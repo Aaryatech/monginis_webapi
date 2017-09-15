@@ -1,0 +1,45 @@
+package com.ats.webapi.repository;
+
+import java.util.Date;
+import java.util.List;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
+
+import com.ats.webapi.model.SpCakeOrders;
+import com.ats.webapi.model.SpCakeOrdersBean;
+
+public interface SpCakeOrdersRepoAdmin extends JpaRepository<SpCakeOrdersBean, Integer> {
+	
+	
+	
+	
+	@Query(value="SELECT m_franchisee.fr_name ,m_sp_cake.sp_code ,m_sp_cake.sp_name ,"
+			+ "t_sp_cake.item_id,m_sp_cake.sp_name ,t_sp_cake.sp_vno,"
+			+ "t_sp_cake.sp_flavour,t_sp_cake.sp_events,"
+			+ " t_sp_cake.sp_delivery_dt, t_sp_cake.sp_price,t_sp_cake.sp_add_rate"
+			+ " FROM m_franchisee ,m_sp_cake,"
+			+ "t_sp_cake WHERE t_sp_cake.sp_produ_date = :PDate AND t_sp_cake.fr_code IN (:frCode) AND "
+			+ "t_sp_cake.sp_id = m_sp_cake.sp_id AND t_sp_cake.fr_code = m_franchisee.fr_id  "
+			,nativeQuery=true)
+	
+	
+	List<SpCakeOrdersBean> FindAllSpCakeOrder(@Param("frCode")List<Integer> frCode,@Param("PDate")String pDate);
+
+
+	@Query(value="SELECT m_franchisee.fr_name ,m_sp_cake.sp_code ,m_sp_cake.sp_name ,"
+			+ "t_sp_cake.item_id,m_sp_cake.sp_name ,t_sp_cake.sp_vno,"
+			+ "t_sp_cake.sp_flavour,t_sp_cake.sp_events,"
+			+ " t_sp_cake.sp_delivery_dt, t_sp_cake.sp_price,t_sp_cake.sp_add_rate "
+			+ " FROM m_franchisee ,m_sp_cake,"
+			+ "t_sp_cake WHERE t_sp_cake.sp_produ_date = :PDate AND "
+			+ "t_sp_cake.sp_id = m_sp_cake.sp_id AND t_sp_cake.fr_code = m_franchisee.fr_id  "
+			,nativeQuery=true)
+	
+	
+	List<SpCakeOrdersBean> FindAllSpCakeOrderAllFr(@Param("PDate")String pDate);
+
+	
+	
+}
