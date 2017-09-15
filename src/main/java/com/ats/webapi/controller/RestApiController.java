@@ -102,11 +102,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 public class RestApiController {
-//test comment
+
 	@Autowired
 	private UserService userService;
+
 	@Autowired
 	private RouteService routeService;
+	
 	@Autowired
 	private MessageService messageService;
 	@Autowired
