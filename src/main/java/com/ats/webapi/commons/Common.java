@@ -6,6 +6,8 @@ import java.util.Date;
 
 public class Common {
 
+	
+	// To convert string to ymd format date
 	public static String convertToYMD(String date) {
 		
 		String convertedDate=null;
