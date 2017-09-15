@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.AllFranchiseeAndMenu;
 import com.ats.webapi.model.AllMenuJsonResponse;
 import com.ats.webapi.model.AllMenus;
@@ -1681,14 +1682,17 @@ public class RestApiController {
 			@RequestParam String date) {
 		GetOrderList orderList = new GetOrderList();
 		try {
-			DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+	/*		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 
 			Date date1;
-			date1 = formatter.parse(date);
-			System.out.println("date str :" + date + " in rest: " + date1);
+			date1 = formatter.parse(date);*/
+			System.out.println("date str :" + date);
 
+			String strDate= Common.convertToYMD(date);
+			System.out.println("Converted date "+strDate);
+			
 			System.out.println("fr id in rest " + frId.toString());
-			List<GetOrder> jsonOrderList = getOrderService.findOrder2(frId, menuId, date);
+			List<GetOrder> jsonOrderList = getOrderService.findOrder2(frId, menuId, strDate);
 
 			orderList.setGetOrder(jsonOrderList);
 			Info info = new Info();
@@ -1710,12 +1714,12 @@ public class RestApiController {
 	public GetOrderList getOrderListForAllFr(@RequestParam List<Integer> menuId, @RequestParam String date) {
 		GetOrderList orderList = new GetOrderList();
 		try {
-			DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-
-			Date date1;
-			date1 = formatter.parse(date);
-
-			List<GetOrder> jsonOrderList = getOrderService.findOrderAllFr(menuId, date);
+			
+			String strDate= Common.convertToYMD(date);
+			System.out.println("Converted date "+strDate);
+			
+			
+			List<GetOrder> jsonOrderList = getOrderService.findOrderAllFr(menuId, strDate);
 
 			orderList.setGetOrder(jsonOrderList);
 			Info info = new Info();
@@ -1738,13 +1742,11 @@ public class RestApiController {
 	public SpCakeOrdersBeanList SpCakeOrderLists(@RequestParam List<Integer> frCode, @RequestParam String prodDate) {
 		SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
 		try {
-			// DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-			DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 
-			Date pDate;
-			pDate = formatter.parse(prodDate);
+			String strDate= Common.convertToYMD(prodDate);
+			System.out.println("Converted date "+strDate);
 
-			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeOrder(frCode, prodDate);
+			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeOrder(frCode, strDate);
 
 			spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
 			Info info = new Info();
@@ -1766,13 +1768,10 @@ public class RestApiController {
 	public SpCakeOrdersBeanList getAllFrSpCakeOrderList(@RequestParam String prodDate) {
 		SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
 		try {
-			// DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
-			DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+			String strDate= Common.convertToYMD(prodDate);
+			System.out.println("Converted date "+strDate);
 
-			Date pDate;
-			pDate = formatter.parse(prodDate);
-
-			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeOrderAllFr(prodDate);
+			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeOrderAllFr(strDate);
 
 			spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
 			Info info = new Info();
@@ -1794,14 +1793,8 @@ public class RestApiController {
 	@ResponseBody
 	public SchedulerList showLatestNews() {
 
-		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		/*
-		 * Calendar cal = Calendar.getInstance(); Date
-		 * date=dateFormat.format(cal.getTime());
-		 * 
-		 * Date date=new Date(); System.out.println("date "+date);
-		 */
-
+		
+		
 		java.sql.Date date1 = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		System.out.println("date " + date1);
 
