@@ -6,7 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication(scanBasePackages={"com.ats.webapi"})
 public class MonginisWebApiApplication {
 
+	// test
 	public static void main(String[] args) {
 		SpringApplication.run(MonginisWebApiApplication.class, args);
 	}
+	
 }
