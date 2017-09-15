@@ -111,38 +111,55 @@ public class RestApiController {
 	
 	@Autowired
 	private MessageService messageService;
+	
 	@Autowired
 	private FlavourService flavourService;
+	
 	@Autowired
 	private SchedulerService schedulerService;
+
 	@Autowired
 	private EventService eventService;
+	
 	@Autowired
 	private SpecialCakeService specialcakeService;
+	
 	@Autowired
 	private FranchiseeService franchiseeService;
+	
 	@Autowired
 	private ModuleService moduleService;
+	
 	@Autowired
 	private ItemService itemService;
+	
 	@Autowired
 	private SubCategoryService subCategoryService;
+	
 	@Autowired
 	private MenuService menuService;
+	
 	@Autowired
 	private SpecialCakeService specialCakeService;
+	
 	@Autowired
 	private RateService rateService;
+	
 	@Autowired
 	private SpMessageService spMsgService;
+	
 	@Autowired
 	private ConfigureFranchiseeService connfigureService;
+	
 	@Autowired
 	private CategoryService categoryService;
+	
 	@Autowired
 	private OrderService orderService;
+	
 	@Autowired
 	private TestFrService frService;
+	
 	@Autowired
 	SpCakeOrdersService spCakeOrdersService;
 	@Autowired
@@ -165,6 +182,7 @@ public class RestApiController {
 
 		String jsonFr = franchiseeService.findFranchiseeByFrCode(frCode, frPasswordKey);
 		System.out.println("JsonString" + jsonFr);
+		
 		return jsonFr;
 
 	}
@@ -174,10 +192,14 @@ public class RestApiController {
 
 	public @ResponseBody List<Orders> placeItemOrder(@RequestBody List<Orders> orderJson)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
+		
 		ObjectMapper mapper = new ObjectMapper();
+		
 		List<Orders> participantJsonList;
 		List<Orders> jsonResult;
+		
 		System.out.println("Inside Place Order " + orderJson.toString());
+		
 		jsonResult = orderService.placeOrder(orderJson);
 
 		return jsonResult;
@@ -189,7 +211,9 @@ public class RestApiController {
 
 	public @ResponseBody SpCakeOrderRes placeSpCakeOrder(@RequestBody SpCakeOrders orderJson)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
+		
 		System.out.println("Inside Place Order " + orderJson.toString());
+		
 		SpCakeOrderRes spCakeOrderRes = spCakeOrdersService.placeSpCakeOrder(orderJson);
 
 		return spCakeOrderRes;
@@ -201,6 +225,7 @@ public class RestApiController {
 	public @ResponseBody OrderSpecialCake searchSpecialCake(@RequestParam String spCode) {
 
 		OrderSpecialCake specialCake = specialcakeService.searchSpecialCake(spCode);
+		
 		return specialCake;
 
 	}
@@ -219,10 +244,13 @@ public class RestApiController {
 	@RequestMapping("/orderHistory")
 	public @ResponseBody ItemOrderList searchOrderHistory(@RequestParam int menuId, @RequestParam String deliveryDt,
 			@RequestParam int frId) throws ParseException {
+		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date date = sdf.parse(deliveryDt);
 		java.sql.Date deliveryDate = new java.sql.Date(date.getTime());
+		
 		ItemOrderList orderList = orderService.searchOrderHistory(menuId, deliveryDate, frId);
+		
 		return orderList;
 
 	}
@@ -246,13 +274,15 @@ public class RestApiController {
 			@RequestParam("usertype") int usertype) {
 
 		System.out.println("input user" + username.toString());
+	
 		User user = new User();
 		user.setUsername(username);
 		user.setPassword(userpwd);
 		user.setUsertype(usertype);
-
 		user.setDelStatus(0);
+		
 		String jsonResult = userService.save(user);
+		
 		return jsonResult;
 	}
 
@@ -267,6 +297,7 @@ public class RestApiController {
 		rate.setSprRate(sprRate);
 		rate.setSprAddOnRate(sprAddOnRate);
 		rate.setDelStatus(0);
+		
 		String jsonResult = rateService.save(rate);
 
 		return jsonResult;
@@ -280,6 +311,7 @@ public class RestApiController {
 		SpMessage spmsg = new SpMessage();
 		spmsg.setSpMsgText(spMsgText);
 		spmsg.setDelStatus(0);
+		
 		String jsonResult = spMsgService.save(spmsg);
 
 		return jsonResult;
@@ -293,6 +325,7 @@ public class RestApiController {
 		SubCategory subCategory = new SubCategory();
 		subCategory.setSubCatName(subCatName);
 		// subCategory.setCatId(catId);
+	
 		String jsonResult = subCategoryService.saveSubCategory(subCategory);
 
 		return jsonResult;
@@ -344,6 +377,7 @@ public class RestApiController {
 		item.setItemTax3(itemTax3);
 		item.setGrnTwo(grnTwo);
 		item.setItemId(itemId);
+		
 		ErrorMessage jsonResult = itemService.saveItem(item);
 
 		return JsonUtil.javaToJson(jsonResult);
@@ -373,9 +407,9 @@ public class RestApiController {
 		configureFr.setDay(day);
 		configureFr.setDate(sqlDate);
 		configureFr.setItemShow(itemShow);
-
 		configureFr.setCatId(catId);
 		configureFr.setSubCatId(11);
+		
 		String jsonResult = connfigureService.configureFranchisee(configureFr);
 
 		return jsonResult;
@@ -388,9 +422,11 @@ public class RestApiController {
 		String jsonResult = "";
 
 		System.out.println("input route " + routeName.toString());
+		
 		Route route = new Route();
 		route.setRouteName(routeName);
 		route.setDelStatus(0);
+		
 		jsonResult = JsonUtil.javaToJson(route);
 		jsonResult = routeService.save(route);
 
