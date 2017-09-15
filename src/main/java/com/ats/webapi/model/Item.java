@@ -70,8 +70,33 @@ public class Item implements Serializable {
 	@Column(name="del_status")
 	private int delStatus;
 		
+	@Column(name="item_rate3")
+	private double itemRate3;
+	
+	@Column(name="min_qty")
+	private int minQty;
 	
 	
+	public double getItemRate3() {
+		return itemRate3;
+	}
+
+	public void setItemRate3(double itemRate3) {
+		this.itemRate3 = itemRate3;
+	}
+
+	public int getMinQty() {
+		return minQty;
+	}
+
+	public void setMinQty(int minQty) {
+		this.minQty = minQty;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="id")
@@ -220,6 +245,16 @@ public class Item implements Serializable {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	@Override
+	public String toString() {
+		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1 + ", itemGrp2=" + itemGrp2
+				+ ", itemGrp3=" + itemGrp3 + ", itemRate1=" + itemRate1 + ", itemRate2=" + itemRate2 + ", itemMrp1="
+				+ itemMrp1 + ", itemMrp2=" + itemMrp2 + ", itemImage=" + itemImage + ", itemTax1=" + itemTax1
+				+ ", itemTax2=" + itemTax2 + ", itemTax3=" + itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId="
+				+ itemSortId + ", grnTwo=" + grnTwo + ", delStatus=" + delStatus + ", itemRate3=" + itemRate3
+				+ ", minQty=" + minQty + ", id=" + id + "]";
 	}
 	
 

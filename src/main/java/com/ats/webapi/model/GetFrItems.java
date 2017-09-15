@@ -53,8 +53,26 @@ public class GetFrItems {
 
 	private int menuId;
 	
+	private double itemRate3;
 	
+	private int minQty;
 	
+	public double getItemRate3() {
+		return itemRate3;
+	}
+
+	public void setItemRate3(double itemRate3) {
+		this.itemRate3 = itemRate3;
+	}
+
+	public int getMinQty() {
+		return minQty;
+	}
+
+	public void setMinQty(int minQty) {
+		this.minQty = minQty;
+	}
+
 	public String getSubCatName() {
 		return subCatName;
 	}

@@ -348,40 +348,45 @@ public class RestApiController {
 	}
 
 	// Save Item
-	@RequestMapping(value = { "/insertItem" }, method = RequestMethod.POST)
-	@ResponseBody
-	public String saveItem(@RequestParam("itemId") String itemId, @RequestParam("itemName") String itemName,
-			@RequestParam("itemGrp1") String itemGrp1, @RequestParam("itemGrp2") String itemGrp2,
-			@RequestParam("itemGrp3") String itemGrp3, @RequestParam("itemRate1") double itemRate1,
-			@RequestParam("itemRate2") double itemRate2, @RequestParam("itemMrp1") double itemMrp1,
-			@RequestParam("itemMrp2") double itemMrp2, @RequestParam("itemImage") String itemImage,
-			@RequestParam("itemTax1") double itemTax1, @RequestParam("itemTax2") double itemTax2,
-			@RequestParam("itemTax3") double itemTax3, @RequestParam("itemIsUsed") int itemIsUsed,
-			@RequestParam("itemSortId") double itemSortId, @RequestParam("grnTwo") int grnTwo) {
+		@RequestMapping(value = { "/insertItem" }, method = RequestMethod.POST)
+		@ResponseBody
+		public String saveItem(@RequestParam("itemId") String itemId, @RequestParam("itemName") String itemName,
+				@RequestParam("itemGrp1") String itemGrp1, @RequestParam("itemGrp2") String itemGrp2,
+				@RequestParam("itemGrp3") String itemGrp3, @RequestParam("itemRate1") double itemRate1,
+				@RequestParam("itemRate2") double itemRate2,@RequestParam("itemRate3") double itemRate3, 
+				@RequestParam("itemMrp1") double itemMrp1,@RequestParam("itemMrp2") double itemMrp2, 
+				@RequestParam("itemImage") String itemImage,@RequestParam("itemTax1") double itemTax1, 
+				@RequestParam("itemTax2") double itemTax2,@RequestParam("itemTax3") double itemTax3, 
+				@RequestParam("itemIsUsed") int itemIsUsed,@RequestParam("itemSortId") double itemSortId, 
+				@RequestParam("grnTwo") int grnTwo) {
 
-		Item item = new Item();
-		item.setItemImage(itemImage);
-		item.setItemGrp1(itemGrp1);
-		item.setDelStatus(0);
-		item.setItemGrp2(itemGrp2);
-		item.setItemGrp3(itemGrp3);
-		item.setItemIsUsed(itemIsUsed);
-		item.setItemMrp1(itemMrp1);
-		item.setItemMrp2(itemMrp2);
-		item.setItemRate1(itemRate1);
-		item.setItemRate2(itemRate2);
-		item.setItemName(itemName);
-		item.setItemSortId(itemSortId);
-		item.setItemTax1(itemTax1);
-		item.setItemTax2(itemTax2);
-		item.setItemTax3(itemTax3);
-		item.setGrnTwo(grnTwo);
-		item.setItemId(itemId);
-		
-		ErrorMessage jsonResult = itemService.saveItem(item);
+			Item item = new Item();
+			item.setItemImage(itemImage);
+			item.setItemGrp1(itemGrp1);
+			item.setDelStatus(0);
+			item.setItemGrp2(itemGrp2);
+			item.setItemGrp3(itemGrp3);
+			item.setItemIsUsed(itemIsUsed);
+			item.setItemMrp1(itemMrp1);
+			item.setItemMrp2(itemMrp2);
+			item.setItemRate1(itemRate1);
+			item.setItemRate2(itemRate2);
+			item.setItemRate3(itemRate3);
+			item.setItemName(itemName);
+			item.setItemSortId(itemSortId);
+			item.setItemTax1(itemTax1);
+			item.setItemTax2(itemTax2);
+			item.setItemTax3(itemTax3);
+			item.setGrnTwo(grnTwo);
+			item.setItemId(itemId);
+			item.setMinQty(0);
+			
+			ErrorMessage jsonResult = itemService.saveItem(item);
 
-		return JsonUtil.javaToJson(jsonResult);
-	}
+			return JsonUtil.javaToJson(jsonResult);
+		}
+
+
 
 	// Configure Franchisee
 	@RequestMapping(value = { "/configureFranchisee" }, method = RequestMethod.POST)
@@ -761,39 +766,40 @@ public class RestApiController {
 	}
 
 	// Update Item
-	@RequestMapping("/updateItem")
-	public ErrorMessage updateItem(@RequestParam("id") int id, @RequestParam("itemId") String itemId,
-			@RequestParam("itemName") String itemName, @RequestParam("itemGrp1") String itemGrp1,
-			@RequestParam("itemGrp2") String itemGrp2, @RequestParam("itemGrp3") String itemGrp3,
-			@RequestParam("itemRate1") double itemRate1, @RequestParam("itemRate2") double itemRate2,
-			@RequestParam("itemMrp1") double itemMrp1, @RequestParam("itemMrp2") double itemMrp2,
-			@RequestParam("itemImage") String itemImage, @RequestParam("itemTax1") double itemTax1,
-			@RequestParam("itemTax2") double itemTax2, @RequestParam("itemTax3") double itemTax3,
-			@RequestParam("itemIsUsed") int itemIsUsed, @RequestParam("itemSortId") double itemSortId,
-			@RequestParam("grnTwo") int grnTwo) {
+		@RequestMapping("/updateItem")
+		public ErrorMessage updateItem(@RequestParam("id") int id, @RequestParam("itemId") String itemId,
+				@RequestParam("itemName") String itemName, @RequestParam("itemGrp1") String itemGrp1,
+				@RequestParam("itemGrp2") String itemGrp2, @RequestParam("itemGrp3") String itemGrp3,
+				@RequestParam("itemRate1") double itemRate1, @RequestParam("itemRate2") double itemRate2,@RequestParam("itemRate3") double itemRate3,
+				@RequestParam("itemMrp1") double itemMrp1, @RequestParam("itemMrp2") double itemMrp2,
+				@RequestParam("itemImage") String itemImage, @RequestParam("itemTax1") double itemTax1,
+				@RequestParam("itemTax2") double itemTax2, @RequestParam("itemTax3") double itemTax3,
+				@RequestParam("itemIsUsed") int itemIsUsed, @RequestParam("itemSortId") double itemSortId,
+				@RequestParam("grnTwo") int grnTwo) {
 
-		Item item = itemService.findItems(id);
-		item.setItemImage(itemImage);
-		item.setItemGrp1(itemGrp1);
-		item.setItemGrp2(itemGrp2);
-		item.setItemGrp3(itemGrp3);
+			Item item = itemService.findItems(id);
+			item.setItemImage(itemImage);
+			item.setItemGrp1(itemGrp1);
+			item.setItemGrp2(itemGrp2);
+			item.setItemGrp3(itemGrp3);
 
-		item.setItemIsUsed(itemIsUsed);
-		item.setItemMrp1(itemMrp1);
-		item.setItemMrp2(itemMrp2);
-		item.setItemRate1(itemRate1);
-		item.setItemRate2(itemRate2);
-		item.setItemName(itemName);
-		item.setItemSortId(itemSortId);
-		item.setItemTax1(itemTax1);
-		item.setItemTax2(itemTax2);
-		item.setItemTax3(itemTax3);
-		item.setGrnTwo(grnTwo);
-		item.setItemId(itemId);
-
-		ErrorMessage jsonResult = itemService.saveItem(item);
-		return jsonResult;
-	}
+			item.setItemIsUsed(itemIsUsed);
+			item.setItemMrp1(itemMrp1);
+			item.setItemMrp2(itemMrp2);
+			item.setItemRate1(itemRate1);
+			item.setItemRate2(itemRate2);
+			item.setItemRate3(itemRate3);
+			item.setItemName(itemName);
+			item.setItemSortId(itemSortId);
+			item.setItemTax1(itemTax1);
+			item.setItemTax2(itemTax2);
+			item.setItemTax3(itemTax3);
+			item.setGrnTwo(grnTwo);
+			item.setItemId(itemId);
+	        
+			ErrorMessage jsonResult = itemService.saveItem(item);
+			return jsonResult;
+		}
 
 	// Update Sub Categories
 	@RequestMapping("/updateSubCategories")
@@ -1161,74 +1167,79 @@ public class RestApiController {
 
 	}
 
-@RequestMapping(value = "/getFrItems", method = RequestMethod.POST)
-	public @ResponseBody List<GetFrItems> getFrItems(@RequestParam List<Integer> items, @RequestParam String frId,
-			@RequestParam String date, @RequestParam String menuId) {
 
-		List<ItemWithSubCat> itemList = new ArrayList<>();
-		List<GetFrItems> frItemList = new ArrayList<>();
+	//3
 
-		List<Orders> orderList = new ArrayList<>();
+	@RequestMapping(value = "/getFrItems", method = RequestMethod.POST)
+		public @ResponseBody List<GetFrItems> getFrItems(@RequestParam List<Integer> items, @RequestParam String frId,
+				@RequestParam String date, @RequestParam String menuId) {
 
-		System.out.println("input param items= " + items.toString());
-		try {
-			itemList = getFrItemsService.findFrItems(items);
+			List<ItemWithSubCat> itemList = new ArrayList<>();
+			List<GetFrItems> frItemList = new ArrayList<>();
+
+			List<Orders> orderList = new ArrayList<>();
+
+			System.out.println("input param items= " + items.toString());
 			try {
-				orderList = prevItemOrderService.findFrItemOrders(items, frId, date, menuId);
+				itemList = getFrItemsService.findFrItems(items);
+				try {
+					orderList = prevItemOrderService.findFrItemOrders(items, frId, date, menuId);
 
-				for (int i = 0; i < itemList.size(); i++) {
+					for (int i = 0; i < itemList.size(); i++) {
 
-					ItemWithSubCat item = itemList.get(i);
+						ItemWithSubCat item = itemList.get(i);
 
-					GetFrItems getFrItems = new GetFrItems();
+						GetFrItems getFrItems = new GetFrItems();
 
-					getFrItems.setDelStatus(item.getDelStatus());
-					getFrItems.setGrnTwo(item.getGrnTwo());
-					getFrItems.setId(item.getId());
-					getFrItems.setItemGrp1(item.getItemGrp1());
-					getFrItems.setItemGrp2(item.getItemGrp2());
-					getFrItems.setItemGrp3(item.getItemGrp3());
-					getFrItems.setItemId(item.getItemId());
-					getFrItems.setItemImage(item.getItemImage());
-					getFrItems.setItemIsUsed(item.getItemIsUsed());
-					getFrItems.setItemMrp1(item.getItemMrp1());
-					getFrItems.setItemMrp2(item.getItemMrp2());
-					getFrItems.setItemName(item.getItemName());
-					getFrItems.setItemRate1(item.getItemRate1());
-					getFrItems.setItemRate2(item.getItemRate2());
-					getFrItems.setItemSortId(item.getItemSortId());
-					getFrItems.setItemTax1(item.getItemTax1());
-					getFrItems.setItemTax2(item.getItemTax2());
-					getFrItems.setItemTax3(item.getItemTax3());
-					getFrItems.setSubCatName(item.getSubCatName());
+						getFrItems.setDelStatus(item.getDelStatus());
+						getFrItems.setGrnTwo(item.getGrnTwo());
+						getFrItems.setId(item.getId());
+						getFrItems.setItemGrp1(item.getItemGrp1());
+						getFrItems.setItemGrp2(item.getItemGrp2());
+						getFrItems.setItemGrp3(item.getItemGrp3());
+						getFrItems.setItemId(item.getItemId());
+						getFrItems.setItemImage(item.getItemImage());
+						getFrItems.setItemIsUsed(item.getItemIsUsed());
+						getFrItems.setItemMrp1(item.getItemMrp1());
+						getFrItems.setItemMrp2(item.getItemMrp2());
+						getFrItems.setItemName(item.getItemName());
+						getFrItems.setItemRate1(item.getItemRate1());
+						getFrItems.setItemRate2(item.getItemRate2());
+						getFrItems.setItemSortId(item.getItemSortId());
+						getFrItems.setItemTax1(item.getItemTax1());
+						getFrItems.setItemTax2(item.getItemTax2());
+						getFrItems.setItemTax3(item.getItemTax3());
+						getFrItems.setSubCatName(item.getSubCatName());
+	                    getFrItems.setMinQty(item.getMinQty());
+	                    getFrItems.setItemRate3(item.getItemRate3());
+						
+						for (int j = 0; j < orderList.size(); j++) {
 
-					for (int j = 0; j < orderList.size(); j++) {
+							if (item.getItemId().equalsIgnoreCase(orderList.get(j).getItemId())) {
 
-						if (item.getItemId().equalsIgnoreCase(orderList.get(j).getItemId())) {
+								getFrItems.setItemQty(orderList.get(j).getOrderQty());
+								getFrItems.setMenuId(orderList.get(j).getMenuId());
 
-							getFrItems.setItemQty(orderList.get(j).getOrderQty());
-							getFrItems.setMenuId(orderList.get(j).getMenuId());
+							}
 
 						}
 
+						frItemList.add(getFrItems);
+
 					}
 
-					frItemList.add(getFrItems);
-
+				} catch (Exception e) {
+					System.out.println("Exception fr Prev Item order " + e.getMessage());
 				}
+				System.out.println("All Prev Order Record" + orderList.toString());
 
 			} catch (Exception e) {
-				System.out.println("Exception fr Prev Item order " + e.getMessage());
+				System.out.println("Exception fr Items " + e.getClass());
 			}
-			System.out.println("All Prev Order Record" + orderList.toString());
 
-		} catch (Exception e) {
-			System.out.println("Exception fr Items " + e.getClass());
+			return frItemList;
+
 		}
-
-		return frItemList;
-
-	}
 
 	@RequestMapping("/getMessage")
 	public @ResponseBody Message getMessage(@RequestParam int msgId) {

@@ -53,9 +53,34 @@ public class ItemWithSubCat implements Serializable {
 	@Column(name="del_status")
 	private int delStatus;
 	
+	
+	@Column(name="item_rate3")
+	private double itemRate3;
+	
+	@Column(name="min_qty")
+	private int minQty;
+	
 	private String subCatName;
 	
 	
+	
+
+	public double getItemRate3() {
+		return itemRate3;
+	}
+
+	public void setItemRate3(double itemRate3) {
+		this.itemRate3 = itemRate3;
+	}
+
+	public int getMinQty() {
+		return minQty;
+	}
+
+	public void setMinQty(int minQty) {
+		this.minQty = minQty;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
