@@ -595,9 +595,14 @@ public class RestApiController {
 		try {
 			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 			Date fromDate, toDate;
-			toDate = formatter.parse(schTodate);
+			/*toDate = formatter.parse(schTodate);
 			fromDate = formatter.parse(schDate);
-
+*/
+			
+			fromDate=Common.convertToSqlDate(schDate);
+			toDate=Common.convertToSqlDate(schTodate);
+			
+			
 			Scheduler scheduler = new Scheduler();
 			scheduler.setSchDate(fromDate);
 			scheduler.setSchTodate(toDate);
