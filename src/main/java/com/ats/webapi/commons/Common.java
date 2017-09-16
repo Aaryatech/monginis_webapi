@@ -6,6 +6,13 @@ import java.util.Date;
 
 public class Common {
 
+	
+	public static void addition() {
+		
+		int a= 20+20;
+		System.out.println("Total is: "+a);
+		
+	}
 
 	
 	// To convert string to ymd format date
