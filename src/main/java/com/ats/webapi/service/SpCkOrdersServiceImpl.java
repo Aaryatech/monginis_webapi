@@ -23,10 +23,10 @@ public class SpCkOrdersServiceImpl implements SpCkOrdersService {
 	
 
 	@Override
-	public List<SpCakeOrdersBean> findSpCakeOrder(List<Integer> frCode, String prodDate) {
+	public List<SpCakeOrdersBean> findSpCakeOrder(List<Integer> frId, String prodDate) {
 		List<SpCakeOrdersBean> spCakeOrders=null;
 		try {
-			spCakeOrders=spCakeOrdersRepository.FindAllSpCakeOrder(frCode, prodDate);
+			spCakeOrders=spCakeOrdersRepository.FindAllSpCakeOrder(frId, prodDate);
 					
 		
 		}catch (Exception e) {

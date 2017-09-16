@@ -457,9 +457,10 @@ public class RestApiController {
 			@RequestParam("frOwner") String frOwner, @RequestParam("frRateCat") int frRateCat,
 			@RequestParam("grnTwo") int grnTwo) throws ParseException {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		java.util.Date date = sdf.parse(frOpeningDate);
-		java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
+		//DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		//java.util.Date date = sdf.parse(frOpeningDate);
+		//java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
+		java.sql.Date sqlOpeningDate=Common.convertToSqlDate(frOpeningDate);
 
 		Franchisee franchisee = new Franchisee();
 		// franchisee.setFrId(frId);
@@ -1626,14 +1627,14 @@ public class RestApiController {
 
 	@RequestMapping(value = { "/getSpCakeOrderList" }, method = RequestMethod.POST)
 	@ResponseBody
-	public SpCakeOrdersList getSpCakeOrderList(@RequestParam List<Integer> frCode, @RequestParam String prodDate) {
+	public SpCakeOrdersList getSpCakeOrderList(@RequestParam List<Integer> frId, @RequestParam String prodDate) {
 		SpCakeOrdersList spCakeOrderList = new SpCakeOrdersList();
 		try {
 			DateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 			Date pDate;
 			pDate = formatter.parse(prodDate);
 
-			List<SpCakeOrders> jsonSpCakeOrderList = spCakeOrdersService.findSpCakeOrder(frCode, pDate);
+			List<SpCakeOrders> jsonSpCakeOrderList = spCakeOrdersService.findSpCakeOrder(frId, pDate);
 
 			spCakeOrderList.setSpCakeOrders(jsonSpCakeOrderList);
 			Info info = new Info();
@@ -1812,14 +1813,14 @@ public class RestApiController {
 
 	@RequestMapping(value = { "/getSpCakeOrderLists" }, method = RequestMethod.POST)
 	@ResponseBody
-	public SpCakeOrdersBeanList SpCakeOrderLists(@RequestParam List<Integer> frCode, @RequestParam String prodDate) {
+	public SpCakeOrdersBeanList SpCakeOrderLists(@RequestParam List<Integer> frId, @RequestParam String prodDate) {
 		SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
 		try {
 
 			String strDate= Common.convertToYMD(prodDate);
 			System.out.println("Converted date "+strDate);
 
-			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeOrder(frCode, strDate);
+			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeOrder(frId, strDate);
 
 			spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
 			Info info = new Info();

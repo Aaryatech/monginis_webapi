@@ -13,8 +13,8 @@ public class SpCkOrderHis implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="sp_vno")
 	private int spVno;
+	private int frId;// frId added
 	
-
 private String frCode;
 private Integer spType;
 private Integer spId;
@@ -61,6 +61,15 @@ private String orderDate;
 private int menuId;
 private String spName;
 private String spfName;
+
+
+
+public int getFrId() {
+	return frId;
+}
+public void setFrId(int frId) {
+	this.frId = frId;
+}
 public int getSpVno() {
 	return spVno;
 }

@@ -16,25 +16,25 @@ public interface SpCakeOrdersRepoAdmin extends JpaRepository<SpCakeOrdersBean, I
 	
 	
 	@Query(value="SELECT m_franchisee.fr_name ,m_sp_cake.sp_code ,m_sp_cake.sp_name ,"
-			+ "t_sp_cake.item_id,m_sp_cake.sp_name ,t_sp_cake.sp_vno,"
+			+ "t_sp_cake.item_id ,t_sp_cake.sp_vno,"
 			+ "t_sp_cake.sp_flavour,t_sp_cake.sp_events,"
 			+ " t_sp_cake.sp_delivery_dt, t_sp_cake.sp_price,t_sp_cake.sp_add_rate"
 			+ " FROM m_franchisee ,m_sp_cake,"
-			+ "t_sp_cake WHERE t_sp_cake.sp_produ_date = :PDate AND t_sp_cake.fr_code IN (:frCode) AND "
-			+ "t_sp_cake.sp_id = m_sp_cake.sp_id AND t_sp_cake.fr_code = m_franchisee.fr_id  "
+			+ "t_sp_cake WHERE t_sp_cake.sp_produ_date = :PDate AND t_sp_cake.fr_id IN (:frId) AND "
+			+ "t_sp_cake.sp_id = m_sp_cake.sp_id AND t_sp_cake.fr_id = m_franchisee.fr_id  "
 			,nativeQuery=true)
 	
 	
-	List<SpCakeOrdersBean> FindAllSpCakeOrder(@Param("frCode")List<Integer> frCode,@Param("PDate")String pDate);
+	List<SpCakeOrdersBean> FindAllSpCakeOrder(@Param("frId")List<Integer> frId,@Param("PDate")String pDate);
 
 
-	@Query(value="SELECT m_franchisee.fr_name ,m_sp_cake.sp_code ,m_sp_cake.sp_name ,"
+	@Query(value="SELECT m_franchisee.fr_name ,m_sp_cake.sp_code ,"
 			+ "t_sp_cake.item_id,m_sp_cake.sp_name ,t_sp_cake.sp_vno,"
 			+ "t_sp_cake.sp_flavour,t_sp_cake.sp_events,"
 			+ " t_sp_cake.sp_delivery_dt, t_sp_cake.sp_price,t_sp_cake.sp_add_rate "
 			+ " FROM m_franchisee ,m_sp_cake,"
 			+ "t_sp_cake WHERE t_sp_cake.sp_produ_date = :PDate AND "
-			+ "t_sp_cake.sp_id = m_sp_cake.sp_id AND t_sp_cake.fr_code = m_franchisee.fr_id  "
+			+ "t_sp_cake.sp_id = m_sp_cake.sp_id AND t_sp_cake.fr_id = m_franchisee.fr_id  "
 			,nativeQuery=true)
 	
 	

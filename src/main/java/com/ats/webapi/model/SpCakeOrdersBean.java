@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Immutable;
 
 @Entity(name="spCakeOrdersBean")
-
+//bean to be changed frId inserted 
 @Immutable
 public class SpCakeOrdersBean implements Serializable {
 	
@@ -22,6 +22,11 @@ public class SpCakeOrdersBean implements Serializable {
 	@Column(name="sp_vno")
 	private int spVno;
 	
+	
+	
+
+
+
 	@Column(name="sp_code")//m_sp_cake
 	private String spCode;
 	

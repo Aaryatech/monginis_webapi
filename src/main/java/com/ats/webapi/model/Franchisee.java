@@ -15,6 +15,8 @@ import javax.persistence.Table;
 
 import org.springframework.beans.factory.annotation.Value;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "m_franchisee")
 public class Franchisee implements Serializable{
@@ -168,7 +170,7 @@ public class Franchisee implements Serializable{
 	public void setFrCode(String frCode) {
 		this.frCode = frCode;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getFrOpeningDate() {
 		return frOpeningDate;
 	}

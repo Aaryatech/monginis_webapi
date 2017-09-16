@@ -7,7 +7,7 @@ import com.ats.webapi.model.SpCakeOrders;
 import com.ats.webapi.model.SpCakeOrdersBean;
 
 public interface SpCkOrdersService {
-	public List<SpCakeOrdersBean> findSpCakeOrder(List<Integer> frCode,String prodDate);
+	public List<SpCakeOrdersBean> findSpCakeOrder(List<Integer> frId,String prodDate);
 	
 	public List<SpCakeOrdersBean> findSpCakeOrderAllFr(String prodDate);
 	

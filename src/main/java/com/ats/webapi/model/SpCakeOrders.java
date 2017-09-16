@@ -16,7 +16,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Immutable;
 
 @Entity(name="spCakeOrders")
-@Table(name = "t_sp_cake")
+@Table(name = "t_sp_cake") // Sachin's Bean
 @DynamicUpdate
 public class SpCakeOrders implements Serializable {
 	@Id
@@ -28,6 +28,15 @@ public class SpCakeOrders implements Serializable {
 private String frCode;
 private Integer spType;
 private Integer spId;
+private int frId; //frId added
+
+public int getFrId() {
+	return frId;
+}
+
+public void setFrId(int frId) {
+	this.frId = frId;
+}
 
 @Column(name="item_id")
 private String itemId;

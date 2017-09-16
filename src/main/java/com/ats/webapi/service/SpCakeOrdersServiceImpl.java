@@ -47,10 +47,10 @@ public class SpCakeOrdersServiceImpl implements SpCakeOrdersService {
 		return spCakeOrderRes;
 	}
 	@Override
-	public List<SpCakeOrders> findSpCakeOrder(List<Integer> frCode, Date prodDate) {
+	public List<SpCakeOrders> findSpCakeOrder(List<Integer> frId, Date prodDate) {
 		List<SpCakeOrders> spCakeOrders=null;
 		try {
-			spCakeOrders=spCakeOrdersRepository.findByFrCodeInAndSpProduDate(frCode, prodDate);
+			spCakeOrders=spCakeOrdersRepository.findByFrCodeInAndSpProduDate(frId, prodDate);
 		
 		}catch (Exception e) {
 			System.out.println("inside sp cake order service impl ex"+e.getMessage());

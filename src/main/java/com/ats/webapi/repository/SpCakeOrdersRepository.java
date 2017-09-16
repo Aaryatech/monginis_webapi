@@ -10,7 +10,7 @@ import com.ats.webapi.model.SpCakeOrders;
 
 public interface SpCakeOrdersRepository extends JpaRepository<SpCakeOrders,Long>{
 	
-	List<SpCakeOrders> findByFrCodeInAndSpProduDate(List<Integer> frCode,Date produDate);
+	List<SpCakeOrders> findByFrCodeInAndSpProduDate(List<Integer> frId,Date produDate);
 
 
 
