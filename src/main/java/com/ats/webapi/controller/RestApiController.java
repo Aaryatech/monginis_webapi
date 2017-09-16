@@ -1190,6 +1190,8 @@ public class RestApiController {
 						ItemWithSubCat item = itemList.get(i);
 
 						GetFrItems getFrItems = new GetFrItems();
+						
+						
 
 						getFrItems.setDelStatus(item.getDelStatus());
 						getFrItems.setGrnTwo(item.getGrnTwo());
