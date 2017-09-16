@@ -102,7 +102,6 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 
-// rest changes sachin
 
 @RestController
 public class RestApiController {
@@ -180,7 +179,7 @@ public class RestApiController {
 	private PrevItemOrderService prevItemOrderService;
 
 	
-	// checking for conflicts
+
 	
 	
 	// Login FrontEnd Franchisee
