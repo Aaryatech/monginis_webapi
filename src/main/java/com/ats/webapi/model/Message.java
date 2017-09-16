@@ -8,6 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -18,19 +20,24 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 @Entity
 @Table(name = "t_message")
 
-
 public class Message implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="msg_id")
 	private int msgId;
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	
+	//@JsonFormat(pattern = "dd-MM-yyyy")
+	//@Temporal(TemporalType.DATE)
+	//@JsonFormat(shape=JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy", timezone="EST")
 	@Column(name="msg_frdt")
 	private Date msgFrdt;
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	
+	//@JsonFormat(pattern = "dd-MM-yyyy")
+	//@Temporal(TemporalType.DATE)
 	@Column(name="msg_todt")
 	private Date msgTodt;
+	
 	@Column(name="msg_image")
 	private String msgImage;
 	@Column(name="msg_header")
@@ -42,7 +49,7 @@ public class Message implements Serializable {
 	@Column(name="del_status")
 	private int delStatus;
 	
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getMsgFrdt() {
 		return msgFrdt;
 	}
@@ -51,6 +58,7 @@ public class Message implements Serializable {
 		this.msgFrdt = msgFrdt;
 	}
 
+	@JsonFormat( locale = "hi",timezone = "Asia/Kolkata",pattern = "dd-MM-yyyy")
 	public Date getMsgTodt() {
 		return msgTodt;
 	}

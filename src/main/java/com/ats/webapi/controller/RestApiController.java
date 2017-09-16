@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -538,8 +539,11 @@ public class RestApiController {
 
 		String jsonResult = "";
 		try {
+			
+		
 
 			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			//DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
 			Date fromDate;
 			Date toDate = formatter.parse(msgTodt);
 			fromDate = formatter.parse(msgFrdt);
@@ -574,14 +578,18 @@ public class RestApiController {
 
 	public @ResponseBody ErrorMessage saveFlavour(@RequestParam("spType") int spType,
 			@RequestParam("spfName") String spfName, @RequestParam("spfAdonRate") Double spfAdonRate) {
+		
 		ErrorMessage errorMessage = new ErrorMessage();
+		
 		try {
 			Flavour flavour = new Flavour();
 			flavour.setSpType(spType);
 			flavour.setSpfName(spfName);
 			flavour.setSpfAdonRate(spfAdonRate);
 			flavour.setDelStatus(0);
+			
 			errorMessage = flavourService.save(flavour);
+			
 		} catch (Exception e) {
 			System.out.println("Insert Flavour Error" + e.getMessage());
 			e.printStackTrace();
@@ -596,17 +604,13 @@ public class RestApiController {
 	public String saveSchedular(@RequestParam("schDate") String schDate, @RequestParam("schTodate") String schTodate,
 			@RequestParam("schOccasionname") String schOccasionname, @RequestParam("schMessage") String schMessage,
 			@RequestParam("schFrdttime") Double schFrdttime, @RequestParam("schTodttime") Double schTodttime) {
-		String jsonScheduler = "";
-		try {
-			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-			Date fromDate, toDate;
-			/*toDate = formatter.parse(schTodate);
+			String jsonScheduler = "";
+			try {
+				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				Date fromDate, toDate;
+			toDate = formatter.parse(schTodate);
 			fromDate = formatter.parse(schDate);
-*/
-			
-			fromDate=Common.convertToSqlDate(schDate);
-			toDate=Common.convertToSqlDate(schTodate);
-			
+
 			
 			Scheduler scheduler = new Scheduler();
 			scheduler.setSchDate(fromDate);
@@ -617,6 +621,7 @@ public class RestApiController {
 			scheduler.setSchTodttime(schTodttime);
 			scheduler.setIsActive(1);
 			scheduler.setDelStatus(0);
+			
 
 			jsonScheduler = schedulerService.save(scheduler);
 
@@ -688,6 +693,10 @@ public class RestApiController {
 	public MessageList showMessageList() {
 
 		List<Message> jsonMessageList = messageService.findAllMessage();
+		
+		
+		
+		
 		MessageList messageList = new MessageList();
 		messageList.setMessage(jsonMessageList);
 		Info info = new Info();
@@ -1064,6 +1073,7 @@ public class RestApiController {
 		return "" + JsonUtil.javaToJson(info);
 
 	}
+	
     //Get Event
 	@RequestMapping(value = "/getEvent")
 	public @ResponseBody Event getEvent(@RequestParam int speId) {
@@ -1072,6 +1082,7 @@ public class RestApiController {
 		return event;
 
 	}
+	
     //Get Rate
 	@RequestMapping(value = "/getRate")
 	public @ResponseBody Rates getRate(@RequestParam int sprId) {
@@ -1190,6 +1201,8 @@ public class RestApiController {
 						ItemWithSubCat item = itemList.get(i);
 
 						GetFrItems getFrItems = new GetFrItems();
+						
+						
 
 						getFrItems.setDelStatus(item.getDelStatus());
 						getFrItems.setGrnTwo(item.getGrnTwo());
