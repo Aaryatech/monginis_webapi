@@ -24,11 +24,11 @@ public class Scheduler implements Serializable {
 	@Column(name="sch_id")
 	private int schId;
 
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	//@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(name = "sch_date")
 	private Date schDate;
 
-	@JsonFormat(pattern = "dd-MM-yyyy")
+	//@JsonFormat(pattern = "dd-MM-yyyy")
 	@Column(name = "sch_to_date")
 	private Date schTodate;
 
@@ -54,23 +54,24 @@ public class Scheduler implements Serializable {
 	public int getSchId() {
 		return schId;
 	}
-
+	
 	public void setSchId(int schId) {
 		this.schId = schId;
 	}
-
+	
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getSchDate() {
 		return schDate;
 	}
-
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setSchDate(Date schDate) {
 		this.schDate = schDate;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getSchTodate() {
 		return schTodate;
 	}
-
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setSchTodate(Date schTodate) {
 		this.schTodate = schTodate;
 	}
