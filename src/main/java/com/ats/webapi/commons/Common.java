@@ -7,7 +7,14 @@ import java.util.Date;
 public class Common {
 
 
-	
+	void add()
+	{
+		int a=10;
+		int b=20;
+	    int res=a+b;
+	    System.out.println("Res"+res);
+		
+	}
 	// To convert string to ymd format date
 	public static String convertToYMD(String date) {
 		
