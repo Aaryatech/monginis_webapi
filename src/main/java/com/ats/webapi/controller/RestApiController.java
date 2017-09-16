@@ -101,6 +101,9 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+
+// rest changes sachin
+
 @RestController
 public class RestApiController {
 
@@ -176,6 +179,10 @@ public class RestApiController {
 	@Autowired
 	private PrevItemOrderService prevItemOrderService;
 
+	
+	// checking for conflicts
+	
+	
 	// Login FrontEnd Franchisee
 	@RequestMapping(value = { "/loginFr" }, method = RequestMethod.POST)
 	@ResponseBody
@@ -185,7 +192,7 @@ public class RestApiController {
 		System.out.println("JsonString" + jsonFr);
 		
 		return jsonFr;
-
+ 
 	}
 
 	// Place Item Order
