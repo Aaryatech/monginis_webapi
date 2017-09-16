@@ -176,6 +176,10 @@ public class RestApiController {
 	@Autowired
 	private PrevItemOrderService prevItemOrderService;
 
+	
+	// checking for conflicts
+	
+	
 	// Login FrontEnd Franchisee
 	@RequestMapping(value = { "/loginFr" }, method = RequestMethod.POST)
 	@ResponseBody
