@@ -48,6 +48,8 @@ import com.ats.webapi.model.MainModuleWithSubModule;
 import com.ats.webapi.model.Message;
 import com.ats.webapi.model.MessageList;
 import com.ats.webapi.model.Order;
+import com.ats.webapi.model.OrderCounts;
+import com.ats.webapi.model.OrderCountsList;
 import com.ats.webapi.model.OrderSpecialCake;
 import com.ats.webapi.model.Orders;
 import com.ats.webapi.model.Rates;
@@ -81,6 +83,7 @@ import com.ats.webapi.service.MenuService;
 import com.ats.webapi.service.MessageService;
 import com.ats.webapi.service.ModuleService;
 import com.ats.webapi.service.ModulesList;
+import com.ats.webapi.service.OrderCountsService;
 import com.ats.webapi.service.OrderService;
 import com.ats.webapi.service.PrevItemOrderService;
 import com.ats.webapi.service.RateList;
@@ -177,6 +180,12 @@ public class RestApiController {
 
 	@Autowired
 	private PrevItemOrderService prevItemOrderService;
+	
+	@Autowired
+	private OrderCountsService orderCountService;
+	
+
+	
 
 	
 
@@ -1925,6 +1934,34 @@ public class RestApiController {
 
 		return schedulerList;
 	}
+	
+	// 18 sept sachin
+	@RequestMapping(value = { "/showOrderCounts" }, method = RequestMethod.GET)
+	@ResponseBody
+	public OrderCountsList showOrderCounts() {
+
+		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		System.out.println("date " + cDate);
+
+		List<OrderCounts> orderCountList = orderCountService.findOrderCount(cDate);
+		
+		System.out.println("order count  list" + orderCountList.toString());
+
+		OrderCountsList ordercountList = new OrderCountsList();
+		ordercountList.setOrderCount(orderCountList);
+		
+		Info info = new Info();
+		
+		info.setError(false);
+		info.setMessage("order count displayed successfully");
+		
+		ordercountList.setInfo(info);
+
+		return ordercountList;
+	}
+	
+	
+	
 
 	// Message news 9 sept front end
 
