@@ -31,16 +31,16 @@ public class SpecialCakeServiceImpl implements SpecialCakeService{
 		
 		try {
 			System.out.println("inside special cake insert");
-			if(specialcake.getErpLinkcode()!=null && !specialcake.getErpLinkcode().trim().equals("")&&
+			if(specialcake!=null /*&& !specialcake.getErpLinkcode().trim().equals("")&&
 					specialcake.getSpBookb4()!=null && !specialcake.getSpBookb4().trim().equals("")&&
 					specialcake.getSpCode()!=null && !specialcake.getSpCode().trim().equals("")&&
 					specialcake.getSpeIdlist()!=null && !specialcake.getSpeIdlist().trim().equals("")&&
 					specialcake.getSpImage()!=null && !specialcake.getSpImage().trim().equals("")&&
-					/*specialcake.getSprId()!=null && !specialcake.getSprId().trim().equals("")&&*/
+					specialcake.getSprId()!=null && !specialcake.getSprId().trim().equals("")&&
 					specialcake.getSpBookb4()!=null && !specialcake.getSpBookb4().trim().equals("")&&
 					specialcake.getSpMaxwt()!=null && !specialcake.getSpMaxwt().trim().equals("")&&
 					specialcake.getSpMinwt()!=null && !specialcake.getSpMinwt().trim().equals("")&&
-					specialcake.getSpName()!=null && !specialcake.getSpName().trim().equals("")) {
+					specialcake.getSpName()!=null && !specialcake.getSpName().trim().equals("")*/) {
 				System.out.println("before save");
 					specialcake=specialcakeRepository.save(specialcake);
 					System.out.println("after save");

@@ -1552,7 +1552,7 @@ public class RestApiController {
 	// Update Special Cake
 	@RequestMapping("/updateSpecialCake")
 	public @ResponseBody String updateSpecialCake(@RequestParam int id, @RequestParam String spname,
-			@RequestParam int sptype, @RequestParam String spminwt, @RequestParam String spmaxwt,
+			@RequestParam int sptype, @RequestParam String spminwt, @RequestParam String spmaxwt,@RequestParam String spCode,
 			@RequestParam String spbookb4, @RequestParam String spimage,
 			@RequestParam double sptax1, @RequestParam double sptax2, @RequestParam double sptax3,
 			@RequestParam String spidlist, @RequestParam String erplinkcode, @RequestParam int spphoupload,
@@ -1561,12 +1561,13 @@ public class RestApiController {
 			@RequestParam("isAddonRateAppli")int isAddonRateAppli,
 			@RequestParam("mrpRate1")int mrpRate1,@RequestParam("mrpRate2")int mrpRate2,
 			@RequestParam("mrpRate3")int mrpRate3,@RequestParam("spRate1")int spRate1,
-			@RequestParam("spRate2")int spRate2,@RequestParam("spRate3")int spRate3) {
+			@RequestParam("spRate2")int spRate2,@RequestParam("spRate3")int spRate3,@RequestParam("isUsed")int isUsed) {
 
 		SpecialCake specialCake = specialcakeService.findSpecialCake(id);
 		Info info = new Info();
 		try {
 			specialCake.setSpName(spname);
+			specialCake.setSpCode(spCode);
 			specialCake.setSpType(sptype);
 			specialCake.setSpMinwt(spminwt);
 			specialCake.setSpMaxwt(spmaxwt);
@@ -1581,7 +1582,7 @@ public class RestApiController {
 			specialCake.setSpPhoupload(spphoupload);
 			specialCake.setTimeTwoappli(timetwoappli);
 			specialCake.setBaseCode("0");
-			specialCake.setIsUsed(1);
+			specialCake.setIsUsed(isUsed);
 			
 			specialCake.setSpDesc(spDesc);
 			specialCake.setOrderQty(orderQty);
