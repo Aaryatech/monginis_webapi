@@ -498,11 +498,17 @@ public class RestApiController {
 	public String saveSpecialCake(@RequestParam("spCode") String spcode, @RequestParam("spName") String spname,
 			@RequestParam("spType") int sptype, @RequestParam("spMinwt") String spminwt,
 			@RequestParam("spMaxwt") String spmaxwt, @RequestParam("spBookb4") String spbookb4,
-			@RequestParam("sprId") int sprid, @RequestParam("spImage") String spimage,
+			 @RequestParam("spImage") String spimage,
 			@RequestParam("spTax1") double sptax1, @RequestParam("spTax2") double sptax2,
 			@RequestParam("spTax3") double sptax3, @RequestParam("speIdlist") String speidlist,
 			@RequestParam("erpLinkcode") String erplinkcode, @RequestParam("spPhoupload") int spphoupload,
-			@RequestParam("timeTwoappli") int timetwoappli, @RequestParam("isUsed") int isused) {
+			@RequestParam("timeTwoappli") int timetwoappli, @RequestParam("isUsed") int isused,
+			@RequestParam("spDesc")String spDesc,@RequestParam("orderQty")int orderQty,
+			@RequestParam("orderDiscount")float orderDiscount,@RequestParam("isCustChoiceCk")int isCustChoiceCk,
+			@RequestParam("isAddonRateAppli")int isAddonRateAppli,
+			@RequestParam("mrpRate1")int mrpRate1,@RequestParam("mrpRate2")int mrpRate2,
+			@RequestParam("mrpRate3")int mrpRate3,@RequestParam("spRate1")int spRate1,
+			@RequestParam("spRate2")int spRate2,@RequestParam("spRate3")int spRate3) {
 
 		String jsonResult = "";
 		try {
@@ -513,7 +519,7 @@ public class RestApiController {
 			specialcake.setSpMinwt(spminwt);
 			specialcake.setSpMaxwt(spmaxwt);
 			specialcake.setSpBookb4(spbookb4);
-			specialcake.setSprId(sprid);
+			specialcake.setSprId(1);
 			specialcake.setSpImage(spimage);
 			specialcake.setSpTax1(sptax1);
 			specialcake.setSpTax2(sptax2);
@@ -525,6 +531,18 @@ public class RestApiController {
 			specialcake.setTimeTwoappli(timetwoappli);
 			specialcake.setBaseCode("0");
 			specialcake.setDelStatus(0);
+
+			specialcake.setSpDesc(spDesc);
+			specialcake.setOrderQty(orderQty);
+			specialcake.setOrderDiscount(orderDiscount);
+			specialcake.setIsCustChoiceCk(isCustChoiceCk);
+			specialcake.setIsAddonRateAppli(isAddonRateAppli);
+			specialcake.setMrpRate1(mrpRate1);
+			specialcake.setMrpRate2(mrpRate2);
+			specialcake.setMrpRate3(mrpRate3);
+			specialcake.setSpRate1(spRate1);
+			specialcake.setSpRate2(spRate2);
+			specialcake.setSpRate3(spRate3);
 
 			jsonResult = specialcakeService.save(specialcake);
 			System.out.println("\n " + jsonResult);
@@ -813,6 +831,7 @@ public class RestApiController {
 			item.setGrnTwo(grnTwo);
 			item.setItemId(itemId);
 	        
+	
 			ErrorMessage jsonResult = itemService.saveItem(item);
 			return jsonResult;
 		}
@@ -1528,15 +1547,21 @@ public class RestApiController {
 		}
 		return JsonUtil.javaToJson(info);
 	}
+	
 
 	// Update Special Cake
 	@RequestMapping("/updateSpecialCake")
 	public @ResponseBody String updateSpecialCake(@RequestParam int id, @RequestParam String spname,
 			@RequestParam int sptype, @RequestParam String spminwt, @RequestParam String spmaxwt,
-			@RequestParam String spbookb4, @RequestParam int sprid, @RequestParam String spimage,
+			@RequestParam String spbookb4, @RequestParam String spimage,
 			@RequestParam double sptax1, @RequestParam double sptax2, @RequestParam double sptax3,
 			@RequestParam String spidlist, @RequestParam String erplinkcode, @RequestParam int spphoupload,
-			@RequestParam int timetwoappli) {
+			@RequestParam int timetwoappli,@RequestParam("spDesc")String spDesc,@RequestParam("orderQty")int orderQty,
+			@RequestParam("orderDiscount")float orderDiscount,@RequestParam("isCustChoiceCk")int isCustChoiceCk,
+			@RequestParam("isAddonRateAppli")int isAddonRateAppli,
+			@RequestParam("mrpRate1")int mrpRate1,@RequestParam("mrpRate2")int mrpRate2,
+			@RequestParam("mrpRate3")int mrpRate3,@RequestParam("spRate1")int spRate1,
+			@RequestParam("spRate2")int spRate2,@RequestParam("spRate3")int spRate3) {
 
 		SpecialCake specialCake = specialcakeService.findSpecialCake(id);
 		Info info = new Info();
@@ -1546,9 +1571,9 @@ public class RestApiController {
 			specialCake.setSpMinwt(spminwt);
 			specialCake.setSpMaxwt(spmaxwt);
 			specialCake.setSpBookb4(spbookb4);
-			specialCake.setSprId(sprid);
 			specialCake.setSpImage(spimage);
 			specialCake.setSpTax1(sptax1);
+			specialCake.setSprId(1);
 			specialCake.setSpTax2(sptax2);
 			specialCake.setSpTax3(sptax3);
 			specialCake.setSpeIdlist(spidlist);
@@ -1557,12 +1582,28 @@ public class RestApiController {
 			specialCake.setTimeTwoappli(timetwoappli);
 			specialCake.setBaseCode("0");
 			specialCake.setIsUsed(1);
-
+			
+			specialCake.setSpDesc(spDesc);
+			specialCake.setOrderQty(orderQty);
+			specialCake.setOrderDiscount(orderDiscount);
+			specialCake.setIsCustChoiceCk(isCustChoiceCk);
+			specialCake.setIsAddonRateAppli(isAddonRateAppli);
+			specialCake.setMrpRate1(mrpRate1);
+			specialCake.setMrpRate2(mrpRate2);
+			specialCake.setMrpRate3(mrpRate3);
+			specialCake.setSpRate1(spRate1);
+			specialCake.setSpRate2(spRate2);
+			specialCake.setSpRate3(spRate3);
+			
 			String jsonResult = specialcakeService.save(specialCake);
+			
 			if (jsonResult == null) {
+				
 				info.setError(true);
 				info.setMessage("Special cake update failed");
+				
 			} else if (jsonResult != null) {
+				
 				info.setError(false);
 				info.setMessage("Special cake successfully updated");
 			}
@@ -1663,7 +1704,7 @@ public class RestApiController {
 			@RequestParam("frOwner") String frOwner, @RequestParam("frRateCat") int frRateCat,
 			@RequestParam("grnTwo") int grnTwo, @RequestParam("delStatus") int delStatus) throws ParseException {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
 		java.util.Date date = sdf.parse(frOpeningDate);
 		java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
 
