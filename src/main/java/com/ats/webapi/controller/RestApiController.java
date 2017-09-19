@@ -371,6 +371,7 @@ public class RestApiController {
 				@RequestParam("itemGrp3") String itemGrp3, @RequestParam("itemRate1") double itemRate1,
 				@RequestParam("itemRate2") double itemRate2,@RequestParam("itemRate3") double itemRate3, 
 				@RequestParam("itemMrp1") double itemMrp1,@RequestParam("itemMrp2") double itemMrp2, 
+				@RequestParam("itemMrp3") double itemMrp3,@RequestParam("minQty") int minQty,
 				@RequestParam("itemImage") String itemImage,@RequestParam("itemTax1") double itemTax1, 
 				@RequestParam("itemTax2") double itemTax2,@RequestParam("itemTax3") double itemTax3, 
 				@RequestParam("itemIsUsed") int itemIsUsed,@RequestParam("itemSortId") double itemSortId, 
@@ -383,8 +384,10 @@ public class RestApiController {
 			item.setItemGrp2(itemGrp2);
 			item.setItemGrp3(itemGrp3);
 			item.setItemIsUsed(itemIsUsed);
+			item.setMinQty(minQty);
 			item.setItemMrp1(itemMrp1);
 			item.setItemMrp2(itemMrp2);
+			item.setItemMrp3(itemMrp3);
 			item.setItemRate1(itemRate1);
 			item.setItemRate2(itemRate2);
 			item.setItemRate3(itemRate3);
@@ -395,7 +398,7 @@ public class RestApiController {
 			item.setItemTax3(itemTax3);
 			item.setGrnTwo(grnTwo);
 			item.setItemId(itemId);
-			item.setMinQty(0);
+		
 			
 			ErrorMessage jsonResult = itemService.saveItem(item);
 
@@ -815,6 +818,7 @@ public class RestApiController {
 				@RequestParam("itemGrp2") String itemGrp2, @RequestParam("itemGrp3") String itemGrp3,
 				@RequestParam("itemRate1") double itemRate1, @RequestParam("itemRate2") double itemRate2,@RequestParam("itemRate3") double itemRate3,
 				@RequestParam("itemMrp1") double itemMrp1, @RequestParam("itemMrp2") double itemMrp2,
+				 @RequestParam("itemMrp3") double itemMrp3, @RequestParam("minQty") int minQty,
 				@RequestParam("itemImage") String itemImage, @RequestParam("itemTax1") double itemTax1,
 				@RequestParam("itemTax2") double itemTax2, @RequestParam("itemTax3") double itemTax3,
 				@RequestParam("itemIsUsed") int itemIsUsed, @RequestParam("itemSortId") double itemSortId,
@@ -825,10 +829,11 @@ public class RestApiController {
 			item.setItemGrp1(itemGrp1);
 			item.setItemGrp2(itemGrp2);
 			item.setItemGrp3(itemGrp3);
-
+            item.setMinQty(minQty);
 			item.setItemIsUsed(itemIsUsed);
 			item.setItemMrp1(itemMrp1);
 			item.setItemMrp2(itemMrp2);
+			item.setItemMrp3(itemMrp3);
 			item.setItemRate1(itemRate1);
 			item.setItemRate2(itemRate2);
 			item.setItemRate3(itemRate3);
