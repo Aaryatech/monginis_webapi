@@ -1255,6 +1255,7 @@ public class RestApiController {
 						getFrItems.setItemIsUsed(item.getItemIsUsed());
 						getFrItems.setItemMrp1(item.getItemMrp1());
 						getFrItems.setItemMrp2(item.getItemMrp2());
+						getFrItems.setItemMrp3(item.getItemMrp3());
 						getFrItems.setItemName(item.getItemName());
 						getFrItems.setItemRate1(item.getItemRate1());
 						getFrItems.setItemRate2(item.getItemRate2());

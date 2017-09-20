@@ -30,6 +30,8 @@ public class GetFrItems {
 	
 	private double itemMrp2;
 	
+	private double itemMrp3;
+	
 	private String itemImage;
 	
 	private double itemTax1;
@@ -151,6 +153,15 @@ public class GetFrItems {
 
 	public void setItemMrp2(double itemMrp2) {
 		this.itemMrp2 = itemMrp2;
+	}
+	
+
+	public double getItemMrp3() {
+		return itemMrp3;
+	}
+
+	public void setItemMrp3(double itemMrp3) {
+		this.itemMrp3 = itemMrp3;
 	}
 
 	public String getItemImage() {
