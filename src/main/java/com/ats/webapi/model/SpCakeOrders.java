@@ -78,8 +78,25 @@ private String tax2Amt;
 private String orderPhoto;
 private String orderDate;
 private int menuId;
+private String orderPhoto2;
+private int isSlotUsed;
 
 
+public String getOrderPhoto2() {
+	return orderPhoto2;
+}
+
+public void setOrderPhoto2(String orderPhoto2) {
+	this.orderPhoto2 = orderPhoto2;
+}
+
+public int getIsSlotUsed() {
+	return isSlotUsed;
+}
+
+public void setIsSlotUsed(int isSlotUsed) {
+	this.isSlotUsed = isSlotUsed;
+}
 
 public int getMenuId() {
 	return menuId;
