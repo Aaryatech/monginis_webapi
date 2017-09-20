@@ -104,6 +104,8 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+
 
 
 @RestController
@@ -569,26 +571,36 @@ public class RestApiController {
 	@ResponseBody
 	public String saveMessage(@RequestParam("msgFrdt") String msgFrdt, @RequestParam("msgTodt") String msgTodt,
 			@RequestParam("msgImage") String msgImage, @RequestParam("msgHeader") String msgHeader,
-			@RequestParam("msgDetails") String msgDetails) {
+			@RequestParam("msgDetails") String msgDetails,@RequestParam("isActive") int isActive) {
 
 		String jsonResult = "";
 		try {
 			
-		
+			
+			System.out.println("rest from date : "+msgFrdt);
+			System.out.println("rest to date : "+msgTodt);
 
-			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			//DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-			Date fromDate;
-			Date toDate = formatter.parse(msgTodt);
-			fromDate = formatter.parse(msgFrdt);
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+			/*Date fromDate =sdf.parse(msgFrdt);
+			Date toDate =sdf.parse(msgTodt);
+			*/
+			
+			java.sql.Date sqlFromDate=Common.convertToSqlDate(msgFrdt);
+			java.sql.Date sqlToDate=Common.convertToSqlDate(msgTodt);
+			
+			System.out.println("sql from date ** : "+sqlFromDate);
+			System.out.println("sql  to date ** : "+sqlToDate);
+			
+			
 
+			
 			Message message = new Message();
-			message.setMsgFrdt(fromDate);
-			message.setMsgTodt(toDate);
+			message.setMsgFrdt(sqlFromDate);
+			message.setMsgTodt(sqlToDate);
 			message.setMsgImage(msgImage);
 			message.setMsgHeader(msgHeader);
 			message.setMsgDetails(msgDetails);
-			message.setIsActive(1);
+			message.setIsActive(isActive);
 			message.setDelStatus(0);
 
 			System.out.println("input message " + message.toString());
@@ -637,10 +649,10 @@ public class RestApiController {
 	@ResponseBody
 	public String saveSchedular(@RequestParam("schDate") String schDate, @RequestParam("schTodate") String schTodate,
 			@RequestParam("schOccasionname") String schOccasionname, @RequestParam("schMessage") String schMessage,
-			@RequestParam("schFrdttime") Double schFrdttime, @RequestParam("schTodttime") Double schTodttime) {
+			@RequestParam("schFrdttime") double schFrdttime,@RequestParam("schTodttime") double schTodttime) {
 			String jsonScheduler = "";
 			try {
-				DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+				DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 				Date fromDate, toDate;
 			toDate = formatter.parse(schTodate);
 			fromDate = formatter.parse(schDate);
@@ -1345,6 +1357,11 @@ public class RestApiController {
 	@RequestMapping(value = { "/getFranchisee" }, method = RequestMethod.GET)
 	public @ResponseBody Franchisee findFranchisee(@RequestParam("frId") int frId) {
 		Franchisee franchisee = franchiseeService.findFranchisee(frId);
+		
+		String openDate=franchisee.getFrOpeningDate().toString();
+	//	String strDate=Common.convertToDMY(openDate);
+	//	java.sql.Date sqlDate=Common.convertToSqlDate(strDate);
+		//franchisee.setFrOpeningDate(sqlDate);
 		return franchisee;
 	}
 
@@ -1458,20 +1475,28 @@ public class RestApiController {
 	@RequestMapping(value = { "/updateMessage" }, method = RequestMethod.POST)
 	public @ResponseBody String updateMessage(@RequestParam int id, @RequestParam String msgFrdt,
 			@RequestParam String msgTodt, @RequestParam String msgImage, @RequestParam String msgHeader,
-			@RequestParam String msgDetails) {
+			@RequestParam String msgDetails,@RequestParam("isActive") int isActive) {
 
 		Message message = messageService.findMessage(id);
 		Info info = new Info();
 		try {
-			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			Date fromDate, toDate;
-			toDate = formatter.parse(msgTodt);
-			fromDate = formatter.parse(msgFrdt);
-			message.setMsgFrdt(fromDate);
-			message.setMsgTodt(toDate);
+			/*DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			Date fromDate, toDate;*/
+
+			java.sql.Date sqlFromDate=Common.convertToSqlDate(msgFrdt);
+			java.sql.Date sqlToDate=Common.convertToSqlDate(msgTodt);
+			
+			System.out.println("sql from date ** : "+sqlFromDate);
+			System.out.println("sql  to date ** : "+sqlToDate);
+			/*toDate = formatter.parse(msgTodt);
+			fromDate = formatter.parse(msgFrdt);*/
+			
+			message.setMsgFrdt(sqlFromDate);
+			message.setMsgTodt(sqlToDate);
 			message.setMsgImage(msgImage);
 			message.setMsgHeader(msgHeader);
 			message.setMsgDetails(msgDetails);
+			message.setIsActive(isActive);
 
 			String jsonResult = messageService.save(message);
 			if (jsonResult == null) {
@@ -1494,23 +1519,34 @@ public class RestApiController {
 
 	// Update Schedular
 	@RequestMapping("/updateScheduler")
-	public @ResponseBody String updateScheduler(@RequestParam int id, @RequestParam String schdate,
-			@RequestParam String schtodate, @RequestParam String schccasionname, @RequestParam String schmessage,
-			@RequestParam double schfrdttime, @RequestParam double schtodttime) {
+	public @ResponseBody String updateScheduler(@RequestParam("id") int id,
+			@RequestParam("schDate") String schDate,
+			@RequestParam("schToDate") String schToDate,
+			@RequestParam("schOccasionName") String schOccasionName, 
+			@RequestParam("schMessage") String schMessage,
+			@RequestParam("schFrdtTime") double schFrdtTime,@RequestParam("schTodtTime") 
+			double schTodtTime,@RequestParam("isActive") int isActive) {
 
 		Scheduler scheduler = schedulerService.findScheduler(id);
 		Info info = new Info();
 		try {
-			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 			Date fromDate, toDate;
-			toDate = formatter.parse(schtodate);
-			fromDate = formatter.parse(schdate);
+			
+			toDate = formatter.parse(schToDate);
+			fromDate = formatter.parse(schDate);
+			
+			/*java.sql.Date sqlFromDate=Common.convertToSqlDate(schDate);
+			java.sql.Date sqlToDate=Common.convertToSqlDate(schToDate);*/
+			
 			scheduler.setSchDate(fromDate);
 			scheduler.setSchTodate(toDate);
-			scheduler.setSchOccasionname(schccasionname);
-			scheduler.setSchMessage(schmessage);
-			scheduler.setSchFrdttime(schfrdttime);
-			scheduler.setSchTodttime(schtodttime);
+			scheduler.setSchOccasionname(schOccasionName);
+			scheduler.setSchMessage(schMessage);
+			scheduler.setSchFrdttime(schFrdtTime);
+			scheduler.setSchTodttime(schTodtTime);
+			scheduler.setIsActive(isActive);
+			
 			String jsonResult = schedulerService.save(scheduler);
 			if (jsonResult == null) {
 				info.setError(true);
@@ -1521,7 +1557,7 @@ public class RestApiController {
 			}
 
 		} catch (Exception e) {
-			System.out.println("error in updating schedule " + e.getMessage());
+			System.out.println("error in updating schedule  Rest Api" + e.getMessage());
 			info.setError(true);
 			info.setMessage("" + e.getMessage());
 
@@ -1712,17 +1748,30 @@ public class RestApiController {
 			@RequestParam("frKg4") int frKg4, @RequestParam("frEmail") String frEmail,
 			@RequestParam("frPassword") String frPassword, @RequestParam("frMob") String frMob,
 			@RequestParam("frOwner") String frOwner, @RequestParam("frRateCat") int frRateCat,
-			@RequestParam("grnTwo") int grnTwo, @RequestParam("delStatus") int delStatus) throws ParseException {
-
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/mm/yyyy");
-		java.util.Date date = sdf.parse(frOpeningDate);
+			@RequestParam("grnTwo") int grnTwo, @RequestParam("delStatus") int delStatus) {
+		String jsonResult="";
+		try {
+			
+		System.out.println("inside update fr rest controller:1721 line");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+		Date date =sdf.parse(frOpeningDate);
+		System.out.println("parsed Date line no 1728 : "+date);
 		java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
-
+		
+/*
+		System.out.println("fr opening as of form "+frOpeningDate);
+		java.sql.Date sqlDate=Common.convertToSqlDate(frOpeningDate);
+		
+		
+		System.out.println("sql date for update fr ****** "+sqlDate);*/
+		
+		
 		Franchisee franchisee = franchiseeService.findFranchisee(frId);
+		
 		// franchisee.setFrId(frId);
 		franchisee.setFrName(frName);
 		franchisee.setFrCode(frCode);
-		franchisee.setFrOpeningDate(sqlOpeningDate);
+		franchisee.setFrOpeningDate(date);
 		franchisee.setFrRate(frRate);
 		franchisee.setFrImage(frImage);
 		franchisee.setFrRouteId(frRouteId);
@@ -1744,9 +1793,13 @@ public class RestApiController {
 		franchisee.setFrPasswordKey("");
 		franchisee.setDelStatus(delStatus);
 		System.out.println("" + franchisee.toString());
-		String jsonResult = franchiseeService.saveFranchisee(franchisee);
+		jsonResult = franchiseeService.saveFranchisee(franchisee);
+		}catch (Exception e) {
+			System.out.println("update scheduler rest exce "+ e.getMessage());
+		}
 
 		return jsonResult;
+		//return "abc";
 	}
 
 	// 27 aug
