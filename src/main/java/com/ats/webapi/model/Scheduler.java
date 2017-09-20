@@ -38,9 +38,11 @@ public class Scheduler implements Serializable {
 	@Column(name = "sch_message")
 	private String schMessage;
 
+
 	@Column(name = "sch_frdttime")
 	private double schFrdttime;
 
+	
 	@Column(name = "sch_todttime")
 	private double schTodttime;
 
