@@ -1187,7 +1187,7 @@ public class RestApiController {
 
 	}
     //Get Items
-	@RequestMapping(value = "/getItems", method = RequestMethod.POST)
+	@RequestMapping(value = "/getItemsByCatId", method = RequestMethod.POST)
 	public @ResponseBody List<Item> getItems(@RequestParam String itemGrp1) {
 
 		List<Item> items = itemService.findFrItems(itemGrp1);
