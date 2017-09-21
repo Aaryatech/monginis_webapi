@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Value;
 @Entity
 @Table(name = "m_sp_cake")
 public class SpecialCake implements Serializable {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="sp_id")
@@ -22,42 +23,164 @@ public class SpecialCake implements Serializable {
 	
 	@Column(name = "sp_code")
 	private String spCode;
+	
 	@Column(name="sp_name")
 	private String spName;
+	
 	@Column(name="sp_type")
 	private int spType;
+	
 	@Column(name="sp_min_wt")
 	private String spMinwt;
+	
 	@Column(name="sp_max_wt")
 	private String spMaxwt;
+	
 	@Column(name="sp_book_b4")
 	private String spBookb4;
+	
 	@Column(name="spr_id")
 	private int sprId;
+	
 	@Column(name="sp_image")
 	private String spImage;
+	
 	@Column(name="sp_tax1")
 	private double spTax1;
+	
 	@Column(name="sp_tax2")
 	private double spTax2;
+	
 	@Column(name="sp_tax3")
 	private double spTax3;
+	
 	@Column(name="spe_id_list")
 	private String speIdlist;
+	
 	@Column(name="erp_link_code")
 	private String erpLinkcode;
+	
 	@Column(name="is_used")
 	private int isUsed;
+	
 	@Column(name="sp_pho_upload")
 	private int spPhoupload;
+	
 	@Column(name="time_two_appli")
 	private int timeTwoappli;
+	
 	@Column(name="del_status")
 	private int delStatus;
+	
 	@Column(name="base_code")
 	private String baseCode;
 	
+	@Column(name="sp_desc")
+	private String spDesc;
 	
+	@Column(name="order_qty")
+	private int orderQty;
+	
+	@Column(name="order_discount")
+	private float orderDiscount;
+	
+	@Column(name="is_cust_choice_ck")
+	private int isCustChoiceCk;
+	
+	@Column(name="is_addon_rate_appli")
+	private int isAddonRateAppli;
+	
+	
+	@Column(name="mrp_rate1")
+	private int mrpRate1;
+	
+	@Column(name="mrp_rate2")
+	private int mrpRate2;
+	
+	@Column(name="mrp_rate3")
+	private int mrpRate3;
+	
+	@Column(name="sp_rate1")
+	private int spRate1;
+	
+	@Column(name="sp_rate2")
+	private int spRate2;
+	
+	
+	@Column(name="sp_rate3")
+	private int spRate3;
+	
+	
+	
+	public String getSpDesc() {
+		return spDesc;
+	}
+	public void setSpDesc(String spDesc) {
+		this.spDesc = spDesc;
+	}
+	public int getOrderQty() {
+		return orderQty;
+	}
+	public void setOrderQty(int orderQty) {
+		this.orderQty = orderQty;
+	}
+	
+
+	
+	public float getOrderDiscount() {
+		return orderDiscount;
+	}
+	public void setOrderDiscount(float orderDiscount) {
+		this.orderDiscount = orderDiscount;
+	}
+	public int getIsCustChoiceCk() {
+		return isCustChoiceCk;
+	}
+	public void setIsCustChoiceCk(int isCustChoiceCk) {
+		this.isCustChoiceCk = isCustChoiceCk;
+	}
+	public int getIsAddonRateAppli() {
+		return isAddonRateAppli;
+	}
+	public void setIsAddonRateAppli(int isAddonRateAppli) {
+		this.isAddonRateAppli = isAddonRateAppli;
+	}
+	public int getMrpRate1() {
+		return mrpRate1;
+	}
+	public void setMrpRate1(int mrpRate1) {
+		this.mrpRate1 = mrpRate1;
+	}
+	public int getMrpRate2() {
+		return mrpRate2;
+	}
+	public void setMrpRate2(int mrpRate2) {
+		this.mrpRate2 = mrpRate2;
+	}
+	public int getMrpRate3() {
+		return mrpRate3;
+	}
+	public void setMrpRate3(int mrpRate3) {
+		this.mrpRate3 = mrpRate3;
+	}
+	public int getSpRate1() {
+		return spRate1;
+	}
+	public void setSpRate1(int spRate1) {
+		this.spRate1 = spRate1;
+	}
+	public int getSpRate2() {
+		return spRate2;
+	}
+	public void setSpRate2(int spRate2) {
+		this.spRate2 = spRate2;
+	}
+	public int getSpRate3() {
+		return spRate3;
+	}
+	public void setSpRate3(int spRate3) {
+		this.spRate3 = spRate3;
+	}
 	
 	public int getSpId() {
 		return spId;
@@ -107,12 +230,7 @@ public class SpecialCake implements Serializable {
 	public void setSprId(int sprId) {
 		this.sprId = sprId;
 	}
-	/*public String getSprId() {
-		return sprId;
-	}
-	public void setSprId(String sprId) {
-		this.sprId = sprId;
-	}*/
+	
 	public String getSpImage() {
 		return spImage;
 	}
@@ -180,14 +298,7 @@ public class SpecialCake implements Serializable {
 	public void setBaseCode(String baseCode) {
 		this.baseCode = baseCode;
 	}
-	@Override
-	public String toString() {
-		return "SpecialCake [spId=" + spId + ", spCode=" + spCode + ", spName=" + spName + ", spType=" + spType
-				+ ", spMinwt=" + spMinwt + ", spMaxwt=" + spMaxwt + ", spBookb4=" + spBookb4 + ", sprId=" + sprId
-				+ ", spImage=" + spImage + ", spTax1=" + spTax1 + ", spTax2=" + spTax2 + ", spTax3=" + spTax3
-				+ ", speIdlist=" + speIdlist + ", erpLinkcode=" + erpLinkcode + ", isUsed=" + isUsed + ", spPhoupload="
-				+ spPhoupload + ", timeTwoappli=" + timeTwoappli + ", delStatus=" + delStatus + ", baseCode=" + baseCode
-				+ "]";
-	}
+	
+
 	
 }

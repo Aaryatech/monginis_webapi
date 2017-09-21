@@ -28,13 +28,15 @@ public class Message implements Serializable {
 	private int msgId;
 	
 	//@JsonFormat(pattern = "dd-MM-yyyy")
+	//
 	//@Temporal(TemporalType.DATE)
-	//@JsonFormat(shape=JsonFormat.Shape.STRING,pattern = "dd-MM-yyyy", timezone="EST")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	@Column(name="msg_frdt")
 	private Date msgFrdt;
 	
 	//@JsonFormat(pattern = "dd-MM-yyyy")
 	//@Temporal(TemporalType.DATE)
+	
 	@Column(name="msg_todt")
 	private Date msgTodt;
 	
@@ -48,7 +50,6 @@ public class Message implements Serializable {
 	private int isActive;
 	@Column(name="del_status")
 	private int delStatus;
-	
 	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getMsgFrdt() {
 		return msgFrdt;
@@ -57,8 +58,8 @@ public class Message implements Serializable {
 	public void setMsgFrdt(Date msgFrdt) {
 		this.msgFrdt = msgFrdt;
 	}
-
-	@JsonFormat( locale = "hi",timezone = "Asia/Kolkata",pattern = "dd-MM-yyyy")
+	
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getMsgTodt() {
 		return msgTodt;
 	}

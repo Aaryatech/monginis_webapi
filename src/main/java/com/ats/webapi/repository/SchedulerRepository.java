@@ -12,7 +12,7 @@ import com.ats.webapi.model.User;
 public interface SchedulerRepository extends JpaRepository<Scheduler, Integer>  {
 	Scheduler save(Scheduler schedular);
 	List<Scheduler> findByDelStatus(int schId);
-@Query(value="SELECT * from t_scheduler WHERE  :cDate BETWEEN sch_date AND sch_to_date AND is_active=1 AND del_status=0 "
+	@Query(value="SELECT * from t_scheduler WHERE  :cDate BETWEEN sch_date AND sch_to_date AND is_active=1 AND del_status=0 "
 			
 			
 			,nativeQuery=true)

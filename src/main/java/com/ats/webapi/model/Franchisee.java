@@ -4,7 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -91,6 +91,14 @@ public class Franchisee implements Serializable{
 	
 	@Column(name="fr_opening")
 	private int frOpening;
+	
+	@Column(name="fr_password_key")
+	private String frPasswordKey;
+	
+	@Column(name="is_same_day_applicable")
+	private int isSameDayApplicable;
+	
+	
 
 	public String getFrRmn1() {
 		return frRmn1;
@@ -140,12 +148,6 @@ public class Franchisee implements Serializable{
 		this.isSameDayApplicable = isSameDayApplicable;
 	}
 
-	@Column(name="fr_password_key")
-	private String frPasswordKey;
-	
-	@Column(name="is_same_day_applicable")
-	private int isSameDayApplicable;
-	
 	
 	public int getFrId() {
 		return frId;
@@ -310,6 +312,5 @@ public class Franchisee implements Serializable{
 				+ ", frPasswordKey=" + frPasswordKey + ", isSameDayApplicable=" + isSameDayApplicable + "]";
 	}
 
-	
 	
 }

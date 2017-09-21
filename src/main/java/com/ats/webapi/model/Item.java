@@ -18,7 +18,11 @@ public class Item implements Serializable {
 	
 	
 	private static final long serialVersionUID = 1L;
-	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="id")
+	private int id;
+
 	@Column(name="item_id")
 	private String itemId;
 	
@@ -45,6 +49,9 @@ public class Item implements Serializable {
 	
 	@Column(name="item_mrp2")
 	private double itemMrp2;
+	
+	@Column(name="item_mrp3")
+	private double itemMrp3;
 	
 	@Column(name="item_image")
 	private String itemImage;
@@ -96,13 +103,18 @@ public class Item implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id")
-	private int id;
+	
 
 	
+	
+	public double getItemMrp3() {
+		return itemMrp3;
+	}
+
+	public void setItemMrp3(double itemMrp3) {
+		this.itemMrp3 = itemMrp3;
+	}
+
 	public String getItemId() {
 		return itemId;
 	}
