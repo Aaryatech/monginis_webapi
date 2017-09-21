@@ -34,6 +34,7 @@ import com.ats.webapi.model.FlavourList;
 import com.ats.webapi.model.FrMenus;
 import com.ats.webapi.model.FrMenusList;
 import com.ats.webapi.model.Franchisee;
+import com.ats.webapi.model.FranchiseeAndMenuList;
 import com.ats.webapi.model.FranchiseeList;
 import com.ats.webapi.model.GetFrItems;
 import com.ats.webapi.model.GetOrder;
@@ -418,11 +419,14 @@ public class RestApiController {
 			@RequestParam("day") int day, @RequestParam("date") String date, @RequestParam("itemShow") String itemShow)
 			throws ParseException {
 
-		DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Date fromDate;
 		Date fDate = formatter.parse(date);
 
 		java.sql.Date sqlDate = new java.sql.Date(fDate.getTime());
+		
+		
+		
 		ConfigureFranchisee configureFr = new ConfigureFranchisee();
 		configureFr.setFrId(frId);
 		configureFr.setMenuId(menuId);
@@ -440,6 +444,15 @@ public class RestApiController {
 
 		return jsonResult;
 	}
+	  //Get Configured MenuId 
+		@RequestMapping(value = "/getConfiguredMenuId")
+		public @ResponseBody List<Integer> getConfiguredMenuId(@RequestParam int frId) {
+
+			List<Integer> configuredMenuIdList = connfigureService.findConfiguredMenuId(frId);
+			return configuredMenuIdList;
+
+		}
+	
 
 	// Save Route
 	@RequestMapping(value = { "/insertRoute" }, method = RequestMethod.POST)
@@ -1162,12 +1175,13 @@ public class RestApiController {
 	}
     //Get Items
 	@RequestMapping(value = "/getItems", method = RequestMethod.POST)
-	public @ResponseBody List<Item> getItems(@RequestParam String itemGrp1, @RequestParam String itemGrp2) {
+	public @ResponseBody List<Item> getItems(@RequestParam String itemGrp1) {
 
-		List<Item> items = itemService.findFrItems(itemGrp1, itemGrp2);
+		List<Item> items = itemService.findFrItems(itemGrp1);
 		return items;
 
 	}
+	
     //
 	@RequestMapping(value = "/getFrMenus11", method = RequestMethod.POST)
 	public @ResponseBody FrMenusList getFrMenus(@RequestParam int frId) {
@@ -1351,7 +1365,21 @@ public class RestApiController {
 		allFranchiseeAndMenu.setSubCategories(subCategories);
 		return allFranchiseeAndMenu;
 	}
-
+	@RequestMapping(value = { "/getFranchiseeAndMenu" }, method = RequestMethod.GET)
+	public @ResponseBody FranchiseeAndMenuList findFranchiseeAndMenu() {
+	
+		FranchiseeAndMenuList franchiseeAndMenu=new FranchiseeAndMenuList();
+		List<Franchisee> allFranchisee = franchiseeService.findAllFranchisee();
+		
+		
+		List<AllMenus> allMenu = menuService.findAllMenus();
+	
+		franchiseeAndMenu.setAllMenu(allMenu);
+		franchiseeAndMenu.setAllFranchisee(allFranchisee);
+		return franchiseeAndMenu;
+	}	
+		
+		
 	// Get Item
 	@RequestMapping(value = { "/getItem" }, method = RequestMethod.GET)
 	public @ResponseBody Item findItem(@RequestParam("id") int id) {
