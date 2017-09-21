@@ -67,4 +67,10 @@ ConfigureFranchisee configureFranchisee=configureFrRepository.findOne(setting_id
 		return configureFranchisee;
 	}
 
+	@Override
+	public List<Integer> findConfiguredMenuId(int frId) {
+		List<Integer>  configuredMenuIdList=configureFrRepository.findConfiguredMenuId(frId);
+		return configuredMenuIdList;
+	}
+
 }

@@ -13,7 +13,7 @@ public interface ItemService {
 	public Item findItems(int id);
 	public ItemsList findAllItems();
 	public Item findItem(int id);
-	public List<Item> findFrItems(String itemGrp1, String itemGrp2);
+	public List<Item> findFrItems(String itemGrp1);
 	public List<Item> getAllItems();
 
 }

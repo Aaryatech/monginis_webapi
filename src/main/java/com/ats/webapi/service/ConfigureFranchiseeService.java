@@ -13,4 +13,5 @@ public interface ConfigureFranchiseeService {
 	public ConfigureFranchisee findFranchiseeById(int setting_id);
 	public ConfigureFranchisee updateFrConfig(int setting_id);
     public List<FrMenus> findFrMenus(int frId);
+	public List<Integer> findConfiguredMenuId(int frId);
 }

@@ -18,6 +18,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer>,JpaSpecific
 	public List<Item> findByDelStatus(int i);
 
 
-	public List<Item> findByItemGrp1AndItemGrp2(String itemGrp1, String itemGrp2);
+	public List<Item> findByItemGrp1(String itemGrp1);
 
 }
