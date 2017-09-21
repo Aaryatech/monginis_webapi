@@ -36,6 +36,8 @@ public class ItemWithSubCat implements Serializable {
 	private double itemMrp1;
 	@Column(name="item_mrp2")
 	private double itemMrp2;
+	@Column(name="item_mrp3")
+	private double itemMrp3;
 	@Column(name="item_image")
 	private String itemImage;
 	@Column(name="item_tax1")
@@ -64,6 +66,14 @@ public class ItemWithSubCat implements Serializable {
 	
 	
 	
+
+	public double getItemMrp3() {
+		return itemMrp3;
+	}
+
+	public void setItemMrp3(double itemMrp3) {
+		this.itemMrp3 = itemMrp3;
+	}
 
 	public double getItemRate3() {
 		return itemRate3;
