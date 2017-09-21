@@ -181,6 +181,16 @@ public class RestApiController {
 	
 
 	
+	//static data for aws testing
+	@RequestMapping(value = { "/test" }, method = RequestMethod.GET)
+	@ResponseBody
+	public String showDummyDate() {
+
+		String dummyData="{\"schedulerList\":[{\"schId\":11,\"schDate\":\"09-09-2017\",\"schTodate\":\"21-09-2017\",\"schOccasionname\":\" Sept\",\"schMessage\":\"Sept\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0},{\"schId\":17,\"schDate\":\"19-09-2017\",\"schTodate\":\"21-09-2017\",\"schOccasionname\":\"19 to 21 sept\",\"schMessage\":\"hjdsfhjf\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0},{\"schId\":20,\"schDate\":\"13-09-2017\",\"schTodate\":\"20-09-2017\",\"schOccasionname\":\"13 to 20 sept\",\"schMessage\":\"rrrrrrr\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0},{\"schId\":21,\"schDate\":\"19-09-2017\",\"schTodate\":\"20-09-2017\",\"schOccasionname\":\"19 to 20 sept\",\"schMessage\":\"sep\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0}],\"info\":{\"message\":\"latest news  displayed successfully\",\"error\":false}}";
+		
+		return dummyData;
+	}
+	
 	
 	// Login FrontEnd Franchisee
 	@RequestMapping(value = { "/loginFr" }, method = RequestMethod.POST)
@@ -193,6 +203,9 @@ public class RestApiController {
 		return jsonFr;
  
 	}
+	
+	
+	
 
 	// Place Item Order
 	@RequestMapping(value = { "/placeOrder" }, method = RequestMethod.POST)
