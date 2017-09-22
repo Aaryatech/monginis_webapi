@@ -11,9 +11,11 @@ import com.ats.webapi.model.OrderCounts;
 
 public interface OrderCountsRepository extends JpaRepository<OrderCounts, Integer>{
 	
-	@Query (value="Select m_fr_menu_show.menu_id,m_fr_menu_show.menu_title,SUM(t_order.order_qty) "+
-	"as Total from m_fr_menu_show,t_order "+
-	"where t_order.production_date=:cDate and m_fr_menu_show.menu_id = t_order.menu_id",nativeQuery=true)
+	@Query (value=" SELECT SUM(t_order.order_qty) as total,m_fr_menu_show.menu_id,"
+			+ " m_fr_menu_show.menu_title FROM t_order,m_fr_menu_show where "
+			+ " production_date =:cDate and "
+			+ " m_fr_menu_show.menu_id=t_order.menu_id GROUP BY menu_id " + 
+			" ",nativeQuery=true)
 	List<OrderCounts> getOrderTotal(@Param("cDate") Date cDate);
 	 
 

@@ -20,9 +20,12 @@ public class OrderCounts implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="menu_id")
 	int menuId;
+	
 	@Column(name="menu_title")
 	String menuTitle;
+	
 	int Total;
+	
 	public int getMenuId() {
 		return menuId;
 	}
