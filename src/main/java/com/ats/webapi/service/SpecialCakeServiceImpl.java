@@ -79,8 +79,12 @@ public class SpecialCakeServiceImpl implements SpecialCakeService{
 
 	@Override
 	public OrderSpecialCake searchSpecialCake(String spCode) {
-		OrderSpecialCake specialCake=orderSpCakeRepository.findBySpCode(spCode);
+		
+		
+		
+		OrderSpecialCake specialCake=orderSpCakeRepository.findBySpCode(spCode);		
 		return specialCake;
+		
 	}
 	
 

@@ -432,12 +432,17 @@ public class RestApiController {
 			@RequestParam("day") int day, @RequestParam("date") String date, @RequestParam("itemShow") String itemShow)
 			throws ParseException {
 
-		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+	/*	DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Date fromDate;
 		Date fDate = formatter.parse(date);
 
 		java.sql.Date sqlDate = new java.sql.Date(fDate.getTime());
+		*/
 		
+		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		Date fromDate, toDate;
+	    toDate = formatter.parse(date);
+	   // java.sql.Date sqlDate = new java.sql.Date(toDate.getTime());
 		
 		
 		ConfigureFranchisee configureFr = new ConfigureFranchisee();
@@ -448,7 +453,7 @@ public class RestApiController {
 		configureFr.setFromTime(fromTime);
 		configureFr.setToTime(toTime);
 		configureFr.setDay(day);
-		configureFr.setDate(sqlDate);
+		configureFr.setDate(toDate);
 		configureFr.setItemShow(itemShow);
 		configureFr.setCatId(catId);
 		configureFr.setSubCatId(11);
@@ -2127,7 +2132,7 @@ public class RestApiController {
 		ConfigureFranchisee configureFranchisee = connfigureService.findFranchiseeById(settingId);
 		Info info = new Info();
 		try {
-			SimpleDateFormat inSDF = new SimpleDateFormat("MM/dd/yyyy");
+			SimpleDateFormat inSDF = new SimpleDateFormat("dd-MM-yyyy");
 
 			SimpleDateFormat outSDF = new SimpleDateFormat("yyyy-mm-dd");
 

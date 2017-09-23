@@ -1,6 +1,6 @@
 package com.ats.webapi.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,7 +11,10 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.SecondaryTable;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -45,7 +48,7 @@ public class ConfigureFranchisee {
 
 	@Column(name="day")
 	private int day;
-
+	
 	@Column(name="date")
 	private Date date;
 	
@@ -187,7 +190,7 @@ public class ConfigureFranchisee {
 
 
 
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getDate() {
 		return date;
 	}
