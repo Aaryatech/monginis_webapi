@@ -5,8 +5,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.OrderSpecialCake;
+import com.ats.webapi.model.SearchSpCakeResponse;
 import com.ats.webapi.model.SpecialCake;
 import com.ats.webapi.model.SpecialCakeList;
 import com.ats.webapi.repository.OrderSpCakeRepository;
@@ -23,27 +25,22 @@ public class SpecialCakeServiceImpl implements SpecialCakeService{
 	SpecialCakeRepository specialcakeRepository;
 	@Autowired
 	OrderSpCakeRepository orderSpCakeRepository;
+	
 	@Override
 	public String save(SpecialCake specialcake) {
+		
 		SpecialCakeList specialCakeList=new SpecialCakeList();
 		String jsonSpecialCake="";
 		
 		
 		try {
 			System.out.println("inside special cake insert");
-			if(specialcake!=null /*&& !specialcake.getErpLinkcode().trim().equals("")&&
-					specialcake.getSpBookb4()!=null && !specialcake.getSpBookb4().trim().equals("")&&
-					specialcake.getSpCode()!=null && !specialcake.getSpCode().trim().equals("")&&
-					specialcake.getSpeIdlist()!=null && !specialcake.getSpeIdlist().trim().equals("")&&
-					specialcake.getSpImage()!=null && !specialcake.getSpImage().trim().equals("")&&
-					specialcake.getSprId()!=null && !specialcake.getSprId().trim().equals("")&&
-					specialcake.getSpBookb4()!=null && !specialcake.getSpBookb4().trim().equals("")&&
-					specialcake.getSpMaxwt()!=null && !specialcake.getSpMaxwt().trim().equals("")&&
-					specialcake.getSpMinwt()!=null && !specialcake.getSpMinwt().trim().equals("")&&
-					specialcake.getSpName()!=null && !specialcake.getSpName().trim().equals("")*/) {
-				System.out.println("before save");
+			if(specialcake!=null) {
+				
+				    System.out.println("before save");
 					specialcake=specialcakeRepository.save(specialcake);
 					System.out.println("after save");
+					
 					Info info=new Info();
 					info.setError(false);
 					info.setMessage("Special cake inserted successfully ");
@@ -78,13 +75,28 @@ public class SpecialCakeServiceImpl implements SpecialCakeService{
 	}
 
 	@Override
-	public OrderSpecialCake searchSpecialCake(String spCode) {
+	public SearchSpCakeResponse searchSpecialCake(String spCode) {
 		
+		OrderSpecialCake specialCake=null;
+		SearchSpCakeResponse searchSpCakeResponse=new SearchSpCakeResponse();
+		ErrorMessage errorMessage=new ErrorMessage();
 		
+	    specialCake=orderSpCakeRepository.findBySpCode(spCode);
+		if(specialCake==null)
+		{
+			errorMessage.setError(true);
+			errorMessage.setMessage("Special Cake Not Found");
+			searchSpCakeResponse.setErrorMessage(errorMessage);
+		}
+		else
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("Special Cake Found Successfully");
+			searchSpCakeResponse.setErrorMessage(errorMessage);
+			searchSpCakeResponse.setSpecialCake(specialCake);
+		}
 		
-		OrderSpecialCake specialCake=orderSpCakeRepository.findBySpCode(spCode);		
-		return specialCake;
-		
+		return searchSpCakeResponse;
 	}
 	
 

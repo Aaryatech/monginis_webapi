@@ -58,6 +58,7 @@ import com.ats.webapi.model.Route;
 import com.ats.webapi.model.RouteList;
 import com.ats.webapi.model.Scheduler;
 import com.ats.webapi.model.SchedulerList;
+import com.ats.webapi.model.SearchSpCakeResponse;
 import com.ats.webapi.model.SpCakeOrderRes;
 import com.ats.webapi.model.SpCakeOrders;
 import com.ats.webapi.model.SpCakeOrdersBean;
@@ -254,11 +255,11 @@ public class RestApiController {
 
 	// Search Special Cake By SpecialCake Code
 	@RequestMapping("/searchSpecialCake")
-	public @ResponseBody OrderSpecialCake searchSpecialCake(@RequestParam String spCode) {
+	public @ResponseBody SearchSpCakeResponse searchSpecialCake(@RequestParam String spCode) {
 
-		OrderSpecialCake specialCake = specialcakeService.searchSpecialCake(spCode);
+		SearchSpCakeResponse searchSpCakeResponse= specialcakeService.searchSpecialCake(spCode);
 		
-		return specialCake;
+		return searchSpCakeResponse;
 
 	}
 
