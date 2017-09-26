@@ -35,7 +35,7 @@ public class ItemOrderHis implements Serializable  {
 	private int refId;
 	
 	
-	private String itemId;
+	private int itemId;
 	
 
 	private int orderQty;
@@ -102,7 +102,7 @@ public class ItemOrderHis implements Serializable  {
 		return refId;
 	}
 
-	public String getItemId() {
+	public int getItemId() {
 		return itemId;
 	}
 
@@ -186,7 +186,7 @@ public class ItemOrderHis implements Serializable  {
 		this.refId = refId;
 	}
 
-	public void setItemId(String itemId) {
+	public void setItemId(int itemId) {
 		this.itemId = itemId;
 	}
 
