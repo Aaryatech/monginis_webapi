@@ -325,7 +325,15 @@ public class RestApiController {
 		return searchSpCakeResponse;
 
 	}
+	// Search Special Cake Configured spCode of  Franchisee
+		@RequestMapping("/searchSpCodes")
+		public @ResponseBody List<String> searchSpCodes(@RequestParam List<Integer>items,@RequestParam int frId,@RequestParam int menuId) {
 
+			List<String> spCakeCodesResponse= specialcakeService.searchSpecialCakeSpCodes(items,frId,menuId);
+			
+			return spCakeCodesResponse;
+
+		}
 	// Search Special Cake Order History
 	@RequestMapping("/SpCakeOrderHistory")
 	public @ResponseBody SpCkOrderHisList searchSpCakeOrderHistory(@RequestParam int menuId,

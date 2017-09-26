@@ -11,6 +11,7 @@ import com.ats.webapi.model.OrderSpecialCake;
 import com.ats.webapi.model.SearchSpCakeResponse;
 import com.ats.webapi.model.SpecialCake;
 import com.ats.webapi.model.SpecialCakeList;
+import com.ats.webapi.repository.ConfiSpCodeRepository;
 import com.ats.webapi.repository.OrderSpCakeRepository;
 import com.ats.webapi.repository.SpecialCakeRepository;
 import com.ats.webapi.util.JsonUtil;
@@ -25,7 +26,8 @@ public class SpecialCakeServiceImpl implements SpecialCakeService{
 	SpecialCakeRepository specialcakeRepository;
 	@Autowired
 	OrderSpCakeRepository orderSpCakeRepository;
-	
+	@Autowired
+	ConfiSpCodeRepository confiSpCodeRepository;
 	@Override
 	public String save(SpecialCake specialcake) {
 		
@@ -97,6 +99,13 @@ public class SpecialCakeServiceImpl implements SpecialCakeService{
 		}
 		
 		return searchSpCakeResponse;
+	}
+
+	@Override
+	public List<String> searchSpecialCakeSpCodes(List<Integer>items,int frId,int menuId) {
+	    List<String> spCodeList=confiSpCodeRepository.findSpCode(items,frId,menuId);
+
+		return spCodeList;
 	}
 	
 

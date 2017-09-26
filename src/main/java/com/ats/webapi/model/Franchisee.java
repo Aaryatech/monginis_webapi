@@ -37,7 +37,7 @@ public class Franchisee implements Serializable{
 	private Date frOpeningDate;
 
 	@Column(name="fr_rate")
-	private int frRate;
+	private float frRate;
 		
 	@Column(name="fr_image")
 	String frImage;
@@ -182,11 +182,12 @@ public class Franchisee implements Serializable{
 		this.frOpeningDate = frOpeningDate;
 	}
 
-	public int getFrRate() {
+	
+	public float getFrRate() {
 		return frRate;
 	}
 
-	public void setFrRate(int frRate) {
+	public void setFrRate(float frRate) {
 		this.frRate = frRate;
 	}
 
