@@ -35,8 +35,8 @@ public class GetOrder {
 	private int orderQty;
 	
 
-	@Column(name="item_id")
-	private String itemId;
+	@Column(name="id")
+	private int Id;
 	
 	
 	@Column(name="delivery_date")
@@ -110,13 +110,14 @@ public class GetOrder {
 
 	
 
-	public String getItemId() {
-		return itemId;
+
+	public int getId() {
+		return Id;
 	}
 
 
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
+	public void setId(int id) {
+		Id = id;
 	}
 
 
@@ -162,11 +163,12 @@ public class GetOrder {
 
 	@Override
 	public String toString() {
-		return "GetOrder [frName=" + frName + ", catName=" + catName + ", itemName=" + itemName + ", orderQty="
-				+ orderQty + ", itemId=" + itemId + ", deliveryDate=" + deliveryDate + ", isEdit=" + isEdit
+		return "GetOrder [orderId=" + orderId + ", frName=" + frName + ", catName=" + catName + ", itemName=" + itemName
+				+ ", orderQty=" + orderQty + ", Id=" + Id + ", deliveryDate=" + deliveryDate + ", isEdit=" + isEdit
 				+ ", isPositive=" + isPositive + ", editQty=" + editQty + "]";
 	}
-	
+
+
 
 	
 }
