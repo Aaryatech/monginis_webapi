@@ -31,6 +31,8 @@ import com.ats.webapi.model.Event;
 import com.ats.webapi.model.EventList;
 import com.ats.webapi.model.Flavour;
 import com.ats.webapi.model.FlavourList;
+import com.ats.webapi.model.FrItemStockConfigure;
+import com.ats.webapi.model.FrItemStockConfigureList;
 import com.ats.webapi.model.FrMenus;
 import com.ats.webapi.model.FrMenusList;
 import com.ats.webapi.model.Franchisee;
@@ -76,6 +78,7 @@ import com.ats.webapi.service.ConfigureFrBeanService;
 import com.ats.webapi.service.ConfigureFranchiseeService;
 import com.ats.webapi.service.EventService;
 import com.ats.webapi.service.FlavourService;
+import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.GetFrItemsService;
 import com.ats.webapi.service.GetOrderService;
@@ -188,9 +191,36 @@ public class RestApiController {
 	@Autowired
 	private OrderCountsService orderCountService;
 	
-
+	
+	@Autowired
+	private FrItemStockConfigureService frItemConfService;
+	
 	
 
+	@RequestMapping(value = "/getfrItemConfSetting",method=RequestMethod.GET)
+	public @ResponseBody FrItemStockConfigureList getfrItemConfSetting() {
+		
+		FrItemStockConfigureList frItemStockConfigureList=new FrItemStockConfigureList();
+
+		List<FrItemStockConfigure> frItemStockConf = frItemConfService.getFrItemConfigure();
+		frItemStockConfigureList.setFrItemStockConfigure(frItemStockConf);
+		
+		Info info=new Info();
+		info.setError(false);
+		info.setMessage("Item Setting Configure displayed successfully");
+		frItemStockConfigureList.setInfo(info);
+		
+		
+		return frItemStockConfigureList;
+		
+		
+		
+
+	}
+	
+
+	
+	
 	
 
 	
