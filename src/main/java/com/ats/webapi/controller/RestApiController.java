@@ -45,6 +45,8 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemOrderList;
 import com.ats.webapi.model.ItemWithSubCat;
+import com.ats.webapi.model.ItemsWithCategory;
+import com.ats.webapi.model.ItemsWithCategoryList;
 import com.ats.webapi.model.LoginResponse;
 import com.ats.webapi.model.MCategory;
 import com.ats.webapi.model.MainModuleWithSubModule;
@@ -84,6 +86,7 @@ import com.ats.webapi.service.GetFrItemsService;
 import com.ats.webapi.service.GetOrderService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.ItemsList;
+import com.ats.webapi.service.ItemsWithCategoryService;
 import com.ats.webapi.service.MenuService;
 import com.ats.webapi.service.MessageService;
 import com.ats.webapi.service.ModuleService;
@@ -194,6 +197,36 @@ public class RestApiController {
 	
 	@Autowired
 	private FrItemStockConfigureService frItemConfService;
+	
+	@Autowired
+	private ItemsWithCategoryService itemsWithCategoryService;
+	
+	
+
+	@RequestMapping(value = "/getItemsWithCatName",method=RequestMethod.GET)
+	public @ResponseBody ItemsWithCategoryList getItemsWithCatName() {
+		
+		ItemsWithCategoryList itemsWithCategoryList=new ItemsWithCategoryList();
+
+		List<ItemsWithCategory> itemsWithCategories = itemsWithCategoryService.getItemsAndCateName();
+		
+		itemsWithCategoryList.setItemsWithCategories(itemsWithCategories);
+		
+		Info info=new Info();
+		
+		info.setError(false);
+		info.setMessage("Items and their cat name  displayed successfully. Total Items: "+itemsWithCategories.size());
+		
+		itemsWithCategoryList.setInfo(info);
+		
+		return itemsWithCategoryList;
+		
+	}
+	
+
+	
+	
+	
 	
 	
 
