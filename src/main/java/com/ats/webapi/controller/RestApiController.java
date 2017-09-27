@@ -34,6 +34,7 @@ import com.ats.webapi.model.FlavourList;
 import com.ats.webapi.model.FrItemStockConfigure;
 import com.ats.webapi.model.FrItemStockConfigureList;
 import com.ats.webapi.model.FrItemStockConfigurePost;
+import com.ats.webapi.model.FrItemStockConfigurePostList;
 import com.ats.webapi.model.FrMenus;
 import com.ats.webapi.model.FrMenusList;
 import com.ats.webapi.model.Franchisee;
@@ -46,8 +47,7 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemOrderList;
 import com.ats.webapi.model.ItemWithSubCat;
-import com.ats.webapi.model.ItemsWithCategory;
-import com.ats.webapi.model.ItemsWithCategoryList;
+
 import com.ats.webapi.model.LoginResponse;
 import com.ats.webapi.model.MCategory;
 import com.ats.webapi.model.MainModuleWithSubModule;
@@ -88,7 +88,6 @@ import com.ats.webapi.service.GetFrItemsService;
 import com.ats.webapi.service.GetOrderService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.ItemsList;
-import com.ats.webapi.service.ItemsWithCategoryService;
 import com.ats.webapi.service.MenuService;
 import com.ats.webapi.service.MessageService;
 import com.ats.webapi.service.ModuleService;
@@ -114,7 +113,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 
 
 
@@ -200,11 +198,35 @@ public class RestApiController {
 	@Autowired
 	private FrItemStockConfigureService frItemConfService;
 	
-	@Autowired
-	private ItemsWithCategoryService itemsWithCategoryService;
 	
 	@Autowired
 	FrItemStockConfigurePostService frItemStockConfigurePostService;
+	
+	
+	
+	
+	
+	
+	@RequestMapping(value = "/getAllFrItemConfPost",method=RequestMethod.GET)
+	public @ResponseBody FrItemStockConfigurePostList getAllFrItemConfPost() {
+		
+		FrItemStockConfigurePostList configurePostList =new FrItemStockConfigurePostList();
+
+		List<FrItemStockConfigurePost> frItemStockConfigurePosts = frItemStockConfigurePostService.getAllFrItemConfPost();
+		
+		configurePostList.setFrItemStockConfigurePosts(frItemStockConfigurePosts);
+		
+		Info info=new Info();
+		
+		info.setError(false);
+		info.setMessage("All Fr Item Stock Config displayed. Total Items: "+frItemStockConfigurePosts.size());
+		
+		configurePostList.setInfo(info);
+		
+		return configurePostList;
+		
+	}
+	
 	
 	
 	
@@ -241,44 +263,20 @@ public class RestApiController {
 	
 	
 
-	@RequestMapping(value = "/getItemsWithCatName",method=RequestMethod.GET)
-	public @ResponseBody ItemsWithCategoryList getItemsWithCatName() {
-		
-		ItemsWithCategoryList itemsWithCategoryList=new ItemsWithCategoryList();
-
-		List<ItemsWithCategory> itemsWithCategories = itemsWithCategoryService.getItemsAndCateName();
-		
-		itemsWithCategoryList.setItemsWithCategories(itemsWithCategories);
-		
-		Info info=new Info();
-		
-		info.setError(false);
-		info.setMessage("Items and their cat name  displayed successfully. Total Items: "+itemsWithCategories.size());
-		
-		itemsWithCategoryList.setInfo(info);
-		
-		return itemsWithCategoryList;
-		
-	}
-	
-
-	
-	
-	
-	
-	
-
 	@RequestMapping(value = "/getfrItemConfSetting",method=RequestMethod.GET)
 	public @ResponseBody FrItemStockConfigureList getfrItemConfSetting() {
 		
 		FrItemStockConfigureList frItemStockConfigureList=new FrItemStockConfigureList();
 
 		List<FrItemStockConfigure> frItemStockConf = frItemConfService.getFrItemConfigure();
+		
 		frItemStockConfigureList.setFrItemStockConfigure(frItemStockConf);
 		
 		Info info=new Info();
+		
 		info.setError(false);
 		info.setMessage("Item Setting Configure displayed successfully");
+		
 		frItemStockConfigureList.setInfo(info);
 		
 		

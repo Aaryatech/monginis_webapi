@@ -26,14 +26,19 @@ public class MCategory implements Serializable{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="cat_id")
 	private int catId;
+	
 	@Column(name="cat_name")
 	private String catName;
+	
 	@Column(name="is_same_day")
     private int isSameDay;
+	
 	@Column(name="del_status")
     private int delStatus;
+	
 	@OneToMany(mappedBy="catId",cascade=CascadeType.ALL)
 	private List<SubCategory> subCategory=new ArrayList<SubCategory>();
+	
 	public int getCatId() {
 		return catId;
 	}

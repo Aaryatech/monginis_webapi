@@ -9,5 +9,7 @@ public interface FrItemStockConfigurePostService {
 	
 	public List<FrItemStockConfigurePost> saveFrItemStockConf(List<FrItemStockConfigurePost> frItemStockConfigurePosts);
 	
+	public List<FrItemStockConfigurePost> getAllFrItemConfPost();
+	
 
 }

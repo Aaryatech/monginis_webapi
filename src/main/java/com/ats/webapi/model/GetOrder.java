@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Immutable;
 
 @Entity(name="getOrder")
-@Table(name = "t_order")
+//@Table(name = "t_order")
 @Immutable
 public class GetOrder {
 	

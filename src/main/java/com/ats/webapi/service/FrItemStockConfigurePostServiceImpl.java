@@ -34,4 +34,13 @@ public class FrItemStockConfigurePostServiceImpl implements FrItemStockConfigure
 	}
 
 	
+	@Override
+	public List<FrItemStockConfigurePost> getAllFrItemConfPost() {
+		List<FrItemStockConfigurePost> frItemStockConfigurePosts=frItemStockConfigurePostRepository.findAll();
+		
+		
+		return frItemStockConfigurePosts;
+	}
+
+	
 }

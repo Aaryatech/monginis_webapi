@@ -9,6 +9,7 @@ import com.ats.webapi.model.FrItemStockConfigurePost;
 public interface FrItemStockConfigurePostRepository extends JpaRepository<FrItemStockConfigurePost, Integer> {
 	
 	public FrItemStockConfigurePost save(List<FrItemStockConfigurePost> frItemStockConfigurePost);
+	public List<FrItemStockConfigurePost> findAll();
 	
 
 }
