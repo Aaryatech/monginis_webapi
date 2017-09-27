@@ -33,6 +33,7 @@ import com.ats.webapi.model.Flavour;
 import com.ats.webapi.model.FlavourList;
 import com.ats.webapi.model.FrItemStockConfigure;
 import com.ats.webapi.model.FrItemStockConfigureList;
+import com.ats.webapi.model.FrItemStockConfigurePost;
 import com.ats.webapi.model.FrMenus;
 import com.ats.webapi.model.FrMenusList;
 import com.ats.webapi.model.Franchisee;
@@ -80,6 +81,7 @@ import com.ats.webapi.service.ConfigureFrBeanService;
 import com.ats.webapi.service.ConfigureFranchiseeService;
 import com.ats.webapi.service.EventService;
 import com.ats.webapi.service.FlavourService;
+import com.ats.webapi.service.FrItemStockConfigurePostService;
 import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.GetFrItemsService;
@@ -200,6 +202,42 @@ public class RestApiController {
 	
 	@Autowired
 	private ItemsWithCategoryService itemsWithCategoryService;
+	
+	@Autowired
+	FrItemStockConfigurePostService frItemStockConfigurePostService;
+	
+	
+	
+	@RequestMapping(value = { "/frItemStockPost" }, method = RequestMethod.POST)
+
+	public @ResponseBody Info info(@RequestBody List<FrItemStockConfigurePost> frItemStockConfigurePosts)
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
+		
+		
+		List<FrItemStockConfigurePost> jsonResult;
+		
+		jsonResult = frItemStockConfigurePostService.saveFrItemStockConf(frItemStockConfigurePosts);
+		
+		Info info=new Info();
+		
+		if(jsonResult.size()>0) {
+		
+		info.setError(false);
+		info.setMessage("fr Item stock Inserted Successfully");
+		
+		}
+		
+		else {
+			
+			info.setError(true);
+			info.setMessage("Error in frItem Stock Insertion  : RestApi");
+			
+		}
+		
+
+		return info;
+
+	}
 	
 	
 
