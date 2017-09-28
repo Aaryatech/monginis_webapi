@@ -99,7 +99,7 @@ public class Franchisee implements Serializable{
 	
 	@Column(name="fba_license_date")
 	private Date fbaLicenseDate;
-	
+	  
 	@Column(name="fr_agreement_date")
  	private Date frAgreementDate;
 	

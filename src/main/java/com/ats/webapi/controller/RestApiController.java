@@ -1927,7 +1927,7 @@ public class RestApiController {
 			@RequestParam("frAgreementDate") String frAgreementDate,@RequestParam("frGstType") int frGstType,@RequestParam("frGstNo") String frGstNo,
 			@RequestParam("stockType") int stockType,
 			@RequestParam("frAddress") String frAddress,@RequestParam("frTarget") int frTarget) {
-		String jsonResult="";
+		String jsonResult="";  
 		try {
 			
 		System.out.println("inside update fr rest controller:1721 line");
