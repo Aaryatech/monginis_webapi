@@ -1917,7 +1917,7 @@ public class RestApiController {
 	@ResponseBody
 	public String updateFranchisee(@RequestParam("frId") int frId, @RequestParam("frName") String frName,
 			@RequestParam("frCode") String frCode, @RequestParam("frOpeningDate") String frOpeningDate,
-			@RequestParam("frRate") int frRate, @RequestParam("frImage") String frImage,
+	  		@RequestParam("frRate") int frRate, @RequestParam("frImage") String frImage,
 			@RequestParam("frRouteId") int frRouteId, @RequestParam("frCity") String frCity,
 			@RequestParam("frKg1") int frKg1, @RequestParam("frKg2") int frKg2, @RequestParam("frKg3") int frKg3,
 			@RequestParam("frKg4") int frKg4, @RequestParam("frEmail") String frEmail,
