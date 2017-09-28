@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @Entity
 @Table(name = "m_franchisee")
 public class Franchisee implements Serializable{
-	
+	 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="fr_id")
