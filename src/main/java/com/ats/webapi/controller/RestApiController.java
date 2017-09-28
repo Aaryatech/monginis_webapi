@@ -608,13 +608,18 @@ public class RestApiController {
 			@RequestParam("frKg3") int frKg3, @RequestParam("frKg4") int frKg4, @RequestParam("frEmail") String frEmail,
 			@RequestParam("frPassword") String frPassword, @RequestParam("frMob") String frMob,
 			@RequestParam("frOwner") String frOwner, @RequestParam("frRateCat") int frRateCat,
-			@RequestParam("grnTwo") int grnTwo) throws ParseException {
-
+			@RequestParam("grnTwo") int grnTwo,@RequestParam("ownerBirthDate") String ownerBirthDate,@RequestParam("fbaLicenseDate") String fbaLicenseDate,
+			@RequestParam("frAgreementDate") String frAgreementDate,@RequestParam("frGstType") int frGstType,@RequestParam("frGstNo") String frGstNo,
+			@RequestParam("stockType") int stockType,
+			@RequestParam("frAddress") String frAddress,@RequestParam("frTarget") int frTarget) throws ParseException {
 		//DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		//java.util.Date date = sdf.parse(frOpeningDate);
 		//java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
 		java.sql.Date sqlOpeningDate=Common.convertToSqlDate(frOpeningDate);
-
+		java.sql.Date sqlFrAgreementDate=Common.convertToSqlDate(frAgreementDate);
+		java.sql.Date sqlOwnerBirthDate=Common.convertToSqlDate(ownerBirthDate);
+		java.sql.Date SQLfbaLicenseDate=Common.convertToSqlDate(fbaLicenseDate);
+		
 		Franchisee franchisee = new Franchisee();
 		// franchisee.setFrId(frId);
 		franchisee.setFrName(frName);
@@ -639,6 +644,16 @@ public class RestApiController {
 		franchisee.setShowItems("");
 		franchisee.setNotShowItems("");
 		franchisee.setFrPasswordKey("");
+		
+		franchisee.setFrAddress(frAddress);
+		franchisee.setFrAgreementDate(sqlFrAgreementDate);
+		franchisee.setFrGstNo(frGstNo);
+		franchisee.setFrGstType(frGstType);
+		franchisee.setOwnerBirthDate(sqlOwnerBirthDate);
+		franchisee.setFbaLicenseDate(SQLfbaLicenseDate);
+		franchisee.setStockType(stockType);
+		franchisee.setFrTarget(frTarget);
+		
 		System.out.println("" + franchisee.toString());
 		String jsonResult = franchiseeService.saveFranchisee(franchisee);
 
@@ -1908,16 +1923,24 @@ public class RestApiController {
 			@RequestParam("frKg4") int frKg4, @RequestParam("frEmail") String frEmail,
 			@RequestParam("frPassword") String frPassword, @RequestParam("frMob") String frMob,
 			@RequestParam("frOwner") String frOwner, @RequestParam("frRateCat") int frRateCat,
-			@RequestParam("grnTwo") int grnTwo, @RequestParam("delStatus") int delStatus) {
+			@RequestParam("grnTwo") int grnTwo, @RequestParam("delStatus") int delStatus,@RequestParam("ownerBirthDate") String ownerBirthDate,@RequestParam("fbaLicenseDate") String fbaLicenseDate,
+			@RequestParam("frAgreementDate") String frAgreementDate,@RequestParam("frGstType") int frGstType,@RequestParam("frGstNo") String frGstNo,
+			@RequestParam("stockType") int stockType,
+			@RequestParam("frAddress") String frAddress,@RequestParam("frTarget") int frTarget) {
 		String jsonResult="";
 		try {
 			
 		System.out.println("inside update fr rest controller:1721 line");
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		Date date =sdf.parse(frOpeningDate);
 		System.out.println("parsed Date line no 1728 : "+date);
 		java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
-		
+		Date utilFrAgreementDate =sdf.parse(frAgreementDate);
+		Date utilOwnerBirthDate =sdf.parse(ownerBirthDate);
+		Date utilFbaLicenseDate =sdf.parse(fbaLicenseDate);
+		/*java.sql.Date sqlFrAgreementDate=Common.convertToSqlDate(frAgreementDate);
+		java.sql.Date sqlOwnerBirthDate=Common.convertToSqlDate(ownerBirthDate);
+		java.sql.Date SQLfrLicenseDate=Common.convertToSqlDate(frLicenseDate);*/
 /*
 		System.out.println("fr opening as of form "+frOpeningDate);
 		java.sql.Date sqlDate=Common.convertToSqlDate(frOpeningDate);
@@ -1952,6 +1975,15 @@ public class RestApiController {
 		franchisee.setNotShowItems("");
 		franchisee.setFrPasswordKey("");
 		franchisee.setDelStatus(delStatus);
+		
+		franchisee.setFrAddress(frAddress);
+		franchisee.setFrAgreementDate(utilFrAgreementDate);
+		franchisee.setFrGstNo(frGstNo);
+		franchisee.setFrGstType(frGstType);
+		franchisee.setOwnerBirthDate(utilOwnerBirthDate);
+		franchisee.setFbaLicenseDate(utilFbaLicenseDate);
+		franchisee.setStockType(stockType);
+		franchisee.setFrTarget(frTarget);
 		System.out.println("" + franchisee.toString());
 		jsonResult = franchiseeService.saveFranchisee(franchisee);
 		}catch (Exception e) {

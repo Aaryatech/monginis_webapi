@@ -3,20 +3,15 @@ package com.ats.webapi.model;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.beans.factory.annotation.Value;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name = "m_franchisee")
@@ -73,7 +68,7 @@ public class Franchisee implements Serializable{
 	String frOwner;
 
 	@Column(name="fr_rate_cat")
-	private 	int frRateCat;
+	private  int frRateCat;
 	
 	@Column(name="grn_two")
 	private int grnTwo;
@@ -99,57 +94,30 @@ public class Franchisee implements Serializable{
 	@Column(name="is_same_day_applicable")
 	private int isSameDayApplicable;
 	
+	@Column(name="owner_birth_date")
+	private Date ownerBirthDate;
 	
-
-	public String getFrRmn1() {
-		return frRmn1;
-	}
-
-	public void setFrRmn1(String frRmn1) {
-		this.frRmn1 = frRmn1;
-	}
-
-	public String getShowItems() {
-		return showItems;
-	}
-
-	public void setShowItems(String showItems) {
-		this.showItems = showItems;
-	}
-
-	public String getNotShowItems() {
-		return notShowItems;
-	}
-
-	public void setNotShowItems(String notShowItems) {
-		this.notShowItems = notShowItems;
-	}
-
-	public int getFrOpening() {
-		return frOpening;
-	}
-
-	public void setFrOpening(int frOpening) {
-		this.frOpening = frOpening;
-	}
-
-	public String getFrPasswordKey() {
-		return frPasswordKey;
-	}
-
-	public void setFrPasswordKey(String frPasswordKey) {
-		this.frPasswordKey = frPasswordKey;
-	}
-
-	public int getIsSameDayApplicable() {
-		return isSameDayApplicable;
-	}
-
-	public void setIsSameDayApplicable(int isSameDayApplicable) {
-		this.isSameDayApplicable = isSameDayApplicable;
-	}
-
+	@Column(name="fba_license_date")
+	private Date fbaLicenseDate;
 	
+	@Column(name="fr_agreement_date")
+ 	private Date frAgreementDate;
+	
+	@Column(name="fr_gst_type")
+ 	private int frGstType;
+	
+	@Column(name="fr_gst_no")
+ 	private String frGstNo;
+	
+	@Column(name="stock_type")
+ 	private int stockType;
+	
+	@Column(name="fr_address")
+ 	private String frAddress;
+	
+	@Column(name="fr_target")
+ 	private int frTarget;
+
 	public int getFrId() {
 		return frId;
 	}
@@ -182,7 +150,6 @@ public class Franchisee implements Serializable{
 		this.frOpeningDate = frOpeningDate;
 	}
 
-	
 	public float getFrRate() {
 		return frRate;
 	}
@@ -303,6 +270,121 @@ public class Franchisee implements Serializable{
 		this.delStatus = delStatus;
 	}
 
+	public String getFrRmn1() {
+		return frRmn1;
+	}
+
+	public void setFrRmn1(String frRmn1) {
+		this.frRmn1 = frRmn1;
+	}
+
+	public String getShowItems() {
+		return showItems;
+	}
+
+	public void setShowItems(String showItems) {
+		this.showItems = showItems;
+	}
+
+	public String getNotShowItems() {
+		return notShowItems;
+	}
+
+	public void setNotShowItems(String notShowItems) {
+		this.notShowItems = notShowItems;
+	}
+
+	public int getFrOpening() {
+		return frOpening;
+	}
+
+	public void setFrOpening(int frOpening) {
+		this.frOpening = frOpening;
+	}
+
+	public String getFrPasswordKey() {
+		return frPasswordKey;
+	}
+
+	public void setFrPasswordKey(String frPasswordKey) {
+		this.frPasswordKey = frPasswordKey;
+	}
+
+	public int getIsSameDayApplicable() {
+		return isSameDayApplicable;
+	}
+
+	public void setIsSameDayApplicable(int isSameDayApplicable) {
+		this.isSameDayApplicable = isSameDayApplicable;
+	}
+
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getOwnerBirthDate() {
+		return ownerBirthDate;
+	}
+
+	public void setOwnerBirthDate(Date ownerBirthDate) {
+		this.ownerBirthDate = ownerBirthDate;
+	}
+	
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getFbaLicenseDate() {
+		return fbaLicenseDate;
+	}
+
+	public void setFbaLicenseDate(Date fbaLicenseDate) {
+		this.fbaLicenseDate = fbaLicenseDate;
+	}
+	
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getFrAgreementDate() {
+		return frAgreementDate;
+	}
+
+	public void setFrAgreementDate(Date frAgreementDate) {
+		this.frAgreementDate = frAgreementDate;
+	}
+
+	public int getFrGstType() {
+		return frGstType;
+	}
+
+	public void setFrGstType(int frGstType) {
+		this.frGstType = frGstType;
+	}
+
+	public String getFrGstNo() {
+		return frGstNo;
+	}
+
+	public void setFrGstNo(String frGstNo) {
+		this.frGstNo = frGstNo;
+	}
+
+	public int getStockType() {
+		return stockType;
+	}
+
+	public void setStockType(int stockType) {
+		this.stockType = stockType;
+	}
+
+	public String getFrAddress() {
+		return frAddress;
+	}
+
+	public void setFrAddress(String frAddress) {
+		this.frAddress = frAddress;
+	}
+
+	public int getFrTarget() {
+		return frTarget;
+	}
+
+	public void setFrTarget(int frTarget) {
+		this.frTarget = frTarget;
+	}
+
 	@Override
 	public String toString() {
 		return "Franchisee [frId=" + frId + ", frName=" + frName + ", frCode=" + frCode + ", frOpeningDate="
@@ -311,8 +393,13 @@ public class Franchisee implements Serializable{
 				+ frKg4 + ", frEmail=" + frEmail + ", frPassword=" + frPassword + ", frMob=" + frMob + ", frOwner="
 				+ frOwner + ", frRateCat=" + frRateCat + ", grnTwo=" + grnTwo + ", delStatus=" + delStatus + ", frRmn1="
 				+ frRmn1 + ", showItems=" + showItems + ", notShowItems=" + notShowItems + ", frOpening=" + frOpening
-				+ ", frPasswordKey=" + frPasswordKey + ", isSameDayApplicable=" + isSameDayApplicable + "]";
+				+ ", frPasswordKey=" + frPasswordKey + ", isSameDayApplicable=" + isSameDayApplicable
+				+ ", ownerBirthDate=" + ownerBirthDate + ", fbaLicenseDate=" + fbaLicenseDate + ", frAgreementDate="
+				+ frAgreementDate + ", frGstType=" + frGstType + ", frGstNo=" + frGstNo + ", stockType=" + stockType
+				+ ", frAddress=" + frAddress + ", frTarget=" + frTarget + "]";
 	}
+	
+
 
 	
 }
