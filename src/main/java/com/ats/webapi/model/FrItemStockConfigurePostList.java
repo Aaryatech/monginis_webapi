@@ -4,12 +4,12 @@ import java.util.List;
 
 public class FrItemStockConfigurePostList {
 	
-	List<FrItemStockConfigurePost> frItemStockConfigurePosts;
+	List<GetFrItemStockConfiguration> frItemStockConfigurePosts;
 	Info info;
-	public List<FrItemStockConfigurePost> getFrItemStockConfigurePosts() {
+	public List<GetFrItemStockConfiguration> getFrItemStockConfigurePosts() {
 		return frItemStockConfigurePosts;
 	}
-	public void setFrItemStockConfigurePosts(List<FrItemStockConfigurePost> frItemStockConfigurePosts) {
+	public void setFrItemStockConfigurePosts(List<GetFrItemStockConfiguration> frItemStockConfigurePosts) {
 		this.frItemStockConfigurePosts = frItemStockConfigurePosts;
 	}
 	public Info getInfo() {

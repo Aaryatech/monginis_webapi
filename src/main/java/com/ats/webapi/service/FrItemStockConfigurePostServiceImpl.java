@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.FrItemStockConfigurePost;
+import com.ats.webapi.model.GetFrItemStockConfiguration;
 import com.ats.webapi.repository.FrItemStockConfigurePostRepository;
 
 @Service
@@ -33,14 +34,14 @@ public class FrItemStockConfigurePostServiceImpl implements FrItemStockConfigure
 		return returnList;
 	}
 
-	
+	/*
 	@Override
-	public List<FrItemStockConfigurePost> getAllFrItemConfPost() {
-		List<FrItemStockConfigurePost> frItemStockConfigurePosts=frItemStockConfigurePostRepository.findAll();
+	public List<GetFrItemStockConfiguration> getAllFrItemConfPost(List<String> itemId) {
+		List<GetFrItemStockConfiguration> frItemStockConfigurePosts=frItemStockConfigurePostRepository.findByItemId(itemId);
 		
 		
 		return frItemStockConfigurePosts;
 	}
-
+*/
 	
 }

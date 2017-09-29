@@ -1,14 +1,17 @@
 package com.ats.webapi.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
-@Entity(name="mFrItemStock")
-public class FrItemStockConfigurePost {
-	
+@Entity
+@Table(name = "m_fr_item_stock")
+public class GetFrItemStockConfiguration implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,6 +29,17 @@ public class FrItemStockConfigurePost {
 	
 	@Column(name="max_qty")
 	private int maxQty;
+	
+	@Column(name="item_name")
+	private String itemName;
+	
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
 
 	public int getFrStockId() {
 		return frStockId;
@@ -35,6 +49,7 @@ public class FrItemStockConfigurePost {
 		this.frStockId = frStockId;
 	}
 
+	
 	public Integer getItemId() {
 		return itemId;
 	}
@@ -66,9 +81,12 @@ public class FrItemStockConfigurePost {
 	public void setMaxQty(int maxQty) {
 		this.maxQty = maxQty;
 	}
-	
-	
-	
+
+	@Override
+	public String toString() {
+		return "FrItemStockConfigurePost [frStockId=" + frStockId + ", itemId=" + itemId + ", type=" + type
+				+ ", minQty=" + minQty + ", maxQty=" + maxQty + ", itemName=" + itemName + "]";
+	}
 	
 
 }

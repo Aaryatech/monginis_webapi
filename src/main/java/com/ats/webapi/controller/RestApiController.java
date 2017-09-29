@@ -9,7 +9,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +33,11 @@ import com.ats.webapi.model.FlavourList;
 import com.ats.webapi.model.FrItemStockConfigure;
 import com.ats.webapi.model.FrItemStockConfigureList;
 import com.ats.webapi.model.FrItemStockConfigurePost;
+import com.ats.webapi.model.GetFrItemStockConfiguration;
 import com.ats.webapi.model.FrItemStockConfigurePostList;
 import com.ats.webapi.model.FrMenus;
 import com.ats.webapi.model.FrMenusList;
+import com.ats.webapi.model.FrStockResponse;
 import com.ats.webapi.model.Franchisee;
 import com.ats.webapi.model.FranchiseeAndMenuList;
 import com.ats.webapi.model.FranchiseeList;
@@ -73,6 +74,7 @@ import com.ats.webapi.model.SpCkOrderHisList;
 import com.ats.webapi.model.SpMessage;
 import com.ats.webapi.model.SpecialCake;
 import com.ats.webapi.model.SpecialCakeList;
+import com.ats.webapi.model.StockDetails;
 import com.ats.webapi.model.SubCategory;
 import com.ats.webapi.model.User;
 
@@ -84,6 +86,7 @@ import com.ats.webapi.service.FlavourService;
 import com.ats.webapi.service.FrItemStockConfigurePostService;
 import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.FranchiseeService;
+import com.ats.webapi.service.GetFrItemStockConfigurationService;
 import com.ats.webapi.service.GetFrItemsService;
 import com.ats.webapi.service.GetOrderService;
 import com.ats.webapi.service.ItemService;
@@ -113,8 +116,6 @@ import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-
-
 @RestController
 public class RestApiController {
 
@@ -123,58 +124,58 @@ public class RestApiController {
 
 	@Autowired
 	private RouteService routeService;
-	
+
 	@Autowired
 	private MessageService messageService;
-	
+
 	@Autowired
 	private FlavourService flavourService;
-	
+
 	@Autowired
 	private SchedulerService schedulerService;
 
 	@Autowired
 	private EventService eventService;
-	
+
 	@Autowired
 	private SpecialCakeService specialcakeService;
-	
+
 	@Autowired
 	private FranchiseeService franchiseeService;
-	
+
 	@Autowired
 	private ModuleService moduleService;
-	
+
 	@Autowired
 	private ItemService itemService;
-	
+
 	@Autowired
 	private SubCategoryService subCategoryService;
-	
+
 	@Autowired
 	private MenuService menuService;
-	
+
 	@Autowired
 	private SpecialCakeService specialCakeService;
-	
+
 	@Autowired
 	private RateService rateService;
-	
+
 	@Autowired
 	private SpMessageService spMsgService;
-	
+
 	@Autowired
 	private ConfigureFranchiseeService connfigureService;
-	
+
 	@Autowired
 	private CategoryService categoryService;
-	
+
 	@Autowired
 	private OrderService orderService;
-	
+
 	@Autowired
 	private TestFrService frService;
-	
+
 	@Autowired
 	SpCakeOrdersService spCakeOrdersService;
 	@Autowired
@@ -189,120 +190,146 @@ public class RestApiController {
 
 	@Autowired
 	private PrevItemOrderService prevItemOrderService;
-	
+
 	@Autowired
 	private OrderCountsService orderCountService;
-	
-	
+
 	@Autowired
 	private FrItemStockConfigureService frItemConfService;
-	
-	
+
 	@Autowired
 	FrItemStockConfigurePostService frItemStockConfigurePostService;
 	
-	
-	
-	
-	
-	
-	@RequestMapping(value = "/getAllFrItemConfPost",method=RequestMethod.GET)
-	public @ResponseBody FrItemStockConfigurePostList getAllFrItemConfPost() {
-		
-		FrItemStockConfigurePostList configurePostList =new FrItemStockConfigurePostList();
+	@Autowired
+	GetFrItemStockConfigurationService getFrItemStockConfigurationService;
 
-		List<FrItemStockConfigurePost> frItemStockConfigurePosts = frItemStockConfigurePostService.getAllFrItemConfPost();
-		
+	@RequestMapping(value = "/getAllFrItemConfPost", method = RequestMethod.POST)
+	public @ResponseBody List<FrStockResponse> getAllFrItemConfPost(@RequestParam List<String> itemId) {
+
+		FrItemStockConfigurePostList configurePostList = new FrItemStockConfigurePostList();
+
+		List<GetFrItemStockConfiguration> frItemStockConfigurePosts = getFrItemStockConfigurationService
+				.getAllFrItemConfPost(itemId);
+
 		configurePostList.setFrItemStockConfigurePosts(frItemStockConfigurePosts);
-		
-		Info info=new Info();
-		
+
+		List<FrStockResponse> frStockResponseList = new ArrayList<FrStockResponse>();
+
+		for (int i = 0; i < frItemStockConfigurePosts.size(); i++) {
+
+			GetFrItemStockConfiguration frItemStockConfigurePostParent = frItemStockConfigurePosts.get(i);
+
+			boolean isUnique = true;
+			for (int m = 0; m < frStockResponseList.size(); m++) {
+
+				if (frStockResponseList.get(m).getItemId() == frItemStockConfigurePostParent.getItemId()) {
+					isUnique = false;
+				}
+
+			}
+
+			if (isUnique) {
+				
+				FrStockResponse frStockResponse = new FrStockResponse();
+				frStockResponse.setItemId(frItemStockConfigurePostParent.getItemId());
+				frStockResponse.setItemName(frItemStockConfigurePostParent.getItemName());
+
+				List<StockDetails> stockDetailsList = new ArrayList<StockDetails>();
+
+				for (int j = 0; j < frItemStockConfigurePosts.size(); j++) {
+
+					GetFrItemStockConfiguration frItemStockConfigurePostChild = frItemStockConfigurePosts.get(j);
+
+					if (frItemStockConfigurePostChild.getItemId() == frItemStockConfigurePostParent.getItemId()) {
+
+						StockDetails stockDetails = new StockDetails();
+						System.out.println("child object " + frItemStockConfigurePostChild.toString());
+
+						stockDetails.setFrStockId(frItemStockConfigurePostChild.getFrStockId());
+						stockDetails.setType(frItemStockConfigurePostChild.getType());
+						stockDetails.setMinQty(frItemStockConfigurePostChild.getMinQty());
+						stockDetails.setMaxQty(frItemStockConfigurePostChild.getMaxQty());
+
+						stockDetailsList.add(stockDetails);
+
+					}
+				}
+				frStockResponse.setStockDetails(stockDetailsList);
+				frStockResponseList.add(frStockResponse);
+
+			} // end of unique if
+		}
+
+		Info info = new Info();
+
 		info.setError(false);
-		info.setMessage("All Fr Item Stock Config displayed. Total Items: "+frItemStockConfigurePosts.size());
-		
+		info.setMessage("All Fr Item Stock Config displayed. Total Items: " + frItemStockConfigurePosts.size());
+
 		configurePostList.setInfo(info);
-		
-		return configurePostList;
-		
+
+		return frStockResponseList;
+
 	}
-	
-	
-	
-	
+
 	@RequestMapping(value = { "/frItemStockPost" }, method = RequestMethod.POST)
 
 	public @ResponseBody Info info(@RequestBody List<FrItemStockConfigurePost> frItemStockConfigurePosts)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
-		
-		
+
 		List<FrItemStockConfigurePost> jsonResult;
-		
+
 		jsonResult = frItemStockConfigurePostService.saveFrItemStockConf(frItemStockConfigurePosts);
-		
-		Info info=new Info();
-		
-		if(jsonResult.size()>0) {
-		
-		info.setError(false);
-		info.setMessage("fr Item stock Inserted Successfully");
-		
+
+		Info info = new Info();
+
+		if (jsonResult.size() > 0) {
+
+			info.setError(false);
+			info.setMessage("fr Item stock Inserted Successfully");
+
 		}
-		
+
 		else {
-			
+
 			info.setError(true);
 			info.setMessage("Error in frItem Stock Insertion  : RestApi");
-			
+
 		}
-		
 
 		return info;
 
 	}
-	
-	
 
-	@RequestMapping(value = "/getfrItemConfSetting",method=RequestMethod.GET)
+	@RequestMapping(value = "/getfrItemConfSetting", method = RequestMethod.GET)
 	public @ResponseBody FrItemStockConfigureList getfrItemConfSetting() {
-		
-		FrItemStockConfigureList frItemStockConfigureList=new FrItemStockConfigureList();
+
+		FrItemStockConfigureList frItemStockConfigureList = new FrItemStockConfigureList();
 
 		List<FrItemStockConfigure> frItemStockConf = frItemConfService.getFrItemConfigure();
-		
+
 		frItemStockConfigureList.setFrItemStockConfigure(frItemStockConf);
-		
-		Info info=new Info();
-		
+
+		Info info = new Info();
+
 		info.setError(false);
 		info.setMessage("Item Setting Configure displayed successfully");
-		
+
 		frItemStockConfigureList.setInfo(info);
-		
-		
+
 		return frItemStockConfigureList;
-		
-		
-		
 
 	}
-	
 
-	
-	
-	
-
-	
-	//static data for aws testing
+	// static data for aws testing
 	@RequestMapping(value = { "/test" }, method = RequestMethod.GET)
 	@ResponseBody
 	public String showDummyDate() {
 
-		String dummyData="{\"schedulerList\":[{\"schId\":11,\"schDate\":\"09-09-2017\",\"schTodate\":\"21-09-2017\",\"schOccasionname\":\" Sept\",\"schMessage\":\"Sept\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0},{\"schId\":17,\"schDate\":\"19-09-2017\",\"schTodate\":\"21-09-2017\",\"schOccasionname\":\"19 to 21 sept\",\"schMessage\":\"hjdsfhjf\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0},{\"schId\":20,\"schDate\":\"13-09-2017\",\"schTodate\":\"20-09-2017\",\"schOccasionname\":\"13 to 20 sept\",\"schMessage\":\"rrrrrrr\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0},{\"schId\":21,\"schDate\":\"19-09-2017\",\"schTodate\":\"20-09-2017\",\"schOccasionname\":\"19 to 20 sept\",\"schMessage\":\"sep\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0}],\"info\":{\"message\":\"latest news  displayed successfully\",\"error\":false}}";
-		
+		String dummyData = "{\"schedulerList\":[{\"schId\":11,\"schDate\":\"09-09-2017\",\"schTodate\":\"21-09-2017\",\"schOccasionname\":\" Sept\",\"schMessage\":\"Sept\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0},{\"schId\":17,\"schDate\":\"19-09-2017\",\"schTodate\":\"21-09-2017\",\"schOccasionname\":\"19 to 21 sept\",\"schMessage\":\"hjdsfhjf\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0},{\"schId\":20,\"schDate\":\"13-09-2017\",\"schTodate\":\"20-09-2017\",\"schOccasionname\":\"13 to 20 sept\",\"schMessage\":\"rrrrrrr\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0},{\"schId\":21,\"schDate\":\"19-09-2017\",\"schTodate\":\"20-09-2017\",\"schOccasionname\":\"19 to 20 sept\",\"schMessage\":\"sep\",\"schFrdttime\":0.0,\"schTodttime\":0.0,\"isActive\":1,\"delStatus\":0}],\"info\":{\"message\":\"latest news  displayed successfully\",\"error\":false}}";
+
 		return dummyData;
 	}
-	
-	
+
 	// Login FrontEnd Franchisee
 	@RequestMapping(value = { "/loginFr" }, method = RequestMethod.POST)
 	@ResponseBody
@@ -310,27 +337,24 @@ public class RestApiController {
 
 		String jsonFr = franchiseeService.findFranchiseeByFrCode(frCode, frPasswordKey);
 		System.out.println("JsonString" + jsonFr);
-		
+
 		return jsonFr;
- 
+
 	}
-	
-	
-	
 
 	// Place Item Order
 	@RequestMapping(value = { "/placeOrder" }, method = RequestMethod.POST)
 
 	public @ResponseBody List<Orders> placeItemOrder(@RequestBody List<Orders> orderJson)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
-		
+
 		ObjectMapper mapper = new ObjectMapper();
-		
+
 		List<Orders> participantJsonList;
 		List<Orders> jsonResult;
-		
+
 		System.out.println("Inside Place Order " + orderJson.toString());
-		
+
 		jsonResult = orderService.placeOrder(orderJson);
 
 		return jsonResult;
@@ -342,9 +366,9 @@ public class RestApiController {
 
 	public @ResponseBody SpCakeOrderRes placeSpCakeOrder(@RequestBody SpCakeOrders orderJson)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
-		
+
 		System.out.println("Inside Place Order " + orderJson.toString());
-		
+
 		SpCakeOrderRes spCakeOrderRes = spCakeOrdersService.placeSpCakeOrder(orderJson);
 
 		return spCakeOrderRes;
@@ -355,20 +379,23 @@ public class RestApiController {
 	@RequestMapping("/searchSpecialCake")
 	public @ResponseBody SearchSpCakeResponse searchSpecialCake(@RequestParam String spCode) {
 
-		SearchSpCakeResponse searchSpCakeResponse= specialcakeService.searchSpecialCake(spCode);
-		
+		SearchSpCakeResponse searchSpCakeResponse = specialcakeService.searchSpecialCake(spCode);
+
 		return searchSpCakeResponse;
 
 	}
-	// Search Special Cake Configured spCode of  Franchisee
-		@RequestMapping("/searchSpCodes")
-		public @ResponseBody List<String> searchSpCodes(@RequestParam List<Integer>items,@RequestParam int frId,@RequestParam int menuId) {
 
-			List<String> spCakeCodesResponse= specialcakeService.searchSpecialCakeSpCodes(items,frId,menuId);
-			
-			return spCakeCodesResponse;
+	// Search Special Cake Configured spCode of Franchisee
+	@RequestMapping("/searchSpCodes")
+	public @ResponseBody List<String> searchSpCodes(@RequestParam List<Integer> items, @RequestParam int frId,
+			@RequestParam int menuId) {
 
-		}
+		List<String> spCakeCodesResponse = specialcakeService.searchSpecialCakeSpCodes(items, frId, menuId);
+
+		return spCakeCodesResponse;
+
+	}
+
 	// Search Special Cake Order History
 	@RequestMapping("/SpCakeOrderHistory")
 	public @ResponseBody SpCkOrderHisList searchSpCakeOrderHistory(@RequestParam int menuId,
@@ -383,13 +410,13 @@ public class RestApiController {
 	@RequestMapping("/orderHistory")
 	public @ResponseBody ItemOrderList searchOrderHistory(@RequestParam int menuId, @RequestParam String deliveryDt,
 			@RequestParam int frId) throws ParseException {
-		
+
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		java.util.Date date = sdf.parse(deliveryDt);
 		java.sql.Date deliveryDate = new java.sql.Date(date.getTime());
-		
+
 		ItemOrderList orderList = orderService.searchOrderHistory(menuId, deliveryDate, frId);
-		
+
 		return orderList;
 
 	}
@@ -413,15 +440,15 @@ public class RestApiController {
 			@RequestParam("usertype") int usertype) {
 
 		System.out.println("input user" + username.toString());
-	
+
 		User user = new User();
 		user.setUsername(username);
 		user.setPassword(userpwd);
 		user.setUsertype(usertype);
 		user.setDelStatus(0);
-		
+
 		String jsonResult = userService.save(user);
-		
+
 		return jsonResult;
 	}
 
@@ -436,7 +463,7 @@ public class RestApiController {
 		rate.setSprRate(sprRate);
 		rate.setSprAddOnRate(sprAddOnRate);
 		rate.setDelStatus(0);
-		
+
 		String jsonResult = rateService.save(rate);
 
 		return jsonResult;
@@ -450,7 +477,7 @@ public class RestApiController {
 		SpMessage spmsg = new SpMessage();
 		spmsg.setSpMsgText(spMsgText);
 		spmsg.setDelStatus(0);
-		
+
 		String jsonResult = spMsgService.save(spmsg);
 
 		return jsonResult;
@@ -464,7 +491,7 @@ public class RestApiController {
 		SubCategory subCategory = new SubCategory();
 		subCategory.setSubCatName(subCatName);
 		// subCategory.setCatId(catId);
-	
+
 		String jsonResult = subCategoryService.saveSubCategory(subCategory);
 
 		return jsonResult;
@@ -487,48 +514,45 @@ public class RestApiController {
 	}
 
 	// Save Item
-		@RequestMapping(value = { "/insertItem" }, method = RequestMethod.POST)
-		@ResponseBody
-		public String saveItem(@RequestParam("itemId") String itemId, @RequestParam("itemName") String itemName,
-				@RequestParam("itemGrp1") String itemGrp1, @RequestParam("itemGrp2") String itemGrp2,
-				@RequestParam("itemGrp3") String itemGrp3, @RequestParam("itemRate1") double itemRate1,
-				@RequestParam("itemRate2") double itemRate2,@RequestParam("itemRate3") double itemRate3, 
-				@RequestParam("itemMrp1") double itemMrp1,@RequestParam("itemMrp2") double itemMrp2, 
-				@RequestParam("itemMrp3") double itemMrp3,@RequestParam("minQty") int minQty,
-				@RequestParam("itemImage") String itemImage,@RequestParam("itemTax1") double itemTax1, 
-				@RequestParam("itemTax2") double itemTax2,@RequestParam("itemTax3") double itemTax3, 
-				@RequestParam("itemIsUsed") int itemIsUsed,@RequestParam("itemSortId") double itemSortId, 
-				@RequestParam("grnTwo") int grnTwo) {
+	@RequestMapping(value = { "/insertItem" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String saveItem(@RequestParam("itemId") String itemId, @RequestParam("itemName") String itemName,
+			@RequestParam("itemGrp1") String itemGrp1, @RequestParam("itemGrp2") String itemGrp2,
+			@RequestParam("itemGrp3") String itemGrp3, @RequestParam("itemRate1") double itemRate1,
+			@RequestParam("itemRate2") double itemRate2, @RequestParam("itemRate3") double itemRate3,
+			@RequestParam("itemMrp1") double itemMrp1, @RequestParam("itemMrp2") double itemMrp2,
+			@RequestParam("itemMrp3") double itemMrp3, @RequestParam("minQty") int minQty,
+			@RequestParam("itemImage") String itemImage, @RequestParam("itemTax1") double itemTax1,
+			@RequestParam("itemTax2") double itemTax2, @RequestParam("itemTax3") double itemTax3,
+			@RequestParam("itemIsUsed") int itemIsUsed, @RequestParam("itemSortId") double itemSortId,
+			@RequestParam("grnTwo") int grnTwo) {
 
-			Item item = new Item();
-			item.setItemImage(itemImage);
-			item.setItemGrp1(itemGrp1);
-			item.setDelStatus(0);
-			item.setItemGrp2(itemGrp2);
-			item.setItemGrp3(itemGrp3);
-			item.setItemIsUsed(itemIsUsed);
-			item.setMinQty(minQty);
-			item.setItemMrp1(itemMrp1);
-			item.setItemMrp2(itemMrp2);
-			item.setItemMrp3(itemMrp3);
-			item.setItemRate1(itemRate1);
-			item.setItemRate2(itemRate2);
-			item.setItemRate3(itemRate3);
-			item.setItemName(itemName);
-			item.setItemSortId(itemSortId);
-			item.setItemTax1(itemTax1);
-			item.setItemTax2(itemTax2);
-			item.setItemTax3(itemTax3);
-			item.setGrnTwo(grnTwo);
-			item.setItemId(itemId);
-		
-			
-			ErrorMessage jsonResult = itemService.saveItem(item);
+		Item item = new Item();
+		item.setItemImage(itemImage);
+		item.setItemGrp1(itemGrp1);
+		item.setDelStatus(0);
+		item.setItemGrp2(itemGrp2);
+		item.setItemGrp3(itemGrp3);
+		item.setItemIsUsed(itemIsUsed);
+		item.setMinQty(minQty);
+		item.setItemMrp1(itemMrp1);
+		item.setItemMrp2(itemMrp2);
+		item.setItemMrp3(itemMrp3);
+		item.setItemRate1(itemRate1);
+		item.setItemRate2(itemRate2);
+		item.setItemRate3(itemRate3);
+		item.setItemName(itemName);
+		item.setItemSortId(itemSortId);
+		item.setItemTax1(itemTax1);
+		item.setItemTax2(itemTax2);
+		item.setItemTax3(itemTax3);
+		item.setGrnTwo(grnTwo);
+		item.setItemId(itemId);
 
-			return JsonUtil.javaToJson(jsonResult);
-		}
+		ErrorMessage jsonResult = itemService.saveItem(item);
 
-
+		return JsonUtil.javaToJson(jsonResult);
+	}
 
 	// Configure Franchisee
 	@RequestMapping(value = { "/configureFranchisee" }, method = RequestMethod.POST)
@@ -539,19 +563,18 @@ public class RestApiController {
 			@RequestParam("day") int day, @RequestParam("date") String date, @RequestParam("itemShow") String itemShow)
 			throws ParseException {
 
-	/*	DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		Date fromDate;
-		Date fDate = formatter.parse(date);
+		/*
+		 * DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy"); Date fromDate;
+		 * Date fDate = formatter.parse(date);
+		 * 
+		 * java.sql.Date sqlDate = new java.sql.Date(fDate.getTime());
+		 */
 
-		java.sql.Date sqlDate = new java.sql.Date(fDate.getTime());
-		*/
-		
 		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 		Date fromDate, toDate;
-	    toDate = formatter.parse(date);
-	   // java.sql.Date sqlDate = new java.sql.Date(toDate.getTime());
-		
-		
+		toDate = formatter.parse(date);
+		// java.sql.Date sqlDate = new java.sql.Date(toDate.getTime());
+
 		ConfigureFranchisee configureFr = new ConfigureFranchisee();
 		configureFr.setFrId(frId);
 		configureFr.setMenuId(menuId);
@@ -564,20 +587,20 @@ public class RestApiController {
 		configureFr.setItemShow(itemShow);
 		configureFr.setCatId(catId);
 		configureFr.setSubCatId(11);
-		
+
 		String jsonResult = connfigureService.configureFranchisee(configureFr);
 
 		return jsonResult;
 	}
-	  //Get Configured MenuId 
-		@RequestMapping(value = "/getConfiguredMenuId")
-		public @ResponseBody List<Integer> getConfiguredMenuId(@RequestParam int frId) {
 
-			List<Integer> configuredMenuIdList = connfigureService.findConfiguredMenuId(frId);
-			return configuredMenuIdList;
+	// Get Configured MenuId
+	@RequestMapping(value = "/getConfiguredMenuId")
+	public @ResponseBody List<Integer> getConfiguredMenuId(@RequestParam int frId) {
 
-		}
-	
+		List<Integer> configuredMenuIdList = connfigureService.findConfiguredMenuId(frId);
+		return configuredMenuIdList;
+
+	}
 
 	// Save Route
 	@RequestMapping(value = { "/insertRoute" }, method = RequestMethod.POST)
@@ -586,18 +609,18 @@ public class RestApiController {
 		String jsonResult = "";
 
 		System.out.println("input route " + routeName.toString());
-		
+
 		Route route = new Route();
 		route.setRouteName(routeName);
 		route.setDelStatus(0);
-		
+
 		jsonResult = JsonUtil.javaToJson(route);
 		jsonResult = routeService.save(route);
 
 		return jsonResult;
 	}
 
-	//Save Franchisee
+	// Save Franchisee
 	@RequestMapping(value = { "/saveFranchisee" }, method = RequestMethod.POST)
 	@ResponseBody
 	public String saveFranchisee(@RequestParam("frName") String frName, @RequestParam("frCode") String frCode,
@@ -607,18 +630,19 @@ public class RestApiController {
 			@RequestParam("frKg3") int frKg3, @RequestParam("frKg4") int frKg4, @RequestParam("frEmail") String frEmail,
 			@RequestParam("frPassword") String frPassword, @RequestParam("frMob") String frMob,
 			@RequestParam("frOwner") String frOwner, @RequestParam("frRateCat") int frRateCat,
-			@RequestParam("grnTwo") int grnTwo,@RequestParam("ownerBirthDate") String ownerBirthDate,@RequestParam("fbaLicenseDate") String fbaLicenseDate,
-			@RequestParam("frAgreementDate") String frAgreementDate,@RequestParam("frGstType") int frGstType,@RequestParam("frGstNo") String frGstNo,
-			@RequestParam("stockType") int stockType,
-			@RequestParam("frAddress") String frAddress,@RequestParam("frTarget") int frTarget) throws ParseException {
-		//DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		//java.util.Date date = sdf.parse(frOpeningDate);
-		//java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
-		java.sql.Date sqlOpeningDate=Common.convertToSqlDate(frOpeningDate);
-		java.sql.Date sqlFrAgreementDate=Common.convertToSqlDate(frAgreementDate);
-		java.sql.Date sqlOwnerBirthDate=Common.convertToSqlDate(ownerBirthDate);
-		java.sql.Date SQLfbaLicenseDate=Common.convertToSqlDate(fbaLicenseDate);
-		
+			@RequestParam("grnTwo") int grnTwo, @RequestParam("ownerBirthDate") String ownerBirthDate,
+			@RequestParam("fbaLicenseDate") String fbaLicenseDate,
+			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
+			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
+			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget) throws ParseException {
+		// DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		// java.util.Date date = sdf.parse(frOpeningDate);
+		// java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
+		java.sql.Date sqlOpeningDate = Common.convertToSqlDate(frOpeningDate);
+		java.sql.Date sqlFrAgreementDate = Common.convertToSqlDate(frAgreementDate);
+		java.sql.Date sqlOwnerBirthDate = Common.convertToSqlDate(ownerBirthDate);
+		java.sql.Date SQLfbaLicenseDate = Common.convertToSqlDate(fbaLicenseDate);
+
 		Franchisee franchisee = new Franchisee();
 		// franchisee.setFrId(frId);
 		franchisee.setFrName(frName);
@@ -643,7 +667,7 @@ public class RestApiController {
 		franchisee.setShowItems("");
 		franchisee.setNotShowItems("");
 		franchisee.setFrPasswordKey("");
-		
+
 		franchisee.setFrAddress(frAddress);
 		franchisee.setFrAgreementDate(sqlFrAgreementDate);
 		franchisee.setFrGstNo(frGstNo);
@@ -652,7 +676,7 @@ public class RestApiController {
 		franchisee.setFbaLicenseDate(SQLfbaLicenseDate);
 		franchisee.setStockType(stockType);
 		franchisee.setFrTarget(frTarget);
-		
+
 		System.out.println("" + franchisee.toString());
 		String jsonResult = franchiseeService.saveFranchisee(franchisee);
 
@@ -665,17 +689,16 @@ public class RestApiController {
 	public String saveSpecialCake(@RequestParam("spCode") String spcode, @RequestParam("spName") String spname,
 			@RequestParam("spType") int sptype, @RequestParam("spMinwt") String spminwt,
 			@RequestParam("spMaxwt") String spmaxwt, @RequestParam("spBookb4") String spbookb4,
-			 @RequestParam("spImage") String spimage,
-			@RequestParam("spTax1") double sptax1, @RequestParam("spTax2") double sptax2,
-			@RequestParam("spTax3") double sptax3, @RequestParam("speIdlist") String speidlist,
-			@RequestParam("erpLinkcode") String erplinkcode, @RequestParam("spPhoupload") int spphoupload,
-			@RequestParam("timeTwoappli") int timetwoappli, @RequestParam("isUsed") int isused,
-			@RequestParam("spDesc")String spDesc,@RequestParam("orderQty")int orderQty,
-			@RequestParam("orderDiscount")float orderDiscount,@RequestParam("isCustChoiceCk")int isCustChoiceCk,
-			@RequestParam("isAddonRateAppli")int isAddonRateAppli,
-			@RequestParam("mrpRate1")int mrpRate1,@RequestParam("mrpRate2")int mrpRate2,
-			@RequestParam("mrpRate3")int mrpRate3,@RequestParam("spRate1")int spRate1,
-			@RequestParam("spRate2")int spRate2,@RequestParam("spRate3")int spRate3) {
+			@RequestParam("spImage") String spimage, @RequestParam("spTax1") double sptax1,
+			@RequestParam("spTax2") double sptax2, @RequestParam("spTax3") double sptax3,
+			@RequestParam("speIdlist") String speidlist, @RequestParam("erpLinkcode") String erplinkcode,
+			@RequestParam("spPhoupload") int spphoupload, @RequestParam("timeTwoappli") int timetwoappli,
+			@RequestParam("isUsed") int isused, @RequestParam("spDesc") String spDesc,
+			@RequestParam("orderQty") int orderQty, @RequestParam("orderDiscount") float orderDiscount,
+			@RequestParam("isCustChoiceCk") int isCustChoiceCk, @RequestParam("isAddonRateAppli") int isAddonRateAppli,
+			@RequestParam("mrpRate1") int mrpRate1, @RequestParam("mrpRate2") int mrpRate2,
+			@RequestParam("mrpRate3") int mrpRate3, @RequestParam("spRate1") int spRate1,
+			@RequestParam("spRate2") int spRate2, @RequestParam("spRate3") int spRate3) {
 
 		String jsonResult = "";
 		try {
@@ -727,29 +750,25 @@ public class RestApiController {
 	@ResponseBody
 	public String saveMessage(@RequestParam("msgFrdt") String msgFrdt, @RequestParam("msgTodt") String msgTodt,
 			@RequestParam("msgImage") String msgImage, @RequestParam("msgHeader") String msgHeader,
-			@RequestParam("msgDetails") String msgDetails,@RequestParam("isActive") int isActive) {
+			@RequestParam("msgDetails") String msgDetails, @RequestParam("isActive") int isActive) {
 
 		String jsonResult = "";
 		try {
-			
-			
-			System.out.println("rest from date : "+msgFrdt);
-			System.out.println("rest to date : "+msgTodt);
+
+			System.out.println("rest from date : " + msgFrdt);
+			System.out.println("rest to date : " + msgTodt);
 
 			SimpleDateFormat sdf = new SimpleDateFormat("dd-mm-yyyy");
-			/*Date fromDate =sdf.parse(msgFrdt);
-			Date toDate =sdf.parse(msgTodt);
-			*/
-			
-			java.sql.Date sqlFromDate=Common.convertToSqlDate(msgFrdt);
-			java.sql.Date sqlToDate=Common.convertToSqlDate(msgTodt);
-			
-			System.out.println("sql from date ** : "+sqlFromDate);
-			System.out.println("sql  to date ** : "+sqlToDate);
-			
-			
+			/*
+			 * Date fromDate =sdf.parse(msgFrdt); Date toDate =sdf.parse(msgTodt);
+			 */
 
-			
+			java.sql.Date sqlFromDate = Common.convertToSqlDate(msgFrdt);
+			java.sql.Date sqlToDate = Common.convertToSqlDate(msgTodt);
+
+			System.out.println("sql from date ** : " + sqlFromDate);
+			System.out.println("sql  to date ** : " + sqlToDate);
+
 			Message message = new Message();
 			message.setMsgFrdt(sqlFromDate);
 			message.setMsgTodt(sqlToDate);
@@ -780,18 +799,18 @@ public class RestApiController {
 
 	public @ResponseBody ErrorMessage saveFlavour(@RequestParam("spType") int spType,
 			@RequestParam("spfName") String spfName, @RequestParam("spfAdonRate") Double spfAdonRate) {
-		
+
 		ErrorMessage errorMessage = new ErrorMessage();
-		
+
 		try {
 			Flavour flavour = new Flavour();
 			flavour.setSpType(spType);
 			flavour.setSpfName(spfName);
 			flavour.setSpfAdonRate(spfAdonRate);
 			flavour.setDelStatus(0);
-			
+
 			errorMessage = flavourService.save(flavour);
-			
+
 		} catch (Exception e) {
 			System.out.println("Insert Flavour Error" + e.getMessage());
 			e.printStackTrace();
@@ -805,15 +824,14 @@ public class RestApiController {
 	@ResponseBody
 	public String saveSchedular(@RequestParam("schDate") String schDate, @RequestParam("schTodate") String schTodate,
 			@RequestParam("schOccasionname") String schOccasionname, @RequestParam("schMessage") String schMessage,
-			@RequestParam("schFrdttime") double schFrdttime,@RequestParam("schTodttime") double schTodttime) {
-			String jsonScheduler = "";
-			try {
-				DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-				Date fromDate, toDate;
+			@RequestParam("schFrdttime") double schFrdttime, @RequestParam("schTodttime") double schTodttime) {
+		String jsonScheduler = "";
+		try {
+			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+			Date fromDate, toDate;
 			toDate = formatter.parse(schTodate);
 			fromDate = formatter.parse(schDate);
 
-			
 			Scheduler scheduler = new Scheduler();
 			scheduler.setSchDate(fromDate);
 			scheduler.setSchTodate(toDate);
@@ -823,7 +841,6 @@ public class RestApiController {
 			scheduler.setSchTodttime(schTodttime);
 			scheduler.setIsActive(1);
 			scheduler.setDelStatus(0);
-			
 
 			jsonScheduler = schedulerService.save(scheduler);
 
@@ -840,9 +857,9 @@ public class RestApiController {
 	@RequestMapping(value = { "/insertEvent" }, method = RequestMethod.POST)
 	@ResponseBody
 	public String saveEvent(@RequestParam("speName") String speName) {
-		
+
 		String jsonEvent = "";
-		
+
 		try {
 			Event event = new Event();
 			event.setSpeName(speName);
@@ -857,7 +874,7 @@ public class RestApiController {
 
 	}
 
-   //Show Route List
+	// Show Route List
 	@RequestMapping(value = { "/showRouteList" }, method = RequestMethod.GET)
 	@ResponseBody
 	public RouteList showRouteList() {
@@ -895,10 +912,7 @@ public class RestApiController {
 	public MessageList showMessageList() {
 
 		List<Message> jsonMessageList = messageService.findAllMessage();
-		
-		
-		
-		
+
 		MessageList messageList = new MessageList();
 		messageList.setMessage(jsonMessageList);
 		Info info = new Info();
@@ -977,43 +991,42 @@ public class RestApiController {
 	}
 
 	// Update Item
-		@RequestMapping("/updateItem")
-		public ErrorMessage updateItem(@RequestParam("id") int id, @RequestParam("itemId") String itemId,
-				@RequestParam("itemName") String itemName, @RequestParam("itemGrp1") String itemGrp1,
-				@RequestParam("itemGrp2") String itemGrp2, @RequestParam("itemGrp3") String itemGrp3,
-				@RequestParam("itemRate1") double itemRate1, @RequestParam("itemRate2") double itemRate2,@RequestParam("itemRate3") double itemRate3,
-				@RequestParam("itemMrp1") double itemMrp1, @RequestParam("itemMrp2") double itemMrp2,
-				 @RequestParam("itemMrp3") double itemMrp3, @RequestParam("minQty") int minQty,
-				@RequestParam("itemImage") String itemImage, @RequestParam("itemTax1") double itemTax1,
-				@RequestParam("itemTax2") double itemTax2, @RequestParam("itemTax3") double itemTax3,
-				@RequestParam("itemIsUsed") int itemIsUsed, @RequestParam("itemSortId") double itemSortId,
-				@RequestParam("grnTwo") int grnTwo) {
+	@RequestMapping("/updateItem")
+	public ErrorMessage updateItem(@RequestParam("id") int id, @RequestParam("itemId") String itemId,
+			@RequestParam("itemName") String itemName, @RequestParam("itemGrp1") String itemGrp1,
+			@RequestParam("itemGrp2") String itemGrp2, @RequestParam("itemGrp3") String itemGrp3,
+			@RequestParam("itemRate1") double itemRate1, @RequestParam("itemRate2") double itemRate2,
+			@RequestParam("itemRate3") double itemRate3, @RequestParam("itemMrp1") double itemMrp1,
+			@RequestParam("itemMrp2") double itemMrp2, @RequestParam("itemMrp3") double itemMrp3,
+			@RequestParam("minQty") int minQty, @RequestParam("itemImage") String itemImage,
+			@RequestParam("itemTax1") double itemTax1, @RequestParam("itemTax2") double itemTax2,
+			@RequestParam("itemTax3") double itemTax3, @RequestParam("itemIsUsed") int itemIsUsed,
+			@RequestParam("itemSortId") double itemSortId, @RequestParam("grnTwo") int grnTwo) {
 
-			Item item = itemService.findItems(id);
-			item.setItemImage(itemImage);
-			item.setItemGrp1(itemGrp1);
-			item.setItemGrp2(itemGrp2);
-			item.setItemGrp3(itemGrp3);
-            item.setMinQty(minQty);
-			item.setItemIsUsed(itemIsUsed);
-			item.setItemMrp1(itemMrp1);
-			item.setItemMrp2(itemMrp2);
-			item.setItemMrp3(itemMrp3);
-			item.setItemRate1(itemRate1);
-			item.setItemRate2(itemRate2);
-			item.setItemRate3(itemRate3);
-			item.setItemName(itemName);
-			item.setItemSortId(itemSortId);
-			item.setItemTax1(itemTax1);
-			item.setItemTax2(itemTax2);
-			item.setItemTax3(itemTax3);
-			item.setGrnTwo(grnTwo);
-			item.setItemId(itemId);
-	        
-	
-			ErrorMessage jsonResult = itemService.saveItem(item);
-			return jsonResult;
-		}
+		Item item = itemService.findItems(id);
+		item.setItemImage(itemImage);
+		item.setItemGrp1(itemGrp1);
+		item.setItemGrp2(itemGrp2);
+		item.setItemGrp3(itemGrp3);
+		item.setMinQty(minQty);
+		item.setItemIsUsed(itemIsUsed);
+		item.setItemMrp1(itemMrp1);
+		item.setItemMrp2(itemMrp2);
+		item.setItemMrp3(itemMrp3);
+		item.setItemRate1(itemRate1);
+		item.setItemRate2(itemRate2);
+		item.setItemRate3(itemRate3);
+		item.setItemName(itemName);
+		item.setItemSortId(itemSortId);
+		item.setItemTax1(itemTax1);
+		item.setItemTax2(itemTax2);
+		item.setItemTax3(itemTax3);
+		item.setGrnTwo(grnTwo);
+		item.setItemId(itemId);
+
+		ErrorMessage jsonResult = itemService.saveItem(item);
+		return jsonResult;
+	}
 
 	// Update Sub Categories
 	@RequestMapping("/updateSubCategories")
@@ -1198,7 +1211,7 @@ public class RestApiController {
 		return JsonUtil.javaToJson(info);
 	}
 
-	//Delete Scheduler
+	// Delete Scheduler
 	@RequestMapping("/deleteScheduler")
 	public @ResponseBody String deleteScheduler(@RequestParam int schId) {
 
@@ -1229,7 +1242,7 @@ public class RestApiController {
 
 	}
 
-	//Delete Franchisee
+	// Delete Franchisee
 	@RequestMapping("/deleteFranchisee")
 	public @ResponseBody String deleteFranchisee(@RequestParam int frId) {
 		Info info = new Info();
@@ -1254,7 +1267,7 @@ public class RestApiController {
 		return "" + JsonUtil.javaToJson(info);
 	}
 
-	//Update Event
+	// Update Event
 	@RequestMapping("/updateEvent")
 	public @ResponseBody String updateEvent(@RequestParam int id, @RequestParam String speName) {
 
@@ -1278,8 +1291,8 @@ public class RestApiController {
 		return "" + JsonUtil.javaToJson(info);
 
 	}
-	
-    //Get Event
+
+	// Get Event
 	@RequestMapping(value = "/getEvent")
 	public @ResponseBody Event getEvent(@RequestParam int speId) {
 
@@ -1287,8 +1300,8 @@ public class RestApiController {
 		return event;
 
 	}
-	
-    //Get Rate
+
+	// Get Rate
 	@RequestMapping(value = "/getRate")
 	public @ResponseBody Rates getRate(@RequestParam int sprId) {
 
@@ -1296,7 +1309,8 @@ public class RestApiController {
 		return rates;
 
 	}
-    //Get SubCategories
+
+	// Get SubCategories
 	@RequestMapping(value = "/getSubCategories")
 	public @ResponseBody List<SubCategory> getAllSubCategories(@RequestParam int catId) {
 
@@ -1305,7 +1319,8 @@ public class RestApiController {
 		return subCategoryList;
 
 	}
-    //Get Flavour
+
+	// Get Flavour
 	@RequestMapping(value = "/getFlavour", method = RequestMethod.GET)
 	public @ResponseBody Flavour getFlavour(@RequestParam int spfId) {
 
@@ -1313,7 +1328,8 @@ public class RestApiController {
 		return flavour;
 
 	}
-    //Get Items
+
+	// Get Items
 	@RequestMapping(value = "/getItemsByCatId", method = RequestMethod.POST)
 	public @ResponseBody List<Item> getItems(@RequestParam String itemGrp1) {
 
@@ -1321,8 +1337,8 @@ public class RestApiController {
 		return items;
 
 	}
-	
-    //
+
+	//
 	@RequestMapping(value = "/getFrMenus11", method = RequestMethod.POST)
 	public @ResponseBody FrMenusList getFrMenus(@RequestParam int frId) {
 
@@ -1384,82 +1400,79 @@ public class RestApiController {
 
 	}
 
-
-	//3
+	// 3
 
 	@RequestMapping(value = "/getFrItems", method = RequestMethod.POST)
-		public @ResponseBody List<GetFrItems> getFrItems(@RequestParam List<Integer> items, @RequestParam String frId,
-				@RequestParam String date, @RequestParam String menuId) {
+	public @ResponseBody List<GetFrItems> getFrItems(@RequestParam List<Integer> items, @RequestParam String frId,
+			@RequestParam String date, @RequestParam String menuId) {
 
-			List<ItemWithSubCat> itemList = new ArrayList<>();
-			List<GetFrItems> frItemList = new ArrayList<>();
+		List<ItemWithSubCat> itemList = new ArrayList<>();
+		List<GetFrItems> frItemList = new ArrayList<>();
 
-			List<Orders> orderList = new ArrayList<>();
+		List<Orders> orderList = new ArrayList<>();
 
-			System.out.println("input param items= " + items.toString());
+		System.out.println("input param items= " + items.toString());
+		try {
+			itemList = getFrItemsService.findFrItems(items);
 			try {
-				itemList = getFrItemsService.findFrItems(items);
-				try {
-					orderList = prevItemOrderService.findFrItemOrders(items, frId, date, menuId);
+				orderList = prevItemOrderService.findFrItemOrders(items, frId, date, menuId);
 
-					for (int i = 0; i < itemList.size(); i++) {
+				for (int i = 0; i < itemList.size(); i++) {
 
-						ItemWithSubCat item = itemList.get(i);
+					ItemWithSubCat item = itemList.get(i);
 
-						GetFrItems getFrItems = new GetFrItems();
-						
-						
+					GetFrItems getFrItems = new GetFrItems();
 
-						getFrItems.setDelStatus(item.getDelStatus());
-						getFrItems.setGrnTwo(item.getGrnTwo());
-						getFrItems.setId(item.getId());
-						getFrItems.setItemGrp1(item.getItemGrp1());
-						getFrItems.setItemGrp2(item.getItemGrp2());
-						getFrItems.setItemGrp3(item.getItemGrp3());
-						getFrItems.setItemId(item.getItemId());
-						getFrItems.setItemImage(item.getItemImage());
-						getFrItems.setItemIsUsed(item.getItemIsUsed());
-						getFrItems.setItemMrp1(item.getItemMrp1());
-						getFrItems.setItemMrp2(item.getItemMrp2());
-						getFrItems.setItemMrp3(item.getItemMrp3());
-						getFrItems.setItemName(item.getItemName());
-						getFrItems.setItemRate1(item.getItemRate1());
-						getFrItems.setItemRate2(item.getItemRate2());
-						getFrItems.setItemSortId(item.getItemSortId());
-						getFrItems.setItemTax1(item.getItemTax1());
-						getFrItems.setItemTax2(item.getItemTax2());
-						getFrItems.setItemTax3(item.getItemTax3());
-						getFrItems.setSubCatName(item.getSubCatName());
-	                    getFrItems.setMinQty(item.getMinQty());
-	                    getFrItems.setItemRate3(item.getItemRate3());
-						
-						for (int j = 0; j < orderList.size(); j++) {
+					getFrItems.setDelStatus(item.getDelStatus());
+					getFrItems.setGrnTwo(item.getGrnTwo());
+					getFrItems.setId(item.getId());
+					getFrItems.setItemGrp1(item.getItemGrp1());
+					getFrItems.setItemGrp2(item.getItemGrp2());
+					getFrItems.setItemGrp3(item.getItemGrp3());
+					getFrItems.setItemId(item.getItemId());
+					getFrItems.setItemImage(item.getItemImage());
+					getFrItems.setItemIsUsed(item.getItemIsUsed());
+					getFrItems.setItemMrp1(item.getItemMrp1());
+					getFrItems.setItemMrp2(item.getItemMrp2());
+					getFrItems.setItemMrp3(item.getItemMrp3());
+					getFrItems.setItemName(item.getItemName());
+					getFrItems.setItemRate1(item.getItemRate1());
+					getFrItems.setItemRate2(item.getItemRate2());
+					getFrItems.setItemSortId(item.getItemSortId());
+					getFrItems.setItemTax1(item.getItemTax1());
+					getFrItems.setItemTax2(item.getItemTax2());
+					getFrItems.setItemTax3(item.getItemTax3());
+					getFrItems.setSubCatName(item.getSubCatName());
+					getFrItems.setMinQty(item.getMinQty());
+					getFrItems.setItemRate3(item.getItemRate3());
 
-							if (item.getItemId().equalsIgnoreCase(orderList.get(j).getItemId())) {
+					for (int j = 0; j < orderList.size(); j++) {
 
-								getFrItems.setItemQty(orderList.get(j).getOrderQty());
-								getFrItems.setMenuId(orderList.get(j).getMenuId());
+						if (item.getItemId().equalsIgnoreCase(orderList.get(j).getItemId())) {
 
-							}
+							getFrItems.setItemQty(orderList.get(j).getOrderQty());
+							getFrItems.setMenuId(orderList.get(j).getMenuId());
 
 						}
 
-						frItemList.add(getFrItems);
-
 					}
 
-				} catch (Exception e) {
-					System.out.println("Exception fr Prev Item order " + e.getMessage());
+					frItemList.add(getFrItems);
+
 				}
-				System.out.println("All Prev Order Record" + orderList.toString());
 
 			} catch (Exception e) {
-				System.out.println("Exception fr Items " + e.getClass());
+				System.out.println("Exception fr Prev Item order " + e.getMessage());
 			}
+			System.out.println("All Prev Order Record" + orderList.toString());
 
-			return frItemList;
-
+		} catch (Exception e) {
+			System.out.println("Exception fr Items " + e.getClass());
 		}
+
+		return frItemList;
+
+	}
 
 	@RequestMapping("/getMessage")
 	public @ResponseBody Message getMessage(@RequestParam int msgId) {
@@ -1505,21 +1518,20 @@ public class RestApiController {
 		allFranchiseeAndMenu.setSubCategories(subCategories);
 		return allFranchiseeAndMenu;
 	}
+
 	@RequestMapping(value = { "/getFranchiseeAndMenu" }, method = RequestMethod.GET)
 	public @ResponseBody FranchiseeAndMenuList findFranchiseeAndMenu() {
-	
-		FranchiseeAndMenuList franchiseeAndMenu=new FranchiseeAndMenuList();
+
+		FranchiseeAndMenuList franchiseeAndMenu = new FranchiseeAndMenuList();
 		List<Franchisee> allFranchisee = franchiseeService.findAllFranchisee();
-		
-		
+
 		List<AllMenus> allMenu = menuService.findAllMenus();
-	
+
 		franchiseeAndMenu.setAllMenu(allMenu);
 		franchiseeAndMenu.setAllFranchisee(allFranchisee);
 		return franchiseeAndMenu;
-	}	
-		
-		
+	}
+
 	// Get Item
 	@RequestMapping(value = { "/getItem" }, method = RequestMethod.GET)
 	public @ResponseBody Item findItem(@RequestParam("id") int id) {
@@ -1531,11 +1543,11 @@ public class RestApiController {
 	@RequestMapping(value = { "/getFranchisee" }, method = RequestMethod.GET)
 	public @ResponseBody Franchisee findFranchisee(@RequestParam("frId") int frId) {
 		Franchisee franchisee = franchiseeService.findFranchisee(frId);
-		
-		String openDate=franchisee.getFrOpeningDate().toString();
-	//	String strDate=Common.convertToDMY(openDate);
-	//	java.sql.Date sqlDate=Common.convertToSqlDate(strDate);
-		//franchisee.setFrOpeningDate(sqlDate);
+
+		String openDate = franchisee.getFrOpeningDate().toString();
+		// String strDate=Common.convertToDMY(openDate);
+		// java.sql.Date sqlDate=Common.convertToSqlDate(strDate);
+		// franchisee.setFrOpeningDate(sqlDate);
 		return franchisee;
 	}
 
@@ -1649,22 +1661,25 @@ public class RestApiController {
 	@RequestMapping(value = { "/updateMessage" }, method = RequestMethod.POST)
 	public @ResponseBody String updateMessage(@RequestParam int id, @RequestParam String msgFrdt,
 			@RequestParam String msgTodt, @RequestParam String msgImage, @RequestParam String msgHeader,
-			@RequestParam String msgDetails,@RequestParam("isActive") int isActive) {
+			@RequestParam String msgDetails, @RequestParam("isActive") int isActive) {
 
 		Message message = messageService.findMessage(id);
 		Info info = new Info();
 		try {
-			/*DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
-			Date fromDate, toDate;*/
+			/*
+			 * DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); Date fromDate,
+			 * toDate;
+			 */
 
-			java.sql.Date sqlFromDate=Common.convertToSqlDate(msgFrdt);
-			java.sql.Date sqlToDate=Common.convertToSqlDate(msgTodt);
-			
-			System.out.println("sql from date ** : "+sqlFromDate);
-			System.out.println("sql  to date ** : "+sqlToDate);
-			/*toDate = formatter.parse(msgTodt);
-			fromDate = formatter.parse(msgFrdt);*/
-			
+			java.sql.Date sqlFromDate = Common.convertToSqlDate(msgFrdt);
+			java.sql.Date sqlToDate = Common.convertToSqlDate(msgTodt);
+
+			System.out.println("sql from date ** : " + sqlFromDate);
+			System.out.println("sql  to date ** : " + sqlToDate);
+			/*
+			 * toDate = formatter.parse(msgTodt); fromDate = formatter.parse(msgFrdt);
+			 */
+
 			message.setMsgFrdt(sqlFromDate);
 			message.setMsgTodt(sqlToDate);
 			message.setMsgImage(msgImage);
@@ -1693,26 +1708,25 @@ public class RestApiController {
 
 	// Update Schedular
 	@RequestMapping("/updateScheduler")
-	public @ResponseBody String updateScheduler(@RequestParam("id") int id,
-			@RequestParam("schDate") String schDate,
-			@RequestParam("schToDate") String schToDate,
-			@RequestParam("schOccasionName") String schOccasionName, 
-			@RequestParam("schMessage") String schMessage,
-			@RequestParam("schFrdtTime") double schFrdtTime,@RequestParam("schTodtTime") 
-			double schTodtTime,@RequestParam("isActive") int isActive) {
+	public @ResponseBody String updateScheduler(@RequestParam("id") int id, @RequestParam("schDate") String schDate,
+			@RequestParam("schToDate") String schToDate, @RequestParam("schOccasionName") String schOccasionName,
+			@RequestParam("schMessage") String schMessage, @RequestParam("schFrdtTime") double schFrdtTime,
+			@RequestParam("schTodtTime") double schTodtTime, @RequestParam("isActive") int isActive) {
 
 		Scheduler scheduler = schedulerService.findScheduler(id);
 		Info info = new Info();
 		try {
 			DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
 			Date fromDate, toDate;
-			
+
 			toDate = formatter.parse(schToDate);
 			fromDate = formatter.parse(schDate);
-			
-			/*java.sql.Date sqlFromDate=Common.convertToSqlDate(schDate);
-			java.sql.Date sqlToDate=Common.convertToSqlDate(schToDate);*/
-			
+
+			/*
+			 * java.sql.Date sqlFromDate=Common.convertToSqlDate(schDate); java.sql.Date
+			 * sqlToDate=Common.convertToSqlDate(schToDate);
+			 */
+
 			scheduler.setSchDate(fromDate);
 			scheduler.setSchTodate(toDate);
 			scheduler.setSchOccasionname(schOccasionName);
@@ -1720,7 +1734,7 @@ public class RestApiController {
 			scheduler.setSchFrdttime(schFrdtTime);
 			scheduler.setSchTodttime(schTodtTime);
 			scheduler.setIsActive(isActive);
-			
+
 			String jsonResult = schedulerService.save(scheduler);
 			if (jsonResult == null) {
 				info.setError(true);
@@ -1766,21 +1780,21 @@ public class RestApiController {
 		}
 		return JsonUtil.javaToJson(info);
 	}
-	
 
 	// Update Special Cake
 	@RequestMapping("/updateSpecialCake")
 	public @ResponseBody String updateSpecialCake(@RequestParam int id, @RequestParam String spname,
-			@RequestParam int sptype, @RequestParam String spminwt, @RequestParam String spmaxwt,@RequestParam String spCode,
-			@RequestParam String spbookb4, @RequestParam String spimage,
+			@RequestParam int sptype, @RequestParam String spminwt, @RequestParam String spmaxwt,
+			@RequestParam String spCode, @RequestParam String spbookb4, @RequestParam String spimage,
 			@RequestParam double sptax1, @RequestParam double sptax2, @RequestParam double sptax3,
 			@RequestParam String spidlist, @RequestParam String erplinkcode, @RequestParam int spphoupload,
-			@RequestParam int timetwoappli,@RequestParam("spDesc")String spDesc,@RequestParam("orderQty")int orderQty,
-			@RequestParam("orderDiscount")float orderDiscount,@RequestParam("isCustChoiceCk")int isCustChoiceCk,
-			@RequestParam("isAddonRateAppli")int isAddonRateAppli,
-			@RequestParam("mrpRate1")int mrpRate1,@RequestParam("mrpRate2")int mrpRate2,
-			@RequestParam("mrpRate3")int mrpRate3,@RequestParam("spRate1")int spRate1,
-			@RequestParam("spRate2")int spRate2,@RequestParam("spRate3")int spRate3,@RequestParam("isUsed")int isUsed) {
+			@RequestParam int timetwoappli, @RequestParam("spDesc") String spDesc,
+			@RequestParam("orderQty") int orderQty, @RequestParam("orderDiscount") float orderDiscount,
+			@RequestParam("isCustChoiceCk") int isCustChoiceCk, @RequestParam("isAddonRateAppli") int isAddonRateAppli,
+			@RequestParam("mrpRate1") int mrpRate1, @RequestParam("mrpRate2") int mrpRate2,
+			@RequestParam("mrpRate3") int mrpRate3, @RequestParam("spRate1") int spRate1,
+			@RequestParam("spRate2") int spRate2, @RequestParam("spRate3") int spRate3,
+			@RequestParam("isUsed") int isUsed) {
 
 		SpecialCake specialCake = specialcakeService.findSpecialCake(id);
 		Info info = new Info();
@@ -1802,7 +1816,7 @@ public class RestApiController {
 			specialCake.setTimeTwoappli(timetwoappli);
 			specialCake.setBaseCode("0");
 			specialCake.setIsUsed(isUsed);
-			
+
 			specialCake.setSpDesc(spDesc);
 			specialCake.setOrderQty(orderQty);
 			specialCake.setOrderDiscount(orderDiscount);
@@ -1814,16 +1828,16 @@ public class RestApiController {
 			specialCake.setSpRate1(spRate1);
 			specialCake.setSpRate2(spRate2);
 			specialCake.setSpRate3(spRate3);
-			
+
 			String jsonResult = specialcakeService.save(specialCake);
-			
+
 			if (jsonResult == null) {
-				
+
 				info.setError(true);
 				info.setMessage("Special cake update failed");
-				
+
 			} else if (jsonResult != null) {
-				
+
 				info.setError(false);
 				info.setMessage("Special cake successfully updated");
 			}
@@ -1916,81 +1930,85 @@ public class RestApiController {
 	@ResponseBody
 	public String updateFranchisee(@RequestParam("frId") int frId, @RequestParam("frName") String frName,
 			@RequestParam("frCode") String frCode, @RequestParam("frOpeningDate") String frOpeningDate,
-	  		@RequestParam("frRate") int frRate, @RequestParam("frImage") String frImage,
+			@RequestParam("frRate") int frRate, @RequestParam("frImage") String frImage,
 			@RequestParam("frRouteId") int frRouteId, @RequestParam("frCity") String frCity,
 			@RequestParam("frKg1") int frKg1, @RequestParam("frKg2") int frKg2, @RequestParam("frKg3") int frKg3,
 			@RequestParam("frKg4") int frKg4, @RequestParam("frEmail") String frEmail,
 			@RequestParam("frPassword") String frPassword, @RequestParam("frMob") String frMob,
 			@RequestParam("frOwner") String frOwner, @RequestParam("frRateCat") int frRateCat,
-			@RequestParam("grnTwo") int grnTwo, @RequestParam("delStatus") int delStatus,@RequestParam("ownerBirthDate") String ownerBirthDate,@RequestParam("fbaLicenseDate") String fbaLicenseDate,
-			@RequestParam("frAgreementDate") String frAgreementDate,@RequestParam("frGstType") int frGstType,@RequestParam("frGstNo") String frGstNo,
-			@RequestParam("stockType") int stockType,
-			@RequestParam("frAddress") String frAddress,@RequestParam("frTarget") int frTarget) {
-		String jsonResult="";  
+			@RequestParam("grnTwo") int grnTwo, @RequestParam("delStatus") int delStatus,
+			@RequestParam("ownerBirthDate") String ownerBirthDate,
+			@RequestParam("fbaLicenseDate") String fbaLicenseDate,
+			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
+			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
+			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget) {
+		String jsonResult = "";
 		try {
-			
-		System.out.println("inside update fr rest controller:1721 line");
-		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		Date date =sdf.parse(frOpeningDate);
-		System.out.println("parsed Date line no 1728 : "+date);
-		java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
-		Date utilFrAgreementDate =sdf.parse(frAgreementDate);
-		Date utilOwnerBirthDate =sdf.parse(ownerBirthDate);
-		Date utilFbaLicenseDate =sdf.parse(fbaLicenseDate);
-		/*java.sql.Date sqlFrAgreementDate=Common.convertToSqlDate(frAgreementDate);
-		java.sql.Date sqlOwnerBirthDate=Common.convertToSqlDate(ownerBirthDate);
-		java.sql.Date SQLfrLicenseDate=Common.convertToSqlDate(frLicenseDate);*/
-/*
-		System.out.println("fr opening as of form "+frOpeningDate);
-		java.sql.Date sqlDate=Common.convertToSqlDate(frOpeningDate);
-		
-		
-		System.out.println("sql date for update fr ****** "+sqlDate);*/
-		
-		
-		Franchisee franchisee = franchiseeService.findFranchisee(frId);
-		
-		// franchisee.setFrId(frId);
-		franchisee.setFrName(frName);
-		franchisee.setFrCode(frCode);
-		franchisee.setFrOpeningDate(date);
-		franchisee.setFrRate(frRate);
-		franchisee.setFrImage(frImage);
-		franchisee.setFrRouteId(frRouteId);
-		franchisee.setFrCity(frCity);
-		franchisee.setFrKg1(frKg1);
-		franchisee.setFrKg2(frKg2);
-		franchisee.setFrKg3(frKg3);
-		franchisee.setFrKg4(frKg4);
-		franchisee.setFrEmail(frEmail);
-		franchisee.setFrPassword(frPassword);
-		franchisee.setFrMob(frMob);
-		franchisee.setFrOwner(frOwner);
-		franchisee.setFrRateCat(frRateCat);
-		franchisee.setGrnTwo(grnTwo);
-		franchisee.setFrRmn1("");
-		franchisee.setFrOpening(0);
-		franchisee.setShowItems("");
-		franchisee.setNotShowItems("");
-		franchisee.setFrPasswordKey("");
-		franchisee.setDelStatus(delStatus);
-		
-		franchisee.setFrAddress(frAddress);
-		franchisee.setFrAgreementDate(utilFrAgreementDate);
-		franchisee.setFrGstNo(frGstNo);
-		franchisee.setFrGstType(frGstType);
-		franchisee.setOwnerBirthDate(utilOwnerBirthDate);
-		franchisee.setFbaLicenseDate(utilFbaLicenseDate);
-		franchisee.setStockType(stockType);
-		franchisee.setFrTarget(frTarget);
-		System.out.println("" + franchisee.toString());
-		jsonResult = franchiseeService.saveFranchisee(franchisee);
-		}catch (Exception e) {
-			System.out.println("update scheduler rest exce "+ e.getMessage());
+
+			System.out.println("inside update fr rest controller:1721 line");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = sdf.parse(frOpeningDate);
+			System.out.println("parsed Date line no 1728 : " + date);
+			java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
+			Date utilFrAgreementDate = sdf.parse(frAgreementDate);
+			Date utilOwnerBirthDate = sdf.parse(ownerBirthDate);
+			Date utilFbaLicenseDate = sdf.parse(fbaLicenseDate);
+			/*
+			 * java.sql.Date sqlFrAgreementDate=Common.convertToSqlDate(frAgreementDate);
+			 * java.sql.Date sqlOwnerBirthDate=Common.convertToSqlDate(ownerBirthDate);
+			 * java.sql.Date SQLfrLicenseDate=Common.convertToSqlDate(frLicenseDate);
+			 */
+			/*
+			 * System.out.println("fr opening as of form "+frOpeningDate); java.sql.Date
+			 * sqlDate=Common.convertToSqlDate(frOpeningDate);
+			 * 
+			 * 
+			 * System.out.println("sql date for update fr ****** "+sqlDate);
+			 */
+
+			Franchisee franchisee = franchiseeService.findFranchisee(frId);
+
+			// franchisee.setFrId(frId);
+			franchisee.setFrName(frName);
+			franchisee.setFrCode(frCode);
+			franchisee.setFrOpeningDate(date);
+			franchisee.setFrRate(frRate);
+			franchisee.setFrImage(frImage);
+			franchisee.setFrRouteId(frRouteId);
+			franchisee.setFrCity(frCity);
+			franchisee.setFrKg1(frKg1);
+			franchisee.setFrKg2(frKg2);
+			franchisee.setFrKg3(frKg3);
+			franchisee.setFrKg4(frKg4);
+			franchisee.setFrEmail(frEmail);
+			franchisee.setFrPassword(frPassword);
+			franchisee.setFrMob(frMob);
+			franchisee.setFrOwner(frOwner);
+			franchisee.setFrRateCat(frRateCat);
+			franchisee.setGrnTwo(grnTwo);
+			franchisee.setFrRmn1("");
+			franchisee.setFrOpening(0);
+			franchisee.setShowItems("");
+			franchisee.setNotShowItems("");
+			franchisee.setFrPasswordKey("");
+			franchisee.setDelStatus(delStatus);
+
+			franchisee.setFrAddress(frAddress);
+			franchisee.setFrAgreementDate(utilFrAgreementDate);
+			franchisee.setFrGstNo(frGstNo);
+			franchisee.setFrGstType(frGstType);
+			franchisee.setOwnerBirthDate(utilOwnerBirthDate);
+			franchisee.setFbaLicenseDate(utilFbaLicenseDate);
+			franchisee.setStockType(stockType);
+			franchisee.setFrTarget(frTarget);
+			System.out.println("" + franchisee.toString());
+			jsonResult = franchiseeService.saveFranchisee(franchisee);
+		} catch (Exception e) {
+			System.out.println("update scheduler rest exce " + e.getMessage());
 		}
 
 		return jsonResult;
-		//return "abc";
+		// return "abc";
 	}
 
 	// 27 aug
@@ -2051,15 +2069,16 @@ public class RestApiController {
 			@RequestParam String date) {
 		GetOrderList orderList = new GetOrderList();
 		try {
-	/*		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
-
-			Date date1;
-			date1 = formatter.parse(date);*/
+			/*
+			 * DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+			 * 
+			 * Date date1; date1 = formatter.parse(date);
+			 */
 			System.out.println("date str :" + date);
 
-			String strDate= Common.convertToYMD(date);
-			System.out.println("Converted date "+strDate);
-			
+			String strDate = Common.convertToYMD(date);
+			System.out.println("Converted date " + strDate);
+
 			System.out.println("fr id in rest " + frId.toString());
 			List<GetOrder> jsonOrderList = getOrderService.findOrder2(frId, menuId, strDate);
 
@@ -2083,11 +2102,10 @@ public class RestApiController {
 	public GetOrderList getOrderListForAllFr(@RequestParam List<Integer> menuId, @RequestParam String date) {
 		GetOrderList orderList = new GetOrderList();
 		try {
-			
-			String strDate= Common.convertToYMD(date);
-			System.out.println("Converted date "+strDate);
-			
-			
+
+			String strDate = Common.convertToYMD(date);
+			System.out.println("Converted date " + strDate);
+
 			List<GetOrder> jsonOrderList = getOrderService.findOrderAllFr(menuId, strDate);
 
 			orderList.setGetOrder(jsonOrderList);
@@ -2112,8 +2130,8 @@ public class RestApiController {
 		SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
 		try {
 
-			String strDate= Common.convertToYMD(prodDate);
-			System.out.println("Converted date "+strDate);
+			String strDate = Common.convertToYMD(prodDate);
+			System.out.println("Converted date " + strDate);
 
 			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeOrder(frId, strDate);
 
@@ -2137,8 +2155,8 @@ public class RestApiController {
 	public SpCakeOrdersBeanList getAllFrSpCakeOrderList(@RequestParam String prodDate) {
 		SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
 		try {
-			String strDate= Common.convertToYMD(prodDate);
-			System.out.println("Converted date "+strDate);
+			String strDate = Common.convertToYMD(prodDate);
+			System.out.println("Converted date " + strDate);
 
 			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeOrderAllFr(strDate);
 
@@ -2162,8 +2180,6 @@ public class RestApiController {
 	@ResponseBody
 	public SchedulerList showLatestNews() {
 
-		
-		
 		java.sql.Date date1 = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		System.out.println("date " + date1);
 
@@ -2179,7 +2195,7 @@ public class RestApiController {
 
 		return schedulerList;
 	}
-	
+
 	// 18 sept sachin
 	@RequestMapping(value = { "/showOrderCounts" }, method = RequestMethod.GET)
 	@ResponseBody
@@ -2189,24 +2205,21 @@ public class RestApiController {
 		System.out.println("date " + cDate);
 
 		List<OrderCounts> orderCountList = orderCountService.findOrderCount(cDate);
-		
+
 		System.out.println("order count  list" + orderCountList.toString());
 
 		OrderCountsList ordercountList = new OrderCountsList();
 		ordercountList.setOrderCount(orderCountList);
-		
+
 		Info info = new Info();
-		
+
 		info.setError(false);
 		info.setMessage("order count displayed successfully");
-		
+
 		ordercountList.setInfo(info);
 
 		return ordercountList;
 	}
-	
-	
-	
 
 	// Message news 9 sept front end
 
