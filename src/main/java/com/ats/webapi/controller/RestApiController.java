@@ -1312,10 +1312,9 @@ public class RestApiController {
 
 	// Get SubCategories
 	@RequestMapping(value = "/getSubCategories")
-	public @ResponseBody List<SubCategory> getAllSubCategories(@RequestParam int catId) {
+	public @ResponseBody CategoryList getAllSubCategories(@RequestParam int catId) {
 
-		List<SubCategory> subCategoryList = new ArrayList<SubCategory>();
-		subCategoryList = subCategoryService.findSubCategoryByCatId(catId);
+		CategoryList subCategoryList = subCategoryService.findSubCategoryByCatId(catId);
 		return subCategoryList;
 
 	}

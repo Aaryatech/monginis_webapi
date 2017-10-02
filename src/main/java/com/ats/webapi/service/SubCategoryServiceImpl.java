@@ -6,8 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.model.CategoryList;
 import com.ats.webapi.model.ErrorMessage;
+import com.ats.webapi.model.MCategory;
 import com.ats.webapi.model.SubCategory;
+import com.ats.webapi.repository.CategoryRepository;
 import com.ats.webapi.repository.SubCategoryRepository;
 import com.ats.webapi.util.JsonUtil;
 
@@ -16,6 +19,10 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
 	@Autowired
 	private SubCategoryRepository subCategoryRepository;
+
+	@Autowired
+    private CategoryRepository categoryRepository;
+    
 	String jsonUser = "{}";
 
 	public String saveSubCategory(SubCategory subCategory) {
@@ -88,9 +95,19 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 
 
 	@Override
-	public List<SubCategory> findSubCategoryByCatId(int catId) {
-		  List<SubCategory> subCategoryList=subCategoryRepository.findSubCategoryByCatId(catId);
-		return subCategoryList;
+	public CategoryList findSubCategoryByCatId(int catId) {
+		  List<MCategory> subCategoryList=categoryRepository.findSubCategoryByCatId(catId);
+		  CategoryList subCategoryListByCateId=new CategoryList();
+		  if(subCategoryList!=null)
+		  {
+			  ErrorMessage errorMessage=new ErrorMessage();
+			  errorMessage.setError(false);
+			  errorMessage.setMessage("SubCategories Found Successfully");
+			  
+			  subCategoryListByCateId.setmCategoryList(subCategoryList);
+			  subCategoryListByCateId.setErrorMessage(errorMessage);
+		  }
+		return subCategoryListByCateId;
 	}
 
 
