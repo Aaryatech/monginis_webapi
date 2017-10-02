@@ -107,6 +107,15 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 			  subCategoryListByCateId.setmCategoryList(subCategoryList);
 			  subCategoryListByCateId.setErrorMessage(errorMessage);
 		  }
+		  else
+		  { 
+			  ErrorMessage errorMessage=new ErrorMessage();
+		      errorMessage.setError(true);
+		      errorMessage.setMessage("SubCategories Not Found ");
+		  
+		      subCategoryListByCateId.setErrorMessage(errorMessage);
+			  
+		  }
 		return subCategoryListByCateId;
 	}
 

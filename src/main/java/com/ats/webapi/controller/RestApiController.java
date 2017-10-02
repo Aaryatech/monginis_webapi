@@ -23,6 +23,7 @@ import com.ats.webapi.model.AllFrIdNameList;
 import com.ats.webapi.model.AllFranchiseeAndMenu;
 import com.ats.webapi.model.AllMenuJsonResponse;
 import com.ats.webapi.model.AllMenus;
+import com.ats.webapi.model.AllRegularSpCkItems;
 import com.ats.webapi.model.CategoryList;
 import com.ats.webapi.model.ConfigureFrBean;
 import com.ats.webapi.model.ConfigureFrBeanList;
@@ -63,6 +64,7 @@ import com.ats.webapi.model.OrderCountsList;
 import com.ats.webapi.model.OrderSpecialCake;
 import com.ats.webapi.model.Orders;
 import com.ats.webapi.model.Rates;
+import com.ats.webapi.model.RegularSpCake;
 import com.ats.webapi.model.Route;
 import com.ats.webapi.model.RouteList;
 import com.ats.webapi.model.Scheduler;
@@ -104,6 +106,8 @@ import com.ats.webapi.service.OrderService;
 import com.ats.webapi.service.PrevItemOrderService;
 import com.ats.webapi.service.RateList;
 import com.ats.webapi.service.RateService;
+import com.ats.webapi.service.RegularSpCkItemsService;
+import com.ats.webapi.service.RegularSpCkOrderService;
 import com.ats.webapi.service.RouteService;
 import com.ats.webapi.service.SchedulerService;
 import com.ats.webapi.service.SpCakeOrdersService;
@@ -213,6 +217,11 @@ public class RestApiController {
 	@Autowired
 	GenerateBillService generateBillService;
 	
+	@Autowired
+	RegularSpCkItemsService regularSpCkItemsService;
+	
+	@Autowired
+	RegularSpCkOrderService regularSpCkOrderService;
 	
 	@RequestMapping(value = "/generateBill", method = RequestMethod.POST)
 	public @ResponseBody GenerateBillList generateBill(@RequestParam("frId")List<Integer> frId,
@@ -244,7 +253,15 @@ public class RestApiController {
 		
 	}
 	
-	
+	@RequestMapping(value = "/getRegularSpCkItems", method = RequestMethod.GET)
+	public @ResponseBody AllRegularSpCkItems getRegularSpCkItems(@RequestParam List<Integer> items,@RequestParam int itemGrp2){
+		
+		AllRegularSpCkItems allRegularSpCkItems=regularSpCkItemsService.findRegularSpCkItems(items,itemGrp2);
+		
+		return allRegularSpCkItems;
+		
+		
+	}
 	
 	
 
@@ -514,6 +531,24 @@ public class RestApiController {
 		return jsonResult;
 	}
 
+	// Place SpCake Order
+		@RequestMapping(value = { "/insertRegularSpCake" }, method = RequestMethod.POST)
+
+		public @ResponseBody ErrorMessage saveRegularSpCake(@RequestBody RegularSpCake regularSpCake)
+				throws ParseException, JsonParseException, JsonMappingException, IOException {
+
+			System.out.println("Inside Place Order " + regularSpCake.toString());
+
+			ErrorMessage errorMessage = regularSpCkOrderService.placeRegularSpCakeOrder(regularSpCake);
+
+			return errorMessage;
+
+		}
+
+	
+	
+	
+	
 	// Save spMessage
 	@RequestMapping(value = { "/insertspMessage" }, method = RequestMethod.POST)
 	@ResponseBody
