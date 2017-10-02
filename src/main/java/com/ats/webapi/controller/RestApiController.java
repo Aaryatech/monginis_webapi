@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
+import com.ats.webapi.model.AllFrIdName;
+import com.ats.webapi.model.AllFrIdNameList;
 import com.ats.webapi.model.AllFranchiseeAndMenu;
 import com.ats.webapi.model.AllMenuJsonResponse;
 import com.ats.webapi.model.AllMenus;
@@ -77,7 +79,7 @@ import com.ats.webapi.model.SpecialCakeList;
 import com.ats.webapi.model.StockDetails;
 import com.ats.webapi.model.SubCategory;
 import com.ats.webapi.model.User;
-
+import com.ats.webapi.service.AllFrIdNameService;
 import com.ats.webapi.service.CategoryService;
 import com.ats.webapi.service.ConfigureFrBeanService;
 import com.ats.webapi.service.ConfigureFranchiseeService;
@@ -202,6 +204,25 @@ public class RestApiController {
 	
 	@Autowired
 	GetFrItemStockConfigurationService getFrItemStockConfigurationService;
+	
+	@Autowired
+	AllFrIdNameService allFrIdNameService;
+	
+	@RequestMapping(value = "/getAllFrIdName", method = RequestMethod.POST)
+	public @ResponseBody AllFrIdNameList getAllFrIdName(){
+		
+		
+		AllFrIdNameList allFrIdNamesList=allFrIdNameService.getFrIdAndName();
+		
+		
+		return allFrIdNamesList;
+		
+		
+	}
+	
+	
+	
+	
 
 	@RequestMapping(value = "/getAllFrItemConfPost", method = RequestMethod.POST)
 	public @ResponseBody List<FrStockResponse> getAllFrItemConfPost(@RequestParam List<String> itemId) {
