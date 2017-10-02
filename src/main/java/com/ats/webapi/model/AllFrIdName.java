@@ -13,17 +13,19 @@ public class AllFrIdName {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="fr_id")
-	private int fr_id;
+	private int frId;
 	
 	@Column(name="fr_name")
 	String frName;
 
-	public int getFr_id() {
-		return fr_id;
+	
+
+	public int getFrId() {
+		return frId;
 	}
 
-	public void setFr_id(int fr_id) {
-		this.fr_id = fr_id;
+	public void setFrId(int frId) {
+		this.frId = frId;
 	}
 
 	public String getFrName() {
