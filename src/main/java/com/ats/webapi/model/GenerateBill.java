@@ -54,7 +54,6 @@ public class GenerateBill {
 	int  subCatId;
 	
 	
-	
 
 	public int getCatId() {
 		return catId;
