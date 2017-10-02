@@ -43,6 +43,7 @@ import com.ats.webapi.model.FrStockResponse;
 import com.ats.webapi.model.Franchisee;
 import com.ats.webapi.model.FranchiseeAndMenuList;
 import com.ats.webapi.model.FranchiseeList;
+import com.ats.webapi.model.GenerateBillList;
 import com.ats.webapi.model.GetFrItems;
 import com.ats.webapi.model.GetOrder;
 import com.ats.webapi.model.GetOrderList;
@@ -88,6 +89,7 @@ import com.ats.webapi.service.FlavourService;
 import com.ats.webapi.service.FrItemStockConfigurePostService;
 import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.FranchiseeService;
+import com.ats.webapi.service.GenerateBillService;
 import com.ats.webapi.service.GetFrItemStockConfigurationService;
 import com.ats.webapi.service.GetFrItemsService;
 import com.ats.webapi.service.GetOrderService;
@@ -208,7 +210,28 @@ public class RestApiController {
 	@Autowired
 	AllFrIdNameService allFrIdNameService;
 	
-	@RequestMapping(value = "/getAllFrIdName", method = RequestMethod.POST)
+	@Autowired
+	GenerateBillService generateBillService;
+	
+	
+	@RequestMapping(value = "/generateBill", method = RequestMethod.POST)
+	public @ResponseBody GenerateBillList generateBill(@RequestParam("frId")List<Integer> frId,
+			@RequestParam("menuId")List<Integer>menuId,@RequestParam("delDate")String delDate){
+		
+		
+		delDate=Common.convertToYMD(delDate);
+		System.out.println("delivery Date after convert "+delDate);
+		
+		GenerateBillList billList=generateBillService.generateBillService(frId, menuId, delDate);
+				
+	return billList;
+		
+		
+	}
+	
+	
+	
+	@RequestMapping(value = "/getAllFrIdName", method = RequestMethod.GET)
 	public @ResponseBody AllFrIdNameList getAllFrIdName(){
 		
 		
