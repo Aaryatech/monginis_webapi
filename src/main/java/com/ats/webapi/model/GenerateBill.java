@@ -41,7 +41,52 @@ public class GenerateBill {
 	@Column(name="item_name")
 	String  itemName;
 	
+	@Column(name="item_grp1")
+	int  catId;
 	
+	@Column(name="fr_code")
+	String  frCode;
+	
+	@Column(name="fr_rate_cat")
+	int  rateType;
+	
+	@Column(name="item_grp2")
+	int  subCatId;
+	
+	
+	
+
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
+	public String getFrCode() {
+		return frCode;
+	}
+
+	public void setFrCode(String frCode) {
+		this.frCode = frCode;
+	}
+
+	public int getRateType() {
+		return rateType;
+	}
+
+	public void setRateType(int rateType) {
+		this.rateType = rateType;
+	}
+
+	public int getSubCatId() {
+		return subCatId;
+	}
+
+	public void setSubCatId(int subCatId) {
+		this.subCatId = subCatId;
+	}
 
 	public int getOrder_id() {
 		return order_id;

@@ -220,6 +220,7 @@ public class RestApiController {
 		
 		
 		delDate=Common.convertToYMD(delDate);
+		
 		System.out.println("delivery Date after convert "+delDate);
 		
 		GenerateBillList billList=generateBillService.generateBillService(frId, menuId, delDate);
