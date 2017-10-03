@@ -45,6 +45,7 @@ import com.ats.webapi.model.Franchisee;
 import com.ats.webapi.model.FranchiseeAndMenuList;
 import com.ats.webapi.model.FranchiseeList;
 import com.ats.webapi.model.GenerateBillList;
+import com.ats.webapi.model.GetBillHeaderList;
 import com.ats.webapi.model.GetFrItems;
 import com.ats.webapi.model.GetOrder;
 import com.ats.webapi.model.GetOrderList;
@@ -92,6 +93,7 @@ import com.ats.webapi.service.FrItemStockConfigurePostService;
 import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.GenerateBillService;
+import com.ats.webapi.service.GetBillHeaderService;
 import com.ats.webapi.service.GetFrItemStockConfigurationService;
 import com.ats.webapi.service.GetFrItemsService;
 import com.ats.webapi.service.GetOrderService;
@@ -222,6 +224,26 @@ public class RestApiController {
 	
 	@Autowired
 	RegularSpCkOrderService regularSpCkOrderService;
+	
+	@Autowired
+	GetBillHeaderService getBillHeaderService;
+	
+	
+	@RequestMapping(value = "/getBillHeader", method = RequestMethod.POST)
+	public @ResponseBody GetBillHeaderList getBillHeader(@RequestParam("frId")List<String> frId,@RequestParam("fromDate")String fromDate,
+	@RequestParam("toDate")String toDate){
+		
+		
+		fromDate=Common.convertToYMD(fromDate);
+		toDate=Common.convertToYMD(toDate);
+		
+		
+		GetBillHeaderList billHeaderList=getBillHeaderService.getBillHeader(frId, fromDate, toDate);
+				
+	return billHeaderList;
+		
+		
+	}
 	
 	
 
