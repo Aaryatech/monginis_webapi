@@ -64,6 +64,9 @@ import com.ats.webapi.model.OrderCounts;
 import com.ats.webapi.model.OrderCountsList;
 import com.ats.webapi.model.OrderSpecialCake;
 import com.ats.webapi.model.Orders;
+import com.ats.webapi.model.PostBillDataCommon;
+import com.ats.webapi.model.PostBillDetail;
+import com.ats.webapi.model.PostBillHeader;
 import com.ats.webapi.model.Rates;
 import com.ats.webapi.model.RegularSpCake;
 import com.ats.webapi.model.Route;
@@ -105,6 +108,7 @@ import com.ats.webapi.service.ModuleService;
 import com.ats.webapi.service.ModulesList;
 import com.ats.webapi.service.OrderCountsService;
 import com.ats.webapi.service.OrderService;
+import com.ats.webapi.service.PostBillDataService;
 import com.ats.webapi.service.PrevItemOrderService;
 import com.ats.webapi.service.RateList;
 import com.ats.webapi.service.RateService;
@@ -227,6 +231,49 @@ public class RestApiController {
 	
 	@Autowired
 	GetBillHeaderService getBillHeaderService;
+	
+	@Autowired
+	PostBillDataService postBillDataService;
+	
+	
+	
+	
+	@RequestMapping(value = { "/insertBillData" }, method = RequestMethod.POST)
+
+	public @ResponseBody Info postBillData(@RequestBody PostBillDataCommon postBillDataCommon)
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
+
+		List<PostBillHeader> jsonBillHeader;
+		List<PostBillDetail> jsonBillDetail;
+
+		jsonBillHeader = postBillDataService.saveBillHeader(postBillDataCommon.getPostBillHeadersList(),postBillDataCommon.getPostBillDetailsList());
+		
+	
+
+		Info info = new Info();
+
+		if (jsonBillHeader.size() > 0) {
+
+			info.setError(false);
+			info.setMessage("post bill header inserted  Successfully");
+
+		}
+
+		else {
+
+			info.setError(true);
+			info.setMessage("Error in post bill header insertion : RestApi");
+
+		}
+		
+		
+		return info;
+
+	}
+
+	
+	
+	
 	
 	
 	@RequestMapping(value = "/getBillHeader", method = RequestMethod.POST)
