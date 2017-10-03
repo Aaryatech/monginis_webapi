@@ -11,13 +11,13 @@ import com.ats.webapi.model.GenerateBillList;
 
 public interface GenerateBillService {
 	
-	GenerateBillList generateBillService(List<Integer> frId,List<Integer> menuId, String delDate);
+	GenerateBillList generateBillService(List<String> frId,List<String> menuId, String delDate);
 	
-	GenerateBillList generateBillServiceForAllFr(List<Integer> menuId, String delDate);
+	GenerateBillList generateBillServiceForAllFr(List<String> menuId, String delDate);
 	
 	GenerateBillList generateBillForAllFrAllMenu(@Param("delDate")String delDate);
 
-	GenerateBillList generateBillForAllMenu(List<Integer> frId,String delDate);
+	GenerateBillList generateBillForAllMenu(List<String> frId,String delDate);
 	
 
 }

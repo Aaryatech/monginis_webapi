@@ -226,7 +226,7 @@ public class RestApiController {
 	
 
 	@RequestMapping(value = "/generateBillForAllMenu", method = RequestMethod.POST)
-	public @ResponseBody GenerateBillList generateBillForAllMenu(@RequestParam("frId")List<Integer> frId,@RequestParam("delDate")String delDate){
+	public @ResponseBody GenerateBillList generateBillForAllMenu(@RequestParam("frId")List<String> frId,@RequestParam("delDate")String delDate){
 		
 		
 		delDate=Common.convertToYMD(delDate);
@@ -258,7 +258,7 @@ public class RestApiController {
 	
 	@RequestMapping(value = "/generateBillForAllFr", method = RequestMethod.POST)
 	public @ResponseBody GenerateBillList generateBillForAllFr(
-			@RequestParam("menuId")List<Integer>menuId,@RequestParam("delDate")String delDate){
+			@RequestParam("menuId")List<String>menuId,@RequestParam("delDate")String delDate){
 		
 		
 		delDate=Common.convertToYMD(delDate);
@@ -273,8 +273,8 @@ public class RestApiController {
 	}
 	
 	@RequestMapping(value = "/generateBill", method = RequestMethod.POST)
-	public @ResponseBody GenerateBillList generateBill(@RequestParam("frId")List<Integer> frId,
-			@RequestParam("menuId")List<Integer>menuId,@RequestParam("delDate")String delDate){
+	public @ResponseBody GenerateBillList generateBill(@RequestParam("frId")List<String> frId,
+			@RequestParam("menuId")List<String>menuId,@RequestParam("delDate")String delDate){
 		
 		
 		delDate=Common.convertToYMD(delDate);
@@ -302,7 +302,7 @@ public class RestApiController {
 		
 	}
 	
-	@RequestMapping(value = "/getRegularSpCkItems", method = RequestMethod.GET)
+	@RequestMapping(value = "/getRegularSpCkItems", method = RequestMethod.POST)
 	public @ResponseBody AllRegularSpCkItems getRegularSpCkItems(@RequestParam List<Integer> items,@RequestParam int itemGrp2){
 		
 		AllRegularSpCkItems allRegularSpCkItems=regularSpCkItemsService.findRegularSpCkItems(items,itemGrp2);

@@ -18,7 +18,7 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 	GenerateBillRepository billRepository;
 
 	@Override
-	public GenerateBillList generateBillService(List<Integer> frId,List<Integer> menuId, String delDate) {
+	public GenerateBillList generateBillService(List<String> frId,List<String> menuId, String delDate) {
 	
 		GenerateBillList generateBillList=new GenerateBillList();
 		
@@ -54,7 +54,7 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 	}
 
 	@Override
-	public GenerateBillList generateBillServiceForAllFr(List<Integer> menuId, String delDate) {
+	public GenerateBillList generateBillServiceForAllFr(List<String> menuId, String delDate) {
 		
 GenerateBillList generateBillList=new GenerateBillList();
 		
@@ -122,7 +122,7 @@ GenerateBillList generateBillList=new GenerateBillList();
 	}
 
 	@Override
-	public GenerateBillList generateBillForAllMenu(List<Integer> frId, String delDate) {
+	public GenerateBillList generateBillForAllMenu(List<String> frId, String delDate) {
 		
 GenerateBillList generateBillList=new GenerateBillList();
 		

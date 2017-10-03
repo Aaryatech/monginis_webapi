@@ -20,7 +20,7 @@ public interface GenerateBillRepository extends JpaRepository<GenerateBill, Inte
 			+ " t_order.menu_id=m_fr_menu_show.menu_id AND t_order.item_id=m_item.id  " + 
 			"",nativeQuery=true)
 	
-	List<GenerateBill> generateBill(@Param("frId")List<Integer> frId,@Param("menuId")List<Integer> menuId,@Param("delDate")String delDate);
+	List<GenerateBill> generateBill(@Param("frId")List<String> frId,@Param("menuId")List<String> menuId,@Param("delDate")String delDate);
 
 	
 	@Query(value=" SELECT t_order.order_id ,t_order.fr_id, t_order.menu_id ,t_order.item_id,t_order.order_qty,"
@@ -31,7 +31,7 @@ public interface GenerateBillRepository extends JpaRepository<GenerateBill, Inte
 			+ " t_order.menu_id=m_fr_menu_show.menu_id AND t_order.item_id=m_item.id  " + 
 			"",nativeQuery=true)
 	
-	List<GenerateBill> generateBillForAllFr(@Param("menuId")List<Integer> menuId,@Param("delDate")String delDate);
+	List<GenerateBill> generateBillForAllFr(@Param("menuId")List<String> menuId,@Param("delDate")String delDate);
 
 	
 	@Query(value=" SELECT t_order.order_id ,t_order.fr_id, t_order.menu_id ,t_order.item_id,t_order.order_qty,"
@@ -52,7 +52,7 @@ public interface GenerateBillRepository extends JpaRepository<GenerateBill, Inte
 			+ " t_order.menu_id=m_fr_menu_show.menu_id AND t_order.item_id=m_item.id  " + 
 			"",nativeQuery=true)
 	
-	List<GenerateBill> generateBillForAllMenu(@Param("frId")List<Integer> frId,@Param("delDate")String delDate);
+	List<GenerateBill> generateBillForAllMenu(@Param("frId")List<String> frId,@Param("delDate")String delDate);
 
 	
 	
