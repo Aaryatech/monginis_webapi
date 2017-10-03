@@ -28,17 +28,21 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 		
 		
 		if(generateBills!=null) {
+			
 			generateBillList.setGenerateBills(generateBills);
 			
 			info.setError(false);
-			info.setMessage("Success in bill generation");
+			info.setMessage("Success in bill generation for selected Franchisees");
+			
 			generateBillList.setInfo(info);
 			
 			
 		}
 		else {
+			
 			info.setError(true);
 			info.setMessage("failed to generate bill");
+			
 			generateBillList.setInfo(info);
 		}
 		
@@ -47,6 +51,108 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 		
 		
 		return generateBillList;
+	}
+
+	@Override
+	public GenerateBillList generateBillServiceForAllFr(List<Integer> menuId, String delDate) {
+		
+GenerateBillList generateBillList=new GenerateBillList();
+		
+		List<GenerateBill> generateBills=billRepository.generateBillForAllFr(menuId, delDate);
+		
+		Info info=new Info();
+		
+		
+		if(generateBills!=null) {
+			
+			generateBillList.setGenerateBills(generateBills);
+			
+			info.setError(false);
+			info.setMessage("Success in bill generation for All Fr");
+			
+			generateBillList.setInfo(info);
+			
+			
+		}
+		else {
+			
+			info.setError(true);
+			info.setMessage("failed to generate bill");
+			
+			generateBillList.setInfo(info);
+		}
+		
+		
+	return generateBillList;
+	}
+
+	@Override
+	public GenerateBillList generateBillForAllFrAllMenu(String delDate) {
+		
+		GenerateBillList generateBillList=new GenerateBillList();
+		
+		List<GenerateBill> generateBills=billRepository.generateBillForAllFrAllMenu(delDate);
+		
+		Info info=new Info();
+		
+		
+		if(generateBills!=null) {
+			
+			generateBillList.setGenerateBills(generateBills);
+			
+			info.setError(false);
+			info.setMessage("Success in bill generation for All Fr All Menu");
+			
+			generateBillList.setInfo(info);
+			
+			
+		}
+		else {
+			
+			info.setError(true);
+			info.setMessage("failed to generate bill");
+			
+			generateBillList.setInfo(info);
+		}
+		
+		
+	return generateBillList;
+		
+	
+	}
+
+	@Override
+	public GenerateBillList generateBillForAllMenu(List<Integer> frId, String delDate) {
+		
+GenerateBillList generateBillList=new GenerateBillList();
+		
+		List<GenerateBill> generateBills=billRepository.generateBillForAllMenu(frId, delDate);
+		
+		Info info=new Info();
+		
+		
+		if(generateBills!=null) {
+			
+			generateBillList.setGenerateBills(generateBills);
+			
+			info.setError(false);
+			info.setMessage("Success in bill generation for All Fr All Menu and selected Franchisee");
+			
+			generateBillList.setInfo(info);
+			
+			
+		}
+		else {
+			
+			info.setError(true);
+			info.setMessage("failed to generate bill");
+			
+			generateBillList.setInfo(info);
+		}
+		
+		
+	return generateBillList;
+	
 	}
 	
 

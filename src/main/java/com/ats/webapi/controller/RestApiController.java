@@ -223,6 +223,55 @@ public class RestApiController {
 	@Autowired
 	RegularSpCkOrderService regularSpCkOrderService;
 	
+	
+
+	@RequestMapping(value = "/generateBillForAllMenu", method = RequestMethod.POST)
+	public @ResponseBody GenerateBillList generateBillForAllMenu(@RequestParam("frId")List<Integer> frId,@RequestParam("delDate")String delDate){
+		
+		
+		delDate=Common.convertToYMD(delDate);
+		
+		System.out.println("delivery Date after convert "+delDate);
+		
+		GenerateBillList billList=generateBillService.generateBillForAllMenu(frId, delDate);
+				
+	return billList;
+		
+		
+	}
+	
+
+	@RequestMapping(value = "/generateBillForAllFrAllMenu", method = RequestMethod.POST)
+	public @ResponseBody GenerateBillList generateBillForAllFrAllMenu(@RequestParam("delDate")String delDate){
+		
+		
+		delDate=Common.convertToYMD(delDate);
+		
+		System.out.println("delivery Date after convert "+delDate);
+		
+		GenerateBillList billList=generateBillService.generateBillForAllFrAllMenu(delDate);
+				
+	return billList;
+		
+		
+	}
+	
+	@RequestMapping(value = "/generateBillForAllFr", method = RequestMethod.POST)
+	public @ResponseBody GenerateBillList generateBillForAllFr(
+			@RequestParam("menuId")List<Integer>menuId,@RequestParam("delDate")String delDate){
+		
+		
+		delDate=Common.convertToYMD(delDate);
+		
+		System.out.println("delivery Date after convert "+delDate);
+		
+		GenerateBillList billList=generateBillService.generateBillServiceForAllFr(menuId, delDate);
+				
+	return billList;
+		
+		
+	}
+	
 	@RequestMapping(value = "/generateBill", method = RequestMethod.POST)
 	public @ResponseBody GenerateBillList generateBill(@RequestParam("frId")List<Integer> frId,
 			@RequestParam("menuId")List<Integer>menuId,@RequestParam("delDate")String delDate){
