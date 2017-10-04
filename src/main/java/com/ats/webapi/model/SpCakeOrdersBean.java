@@ -34,7 +34,7 @@ public class SpCakeOrdersBean implements Serializable {
 	private String spName;
 	
 	//@Column(name="sp_flavour")
-	private String spFlavour;
+	private String spfName;
 	
 	//@Column(name="sp_events")
 	private String spEvents;
@@ -99,13 +99,15 @@ public class SpCakeOrdersBean implements Serializable {
 	}
 
 
-	public String getSpFlavour() {
-		return spFlavour;
+	
+	
+	public String getSpfName() {
+		return spfName;
 	}
 
 
-	public void setSpFlavour(String spFlavour) {
-		this.spFlavour = spFlavour;
+	public void setSpfName(String spfName) {
+		this.spfName = spfName;
 	}
 
 
@@ -162,24 +164,6 @@ public class SpCakeOrdersBean implements Serializable {
 	}
 
 
-	@Override
-	public String toString() {
-		return "SpCakeOrdersBean [spVno=" + spVno + ", spCode=" + spCode + ", spName=" + spName + ", spFlavour="
-				+ spFlavour + ", spEvents=" + spEvents + ", spDeliverydt=" + spDeliverydt + ", spPrice=" + spPrice
-				+ ", spAddrate=" + spAddrate + ", frName=" + frName + ", itemId=" + itemId + "]";
-	}
-
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 

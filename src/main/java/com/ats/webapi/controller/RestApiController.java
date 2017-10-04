@@ -45,6 +45,7 @@ import com.ats.webapi.model.Franchisee;
 import com.ats.webapi.model.FranchiseeAndMenuList;
 import com.ats.webapi.model.FranchiseeList;
 import com.ats.webapi.model.GenerateBillList;
+import com.ats.webapi.model.GetBillDetailsList;
 import com.ats.webapi.model.GetBillHeaderList;
 import com.ats.webapi.model.GetFrItems;
 import com.ats.webapi.model.GetOrder;
@@ -96,6 +97,7 @@ import com.ats.webapi.service.FrItemStockConfigurePostService;
 import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.GenerateBillService;
+import com.ats.webapi.service.GetBillDetailsService;
 import com.ats.webapi.service.GetBillHeaderService;
 import com.ats.webapi.service.GetFrItemStockConfigurationService;
 import com.ats.webapi.service.GetFrItemsService;
@@ -234,6 +236,21 @@ public class RestApiController {
 	
 	@Autowired
 	PostBillDataService postBillDataService;
+	
+	@Autowired
+	GetBillDetailsService getBillDetailsService;
+	
+	
+	@RequestMapping(value = "/getBillDetails", method = RequestMethod.POST)
+	public @ResponseBody GetBillDetailsList getBillDetails(@RequestParam("billNo")int billNo){
+		System.out.println("inside rest");
+		
+		GetBillDetailsList billDetailsList=getBillDetailsService.getBillDetailList(billNo);
+		
+		
+	return billDetailsList;
+	
+	}
 	
 	
 	
