@@ -17,7 +17,7 @@ public interface GenerateBillRepository extends JpaRepository<GenerateBill, Inte
 			+ " m_item.item_name,m_item.item_grp1,m_item.item_grp2 from t_order,m_franchisee, m_fr_menu_show ,"
 			+ " m_item where t_order.fr_id IN (:frId) AND t_order.delivery_date=:delDate "
 			+ " AND t_order.menu_id IN (:menuId) AND m_franchisee.fr_id=t_order.fr_id AND "
-			+ " t_order.menu_id=m_fr_menu_show.menu_id AND t_order.item_id=m_item.id  " + 
+			+ " t_order.menu_id=m_fr_menu_show.menu_id AND t_order.item_id=m_item.id AND t_order.is_bill_generated=0 " + 
 			"",nativeQuery=true)
 	
 	List<GenerateBill> generateBill(@Param("frId")List<String> frId,@Param("menuId")List<String> menuId,@Param("delDate")String delDate);
@@ -28,7 +28,7 @@ public interface GenerateBillRepository extends JpaRepository<GenerateBill, Inte
 			+ " m_item.item_name,m_item.item_grp1,m_item.item_grp2 from t_order,m_franchisee, m_fr_menu_show ,"
 			+ " m_item where t_order.delivery_date=:delDate "
 			+ " AND t_order.menu_id IN (:menuId) AND m_franchisee.fr_id=t_order.fr_id AND "
-			+ " t_order.menu_id=m_fr_menu_show.menu_id AND t_order.item_id=m_item.id  " + 
+			+ " t_order.menu_id=m_fr_menu_show.menu_id AND t_order.item_id=m_item.id AND t_order.is_bill_generated=0  " + 
 			"",nativeQuery=true)
 	
 	List<GenerateBill> generateBillForAllFr(@Param("menuId")List<String> menuId,@Param("delDate")String delDate);
@@ -39,7 +39,7 @@ public interface GenerateBillRepository extends JpaRepository<GenerateBill, Inte
 			+ " m_item.item_name,m_item.item_grp1,m_item.item_grp2 from t_order,m_franchisee, m_fr_menu_show ,"
 			+ " m_item where t_order.delivery_date=:delDate "
 			+ "  AND m_franchisee.fr_id=t_order.fr_id AND "
-			+ " t_order.menu_id=m_fr_menu_show.menu_id AND t_order.item_id=m_item.id  " + 
+			+ " t_order.menu_id=m_fr_menu_show.menu_id AND t_order.item_id=m_item.id AND t_order.is_bill_generated=0  " + 
 			"",nativeQuery=true)
 	
 	List<GenerateBill> generateBillForAllFrAllMenu(@Param("delDate")String delDate);
@@ -49,7 +49,7 @@ public interface GenerateBillRepository extends JpaRepository<GenerateBill, Inte
 			+ " m_item.item_name,m_item.item_grp1,m_item.item_grp2 from t_order,m_franchisee, m_fr_menu_show ,"
 			+ " m_item where t_order.fr_id IN (:frId) AND t_order.delivery_date=:delDate "
 			+ " AND m_franchisee.fr_id=t_order.fr_id AND "
-			+ " t_order.menu_id=m_fr_menu_show.menu_id AND t_order.item_id=m_item.id  " + 
+			+ " t_order.menu_id=m_fr_menu_show.menu_id AND t_order.item_id=m_item.id AND t_order.is_bill_generated=0  " + 
 			"",nativeQuery=true)
 	
 	List<GenerateBill> generateBillForAllMenu(@Param("frId")List<String> frId,@Param("delDate")String delDate);

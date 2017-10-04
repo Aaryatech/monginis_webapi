@@ -57,7 +57,7 @@ public class GetBillHeader implements Serializable {
 	private int DelStatus;
 	
 	@Column(name="remark")
-	private int remark;
+	private String remark;
 
 	public int getBillNo() {
 		return billNo;
@@ -139,11 +139,13 @@ public class GetBillHeader implements Serializable {
 		DelStatus = delStatus;
 	}
 
-	public int getRemark() {
+	
+
+	public String getRemark() {
 		return remark;
 	}
 
-	public void setRemark(int remark) {
+	public void setRemark(String remark) {
 		this.remark = remark;
 	}
 

@@ -36,6 +36,9 @@ public class PostBillDetail {
 	@Column(name="bill_qty")
 	private int billQty;
 	
+	@Column(name="order_id")
+	private int orderId;
+	
 	
 	@Column(name="rate_type")
 	private int rateType;
@@ -237,42 +240,17 @@ public class PostBillDetail {
 	}
 	
 	
-	// constructor remove after testing
-	public PostBillDetail(int billDetailNo, int billNo, int menuId, int catId, int itemId, int orderQty, int billQty,
-			int rateType, float rate, float mrp, float total, float sgstPer, float sgstRs, float cgstPer, float cgstRs,
-			float igstPer, float igstRs, float totalWithoutTax, String remark, int delStaus) {
-		super();
-		this.billDetailNo = billDetailNo;
-		this.billNo = billNo;
-		this.menuId = menuId;
-		this.catId = catId;
-		this.itemId = itemId;
-		this.orderQty = orderQty;
-		this.billQty = billQty;
-		this.rateType = rateType;
-		this.rate = rate;
-		this.mrp = mrp;
-		this.total = total;
-		this.sgstPer = sgstPer;
-		this.sgstRs = sgstRs;
-		this.cgstPer = cgstPer;
-		this.cgstRs = cgstRs;
-		this.igstPer = igstPer;
-		this.igstRs = igstRs;
-		this.totalWithoutTax = totalWithoutTax;
-		this.remark = remark;
-		this.delStaus = delStaus;
+	
+
+	public int getOrderId() {
+		return orderId;
 	}
 
-	@Override
-	public String toString() {
-		return "PostBillDetail [billDetailNo=" + billDetailNo + ", billNo=" + billNo + ", menuId=" + menuId + ", catId="
-				+ catId + ", itemId=" + itemId + ", orderQty=" + orderQty + ", billQty=" + billQty + ", rateType="
-				+ rateType + ", rate=" + rate + ", mrp=" + mrp + ", total=" + total + ", sgstPer=" + sgstPer
-				+ ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs + ", igstPer=" + igstPer
-				+ ", igstRs=" + igstRs + ", totalWithoutTax=" + totalWithoutTax + ", remark=" + remark + ", delStaus="
-				+ delStaus + "]";
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
+
+	
 	
 
 	

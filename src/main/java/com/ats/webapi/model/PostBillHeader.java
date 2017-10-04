@@ -156,32 +156,8 @@ public class PostBillHeader implements Serializable {
 	}
 
 	
-	// constructor remove after testing
-	public PostBillHeader(int billNo, int taxApplicable, int invoiceNo, Date billDate, int frId, String frCode,
-			float total, float totalWithoutTax, float totalTax, int status, int delStatus, String remark) {
-		super();
-		this.billNo = billNo;
-		this.taxApplicable = taxApplicable;
-		this.invoiceNo = invoiceNo;
-		this.billDate = billDate;
-		this.frId = frId;
-		this.frCode = frCode;
-		this.total = total;
-		this.totalWithoutTax = totalWithoutTax;
-		this.totalTax = totalTax;
-		this.status = status;
-		DelStatus = delStatus;
-		this.remark = remark;
-	}
-
-	@Override
-	public String toString() {
-		return "PostBillHeader [billNo=" + billNo + ", taxApplicable=" + taxApplicable + ", invoiceNo=" + invoiceNo
-				+ ", billDate=" + billDate + ", frId=" + frId + ", frCode=" + frCode + ", total=" + total
-				+ ", totalWithoutTax=" + totalWithoutTax + ", totalTax=" + totalTax + ", status=" + status
-				+ ", DelStatus=" + DelStatus + ", remark=" + remark + "]";
-	}
 	
+
 
 	
 	
