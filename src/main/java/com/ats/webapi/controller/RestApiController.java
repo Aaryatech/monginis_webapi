@@ -24,6 +24,7 @@ import com.ats.webapi.model.AllFranchiseeAndMenu;
 import com.ats.webapi.model.AllMenuJsonResponse;
 import com.ats.webapi.model.AllMenus;
 import com.ats.webapi.model.AllRegularSpCkItems;
+import com.ats.webapi.model.BillDetailUpdate;
 import com.ats.webapi.model.CategoryList;
 import com.ats.webapi.model.ConfigureFrBean;
 import com.ats.webapi.model.ConfigureFrBeanList;
@@ -40,11 +41,13 @@ import com.ats.webapi.model.GetFrItemStockConfiguration;
 import com.ats.webapi.model.FrItemStockConfigurePostList;
 import com.ats.webapi.model.FrMenus;
 import com.ats.webapi.model.FrMenusList;
+import com.ats.webapi.model.FrNameIdByRouteIdList;
 import com.ats.webapi.model.FrStockResponse;
 import com.ats.webapi.model.Franchisee;
 import com.ats.webapi.model.FranchiseeAndMenuList;
 import com.ats.webapi.model.FranchiseeList;
 import com.ats.webapi.model.GenerateBillList;
+import com.ats.webapi.model.GetBillDetails;
 import com.ats.webapi.model.GetBillDetailsList;
 import com.ats.webapi.model.GetBillHeaderList;
 import com.ats.webapi.model.GetFrItems;
@@ -90,6 +93,7 @@ import com.ats.webapi.model.StockDetails;
 import com.ats.webapi.model.SubCategory;
 import com.ats.webapi.model.User;
 import com.ats.webapi.service.AllFrIdNameService;
+import com.ats.webapi.service.BillDetailUpdateService;
 import com.ats.webapi.service.CategoryService;
 import com.ats.webapi.service.ConfigureFrBeanService;
 import com.ats.webapi.service.ConfigureFranchiseeService;
@@ -97,8 +101,10 @@ import com.ats.webapi.service.EventService;
 import com.ats.webapi.service.FlavourService;
 import com.ats.webapi.service.FrItemStockConfigurePostService;
 import com.ats.webapi.service.FrItemStockConfigureService;
+import com.ats.webapi.service.FrNameIdByRouteIdService;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.GenerateBillService;
+import com.ats.webapi.service.GetBillDetailOnlyService;
 import com.ats.webapi.service.GetBillDetailsService;
 import com.ats.webapi.service.GetBillHeaderService;
 import com.ats.webapi.service.GetFrItemStockConfigurationService;
@@ -113,6 +119,7 @@ import com.ats.webapi.service.ModulesList;
 import com.ats.webapi.service.OrderCountsService;
 import com.ats.webapi.service.OrderService;
 import com.ats.webapi.service.PostBillDataService;
+import com.ats.webapi.service.PostBillUpdateService;
 import com.ats.webapi.service.PrevItemOrderService;
 import com.ats.webapi.service.RateList;
 import com.ats.webapi.service.RateService;
@@ -241,6 +248,84 @@ public class RestApiController {
 	
 	@Autowired
 	GetBillDetailsService getBillDetailsService;
+	
+	@Autowired
+	FrNameIdByRouteIdService frNameIdByRouteIdService;
+	
+	@Autowired
+	PostBillUpdateService postBillUpdateService;
+	
+	@Autowired
+	GetBillDetailOnlyService billDetailOnlyService;
+	
+	
+	@RequestMapping(value = "/getBillDetailOnly", method = RequestMethod.POST)
+	public @ResponseBody String getBillDetailOnly(@RequestParam("billDetailNo") int billDetailNo){
+		System.out.println("inside rest");
+		
+		PostBillDetail billDetailsList=billDetailOnlyService.getByBillDetailNo(billDetailNo);
+		
+		
+	return JsonUtil.javaToJson(billDetailsList);
+	
+	}
+	
+	
+	@RequestMapping(value = { "/updateBillDetails" }, method = RequestMethod.POST)
+	public @ResponseBody String updateBillDetails(@RequestParam int billNo,@RequestParam int billDetailNo, @RequestParam int  billQty,
+			@RequestParam float total, @RequestParam float totalWithoutTax) {
+
+		PostBillDetail billDetailsList=billDetailOnlyService.getByBillDetailNo(billDetailNo);
+		
+		//List<GetBillDetails> getBillDetailList=billDetails.getGetBillDetails();
+		
+		Info info = new Info();
+		
+		PostBillDetail postBillUpdate=new PostBillDetail();
+		
+		postBillUpdate.setBillDetailNo(billDetailNo);
+		postBillUpdate.setBillNo(billNo);
+		postBillUpdate.setBillQty(billQty);
+		postBillUpdate.setTotal(total);
+		postBillUpdate.setTotalWithoutTax(totalWithoutTax);
+		postBillUpdate.setCatId(billDetailsList.getCatId());
+		postBillUpdate.setCgstPer(billDetailsList.getCgstPer());
+		postBillUpdate.setCgstRs(billDetailsList.getCgstRs());
+		postBillUpdate.setDelStaus(billDetailsList.getDelStaus());
+		postBillUpdate.setIgstPer(billDetailsList.getIgstPer());
+		postBillUpdate.setIgstRs(billDetailsList.getIgstRs());
+		postBillUpdate.setItemId(billDetailsList.getItemId());
+		postBillUpdate.setMenuId(billDetailsList.getMenuId());
+		postBillUpdate.setMrp(billDetailsList.getMrp());
+		postBillUpdate.setOrderId(billDetailsList.getOrderId());
+		postBillUpdate.setOrderQty(billDetailsList.getOrderQty());
+		postBillUpdate.setRate(billDetailsList.getRate());
+		postBillUpdate.setRateType(billDetailsList.getRateType());
+		postBillUpdate.setRemark(billDetailsList.getRemark());
+		postBillUpdate.setSgstPer(billDetailsList.getSgstPer());
+		postBillUpdate.setSgstRs(billDetailsList.getSgstRs());
+		
+		
+		
+		
+		
+		
+		
+		PostBillDetail postBillUpdated=postBillUpdateService.save(postBillUpdate);
+		
+		return "jj";
+		
+	
+	}
+	
+	@RequestMapping(value = "/getFrNameIdByRouteId", method = RequestMethod.POST)
+	public @ResponseBody FrNameIdByRouteIdList getFrNameIdByRouteId(@RequestParam("routeId")int routeId){
+		
+		FrNameIdByRouteIdList frNameIdByRouteIdList=frNameIdByRouteIdService.getFrNameIdByRouteId(routeId);
+	
+	return frNameIdByRouteIdList;
+	
+	}
 	
 	
 	@RequestMapping(value = "/getBillDetails", method = RequestMethod.POST)
@@ -2364,6 +2449,38 @@ public class RestApiController {
 		return spCakeOrderList;
 
 	}
+	
+	//getAllFrSpCakeOrderList
+	
+	
+	@RequestMapping(value = { "/getAllFrSpCakeOrderList" }, method = RequestMethod.POST)
+	@ResponseBody
+	public SpCakeOrdersBeanList getAllFrSpCakeOrderList(@RequestParam String prodDate) {
+		SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
+		try {
+
+			String strDate = Common.convertToYMD(prodDate);
+			System.out.println("Converted date " + strDate);
+
+			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeOrderAllFr(strDate);
+
+			spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
+			Info info = new Info();
+			info.setError(false);
+			info.setMessage("Sp Cake Order list displayed Successfully");
+			spCakeOrderList.setInfo(info);
+
+		} catch (Exception e) {
+
+			System.out.println("exception in order list rest controller" + e.getMessage());
+		}
+		return spCakeOrderList;
+
+	}
+	
+	
+	
+	
 	@RequestMapping(value = { "/getRegSpCkOrderList" }, method = RequestMethod.POST)
 	@ResponseBody
 	public RegSpCkOrderResponse getRegSpCkOrderList(@RequestParam List<Integer> frId, @RequestParam String prodDate) {

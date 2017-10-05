@@ -8,10 +8,13 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Table(name="t_bill_detail")
 public class GetBillDetails implements Serializable {
 	
 	
@@ -28,7 +31,7 @@ public class GetBillDetails implements Serializable {
 		
 		@Column(name="cat_id")
 		private int catId;
-		
+
 		@Column(name="bill_date")
 		private Date billDate;
 		
@@ -84,6 +87,7 @@ public class GetBillDetails implements Serializable {
 		
 		@Column(name="del_status")
 		private int delStaus;
+		
 		
 		@Column(name="item_name")
 		private String itemName;
