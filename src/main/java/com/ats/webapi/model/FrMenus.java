@@ -51,9 +51,18 @@ public class FrMenus {
 	@Column(name = "is_same_day_applicable")
 	private int isSameDayApplicable;
 
+	@Column(name = "day")
+	private String day;
 	
 	
-	
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
 	public int getIsSameDayApplicable() {
 		return isSameDayApplicable;
 	}
@@ -163,8 +172,11 @@ public class FrMenus {
 		return "FrMenus [settingId=" + settingId + ", fromTime=" + fromTime + ", toTime=" + toTime + ", itemShow="
 				+ itemShow + ", menuDesc=" + menuDesc + ", menuImage=" + menuImage + ", selectedMenuImage="
 				+ selectedMenuImage + ", menuTitle=" + menuTitle + ", settingType=" + settingType + ", frId=" + frId
-				+ ", menuId=" + menuId + ", catId=" + catId + "]";
+				+ ", menuId=" + menuId + ", catId=" + catId + ", isSameDayApplicable=" + isSameDayApplicable + ", day="
+				+ day + "]";
 	}
+
+	
 
 	
 	
