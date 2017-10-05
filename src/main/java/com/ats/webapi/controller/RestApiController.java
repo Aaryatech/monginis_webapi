@@ -69,7 +69,9 @@ import com.ats.webapi.model.PostBillDataCommon;
 import com.ats.webapi.model.PostBillDetail;
 import com.ats.webapi.model.PostBillHeader;
 import com.ats.webapi.model.Rates;
+import com.ats.webapi.model.RegSpCkOrderResponse;
 import com.ats.webapi.model.RegularSpCake;
+import com.ats.webapi.model.RegularSpCkOrders;
 import com.ats.webapi.model.Route;
 import com.ats.webapi.model.RouteList;
 import com.ats.webapi.model.Scheduler;
@@ -2362,29 +2364,47 @@ public class RestApiController {
 		return spCakeOrderList;
 
 	}
-
-	// for all fr sp cake search 7sep
-	@RequestMapping(value = { "/getAllFrSpCakeOrderList" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/getRegSpCkOrderList" }, method = RequestMethod.POST)
 	@ResponseBody
-	public SpCakeOrdersBeanList getAllFrSpCakeOrderList(@RequestParam String prodDate) {
-		SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
+	public RegSpCkOrderResponse getRegSpCkOrderList(@RequestParam List<Integer> frId, @RequestParam String prodDate) {
+		
+		RegSpCkOrderResponse regSpCakeOrderRes = new RegSpCkOrderResponse();
+		
+		try {
+
+			String strDate = Common.convertToYMD(prodDate);
+			System.out.println("Converted date " + strDate);
+
+			 regSpCakeOrderRes = regularSpCkOrderService.findRegularSpCkOrder(frId, strDate);
+			
+		} catch (Exception e) {
+			System.out.println("controller " );
+
+			System.out.println("exception in sp cake order list for all fr rest controller" + e.getMessage());
+		}
+			
+	
+		return regSpCakeOrderRes;
+
+	}
+	@RequestMapping(value = { "/getAllFrRegSpCakeOrders" }, method = RequestMethod.POST)
+	@ResponseBody
+	public RegSpCkOrderResponse getAllFrRegSpCakeOrders(@RequestParam String prodDate) {
+	
+		RegSpCkOrderResponse regSpCakeOrderRes = new RegSpCkOrderResponse();
+
 		try {
 			String strDate = Common.convertToYMD(prodDate);
 			System.out.println("Converted date " + strDate);
 
-			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeOrderAllFr(strDate);
+			regSpCakeOrderRes= regularSpCkOrderService.findRegSpCakeOrderAllFr(strDate);
 
-			spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
-			Info info = new Info();
-			info.setError(false);
-			info.setMessage("Sp Cake Order list for all fr displayed Successfully");
-			spCakeOrderList.setInfo(info);
-
+		
 		} catch (Exception e) {
 
 			System.out.println("exception in sp cake order list for all fr rest controller" + e.getMessage());
 		}
-		return spCakeOrderList;
+		return regSpCakeOrderRes;
 
 	}
 

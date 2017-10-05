@@ -39,6 +39,12 @@ public interface SpCakeOrdersRepoAdmin extends JpaRepository<SpCakeOrdersBean, I
 	
 	
 	List<SpCakeOrdersBean> FindAllSpCakeOrderAllFr(@Param("PDate")String pDate);
+	
+	
+	
+	
+	//SELECT m_franchisee.fr_name ,m_item.item_name ,m_item.id,t_regular_sp_cake.rsp_delivery_dt, t_regular_sp_cake.rsp_events,t_regular_sp_cake.rsp_events_name,t_regular_sp_cake.rsp_sub_total,t_regular_sp_cake.tax_1,t_regular_sp_cake.tax_1_amt,t_regular_sp_cake.tax_2,t_regular_sp_cake.tax_2_amt,t_regular_sp_cake.rate,t_regular_sp_cake.mrp,t_regular_sp_cake.qty FROM m_franchisee ,m_item,t_regular_sp_cake WHERE t_regular_sp_cake.rsp_produ_date = '2017-10-03' AND t_regular_sp_cake.fr_id IN (15) AND t_regular_sp_cake.item_id = m_item.item_id AND t_regular_sp_cake.fr_id = m_franchisee.fr_id
+	
 
 	
 	
