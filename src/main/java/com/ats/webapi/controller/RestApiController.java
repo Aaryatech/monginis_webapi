@@ -418,6 +418,22 @@ public class RestApiController {
 		
 	}
 	
+	@RequestMapping(value = "/getBillHeaderForAllFr", method = RequestMethod.POST)
+	public @ResponseBody GetBillHeaderList getBillHeaderForAllFr(@RequestParam("fromDate")String fromDate,
+	@RequestParam("toDate")String toDate){
+		
+		
+		fromDate=Common.convertToYMD(fromDate);
+		toDate=Common.convertToYMD(toDate);
+		
+		
+		GetBillHeaderList billHeaderList=getBillHeaderService.getBillHeaderForAllFr(fromDate, toDate);
+				
+	return billHeaderList;
+		
+		
+	}
+	
 	
 
 	@RequestMapping(value = "/generateBillForAllMenu", method = RequestMethod.POST)

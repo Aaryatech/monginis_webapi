@@ -46,4 +46,34 @@ public class GetBillHeaderServiceImpl implements GetBillHeaderService {
 		return getBillHeaderList;
 	}
 
+	@Override
+	public GetBillHeaderList getBillHeaderForAllFr(String fromDate, String toDate) {
+		
+GetBillHeaderList getBillHeaderList=new GetBillHeaderList();
+		
+		List<GetBillHeader> billHeaders=getBillHeaderRepository.getBillHeaderForAllFr(fromDate, toDate);
+		Info info=new Info();
+		
+		if(billHeaders!=null) {
+			
+			getBillHeaderList.setGetBillHeaders(billHeaders);
+			
+			info.setError(false);
+			info.setMessage("Bill header List for all Fr received successfully");
+			
+		}
+		
+		else {
+			
+			info.setError(true);
+			info.setMessage("Error: failed to receive Bill Header List ");
+		}
+		
+		getBillHeaderList.setInfo(info);
+		
+		
+		return getBillHeaderList;
+		
+	}
+
 }

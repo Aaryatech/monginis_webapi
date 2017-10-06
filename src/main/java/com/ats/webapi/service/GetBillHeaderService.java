@@ -11,5 +11,7 @@ public interface GetBillHeaderService {
 	
 	GetBillHeaderList getBillHeader(List<String>frId, String fromDate, String toDate);
 	
+	GetBillHeaderList getBillHeaderForAllFr(String fromDate, String toDate);
+	
 
 }
