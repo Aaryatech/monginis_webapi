@@ -110,8 +110,15 @@ public class SpecialCake implements Serializable {
 	@Column(name="sp_rate3")
 	private int spRate3;
 	
-	
-	
+	@Column(name="is_slot_used")
+	private int isSlotUsed;
+		
+	public int getIsSlotUsed() {
+		return isSlotUsed;
+	}
+	public void setIsSlotUsed(int isSlotUsed) {
+		this.isSlotUsed = isSlotUsed;
+	}
 	public String getSpDesc() {
 		return spDesc;
 	}

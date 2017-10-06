@@ -259,6 +259,32 @@ public class RestApiController {
 	GetBillDetailOnlyService billDetailOnlyService;
 	
 	
+	@RequestMapping(value = "/getCountByProduDate", method = RequestMethod.POST)
+	public @ResponseBody int getCountOfSlotUsedByProduDate(@RequestParam("spProduDate")String spProduDate){
+		
+		String sqlSpProduDate = Common.convertToYMD(spProduDate);
+		System.out.println("Converted date " + sqlSpProduDate);
+		
+		
+		int isSlotUsedCount=spCakeOrdersService.findCountOfSlotUsedByProduDate(sqlSpProduDate);
+		
+		
+	return isSlotUsedCount;
+	
+	}
+	
+
+	@RequestMapping(value = "/getTotalAvailableSlot", method = RequestMethod.POST)
+	public @ResponseBody int getTotalAvailableSlot(){
+		
+	
+		int totalAvailableSlot=frItemConfService.findTotalAvailableSlot();
+		
+		
+	return totalAvailableSlot;
+	
+	}
+	
 	@RequestMapping(value = "/getBillDetailOnly", method = RequestMethod.POST)
 	public @ResponseBody String getBillDetailOnly(@RequestParam("billDetailNo") int billDetailNo){
 		System.out.println("inside rest");
@@ -375,10 +401,6 @@ public class RestApiController {
 
 	}
 
-	
-	
-	
-	
 	
 	@RequestMapping(value = "/getBillHeader", method = RequestMethod.POST)
 	public @ResponseBody GetBillHeaderList getBillHeader(@RequestParam("frId")List<String> frId,@RequestParam("fromDate")String fromDate,

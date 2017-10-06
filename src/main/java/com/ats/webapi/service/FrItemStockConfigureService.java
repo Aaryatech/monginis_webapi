@@ -8,4 +8,6 @@ public interface FrItemStockConfigureService {
 	
 	 public List<FrItemStockConfigure> getFrItemConfigure();
 
+	public int findTotalAvailableSlot();
+
 }

@@ -24,4 +24,11 @@ public class FrItemStockConfigureServiceImpl implements FrItemStockConfigureServ
 		return frItemStockConfigures;
 	}
 
+	@Override
+	public int findTotalAvailableSlot() {
+		
+		   int totalAvailableSlot=frItemStockConfRepo.findBySettingKey("total_available_slot");
+		return totalAvailableSlot;
+	}
+
 }

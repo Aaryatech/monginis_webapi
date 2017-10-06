@@ -108,6 +108,13 @@ public class SpCakeOrdersServiceImpl implements SpCakeOrdersService {
 		}
 		return spCakeOrderHisList;
 	}
+	@Override
+	public int findCountOfSlotUsedByProduDate(String sqlSpProduDate) {
+		
+		int isSlotUsedCount=spCakeOrdersRepository.findCountByProduDateAndIsSlotUsed(sqlSpProduDate);
+
+		return isSlotUsedCount;
+	}
 		
 		
 	}
