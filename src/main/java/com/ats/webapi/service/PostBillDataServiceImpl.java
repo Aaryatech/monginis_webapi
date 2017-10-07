@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.PostBillDetail;
 import com.ats.webapi.model.PostBillHeader;
+import com.ats.webapi.repository.OrderRepository;
 import com.ats.webapi.repository.PostBillDetailRepository;
 import com.ats.webapi.repository.PostBillHeaderRepository;
 
@@ -20,6 +21,9 @@ public class PostBillDataServiceImpl implements PostBillDataService  {
 	@Autowired
 	PostBillDetailRepository  postBillDetailRepository;
 
+	@Autowired
+	OrderRepository orderRepository;
+	
 	/*@Override
 	public List<PostBillDetail> saveBillDetails(List<PostBillDetail> postBillDetail) {
 	
@@ -43,6 +47,21 @@ public class PostBillDataServiceImpl implements PostBillDataService  {
 			
 			int billNo=postBillHeader.get(i).getBillNo();
 			
+			
+			List<PostBillDetail> postBillDetailList=postBillHeader.get(i).getPostBillDetailsList();
+			
+			for(int j=0;j<postBillDetailList.size();j++) {
+				
+				PostBillDetail billDetail=postBillDetailList.get(j);
+				
+				billDetail.setBillNo(billNo);
+				
+				
+				postBillDetailRepository.save(billDetail);
+				
+				orderRepository.updateBillStatus(billDetail.getOrderId());
+				
+			}
 			//postBillDetail.get(i).setBillNo(billNo);
 			//postBillDetailRepository.save(postBillDetail);
 			
