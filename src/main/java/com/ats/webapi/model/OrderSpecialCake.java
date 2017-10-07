@@ -81,8 +81,15 @@ private String spDesc;
 	
 	private int spRate3;
 
+	private int isSlotUsed;
 	
 	
+	public int getIsSlotUsed() {
+		return isSlotUsed;
+	}
+	public void setIsSlotUsed(int isSlotUsed) {
+		this.isSlotUsed = isSlotUsed;
+	}
 	public String getSpDesc() {
 		return spDesc;
 	}
