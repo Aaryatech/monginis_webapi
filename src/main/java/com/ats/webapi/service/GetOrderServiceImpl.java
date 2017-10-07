@@ -28,7 +28,7 @@ public class GetOrderServiceImpl implements GetOrderService {
 
 	
 	@Override
-	public List<GetOrder> findOrder2(List<Integer>  frId,List<Integer> menuId,String date) {
+	public List<GetOrder> findOrder(List<String>  frId,List<String> menuId,String date) {
 		List<GetOrder> getOrderList=null;
 		try {
 			getOrderList=orderRepository.findAllNative( frId,menuId, date);
@@ -46,7 +46,7 @@ public class GetOrderServiceImpl implements GetOrderService {
 
 
 	@Override
-	public List<GetOrder> findOrderAllFr(List<Integer> menuId, String date1) {
+	public List<GetOrder> findOrderAllFr(List<String> menuId, String date1) {
 		List<GetOrder> getOrderList=null;
 		try {
 			getOrderList=orderRepository.findAllNativeAllFr(menuId, date1);
