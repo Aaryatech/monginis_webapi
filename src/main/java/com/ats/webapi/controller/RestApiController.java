@@ -29,6 +29,7 @@ import com.ats.webapi.model.CategoryList;
 import com.ats.webapi.model.ConfigureFrBean;
 import com.ats.webapi.model.ConfigureFrBeanList;
 import com.ats.webapi.model.ConfigureFranchisee;
+import com.ats.webapi.model.ConfiguredSpDayCkResponse;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Event;
 import com.ats.webapi.model.EventList;
@@ -86,6 +87,7 @@ import com.ats.webapi.model.SpCakeOrdersBean;
 import com.ats.webapi.model.SpCakeOrdersBeanList;
 import com.ats.webapi.model.SpCakeOrdersList;
 import com.ats.webapi.model.SpCkOrderHisList;
+import com.ats.webapi.model.SpDayConfigure;
 import com.ats.webapi.model.SpMessage;
 import com.ats.webapi.model.SpecialCake;
 import com.ats.webapi.model.SpecialCakeList;
@@ -97,6 +99,7 @@ import com.ats.webapi.service.BillDetailUpdateService;
 import com.ats.webapi.service.CategoryService;
 import com.ats.webapi.service.ConfigureFrBeanService;
 import com.ats.webapi.service.ConfigureFranchiseeService;
+import com.ats.webapi.service.ConfigureSpDayCakeService;
 import com.ats.webapi.service.EventService;
 import com.ats.webapi.service.FlavourService;
 import com.ats.webapi.service.FrItemStockConfigurePostService;
@@ -258,6 +261,8 @@ public class RestApiController {
 	@Autowired
 	GetBillDetailOnlyService billDetailOnlyService;
 	
+	@Autowired
+	ConfigureSpDayCakeService configureSpDayCakeService;
 	
 	@RequestMapping(value = "/getCountByProduDate", method = RequestMethod.POST)
 	public @ResponseBody int getCountOfSlotUsedByProduDate(@RequestParam("spProduDate")String spProduDate){
@@ -663,7 +668,37 @@ public class RestApiController {
 		return jsonFr;
 
 	}
+	// Configure Sp Day Cake
+		@RequestMapping(value = { "/configureSpDayCk" }, method = RequestMethod.POST)
 
+		public @ResponseBody ErrorMessage configureSpDayCk(@RequestBody SpDayConfigure spDayConfigure)
+				throws ParseException, JsonParseException, JsonMappingException, IOException {
+
+			ObjectMapper mapper = new ObjectMapper();
+
+		
+
+			System.out.println("Inside Place Order " + spDayConfigure.toString());
+
+			ErrorMessage errorMessage = configureSpDayCakeService.configureSpDayCake(spDayConfigure);
+
+			return errorMessage;
+
+		}
+		
+		//For Getting List Of Configured Special day Cake List
+		@RequestMapping(value = "/getConfiguredSpDayCkList", method = RequestMethod.GET)
+		public @ResponseBody ConfiguredSpDayCkResponse getConfiguredSpDayCkList() {
+
+
+		
+			ConfiguredSpDayCkResponse	configuredSpDayCkResponse=configureSpDayCakeService.getConfiguredSpDayCkList();
+		
+			return configuredSpDayCkResponse;
+		 
+
+		}
+		
 	// Place Item Order
 	@RequestMapping(value = { "/placeOrder" }, method = RequestMethod.POST)
 
