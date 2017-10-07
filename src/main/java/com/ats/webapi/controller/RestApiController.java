@@ -376,7 +376,7 @@ public class RestApiController {
 		List<PostBillHeader> jsonBillHeader;
 		List<PostBillDetail> jsonBillDetail;
 
-		jsonBillHeader = postBillDataService.saveBillHeader(postBillDataCommon.getPostBillHeadersList(),postBillDataCommon.getPostBillDetailsList());
+		jsonBillHeader = postBillDataService.saveBillHeader(postBillDataCommon.getPostBillHeadersList());
 		
 	
 

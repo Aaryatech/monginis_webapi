@@ -9,7 +9,7 @@ public interface PostBillDataService {
 	
 	//List<PostBillDetail> saveBillDetails(List<PostBillDetail> postBillDetail);
 	
-	List<PostBillHeader> saveBillHeader(List<PostBillHeader> postBillHeader,List<PostBillDetail> postBillDetail);
+	List<PostBillHeader> saveBillHeader(List<PostBillHeader> postBillHeader);
 
 
 }

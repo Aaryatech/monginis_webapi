@@ -34,7 +34,7 @@ public class PostBillDataServiceImpl implements PostBillDataService  {
 	}*/
 
 	@Override
-	public List<PostBillHeader> saveBillHeader(List<PostBillHeader> postBillHeader,List<PostBillDetail> postBillDetail) {
+	public List<PostBillHeader> saveBillHeader(List<PostBillHeader> postBillHeader) {
 		
 		List<PostBillHeader> postBillHeaders=new ArrayList<PostBillHeader>();
 		for(int i=0;i<postBillHeader.size();i++) {
@@ -43,8 +43,8 @@ public class PostBillDataServiceImpl implements PostBillDataService  {
 			
 			int billNo=postBillHeader.get(i).getBillNo();
 			
-			postBillDetail.get(i).setBillNo(billNo);
-			postBillDetailRepository.save(postBillDetail);
+			//postBillDetail.get(i).setBillNo(billNo);
+			//postBillDetailRepository.save(postBillDetail);
 			
 		}
 		
