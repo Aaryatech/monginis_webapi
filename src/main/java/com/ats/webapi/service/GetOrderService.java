@@ -13,10 +13,10 @@ public interface GetOrderService {
 	
 	
 	
-	public List<GetOrder> findOrder2(List<Integer>  frId,List<Integer> menuId,String date1);
+	public List<GetOrder> findOrder(List<String>  frId,List<String> menuId,String date);
 	
 	
-	public List<GetOrder> findOrderAllFr(List<Integer> menuId,String date1);
+	public List<GetOrder> findOrderAllFr(List<String> menuId,String date);
 	//public List<GetOrder> findOrder(String itemId);
 	
 }

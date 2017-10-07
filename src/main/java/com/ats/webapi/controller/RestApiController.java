@@ -339,7 +339,7 @@ public class RestApiController {
 		
 		PostBillDetail postBillUpdated=postBillUpdateService.save(postBillUpdate);
 		
-		return "jj";
+		return "bill Details Updated Successfully";
 		
 	
 	}
@@ -2404,7 +2404,7 @@ public class RestApiController {
 	// order Service 1 sept Sachin
 	@RequestMapping(value = { "/getOrderList" }, method = RequestMethod.POST)
 	@ResponseBody
-	public GetOrderList getOrderList2(@RequestParam List<Integer> frId, @RequestParam List<Integer> menuId,
+	public GetOrderList getOrderList(@RequestParam List<String> frId, @RequestParam List<String> menuId,
 			@RequestParam String date) {
 		GetOrderList orderList = new GetOrderList();
 		try {
@@ -2419,7 +2419,7 @@ public class RestApiController {
 			System.out.println("Converted date " + strDate);
 
 			System.out.println("fr id in rest " + frId.toString());
-			List<GetOrder> jsonOrderList = getOrderService.findOrder2(frId, menuId, strDate);
+			List<GetOrder> jsonOrderList = getOrderService.findOrder(frId, menuId, strDate);
 
 			orderList.setGetOrder(jsonOrderList);
 			Info info = new Info();
@@ -2438,7 +2438,7 @@ public class RestApiController {
 	// 7 sep orderlist for all franchisee
 	@RequestMapping(value = { "/getOrderListForAllFr" }, method = RequestMethod.POST)
 	@ResponseBody
-	public GetOrderList getOrderListForAllFr(@RequestParam List<Integer> menuId, @RequestParam String date) {
+	public GetOrderList getOrderListForAllFr(@RequestParam List<String> menuId, @RequestParam String date) {
 		GetOrderList orderList = new GetOrderList();
 		try {
 
