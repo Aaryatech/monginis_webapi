@@ -10,4 +10,6 @@ public interface ConfigureSpDayCakeRepository extends JpaRepository<SpDayConfigu
 
 	SpDayConfigure save(SpDayConfigure spDayConfigure);
 
+	SpDayConfigure findBySpdayId(int spdayId);
+
 }

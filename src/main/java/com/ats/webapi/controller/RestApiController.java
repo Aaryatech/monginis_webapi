@@ -51,6 +51,7 @@ import com.ats.webapi.model.GenerateBillList;
 import com.ats.webapi.model.GetBillDetails;
 import com.ats.webapi.model.GetBillDetailsList;
 import com.ats.webapi.model.GetBillHeaderList;
+import com.ats.webapi.model.GetConfiguredSpDayCk;
 import com.ats.webapi.model.GetFrItems;
 import com.ats.webapi.model.GetOrder;
 import com.ats.webapi.model.GetOrderList;
@@ -690,15 +691,28 @@ public class RestApiController {
 		@RequestMapping(value = "/getConfiguredSpDayCkList", method = RequestMethod.GET)
 		public @ResponseBody ConfiguredSpDayCkResponse getConfiguredSpDayCkList() {
 
-
-		
 			ConfiguredSpDayCkResponse	configuredSpDayCkResponse=configureSpDayCakeService.getConfiguredSpDayCkList();
 		
 			return configuredSpDayCkResponse;
 		 
 
 		}
-		
+		//getConfSpDayCake
+		@RequestMapping(value = "/getConfSpDayCake", method = RequestMethod.GET) 
+		public @ResponseBody GetConfiguredSpDayCk getConfSpDayCake(@RequestParam int spdayId) {
+
+			GetConfiguredSpDayCk getConfiguredSpDayCk = configureSpDayCakeService.findConfSpDayCake(spdayId);
+			return getConfiguredSpDayCk;
+
+		}
+		// Delete Configure SpDayCk
+		@RequestMapping(value = "/deleteConfSpDayCk", method = RequestMethod.POST)
+		public @ResponseBody ErrorMessage deleteConfSpDayCk(@RequestParam int spdayId) {
+
+			ErrorMessage errorMessage= configureSpDayCakeService.findConfiguredSpDayCk(spdayId);
+			
+			return errorMessage;
+		}
 	// Place Item Order
 	@RequestMapping(value = { "/placeOrder" }, method = RequestMethod.POST)
 
@@ -2030,7 +2044,7 @@ public class RestApiController {
 		}
 		return JsonUtil.javaToJson(errorMessage);
 	}
-
+    
 	// update Message
 	@RequestMapping(value = { "/updateMessage" }, method = RequestMethod.POST)
 	public @ResponseBody String updateMessage(@RequestParam int id, @RequestParam String msgFrdt,

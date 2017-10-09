@@ -12,6 +12,8 @@ public interface GetConfSpDayCakeRepository extends JpaRepository<GetConfiguredS
 
 
 	List<GetConfiguredSpDayCk> findAllByDelStatus(int delStatus);
+
+	GetConfiguredSpDayCk findBySpdayId(int spdayId);
 	
 	
 

@@ -8,9 +8,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
+@Table(name="m_spday_configure")
 public class GetConfiguredSpDayCk implements Serializable{
 
 		@Id
@@ -48,14 +50,14 @@ public class GetConfiguredSpDayCk implements Serializable{
 		private String toTime;
 
 		@Column(name = "del_status")
-		private String delStatus;
+		private int delStatus;
 		
-		
-		public String getDelStatus() {
+
+		public int getDelStatus() {
 			return delStatus;
 		}
 
-		public void setDelStatus(String delStatus) {
+		public void setDelStatus(int delStatus) {
 			this.delStatus = delStatus;
 		}
 

@@ -61,6 +61,34 @@ public class ConfigureSpDayCakeServiceImpl implements ConfigureSpDayCakeService{
 		
 		return configuredSpDayCkResponse;
 	}
+
+	@Override
+	public GetConfiguredSpDayCk findConfSpDayCake(int spdayId) {
+        
+		GetConfiguredSpDayCk getConfiguredSpDayCk=getConfSpDayCakeRepository.findBySpdayId(spdayId);
+		return getConfiguredSpDayCk;
+	}
+
+	@Override
+	public ErrorMessage findConfiguredSpDayCk(int spdayId) {
+		ErrorMessage errorMessage=new ErrorMessage();
+		SpDayConfigure getConfiguredSpDayCk=configureSpDayCakeRepository.findBySpdayId(spdayId);
+		getConfiguredSpDayCk.setDelStatus(1);
+		
+		SpDayConfigure spDayConfigureRes=configureSpDayCakeRepository.save(getConfiguredSpDayCk);
+	    if(spDayConfigureRes==null)
+	    {
+	    	errorMessage.setError(true);
+	    	errorMessage.setMessage("Configured SpDay Cake Deletion Failed");
+	    }
+	    else
+	    {
+	    	errorMessage.setError(false);
+	    	errorMessage.setMessage("Configured SpDay Cake Deleted Successfully");
+	    }
+		return errorMessage;
+	}
+
 	
 
 }

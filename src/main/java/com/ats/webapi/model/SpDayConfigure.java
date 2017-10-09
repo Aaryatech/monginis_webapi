@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "m_spday_configure")
 public class SpDayConfigure implements Serializable{
@@ -88,7 +90,7 @@ public class SpDayConfigure implements Serializable{
 	public Date getOrderFromDate() {
 		return orderFromDate;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setOrderFromDate(Date orderFromDate) {
 		this.orderFromDate = orderFromDate;
 	}
@@ -96,7 +98,7 @@ public class SpDayConfigure implements Serializable{
 	public Date getOrderToDate() {
 		return orderToDate;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setOrderToDate(Date orderToDate) {
 		this.orderToDate = orderToDate;
 	}
@@ -104,7 +106,7 @@ public class SpDayConfigure implements Serializable{
 	public Date getDeliveryToDate() {
 		return deliveryToDate;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setDeliveryToDate(Date deliveryToDate) {
 		this.deliveryToDate = deliveryToDate;
 	}
@@ -112,7 +114,7 @@ public class SpDayConfigure implements Serializable{
 	public Date getDeliveryFromDate() {
 		return deliveryFromDate;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setDeliveryFromDate(Date deliveryFromDate) {
 		this.deliveryFromDate = deliveryFromDate;
 	}
