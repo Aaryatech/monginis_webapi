@@ -20,6 +20,14 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name = "t_bill_header")
 public class PostBillHeader implements Serializable {
 	
+	@Override
+	public String toString() {
+		return "PostBillHeader [billNo=" + billNo + ", taxApplicable=" + taxApplicable + ", invoiceNo=" + invoiceNo
+				+ ", billDate=" + billDate + ", frId=" + frId + ", frCode=" + frCode + ", grandTotal=" + grandTotal
+				+ ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", status=" + status + ", DelStatus="
+				+ DelStatus + ", remark=" + remark + ", postBillDetailsList=" + postBillDetailsList + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="bill_no")
@@ -40,11 +48,11 @@ public class PostBillHeader implements Serializable {
 	@Column(name="fr_code")
 	private String frCode;
 	
-	@Column(name="total")
-	private float total;
+	@Column(name="grand_total")
+	private float grandTotal;
 	
-	@Column(name="total_without_tax")
-	private float totalWithoutTax;
+	@Column(name="taxable_amt")
+	private float taxableAmt;
 	
 	@Column(name="total_tax")
 	private float totalTax;
@@ -58,6 +66,8 @@ public class PostBillHeader implements Serializable {
 	
 	@Column(name="remark")
 	private String remark;
+	
+	
 
 	@Transient
 	List<PostBillDetail> postBillDetailsList;
@@ -112,20 +122,20 @@ public class PostBillHeader implements Serializable {
 		this.frCode = frCode;
 	}
 
-	public float getTotal() {
-		return total;
+	public float getGrandTotal() {
+		return grandTotal;
 	}
 
-	public void setTotal(float total) {
-		this.total = total;
+	public void setGrandTotal(float grandTotal) {
+		this.grandTotal = grandTotal;
 	}
 
-	public float getTotalWithoutTax() {
-		return totalWithoutTax;
+	public float getTaxableAmt() {
+		return taxableAmt;
 	}
 
-	public void setTotalWithoutTax(float totalWithoutTax) {
-		this.totalWithoutTax = totalWithoutTax;
+	public void setTaxableAmt(float taxableAmt) {
+		this.taxableAmt = taxableAmt;
 	}
 
 	public float getTotalTax() {

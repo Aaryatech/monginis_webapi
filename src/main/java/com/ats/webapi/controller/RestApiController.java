@@ -304,22 +304,71 @@ public class RestApiController {
 	
 	
 	@RequestMapping(value = { "/updateBillDetails" }, method = RequestMethod.POST)
-	public @ResponseBody String updateBillDetails(@RequestParam int billNo,@RequestParam int billDetailNo, @RequestParam int  billQty,
-			@RequestParam float total, @RequestParam float totalWithoutTax) {
+	public @ResponseBody String updateBillDetails(@RequestParam int billNo,@RequestParam List<Integer> billDetailNoList, 
+			@RequestParam List<Integer> billQtyList,
+			@RequestParam List<Integer> grandTotalList, @RequestParam List<Integer> taxableAmtList) {
 
-		PostBillDetail billDetailsList=billDetailOnlyService.getByBillDetailNo(billDetailNo);
+		
+		
+		int billDeNo=0;
+		
+		
+		for(int i=0;i<billDetailNoList.size();i++) {
+			
+			int billDNo=billDetailNoList.get(i);
+			//int bn=billNo;
+			int bilQty=billQtyList.get(i);
+			float grTot=grandTotalList.get(i);
+			float taxAmt=taxableAmtList.get(i);
+			
+			PostBillDetail billDetailsList=billDetailOnlyService.getByBillDetailNo(billDNo);
+			
+			
+			PostBillDetail postBillUpdate=new PostBillDetail();
+			
+			postBillUpdate.setBillDetailNo(billDNo);
+			postBillUpdate.setBillNo(billNo);
+			postBillUpdate.setBillQty(bilQty);
+			postBillUpdate.setGrandTotal(grTot);
+			postBillUpdate.setTaxableAmt(taxAmt);
+			postBillUpdate.setCatId(billDetailsList.getCatId());
+			postBillUpdate.setCgstPer(billDetailsList.getCgstPer());
+			postBillUpdate.setCgstRs(billDetailsList.getCgstRs());
+			postBillUpdate.setDelStaus(billDetailsList.getDelStaus());
+			postBillUpdate.setIgstPer(billDetailsList.getIgstPer());
+			postBillUpdate.setIgstRs(billDetailsList.getIgstRs());
+			postBillUpdate.setItemId(billDetailsList.getItemId());
+			postBillUpdate.setMenuId(billDetailsList.getMenuId());
+			postBillUpdate.setMrp(billDetailsList.getMrp());
+			postBillUpdate.setOrderId(billDetailsList.getOrderId());
+			postBillUpdate.setOrderQty(billDetailsList.getOrderQty());
+			postBillUpdate.setRate(billDetailsList.getRate());
+			postBillUpdate.setRateType(billDetailsList.getRateType());
+			postBillUpdate.setRemark(billDetailsList.getRemark());
+			postBillUpdate.setSgstPer(billDetailsList.getSgstPer());
+			postBillUpdate.setSgstRs(billDetailsList.getSgstRs());
+			
+			
+			PostBillDetail postBillUpdated=postBillUpdateService.save(postBillUpdate);
+			
+			
+		}
+		
+		
+		//PostBillDetail billDetailsList=billDetailOnlyService.getByBillDetailNo(billDeNo);
 		
 		//List<GetBillDetails> getBillDetailList=billDetails.getGetBillDetails();
 		
 		Info info = new Info();
 		
-		PostBillDetail postBillUpdate=new PostBillDetail();
+	
+		/*PostBillDetail postBillUpdate=new PostBillDetail();
 		
-		postBillUpdate.setBillDetailNo(billDetailNo);
+		postBillUpdate.setBillDetailNo(billDeNo);
 		postBillUpdate.setBillNo(billNo);
 		postBillUpdate.setBillQty(billQty);
-		postBillUpdate.setTotal(total);
-		postBillUpdate.setTotalWithoutTax(totalWithoutTax);
+		postBillUpdate.setGrandTotal(grandTotal);
+		postBillUpdate.setTaxableAmt(taxableAmt);
 		postBillUpdate.setCatId(billDetailsList.getCatId());
 		postBillUpdate.setCgstPer(billDetailsList.getCgstPer());
 		postBillUpdate.setCgstRs(billDetailsList.getCgstRs());
@@ -338,13 +387,8 @@ public class RestApiController {
 		postBillUpdate.setSgstRs(billDetailsList.getSgstRs());
 		
 		
-		
-		
-		
-		
-		
 		PostBillDetail postBillUpdated=postBillUpdateService.save(postBillUpdate);
-		
+		*/
 		return "bill Details Updated Successfully";
 		
 	
@@ -378,6 +422,8 @@ public class RestApiController {
 
 	public @ResponseBody Info postBillData(@RequestBody PostBillDataCommon postBillDataCommon)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
+		
+		System.out.println("Data Common "+postBillDataCommon.toString());
 
 		List<PostBillHeader> jsonBillHeader;
 		List<PostBillDetail> jsonBillDetail;

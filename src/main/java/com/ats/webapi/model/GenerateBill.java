@@ -53,7 +53,43 @@ public class GenerateBill {
 	@Column(name="item_grp2")
 	int  subCatId;
 	
+	@Column(name="item_tax1")
+	private double itemTax1;
 	
+	@Column(name="item_tax2")
+	private double itemTax2;
+	
+	@Column(name="item_tax3")
+	private double itemTax3;
+	
+	
+	
+
+
+	
+	public double getItemTax1() {
+		return itemTax1;
+	}
+
+	public void setItemTax1(double itemTax1) {
+		this.itemTax1 = itemTax1;
+	}
+
+	public double getItemTax2() {
+		return itemTax2;
+	}
+
+	public void setItemTax2(double itemTax2) {
+		this.itemTax2 = itemTax2;
+	}
+
+	public double getItemTax3() {
+		return itemTax3;
+	}
+
+	public void setItemTax3(double itemTax3) {
+		this.itemTax3 = itemTax3;
+	}
 
 	public int getCatId() {
 		return catId;

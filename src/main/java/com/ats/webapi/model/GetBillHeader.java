@@ -40,11 +40,11 @@ public class GetBillHeader implements Serializable {
 	@Column(name="fr_code")
 	private String frCode;
 	
-	@Column(name="total")
-	private float total;
+	@Column(name="grand_total")
+	private float grandTotal;
 	
-	@Column(name="total_without_tax")
-	private float totalWithoutTax;
+	@Column(name="taxable_amt")
+	private float taxableAmt;
 	
 	@Column(name="total_tax")
 	private float totalTax;
@@ -99,20 +99,21 @@ public class GetBillHeader implements Serializable {
 		this.frCode = frCode;
 	}
 
-	public float getTotal() {
-		return total;
+	
+	public float getGrandTotal() {
+		return grandTotal;
 	}
 
-	public void setTotal(float total) {
-		this.total = total;
+	public void setGrandTotal(float grandTotal) {
+		this.grandTotal = grandTotal;
 	}
 
-	public float getTotalWithoutTax() {
-		return totalWithoutTax;
+	public float getTaxableAmt() {
+		return taxableAmt;
 	}
 
-	public void setTotalWithoutTax(float totalWithoutTax) {
-		this.totalWithoutTax = totalWithoutTax;
+	public void setTaxableAmt(float taxableAmt) {
+		this.taxableAmt = taxableAmt;
 	}
 
 	public float getTotalTax() {

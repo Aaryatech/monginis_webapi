@@ -59,7 +59,7 @@ public class PostBillDataServiceImpl implements PostBillDataService  {
 				
 				postBillDetailRepository.save(billDetail);
 				
-				orderRepository.updateBillStatus(billDetail.getOrderId());
+				//orderRepository.updateBillStatus(billDetail.getOrderId());
 				
 			}
 			//postBillDetail.get(i).setBillNo(billNo);
