@@ -52,6 +52,39 @@ public class GetConfiguredSpDayCk implements Serializable{
 		@Column(name = "del_status")
 		private int delStatus;
 		
+		@Column(name = "menu_id")
+        private int menuId;
+		
+		@Column(name = "cat_id")
+		private int catId;
+		
+		@Column(name = "sub_cat_id")
+		private int subCatId;
+		
+		
+		public int getMenuId() {
+			return menuId;
+		}
+
+		public void setMenuId(int menuId) {
+			this.menuId = menuId;
+		}
+
+		public int getCatId() {
+			return catId;
+		}
+
+		public void setCatId(int catId) {
+			this.catId = catId;
+		}
+
+		public int getSubCatId() {
+			return subCatId;
+		}
+
+		public void setSubCatId(int subCatId) {
+			this.subCatId = subCatId;
+		}
 
 		public int getDelStatus() {
 			return delStatus;
