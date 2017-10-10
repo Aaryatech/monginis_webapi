@@ -19,11 +19,11 @@ public class BillDetailUpdate {
 	@Column(name="bill_qty")
 	int  billQty;
 
-	@Column(name="total")
-	float  total;
+	@Column(name="grand_total")
+	float  grandTotal;
 	
-	@Column(name="total_without_tax")
-	float  totalWithoutTax;
+	@Column(name="taxable_amt")
+	float  taxableAmt;
 
 	public int getBillDetailNo() {
 		return billDetailNo;
@@ -41,21 +41,23 @@ public class BillDetailUpdate {
 		this.billQty = billQty;
 	}
 
-	public float getTotal() {
-		return total;
+	public float getGrandTotal() {
+		return grandTotal;
 	}
 
-	public void setTotal(float total) {
-		this.total = total;
+	public void setGrandTotal(float grandTotal) {
+		this.grandTotal = grandTotal;
 	}
 
-	public float getTotalWithoutTax() {
-		return totalWithoutTax;
+	public float getTaxableAmt() {
+		return taxableAmt;
 	}
 
-	public void setTotalWithoutTax(float totalWithoutTax) {
-		this.totalWithoutTax = totalWithoutTax;
+	public void setTaxableAmt(float taxableAmt) {
+		this.taxableAmt = taxableAmt;
 	}
+
+	
 	
 	
 	

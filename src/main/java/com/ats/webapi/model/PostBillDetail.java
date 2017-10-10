@@ -49,8 +49,8 @@ public class PostBillDetail {
 	@Column(name="mrp")
 	private float mrp;
 	
-	@Column(name="total")
-	private float total;
+	@Column(name="grand_total")
+	private float grandTotal;
 	
 	@Column(name="sgst_per")
 	private float sgstPer;
@@ -70,11 +70,19 @@ public class PostBillDetail {
 	@Column(name="igst_rs")
 	private float igstRs;
 	
-	@Column(name="total_without_tax")
-	private float totalWithoutTax;
+	@Column(name="base_rate")
+	private float baseRate;
+	
+	
+	@Column(name="taxable_amt")
+	private float taxableAmt;
 	
 	@Column(name="remark")
 	private String remark;
+	
+	@Column(name="total_tax")
+	private float totalTax;
+	
 	
 	@Column(name="del_status")
 	private int delStaus;
@@ -159,14 +167,7 @@ public class PostBillDetail {
 		this.mrp = mrp;
 	}
 
-	public float getTotal() {
-		return total;
-	}
-
-	public void setTotal(float total) {
-		this.total = total;
-	}
-
+	
 	public float getSgstPer() {
 		return sgstPer;
 	}
@@ -215,12 +216,21 @@ public class PostBillDetail {
 		this.igstRs = igstRs;
 	}
 
-	public float getTotalWithoutTax() {
-		return totalWithoutTax;
+	
+	public float getGrandTotal() {
+		return grandTotal;
 	}
 
-	public void setTotalWithoutTax(float totalWithoutTax) {
-		this.totalWithoutTax = totalWithoutTax;
+	public void setGrandTotal(float grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
+	public float getTaxableAmt() {
+		return taxableAmt;
+	}
+
+	public void setTaxableAmt(float taxableAmt) {
+		this.taxableAmt = taxableAmt;
 	}
 
 	public String getRemark() {
@@ -240,8 +250,6 @@ public class PostBillDetail {
 	}
 	
 	
-	
-
 	public int getOrderId() {
 		return orderId;
 	}
@@ -250,11 +258,32 @@ public class PostBillDetail {
 		this.orderId = orderId;
 	}
 
-	
-	
+	public float getBaseRate() {
+		return baseRate;
+	}
+
+	public void setBaseRate(float baseRate) {
+		this.baseRate = baseRate;
+	}
+
+	public float getTotalTax() {
+		return totalTax;
+	}
+
+	public void setTotalTax(float totalTax) {
+		this.totalTax = totalTax;
+	}
+
+	@Override
+	public String toString() {
+		return "PostBillDetail [billDetailNo=" + billDetailNo + ", billNo=" + billNo + ", menuId=" + menuId + ", catId="
+				+ catId + ", itemId=" + itemId + ", orderQty=" + orderQty + ", billQty=" + billQty + ", orderId="
+				+ orderId + ", rateType=" + rateType + ", rate=" + rate + ", mrp=" + mrp + ", grandTotal=" + grandTotal
+				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
+				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", baseRate=" + baseRate + ", taxableAmt="
+				+ taxableAmt + ", remark=" + remark + ", totalTax=" + totalTax + ", delStaus=" + delStaus + "]";
+	}
 
 	
 	
-	
-
 }

@@ -58,8 +58,8 @@ public class GetBillDetails implements Serializable {
 		@Column(name="mrp")
 		private float mrp;
 		
-		@Column(name="total")
-		private float total;
+		@Column(name="grand_total")
+		private float grandTotal;
 		
 		@Column(name="sgst_per")
 		private float sgstPer;
@@ -79,8 +79,8 @@ public class GetBillDetails implements Serializable {
 		@Column(name="igst_rs")
 		private float igstRs;
 		
-		@Column(name="total_without_tax")
-		private float totalWithoutTax;
+		@Column(name="taxable_amt")
+		private float taxableAmt;
 		
 		@Column(name="remark")
 		private String remark;
@@ -177,14 +177,6 @@ public class GetBillDetails implements Serializable {
 			this.mrp = mrp;
 		}
 
-		public float getTotal() {
-			return total;
-		}
-
-		public void setTotal(float total) {
-			this.total = total;
-		}
-
 		public float getSgstPer() {
 			return sgstPer;
 		}
@@ -233,12 +225,24 @@ public class GetBillDetails implements Serializable {
 			this.igstRs = igstRs;
 		}
 
-		public float getTotalWithoutTax() {
-			return totalWithoutTax;
+		
+
+		public float getTaxableAmt() {
+			return taxableAmt;
 		}
 
-		public void setTotalWithoutTax(float totalWithoutTax) {
-			this.totalWithoutTax = totalWithoutTax;
+		public void setTaxableAmt(float taxableAmt) {
+			this.taxableAmt = taxableAmt;
+		}
+
+		public float getGrandTotal() {
+			return grandTotal;
+		}
+
+	
+
+		public void setGrandTotal(float grandTotal) {
+			this.grandTotal = grandTotal;
 		}
 
 		public String getRemark() {
@@ -294,4 +298,14 @@ public class GetBillDetails implements Serializable {
 		}
 
 		
+		@Override
+		public String toString() {
+			return "GetBillDetails [billDetailNo=" + billDetailNo + ", billNo=" + billNo + ", menuId=" + menuId
+					+ ", catId=" + catId + ", billDate=" + billDate + ", itemId=" + itemId + ", orderQty=" + orderQty
+					+ ", billQty=" + billQty + ", orderId=" + orderId + ", rateType=" + rateType + ", rate=" + rate
+					+ ", mrp=" + mrp + ", grandTotal=" + grandTotal + ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs
+					+ ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs + ", igstPer=" + igstPer + ", igstRs=" + igstRs
+					+ ", taxableAmt=" + taxableAmt + ", remark=" + remark + ", delStaus=" + delStaus + ", itemName="
+					+ itemName + ", catName=" + catName + "]";
+		}
 }
