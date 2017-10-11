@@ -17,7 +17,7 @@ public interface GetBillHeaderRepository extends JpaRepository<GetBillHeader, In
 			+ " t_bill_header.total_tax,t_bill_header.status,t_bill_header.remark,t_bill_header.del_status, "
 			+ " m_franchisee.fr_name FROM t_bill_header,m_franchisee WHERE t_bill_header.fr_id IN (:frId) "
 			+ " AND t_bill_header.bill_date BETWEEN :fromDate AND :toDate "
-			+ " AND t_bill_header.fr_id=m_franchisee.fr_id " + 
+			+ " AND t_bill_header.fr_id=m_franchisee.fr_id AND t_bill_header.del_status=0" + 
 			"",nativeQuery=true)
 	
 	List<GetBillHeader> getBillHeader(@Param("frId") List<String> frId,@Param("fromDate")String fromDate, @Param("toDate")String toDate);
@@ -29,7 +29,7 @@ public interface GetBillHeaderRepository extends JpaRepository<GetBillHeader, In
 			+ " t_bill_header.total_tax,t_bill_header.status,t_bill_header.remark,t_bill_header.del_status, "
 			+ " m_franchisee.fr_name FROM t_bill_header,m_franchisee WHERE "
 			+ " t_bill_header.bill_date BETWEEN :fromDate AND :toDate "
-			+ " AND t_bill_header.fr_id=m_franchisee.fr_id " + 
+			+ " AND t_bill_header.fr_id=m_franchisee.fr_id AND t_bill_header.del_status=0 " + 
 			"",nativeQuery=true)
 	
 	List<GetBillHeader> getBillHeaderForAllFr(@Param("fromDate")String fromDate, @Param("toDate")String toDate);

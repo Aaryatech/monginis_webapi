@@ -26,7 +26,6 @@ import com.ats.webapi.model.AllFranchiseeAndMenu;
 import com.ats.webapi.model.AllMenuJsonResponse;
 import com.ats.webapi.model.AllMenus;
 import com.ats.webapi.model.AllRegularSpCkItems;
-import com.ats.webapi.model.BillDetailUpdate;
 import com.ats.webapi.model.CategoryList;
 import com.ats.webapi.model.ConfigureFrBean;
 import com.ats.webapi.model.ConfigureFrBeanList;
@@ -103,6 +102,7 @@ import com.ats.webapi.service.CategoryService;
 import com.ats.webapi.service.ConfigureFrBeanService;
 import com.ats.webapi.service.ConfigureFranchiseeService;
 import com.ats.webapi.service.ConfigureSpDayCakeService;
+import com.ats.webapi.service.DeleteBillService;
 import com.ats.webapi.service.EventService;
 import com.ats.webapi.service.FlavourService;
 import com.ats.webapi.service.FrItemStockConfigurePostService;
@@ -266,6 +266,25 @@ public class RestApiController {
 	
 	@Autowired
 	ConfigureSpDayCakeService configureSpDayCakeService;
+	
+	@Autowired
+	DeleteBillService deleteBillService;
+	
+	
+	@RequestMapping(value = "/deleteBill", method = RequestMethod.POST)
+	public @ResponseBody Info deleteBill(@RequestParam("delStatus") int delStatus,@RequestParam("billNo") int billNo){
+		System.out.println("inside rest");
+		
+		deleteBillService.deleteBill(delStatus, billNo);
+		
+		Info info=new Info();
+		info.setMessage("success");
+		
+		
+	return info;
+	
+	
+	}
 	
 	
 	

@@ -98,9 +98,19 @@ public class GetBillDetails implements Serializable {
 		@Column(name="total_tax")
 		private float totalTax;
 		
+		@Column(name="base_rate")
+		private float baseRate;
+		
+		
+		
+		public float getBaseRate() {
+			return baseRate;
+		}
 
-		
-		
+		public void setBaseRate(float baseRate) {
+			this.baseRate = baseRate;
+		}
+
 		public float getTotalTax() {
 			return totalTax;
 		}
@@ -317,9 +327,10 @@ public class GetBillDetails implements Serializable {
 					+ ", mrp=" + mrp + ", grandTotal=" + grandTotal + ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs
 					+ ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs + ", igstPer=" + igstPer + ", igstRs=" + igstRs
 					+ ", taxableAmt=" + taxableAmt + ", remark=" + remark + ", delStaus=" + delStaus + ", itemName="
-					+ itemName + ", catName=" + catName + ", totalTax=" + totalTax + "]";
+					+ itemName + ", catName=" + catName + ", totalTax=" + totalTax + ", baseRate=" + baseRate + "]";
 		}
 
+		
 		
 		
 }
