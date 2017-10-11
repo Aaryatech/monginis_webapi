@@ -15,7 +15,7 @@ import com.ats.webapi.repository.ItemOrderHisRepository;
 import com.ats.webapi.repository.OrderRepository;
 import com.ats.webapi.repository.OrdersRepository;
 
-@Service("orderService")
+@Service
 public class OrderServiceImpl implements OrderService {
 
 	String jsonResult;
@@ -115,5 +115,17 @@ public class OrderServiceImpl implements OrderService {
 			itemOrderList.setErrorMessage(errorMessage);
 		}
 		return itemOrderList;
+	}
+
+	// new Update order method for billing
+	@Override
+	public int  updateBillStatus(int orderId,int status) {
+	
+	int x=	orderRepository.updateBillStatus(orderId,status);
+		
+		
+		return x;
+		
+		
 	}
 }

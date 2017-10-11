@@ -265,6 +265,24 @@ public class RestApiController {
 	@Autowired
 	ConfigureSpDayCakeService configureSpDayCakeService;
 	
+	
+	
+	@RequestMapping(value = "/updateOrderStatus", method = RequestMethod.POST)
+	public @ResponseBody String updateOrderStatus(@RequestParam("orderId") int orderId,@RequestParam("status") int status){
+		System.out.println("inside rest");
+		
+		orderService.updateBillStatus(orderId,status);
+		
+		
+		
+	return "resulted ";
+	
+	
+	}
+	
+	
+	
+	
 	@RequestMapping(value = "/getCountByProduDate", method = RequestMethod.POST)
 	public @ResponseBody int getCountOfSlotUsedByProduDate(@RequestParam("spProduDate")String spProduDate){
 		
@@ -304,49 +322,46 @@ public class RestApiController {
 	
 	
 	@RequestMapping(value = { "/updateBillDetails" }, method = RequestMethod.POST)
-	public @ResponseBody String updateBillDetails(@RequestParam int billNo,@RequestParam List<Integer> billDetailNoList, 
-			@RequestParam List<Integer> billQtyList,
-			@RequestParam List<Integer> grandTotalList, @RequestParam List<Integer> taxableAmtList) {
+	public @ResponseBody String updateBillDetails(@RequestParam List<PostBillDetail> postBillDetailsList  ) {
 
 		
 		
 		int billDeNo=0;
 		
+		System.out.println("post bill Detail with get bill Details= "+postBillDetailsList.toString());
 		
-		for(int i=0;i<billDetailNoList.size();i++) {
+		
+		for(int i=0;i<postBillDetailsList.size();i++) {
 			
-			int billDNo=billDetailNoList.get(i);
-			//int bn=billNo;
-			int bilQty=billQtyList.get(i);
-			float grTot=grandTotalList.get(i);
-			float taxAmt=taxableAmtList.get(i);
 			
-			PostBillDetail billDetailsList=billDetailOnlyService.getByBillDetailNo(billDNo);
+			
+			
+			//PostBillDetail billDetailsList=billDetailOnlyService.getByBillDetailNo(billDNo);
 			
 			
 			PostBillDetail postBillUpdate=new PostBillDetail();
 			
-			postBillUpdate.setBillDetailNo(billDNo);
-			postBillUpdate.setBillNo(billNo);
-			postBillUpdate.setBillQty(bilQty);
-			postBillUpdate.setGrandTotal(grTot);
-			postBillUpdate.setTaxableAmt(taxAmt);
-			postBillUpdate.setCatId(billDetailsList.getCatId());
-			postBillUpdate.setCgstPer(billDetailsList.getCgstPer());
-			postBillUpdate.setCgstRs(billDetailsList.getCgstRs());
-			postBillUpdate.setDelStaus(billDetailsList.getDelStaus());
-			postBillUpdate.setIgstPer(billDetailsList.getIgstPer());
-			postBillUpdate.setIgstRs(billDetailsList.getIgstRs());
-			postBillUpdate.setItemId(billDetailsList.getItemId());
-			postBillUpdate.setMenuId(billDetailsList.getMenuId());
-			postBillUpdate.setMrp(billDetailsList.getMrp());
-			postBillUpdate.setOrderId(billDetailsList.getOrderId());
-			postBillUpdate.setOrderQty(billDetailsList.getOrderQty());
-			postBillUpdate.setRate(billDetailsList.getRate());
-			postBillUpdate.setRateType(billDetailsList.getRateType());
-			postBillUpdate.setRemark(billDetailsList.getRemark());
-			postBillUpdate.setSgstPer(billDetailsList.getSgstPer());
-			postBillUpdate.setSgstRs(billDetailsList.getSgstRs());
+			postBillUpdate.setBillDetailNo(postBillDetailsList.get(i).getBillDetailNo());
+			postBillUpdate.setBillNo(postBillDetailsList.get(i).getBillNo());
+			postBillUpdate.setBillQty(postBillDetailsList.get(i).getBillQty());
+			postBillUpdate.setGrandTotal(postBillDetailsList.get(i).getGrandTotal());
+			postBillUpdate.setTaxableAmt(postBillDetailsList.get(i).getTaxableAmt());
+			postBillUpdate.setCatId(postBillDetailsList.get(i).getCatId());
+			postBillUpdate.setCgstPer(postBillDetailsList.get(i).getCgstPer());
+			postBillUpdate.setCgstRs(postBillDetailsList.get(i).getCgstRs());
+			postBillUpdate.setDelStaus(postBillDetailsList.get(i).getDelStaus());
+			postBillUpdate.setIgstPer(postBillDetailsList.get(i).getIgstPer());
+			postBillUpdate.setIgstRs(postBillDetailsList.get(i).getIgstRs());
+			postBillUpdate.setItemId(postBillDetailsList.get(i).getItemId());
+			postBillUpdate.setMenuId(postBillDetailsList.get(i).getMenuId());
+			postBillUpdate.setMrp(postBillDetailsList.get(i).getMrp());
+			postBillUpdate.setOrderId(postBillDetailsList.get(i).getOrderId());
+			postBillUpdate.setOrderQty(postBillDetailsList.get(i).getOrderQty());
+			postBillUpdate.setRate(postBillDetailsList.get(i).getRate());
+			postBillUpdate.setRateType(postBillDetailsList.get(i).getRateType());
+			postBillUpdate.setRemark(postBillDetailsList.get(i).getRemark());
+			postBillUpdate.setSgstPer(postBillDetailsList.get(i).getSgstPer());
+			postBillUpdate.setSgstRs(postBillDetailsList.get(i).getSgstRs());
 			
 			
 			PostBillDetail postBillUpdated=postBillUpdateService.save(postBillUpdate);
