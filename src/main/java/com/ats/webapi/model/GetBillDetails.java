@@ -95,7 +95,19 @@ public class GetBillDetails implements Serializable {
 		@Column(name="cat_name")
 		private String catName;
 		
+		@Column(name="total_tax")
+		private float totalTax;
 		
+
+		
+		
+		public float getTotalTax() {
+			return totalTax;
+		}
+
+		public void setTotalTax(float totalTax) {
+			this.totalTax = totalTax;
+		}
 
 		public int getBillDetailNo() {
 			return billDetailNo;
@@ -297,7 +309,6 @@ public class GetBillDetails implements Serializable {
 			this.billDate = billDate;
 		}
 
-		
 		@Override
 		public String toString() {
 			return "GetBillDetails [billDetailNo=" + billDetailNo + ", billNo=" + billNo + ", menuId=" + menuId
@@ -306,6 +317,9 @@ public class GetBillDetails implements Serializable {
 					+ ", mrp=" + mrp + ", grandTotal=" + grandTotal + ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs
 					+ ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs + ", igstPer=" + igstPer + ", igstRs=" + igstRs
 					+ ", taxableAmt=" + taxableAmt + ", remark=" + remark + ", delStaus=" + delStaus + ", itemName="
-					+ itemName + ", catName=" + catName + "]";
+					+ itemName + ", catName=" + catName + ", totalTax=" + totalTax + "]";
 		}
+
+		
+		
 }

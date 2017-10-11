@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Entity
+@Entity(name="Orders")
 @Table(name = "t_order")
 public class Orders {
 
@@ -73,8 +73,22 @@ public class Orders {
 
 	@Column(name="menu_id")
 	private int menuId;
+	
+	@Column(name="is_bill_generated")
+	private int isBillGenerated;
 
 	
+	
+	
+	
+	public int getIsBillGenerated() {
+		return isBillGenerated;
+	}
+
+	public void setIsBillGenerated(int isBillGenerated) {
+		this.isBillGenerated = isBillGenerated;
+	}
+
 	public int getOrderId() {
 		return orderId;
 	}
