@@ -15,5 +15,7 @@ public interface ConfigureSpDayCakeService {
 
 	ErrorMessage findConfiguredSpDayCk(int spdayId);
 
+	ConfiguredSpDayCkResponse getSpDayCkList();
+
 
 }

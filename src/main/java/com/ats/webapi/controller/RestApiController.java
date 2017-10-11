@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -758,6 +760,17 @@ public class RestApiController {
 		 
 
 		}
+		//For Getting List Of  Special day Cake List by Current Date Between DeliveryFromDate to DeliveryToDate 
+				@RequestMapping(value = "/getSpDayCkList", method = RequestMethod.GET)
+				public @ResponseBody ConfiguredSpDayCkResponse getSpDayCkList() {
+
+					
+					ConfiguredSpDayCkResponse	configuredSpDayCkResponse=configureSpDayCakeService.getSpDayCkList();
+				
+					return configuredSpDayCkResponse;
+				 
+
+				}
 		//getConfSpDayCake
 		@RequestMapping(value = "/getConfSpDayCake", method = RequestMethod.GET) 
 		public @ResponseBody GetConfiguredSpDayCk getConfSpDayCake(@RequestParam int spdayId) {

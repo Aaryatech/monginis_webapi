@@ -1,5 +1,8 @@
 package com.ats.webapi.service;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,6 +90,34 @@ public class ConfigureSpDayCakeServiceImpl implements ConfigureSpDayCakeService{
 	    	errorMessage.setMessage("Configured SpDay Cake Deleted Successfully");
 	    }
 		return errorMessage;
+	}
+
+	@Override
+	public ConfiguredSpDayCkResponse getSpDayCkList() {
+		ConfiguredSpDayCkResponse configuredSpDayCkResponse=new ConfiguredSpDayCkResponse();
+
+		
+		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		System.out.println("date " + cDate);
+		
+		List<GetConfiguredSpDayCk> configuredSpDayCkList=getConfSpDayCakeRepository.findAllSpDayCake(cDate);
+          ErrorMessage errorMessage=new ErrorMessage();
+		
+		if(configuredSpDayCkList!=null)
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("Configured Special Day Cake List Found Successfully.");
+			configuredSpDayCkResponse.setConfiguredSpDayCkList(configuredSpDayCkList);
+			configuredSpDayCkResponse.setErrorMessage(errorMessage);
+		}
+		else
+		{
+			errorMessage.setError(true);
+		    errorMessage.setMessage("Configured Special Day Cake List Not Found");
+			configuredSpDayCkResponse.setErrorMessage(errorMessage);
+		}
+		
+		return configuredSpDayCkResponse;
 	}
 
 	
