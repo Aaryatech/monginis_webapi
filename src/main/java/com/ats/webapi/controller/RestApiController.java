@@ -1874,6 +1874,9 @@ public class RestApiController {
 		List<Orders> orderList = new ArrayList<>();
 
 		System.out.println("input param items= " + items.toString());
+		
+		System.out.println("date param = " + date.toString());
+
 		try {
 			itemList = getFrItemsService.findFrItems(items);
 			try {
