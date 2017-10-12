@@ -83,6 +83,9 @@ import com.ats.webapi.model.RouteList;
 import com.ats.webapi.model.Scheduler;
 import com.ats.webapi.model.SchedulerList;
 import com.ats.webapi.model.SearchSpCakeResponse;
+import com.ats.webapi.model.SellBillDataCommon;
+import com.ats.webapi.model.SellBillDetail;
+import com.ats.webapi.model.SellBillHeader;
 import com.ats.webapi.model.SpCakeOrderRes;
 import com.ats.webapi.model.SpCakeOrders;
 import com.ats.webapi.model.SpCakeOrdersBean;
@@ -133,6 +136,7 @@ import com.ats.webapi.service.RegularSpCkItemsService;
 import com.ats.webapi.service.RegularSpCkOrderService;
 import com.ats.webapi.service.RouteService;
 import com.ats.webapi.service.SchedulerService;
+import com.ats.webapi.service.SellBillDataService;
 import com.ats.webapi.service.SpCakeOrdersService;
 import com.ats.webapi.service.SpCkOrdersService;
 import com.ats.webapi.service.SpMessageService;
@@ -270,6 +274,8 @@ public class RestApiController {
 	@Autowired
 	DeleteBillService deleteBillService;
 	
+	@Autowired
+	SellBillDataService sellBillDataService;
 	
 	@RequestMapping(value = "/deleteBill", method = RequestMethod.POST)
 	public @ResponseBody Info deleteBill(@RequestParam("delStatus") int delStatus,@RequestParam("billNo") int billNo){
@@ -489,7 +495,41 @@ public class RestApiController {
 
 	}
 
+	@RequestMapping(value = { "/insertSellBillData" }, method = RequestMethod.POST)
+
+	public @ResponseBody Info sellBillData(@RequestBody SellBillDataCommon sellBillDataCommon)
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
+		
+		System.out.println("Data Common "+sellBillDataCommon.toString());
+
+		List<SellBillHeader> jsonSellBillHeader;
+		List<SellBillDetail> jsonBillDetail;
+
+		jsonSellBillHeader = sellBillDataService.saveSellBillHeader(sellBillDataCommon.getSellBillHeaderList());
+		
 	
+
+		Info info = new Info();
+
+		if (jsonSellBillHeader.size() > 0) {
+
+			info.setError(false);
+			info.setMessage("Sell bill header inserted  Successfully");
+
+		}
+
+		else {
+
+			info.setError(true);
+			info.setMessage("Error in Sell bill header insertion : RestApi");
+
+		}
+		
+		
+		return info;
+
+	}
+
 	@RequestMapping(value = "/getBillHeader", method = RequestMethod.POST)
 	public @ResponseBody GetBillHeaderList getBillHeader(@RequestParam("frId")List<String> frId,@RequestParam("fromDate")String fromDate,
 	@RequestParam("toDate")String toDate){
