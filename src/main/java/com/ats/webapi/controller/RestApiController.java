@@ -1007,7 +1007,7 @@ public class RestApiController {
 			@RequestParam("itemImage") String itemImage, @RequestParam("itemTax1") double itemTax1,
 			@RequestParam("itemTax2") double itemTax2, @RequestParam("itemTax3") double itemTax3,
 			@RequestParam("itemIsUsed") int itemIsUsed, @RequestParam("itemSortId") double itemSortId,
-			@RequestParam("grnTwo") int grnTwo) {
+			@RequestParam("grnTwo") int grnTwo,	@RequestParam("itemShelfLife") int itemShelfLife ){
 
 		Item item = new Item();
 		item.setItemImage(itemImage);
@@ -1030,6 +1030,7 @@ public class RestApiController {
 		item.setItemTax3(itemTax3);
 		item.setGrnTwo(grnTwo);
 		item.setItemId(itemId);
+		item.setShelfLife(itemShelfLife);
 
 		ErrorMessage jsonResult = itemService.saveItem(item);
 
@@ -1483,7 +1484,8 @@ public class RestApiController {
 			@RequestParam("minQty") int minQty, @RequestParam("itemImage") String itemImage,
 			@RequestParam("itemTax1") double itemTax1, @RequestParam("itemTax2") double itemTax2,
 			@RequestParam("itemTax3") double itemTax3, @RequestParam("itemIsUsed") int itemIsUsed,
-			@RequestParam("itemSortId") double itemSortId, @RequestParam("grnTwo") int grnTwo) {
+			@RequestParam("itemSortId") double itemSortId, @RequestParam("grnTwo") int grnTwo,
+			@RequestParam("item_shelf_life") int itemShelfLife) {
 
 		Item item = itemService.findItems(id);
 		item.setItemImage(itemImage);
@@ -1504,6 +1506,7 @@ public class RestApiController {
 		item.setItemTax2(itemTax2);
 		item.setItemTax3(itemTax3);
 		item.setGrnTwo(grnTwo);
+		item.setShelfLife(itemShelfLife);
 		item.setItemId(itemId);
 
 		ErrorMessage jsonResult = itemService.saveItem(item);

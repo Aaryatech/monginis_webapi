@@ -83,6 +83,9 @@ public class Item implements Serializable {
 	@Column(name="min_qty")
 	private int minQty;
 	
+	@Column(name="item_shelf_life")
+	private int shelfLife;
+	
 	
 	public double getItemRate3() {
 		return itemRate3;
@@ -259,16 +262,25 @@ public class Item implements Serializable {
 		this.id = id;
 	}
 
+	public int getShelfLife() {
+		return shelfLife;
+	}
+
+	public void setShelfLife(int shelfLife) {
+		this.shelfLife = shelfLife;
+	}
+
 	@Override
 	public String toString() {
-		return "Item [itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1 + ", itemGrp2=" + itemGrp2
-				+ ", itemGrp3=" + itemGrp3 + ", itemRate1=" + itemRate1 + ", itemRate2=" + itemRate2 + ", itemMrp1="
-				+ itemMrp1 + ", itemMrp2=" + itemMrp2 + ", itemImage=" + itemImage + ", itemTax1=" + itemTax1
-				+ ", itemTax2=" + itemTax2 + ", itemTax3=" + itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId="
-				+ itemSortId + ", grnTwo=" + grnTwo + ", delStatus=" + delStatus + ", itemRate3=" + itemRate3
-				+ ", minQty=" + minQty + ", id=" + id + "]";
+		return "Item [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1
+				+ ", itemGrp2=" + itemGrp2 + ", itemGrp3=" + itemGrp3 + ", itemRate1=" + itemRate1 + ", itemRate2="
+				+ itemRate2 + ", itemMrp1=" + itemMrp1 + ", itemMrp2=" + itemMrp2 + ", itemMrp3=" + itemMrp3
+				+ ", itemImage=" + itemImage + ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2 + ", itemTax3="
+				+ itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId + ", grnTwo=" + grnTwo
+				+ ", delStatus=" + delStatus + ", itemRate3=" + itemRate3 + ", minQty=" + minQty + ", shelfLife="
+				+ shelfLife + "]";
 	}
-	
 
+	
 
 }
