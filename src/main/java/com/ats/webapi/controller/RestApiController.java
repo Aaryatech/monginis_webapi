@@ -1509,7 +1509,7 @@ public class RestApiController {
 			@RequestParam("itemTax1") double itemTax1, @RequestParam("itemTax2") double itemTax2,
 			@RequestParam("itemTax3") double itemTax3, @RequestParam("itemIsUsed") int itemIsUsed,
 			@RequestParam("itemSortId") double itemSortId, @RequestParam("grnTwo") int grnTwo,
-			@RequestParam("item_shelf_life") int itemShelfLife) {
+			@RequestParam("itemShelfLife") int itemShelfLife) {
 
 		Item item = itemService.findItems(id);
 		item.setItemImage(itemImage);
