@@ -1463,22 +1463,6 @@ public class RestApiController {
 		return categoryList;
 	}
 
-	// Show Event List
-	@RequestMapping(value = { "/showEventList" }, method = RequestMethod.GET)
-	@ResponseBody
-	public EventList showEvent() {
-
-		List<Event> jsonEventList = eventService.findAllEvent();
-		EventList eventList = new EventList();
-		eventList.setEvent(jsonEventList);
-		Info info = new Info();
-		info.setError(false);
-		info.setMessage("Event List displayed Successfully");
-		eventList.setInfo(info);
-
-		return eventList;
-	}
-
 	// Show Flavor List
 	@RequestMapping(value = { "/showFlavourList" }, method = RequestMethod.GET)
 	@ResponseBody
