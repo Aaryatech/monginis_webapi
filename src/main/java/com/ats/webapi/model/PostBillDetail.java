@@ -85,7 +85,7 @@ public class PostBillDetail {
 	
 	
 	@Column(name="del_status")
-	private int delStaus;
+	private int delStatus;
 
 	public int getBillDetailNo() {
 		return billDetailNo;
@@ -241,15 +241,16 @@ public class PostBillDetail {
 		this.remark = remark;
 	}
 
-	public int getDelStaus() {
-		return delStaus;
+	
+	
+	public int getDelStatus() {
+		return delStatus;
 	}
 
-	public void setDelStaus(int delStaus) {
-		this.delStaus = delStaus;
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
 	}
-	
-	
+
 	public int getOrderId() {
 		return orderId;
 	}
@@ -281,7 +282,7 @@ public class PostBillDetail {
 				+ orderId + ", rateType=" + rateType + ", rate=" + rate + ", mrp=" + mrp + ", grandTotal=" + grandTotal
 				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
 				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", baseRate=" + baseRate + ", taxableAmt="
-				+ taxableAmt + ", remark=" + remark + ", totalTax=" + totalTax + ", delStaus=" + delStaus + "]";
+				+ taxableAmt + ", remark=" + remark + ", totalTax=" + totalTax + ", delStatus=" + delStatus + "]";
 	}
 
 	

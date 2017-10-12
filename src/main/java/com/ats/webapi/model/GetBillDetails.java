@@ -86,7 +86,7 @@ public class GetBillDetails implements Serializable {
 		private String remark;
 		
 		@Column(name="del_status")
-		private int delStaus;
+		private int delStatus;
 		
 		
 		@Column(name="item_name")
@@ -275,16 +275,18 @@ public class GetBillDetails implements Serializable {
 			this.remark = remark;
 		}
 
-		public int getDelStaus() {
-			return delStaus;
+		
+		
+		
+		
+
+		public int getDelStatus() {
+			return delStatus;
 		}
 
-		public void setDelStaus(int delStaus) {
-			this.delStaus = delStaus;
+		public void setDelStatus(int delStatus) {
+			this.delStatus = delStatus;
 		}
-		
-		
-		
 
 		public int getOrderId() {
 			return orderId;
@@ -326,10 +328,11 @@ public class GetBillDetails implements Serializable {
 					+ ", billQty=" + billQty + ", orderId=" + orderId + ", rateType=" + rateType + ", rate=" + rate
 					+ ", mrp=" + mrp + ", grandTotal=" + grandTotal + ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs
 					+ ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs + ", igstPer=" + igstPer + ", igstRs=" + igstRs
-					+ ", taxableAmt=" + taxableAmt + ", remark=" + remark + ", delStaus=" + delStaus + ", itemName="
+					+ ", taxableAmt=" + taxableAmt + ", remark=" + remark + ", delStatus=" + delStatus + ", itemName="
 					+ itemName + ", catName=" + catName + ", totalTax=" + totalTax + ", baseRate=" + baseRate + "]";
 		}
 
+		
 		
 		
 		

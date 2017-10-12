@@ -370,7 +370,7 @@ public class RestApiController {
 			postBillUpdate.setCatId(postBillDetailsList.get(i).getCatId());
 			postBillUpdate.setCgstPer(postBillDetailsList.get(i).getCgstPer());
 			postBillUpdate.setCgstRs(postBillDetailsList.get(i).getCgstRs());
-			postBillUpdate.setDelStaus(postBillDetailsList.get(i).getDelStaus());
+			postBillUpdate.setDelStatus(postBillDetailsList.get(i).getDelStatus());
 			postBillUpdate.setIgstPer(postBillDetailsList.get(i).getIgstPer());
 			postBillUpdate.setIgstRs(postBillDetailsList.get(i).getIgstRs());
 			postBillUpdate.setItemId(postBillDetailsList.get(i).getItemId());
