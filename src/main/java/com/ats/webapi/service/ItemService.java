@@ -15,5 +15,6 @@ public interface ItemService {
 	public Item findItem(int id);
 	public List<Item> findFrItems(String itemGrp1);
 	public List<Item> getAllItems();
+	public List<Item> findItemsByItemId(List<Integer> itemList);
 
 }

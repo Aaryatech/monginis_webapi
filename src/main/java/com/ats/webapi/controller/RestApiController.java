@@ -1845,7 +1845,14 @@ public class RestApiController {
 		return items;
 
 	}
+	// Get Items By Item Id and Delete Status 0
+			@RequestMapping(value = "/getItemsByItemId", method = RequestMethod.POST)
+			public @ResponseBody List<Item> getItems(@RequestParam List<Integer> itemList) {
 
+				List<Item> items = itemService.findItemsByItemId(itemList);
+				return items;
+
+			}
 	//
 	@RequestMapping(value = "/getFrMenus11", method = RequestMethod.POST)
 	public @ResponseBody FrMenusList getFrMenus(@RequestParam int frId) {

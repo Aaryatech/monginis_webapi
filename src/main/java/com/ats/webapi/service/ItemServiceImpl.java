@@ -102,6 +102,14 @@ public class ItemServiceImpl implements ItemService{
 		return items;
 	}
 
+	@Override
+	public List<Item> findItemsByItemId(List<Integer> itemList) {
+
+		
+		 List<Item> items=itemRepository.findByDelStatusAndItemIdIn(itemList);
+		return items;
+	}
+
 	
 
 }
