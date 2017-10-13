@@ -50,7 +50,6 @@ public class GetBillDetailsServiceImpl implements GetBillDetailsService {
 		return billDetailsList;
 	}
 	
-	
-	
+
 
 }
