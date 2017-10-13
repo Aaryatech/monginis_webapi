@@ -77,10 +77,20 @@ public class Orders {
 	@Column(name="is_bill_generated")
 	private int isBillGenerated;
 
+	@Column(name="grn_type")//newly added
+	private int grnType;
 	
 	
 	
 	
+	public int getGrnType() {
+		return grnType;
+	}
+
+	public void setGrnType(int grnType) {
+		this.grnType = grnType;
+	}
+
 	public int getIsBillGenerated() {
 		return isBillGenerated;
 	}

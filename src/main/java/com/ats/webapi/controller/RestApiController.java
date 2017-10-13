@@ -1959,7 +1959,7 @@ public class RestApiController {
 
 					for (int j = 0; j < orderList.size(); j++) {
 
-						if (item.getItemId().equalsIgnoreCase(orderList.get(j).getItemId())) {
+						if (String.valueOf(item.getId()).equalsIgnoreCase(orderList.get(j).getItemId())) {
 
 							getFrItems.setItemQty(orderList.get(j).getOrderQty());
 							getFrItems.setMenuId(orderList.get(j).getMenuId());
