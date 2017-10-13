@@ -1,10 +1,14 @@
 package com.ats.webapi.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class GenerateBill {
@@ -62,11 +66,46 @@ public class GenerateBill {
 	@Column(name="item_tax3")
 	private double itemTax3;
 	
-	
+	@Column(name="grn_type")//newly added
+	int  grnType;
 	
 
-
+	@Column(name="item_shelf_life")//newly added
+	int  itemShelfLife;
 	
+	
+	
+	@Column(name="delivery_date")//newly added
+	Date  deliveryDate;
+	
+	
+	
+	
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getDeliveryDate() {
+		return deliveryDate;
+	}
+
+	public void setDeliveryDate(Date deliveryDate) {
+		this.deliveryDate = deliveryDate;
+	}
+
+	public int getGrnType() {
+		return grnType;
+	}
+
+	public void setGrnType(int grnType) {
+		this.grnType = grnType;
+	}
+
+	public int getItemShelfLife() {
+		return itemShelfLife;
+	}
+
+	public void setItemShelfLife(int itemShelfLife) {
+		this.itemShelfLife = itemShelfLife;
+	}
+
 	public double getItemTax1() {
 		return itemTax1;
 	}

@@ -101,8 +101,33 @@ public class GetBillDetails implements Serializable {
 		@Column(name="base_rate")
 		private float baseRate;
 		
+		@Column(name="grn_type")
+		private int  grnType;
 		
 		
+		@Column(name="expiry_date")
+		private Date  expiryDate;
+		
+		
+		
+		
+		
+		public int getGrnType() {
+			return grnType;
+		}
+
+		public void setGrnType(int grnType) {
+			this.grnType = grnType;
+		}
+
+		public Date getExpiryDate() {
+			return expiryDate;
+		}
+
+		public void setExpiryDate(Date expiryDate) {
+			this.expiryDate = expiryDate;
+		}
+
 		public float getBaseRate() {
 			return baseRate;
 		}
@@ -329,9 +354,11 @@ public class GetBillDetails implements Serializable {
 					+ ", mrp=" + mrp + ", grandTotal=" + grandTotal + ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs
 					+ ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs + ", igstPer=" + igstPer + ", igstRs=" + igstRs
 					+ ", taxableAmt=" + taxableAmt + ", remark=" + remark + ", delStatus=" + delStatus + ", itemName="
-					+ itemName + ", catName=" + catName + ", totalTax=" + totalTax + ", baseRate=" + baseRate + "]";
+					+ itemName + ", catName=" + catName + ", totalTax=" + totalTax + ", baseRate=" + baseRate
+					+ ", grnType=" + grnType + ", expiryDate=" + expiryDate + "]";
 		}
 
+		
 		
 		
 		

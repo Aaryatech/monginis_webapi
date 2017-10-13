@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "t_bill_detail")
 public class PostBillDetail {
@@ -92,7 +94,7 @@ public class PostBillDetail {
 	
 	
 	@Column(name="expiry_date")//new added
-	private Date expityDate;
+	private Date expiryDate;
 	
 	
 	
@@ -105,12 +107,13 @@ public class PostBillDetail {
 		this.grnType = grnType;
 	}
 
-	public Date getExpityDate() {
-		return expityDate;
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getExpiryDate() {
+		return expiryDate;
 	}
 
-	public void setExpityDate(Date expityDate) {
-		this.expityDate = expityDate;
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
 	}
 
 	public int getBillDetailNo() {
@@ -309,9 +312,10 @@ public class PostBillDetail {
 				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
 				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", baseRate=" + baseRate + ", taxableAmt="
 				+ taxableAmt + ", remark=" + remark + ", totalTax=" + totalTax + ", delStatus=" + delStatus
-				+ ", grnType=" + grnType + ", expityDate=" + expityDate + "]";
+				+ ", grnType=" + grnType + ", expiryDate=" + expiryDate + "]";
 	}
 
+	
 	
 	
 }
