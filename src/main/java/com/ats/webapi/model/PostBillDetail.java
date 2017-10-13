@@ -87,6 +87,32 @@ public class PostBillDetail {
 	@Column(name="del_status")
 	private int delStatus;
 
+	@Column(name="grn_type")//new added
+	private int grnType;
+	
+	
+	@Column(name="expiry_date")//new added
+	private Date expityDate;
+	
+	
+	
+	
+	public int getGrnType() {
+		return grnType;
+	}
+
+	public void setGrnType(int grnType) {
+		this.grnType = grnType;
+	}
+
+	public Date getExpityDate() {
+		return expityDate;
+	}
+
+	public void setExpityDate(Date expityDate) {
+		this.expityDate = expityDate;
+	}
+
 	public int getBillDetailNo() {
 		return billDetailNo;
 	}
@@ -282,7 +308,8 @@ public class PostBillDetail {
 				+ orderId + ", rateType=" + rateType + ", rate=" + rate + ", mrp=" + mrp + ", grandTotal=" + grandTotal
 				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
 				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", baseRate=" + baseRate + ", taxableAmt="
-				+ taxableAmt + ", remark=" + remark + ", totalTax=" + totalTax + ", delStatus=" + delStatus + "]";
+				+ taxableAmt + ", remark=" + remark + ", totalTax=" + totalTax + ", delStatus=" + delStatus
+				+ ", grnType=" + grnType + ", expityDate=" + expityDate + "]";
 	}
 
 	
