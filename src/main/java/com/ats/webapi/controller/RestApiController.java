@@ -54,6 +54,7 @@ import com.ats.webapi.model.GetBillDetailsList;
 import com.ats.webapi.model.GetBillHeaderList;
 import com.ats.webapi.model.GetConfiguredSpDayCk;
 import com.ats.webapi.model.GetFrItems;
+import com.ats.webapi.model.GetGrnItemConfigList;
 import com.ats.webapi.model.GetOrder;
 import com.ats.webapi.model.GetOrderList;
 import com.ats.webapi.model.Info;
@@ -118,6 +119,7 @@ import com.ats.webapi.service.GetBillDetailsService;
 import com.ats.webapi.service.GetBillHeaderService;
 import com.ats.webapi.service.GetFrItemStockConfigurationService;
 import com.ats.webapi.service.GetFrItemsService;
+import com.ats.webapi.service.GetGrnItemConfigService;
 import com.ats.webapi.service.GetOrderService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.ItemsList;
@@ -276,6 +278,31 @@ public class RestApiController {
 	
 	@Autowired
 	SellBillDataService sellBillDataService;
+	
+	@Autowired
+	GetGrnItemConfigService getGrnItemConfigService;
+	
+	
+	@RequestMapping(value = "/getGrnItemConfig", method = RequestMethod.POST)
+	public @ResponseBody GetGrnItemConfigList getGrnItemConfig(){
+		System.out.println("inside rest");
+		
+		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		
+
+		
+		GetGrnItemConfigList grnItemConfigList =getGrnItemConfigService.getAllGrnItemConfiguration(cDate);
+		
+		
+		
+	return grnItemConfigList;
+	
+	
+	}
+	
+	
+	
+	
 	
 	@RequestMapping(value = "/deleteBill", method = RequestMethod.POST)
 	public @ResponseBody Info deleteBill(@RequestParam("delStatus") int delStatus,@RequestParam("billNo") int billNo){
