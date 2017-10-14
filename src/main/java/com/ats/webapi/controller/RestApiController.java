@@ -858,7 +858,7 @@ public class RestApiController {
 
 				}
 		//getConfSpDayCake
-		@RequestMapping(value = "/getConfSpDayCake", method = RequestMethod.GET) 
+		@RequestMapping(value = "/getConfSpDayCake", method = RequestMethod.POST) 
 		public @ResponseBody GetConfiguredSpDayCk getConfSpDayCake(@RequestParam int spdayId) {
 
 			GetConfiguredSpDayCk getConfiguredSpDayCk = configureSpDayCakeService.findConfSpDayCake(spdayId);
