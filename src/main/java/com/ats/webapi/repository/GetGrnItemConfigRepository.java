@@ -9,16 +9,13 @@ import org.springframework.data.repository.query.Param;
 
 import com.ats.webapi.model.GetGrnItemConfig;
 
-public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConfig, Integer>{
-	
-	
-	
-	@Query(value=" select m_item.item_name,m_item.id,"
-			+ " t_bill_detail.grn_type,t_bill_detail.bill_no,t_bill_detail.bill_qty,t_bill_detail.bill_detail_no,"
-			+ " t_bill_detail.item_id,"
-			+ " t_bill_detail.rate ,t_bill_detail.mrp from m_item,t_bill_detail "
-			+ " where t_bill_detail.expiry_date=:cDate  AND t_bill_detail.item_id=m_item.id "
-			+ "",nativeQuery=true)
-	public List<GetGrnItemConfig> getAllGrnItemConfig(@Param("cDate") Date cDate);
+public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConfig, Integer> {
+
+	@Query(value = "select t_bill_header.bill_no,m_item.item_id,m_item.item_name,t_bill_detail.grn_type,"
+			+ "	t_bill_detail.rate,t_bill_detail.mrp,t_bill_detail.bill_qty,t_bill_detail.bill_detail_no,"
+			+ "	t_bill_detail.bill_no,t_bill_header.fr_id from t_bill_header ,t_bill_detail,m_item "
+			+ "	 where t_bill_header.fr_id=:frId AND t_bill_detail.bill_no=t_bill_header.bill_no "
+			+ "	AND t_bill_detail.item_id=m_item.id AND t_bill_detail.expiry_date=:cDate " + "", nativeQuery = true)
+	public List<GetGrnItemConfig> getAllGrnItemConfig(@Param("cDate") Date cDate,@Param("frId") int frId);
 
 }

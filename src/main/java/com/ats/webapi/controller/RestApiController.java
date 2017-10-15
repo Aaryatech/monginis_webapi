@@ -57,6 +57,7 @@ import com.ats.webapi.model.GetFrItems;
 import com.ats.webapi.model.GetGrnItemConfigList;
 import com.ats.webapi.model.GetOrder;
 import com.ats.webapi.model.GetOrderList;
+import com.ats.webapi.model.GrnGvn;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemOrderList;
@@ -131,6 +132,7 @@ import com.ats.webapi.service.OrderCountsService;
 import com.ats.webapi.service.OrderService;
 import com.ats.webapi.service.PostBillDataService;
 import com.ats.webapi.service.PostBillUpdateService;
+import com.ats.webapi.service.PostGrnGvnService;
 import com.ats.webapi.service.PrevItemOrderService;
 import com.ats.webapi.service.RateList;
 import com.ats.webapi.service.RateService;
@@ -282,16 +284,51 @@ public class RestApiController {
 	@Autowired
 	GetGrnItemConfigService getGrnItemConfigService;
 	
+	@Autowired
+	PostGrnGvnService postGrnGvnService;
+	
+	
+	@RequestMapping(value = { "/insertGrnGvn" }, method = RequestMethod.POST)
+
+	public @ResponseBody Info postGrnGvn(@RequestBody List<GrnGvn> grnGvnList)
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
+		
+		List<GrnGvn> jsonGrnGvn;
+		
+		jsonGrnGvn = postGrnGvnService.saveGrnGvn(grnGvnList);
+		
+		Info info = new Info();
+
+		if (jsonGrnGvn.size() > 0) {
+
+			info.setError(false);
+			info.setMessage("Grn Gvn inserted  Successfully");
+
+		}
+
+		else {
+
+			info.setError(true);
+			info.setMessage("Error in Grn Gvn insertion : RestApi");
+
+		}
+		
+		
+		return info;
+
+	}
+	
+	
 	
 	@RequestMapping(value = "/getGrnItemConfig", method = RequestMethod.POST)
-	public @ResponseBody GetGrnItemConfigList getGrnItemConfig(){
+	public @ResponseBody GetGrnItemConfigList getGrnItemConfig(@RequestParam("frId") int frId){
 		System.out.println("inside rest");
 		
 		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		
 
 		
-		GetGrnItemConfigList grnItemConfigList =getGrnItemConfigService.getAllGrnItemConfiguration(cDate);
+		GetGrnItemConfigList grnItemConfigList =getGrnItemConfigService.getAllGrnItemConfiguration(cDate,frId);
 		
 		
 		

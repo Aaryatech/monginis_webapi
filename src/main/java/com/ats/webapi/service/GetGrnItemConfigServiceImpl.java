@@ -18,13 +18,13 @@ public class GetGrnItemConfigServiceImpl implements GetGrnItemConfigService {
 	GetGrnItemConfigRepository grnItemConfigRepository;
 
 	@Override
-	public GetGrnItemConfigList getAllGrnItemConfiguration(Date cDate) {
+	public GetGrnItemConfigList getAllGrnItemConfiguration(Date cDate,int frId) {
 	
 		GetGrnItemConfigList getGrnItemConfigList=new GetGrnItemConfigList();
 		
 		Info info=new Info();
 		
-		List<GetGrnItemConfig> getGrnItemConfigs=grnItemConfigRepository.getAllGrnItemConfig(cDate);
+		List<GetGrnItemConfig> getGrnItemConfigs=grnItemConfigRepository.getAllGrnItemConfig(cDate, frId);
 		
 		if(getGrnItemConfigs!=null) {
 			

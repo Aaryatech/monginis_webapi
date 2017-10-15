@@ -21,8 +21,9 @@ public class GetGrnItemConfig implements Serializable {
 	@Column(name="item_id")
 	private int  itemId;
 	
-	@Column(name="id")
-	private int  id;
+	@Column(name="fr_id")
+	private int  frId;
+	
 	
 
 	@Column(name="item_name")
@@ -42,22 +43,7 @@ public class GetGrnItemConfig implements Serializable {
 	private float mrp;
 	
 	@Column(name="bill_qty")
-	private float billQty;
-
-	
-	
-	
-
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-	
-	
-	
+	private int billQty;
 
 	public int getBillDetailNo() {
 		return billDetailNo;
@@ -115,18 +101,26 @@ public class GetGrnItemConfig implements Serializable {
 		this.mrp = mrp;
 	}
 
-	public float getBillQty() {
+	public int getBillQty() {
 		return billQty;
 	}
 
-	public void setBillQty(float billQty) {
+	public void setBillQty(int billQty) {
 		this.billQty = billQty;
 	}
-	
+
+	public int getFrId() {
+		return frId;
+	}
+
+	public void setFrId(int frId) {
+		this.frId = frId;
+	}
+
+		
 	
 
-	
-	
+
 	
 	
 
