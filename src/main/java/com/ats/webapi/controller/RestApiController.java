@@ -61,6 +61,7 @@ import com.ats.webapi.model.GrnGvn;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemOrderList;
+import com.ats.webapi.model.ItemResponse;
 import com.ats.webapi.model.ItemWithSubCat;
 
 import com.ats.webapi.model.LoginResponse;
@@ -1917,7 +1918,27 @@ public class RestApiController {
 				return items;
 
 			}
-	//
+	// Get Items By Item->FR  Id and Delete Status 0
+	@RequestMapping(value = "/getItemsById", method = RequestMethod.POST)
+    public @ResponseBody ItemResponse getItemList(@RequestParam List<Integer> itemList) {
+
+		ItemResponse itemResponse=new ItemResponse();
+		ErrorMessage errorMessage=new ErrorMessage();
+	   List<Item> items = itemService.findItemsByItemId(itemList);
+	  if(items!=null)
+	  {
+		  itemResponse.setItemList(items);
+		  errorMessage.setError(false);
+		  errorMessage.setMessage("Success");
+	  }else
+	  {
+		  errorMessage.setError(true);
+		  errorMessage.setMessage("No Items Found");
+	  }
+	  return itemResponse;
+
+	}
+				//
 	@RequestMapping(value = "/getFrMenus11", method = RequestMethod.POST)
 	public @ResponseBody FrMenusList getFrMenus(@RequestParam int frId) {
 
