@@ -11,7 +11,7 @@ import com.ats.webapi.model.GetGrnItemConfig;
 
 public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConfig, Integer> {
 
-	@Query(value = "select t_bill_header.bill_no,m_item.item_id,m_item.item_name,t_bill_detail.grn_type,"
+	@Query(value = "select t_bill_header.bill_no,t_bill_header.bill_date,m_item.item_id,m_item.item_name,t_bill_detail.grn_type,"
 			+ "	t_bill_detail.rate,t_bill_detail.mrp,t_bill_detail.bill_qty,t_bill_detail.bill_detail_no,"
 			+ "	t_bill_detail.bill_no,t_bill_header.fr_id from t_bill_header ,t_bill_detail,m_item "
 			+ "	 where t_bill_header.fr_id=:frId AND t_bill_detail.bill_no=t_bill_header.bill_no "
@@ -21,7 +21,7 @@ public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConf
 
 	
 	
-	@Query(value = "select t_bill_header.bill_no,m_item.item_id,m_item.item_name,t_bill_detail.grn_type,"
+	@Query(value = "select t_bill_header.bill_no,t_bill_header.bill_date,m_item.item_id,m_item.item_name,t_bill_detail.grn_type,"
 			+ "	t_bill_detail.rate,t_bill_detail.mrp,t_bill_detail.bill_qty,t_bill_detail.bill_detail_no,"
 			+ "	t_bill_detail.bill_no,t_bill_header.fr_id from t_bill_header ,t_bill_detail,m_item "
 			+ "	 where t_bill_detail.bill_no=:billNo "

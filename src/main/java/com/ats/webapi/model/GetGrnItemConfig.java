@@ -39,6 +39,9 @@ public class GetGrnItemConfig implements Serializable {
 	@Column(name="rate")
 	private float rate;
 	
+	@Column(name="bill_date")
+	private Date billDate;
+	
 	@Column(name="mrp")
 	private float mrp;
 	
@@ -115,6 +118,14 @@ public class GetGrnItemConfig implements Serializable {
 
 	public void setFrId(int frId) {
 		this.frId = frId;
+	}
+
+	public Date getBillDate() {
+		return billDate;
+	}
+
+	public void setBillDate(Date billDate) {
+		this.billDate = billDate;
 	}
 
 		
