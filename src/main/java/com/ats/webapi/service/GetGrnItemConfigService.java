@@ -8,5 +8,7 @@ public interface GetGrnItemConfigService {
 	
 	
 	GetGrnItemConfigList getAllGrnItemConfiguration(Date cDate,int frId);
+	
+	GetGrnItemConfigList getGvnItemConfig(int billNo);
 
 }

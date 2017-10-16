@@ -48,6 +48,38 @@ public class GetGrnItemConfigServiceImpl implements GetGrnItemConfigService {
 	return getGrnItemConfigList;
 	
 	}
+
+	@Override
+	public GetGrnItemConfigList getGvnItemConfig(int billNo) {
+
+		GetGrnItemConfigList getGvnItemConfigList=new GetGrnItemConfigList();
+		
+		Info info=new Info();
+		
+		List<GetGrnItemConfig> getGvnItemConfigs=grnItemConfigRepository.getGvnItemConfig(billNo);
+		
+		if(getGvnItemConfigs!=null) {
+			
+			getGvnItemConfigList.setGetGrnItemConfigs(getGvnItemConfigs);
+			
+			info.setError(false);
+			info.setMessage("success gvn confi get");
+			
+			
+		}
+		else {
+			
+			info.setError(true);
+			info.setMessage("error gvn confi get");
+		
+			
+		}
+		
+		getGvnItemConfigList.setInfo(info);
+		
+	return getGvnItemConfigList;
+	
+	}
 	
 
 }

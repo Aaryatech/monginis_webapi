@@ -52,6 +52,7 @@ import com.ats.webapi.model.GenerateBillList;
 import com.ats.webapi.model.GetBillDetails;
 import com.ats.webapi.model.GetBillDetailsList;
 import com.ats.webapi.model.GetBillHeaderList;
+import com.ats.webapi.model.GetBillsForFrList;
 import com.ats.webapi.model.GetConfiguredSpDayCk;
 import com.ats.webapi.model.GetFrItems;
 import com.ats.webapi.model.GetGrnItemConfigList;
@@ -122,6 +123,7 @@ import com.ats.webapi.service.GenerateBillService;
 import com.ats.webapi.service.GetBillDetailOnlyService;
 import com.ats.webapi.service.GetBillDetailsService;
 import com.ats.webapi.service.GetBillHeaderService;
+import com.ats.webapi.service.GetBillsForFrService;
 import com.ats.webapi.service.GetFrItemStockConfigurationService;
 import com.ats.webapi.service.GetFrItemsService;
 import com.ats.webapi.service.GetGrnItemConfigService;
@@ -299,6 +301,42 @@ public class RestApiController {
 	
 	@Autowired
 	GetItemByCatIdService getItemByCatIdService;
+	
+	@Autowired
+	GetBillsForFrService getBillsForFrService;
+	
+	
+	
+	
+
+	@RequestMapping(value = "/getGvnItemConfig", method = RequestMethod.POST)
+	public @ResponseBody GetGrnItemConfigList getGvnItemConfig(@RequestParam("billNo") int billNo){
+		System.out.println("inside rest");
+		
+		
+		
+		GetGrnItemConfigList gvnItemConfigList =getGrnItemConfigService.getGvnItemConfig(billNo);
+		
+		
+		
+	return gvnItemConfigList;
+	
+	
+	}
+	
+	
+	@RequestMapping(value = "/getBillsForFr", method = RequestMethod.POST)
+	public @ResponseBody GetBillsForFrList getBillsForFrService(@RequestParam("frId") int frId){
+		
+		
+		GetBillsForFrList billsForFrLisr=getBillsForFrService.getBillForFr(frId);
+		
+		
+		return billsForFrLisr;
+		
+		
+	}
+	
 	
 	@RequestMapping(value = "/getItemByCategoryId", method = RequestMethod.POST)
 	public @ResponseBody GetItemByCatIdList getItemByCatId(@RequestParam("catId") int catId){
