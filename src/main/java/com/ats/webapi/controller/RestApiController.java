@@ -55,6 +55,8 @@ import com.ats.webapi.model.GetBillHeaderList;
 import com.ats.webapi.model.GetConfiguredSpDayCk;
 import com.ats.webapi.model.GetFrItems;
 import com.ats.webapi.model.GetGrnItemConfigList;
+import com.ats.webapi.model.GetItemByCatIdList;
+import com.ats.webapi.model.GetMCategoryList;
 import com.ats.webapi.model.GetOrder;
 import com.ats.webapi.model.GetOrderList;
 import com.ats.webapi.model.GrnGvn;
@@ -77,6 +79,7 @@ import com.ats.webapi.model.Orders;
 import com.ats.webapi.model.PostBillDataCommon;
 import com.ats.webapi.model.PostBillDetail;
 import com.ats.webapi.model.PostBillHeader;
+import com.ats.webapi.model.PostGrnGvnList;
 import com.ats.webapi.model.Rates;
 import com.ats.webapi.model.RegSpCkOrderResponse;
 import com.ats.webapi.model.RegularSpCake;
@@ -122,6 +125,8 @@ import com.ats.webapi.service.GetBillHeaderService;
 import com.ats.webapi.service.GetFrItemStockConfigurationService;
 import com.ats.webapi.service.GetFrItemsService;
 import com.ats.webapi.service.GetGrnItemConfigService;
+import com.ats.webapi.service.GetItemByCatIdService;
+import com.ats.webapi.service.GetMCategoryService;
 import com.ats.webapi.service.GetOrderService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.ItemsList;
@@ -289,18 +294,57 @@ public class RestApiController {
 	PostGrnGvnService postGrnGvnService;
 	
 	
+	@Autowired
+	GetMCategoryService getMCategoryService;
+	
+	@Autowired
+	GetItemByCatIdService getItemByCatIdService;
+	
+	@RequestMapping(value = "/getItemByCategoryId", method = RequestMethod.POST)
+	public @ResponseBody GetItemByCatIdList getItemByCatId(@RequestParam("catId") int catId){
+		
+		
+		GetItemByCatIdList getItemByCatIdList=getItemByCatIdService.getItemByCatId(catId);
+		
+		
+		return getItemByCatIdList;
+		
+		
+	}
+	
+	
+	
+	
+	@RequestMapping(value = "/getMCategory", method = RequestMethod.GET)
+	public @ResponseBody GetMCategoryList getMCategory(){
+		
+		
+		GetMCategoryList getMCategoryList=getMCategoryService.getMainCategory(0);
+		
+		
+		return getMCategoryList;
+		
+		
+	}
+	
+	
+	
 	@RequestMapping(value = { "/insertGrnGvn" }, method = RequestMethod.POST)
 
-	public @ResponseBody Info postGrnGvn(@RequestBody List<GrnGvn> grnGvnList)
+	public @ResponseBody Info postGrnGvn(@RequestBody PostGrnGvnList postGrnGvnList)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
 		
-		List<GrnGvn> jsonGrnGvn;
+		System.out.println("inside rest Insert Grn Gvn ");
+		System.out.println("list== "+postGrnGvnList.toString());
 		
-		jsonGrnGvn = postGrnGvnService.saveGrnGvn(grnGvnList);
+		GrnGvn jsonGrnGvn=null;
+	
 		
+		jsonGrnGvn = postGrnGvnService.saveGrnGvn(postGrnGvnList.getGrnGvn());
+	
 		Info info = new Info();
 
-		if (jsonGrnGvn.size() > 0) {
+		if (jsonGrnGvn!=null) {
 
 			info.setError(false);
 			info.setMessage("Grn Gvn inserted  Successfully");

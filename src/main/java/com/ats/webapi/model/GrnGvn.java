@@ -1,7 +1,6 @@
 package com.ats.webapi.model;
 
-import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,12 +11,12 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "t_grn_gvn")
-public class GrnGvn implements Serializable {
+public class GrnGvn  {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "grn_gvn_id")
-	private int gId;
+	int grnGvnId;
 
 	@Column(name = "grn_gvn_date")
 	Date grnGvnDate;
@@ -56,8 +55,8 @@ public class GrnGvn implements Serializable {
 	@Column(name = "grn_gvn_entry_datetime")
 	private String grnGvnEntryDateTime;
 
-	@Column(name = "fr_gvn_remark")
-	private String frGvnRemark;
+	@Column(name = "fr_grn_gvn_remark")
+	private String frGrnGvnRemark;
 
 	@Column(name = "gvn_photo_upload1")
 	private String gvnPhotoUpload1;
@@ -104,12 +103,14 @@ public class GrnGvn implements Serializable {
 
 	
 
-	public int getgId() {
-		return gId;
+	
+
+	public int getGrnGvnId() {
+		return grnGvnId;
 	}
 
-	public void setgId(int gId) {
-		this.gId = gId;
+	public void setGrnGvnId(int grnGvnId) {
+		this.grnGvnId = grnGvnId;
 	}
 
 	public Date getGrnGvnDate() {
@@ -208,12 +209,14 @@ public class GrnGvn implements Serializable {
 		this.grnGvnEntryDateTime = grnGvnEntryDateTime;
 	}
 
-	public String getFrGvnRemark() {
-		return frGvnRemark;
+	
+
+	public String getFrGrnGvnRemark() {
+		return frGrnGvnRemark;
 	}
 
-	public void setFrGvnRemark(String frGvnRemark) {
-		this.frGvnRemark = frGvnRemark;
+	public void setFrGrnGvnRemark(String frGrnGvnRemark) {
+		this.frGrnGvnRemark = frGrnGvnRemark;
 	}
 
 	public String getGvnPhotoUpload1() {
@@ -328,9 +331,21 @@ public class GrnGvn implements Serializable {
 		this.grnGvnQtyAuto = grnGvnQtyAuto;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "GrnGvn [grnGvnId=" + grnGvnId + ", grnGvnDate=" + grnGvnDate + ", billNo=" + billNo + ", frId=" + frId
+				+ ", itemId=" + itemId + ", itemRate=" + itemRate + ", itemMrp=" + itemMrp + ", grnGvnQty=" + grnGvnQty
+				+ ", grnGvnAmt=" + grnGvnAmt + ", grnType=" + grnType + ", isGrn=" + isGrn + ", isGrnEdit=" + isGrnEdit
+				+ ", grnGvnEntryDateTime=" + grnGvnEntryDateTime + ", frGrnGvnRemark=" + frGrnGvnRemark
+				+ ", gvnPhotoUpload1=" + gvnPhotoUpload1 + ", gvnPhotoUpload2=" + gvnPhotoUpload2 + ", grnGvnStatus="
+				+ grnGvnStatus + ", approvedLoginGate=" + approvedLoginGate + ", approveimedDateTimeGate="
+				+ approveimedDateTimeGate + ", approvedRemarkGate=" + approvedRemarkGate + ", approvedLoginStore="
+				+ approvedLoginStore + ", approvedDateTimeStore=" + approvedDateTimeStore + ", approvedRemarkStore="
+				+ approvedRemarkStore + ", approvedLoginAcc=" + approvedLoginAcc + ", grnApprovedDateTimeAcc="
+				+ grnApprovedDateTimeAcc + ", approvedRemarkAcc=" + approvedRemarkAcc + ", delStatus=" + delStatus
+				+ ", grnGvnQtyAuto=" + grnGvnQtyAuto + "]";
+	}
 
-	
 	
 	
 }

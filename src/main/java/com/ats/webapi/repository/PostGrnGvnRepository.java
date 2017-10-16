@@ -8,7 +8,7 @@ import com.ats.webapi.model.GrnGvn;
 
 public interface PostGrnGvnRepository extends JpaRepository<GrnGvn, Integer> {
 	
-	public List<GrnGvn> save(List<GrnGvn> grnGvn);
+	public GrnGvn save(GrnGvn grnGvn);
 	
 
 }

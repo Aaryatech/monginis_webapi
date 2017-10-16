@@ -6,7 +6,7 @@ import com.ats.webapi.model.GrnGvn;
 
 public interface PostGrnGvnService {
 	
-	public List<GrnGvn> saveGrnGvn(List<GrnGvn> grnGvn);
+	public GrnGvn saveGrnGvn(List<GrnGvn> grnGvn);
 	
 
 }

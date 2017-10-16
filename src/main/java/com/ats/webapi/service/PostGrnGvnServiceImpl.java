@@ -17,13 +17,13 @@ public class PostGrnGvnServiceImpl implements PostGrnGvnService {
 	PostGrnGvnRepository grnGvnRepository;
 
 	@Override
-	public List<GrnGvn> saveGrnGvn(List<GrnGvn> grnGvnList) {
+	public GrnGvn saveGrnGvn(List<GrnGvn> grnGvnList) {
 		
-		List<GrnGvn> grnGvnReturnList=new ArrayList<GrnGvn>();
+		GrnGvn grnGvnReturnList=new GrnGvn();
 		
 		for(int i=0;i<grnGvnList.size();i++) {
 			
-			grnGvnReturnList=grnGvnRepository.save(grnGvnList);
+			grnGvnReturnList=grnGvnRepository.save(grnGvnList.get(i));
 			
 		}
 		
