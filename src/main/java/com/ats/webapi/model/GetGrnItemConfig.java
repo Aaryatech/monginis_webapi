@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class GetGrnItemConfig implements Serializable {
 	
@@ -119,7 +121,7 @@ public class GetGrnItemConfig implements Serializable {
 	public void setFrId(int frId) {
 		this.frId = frId;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getBillDate() {
 		return billDate;
 	}
