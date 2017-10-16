@@ -2862,7 +2862,29 @@ public class RestApiController {
 
 	}
 	
-	
+	@RequestMapping(value = { "/showEventList" }, method = RequestMethod.GET)
+	@ResponseBody
+	public EventList showEventList() {
+
+		EventList eventList=new EventList();
+		   Info info = new Info();
+
+		List<Event> event=eventService.findAllEvent();	
+		if(event!=null)
+		{
+		info.setError(false);
+		info.setMessage("latest news  displayed successfully");
+		eventList.setInfo(info);
+		eventList.setEvent(event);
+		}
+		else
+		{
+			info.setError(false);
+			info.setMessage("latest news  displayed successfully");
+			eventList.setInfo(info);
+		}
+		return eventList;
+	}
 	
 	
 	@RequestMapping(value = { "/getRegSpCkOrderList" }, method = RequestMethod.POST)
