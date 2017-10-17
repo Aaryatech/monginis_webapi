@@ -654,8 +654,8 @@ public class RestApiController {
 
 		jsonSellBillHeader = sellBillDataService.saveSellBillHeader(sellBillDataCommon.getSellBillHeaderList());
 		
-	
-
+	    System.out.println("SellBillHeader data: "+sellBillDataCommon.getSellBillHeaderList());     
+	    
 		Info info = new Info();
 
 		if (jsonSellBillHeader.size() > 0) {

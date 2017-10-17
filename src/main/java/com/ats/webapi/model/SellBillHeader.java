@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 @Entity
 @Table(name ="t_sell_bill_header")
 public class SellBillHeader implements Serializable{
@@ -59,7 +61,7 @@ public class SellBillHeader implements Serializable{
 	private String userGstNo;
 	
 	@Column(name="user_phone")
-	private int userPhone;
+	private long userPhone;
 	
 	@Column(name="status")
 	private int status;
@@ -98,7 +100,7 @@ public class SellBillHeader implements Serializable{
 	public Date getBillDate() {
 		return billDate;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "yyyy-MM-dd")
 	public void setBillDate(Date billDate) {
 		this.billDate = billDate;
 	}
@@ -187,16 +189,16 @@ public class SellBillHeader implements Serializable{
 		return userGstNo;
 	}
 
-	public void setUserGstNo(String userGstNo) {
-		this.userGstNo = userGstNo;
-	}
-
-	public int getUserPhone() {
+	public long getUserPhone() {
 		return userPhone;
 	}
 
-	public void setUserPhone(int userPhone) {
+	public void setUserPhone(long userPhone) {
 		this.userPhone = userPhone;
+	}
+
+	public void setUserGstNo(String userGstNo) {
+		this.userGstNo = userGstNo;
 	}
 
 	public int getStatus() {

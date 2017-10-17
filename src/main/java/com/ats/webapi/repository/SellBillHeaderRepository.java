@@ -7,5 +7,7 @@ import com.ats.webapi.model.SellBillHeader;
 
 @Repository
 public interface SellBillHeaderRepository extends JpaRepository<SellBillHeader, Long>{
-
+	
+	@SuppressWarnings("unchecked")
+	public SellBillHeader save (SellBillHeader sellBillHeaderList);
 }
