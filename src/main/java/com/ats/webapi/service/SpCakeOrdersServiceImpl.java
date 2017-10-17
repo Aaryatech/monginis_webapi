@@ -23,9 +23,12 @@ public class SpCakeOrdersServiceImpl implements SpCakeOrdersService {
 	String jsonSpCakeOrder="{}";
 	@Autowired
 	SpCakeOrdersRepository spCakeOrdersRepository;
+	
 	@Autowired
 	SpCakeOrderHisRepository spCakeOrderHisRepository;
+	
 	SpCakeOrderRes spCakeOrderRes=new SpCakeOrderRes();
+	
 	ErrorMessage errorMessage=new ErrorMessage();
 	@Override
 	public SpCakeOrderRes placeSpCakeOrder(SpCakeOrders spCakeOrders) {
@@ -39,6 +42,7 @@ public class SpCakeOrdersServiceImpl implements SpCakeOrdersService {
 			spCakeOrderRes.setSpCakeOrder(spCakeOrder);
 		}
 	} catch (Exception e) {
+		
 		errorMessage.setError(true);
 		errorMessage.setMessage("Exc while saving Item");
 		spCakeOrderRes.setErrorMessage(errorMessage);
@@ -50,25 +54,14 @@ public class SpCakeOrdersServiceImpl implements SpCakeOrdersService {
 	public List<SpCakeOrders> findSpCakeOrder(List<Integer> frId, Date prodDate) {
 		List<SpCakeOrders> spCakeOrders=null;
 		try {
-			spCakeOrders=spCakeOrdersRepository.findByFrCodeInAndSpProduDate(frId, prodDate);
+			spCakeOrders=spCakeOrdersRepository.findByFrCodeInAndSpProdDate(frId, prodDate);
 		
 		}catch (Exception e) {
 			System.out.println("inside sp cake order service impl ex"+e.getMessage());
 		}
 		return spCakeOrders;
 	}
-/*
-	@Override
-	public List<SpCakeOrders> findSpCakeOrder(List<Integer> frCode, Date prodDate) {
-		List<SpCakeOrders> spCakeOrders=null;
-		try {
-			spCakeOrders=spCakeOrdersRepository.findByFrCodeInAndSpProdudate(frCode, prodDate);
-		
-		}catch (Exception e) {
-			System.out.println("inside sp cake order service impl ex"+e.getMessage());
-		}
-		return spCakeOrders;
-	}*/
+
 	@Override
 	public SpCkOrderHisList searchOrderHistory(int menuId, String spDeliveryDt,String frCode) {
 		List<SpCkOrderHis> spCakeOrders=null;

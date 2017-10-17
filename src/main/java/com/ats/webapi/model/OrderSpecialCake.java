@@ -23,42 +23,59 @@ public class OrderSpecialCake implements Serializable {
 	
 	@Column(name = "sp_code")
 	private String spCode;
+	
 	@Column(name="sp_name")
 	private String spName;
+	
 	@Column(name="sp_type")
 	private int spType;
+	
 	@Column(name="sp_min_wt")
 	private String spMinwt;
+	
 	@Column(name="sp_max_wt")
 	private String spMaxwt;
+	
 	@Column(name="sp_book_b4")
 	private String spBookb4;
+	
 	@Column(name="spr_id")
 	private int sprId;
+	
 	@Column(name="sp_image")
 	private String spImage;
+	
 	@Column(name="sp_tax1")
 	private double spTax1;
+	
 	@Column(name="sp_tax2")
 	private double spTax2;
+	
 	@Column(name="sp_tax3")
 	private double spTax3;
+	
 	@Column(name="spe_id_list")
 	private String speIdlist;
+	
 	@Column(name="erp_link_code")
 	private String erpLinkcode;
+	
 	@Column(name="is_used")
 	private int isUsed;
+	
 	@Column(name="sp_pho_upload")
 	private int spPhoupload;
+	
 	@Column(name="time_two_appli")
 	private int timeTwoappli;
+	
 	@Column(name="del_status")
 	private int delStatus;
+	
 	@Column(name="base_code")
 	private String baseCode;
 	
-private String spDesc;
+    private String spDesc;
 	
 	private int orderQty;
 	

@@ -19,13 +19,8 @@ public class SpCakeOrdersBean implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="sp_vno")
-	private int spVno;
-	
-	
-	
-
-
+	@Column(name="sp_order_no")
+	private int spOrderNo;
 
 	@Column(name="sp_code")//m_sp_cake
 	private String spCode;
@@ -39,14 +34,14 @@ public class SpCakeOrdersBean implements Serializable {
 	//@Column(name="sp_events")
 	private String spEvents;
 	
-	@Column(name="sp_delivery_dt")
-	private String spDeliverydt;
+	@Column(name="sp_delivery_date")
+	private Date spDeliveryDate;
 	
 	//@Column(name="sp_price")
 	private String spPrice;
 	
-	@Column(name="sp_add_rate")
-	private String spAddrate;
+	@Column(name="sp_total_add_rate")
+	private String spTotalAddRate;
 	
 	
 	@Column(name="fr_name")//franchisee table
@@ -56,27 +51,19 @@ public class SpCakeOrdersBean implements Serializable {
 
 	@Column(name="item_id")
 	private String itemId;
-	
 
-	
-	public String getItemId() {
-		return itemId;
+
+
+	public int getSpOrderNo() {
+		return spOrderNo;
 	}
 
 
-	public void setItemId(String itemId) {
-		this.itemId = itemId;
+
+	public void setSpOrderNo(int spOrderNo) {
+		this.spOrderNo = spOrderNo;
 	}
 
-
-	public int getSpVno() {
-		return spVno;
-	}
-
-
-	public void setSpVno(int spVno) {
-		this.spVno = spVno;
-	}
 
 
 	public String getSpCode() {
@@ -84,9 +71,11 @@ public class SpCakeOrdersBean implements Serializable {
 	}
 
 
+
 	public void setSpCode(String spCode) {
 		this.spCode = spCode;
 	}
+
 
 
 	public String getSpName() {
@@ -94,16 +83,17 @@ public class SpCakeOrdersBean implements Serializable {
 	}
 
 
+
 	public void setSpName(String spName) {
 		this.spName = spName;
 	}
 
 
-	
-	
+
 	public String getSpfName() {
 		return spfName;
 	}
+
 
 
 	public void setSpfName(String spfName) {
@@ -111,9 +101,11 @@ public class SpCakeOrdersBean implements Serializable {
 	}
 
 
+
 	public String getSpEvents() {
 		return spEvents;
 	}
+
 
 
 	public void setSpEvents(String spEvents) {
@@ -121,19 +113,23 @@ public class SpCakeOrdersBean implements Serializable {
 	}
 
 
-	public String getSpDeliverydt() {
-		return spDeliverydt;
+
+	public Date getSpDeliveryDate() {
+		return spDeliveryDate;
 	}
 
 
-	public void setSpDeliverydt(String spDeliverydt) {
-		this.spDeliverydt = spDeliverydt;
+
+	public void setSpDeliveryDate(Date spDeliveryDate) {
+		this.spDeliveryDate = spDeliveryDate;
 	}
+
 
 
 	public String getSpPrice() {
 		return spPrice;
 	}
+
 
 
 	public void setSpPrice(String spPrice) {
@@ -142,16 +138,16 @@ public class SpCakeOrdersBean implements Serializable {
 
 
 
-	
-
-	public String getSpAddrate() {
-		return spAddrate;
+	public String getSpTotalAddRate() {
+		return spTotalAddRate;
 	}
 
 
-	public void setSpAddrate(String spAddrate) {
-		this.spAddrate = spAddrate;
+
+	public void setSpTotalAddRate(String spTotalAddRate) {
+		this.spTotalAddRate = spTotalAddRate;
 	}
+
 
 
 	public String getFrName() {
@@ -159,10 +155,23 @@ public class SpCakeOrdersBean implements Serializable {
 	}
 
 
+
 	public void setFrName(String frName) {
 		this.frName = frName;
 	}
 
+
+
+	public String getItemId() {
+		return itemId;
+	}
+
+
+
+	public void setItemId(String itemId) {
+		this.itemId = itemId;
+	}
+	
 
 	
 	
