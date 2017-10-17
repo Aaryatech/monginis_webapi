@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import org.hibernate.annotations.Immutable;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity(name="spCakeOrdersBean")
 //bean to be changed frId inserted 
 @Immutable
@@ -38,10 +40,10 @@ public class SpCakeOrdersBean implements Serializable {
 	private Date spDeliveryDate;
 	
 	//@Column(name="sp_price")
-	private String spPrice;
+	private float spPrice;
 	
 	@Column(name="sp_total_add_rate")
-	private String spTotalAddRate;
+	private float spTotalAddRate;
 	
 	
 	@Column(name="fr_name")//franchisee table
@@ -113,7 +115,7 @@ public class SpCakeOrdersBean implements Serializable {
 	}
 
 
-
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getSpDeliveryDate() {
 		return spDeliveryDate;
 	}
@@ -126,25 +128,28 @@ public class SpCakeOrdersBean implements Serializable {
 
 
 
-	public String getSpPrice() {
+
+
+
+	public float getSpPrice() {
 		return spPrice;
 	}
 
 
 
-	public void setSpPrice(String spPrice) {
+	public void setSpPrice(float spPrice) {
 		this.spPrice = spPrice;
 	}
 
 
 
-	public String getSpTotalAddRate() {
+	public float getSpTotalAddRate() {
 		return spTotalAddRate;
 	}
 
 
 
-	public void setSpTotalAddRate(String spTotalAddRate) {
+	public void setSpTotalAddRate(float spTotalAddRate) {
 		this.spTotalAddRate = spTotalAddRate;
 	}
 

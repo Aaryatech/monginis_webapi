@@ -54,7 +54,7 @@ public class SpCakeOrdersServiceImpl implements SpCakeOrdersService {
 	public List<SpCakeOrders> findSpCakeOrder(List<Integer> frId, Date prodDate) {
 		List<SpCakeOrders> spCakeOrders=null;
 		try {
-			spCakeOrders=spCakeOrdersRepository.findByFrCodeInAndSpProdDate(frId, prodDate);
+			spCakeOrders=spCakeOrdersRepository.findByFrIdInAndSpProdDate(frId, prodDate);
 		
 		}catch (Exception e) {
 			System.out.println("inside sp cake order service impl ex"+e.getMessage());

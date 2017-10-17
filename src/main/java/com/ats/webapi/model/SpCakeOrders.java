@@ -16,6 +16,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
+
 @Entity(name = "spCakeOrders")
 @Table(name = "t_sp_cake") 
 @DynamicUpdate
@@ -243,25 +244,22 @@ public class SpCakeOrders implements Serializable {
 	public int getSpProdTime() {
 		return spProdTime;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setSpProdTime(int spProdTime) {
 		this.spProdTime = spProdTime;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getSpEstDeliDate() {
 		return spEstDeliDate;
 	}
 	
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setSpEstDeliDate(Date spEstDeliDate) {
 		this.spEstDeliDate = spEstDeliDate;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getSpProdDate() {
 		return spProdDate;
 	}
 	
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setSpProdDate(Date spProdDate) {
 		this.spProdDate = spProdDate;
 	}
@@ -289,11 +287,10 @@ public class SpCakeOrders implements Serializable {
 	public void setSpInstructions(String spInstructions) {
 		this.spInstructions = spInstructions;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getSpDeliveryDate() {
 		return spDeliveryDate;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setSpDeliveryDate(Date spDeliveryDate) {
 		this.spDeliveryDate = spDeliveryDate;
 	}
@@ -305,11 +302,10 @@ public class SpCakeOrders implements Serializable {
 	public void setSpCustName(String spCustName) {
 		this.spCustName = spCustName;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getSpCustDob() {
 		return spCustDob;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setSpCustDob(Date spCustDob) {
 		this.spCustDob = spCustDob;
 	}
@@ -329,11 +325,10 @@ public class SpCakeOrders implements Serializable {
 	public void setSpBookedForName(String spBookedForName) {
 		this.spBookedForName = spBookedForName;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getSpBookForDob() {
 		return spBookForDob;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setSpBookForDob(Date spBookForDob) {
 		this.spBookForDob = spBookForDob;
 	}
@@ -441,12 +436,11 @@ public class SpCakeOrders implements Serializable {
 	public void setOrderPhoto(String orderPhoto) {
 		this.orderPhoto = orderPhoto;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getOrderDate() {
 		return orderDate;
 	}
 	
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
