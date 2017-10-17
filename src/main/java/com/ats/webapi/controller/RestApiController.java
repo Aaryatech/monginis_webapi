@@ -54,6 +54,8 @@ import com.ats.webapi.model.GetBillDetailsList;
 import com.ats.webapi.model.GetBillHeaderList;
 import com.ats.webapi.model.GetBillsForFrList;
 import com.ats.webapi.model.GetConfiguredSpDayCk;
+import com.ats.webapi.model.GetDumpOrder;
+import com.ats.webapi.model.GetDumpOrderList;
 import com.ats.webapi.model.GetFrItems;
 import com.ats.webapi.model.GetGrnGvnDetailsList;
 import com.ats.webapi.model.GetGrnItemConfigList;
@@ -125,6 +127,7 @@ import com.ats.webapi.service.GetBillDetailOnlyService;
 import com.ats.webapi.service.GetBillDetailsService;
 import com.ats.webapi.service.GetBillHeaderService;
 import com.ats.webapi.service.GetBillsForFrService;
+import com.ats.webapi.service.GetDumpOrderService;
 import com.ats.webapi.service.GetFrItemStockConfigurationService;
 import com.ats.webapi.service.GetFrItemsService;
 import com.ats.webapi.service.GetGrnGvnDetailService;
@@ -256,6 +259,9 @@ public class RestApiController {
 	AllFrIdNameService allFrIdNameService;
 	
 	@Autowired
+	GetDumpOrderService getDumpOrderService;
+	
+	@Autowired
 	GenerateBillService generateBillService;
 	
 	@Autowired
@@ -311,7 +317,26 @@ public class RestApiController {
 	GetGrnGvnDetailService getGrnGvnDetailService;
 	
 	
-	@RequestMapping(value = "/getGrnGvnDetail", method = RequestMethod.POST)
+	@RequestMapping(value = "/getGvnDetails", method = RequestMethod.POST)
+	public @ResponseBody GetGrnGvnDetailsList getGvnDetails(@RequestParam("fromDate") String  fromDate,
+			@RequestParam("toDate") String  toDate){
+		System.out.println("inside rest");
+		
+		fromDate=Common.convertToYMD(fromDate);
+		toDate=Common.convertToYMD(toDate);
+		
+		GetGrnGvnDetailsList gvnDetailList =getGrnGvnDetailService.getGvnDetails(fromDate, toDate);
+		
+		
+		
+	return gvnDetailList;
+	
+	
+	}
+	
+	
+	
+	@RequestMapping(value = "/getGrnDetail", method = RequestMethod.POST)
 	public @ResponseBody GetGrnGvnDetailsList getGrnGvnDetailService(@RequestParam("fromDate") String  fromDate,
 			@RequestParam("toDate") String  toDate){
 		System.out.println("inside rest");
@@ -319,11 +344,11 @@ public class RestApiController {
 		fromDate=Common.convertToYMD(fromDate);
 		toDate=Common.convertToYMD(toDate);
 		
-		GetGrnGvnDetailsList gvnItemConfigList =getGrnGvnDetailService.getGrnGvnDetails(fromDate, toDate);
+		GetGrnGvnDetailsList grnDetailList =getGrnGvnDetailService.getGrnDetails(fromDate, toDate);
 		
 		
 		
-	return gvnItemConfigList;
+	return grnDetailList;
 	
 	
 	}
@@ -3107,5 +3132,46 @@ public class RestApiController {
 		}
 		return JsonUtil.javaToJson(info);
 	}
+	
+	
+	//Ganesh 16/10
+		//List of Franchisee - not place order
+		@RequestMapping(value = "/getNonOrderFr", method = RequestMethod.POST)
+		public @ResponseBody AllFrIdNameList getNonOrderFr(@RequestParam("orderDate") String orderDate) {
+			
+			
+			AllFrIdNameList allFrIdNamesList=allFrIdNameService.findNonOrderFranchisee(orderDate);
+			
+			
+			return allFrIdNamesList;
+			
+			
+		}
+		
+		//Ganesh 16/10
+		
+		
+		@RequestMapping(value = { "/getOrderListForDumpOrder" }, method = RequestMethod.POST)
+		public @ResponseBody GetDumpOrderList getOrderListForDumpOrder(@RequestParam List<String> frId, @RequestParam String menuId,
+				@RequestParam String date) {
+			GetDumpOrderList orderDumpList = new GetDumpOrderList();
+			try {
+				System.out.println("date str :" + date);
+
+				List<GetDumpOrder> jsonOrderList = getDumpOrderService.findFrOrder(frId, menuId, date);
+
+				orderDumpList.setGetDumpOrder(jsonOrderList);
+				Info info = new Info();
+				info.setError(false);
+				info.setMessage("Order list displayed Successfully");
+				orderDumpList.setInfo(info);
+
+			} catch (Exception e) {
+
+				System.out.println("exception in order list rest controller" + e.getMessage());
+			}
+			return orderDumpList;
+
+		}
 
 }

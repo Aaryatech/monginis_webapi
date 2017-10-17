@@ -7,4 +7,6 @@ public interface AllFrIdNameService {
 	
 	AllFrIdNameList getFrIdAndName();
 
+	AllFrIdNameList findNonOrderFranchisee(String orderDate);
+
 }

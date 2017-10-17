@@ -6,7 +6,9 @@ import com.ats.webapi.model.GetGrnGvnDetailsList;
 
 public interface GetGrnGvnDetailService {
 	
-	GetGrnGvnDetailsList getGrnGvnDetails(String fromDate, String toDate);
+	GetGrnGvnDetailsList getGrnDetails(String fromDate, String toDate);
+	
+	GetGrnGvnDetailsList getGvnDetails(String fromDate, String toDate);
 	
 	
 }

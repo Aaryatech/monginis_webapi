@@ -43,5 +43,32 @@ public class AllFrIdNameServiceImpl implements AllFrIdNameService {
 		
 		return allFrIdNameList;
 	}
+	@Override
+	public AllFrIdNameList findNonOrderFranchisee(String orderDate) {
+		
+		
+AllFrIdNameList allFrIdNameList=new AllFrIdNameList();
+		
+		List<AllFrIdName> allFrIdNames=allFrIdNameRepository.findNonOrder(orderDate);
+		Info info=new Info();
+		
+		if(allFrIdNames!=null) {
+			allFrIdNameList.setFrIdNamesList(allFrIdNames);
+			info.setError(false);
+			info.setMessage("Successfully displayed of Non Order fr Name and Id");
+			allFrIdNameList.setInfo(info);
+			
+			
+		}
+		else {
+			info.setError(true);
+			info.setMessage("error in getting fr Id and Names");
+			allFrIdNameList.setInfo(info);
+		}
+		
+		
+		
+		return allFrIdNameList;
+	}
 
 }

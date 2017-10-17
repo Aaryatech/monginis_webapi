@@ -18,11 +18,11 @@ public class GetGrnGvnDetailServiceImpl implements GetGrnGvnDetailService {
 	GetGrnGvnDetailsRepository getGrnGvnDetailsRepository;
 
 	@Override
-	public GetGrnGvnDetailsList getGrnGvnDetails(String fromDate, String toDate) {
+	public GetGrnGvnDetailsList getGrnDetails(String fromDate, String toDate) {
 		
 		GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
 		
-		List<GetGrnGvnDetails> grnGvnDetails=getGrnGvnDetailsRepository.getAllGrnGvnDetails(fromDate, toDate);
+		List<GetGrnGvnDetails> grnGvnDetails=getGrnGvnDetailsRepository.getAllGrnDetails(fromDate, toDate);
 		
 		Info info=new Info();
 		
@@ -47,6 +47,41 @@ public class GetGrnGvnDetailServiceImpl implements GetGrnGvnDetailService {
 		grnGvnDetailsList.setInfo(info);
 		
 	return grnGvnDetailsList;
+	}
+
+	@Override
+	public GetGrnGvnDetailsList getGvnDetails(String fromDate, String toDate) {
+		
+		
+		
+GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
+		
+		List<GetGrnGvnDetails> grnGvnDetails=getGrnGvnDetailsRepository.getAllGvnDetails(fromDate, toDate);
+		
+		Info info=new Info();
+		
+		
+		if(grnGvnDetails!=null) {
+			
+			grnGvnDetailsList.setGrnGvnDetails(grnGvnDetails);
+			
+			info.setError(false);
+			info.setMessage("received :success grn Gvn details ");
+		
+		}
+		
+		else {
+			
+			info.setError(true);
+			info.setMessage(" Error :failed to get grn Gvn Details "  );
+			
+		}
+		
+		
+		grnGvnDetailsList.setInfo(info);
+		
+	return grnGvnDetailsList;
+		
 	}
 
 }
