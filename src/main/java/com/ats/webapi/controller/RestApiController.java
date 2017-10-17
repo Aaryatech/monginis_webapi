@@ -55,6 +55,7 @@ import com.ats.webapi.model.GetBillHeaderList;
 import com.ats.webapi.model.GetBillsForFrList;
 import com.ats.webapi.model.GetConfiguredSpDayCk;
 import com.ats.webapi.model.GetFrItems;
+import com.ats.webapi.model.GetGrnGvnDetailsList;
 import com.ats.webapi.model.GetGrnItemConfigList;
 import com.ats.webapi.model.GetItemByCatIdList;
 import com.ats.webapi.model.GetMCategoryList;
@@ -126,6 +127,7 @@ import com.ats.webapi.service.GetBillHeaderService;
 import com.ats.webapi.service.GetBillsForFrService;
 import com.ats.webapi.service.GetFrItemStockConfigurationService;
 import com.ats.webapi.service.GetFrItemsService;
+import com.ats.webapi.service.GetGrnGvnDetailService;
 import com.ats.webapi.service.GetGrnItemConfigService;
 import com.ats.webapi.service.GetItemByCatIdService;
 import com.ats.webapi.service.GetMCategoryService;
@@ -304,6 +306,27 @@ public class RestApiController {
 	
 	@Autowired
 	GetBillsForFrService getBillsForFrService;
+	
+	@Autowired
+	GetGrnGvnDetailService getGrnGvnDetailService;
+	
+	
+	@RequestMapping(value = "/getGrnGvnDetail", method = RequestMethod.POST)
+	public @ResponseBody GetGrnGvnDetailsList getGrnGvnDetailService(@RequestParam("fromDate") String  fromDate,
+			@RequestParam("toDate") String  toDate){
+		System.out.println("inside rest");
+		
+		fromDate=Common.convertToYMD(fromDate);
+		toDate=Common.convertToYMD(toDate);
+		
+		GetGrnGvnDetailsList gvnItemConfigList =getGrnGvnDetailService.getGrnGvnDetails(fromDate, toDate);
+		
+		
+		
+	return gvnItemConfigList;
+	
+	
+	}
 	
 	
 	
