@@ -3081,7 +3081,7 @@ public class RestApiController {
 	}
 
 	// update config franchisee 11 sept
-	@RequestMapping("/updateConfFr")
+	@RequestMapping(value = { "/updateConfFr" }, method = RequestMethod.POST)
 	public @ResponseBody String updateFrConfig(@RequestParam int settingId, @RequestParam int settingType,
 			@RequestParam String fromTime, @RequestParam String toTime, @RequestParam int day,
 			@RequestParam String date, @RequestParam String itemShow) {
