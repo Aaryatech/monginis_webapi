@@ -24,7 +24,7 @@ public class PostFrItemStockHeader {
 	private int month;
 	
 	@Column(name="year")
-	private Date year;
+	private int year;
 	
 	@Column(name="from_date")
 	private Date fromDate;
@@ -60,11 +60,11 @@ public class PostFrItemStockHeader {
 		this.month = month;
 	}
 
-	public Date getYear() {
+	public int getYear() {
 		return year;
 	}
 
-	public void setYear(Date year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
 

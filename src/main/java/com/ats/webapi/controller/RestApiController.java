@@ -83,6 +83,7 @@ import com.ats.webapi.model.Orders;
 import com.ats.webapi.model.PostBillDataCommon;
 import com.ats.webapi.model.PostBillDetail;
 import com.ats.webapi.model.PostBillHeader;
+import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.PostGrnGvnList;
 import com.ats.webapi.model.Rates;
 import com.ats.webapi.model.RegSpCkOrderResponse;
@@ -145,6 +146,7 @@ import com.ats.webapi.service.OrderCountsService;
 import com.ats.webapi.service.OrderService;
 import com.ats.webapi.service.PostBillDataService;
 import com.ats.webapi.service.PostBillUpdateService;
+import com.ats.webapi.service.PostFrOpStockService;
 import com.ats.webapi.service.PostGrnGvnService;
 import com.ats.webapi.service.PrevItemOrderService;
 import com.ats.webapi.service.RateList;
@@ -323,6 +325,9 @@ public class RestApiController {
 	
 	@Autowired
 	UpdateGrnGvnService updateGrnGvnService;
+	
+	@Autowired
+	PostFrOpStockService postFrOpStockService;
 	
 	
 	@RequestMapping(value = "/updateGateGrn", method = RequestMethod.POST)
@@ -3221,5 +3226,43 @@ public class RestApiController {
 					
 				return "resulted ";
 				}
+				
+				
+				//ganesh 25-10-2017
+								
+								@RequestMapping(value = { "/postFrOpStock" }, method = RequestMethod.POST)
+
+								public @ResponseBody Info postFrOpStock(@RequestBody List<PostFrItemStockHeader> postFrItemStockHeaderList)
+										throws ParseException, JsonParseException, JsonMappingException, IOException {
+									
+									System.out.println("Data Common "+postFrItemStockHeaderList.toString());
+
+									List<PostFrItemStockHeader> jsonBillHeader;
+									
+									jsonBillHeader = postFrOpStockService.saveFrOpStockHeader(postFrItemStockHeaderList);
+									
+								
+
+									Info info = new Info();
+
+									if (jsonBillHeader.size() > 0) {
+
+										info.setError(false);
+										info.setMessage("post Fr Stock header inserted  Successfully");
+
+									}
+
+									else {
+
+										info.setError(true);
+										info.setMessage("Error in post Fr Stock header insertion : RestApi");
+
+									}
+									
+									
+									return info;
+
+								}
+
 
 }
