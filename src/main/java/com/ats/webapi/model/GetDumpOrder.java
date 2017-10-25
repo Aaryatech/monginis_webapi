@@ -86,6 +86,12 @@ public class GetDumpOrder {
 		this.itemId = itemId;
 	}
 
+	@Override
+	public String toString() {
+		return "GetDumpOrder [orderId=" + orderId + ", frId=" + frId + ", menuId=" + menuId + ", orderQty=" + orderQty
+				+ ", itemId=" + itemId + "]";
+	}
+
 	
 	
 	

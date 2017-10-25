@@ -161,6 +161,7 @@ import com.ats.webapi.service.SpecialCakeService;
 import com.ats.webapi.service.SubCategoryService;
 import com.ats.webapi.service.SubCatergoryList;
 import com.ats.webapi.service.TestFrService;
+import com.ats.webapi.service.UpdateOrderService;
 import com.ats.webapi.service.UserService;
 import com.ats.webapi.service.spMessageList;
 import com.ats.webapi.util.JsonUtil;
@@ -303,6 +304,8 @@ public class RestApiController {
 	@Autowired
 	PostGrnGvnService postGrnGvnService;
 	
+	@Autowired
+	UpdateOrderService updateorderService;
 	
 	@Autowired
 	GetMCategoryService getMCategoryService;
@@ -3154,24 +3157,44 @@ public class RestApiController {
 		@RequestMapping(value = { "/getOrderListForDumpOrder" }, method = RequestMethod.POST)
 		public @ResponseBody GetDumpOrderList getOrderListForDumpOrder(@RequestParam List<String> frId, @RequestParam String menuId,
 				@RequestParam String date) {
+			String date1=Common.convertToYMD(date);
+			
 			GetDumpOrderList orderDumpList = new GetDumpOrderList();
-			try {
-				System.out.println("date str :" + date);
+			List<GetDumpOrder> getDumpmOrder = getDumpOrderService.findFrOrder(frId, menuId, date1);
+	System.out.println("List  "+getDumpmOrder.toString());
+	//System.out.println("Count    "+getDumpmOrder.size());
+			orderDumpList.setGetDumpOrder(getDumpmOrder);
+			Info info = new Info();
+			info.setError(false);
+			info.setMessage("configure Fr List displayed successfully");
+			orderDumpList.setInfo(info);
 
-				List<GetDumpOrder> jsonOrderList = getDumpOrderService.findFrOrder(frId, menuId, date);
-
-				orderDumpList.setGetDumpOrder(jsonOrderList);
-				Info info = new Info();
-				info.setError(false);
-				info.setMessage("Order list displayed Successfully");
-				orderDumpList.setInfo(info);
-
-			} catch (Exception e) {
-
-				System.out.println("exception in order list rest controller" + e.getMessage());
-			}
 			return orderDumpList;
-
 		}
+		
+		//Ganesh 24-10-2017
+		
+				@RequestMapping(value = "/updateOrderQty",method = RequestMethod.POST)
+				public  @ResponseBody  String updateOrderQty(@RequestParam int orderId, @RequestParam int orderQty) {
+					System.out.println("inside rest");
+					
+					updateorderService.updateOrderQty(orderId,orderQty);
+					
+					
+					
+				return "resulted ";
+				}
+				
+
+				@RequestMapping(value = "/DeleteOrder",method = RequestMethod.POST)
+				public  @ResponseBody  String DeleteOrder(@RequestParam int orderId) {
+					System.out.println("inside rest");
+					int orderStatus=1;
+					updateorderService.deleteOrder(orderId,orderStatus);
+					
+					
+					
+				return "resulted ";
+				}
 
 }
