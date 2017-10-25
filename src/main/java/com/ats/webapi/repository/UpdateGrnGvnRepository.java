@@ -13,12 +13,12 @@ public interface UpdateGrnGvnRepository extends JpaRepository<UpdateGrnGvn, Inte
 	
 	@Transactional
 	@Modifying
-	@Query(" UPDATE UpdateGrnGvn  SET approvedLoginGate =:approvedLoginGate,approveimedDateTimeGate=: "
-			+ " approveimedDateTimeGate,approvedRemarkGate=:approvedRemarkGate ,"
-			+ ",grnGvnStatus=:grnGvnStatus WHERE grnGvnId=:grnGvnId ")
+	@Query(" UPDATE UpdateGrnGvn  SET approvedLoginGate =:approvedLoginGate,"
+			+ "approveimedDateTimeGate=:approveimedDateTimeGate,approvedRemarkGate=:approvedRemarkGate ,"
+			+ "grnGvnStatus=:grnGvnStatus WHERE grnGvnId=:grnGvnId ")
 		int updateGateGrn(@Param("approvedLoginGate") int approvedLoginGate,@Param("approveimedDateTimeGate") 
 		String approveimedDateTimeGate,@Param("approvedRemarkGate") String approvedRemarkGate,@Param("grnGvnStatus") 
-		String grnGvnStatus,@Param("grnGvnId") int grnGvnId);
+		int grnGvnStatus,@Param("grnGvnId") int grnGvnId);
 	
 	
 

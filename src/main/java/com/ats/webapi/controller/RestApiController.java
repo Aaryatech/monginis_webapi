@@ -329,7 +329,7 @@ public class RestApiController {
 	public @ResponseBody String updateGateGrn(@RequestParam("approvedLoginGate") int approvedLoginGate,
 			@RequestParam("approveimedDateTimeGate") String approveimedDateTimeGate,
 			@RequestParam("approvedRemarkGate") String approvedRemarkGate,
-			@RequestParam("grnGvnStatus") String grnGvnStatus,@RequestParam("grnGvnId") int grnGvnId){
+			@RequestParam("grnGvnStatus") int grnGvnStatus,@RequestParam("grnGvnId") int grnGvnId){
 		System.out.println("inside rest");
 		
 		int x=updateGrnGvnService.updateGrnForGate(approvedLoginGate, approveimedDateTimeGate, approvedRemarkGate, grnGvnStatus, grnGvnId);

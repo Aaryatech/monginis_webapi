@@ -13,7 +13,7 @@ public class UpdateGrnGvnServiceImpl implements  UpdateGrnGvnService {
 
 	@Override
 	public int updateGrnForGate(int approvedLoginGate, String approveimedDateTimeGate, String approvedRemarkGate,
-			String grnGvnStatus, int grnGvnId) {
+			int grnGvnStatus, int grnGvnId) {
 		
 		int i=updateGrnGvnRepository.updateGateGrn(approvedLoginGate, approveimedDateTimeGate, approvedRemarkGate, grnGvnStatus, grnGvnId);
 		
