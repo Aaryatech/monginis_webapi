@@ -161,6 +161,7 @@ import com.ats.webapi.service.SpecialCakeService;
 import com.ats.webapi.service.SubCategoryService;
 import com.ats.webapi.service.SubCatergoryList;
 import com.ats.webapi.service.TestFrService;
+import com.ats.webapi.service.UpdateGrnGvnService;
 import com.ats.webapi.service.UpdateOrderService;
 import com.ats.webapi.service.UserService;
 import com.ats.webapi.service.spMessageList;
@@ -318,6 +319,30 @@ public class RestApiController {
 	
 	@Autowired
 	GetGrnGvnDetailService getGrnGvnDetailService;
+	
+	
+	@Autowired
+	UpdateGrnGvnService updateGrnGvnService;
+	
+	
+	@RequestMapping(value = "/updateGateGrn", method = RequestMethod.POST)
+	public @ResponseBody String updateGateGrn(@RequestParam("approvedLoginGate") int approvedLoginGate,
+			@RequestParam("approveimedDateTimeGate") String approveimedDateTimeGate,
+			@RequestParam("approvedRemarkGate") String approvedRemarkGate,
+			@RequestParam("grnGvnStatus") String grnGvnStatus,@RequestParam("grnGvnId") int grnGvnId){
+		System.out.println("inside rest");
+		
+		int x=updateGrnGvnService.updateGrnForGate(approvedLoginGate, approveimedDateTimeGate, approvedRemarkGate, grnGvnStatus, grnGvnId);
+		
+		
+	return "Gate Grn Updated Successfully ";
+	
+	
+	}
+	
+	
+	
+	
 	
 	
 	@RequestMapping(value = "/getGvnDetails", method = RequestMethod.POST)
