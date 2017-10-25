@@ -43,7 +43,6 @@ public class PostFrItemStockHeader {
 	
 	
 	
-	
 
 	public int getOpeningStockHeaderId() {
 		return openingStockHeaderId;
