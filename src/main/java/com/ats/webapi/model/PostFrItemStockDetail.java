@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Table(name = "m_fr_opening_stock_detail")
 public class PostFrItemStockDetail {
 
-	
+	 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="opening_stock_detail_id")

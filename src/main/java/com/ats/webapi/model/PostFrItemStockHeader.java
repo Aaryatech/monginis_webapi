@@ -41,7 +41,7 @@ public class PostFrItemStockHeader {
 	@Transient
 	private List<PostFrItemStockDetail>postFrItemStockDetailList;
 	
-	
+ 	
 	
 
 	public int getOpeningStockHeaderId() {
