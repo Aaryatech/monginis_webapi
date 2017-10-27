@@ -369,6 +369,21 @@ public class RestApiController {
 	}
 	
 	
+	@RequestMapping(value = "/updateAccGrn", method = RequestMethod.POST)
+	public @ResponseBody String updateAccGrn(@RequestParam("approvedLoginAcc") int approvedLoginAcc,
+			@RequestParam("grnApprovedDateTimeAcc") String grnApprovedDateTimeAcc,
+			@RequestParam("approvedRemarkAcc") String approvedRemarkAcc,
+			@RequestParam("grnGvnStatus") int grnGvnStatus,@RequestParam("grnGvnId") int grnGvnId){
+		System.out.println("inside rest");
+		
+		int x=updateGrnGvnService.updateGrnForAcc(approvedLoginAcc, grnApprovedDateTimeAcc, approvedRemarkAcc, grnGvnStatus, grnGvnId);
+		
+		
+	return "Acc Grn Updated Successfully ";
+	
+	
+	}
+	
 	
 	@RequestMapping(value = "/getGvnDetails", method = RequestMethod.POST)
 	public @ResponseBody GetGrnGvnDetailsList getGvnDetails(@RequestParam("fromDate") String  fromDate,
