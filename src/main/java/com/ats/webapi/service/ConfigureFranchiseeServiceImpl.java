@@ -53,17 +53,13 @@ public class ConfigureFranchiseeServiceImpl implements ConfigureFranchiseeServic
 	public ConfigureFranchisee findFranchiseeById(int setting_id) {
 		ConfigureFranchisee configureFranchisee=configureFrRepository.findOne(setting_id);
 		
-		
-		
 		return configureFranchisee;
 	}
 	@Override
 	public ConfigureFranchisee updateFrConfig(int setting_id) {
 		
 ConfigureFranchisee configureFranchisee=configureFrRepository.findOne(setting_id);
-		
-		
-		
+				
 		return configureFranchisee;
 	}
 

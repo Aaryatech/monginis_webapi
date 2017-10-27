@@ -39,7 +39,7 @@ public class GetItemStockServiceImpl implements GetItemStockService{
 		int totalSell=billHeaderRepository.getTotalSell(frId,fromDate,toDate,itemId);
 		System.out.println("Total Sell "+totalSell);
 		
-		return totalSell;
+		return totalSell; 
 	}
 
 	@Override

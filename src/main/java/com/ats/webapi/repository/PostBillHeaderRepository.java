@@ -36,7 +36,7 @@ public interface PostBillHeaderRepository extends JpaRepository<PostBillHeader, 
 	int getOpeningStock(@Param("frId") int frId,@Param("currentMonth") int currentMonth, @Param("itemId") int itemId);
 
 	
-	
+	 
 	/*
 	SELL -
 	SELECT  SUM(t_sell_bill_detail.qty) FROM t_sell_bill_detail WHERE t_sell_bill_detail.item_id =8  AND t_sell_bill_detail.sell_bill_no IN(SELECT t_sell_bill_header.sell_bill_no 

@@ -365,7 +365,7 @@ public class RestApiController {
 		stockDetailsList.add(getCurrentStockDetails);
 		}
 		
-		return stockDetailsList;
+		return stockDetailsList; 
 
 	}
 
