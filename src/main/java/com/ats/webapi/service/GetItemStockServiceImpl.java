@@ -39,7 +39,19 @@ public class GetItemStockServiceImpl implements GetItemStockService{
 		int totalSell=billHeaderRepository.getTotalSell(frId,fromDate,toDate,itemId);
 		System.out.println("Total Sell "+totalSell);
 		
-		return 0;
+		return totalSell;
+	}
+
+	@Override
+	public int getOpeningStock(int frId, int currentMonth, int itemId) {
+		int totalStock=0;
+		try {
+		 totalStock = billHeaderRepository.getOpeningStock(frId, currentMonth, itemId);
+		}catch (Exception e) {
+		e.printStackTrace();
+			
+		}
+		 return totalStock;
 	}
 
 	

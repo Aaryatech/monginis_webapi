@@ -14,4 +14,7 @@ public interface GetItemStockService {
 	
 	int getTotalSell( @Param("frId") int frId, @Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("itemId") int itemId);
 	
+	int getOpeningStock( @Param("frId") int frId, @Param("currentMonth") int currentMonth, @Param("itemId") int itemId);
+
+
 }
