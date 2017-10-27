@@ -41,7 +41,7 @@ public class SpCakeOrders  {
 	
 	@Column(name = "item_id")
 	private String itemId;
-	
+	 
 	@Column(name = "menu_id")
 	private int menuId;
 	
