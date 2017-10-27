@@ -84,4 +84,69 @@ GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
 		
 	}
 
+	@Override
+	public GetGrnGvnDetailsList getFrGrnDetails(String fromDate, String toDate, int frId) {
+GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
+		
+		List<GetGrnGvnDetails> grnGvnDetails=getGrnGvnDetailsRepository.getFrGrnDetails(fromDate, toDate, frId);
+		
+		Info info=new Info();
+		
+		
+		if(grnGvnDetails!=null) {
+			
+			grnGvnDetailsList.setGrnGvnDetails(grnGvnDetails);
+			
+			info.setError(false);
+			info.setMessage("received :success grn Gvn details ");
+		
+		}
+		
+		else {
+			
+			info.setError(true);
+			info.setMessage(" Error :failed to get grn Gvn Details "  );
+			
+		}
+		
+		
+		grnGvnDetailsList.setInfo(info);
+		
+	return grnGvnDetailsList;
+	}
+
+	@Override
+	public GetGrnGvnDetailsList getFrGvnDetails(String fromDate, String toDate, int frId) {
+		
+		
+		
+		GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
+				
+				List<GetGrnGvnDetails> grnGvnDetails=getGrnGvnDetailsRepository.getFrGvnDetails(fromDate, toDate, frId);
+				
+				Info info=new Info();
+				
+				
+				if(grnGvnDetails!=null) {
+					
+					grnGvnDetailsList.setGrnGvnDetails(grnGvnDetails);
+					
+					info.setError(false);
+					info.setMessage("received :success grn Gvn details ");
+				
+				}
+				
+				else {
+					
+					info.setError(true);
+					info.setMessage(" Error :failed to get grn Gvn Details "  );
+					
+				}
+				
+				
+				grnGvnDetailsList.setInfo(info);
+				
+			return grnGvnDetailsList;
+	}
+
 }

@@ -3283,6 +3283,44 @@ public class RestApiController {
 									return info;
 
 								}
+								
+	//Ganesh 26-10-2017
+								
+								@RequestMapping(value = "/getFrGvnDetails", method = RequestMethod.POST)
+								public @ResponseBody GetGrnGvnDetailsList getFrGvnDetails(@RequestParam("fromDate") String  fromDate,
+										@RequestParam("toDate") String  toDate, @RequestParam("frId") int  frId){
+									System.out.println("inside rest");
+									fromDate=Common.convertToYMD(fromDate);
+									toDate=Common.convertToYMD(toDate);
+									System.out.println("From  "+fromDate+"   To   "+toDate+"   FrId   " +frId);
+									
+									GetGrnGvnDetailsList gvnDetailList =getGrnGvnDetailService.getFrGvnDetails(fromDate, toDate, frId);
+									
+									
+									
+								return gvnDetailList;
+								
+								
+								}
+								
+								
+								
+								@RequestMapping(value = "/getFrGrnDetail", method = RequestMethod.POST)
+								public @ResponseBody GetGrnGvnDetailsList getFrGrnDetail(@RequestParam("fromDate") String  fromDate,
+										@RequestParam("toDate") String  toDate, @RequestParam("frId") int  frId){
+									System.out.println("inside rest");
+									
+									fromDate=Common.convertToYMD(fromDate);
+									toDate=Common.convertToYMD(toDate);
+									
+									GetGrnGvnDetailsList grnDetailList =getGrnGvnDetailService.getFrGrnDetails(fromDate, toDate, frId);
+									
+									
+									System.out.println("List GR*N****  "+grnDetailList.toString());
+								return grnDetailList;
+								
+								
+								}
 
 
 }

@@ -10,5 +10,10 @@ public interface GetGrnGvnDetailService {
 	
 	GetGrnGvnDetailsList getGvnDetails(String fromDate, String toDate);
 	
+	GetGrnGvnDetailsList getFrGrnDetails(String fromDate, String toDate, int frId);
+	
+	GetGrnGvnDetailsList getFrGvnDetails(String fromDate, String toDate, int frId);
+	
+	
 	
 }
