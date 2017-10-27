@@ -28,19 +28,19 @@ public interface GetGrnGvnDetailsRepository extends JpaRepository<GetGrnGvnDetai
 	
 	List<GetGrnGvnDetails> getAllGvnDetails(@Param("fromDate") String fromDate ,@Param("toDate") String toDate);
 	
-	@Query(value = "SELECT t_grn_gvn.* ,m_item.item_name,m_franchisee.fr_name FROM m_franchisee, m_item,"
-			+ "t_grn_gvn WHERE t_grn_gvn.fr_id=:frId AND "
-			+ "t_grn_gvn.item_id=m_item.id AND t_grn_gvn.grn_gvn_date BETWEEN :fromDate AND  :toDate AND"
-			+ " t_grn_gvn.is_grn=0"
+	@Query(value =  "SELECT t_grn_gvn.* ,m_item.item_name,m_franchisee.fr_name FROM m_franchisee," 
+			+"m_item,t_grn_gvn WHERE t_grn_gvn.fr_id=:frId AND t_grn_gvn.is_grn=0 AND"
+			+ " t_grn_gvn.item_id=m_item.id AND t_grn_gvn.fr_id=m_franchisee.fr_id"
+			+ " AND t_grn_gvn.grn_gvn_date BETWEEN :fromDate AND :toDate"
 			+ "" + "", nativeQuery = true)
 	
 	List<GetGrnGvnDetails> getFrGvnDetails(@Param("fromDate") String fromDate ,@Param("toDate") String toDate ,@Param("frId") int frId);
 
-	@Query(value = "SELECT t_grn_gvn.* ,m_item.item_name,m_franchisee.fr_name FROM m_franchisee, m_item,"
-			+ "t_grn_gvn WHERE t_grn_gvn.fr_id=:frId AND "
-			+ "t_grn_gvn.item_id=m_item.id AND t_grn_gvn.grn_gvn_date BETWEEN :fromDate AND  :toDate AND"
-			+ " t_grn_gvn.is_grn=1"
-			+ "" + "", nativeQuery = true)
+	@Query(value = "SELECT t_grn_gvn.* ,m_item.item_name,m_franchisee.fr_name FROM m_franchisee," 
+			+"m_item,t_grn_gvn WHERE t_grn_gvn.fr_id=:frId AND t_grn_gvn.is_grn=1 AND"
+			+ " t_grn_gvn.item_id=m_item.id AND t_grn_gvn.fr_id=m_franchisee.fr_id"
+			+ " AND t_grn_gvn.grn_gvn_date BETWEEN :fromDate AND :toDate"
+			+ "", nativeQuery = true)
 	
 	List<GetGrnGvnDetails> getFrGrnDetails(@Param("fromDate") String fromDate ,@Param("toDate") String toDate ,@Param("frId") int frId);
 	
