@@ -3211,7 +3211,7 @@ public class RestApiController {
 
 	}
 
-	@RequestMapping(value = "/getFrGrnDetail", method = RequestMethod.POST)
+	@RequestMapping(value = "/getFrGrnDetails", method = RequestMethod.POST)
 	public @ResponseBody GetGrnGvnDetailsList getFrGrnDetail(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("frId") int frId) {
 		System.out.println("inside rest");
