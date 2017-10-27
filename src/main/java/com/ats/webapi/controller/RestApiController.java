@@ -134,6 +134,7 @@ import com.ats.webapi.service.GetFrItemsService;
 import com.ats.webapi.service.GetGrnGvnDetailService;
 import com.ats.webapi.service.GetGrnItemConfigService;
 import com.ats.webapi.service.GetItemByCatIdService;
+import com.ats.webapi.service.GetItemStockService;
 import com.ats.webapi.service.GetMCategoryService;
 import com.ats.webapi.service.GetOrderService;
 import com.ats.webapi.service.ItemService;
@@ -234,6 +235,7 @@ public class RestApiController {
 
 	@Autowired
 	SpCakeOrdersService spCakeOrdersService;
+	
 	@Autowired
 	ConfigureFrBeanService configureFrBeanService;
 	@Autowired
@@ -329,6 +331,27 @@ public class RestApiController {
 	@Autowired
 	PostFrOpStockService postFrOpStockService;
 	
+	@Autowired
+	GetItemStockService getItemStockService;
+	
+	@RequestMapping(value = "/getCurrentStock", method = RequestMethod.POST)
+	public @ResponseBody int getCurrentStock(@RequestParam("frId") int frId,
+			@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate,
+			@RequestParam("itemId") int itemId){
+		System.out.println("inside rest getCurrentStock");
+		
+		int totalPurchase=getItemStockService.getTotalPurchase(frId, fromDate, toDate, itemId);
+		
+		int totalGrnGvn=getItemStockService.getTotalGrnGvn(frId, fromDate, toDate, itemId);
+
+		int totalSell=getItemStockService.getTotalSell(frId, fromDate, toDate, itemId);
+	
+		return totalSell;
+		
+	}
+	
+	
 	
 	@RequestMapping(value = "/updateGateGrn", method = RequestMethod.POST)
 	public @ResponseBody String updateGateGrn(@RequestParam("approvedLoginGate") int approvedLoginGate,
@@ -344,9 +367,6 @@ public class RestApiController {
 	
 	
 	}
-	
-	
-	
 	
 	
 	
@@ -3232,14 +3252,14 @@ public class RestApiController {
 								
 								@RequestMapping(value = { "/postFrOpStock" }, method = RequestMethod.POST)
 
-								public @ResponseBody Info postFrOpStock(@RequestBody List<PostFrItemStockHeader> postFrItemStockHeaderList)
+								public @ResponseBody Info postFrOpStock(@RequestBody PostFrItemStockHeader postFrItemStockHeader)
 										throws ParseException, JsonParseException, JsonMappingException, IOException {
 									
-									System.out.println("Data Common "+postFrItemStockHeaderList.toString());
+									System.out.println("Data Common "+postFrItemStockHeader.toString());
 
 									List<PostFrItemStockHeader> jsonBillHeader;
 									
-									jsonBillHeader = postFrOpStockService.saveFrOpStockHeader(postFrItemStockHeaderList);
+									jsonBillHeader = postFrOpStockService.saveFrOpStockHeader(postFrItemStockHeader);
 									
 								
 
