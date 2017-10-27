@@ -113,6 +113,9 @@ public class SpecialCake implements Serializable {
 	@Column(name="is_slot_used")
 	private int isSlotUsed;
 		
+	
+	
+	
 	public int getIsSlotUsed() {
 		return isSlotUsed;
 	}

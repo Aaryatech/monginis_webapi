@@ -35,7 +35,7 @@ public class PostFrItemStockDetail {
 	@Column(name="total_purchase")
 	private int totalPurchase;
 	
-	@Column(name="total_grn_grvn")
+	@Column(name="total_grn_gvn")
 	private int totalGrnGvn;
 	
 	@Column(name="total_sell")

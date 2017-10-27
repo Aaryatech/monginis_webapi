@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-@Entity
+@Entity(name="RegularSpCake")
 @Table(name="t_regular_sp_cake")
 public class RegularSpCake {
 
@@ -63,8 +63,15 @@ public class RegularSpCake {
     private float mrp;
     @Column(name="rate_cat")
     private int rateCat;
+    
     @Column(name="qty")
     private int qty;
+    
+    @Column(name="is_bill_generated")
+    private int isBillGenerated;
+    
+    
+    
 	public int getRspId() {
 		return rspId;
 	}
@@ -212,5 +219,26 @@ public class RegularSpCake {
 	public void setQty(int qty) {
 		this.qty = qty;
 	}
+	public int getIsBillGenerated() {
+		return isBillGenerated;
+	}
+	public void setIsBillGenerated(int isBillGenerated) {
+		this.isBillGenerated = isBillGenerated;
+	}
+	
+	@Override
+	public String toString() {
+		return "RegularSpCake [rspId=" + rspId + ", frId=" + frId + ", frCode=" + frCode + ", rspSubCat=" + rspSubCat
+				+ ", itemId=" + itemId + ", menuId=" + menuId + ", orderDate=" + orderDate + ", rspProduDate="
+				+ rspProduDate + ", rspDeliveryDt=" + rspDeliveryDt + ", rspEvents=" + rspEvents + ", rspEventsName="
+				+ rspEventsName + ", rspSubTotal=" + rspSubTotal + ", rspAdvanceAmt=" + rspAdvanceAmt
+				+ ", rspRemainingAmt=" + rspRemainingAmt + ", tax1=" + tax1 + ", tax1Amt=" + tax1Amt + ", tax2=" + tax2
+				+ ", tax2Amt=" + tax2Amt + ", rspCustName=" + rspCustName + ", rspCustMobileNo=" + rspCustMobileNo
+				+ ", rate=" + rate + ", mrp=" + mrp + ", rateCat=" + rateCat + ", qty=" + qty + ", isBillGenerated="
+				+ isBillGenerated + "]";
+	}
+		
+	
+	
 	
 }
