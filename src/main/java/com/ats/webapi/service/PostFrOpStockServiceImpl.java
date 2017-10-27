@@ -22,20 +22,19 @@ public class PostFrOpStockServiceImpl implements PostFrOpStockService{
 	
 	
 	@Override
-	public List<PostFrItemStockHeader> saveFrOpStockHeader(List<PostFrItemStockHeader> postFrItemStockHeader) {
+	public List<PostFrItemStockHeader> saveFrOpStockHeader(PostFrItemStockHeader postFrItemStockHeader) {
 		
 		PostFrItemStockHeader postFrItemStockHeaders=new PostFrItemStockHeader();
 		List<PostFrItemStockHeader> postFrItemStockHeaderList=new ArrayList<PostFrItemStockHeader>();
-		for(int i=0;i<postFrItemStockHeader.size();i++) {
+		
 			
 			
-			
-			postFrItemStockHeaders=postFrOpStockHeaderRepository.save(postFrItemStockHeader.get(i));
+			postFrItemStockHeaders=postFrOpStockHeaderRepository.save(postFrItemStockHeader);
 			postFrItemStockHeaderList.add(postFrItemStockHeaders);
-			int headerId=postFrItemStockHeader.get(i).getOpeningStockHeaderId();
+			int headerId=postFrItemStockHeader.getOpeningStockHeaderId();
 			
 			
-			List<PostFrItemStockDetail> PostFrItemStockDetailList=postFrItemStockHeader.get(i).getPostFrItemStockDetailList();
+			List<PostFrItemStockDetail> PostFrItemStockDetailList=postFrItemStockHeader.getPostFrItemStockDetailList();
 			
 			for(int j=0;j<PostFrItemStockDetailList.size();j++) {
 				
@@ -49,7 +48,7 @@ public class PostFrOpStockServiceImpl implements PostFrOpStockService{
 			
 			}
 			
-		}
+		
 		return postFrItemStockHeaderList;
 	}
 

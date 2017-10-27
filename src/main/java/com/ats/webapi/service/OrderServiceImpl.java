@@ -19,8 +19,10 @@ import com.ats.webapi.repository.OrdersRepository;
 public class OrderServiceImpl implements OrderService {
 
 	String jsonResult;
+	
 	@Autowired
 	OrderRepository orderRepository;
+	
 	@Autowired
 	ItemOrderHisRepository itemOrderHisRepository;
 

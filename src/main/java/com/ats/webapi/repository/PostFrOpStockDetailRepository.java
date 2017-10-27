@@ -8,5 +8,5 @@ public interface PostFrOpStockDetailRepository extends JpaRepository<PostFrItemS
 	
 	PostFrItemStockDetail save(PostFrItemStockDetail postFrItemStockDetail);
 	
-	
+	 
 }
