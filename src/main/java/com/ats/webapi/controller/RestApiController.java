@@ -1389,11 +1389,14 @@ public class RestApiController {
 			@RequestParam("isCustChoiceCk") int isCustChoiceCk, @RequestParam("isAddonRateAppli") int isAddonRateAppli,
 			@RequestParam("mrpRate1") int mrpRate1, @RequestParam("mrpRate2") int mrpRate2,
 			@RequestParam("mrpRate3") int mrpRate3, @RequestParam("spRate1") int spRate1,
-			@RequestParam("spRate2") int spRate2, @RequestParam("spRate3") int spRate3) {
+			@RequestParam("spRate2") int spRate2, @RequestParam("spRate3") int spRate3,@RequestParam("isSlotUsed") int isSlotUsed) {
 
 		String jsonResult = "";
 		try {
+			System.out.println("isSlotUsed");
+			
 			SpecialCake specialcake = new SpecialCake();
+			
 			specialcake.setSpCode(spcode);
 			specialcake.setSpName(spname);
 			specialcake.setSpType(sptype);
@@ -1424,7 +1427,10 @@ public class RestApiController {
 			specialcake.setSpRate1(spRate1);
 			specialcake.setSpRate2(spRate2);
 			specialcake.setSpRate3(spRate3);
+			specialcake.setIsSlotUsed(isSlotUsed);
 
+			System.out.println("*********Special Cake:***************"+specialcake.toString());
+			
 			jsonResult = specialcakeService.save(specialcake);
 			System.out.println("\n " + jsonResult);
 		} catch (Exception e) {
@@ -2501,11 +2507,12 @@ public class RestApiController {
 			@RequestParam("mrpRate1") int mrpRate1, @RequestParam("mrpRate2") int mrpRate2,
 			@RequestParam("mrpRate3") int mrpRate3, @RequestParam("spRate1") int spRate1,
 			@RequestParam("spRate2") int spRate2, @RequestParam("spRate3") int spRate3,
-			@RequestParam("isUsed") int isUsed) {
+			@RequestParam("isUsed") int isUsed,@RequestParam("isSlotUsed") int isSlotUsed) {
 
 		SpecialCake specialCake = specialcakeService.findSpecialCake(id);
 		Info info = new Info();
 		try {
+			
 			specialCake.setSpName(spname);
 			specialCake.setSpCode(spCode);
 			specialCake.setSpType(sptype);
@@ -2535,7 +2542,10 @@ public class RestApiController {
 			specialCake.setSpRate1(spRate1);
 			specialCake.setSpRate2(spRate2);
 			specialCake.setSpRate3(spRate3);
-
+            specialCake.setIsSlotUsed(isSlotUsed);
+			
+        	System.out.println("*********Special Cake:***************"+ specialCake.getIsSlotUsed());
+            
 			String jsonResult = specialcakeService.save(specialCake);
 
 			if (jsonResult == null) {
