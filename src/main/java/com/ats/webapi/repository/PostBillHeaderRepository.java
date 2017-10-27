@@ -32,8 +32,8 @@ public interface PostBillHeaderRepository extends JpaRepository<PostBillHeader, 
 	
 	
 	@Query(value = "SELECT m_fr_opening_stock_detail.opening_stock FROM m_fr_opening_stock_detail WHERE m_fr_opening_stock_detail.item_id=:itemId AND m_fr_opening_stock_detail.opening_stock_header_id" + 
-			" IN(SELECT m_fr_opening_stock_header.opening_stock_header_id FROM m_fr_opening_stock_header WHERE m_fr_opening_stock_header.fr_id=:frId AND m_fr_opening_stock_header.month=10)", nativeQuery = true)
-	int getOpeningStock(@Param("frId") int frId,@Param("fromDate") String fromDate, @Param("itemId") int itemId);
+			" IN(SELECT m_fr_opening_stock_header.opening_stock_header_id FROM m_fr_opening_stock_header WHERE m_fr_opening_stock_header.fr_id=:frId AND m_fr_opening_stock_header.month=:currentMonth)", nativeQuery = true)
+	int getOpeningStock(@Param("frId") int frId,@Param("currentMonth") int currentMonth, @Param("itemId") int itemId);
 
 	
 	

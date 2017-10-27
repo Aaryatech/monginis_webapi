@@ -337,7 +337,7 @@ public class RestApiController {
 	@RequestMapping(value = "/getCurrentStock", method = RequestMethod.POST)
 	public @ResponseBody int getCurrentStock(@RequestParam("frId") int frId,
 			@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate,
+			@RequestParam("toDate") String toDate,@RequestParam("currentMonth") int currentMonth,
 			@RequestParam("itemId") int itemId){
 		System.out.println("inside rest getCurrentStock");
 		
