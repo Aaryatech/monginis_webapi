@@ -36,7 +36,7 @@ public class SpCakeOrders  {
 	private int spId;
 	
 	@Column(name = "fr_id")
-	private int frId; 
+	private int frId;  
 
 	
 	@Column(name = "item_id")
