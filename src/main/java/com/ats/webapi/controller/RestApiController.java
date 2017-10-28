@@ -64,6 +64,8 @@ import com.ats.webapi.model.GetItemByCatIdList;
 import com.ats.webapi.model.GetMCategoryList;
 import com.ats.webapi.model.GetOrder;
 import com.ats.webapi.model.GetOrderList;
+import com.ats.webapi.model.GetSellBillDetail;
+import com.ats.webapi.model.GetSellBillHeader;
 import com.ats.webapi.model.GrnGvn;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
@@ -138,6 +140,8 @@ import com.ats.webapi.service.GetItemByCatIdService;
 import com.ats.webapi.service.GetItemStockService;
 import com.ats.webapi.service.GetMCategoryService;
 import com.ats.webapi.service.GetOrderService;
+import com.ats.webapi.service.GetSellBillDetailService;
+import com.ats.webapi.service.GetSellBillHeaderService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.ItemsList;
 import com.ats.webapi.service.MenuService;
@@ -324,7 +328,13 @@ public class RestApiController {
 
 	@Autowired
 	GetGrnGvnDetailService getGrnGvnDetailService;
-
+	
+	@Autowired
+	GetSellBillHeaderService getSellBillHeaderService;
+	
+		@Autowired
+	GetSellBillDetailService getSellBillDetailService;
+	
 	@Autowired
 	UpdateGrnGvnService updateGrnGvnService;
 
@@ -3226,4 +3236,36 @@ public class RestApiController {
 
 	}
 
+	
+	//28-10-2017 ganesh
+	
+	@RequestMapping(value = "/getSellBillHeader", method = RequestMethod.POST)
+	public @ResponseBody List<GetSellBillHeader> getSellBillHeader(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("frId") int frId) {
+		System.out.println("inside rest");
+
+		fromDate = Common.convertToYMD(fromDate);
+		toDate = Common.convertToYMD(toDate);
+
+		List<GetSellBillHeader> getSellBillHeaderList = getSellBillHeaderService.getSellBillHeader(fromDate, toDate, frId);
+
+		System.out.println("List Sell Bill Header****  " + getSellBillHeaderList.toString());
+		return getSellBillHeaderList;
+
+	}
+	
+	@RequestMapping(value = "/getSellBillDetail", method = RequestMethod.POST)
+	public @ResponseBody List<GetSellBillDetail> getSellBillDetail(@RequestParam("sellBillNo") int sellBillNo) {
+		System.out.println("inside rest");
+
+		
+
+		List<GetSellBillDetail> getSellBillDetailList = getSellBillDetailService.getSellBillDetail(sellBillNo);
+
+		System.out.println("List Sell Bill Detail****  " + getSellBillDetailList.toString());
+		return getSellBillDetailList;
+
+	}
+	
+	
 }

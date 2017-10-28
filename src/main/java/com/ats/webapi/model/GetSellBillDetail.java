@@ -20,6 +20,9 @@ public class GetSellBillDetail {
 	@Column(name="taxable_amt")
 	private float taxableAmt;
 	
+	@Column(name="mrp_base_rate")
+	private float mrpBaseRate;
+	
 	@Column(name="total_tax")
 	private float totalTax;
 
@@ -123,13 +126,22 @@ public class GetSellBillDetail {
 		this.itemName = itemName;
 	}
 
+	public float getMrpBaseRate() {
+		return mrpBaseRate;
+	}
+
+	public void setMrpBaserate(float mrpBaseRate) {
+		this.mrpBaseRate = mrpBaseRate;
+	}
+
 	@Override
 	public String toString() {
 		return "GetSellBillDetail [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo
-				+ ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", mrp="
-				+ mrp + ", qty=" + qty + ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer + ", itemName=" + itemName
-				+ "]";
+				+ ", taxableAmt=" + taxableAmt + ", mrpBaseRate=" + mrpBaseRate + ", totalTax=" + totalTax
+				+ ", grandTotal=" + grandTotal + ", mrp=" + mrp + ", qty=" + qty + ", sgstPer=" + sgstPer + ", cgstPer="
+				+ cgstPer + ", itemName=" + itemName + "]";
 	}
+
 	
 	
 	

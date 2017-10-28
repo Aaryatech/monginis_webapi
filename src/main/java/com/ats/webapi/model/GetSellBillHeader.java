@@ -45,7 +45,7 @@ public class GetSellBillHeader {
 	private int discountPer;
 	
 	@Column(name="payable_amt")
-	private float PayableAmt;
+	private float payableAmt;
 
 	public int getSellBillNo() {
 		return sellBillNo;
@@ -128,11 +128,11 @@ public class GetSellBillHeader {
 	}
 
 	public float getPayableAmt() {
-		return PayableAmt;
+		return payableAmt;
 	}
 
 	public void setPayableAmt(float payableAmt) {
-		PayableAmt = payableAmt;
+		this.payableAmt = payableAmt;
 	}
 
 	@Override
@@ -140,8 +140,10 @@ public class GetSellBillHeader {
 		return "GetSellBillHeader [sellBillNo=" + sellBillNo + ", invoiceNo=" + invoiceNo + ", billDate=" + billDate
 				+ ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", paidAmt="
 				+ paidAmt + ", remainingAmt=" + remainingAmt + ", paymentMode=" + paymentMode + ", discountPer="
-				+ discountPer + ", PayableAmt=" + PayableAmt + "]";
+				+ discountPer + ", payableAmt=" + payableAmt + "]";
 	}
+
+	
 
 
 	
