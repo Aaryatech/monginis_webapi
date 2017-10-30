@@ -13,7 +13,7 @@ public class GetSellBillHeaderServiceImpl implements GetSellBillHeaderService {
 	@Autowired
 	GetSellBillHeaderRepository getSellBillHeaderRepository;
 	@Override
-	public List<GetSellBillHeader> getSellBillHeader(String fromDate, String toDate, int frId) {
+	public List<GetSellBillHeader> getSellBillHeader(String fromDate, String toDate, List<String> frId) {
 
 
 		List<GetSellBillHeader> getSellBillHeaderList=getSellBillHeaderRepository.getFrSellBillHeader(fromDate, toDate, frId);

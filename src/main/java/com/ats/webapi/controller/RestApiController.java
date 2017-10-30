@@ -3241,7 +3241,7 @@ public class RestApiController {
 	
 	@RequestMapping(value = "/getSellBillHeader", method = RequestMethod.POST)
 	public @ResponseBody List<GetSellBillHeader> getSellBillHeader(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("frId") int frId) {
+			@RequestParam("toDate") String toDate, @RequestParam("frId") List<String> frId) {
 		System.out.println("inside rest");
 
 		fromDate = Common.convertToYMD(fromDate);

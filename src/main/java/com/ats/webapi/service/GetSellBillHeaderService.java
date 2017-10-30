@@ -6,6 +6,6 @@ import com.ats.webapi.model.GetSellBillHeader;
 
 public interface GetSellBillHeaderService {
 	
-	List<GetSellBillHeader> getSellBillHeader(String fromDate, String toDate, int frId);
+	List<GetSellBillHeader> getSellBillHeader(String fromDate, String toDate, List<String> frId);
 
 }
