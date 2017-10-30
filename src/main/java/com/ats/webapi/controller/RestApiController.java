@@ -3209,7 +3209,7 @@ public class RestApiController {
 
 	@RequestMapping(value = "/getFrGvnDetails", method = RequestMethod.POST)
 	public @ResponseBody GetGrnGvnDetailsList getFrGvnDetails(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("frId") int frId) {
+			@RequestParam("toDate") String toDate, @RequestParam("frId") List<String> frId) {
 		System.out.println("inside rest");
 		fromDate = Common.convertToYMD(fromDate);
 		toDate = Common.convertToYMD(toDate);
@@ -3223,7 +3223,7 @@ public class RestApiController {
 
 	@RequestMapping(value = "/getFrGrnDetails", method = RequestMethod.POST)
 	public @ResponseBody GetGrnGvnDetailsList getFrGrnDetail(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("frId") int frId) {
+			@RequestParam("toDate") String toDate, @RequestParam("frId") List<String> frId) {
 		System.out.println("inside rest");
 
 		fromDate = Common.convertToYMD(fromDate);
@@ -3266,6 +3266,7 @@ public class RestApiController {
 		return getSellBillDetailList;
 
 	}
+	
 	
 	
 }

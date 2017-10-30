@@ -85,7 +85,7 @@ GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
 	}
 
 	@Override
-	public GetGrnGvnDetailsList getFrGrnDetails(String fromDate, String toDate, int frId) {
+	public GetGrnGvnDetailsList getFrGrnDetails(String fromDate, String toDate, List<String> frId) {
 GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
 		
 		List<GetGrnGvnDetails> grnGvnDetails=getGrnGvnDetailsRepository.getFrGrnDetails(fromDate, toDate, frId);
@@ -116,7 +116,7 @@ GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
 	}
 
 	@Override
-	public GetGrnGvnDetailsList getFrGvnDetails(String fromDate, String toDate, int frId) {
+	public GetGrnGvnDetailsList getFrGvnDetails(String fromDate, String toDate, List<String> frId) {
 		
 		
 		

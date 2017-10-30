@@ -348,6 +348,22 @@ public class GetGrnGvnDetails {
 	public void setFrName(String frName) {
 		this.frName = frName;
 	}
+
+	@Override
+	public String toString() {
+		return "GetGrnGvnDetails [grnGvnId=" + grnGvnId + ", grnGvnDate=" + grnGvnDate + ", billNo=" + billNo
+				+ ", frId=" + frId + ", itemId=" + itemId + ", itemRate=" + itemRate + ", itemMrp=" + itemMrp
+				+ ", grnGvnQty=" + grnGvnQty + ", grnGvnAmt=" + grnGvnAmt + ", grnType=" + grnType + ", isGrn=" + isGrn
+				+ ", isGrnEdit=" + isGrnEdit + ", grnGvnEntryDateTime=" + grnGvnEntryDateTime + ", frGrnGvnRemark="
+				+ frGrnGvnRemark + ", gvnPhotoUpload1=" + gvnPhotoUpload1 + ", gvnPhotoUpload2=" + gvnPhotoUpload2
+				+ ", grnGvnStatus=" + grnGvnStatus + ", approvedLoginGate=" + approvedLoginGate
+				+ ", approveimedDateTimeGate=" + approveimedDateTimeGate + ", approvedRemarkGate=" + approvedRemarkGate
+				+ ", approvedLoginStore=" + approvedLoginStore + ", approvedDateTimeStore=" + approvedDateTimeStore
+				+ ", approvedRemarkStore=" + approvedRemarkStore + ", approvedLoginAcc=" + approvedLoginAcc
+				+ ", grnApprovedDateTimeAcc=" + grnApprovedDateTimeAcc + ", approvedRemarkAcc=" + approvedRemarkAcc
+				+ ", delStatus=" + delStatus + ", grnGvnQtyAuto=" + grnGvnQtyAuto + ", itemName=" + itemName
+				+ ", frName=" + frName + "]";
+	}
 	
 
 }
