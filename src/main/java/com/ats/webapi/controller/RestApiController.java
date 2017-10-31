@@ -86,6 +86,7 @@ import com.ats.webapi.model.Orders;
 import com.ats.webapi.model.PostBillDataCommon;
 import com.ats.webapi.model.PostBillDetail;
 import com.ats.webapi.model.PostBillHeader;
+import com.ats.webapi.model.PostFrItemStockDetail;
 import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.PostGrnGvnList;
 import com.ats.webapi.model.Rates;
@@ -3267,6 +3268,35 @@ public class RestApiController {
 
 	}
 	
-	
-	
+	//31-10-2017
+	@RequestMapping(value = { "/updateEndMonth" }, method = RequestMethod.POST)
+
+	public @ResponseBody Info updateEndMonth(@RequestBody PostFrItemStockDetail postFrItemStockDetail)
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
+
+		System.out.println("Data Common " + postFrItemStockDetail.toString());
+
+		List<PostFrItemStockDetail> jsonBillDetail;
+
+		jsonBillDetail = postFrOpStockService.saveFrOpStockDetail(postFrItemStockDetail);
+
+		Info info = new Info();
+
+		if (jsonBillDetail.size() > 0) {
+
+			info.setError(false);
+			info.setMessage("End Month  Successfully");
+
+		}
+
+		else {
+
+			info.setError(true);
+			info.setMessage("End Month Unsuccessfull : RestApi");
+
+		}
+
+		return info;
+
+	}
 }
