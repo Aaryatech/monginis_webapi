@@ -3,14 +3,11 @@ package com.ats.webapi.model;
 public class GetCurrentStockDetails {
 	
 	private int itemId;
+	private String itemName;
 	private int openingBalance;
 	private int totalPurchase;
 	private int totalGrnGvn;
 	private int totalSell;
-	
-	
-	
-	
 	
 	
 	public int getItemId() {
@@ -44,15 +41,20 @@ public class GetCurrentStockDetails {
 		this.totalSell = totalSell;
 	}
 	
+	public String getItemName() {
+		return itemName;
+	}
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+	
 	
 	@Override
 	public String toString() {
-		return "GetCurrentStockDetails [itemId=" + itemId + ", openingBalance=" + openingBalance + ", totalPurchase="
-				+ totalPurchase + ", totalGrnGvn=" + totalGrnGvn + ", totalSell=" + totalSell + "]";
+		return "GetCurrentStockDetails [itemId=" + itemId + ", itemName=" + itemName + ", openingBalance="
+				+ openingBalance + ", totalPurchase=" + totalPurchase + ", totalGrnGvn=" + totalGrnGvn + ", totalSell="
+				+ totalSell + "]";
 	}
 	
-
-	
-	 
 
 }

@@ -352,9 +352,12 @@ public class RestApiController {
 
 		System.out.println("inside rest getCurrentStock");
 		List<GetCurrentStockDetails> stockDetailsList=new ArrayList<GetCurrentStockDetails>();
-		for(int i=0;i<itemIdList.size();i++) {
+		
+		
+		List<Item> itemsList = itemService.findItemsByItemId(itemIdList);
+		for(int i=0;i<itemsList.size();i++) {
 			
-			int itemId=itemIdList.get(i);
+			int itemId=itemsList.get(i).getId();
 
 		int totalPurchase = getItemStockService.getTotalPurchase(frId, fromDate, toDate, itemId);
 
@@ -372,6 +375,7 @@ public class RestApiController {
 		getCurrentStockDetails.setTotalPurchase(totalPurchase);
 		getCurrentStockDetails.setTotalSell(totalSell);
 		getCurrentStockDetails.setItemId(itemId);
+		getCurrentStockDetails.setItemName(itemsList.get(i).getItemName());
 		
 		stockDetailsList.add(getCurrentStockDetails);
 		}
