@@ -47,7 +47,7 @@ public class PostFrItemStockDetail {
 
 	@Transient
 	@Column(name="item_name")
-	private String itemname;
+	private String itemName;
 	
 	
 	public int getOpeningStockDetailId() {
@@ -130,16 +130,27 @@ public class PostFrItemStockDetail {
 		this.remark = remark;
 	}
 
-	
-	
-	
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
 	@Override
 	public String toString() {
 		return "PostFrItemStockDetail [openingStockDetailId=" + openingStockDetailId + ", openingStockHeaderId="
 				+ openingStockHeaderId + ", itemId=" + itemId + ", openingStock=" + openingStock + ", physicalStock="
 				+ physicalStock + ", stockDifference=" + stockDifference + ", totalPurchase=" + totalPurchase
-				+ ", totalGrnGvn=" + totalGrnGvn + ", totalSell=" + totalSell + ", remark=" + remark + "]";
+				+ ", totalGrnGvn=" + totalGrnGvn + ", totalSell=" + totalSell + ", remark=" + remark + ", itemName="
+				+ itemName + "]";
 	}
+
+	
+	
+	
+	
 	
 	
 	
