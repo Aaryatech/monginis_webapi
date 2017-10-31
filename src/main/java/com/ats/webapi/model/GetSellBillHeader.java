@@ -51,6 +51,8 @@ public class GetSellBillHeader {
 	private String frName;
 	
 
+
+
 	public int getSellBillNo() {
 		return sellBillNo;
 	}
@@ -155,6 +157,7 @@ public class GetSellBillHeader {
 				+ discountPer + ", payableAmt=" + payableAmt + ", frName=" + frName + "]";
 	}
 
+	
 	
 	
 

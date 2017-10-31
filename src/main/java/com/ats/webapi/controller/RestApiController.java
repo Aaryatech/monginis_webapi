@@ -3289,21 +3289,21 @@ public class RestApiController {
 
 	}
 	
-	/*//31-10-2017
+	//31-10-2017
 	@RequestMapping(value = { "/updateEndMonth" }, method = RequestMethod.POST)
 
-	public @ResponseBody Info updateEndMonth(@RequestBody PostFrItemStockDetail postFrItemStockDetail)
-			throws ParseException, JsonParseException, JsonMappingException, IOException {
+	public @ResponseBody Info updateEndMonth(@RequestBody PostFrItemStockHeader postFrItemStockHeader)
+		//	throws ParseException, JsonParseException, JsonMappingException, IOException 
+	{
 
-		System.out.println("Data Common " + postFrItemStockDetail.toString());
+		System.out.println("Data  " + postFrItemStockHeader.toString());
 
-		List<PostFrItemStockDetail> jsonBillDetail;
-
-		jsonBillDetail = postFrOpStockService.saveFrOpStockDetail(postFrItemStockDetail);
+		
+		int a = postFrOpStockService.updateEndMonth(postFrItemStockHeader);
 
 		Info info = new Info();
 
-		if (jsonBillDetail.size() > 0) {
+		if (a > 0) {
 
 			info.setError(false);
 			info.setMessage("End Month  Successfully");
@@ -3319,5 +3319,5 @@ public class RestApiController {
 
 		return info;
 
-	}*/
+	}
 }

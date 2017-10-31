@@ -52,4 +52,61 @@ public class PostFrOpStockServiceImpl implements PostFrOpStockService{
 		return postFrItemStockHeaderList;
 	}
 
-}
+
+	@Override
+	public int updateEndMonth(PostFrItemStockHeader postFrItemStockHeader) {
+		PostFrItemStockHeader postFrItemStockHeaders=new PostFrItemStockHeader();
+	
+		
+			int headerId=postFrItemStockHeader.getOpeningStockHeaderId();
+			
+			
+			List<PostFrItemStockDetail> PostFrItemStockDetailList=postFrItemStockHeader.getPostFrItemStockDetailList();
+			
+			for(int j=0;j<PostFrItemStockDetailList.size();j++) {
+				
+				PostFrItemStockDetail postFrItemStockDetail=PostFrItemStockDetailList.get(j);
+				
+				postFrOpStockDetailRepository.save(postFrItemStockDetail);
+				
+				
+			}
+			int x=postFrOpStockHeaderRepository.endMonth(headerId);
+			postFrItemStockHeaders= postFrOpStockHeaderRepository.getHeader(headerId);
+			PostFrItemStockHeader header=new PostFrItemStockHeader();
+			if(postFrItemStockHeaders.getMonth()==12)
+			{
+				header.setYear(postFrItemStockHeaders.getYear()+1);
+				header.setMonth(1);
+				
+			}
+			else {
+				header.setMonth(postFrItemStockHeaders.getMonth()+1);
+			}
+			header.setIsMonthClosed(0);
+			postFrItemStockHeaders=postFrOpStockHeaderRepository.save(header);
+			
+			
+			
+				for(int j=0;j<PostFrItemStockDetailList.size();j++) {
+				
+				PostFrItemStockDetail postFrItemStockDetail=PostFrItemStockDetailList.get(j);
+				int opStock=(postFrItemStockDetail.getOpeningStock()+postFrItemStockDetail.getTotalPurchase())-(postFrItemStockDetail.getTotalGrnGvn()+postFrItemStockDetail.getTotalGrnGvn());
+				postFrItemStockDetail.setOpeningStock(opStock);
+				postFrItemStockDetail.setOpeningStockHeaderId(postFrItemStockHeaders.getOpeningStockHeaderId());
+				postFrOpStockDetailRepository.save(postFrItemStockDetail);
+				
+			
+			}
+		return x;
+	}
+	}
+
+
+	
+
+
+	
+	
+
+
