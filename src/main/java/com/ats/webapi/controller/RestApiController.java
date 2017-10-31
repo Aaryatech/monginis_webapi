@@ -379,6 +379,23 @@ public class RestApiController {
 		return stockDetailsList; 
 
 	}
+	
+	
+	@RequestMapping(value = "/updateStoreGvn", method = RequestMethod.POST)
+	public @ResponseBody String updateStoreGvn(@RequestParam("approvedLoginStore") int approvedLoginStore,
+			@RequestParam("approvedDateTimeStore") String approvedDateTimeStore,
+			@RequestParam("approvedRemarkStore") String approvedRemarkStore,
+			@RequestParam("grnGvnStatus") int grnGvnStatus, @RequestParam("grnGvnId") int grnGvnId) {
+		System.out.println("inside rest");
+
+		int x = updateGrnGvnService.updateGrnGvnForStore(approvedLoginStore, approvedDateTimeStore, approvedRemarkStore, grnGvnStatus, grnGvnId);
+			
+
+		return "Store Gvn Updated Successfully ";
+
+	}
+	
+	
 
 	@RequestMapping(value = "/updateGateGrn", method = RequestMethod.POST)
 	public @ResponseBody String updateGateGrn(@RequestParam("approvedLoginGate") int approvedLoginGate,
@@ -3268,7 +3285,7 @@ public class RestApiController {
 
 	}
 	
-	//31-10-2017
+	/*//31-10-2017
 	@RequestMapping(value = { "/updateEndMonth" }, method = RequestMethod.POST)
 
 	public @ResponseBody Info updateEndMonth(@RequestBody PostFrItemStockDetail postFrItemStockDetail)
@@ -3298,5 +3315,5 @@ public class RestApiController {
 
 		return info;
 
-	}
+	}*/
 }

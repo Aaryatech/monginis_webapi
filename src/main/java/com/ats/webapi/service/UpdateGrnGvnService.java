@@ -10,5 +10,9 @@ public interface UpdateGrnGvnService {
 			String approvedRemarkAcc,int grnGvnStatus,int grnGvnId);
 
 	
+	public int updateGrnGvnForStore( int approvedLoginStore,String approvedDateTimeStore,
+			String approvedRemarkStore,int grnGvnStatus,int grnGvnId);
+
+	
 	
 }

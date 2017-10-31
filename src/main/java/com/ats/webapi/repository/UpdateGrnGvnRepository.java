@@ -31,5 +31,18 @@ public interface UpdateGrnGvnRepository extends JpaRepository<UpdateGrnGvn, Inte
 		int grnGvnStatus,@Param("grnGvnId") int grnGvnId);
 	
 	
+	
+	
+	@Transactional
+	@Modifying
+	@Query(" UPDATE UpdateGrnGvn  SET approvedLoginStore =:approvedLoginStore,"
+			+ "approvedDateTimeStore=:approvedDateTimeStore,approvedRemarkStore=:approvedRemarkStore ,"
+			+ "grnGvnStatus=:grnGvnStatus WHERE grnGvnId=:grnGvnId ")
+		int updateStoreGvn(@Param("approvedLoginStore") int approvedLoginStore,@Param("approvedDateTimeStore") 
+		String approvedDateTimeStore,@Param("approvedRemarkStore") String approvedRemarkStore,@Param("grnGvnStatus") 
+		int grnGvnStatus,@Param("grnGvnId") int grnGvnId);
+	
+	
+	
 
 }
