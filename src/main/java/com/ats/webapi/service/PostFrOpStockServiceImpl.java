@@ -100,6 +100,19 @@ public class PostFrOpStockServiceImpl implements PostFrOpStockService{
 			}
 		return x;
 	}
+
+
+	@Override
+	public PostFrItemStockHeader getFrOpStockHeader(int frId, int month, int year) {
+		
+		PostFrItemStockHeader postFrItemStockHeader=postFrOpStockHeaderRepository.getFrHeader(frId, month, year);
+		int headerId=postFrItemStockHeader.getOpeningStockHeaderId();
+		
+		List<PostFrItemStockDetail> postFrItemStockDetail=postFrOpStockDetailRepository.getFrDetail(headerId);
+		postFrItemStockHeader.setPostFrItemStockDetailList(postFrItemStockDetail);
+		
+		return postFrItemStockHeader;
+	}
 	}
 
 

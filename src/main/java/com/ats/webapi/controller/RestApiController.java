@@ -3320,4 +3320,36 @@ public class RestApiController {
 		return info;
 
 	}
+	
+	@RequestMapping(value = { "/getPostFrOpStock" }, method = RequestMethod.POST)
+
+	public @ResponseBody PostFrItemStockHeader getPostFrOpStock(@RequestParam("month") int month,
+			@RequestParam("year") int year, @RequestParam("frId") int frId )
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
+
+		
+		PostFrItemStockHeader postFrItemStockHeader;
+
+		postFrItemStockHeader = postFrOpStockService.getFrOpStockHeader(frId, month, year);
+		System.out.println("Data Common " + postFrItemStockHeader.toString());
+
+		Info info = new Info();
+
+		if (postFrItemStockHeader.toString()!=null) {
+
+			info.setError(false);
+			info.setMessage("post Fr Stock header inserted  Successfully");
+
+		}
+
+		else {
+
+			info.setError(true);
+			info.setMessage("Error in post Fr Stock header insertion : RestApi");
+
+		}
+
+		return postFrItemStockHeader;
+
+	}
 }

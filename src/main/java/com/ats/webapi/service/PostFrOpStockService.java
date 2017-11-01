@@ -11,4 +11,5 @@ public interface PostFrOpStockService {
 	
 	List<PostFrItemStockHeader> saveFrOpStockHeader( PostFrItemStockHeader postFrItemStockHeader);
 	int updateEndMonth( PostFrItemStockHeader postFrItemStockHeader);
+	PostFrItemStockHeader getFrOpStockHeader(int frId, int month, int year);
 }
