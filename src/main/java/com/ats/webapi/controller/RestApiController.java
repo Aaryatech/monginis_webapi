@@ -3353,4 +3353,22 @@ public class RestApiController {
 		return postFrItemStockHeader;
 
 	}
+	
+	@RequestMapping(value = { "/placePushDumpOrder" }, method = RequestMethod.POST)
+
+	public @ResponseBody List<Orders> placePushDumpItemOrder(@RequestBody List<Orders> orderJson)
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
+
+		ObjectMapper mapper = new ObjectMapper();
+
+		List<Orders> participantJsonList;
+		List<Orders> jsonResult;
+
+		System.out.println("Inside Place Order " + orderJson.toString());
+
+		jsonResult = orderService.placePustDumpOrder(orderJson);
+
+		return jsonResult;
+
+	}
 }

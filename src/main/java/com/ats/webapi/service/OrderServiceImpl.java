@@ -130,4 +130,19 @@ public class OrderServiceImpl implements OrderService {
 		
 		
 	}
+
+	@Override
+	public List<Orders> placePustDumpOrder(List<Orders> list) {
+		List<Orders> returnList = new ArrayList();
+		for (Orders o : list) {
+
+					System.out.println("Saving new order");
+
+					Orders newOrder = orderRepository.save(o);
+					returnList.add(newOrder);
+			
+			}
+
+		return returnList;
+	}
 }
