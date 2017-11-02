@@ -43,7 +43,7 @@ public class UpdateGrnGvn  {
 	private int approvedLoginAcc;
 
 	@Column(name = "approved_datetime_acc")
-	private String grnApprovedDateTimeAcc;
+	private String approvedDateTimeAcc;
 
 	@Column(name = "approved_remark_acc")
 	private String approvedRemarkAcc;
@@ -120,20 +120,21 @@ public class UpdateGrnGvn  {
 		this.approvedLoginAcc = approvedLoginAcc;
 	}
 
-	public String getGrnApprovedDateTimeAcc() {
-		return grnApprovedDateTimeAcc;
-	}
-
-	public void setGrnApprovedDateTimeAcc(String grnApprovedDateTimeAcc) {
-		this.grnApprovedDateTimeAcc = grnApprovedDateTimeAcc;
-	}
-
+	
 	public String getApprovedRemarkAcc() {
 		return approvedRemarkAcc;
 	}
 
 	public void setApprovedRemarkAcc(String approvedRemarkAcc) {
 		this.approvedRemarkAcc = approvedRemarkAcc;
+	}
+
+	public String getApprovedDateTimeAcc() {
+		return approvedDateTimeAcc;
+	}
+
+	public void setApprovedDateTimeAcc(String approvedDateTimeAcc) {
+		this.approvedDateTimeAcc = approvedDateTimeAcc;
 	}
 	
 	

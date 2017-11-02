@@ -23,10 +23,10 @@ public class UpdateGrnGvnServiceImpl implements  UpdateGrnGvnService {
 	}
 
 	@Override
-	public int updateGrnForAcc(int approvedLoginAcc, String grnApprovedDateTimeAcc, String approvedRemarkAcc,
+	public int updateGrnForAcc(int approvedLoginAcc, String approvedDateTimeAcc, String approvedRemarkAcc,
 			int grnGvnStatus, int grnGvnId) {
 
-		int i=updateGrnGvnRepository.updateAccGrn(approvedLoginAcc, grnApprovedDateTimeAcc, approvedRemarkAcc, grnGvnStatus, grnGvnId);
+		int i=updateGrnGvnRepository.updateAccGrn(approvedLoginAcc, approvedDateTimeAcc, approvedRemarkAcc, grnGvnStatus, grnGvnId);
 		
 		
 		return i;

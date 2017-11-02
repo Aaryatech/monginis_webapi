@@ -6,7 +6,7 @@ public interface UpdateGrnGvnService {
 			String approvedRemarkGate,int grnGvnStatus,int grnGvnId);
 
 
-	public int updateGrnForAcc( int approvedLoginAcc,String grnApprovedDateTimeAcc,
+	public int updateGrnForAcc( int approvedLoginAcc,String approvedDateTimeAcc,
 			String approvedRemarkAcc,int grnGvnStatus,int grnGvnId);
 
 	

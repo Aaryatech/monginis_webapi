@@ -24,7 +24,7 @@ public class OrderCounts implements Serializable{
 	@Column(name="menu_title")
 	String menuTitle;
 	
-	int Total;
+	int total;
 	
 	public int getMenuId() {
 		return menuId;
@@ -38,15 +38,19 @@ public class OrderCounts implements Serializable{
 	public void setMenuTitle(String menuTitle) {
 		this.menuTitle = menuTitle;
 	}
+	
+	
+	
+	
 	public int getTotal() {
-		return Total;
+		return total;
 	}
 	public void setTotal(int total) {
-		Total = total;
+		this.total = total;
 	}
 	@Override
 	public String toString() {
-		return "OrderCounts [menuId=" + menuId + ", menuTitle=" + menuTitle + ", Total=" + Total + "]";
+		return "OrderCounts [menuId=" + menuId + ", menuTitle=" + menuTitle + ", Total=" + total + "]";
 	}
 	
 	
