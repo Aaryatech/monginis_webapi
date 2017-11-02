@@ -25,8 +25,40 @@ public class GetOrderItemQty implements Serializable{
 	
 	@Column(name="item_id")
 	private String itemId;
+	
+	@Column(name="menu_id")
+	private int menuId;
+	
+	@Column(name="item_grp1")
+	private int itemGrp1;
+
+	@Column(name="item_name")
+	private String itemName;
 
 	
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public int getMenuId() {
+		return menuId;
+	}
+
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
+	}
+
+	public int getItemGrp1() {
+		return itemGrp1;
+	}
+
+	public void setItemGrp1(int itemGrp1) {
+		this.itemGrp1 = itemGrp1;
+	}
 
 	public int getQty() {
 		return qty;
@@ -54,9 +86,13 @@ public class GetOrderItemQty implements Serializable{
 
 	@Override
 	public String toString() {
-		return "GetOrderItemQty [orderId=" + orderId + ", qty=" + qty + ", itemId=" + itemId + "]";
+		return "GetOrderItemQty [orderId=" + orderId + ", qty=" + qty + ", itemId=" + itemId + ", menuId=" + menuId
+				+ ", itemGrp1=" + itemGrp1 + ", itemName=" + itemName + "]";
 	}
 
+	 
+
+	 
 	
 	
 
