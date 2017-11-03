@@ -115,7 +115,7 @@ public class SpCakeOrdersBean implements Serializable {
 	}
 
 
-	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getSpDeliveryDate() {
 		return spDeliveryDate;
 	}
