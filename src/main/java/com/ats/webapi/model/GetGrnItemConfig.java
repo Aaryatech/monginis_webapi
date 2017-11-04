@@ -50,6 +50,17 @@ public class GetGrnItemConfig implements Serializable {
 	@Column(name="bill_qty")
 	private int billQty;
 
+	@Column(name="sgst_per")
+	private float sgstPer;
+	
+	@Column(name="cgst_per")
+	private float cgstPer;
+	
+	@Column(name="igst_per")
+	private float igstPer;
+	
+	
+	
 	public int getBillDetailNo() {
 		return billDetailNo;
 	}
@@ -128,6 +139,30 @@ public class GetGrnItemConfig implements Serializable {
 
 	public void setBillDate(Date billDate) {
 		this.billDate = billDate;
+	}
+
+	public float getSgstPer() {
+		return sgstPer;
+	}
+
+	public void setSgstPer(float sgstPer) {
+		this.sgstPer = sgstPer;
+	}
+
+	public float getCgstPer() {
+		return cgstPer;
+	}
+
+	public void setCgstPer(float cgstPer) {
+		this.cgstPer = cgstPer;
+	}
+
+	public float getIgstPer() {
+		return igstPer;
+	}
+
+	public void setIgstPer(float igstPer) {
+		this.igstPer = igstPer;
 	}
 
 		
