@@ -27,7 +27,7 @@ public class PostProductionDetail {
 
 	@Column(name="production_qty")
 	private int productionQty;
-	
+	 
 	@Column(name="item_id")
 	private int itemId;
 

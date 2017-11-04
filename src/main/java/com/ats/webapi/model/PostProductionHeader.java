@@ -21,7 +21,7 @@ public class PostProductionHeader {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="production_header_id")
 	private int productionHeaderId;
-	
+	 
 	@Column(name="cat_id")
 	private int itemGrp1;
 	
