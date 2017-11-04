@@ -1,5 +1,7 @@
 package com.ats.webapi.model;
 
+import java.sql.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -20,6 +22,9 @@ public class GetRegSpCakeOrderQty {
 	
 	@Column(name="item_id")
 	private int itemId;
+	
+	@Column(name="rsp_produ_date")
+	private Date productionDate;
 	
 	@Column(name="menu_id")
 	private int menuId;
@@ -79,12 +84,21 @@ public class GetRegSpCakeOrderQty {
 		this.itemName = itemName;
 	}
 
-	@Override
-	public String toString() {
-		return "GetRegSpCakeOrderQty [rspId=" + rspId + ", qty=" + qty + ", itemId=" + itemId + ", menuId=" + menuId
-				+ ", itemGrp1=" + itemGrp1 + ", itemName=" + itemName + "]";
+	public Date getProductionDate() {
+		return productionDate;
 	}
 
+	public void setProductionDate(Date productionDate) {
+		this.productionDate = productionDate;
+	}
+
+	@Override
+	public String toString() {
+		return "GetRegSpCakeOrderQty [rspId=" + rspId + ", qty=" + qty + ", itemId=" + itemId + ", productionDate="
+				+ productionDate + ", menuId=" + menuId + ", itemGrp1=" + itemGrp1 + ", itemName=" + itemName + "]";
+	}
+
+	 
 	 
 	
 }

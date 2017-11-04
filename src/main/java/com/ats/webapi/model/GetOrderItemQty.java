@@ -1,6 +1,7 @@
 package com.ats.webapi.model;
 
 import java.io.Serializable;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -28,6 +29,9 @@ public class GetOrderItemQty implements Serializable{
 	
 	@Column(name="menu_id")
 	private int menuId;
+	
+	@Column(name="production_date")
+	private Date productionDate;
 	
 	@Column(name="item_grp1")
 	private int itemGrp1;
@@ -84,14 +88,21 @@ public class GetOrderItemQty implements Serializable{
 		this.orderId = orderId;
 	}
 
+	public Date getProductionDate() {
+		return productionDate;
+	}
+
+	public void setProductionDate(Date productionDate) {
+		this.productionDate = productionDate;
+	}
+
 	@Override
 	public String toString() {
 		return "GetOrderItemQty [orderId=" + orderId + ", qty=" + qty + ", itemId=" + itemId + ", menuId=" + menuId
-				+ ", itemGrp1=" + itemGrp1 + ", itemName=" + itemName + "]";
+				+ ", productionDate=" + productionDate + ", itemGrp1=" + itemGrp1 + ", itemName=" + itemName + "]";
 	}
 
 	 
-
 	 
 	
 	

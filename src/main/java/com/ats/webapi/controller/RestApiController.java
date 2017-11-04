@@ -3371,4 +3371,11 @@ public class RestApiController {
 		return jsonResult;
 
 	}
+	
+	// Get  Menus By Cat Id
+		@RequestMapping(value = { "/getMenuByCat" }, method = RequestMethod.POST)
+		public @ResponseBody AllMenuJsonResponse findMenuByCat(@RequestParam("catId") int catId) {
+			AllMenuJsonResponse menus = menuService.findMenuByCat(catId);
+			return menus;
+		}
 }

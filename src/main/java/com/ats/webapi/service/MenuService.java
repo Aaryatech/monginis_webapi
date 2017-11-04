@@ -9,6 +9,7 @@ public interface MenuService {
 	public List<AllMenus> findAllMenus();
 	public String saveMenuConfigurationPage(AllMenus menuConfigurationPage);
 	public AllMenuJsonResponse findAllMenu();
+	public AllMenuJsonResponse findMenuByCat(int catId);
 	public AllMenus findMenu(int menuId);
 
 }

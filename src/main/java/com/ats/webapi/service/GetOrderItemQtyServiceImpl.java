@@ -36,8 +36,8 @@ public class GetOrderItemQtyServiceImpl implements GetOrderItemQtyService{
 	}
 */
 	@Override
-	public List<GetRegSpCakeOrderQty> getRegSpCakeOrderQty(String orderDate, List<String> menuId) {
-List<GetRegSpCakeOrderQty> getRegSpCakeOrderItemQtyList=getRegSpCakeOrderQtyRepository.getRegSpCakeOrderAllItemQty(orderDate, menuId);
+	public List<GetRegSpCakeOrderQty> getRegSpCakeOrderQty(String productionDate, List<String> menuId) {
+List<GetRegSpCakeOrderQty> getRegSpCakeOrderItemQtyList=getRegSpCakeOrderQtyRepository.getRegSpCakeOrderAllItemQty(productionDate, menuId);
 		
 		System.out.println("inside service impl "+getRegSpCakeOrderItemQtyList);
 		
@@ -45,8 +45,8 @@ List<GetRegSpCakeOrderQty> getRegSpCakeOrderItemQtyList=getRegSpCakeOrderQtyRepo
 	}
 
 	@Override
-	public List<GetOrderItemQty> getOrderQty(String orderDate, List<String> menuId) {
-List<GetOrderItemQty> getOrderItemQtyList=getOrderItemRepository.getOrderAllItemQty(orderDate, menuId);
+	public List<GetOrderItemQty> getOrderQty(String productionDate, List<String> menuId) {
+List<GetOrderItemQty> getOrderItemQtyList=getOrderItemRepository.getOrderAllItemQty(productionDate, menuId);
 		
 		System.out.println("inside service impl "+getOrderItemQtyList);
 		
