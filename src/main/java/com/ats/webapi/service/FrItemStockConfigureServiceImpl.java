@@ -31,4 +31,10 @@ public class FrItemStockConfigureServiceImpl implements FrItemStockConfigureServ
 		return totalAvailableSlot;
 	}
 
+	@Override
+	public int findProductionTimeSlot() {
+		int productionTimeSlot=frItemStockConfRepo.findBySettingKey("production_time_slot");
+		return productionTimeSlot;
+	}
+
 }

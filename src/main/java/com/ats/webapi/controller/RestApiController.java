@@ -583,6 +583,14 @@ public class RestApiController {
 		return totalAvailableSlot;
 
 	}
+	@RequestMapping(value = "/getProductionTimeSlot", method = RequestMethod.GET)
+	public @ResponseBody int getProductionTimeSlot() {
+
+		int productionTimeSlot = frItemConfService.findProductionTimeSlot();
+
+		return productionTimeSlot;
+
+	}
 
 	@RequestMapping(value = "/getBillDetailOnly", method = RequestMethod.POST)
 	public @ResponseBody String getBillDetailOnly(@RequestParam("billDetailNo") int billDetailNo) {
