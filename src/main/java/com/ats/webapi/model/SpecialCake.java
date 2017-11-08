@@ -308,6 +308,18 @@ public class SpecialCake implements Serializable {
 	public void setBaseCode(String baseCode) {
 		this.baseCode = baseCode;
 	}
+	@Override
+	public String toString() {
+		return "SpecialCake [spId=" + spId + ", spCode=" + spCode + ", spName=" + spName + ", spType=" + spType
+				+ ", spMinwt=" + spMinwt + ", spMaxwt=" + spMaxwt + ", spBookb4=" + spBookb4 + ", sprId=" + sprId
+				+ ", spImage=" + spImage + ", spTax1=" + spTax1 + ", spTax2=" + spTax2 + ", spTax3=" + spTax3
+				+ ", speIdlist=" + speIdlist + ", erpLinkcode=" + erpLinkcode + ", isUsed=" + isUsed + ", spPhoupload="
+				+ spPhoupload + ", timeTwoappli=" + timeTwoappli + ", delStatus=" + delStatus + ", baseCode=" + baseCode
+				+ ", spDesc=" + spDesc + ", orderQty=" + orderQty + ", orderDiscount=" + orderDiscount
+				+ ", isCustChoiceCk=" + isCustChoiceCk + ", isAddonRateAppli=" + isAddonRateAppli + ", mrpRate1="
+				+ mrpRate1 + ", mrpRate2=" + mrpRate2 + ", mrpRate3=" + mrpRate3 + ", spRate1=" + spRate1 + ", spRate2="
+				+ spRate2 + ", spRate3=" + spRate3 + ", isSlotUsed=" + isSlotUsed + "]";
+	}
 	
 
 	

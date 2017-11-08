@@ -91,7 +91,7 @@ public class ItemServiceImpl implements ItemService{
 
 	@Override
 	public List<Item> findFrItems(String itemGrp1) {
-		List<Item> items=itemRepository.findByItemGrp1(itemGrp1);
+		List<Item> items=itemRepository.findByItemGrp1AndDelStatus(itemGrp1,0);
 		return items;
 	}
 

@@ -20,7 +20,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer>,JpaSpecific
 	public List<Item> findByDelStatus(int i);
 
 
-	public List<Item> findByItemGrp1(String itemGrp1);
+	public List<Item> findByItemGrp1AndDelStatus(String itemGrp1,int i);
 
 	@Query(value="select * from m_item where id IN (:itemList) AND del_status=0",nativeQuery=true)
 	public List<Item> findByDelStatusAndItemIdIn(@Param("itemList")List<Integer> itemList);

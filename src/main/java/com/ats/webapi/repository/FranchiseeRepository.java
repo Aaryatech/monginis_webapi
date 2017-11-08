@@ -15,8 +15,10 @@ public interface FranchiseeRepository extends JpaRepository<Franchisee, Integer>
 
 		public Franchisee findOne(int frId);
 
-		public List<Franchisee> findAll();
+		//public Franchisee findByFrCode(String frCode);
 
-		public Franchisee findByFrCode(String frCode);
+		public List<Franchisee> findAllByDelStatus(int i);
+
+		public Franchisee findByFrCodeAndDelStatus(String frCode, int i);
 		
 	}

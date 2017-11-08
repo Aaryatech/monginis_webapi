@@ -31,7 +31,7 @@ public class OrderServiceImpl implements OrderService {
 		List<Orders> returnList = new ArrayList();
 		for (Orders o : list) {
 
-			Orders prevOrder = orderRepository.findPreviousOrder(o.getItemId(), o.getFrId(), o.getOrderDate(),
+			Orders prevOrder = orderRepository.findPreviousOrder(o.getItemId(), o.getFrId(), o.getProductionDate(),
 					o.getMenuId());
 
 			try {

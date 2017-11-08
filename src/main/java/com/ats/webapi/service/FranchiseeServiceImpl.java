@@ -44,7 +44,7 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 	@Override
 	public List<Franchisee> findAllFranchisee() {
 		 List<Franchisee> franchisee=new ArrayList<Franchisee>();
-			franchisee=franchiseeRepository.findAll();
+			franchisee=franchiseeRepository.findAllByDelStatus(0);
 	
 		
 		return franchisee;
@@ -68,7 +68,7 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 			FrLoginResponse frLoginResponse = new FrLoginResponse();
             ErrorMessage errorMessage=new ErrorMessage();
 			try {
-				dbFranchisee = franchiseeRepository.findByFrCode(frCode);
+				dbFranchisee = franchiseeRepository.findByFrCodeAndDelStatus(frCode,0);
 				System.out.println(" details "+dbFranchisee.toString());
 				
 				dbFrCode = dbFranchisee.getFrCode();
@@ -95,7 +95,7 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 					 frLoginResponse.setErrorMessage(errorMessage);
 					jsonFr = JsonUtil.javaToJson(frLoginResponse);
 					
-				} else if (dbFrCode.equals(frCode) && dbPassword.equals(frPassword)) {
+				} else if (dbFrCode.equalsIgnoreCase(frCode) && dbPassword.equals(frPassword)) {
 					
 				
 					frLoginResponse.setFranchisee(dbFranchisee);
@@ -104,7 +104,7 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 					frLoginResponse.setErrorMessage(errorMessage);
 					jsonFr = JsonUtil.javaToJson(frLoginResponse);
 
-				} else if (dbFrCode.equals(frCode) && dbPassword != frPassword) {
+				} else if (dbFrCode.equalsIgnoreCase(frCode) && dbPassword != frPassword) {
 					
 					 frLoginResponse.setFranchisee(dbFranchisee);
 					 errorMessage.setError(true);

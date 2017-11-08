@@ -36,8 +36,14 @@ public class SellBillHeader implements Serializable{
 	@Column(name="taxable_amt")
 	private float taxableAmt;
 	
-	@Column(name="tax_applicable")
-	private int taxApplicable;
+	@Column(name="discount_per")
+	private float discountPer;
+	
+	@Column(name="discount_amt")
+	private float discountAmt;
+	
+	@Column(name="payable_amt")
+	private float payableAmt;
 	
 	@Column(name="total_tax")
 	private float totalTax;
@@ -61,7 +67,7 @@ public class SellBillHeader implements Serializable{
 	private String userGstNo;
 	
 	@Column(name="user_phone")
-	private long userPhone;
+	private String userPhone;
 	
 	@Column(name="status")
 	private int status;
@@ -129,14 +135,7 @@ public class SellBillHeader implements Serializable{
 		this.taxableAmt = taxableAmt;
 	}
 
-	public int getTaxApplicable() {
-		return taxApplicable;
-	}
-
-	public void setTaxApplicable(int taxApplicable) {
-		this.taxApplicable = taxApplicable;
-	}
-
+	
 	public float getTotalTax() {
 		return totalTax;
 	}
@@ -189,11 +188,12 @@ public class SellBillHeader implements Serializable{
 		return userGstNo;
 	}
 
-	public long getUserPhone() {
+	
+	public String getUserPhone() {
 		return userPhone;
 	}
 
-	public void setUserPhone(long userPhone) {
+	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
 	}
 
@@ -217,15 +217,39 @@ public class SellBillHeader implements Serializable{
 		DelStatus = delStatus;
 	}
 
+	public float getDiscountPer() {
+		return discountPer;
+	}
+
+	public void setDiscountPer(float discountPer) {
+		this.discountPer = discountPer;
+	}
+
+	public float getDiscountAmt() {
+		return discountAmt;
+	}
+
+	public void setDiscountAmt(float discountAmt) {
+		this.discountAmt = discountAmt;
+	}
+
+	public float getPayableAmt() {
+		return payableAmt;
+	}
+
+	public void setPayableAmt(float payableAmt) {
+		this.payableAmt = payableAmt;
+	}
+
 	@Override
 	public String toString() {
 		return "SellBillHeader [sellBillNo=" + sellBillNo + ", invoiceNo=" + invoiceNo + ", billDate=" + billDate
-				+ ", frId=" + frId + ", frCode=" + frCode + ", taxableAmt=" + taxableAmt + ", taxApplicable="
-				+ taxApplicable + ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + ", paidAmt=" + paidAmt
-				+ ", remainingAmt=" + remainingAmt + ", paymentMode=" + paymentMode + ", userName=" + userName
-				+ ", userGstNo=" + userGstNo + ", userPhone=" + userPhone + ", status=" + status + ", DelStatus="
-				+ DelStatus + "]";
+				+ ", frId=" + frId + ", frCode=" + frCode + ", taxableAmt=" + taxableAmt + ", discountPer="
+				+ discountPer + ", discountAmt=" + discountAmt + ", payableAmt=" + payableAmt + ", totalTax=" + totalTax
+				+ ", grandTotal=" + grandTotal + ", paidAmt=" + paidAmt + ", remainingAmt=" + remainingAmt
+				+ ", paymentMode=" + paymentMode + ", userName=" + userName + ", userGstNo=" + userGstNo
+				+ ", userPhone=" + userPhone + ", status=" + status + ", DelStatus=" + DelStatus
+				+ ", sellBillDetailsList=" + sellBillDetailsList + "]";
 	}
-	
-	
+
 }
