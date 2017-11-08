@@ -1,6 +1,6 @@
 package com.ats.webapi.model;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -107,6 +107,39 @@ public class GetGrnGvnDetails {
 	
 	@Column(name = "fr_name")
 	private String frName;
+	
+	//newly Added
+	
+	@Column(name = "is_tally_sync")
+	private int isTallySync;
+	
+	
+	@Column(name = "base_rate")
+	private float baseRate;
+	
+	@Column(name = "sgst_per")
+	private float sgstPer;
+	
+	@Column(name = "cgst_per")
+	private float cgstPer;
+	
+	@Column(name = "igst_per")
+	private float igstPer;
+	
+	@Column(name = "taxable_amt")
+	private float taxableAmt;
+	
+	@Column(name = "total_tax")
+	private float totalTax;
+	
+	
+	
+	@Column(name = "round_up_amt")
+	private float roundUpAmt;
+	
+	@Column(name = "final_amt")
+	private float finalAmt;
+	
 
 	public int getGrnGvnId() {
 		return grnGvnId;
@@ -349,6 +382,78 @@ public class GetGrnGvnDetails {
 		this.frName = frName;
 	}
 
+	public int getIsTallySync() {
+		return isTallySync;
+	}
+
+	public void setIsTallySync(int isTallySync) {
+		this.isTallySync = isTallySync;
+	}
+
+	public float getBaseRate() {
+		return baseRate;
+	}
+
+	public void setBaseRate(float baseRate) {
+		this.baseRate = baseRate;
+	}
+
+	public float getSgstPer() {
+		return sgstPer;
+	}
+
+	public void setSgstPer(float sgstPer) {
+		this.sgstPer = sgstPer;
+	}
+
+	public float getCgstPer() {
+		return cgstPer;
+	}
+
+	public void setCgstPer(float cgstPer) {
+		this.cgstPer = cgstPer;
+	}
+
+	public float getIgstPer() {
+		return igstPer;
+	}
+
+	public void setIgstPer(float igstPer) {
+		this.igstPer = igstPer;
+	}
+
+	public float getTaxableAmt() {
+		return taxableAmt;
+	}
+
+	public void setTaxableAmt(float taxableAmt) {
+		this.taxableAmt = taxableAmt;
+	}
+
+	public float getTotalTax() {
+		return totalTax;
+	}
+
+	public void setTotalTax(float totalTax) {
+		this.totalTax = totalTax;
+	}
+
+	public float getRoundUpAmt() {
+		return roundUpAmt;
+	}
+
+	public void setRoundUpAmt(float roundUpAmt) {
+		this.roundUpAmt = roundUpAmt;
+	}
+
+	public float getFinalAmt() {
+		return finalAmt;
+	}
+
+	public void setFinalAmt(float finalAmt) {
+		this.finalAmt = finalAmt;
+	}
+
 	@Override
 	public String toString() {
 		return "GetGrnGvnDetails [grnGvnId=" + grnGvnId + ", grnGvnDate=" + grnGvnDate + ", billNo=" + billNo
@@ -362,8 +467,11 @@ public class GetGrnGvnDetails {
 				+ ", approvedRemarkStore=" + approvedRemarkStore + ", approvedLoginAcc=" + approvedLoginAcc
 				+ ", grnApprovedDateTimeAcc=" + grnApprovedDateTimeAcc + ", approvedRemarkAcc=" + approvedRemarkAcc
 				+ ", delStatus=" + delStatus + ", grnGvnQtyAuto=" + grnGvnQtyAuto + ", itemName=" + itemName
-				+ ", frName=" + frName + "]";
+				+ ", frName=" + frName + ", isTallySync=" + isTallySync + ", baseRate=" + baseRate + ", sgstPer="
+				+ sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", taxableAmt=" + taxableAmt
+				+ ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt + "]";
 	}
+
 	
 
 }

@@ -114,6 +114,9 @@ import com.ats.webapi.model.SpecialCakeList;
 import com.ats.webapi.model.StockDetails;
 import com.ats.webapi.model.SubCategory;
 import com.ats.webapi.model.User;
+import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
+import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
+import com.ats.webapi.model.grngvn.PostCreditNoteHeaderList;
 import com.ats.webapi.service.AllFrIdNameService;
 import com.ats.webapi.service.BillDetailUpdateService;
 import com.ats.webapi.service.CategoryService;
@@ -136,6 +139,7 @@ import com.ats.webapi.service.GetDumpOrderService;
 import com.ats.webapi.service.GetFrItemStockConfigurationService;
 import com.ats.webapi.service.GetFrItemsService;
 import com.ats.webapi.service.GetGrnGvnDetailService;
+import com.ats.webapi.service.GetGrnGvnForCreditNoteService;
 import com.ats.webapi.service.GetGrnItemConfigService;
 import com.ats.webapi.service.GetItemByCatIdService;
 import com.ats.webapi.service.GetItemStockService;
@@ -153,6 +157,7 @@ import com.ats.webapi.service.OrderCountsService;
 import com.ats.webapi.service.OrderService;
 import com.ats.webapi.service.PostBillDataService;
 import com.ats.webapi.service.PostBillUpdateService;
+import com.ats.webapi.service.PostCreditNoteService;
 import com.ats.webapi.service.PostFrOpStockService;
 import com.ats.webapi.service.PostGrnGvnService;
 import com.ats.webapi.service.PrevItemOrderService;
@@ -344,6 +349,55 @@ public class RestApiController {
 
 	@Autowired
 	GetItemStockService getItemStockService;
+	
+	@Autowired
+	PostCreditNoteService postCreditNoteService;
+	
+	
+	@RequestMapping(value = { "/postCreditNote" }, method = RequestMethod.POST)
+	public @ResponseBody Info postCreditNote(@RequestBody PostCreditNoteHeaderList postCreditNoteHeader) {
+						
+		Info info=new Info();
+		
+		List<PostCreditNoteHeader> creditNoteHeaderList=postCreditNoteService.savePostCreditNote(postCreditNoteHeader.getPostCreditNoteHeader());
+		
+		if(!creditNoteHeaderList.isEmpty()) {
+			
+			info.setError(false);
+			info.setMessage("Credit Note inserted successfully");
+		}
+		
+		else {
+			
+			info.setError(true);
+			info.setMessage("Error: credit note insertion failed");
+		}
+		
+		return info;
+		
+	}
+	
+	
+	
+	
+	@Autowired//credit note sachin 07/11/2017
+	GetGrnGvnForCreditNoteService getGrnGvnForCreditNoteService;
+	
+	@RequestMapping(value = "/grnGvnDetailForCreditNote", method = RequestMethod.GET)
+	public @ResponseBody GetGrnGvnForCreditNoteList grnGvnDetailForCreditNote() {
+		System.out.println("inside rest");
+
+		GetGrnGvnForCreditNoteList getGrnGvnForCreditNoteList=getGrnGvnForCreditNoteService.getGrnGvnForCreditNote();
+		
+		return getGrnGvnForCreditNoteList;
+
+	}
+
+	
+	
+	
+	
+	
 
 	@RequestMapping(value = "/getCurrentStock", method = RequestMethod.POST)
 	public @ResponseBody List<GetCurrentStockDetails>  getCurrentStock(@RequestParam("frId") int frId, @RequestParam("fromDate") String fromDate,
