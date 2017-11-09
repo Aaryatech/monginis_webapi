@@ -16,11 +16,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.GetOrderItemQty;
+import com.ats.webapi.model.GetProductionDetail;
 import com.ats.webapi.model.GetRegSpCakeOrderQty;
+import com.ats.webapi.model.GetSellBillHeader;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.PostFrItemStockHeader;
+import com.ats.webapi.model.PostProductionDetail;
 import com.ats.webapi.model.PostProductionHeader;
+import com.ats.webapi.model.report.GetRepFrDatewiseSell;
+import com.ats.webapi.model.report.GetRepItemwiseSell;
+import com.ats.webapi.model.report.GetRepMonthwiseSell;
+import com.ats.webapi.model.report.GetRepTaxSell;
 import com.ats.webapi.service.GetOrderItemQtyService;
 import com.ats.webapi.service.ProductionService;
+import com.ats.webapi.service.RepFrSellServise;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -32,6 +41,9 @@ public class PorductionApiController {
 	
 	@Autowired
 	private ProductionService productionService;
+	
+	@Autowired
+	RepFrSellServise repFrSellServise;
 	
 	/*@RequestMapping(value = { "/getOrderItemQty" }, method = RequestMethod.POST)
 	@ResponseBody
@@ -160,4 +172,39 @@ e.printStackTrace();
 		return info;
 
 	}
+	
+	@RequestMapping(value = { "/getProdOrderQty" }, method = RequestMethod.POST)
+
+	public @ResponseBody List<GetProductionDetail> getProdOrderQty(@RequestParam("catId") List<String> catId,
+			@RequestParam("productionDate") String productionDate, @RequestParam("timeSlot") int timeSlot )
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
+
+		productionDate = Common.convertToYMD(productionDate);
+		List<GetProductionDetail> getProductionDetailList;
+System.out.println(productionDate);
+		getProductionDetailList = productionService.getProdQty(catId, productionDate, timeSlot);
+		System.out.println("Data Common " + getProductionDetailList.toString());
+
+		Info info = new Info();
+
+		if (getProductionDetailList.toString()!=null) {
+
+			info.setError(false);
+			info.setMessage("  Successfully");
+
+		}
+
+		else {
+
+			info.setError(true);
+			info.setMessage("Error in  production order Qty insertion : RestApi");
+
+		}
+
+		return getProductionDetailList;
+
+	}
+	
+	
+	
 }
