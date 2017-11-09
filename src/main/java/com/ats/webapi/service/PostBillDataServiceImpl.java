@@ -13,6 +13,7 @@ import com.ats.webapi.repository.PostBillDetailRepository;
 import com.ats.webapi.repository.PostBillHeaderRepository;
 import com.ats.webapi.repository.RegularSpCkOrderRepository;
 import com.ats.webapi.repository.SpCakeOrdersRepository;
+import com.ats.webapi.repository.UpdateBillDetailForGrnGvnRepository;
 
 @Service
 public class PostBillDataServiceImpl implements PostBillDataService {
@@ -31,6 +32,14 @@ public class PostBillDataServiceImpl implements PostBillDataService {
 	
 	@Autowired
 	RegularSpCkOrderRepository  regularSpCkOrderRepository;
+	
+	
+	@Autowired
+	UpdateBillDetailForGrnGvnRepository updateBillDetailForGrnGvnRepository;
+	
+	
+	
+	
 	/*
 	 * @Override public List<PostBillDetail> saveBillDetails(List<PostBillDetail>
 	 * postBillDetail) {
@@ -64,6 +73,9 @@ public class PostBillDataServiceImpl implements PostBillDataService {
 				billDetail.setBillNo(billNo);
 
 				postBillDetailRepository.save(billDetail);
+				
+				
+				
 				
 				int res=0;
 				if (billDetail.getCatId() != 5) { 

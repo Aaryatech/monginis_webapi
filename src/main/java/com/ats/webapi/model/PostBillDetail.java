@@ -96,7 +96,8 @@ public class PostBillDetail {
 	@Column(name="expiry_date")//new added
 	private Date expiryDate;
 	
-	
+	@Column(name="is_grngvn_applied")//new added
+	private int  isgrnGvnApplied;
 	
 	
 	public int getGrnType() {
@@ -304,6 +305,14 @@ public class PostBillDetail {
 		this.totalTax = totalTax;
 	}
 
+	public int getIsgrnGvnApplied() {
+		return isgrnGvnApplied;
+	}
+
+	public void setIsgrnGvnApplied(int isgrnGvnApplied) {
+		this.isgrnGvnApplied = isgrnGvnApplied;
+	}
+
 	@Override
 	public String toString() {
 		return "PostBillDetail [billDetailNo=" + billDetailNo + ", billNo=" + billNo + ", menuId=" + menuId + ", catId="
@@ -312,7 +321,7 @@ public class PostBillDetail {
 				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
 				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", baseRate=" + baseRate + ", taxableAmt="
 				+ taxableAmt + ", remark=" + remark + ", totalTax=" + totalTax + ", delStatus=" + delStatus
-				+ ", grnType=" + grnType + ", expiryDate=" + expiryDate + "]";
+				+ ", grnType=" + grnType + ", expiryDate=" + expiryDate + ", isgrnGvnApplied=" + isgrnGvnApplied + "]";
 	}
 
 	

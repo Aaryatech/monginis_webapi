@@ -1,6 +1,6 @@
 package com.ats.webapi.model;
 
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -140,6 +140,19 @@ public class GetGrnGvnDetails {
 	@Column(name = "final_amt")
 	private float finalAmt;
 	
+	
+	@Column(name = "is_credit_note")
+	private int  isCreditNote;
+	
+	
+
+	public int getIsCreditNote() {
+		return isCreditNote;
+	}
+
+	public void setIsCreditNote(int isCreditNote) {
+		this.isCreditNote = isCreditNote;
+	}
 
 	public int getGrnGvnId() {
 		return grnGvnId;
@@ -151,7 +164,9 @@ public class GetGrnGvnDetails {
 
 	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getGrnGvnDate() {
+		
 		return grnGvnDate;
+	
 	}
 
 	public void setGrnGvnDate(Date grnGvnDate) {
@@ -469,7 +484,8 @@ public class GetGrnGvnDetails {
 				+ ", delStatus=" + delStatus + ", grnGvnQtyAuto=" + grnGvnQtyAuto + ", itemName=" + itemName
 				+ ", frName=" + frName + ", isTallySync=" + isTallySync + ", baseRate=" + baseRate + ", sgstPer="
 				+ sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", taxableAmt=" + taxableAmt
-				+ ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt + "]";
+				+ ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt + ", isCreditNote="
+				+ isCreditNote + "]";
 	}
 
 	

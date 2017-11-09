@@ -138,6 +138,12 @@ public class GrnGvn  {
 	private float finalAmt;
 	
 	
+	@Column(name = "is_credit_note")
+	private int isCreditNote;
+	
+	
+	
+	
 	/*@Column(name = "int1")
 	private int int1;
 	
@@ -166,6 +172,14 @@ public class GrnGvn  {
 	private String varchar4;*/
 	
 	
+	public int getIsCreditNote() {
+		return isCreditNote;
+	}
+
+	public void setIsCreditNote(int isCreditNote) {
+		this.isCreditNote = isCreditNote;
+	}
+
 	public int getGrnGvnId() {
 		return grnGvnId;
 	}
@@ -173,12 +187,14 @@ public class GrnGvn  {
 	public void setGrnGvnId(int grnGvnId) {
 		this.grnGvnId = grnGvnId;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 
 	public Date getGrnGvnDate() {
 		return grnGvnDate;
 	}
 
+	
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "yyyy-MM-dd")
 	public void setGrnGvnDate(Date grnGvnDate) {
 		this.grnGvnDate = grnGvnDate;
 	}

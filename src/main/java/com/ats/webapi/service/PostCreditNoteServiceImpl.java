@@ -10,6 +10,7 @@ import com.ats.webapi.model.grngvn.PostCreditNoteDetails;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
 import com.ats.webapi.repository.PostCreditNoteDetailsRepository;
 import com.ats.webapi.repository.PostCreditNoteHeaderRepository;
+import com.ats.webapi.repository.UpdateGrnGvnForCreditNoteRepository;
 
 @Service
 public class PostCreditNoteServiceImpl implements PostCreditNoteService {
@@ -19,6 +20,9 @@ public class PostCreditNoteServiceImpl implements PostCreditNoteService {
 
 	@Autowired
 	PostCreditNoteDetailsRepository postCreditNoteDetailsRepository;
+	
+	@Autowired
+	UpdateGrnGvnForCreditNoteRepository updateGrnGvnForCreditNoteRepository;
 
 	@Override
 	public List<PostCreditNoteHeader> savePostCreditNote(List<PostCreditNoteHeader> postCreditNoteHeader) {
@@ -46,6 +50,9 @@ public class PostCreditNoteServiceImpl implements PostCreditNoteService {
 				postCreditNoteDetails.setCrnId(crnId);
 
 				postCreditNoteDetailsRepository.save(postCreditNoteDetails);
+				
+				int result= updateGrnGvnForCreditNoteRepository.updateBillDetailForGrnGvnInsert(
+						postCreditNoteDetails.getGrnGvnId(), 1);
 
 			}
 		}

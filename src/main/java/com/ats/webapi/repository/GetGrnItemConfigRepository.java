@@ -17,7 +17,7 @@ public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConf
 			"t_bill_detail.bill_no,t_bill_detail.sgst_per,t_bill_detail.cgst_per,t_bill_detail.igst_per," + 
 			"t_bill_header.fr_id from t_bill_header ,t_bill_detail,m_item " + 
 			" WHERE t_bill_header.fr_id=:frId AND t_bill_detail.bill_no=t_bill_header.bill_no " + 
-			"AND t_bill_detail.item_id=m_item.id AND t_bill_detail.expiry_date=:cDate" + "", nativeQuery = true)
+			"AND t_bill_detail.item_id=m_item.id AND t_bill_detail.expiry_date=:cDate AND t_bill_detail.is_grngvn_applied=0", nativeQuery = true)
 	
 	public List<GetGrnItemConfig> getAllGrnItemConfig(@Param("cDate") Date cDate,@Param("frId") int frId);
 
@@ -27,7 +27,7 @@ public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConf
 			+ "	t_bill_detail.rate,t_bill_detail.mrp,t_bill_detail.bill_qty,t_bill_detail.bill_detail_no,"
 			+ "	t_bill_detail.bill_no,t_bill_detail.sgst_per,t_bill_detail.cgst_per,t_bill_detail.igst_per,t_bill_header.fr_id from t_bill_header ,t_bill_detail,m_item "
 			+ "	 where t_bill_detail.bill_no=:billNo AND t_bill_header.bill_no=t_bill_detail.bill_no "
-			+ "	AND t_bill_detail.item_id=m_item.id " + "", nativeQuery = true)
+			+ "	AND t_bill_detail.item_id=m_item.id AND t_bill_detail.is_grngvn_applied=0 " + "", nativeQuery = true)
 	
 	public List<GetGrnItemConfig> getGvnItemConfig(@Param("billNo") int billNo);
 	

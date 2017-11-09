@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.GrnGvn;
 import com.ats.webapi.repository.PostGrnGvnRepository;
+import com.ats.webapi.repository.UpdateBillDetailForGrnGvnRepository;
 
 @Service
 public class PostGrnGvnServiceImpl implements PostGrnGvnService {
@@ -15,6 +16,12 @@ public class PostGrnGvnServiceImpl implements PostGrnGvnService {
 	
 	@Autowired
 	PostGrnGvnRepository grnGvnRepository;
+	
+	
+	@Autowired
+	UpdateBillDetailForGrnGvnRepository updateBillDetailForGrnGvnRepository;
+	
+	
 
 	@Override
 	public GrnGvn saveGrnGvn(List<GrnGvn> grnGvnList) {
@@ -24,6 +31,10 @@ public class PostGrnGvnServiceImpl implements PostGrnGvnService {
 		for(int i=0;i<grnGvnList.size();i++) {
 			
 			grnGvnReturnList=grnGvnRepository.save(grnGvnList.get(i));
+			
+			
+			int result=updateBillDetailForGrnGvnRepository.updateBillDetailForGrnGvnInsert(
+					grnGvnReturnList.getBillNo(), 1);
 			
 		}
 		
