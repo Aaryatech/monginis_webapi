@@ -15,7 +15,7 @@ public interface UpdateGrnGvnForCreditNoteRepository extends JpaRepository<Updat
 	@Modifying
 	@Query(" UPDATE UpdateGrnGvnForCreditNote  SET isCreditNote=:isCreditNote "
 			+ " WHERE grnGvnId=:grnGvnId ")
-		int updateBillDetailForGrnGvnInsert(@Param("grnGvnId") int grnGvnId,@Param("isCreditNote") 
+		int updateGrnGvnForCreditNoteInsert(@Param("grnGvnId") int grnGvnId,@Param("isCreditNote") 
 		int isCreditNote);
 	
 }

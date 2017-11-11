@@ -110,19 +110,17 @@ public class GetBillDetails implements Serializable {
 		
 		
 		@Column(name="is_grngvn_applied")
-		private int  isgrnGvnApplied;
+		private int  isGrngvnApplied;
 		
 		
 		
 		
-		
-		
-		public int getIsgrnGvnApplied() {
-			return isgrnGvnApplied;
+		public int getIsGrngvnApplied() {
+			return isGrngvnApplied;
 		}
 
-		public void setIsgrnGvnApplied(int isgrnGvnApplied) {
-			this.isgrnGvnApplied = isgrnGvnApplied;
+		public void setIsGrngvnApplied(int isGrngvnApplied) {
+			this.isGrngvnApplied = isGrngvnApplied;
 		}
 
 		public int getGrnType() {
@@ -368,12 +366,10 @@ public class GetBillDetails implements Serializable {
 					+ ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs + ", igstPer=" + igstPer + ", igstRs=" + igstRs
 					+ ", taxableAmt=" + taxableAmt + ", remark=" + remark + ", delStatus=" + delStatus + ", itemName="
 					+ itemName + ", catName=" + catName + ", totalTax=" + totalTax + ", baseRate=" + baseRate
-					+ ", grnType=" + grnType + ", expiryDate=" + expiryDate + ", isgrnGvnApplied=" + isgrnGvnApplied
+					+ ", grnType=" + grnType + ", expiryDate=" + expiryDate + ", isGrngvnApplied=" + isGrngvnApplied
 					+ "]";
 		}
 
-		
-		
 		
 		
 		
