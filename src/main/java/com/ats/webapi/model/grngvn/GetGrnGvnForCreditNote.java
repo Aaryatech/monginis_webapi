@@ -150,6 +150,68 @@ public class GetGrnGvnForCreditNote implements Serializable {
 	
 	@Column(name = "is_credit_note")
 	private int isCreditNote;
+	
+	
+	
+	@Column(name = "menu_id")
+	private int menuId;
+	
+
+	@Column(name = "cat_id")
+	private int catId;
+	
+
+	@Column(name = "invoice_no")
+	private String invoiceNo;
+	
+
+	@Column(name = "ref_invoice_date")
+	private Date refInvoiceDate;
+	
+	
+	
+	
+	
+
+
+	public int getMenuId() {
+		return menuId;
+	}
+
+
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
+	}
+
+
+	public int getCatId() {
+		return catId;
+	}
+
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
+
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getRefInvoiceDate() {
+		return refInvoiceDate;
+	}
+
+
+	public void setRefInvoiceDate(Date refInvoiceDate) {
+		this.refInvoiceDate = refInvoiceDate;
+	}
 
 
 	public int getGrnGvnId() {

@@ -142,6 +142,25 @@ public class GrnGvn  {
 	private int isCreditNote;
 	
 	
+	//newly added
+	
+
+	@Column(name = "menu_id")
+	private int menuId;
+	
+
+	@Column(name = "cat_id")
+	private int catId;
+	
+
+	@Column(name = "invoice_no")
+	private String invoiceNo;
+	
+
+	@Column(name = "ref_invoice_date")
+	private Date refInvoiceDate;
+	
+	
 	
 	
 	/*@Column(name = "int1")
@@ -482,6 +501,47 @@ public class GrnGvn  {
 		this.finalAmt = finalAmt;
 	}
 
+	public int getMenuId() {
+		return menuId;
+	}
+
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
+	}
+
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+
+	public Date getRefInvoiceDate() {
+		return refInvoiceDate;
+	}
+	
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "yyyy-MM-dd")
+	public void setRefInvoiceDate(Date refInvoiceDate) {
+		
+		this.refInvoiceDate = refInvoiceDate;
+		
+	}
+	
+	
+	
+	
+	
+	
+
 	/*public int getInt1() {
 		return int1;
 	}
@@ -555,6 +615,8 @@ public class GrnGvn  {
 	}
 
 	*/
+	
+	
 	
 	
 }

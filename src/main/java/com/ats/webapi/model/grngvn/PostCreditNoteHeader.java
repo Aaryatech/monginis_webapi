@@ -20,6 +20,10 @@ public class PostCreditNoteHeader implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "crn_id")
 	private int crnId;
+	
+	//newly added
+	@Column(name = "crn_no")
+	private String crnNo;
 
 	@Column(name = "crn_date")
 	private Date crnDate;
@@ -53,6 +57,11 @@ public class PostCreditNoteHeader implements Serializable {
 
 	@Transient
 	List<PostCreditNoteDetails> postCreditNoteDetails;
+	
+	
+	
+	
+	
 
 	public int getCrnId() {
 		return crnId;
@@ -152,14 +161,24 @@ public class PostCreditNoteHeader implements Serializable {
 		this.postCreditNoteDetails = postCreditNoteDetails;
 	}
 
-	@Override
-	public String toString() {
-		return "PostCreditNoteHeader [crnId=" + crnId + ", crnDate=" + crnDate + ", frId=" + frId + ", crnTaxableAmt="
-				+ crnTaxableAmt + ", crnTotalTax=" + crnTotalTax + ", crnGrandTotal=" + crnGrandTotal + ", crnFinalAmt="
-				+ crnFinalAmt + ", roundOff=" + roundOff + ", userId=" + userId + ", createdDateTime=" + createdDateTime
-				+ ", isTallySync=" + isTallySync + ", postCreditNoteDetails=" + postCreditNoteDetails + "]";
+	public String getCrnNo() {
+		return crnNo;
 	}
 
+	public void setCrnNo(String crnNo) {
+		this.crnNo = crnNo;
+	}
+
+	@Override
+	public String toString() {
+		return "PostCreditNoteHeader [crnId=" + crnId + ", crnNo=" + crnNo + ", crnDate=" + crnDate + ", frId=" + frId
+				+ ", crnTaxableAmt=" + crnTaxableAmt + ", crnTotalTax=" + crnTotalTax + ", crnGrandTotal="
+				+ crnGrandTotal + ", crnFinalAmt=" + crnFinalAmt + ", roundOff=" + roundOff + ", userId=" + userId
+				+ ", createdDateTime=" + createdDateTime + ", isTallySync=" + isTallySync + ", postCreditNoteDetails="
+				+ postCreditNoteDetails + "]";
+	}
+
+	
 	
 
 }

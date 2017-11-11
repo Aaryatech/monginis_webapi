@@ -11,5 +11,8 @@ public interface PostBillDataService {
 	
 	List<PostBillHeader> saveBillHeader(List<PostBillHeader> postBillHeader);
 
+	
+	List<PostBillHeader> updateBillHeader(List<PostBillHeader> postBillHeader);
+
 
 }

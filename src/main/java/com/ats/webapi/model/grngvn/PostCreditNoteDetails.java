@@ -86,7 +86,21 @@ public class PostCreditNoteDetails implements Serializable {
 	private Date billDate;
 	
 	
+	//newly added
 	
+		@Column(name = "cat_id")
+		private int catId;
+		
+		
+		@Column(name = "base_rate")
+		private float baseRate;
+		
+		@Column(name = "cess_per")
+		private float cessPer;
+		
+		@Column(name = "ref_invoice_no")
+		private String  refInvoiceNo;
+		
 	
 
 	public int getBillNo() {
@@ -257,8 +271,38 @@ public class PostCreditNoteDetails implements Serializable {
 		this.delStatus = delStatus;
 	}
 
-	
-	
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
+	public float getBaseRate() {
+		return baseRate;
+	}
+
+	public void setBaseRate(float baseRate) {
+		this.baseRate = baseRate;
+	}
+
+	public float getCessPer() {
+		return cessPer;
+	}
+
+	public void setCessPer(float cessPer) {
+		this.cessPer = cessPer;
+	}
+
+	public String getRefInvoiceNo() {
+		return refInvoiceNo;
+	}
+
+	public void setRefInvoiceNo(String refInvoiceNo) {
+		this.refInvoiceNo = refInvoiceNo;
+	}
+
 	@Override
 	public String toString() {
 		return "PostCreditNoteDetails [crndId=" + crndId + ", crnId=" + crnId + ", itemId=" + itemId + ", grnGvnId="
@@ -266,8 +310,12 @@ public class PostCreditNoteDetails implements Serializable {
 				+ grnGvnQty + ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", grnGvnAmt=" + grnGvnAmt
 				+ ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cgstRs=" + cgstRs
 				+ ", sgstRs=" + sgstRs + ", igstRs=" + igstRs + ", cessRs=" + cessRs + ", delStatus=" + delStatus
-				+ ", billNo=" + billNo + ", billDate=" + billDate + "]";
+				+ ", billNo=" + billNo + ", billDate=" + billDate + ", catId=" + catId + ", baseRate=" + baseRate
+				+ ", cessPer=" + cessPer + ", refInvoiceNo=" + refInvoiceNo + "]";
 	}
 
+	
+	
+	
 	
 }

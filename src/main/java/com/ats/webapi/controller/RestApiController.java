@@ -588,6 +588,8 @@ public class RestApiController {
 		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
 		GetGrnItemConfigList grnItemConfigList = getGrnItemConfigService.getAllGrnItemConfiguration(cDate, frId);
+		
+		System.out.println("grn Item config  with Rest: "+grnItemConfigList.toString());
 
 		return grnItemConfigList;
 
@@ -783,6 +785,41 @@ public class RestApiController {
 		return info;
 
 	}
+	
+	
+	
+	@RequestMapping(value = { "/updateBillData" }, method = RequestMethod.POST)
+
+	public @ResponseBody Info updateBillData(@RequestBody PostBillDataCommon postBillDataCommon)
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
+
+		System.out.println("Data Common " + postBillDataCommon.toString());
+
+		List<PostBillHeader> jsonBillHeader;
+		List<PostBillDetail> jsonBillDetail;
+
+		jsonBillHeader = postBillDataService.updateBillHeader(postBillDataCommon.getPostBillHeadersList());
+
+		Info info = new Info();
+
+		if (jsonBillHeader.size() > 0) {
+
+			info.setError(false);
+			info.setMessage("post bill header inserted  Successfully");
+
+		}
+
+		else {
+
+			info.setError(true);
+			info.setMessage("Error in post bill header insertion : RestApi");
+
+		}
+
+		return info;
+
+	}
+
 
 	@RequestMapping(value = { "/insertSellBillData" }, method = RequestMethod.POST)
 

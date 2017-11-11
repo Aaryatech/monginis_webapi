@@ -105,4 +105,43 @@ public class PostBillDataServiceImpl implements PostBillDataService {
 		return postBillHeaders;
 	}
 
+
+
+
+	@Override
+	public List<PostBillHeader> updateBillHeader(List<PostBillHeader> postBillHeader) {
+		
+		
+		List<PostBillHeader> postBillHeaders = new ArrayList<PostBillHeader>();
+		for (int i = 0; i < postBillHeader.size(); i++) {
+
+			postBillHeaders = postBillHeaderRepository.save(postBillHeader);
+
+			int billNo = postBillHeader.get(i).getBillNo();
+
+			List<PostBillDetail> postBillDetailList = postBillHeader.get(i).getPostBillDetailsList();
+
+			for (int j = 0; j < postBillDetailList.size(); j++) {
+
+				PostBillDetail billDetail = postBillDetailList.get(j);
+
+				billDetail.setBillNo(billNo);
+
+				postBillDetailRepository.save(billDetail);
+				
+				
+				
+				
+				
+			}
+			// postBillDetail.get(i).setBillNo(billNo);
+			// postBillDetailRepository.save(postBillDetail);
+
+		}
+
+		return postBillHeaders;
+		
+		
+	}
+
 }

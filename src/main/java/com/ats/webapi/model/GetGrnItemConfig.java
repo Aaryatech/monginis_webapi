@@ -1,7 +1,7 @@
 package com.ats.webapi.model;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.sql.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -61,6 +61,43 @@ public class GetGrnItemConfig implements Serializable {
 	
 	
 	
+	
+	//newly Added
+	@Column(name="menu_id")
+	private int menuId;
+	
+	@Column(name="cat_id")
+	private int catId;
+	
+	@Column(name="invoice_no")
+	private String invoiceNo;
+	
+	
+	
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+
+	public int getMenuId() {
+		return menuId;
+	}
+
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
+	}
+
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
 	public int getBillDetailNo() {
 		return billDetailNo;
 	}
@@ -132,7 +169,7 @@ public class GetGrnItemConfig implements Serializable {
 	public void setFrId(int frId) {
 		this.frId = frId;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "yyyy-MM-dd")
 	public Date getBillDate() {
 		return billDate;
 	}
@@ -165,11 +202,16 @@ public class GetGrnItemConfig implements Serializable {
 		this.igstPer = igstPer;
 	}
 
+	@Override
+	public String toString() {
+		return "GetGrnItemConfig [billDetailNo=" + billDetailNo + ", itemId=" + itemId + ", frId=" + frId
+				+ ", itemName=" + itemName + ", grnType=" + grnType + ", billNo=" + billNo + ", rate=" + rate
+				+ ", billDate=" + billDate + ", mrp=" + mrp + ", billQty=" + billQty + ", sgstPer=" + sgstPer
+				+ ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", menuId=" + menuId + ", catId=" + catId
+				+ ", invoiceNo=" + invoiceNo + "]";
+	}
+
 		
-	
-
-
-	
 	
 
 }
