@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
 import com.ats.webapi.model.report.GetRepItemwiseSell;
+import com.ats.webapi.model.report.GetRepMenuwiseSell;
 import com.ats.webapi.model.report.GetRepMonthwiseSell;
 import com.ats.webapi.model.report.GetRepTaxSell;
 
@@ -17,5 +18,8 @@ public interface RepFrSellServise {
 	List<GetRepTaxSell> getTaxSellReport(String fromDate, String toDate, List<String> frId);
 	List<GetRepTaxSell> getDatewiseTaxSellReport(String fromDate, String toDate, List<String> frId);
 	List<GetRepTaxSell> getBillwiseTaxSellReport(String fromDate, String toDate, List<String> frId);
+	List<GetRepMenuwiseSell> getMenuwiseSellReport(String fromDate, String toDate, List<String> frId);
+	List<GetRepItemwiseSell> getDateCatwiseSellReport(String fromDate, String toDate, List<String> frId,
+			List<String> catId);
 
 }
