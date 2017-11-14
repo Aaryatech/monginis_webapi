@@ -1010,34 +1010,7 @@ public class RestApiController {
 
 	}
 
-	@RequestMapping(value = { "/frItemStockPost" }, method = RequestMethod.POST)
-
-	public @ResponseBody Info info(@RequestBody List<FrItemStockConfigurePost> frItemStockConfigurePosts)
-			throws ParseException, JsonParseException, JsonMappingException, IOException {
-
-		List<FrItemStockConfigurePost> jsonResult;
-
-		jsonResult = frItemStockConfigurePostService.saveFrItemStockConf(frItemStockConfigurePosts);
-
-		Info info = new Info();
-
-		if (jsonResult.size() > 0) {
-
-			info.setError(false);
-			info.setMessage("fr Item stock Inserted Successfully");
-
-		}
-
-		else {
-
-			info.setError(true);
-			info.setMessage("Error in frItem Stock Insertion  : RestApi");
-
-		}
-
-		return info;
-
-	}
+	
 
 	@RequestMapping(value = "/getfrItemConfSetting", method = RequestMethod.GET)
 	public @ResponseBody FrItemStockConfigureList getfrItemConfSetting() {
