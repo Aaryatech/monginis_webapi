@@ -13,6 +13,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 // Bean to search order :Listing Bills @Sachin
 @Entity
+ 
 public class GetBillHeader implements Serializable {
 	
 	@Id
