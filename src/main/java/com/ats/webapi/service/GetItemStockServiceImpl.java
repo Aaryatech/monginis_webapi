@@ -1,11 +1,17 @@
 package com.ats.webapi.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.model.PostFrItemStockDetail;
+import com.ats.webapi.model.RegularSpecialStockCal;
 import com.ats.webapi.repository.PostBillHeaderRepository;
+import com.ats.webapi.repository.PostFrOpStockDetailRepository;
+import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
+import com.ats.webapi.repository.StockCalculationRepository;
 
 @Service
 public class GetItemStockServiceImpl implements GetItemStockService{
@@ -14,44 +20,53 @@ public class GetItemStockServiceImpl implements GetItemStockService{
 	@Autowired
 	PostBillHeaderRepository billHeaderRepository;
 	
+	@Autowired
+	PostFrOpStockDetailRepository stockDetailRepository;
+	
+	@Autowired
+	StockCalculationRepository calculationRepository;
+	
 	
 	@Override
-	public int getTotalPurchase(int frId, String fromDate, String toDate, int itemId) {
+	public RegularSpecialStockCal getRegTotalPurchase(int frId, String fromDate, String toDate, int itemId) {
 		
-		int purchase=billHeaderRepository.getTotalPurchase(frId,fromDate,toDate,itemId);
+		RegularSpecialStockCal purchase=calculationRepository.getTotalPurchase(frId,fromDate,toDate,itemId);
 		System.out.println("Total Purchase "+purchase);
 		
 		return purchase;
 	}
 
 	@Override
-	public int getTotalGrnGvn(int frId, String fromDate, String toDate, int itemId) {
+	public int getRegTotalGrnGvn(int frId, String fromDate, String toDate, int itemId) {
 		
-		int grnGvn=billHeaderRepository.getTotalGrnGvn(frId,fromDate,toDate,itemId);
+		int grnGvn=calculationRepository.getRegTotalGrnGvn(frId,fromDate,toDate,itemId);
 		System.out.println("Total Grn "+grnGvn);
 		
 		return grnGvn;
 	}
 
 	@Override
-	public int getTotalSell(int frId, String fromDate, String toDate, int itemId) {
+	public RegularSpecialStockCal getRegTotalSell(int frId, String fromDate, String toDate, int itemId) {
 		
-		int totalSell=billHeaderRepository.getTotalSell(frId,fromDate,toDate,itemId);
+		RegularSpecialStockCal totalSell=calculationRepository.getRegTotalSell(frId,fromDate,toDate,itemId);
 		System.out.println("Total Sell "+totalSell);
 		
 		return totalSell; 
 	}
 
 	@Override
-	public int getOpeningStock(int frId, int currentMonth, int itemId) {
-		int totalStock=0;
+	public PostFrItemStockDetail getOpeningStock(int frId, int currentMonth, int year, int itemId , int catId) {
+	
+		PostFrItemStockDetail stockDetail=new PostFrItemStockDetail();
 		try {
-		 totalStock = billHeaderRepository.getOpeningStock(frId, currentMonth, itemId);
+			stockDetail = stockDetailRepository.getOpeningStock(frId, currentMonth,  year,itemId , catId);
 		}catch (Exception e) {
+			
+			System.out.println("Get Opening Stock ServiceImpl Exception "+e.getMessage());
 		e.printStackTrace();
 			
 		}
-		 return totalStock;
+		 return stockDetail;
 	}
 
 	

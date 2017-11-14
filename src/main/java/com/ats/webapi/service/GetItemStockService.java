@@ -1,20 +1,24 @@
 package com.ats.webapi.service;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.data.repository.query.Param;
+
+import com.ats.webapi.model.PostFrItemStockDetail;
+import com.ats.webapi.model.RegularSpecialStockCal;
 
 public interface GetItemStockService {
 
 
-	int getTotalPurchase(@Param("frId") int frId, @Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("itemId") int itemId);
+	RegularSpecialStockCal getRegTotalPurchase(@Param("frId") int frId, @Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("itemId") int itemId);
 	
 
-	int getTotalGrnGvn( @Param("frId") int frId, @Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("itemId") int itemId);
+	int getRegTotalGrnGvn( @Param("frId") int frId, @Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("itemId") int itemId);
 	
-	int getTotalSell( @Param("frId") int frId, @Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("itemId") int itemId);
+	RegularSpecialStockCal getRegTotalSell( @Param("frId") int frId, @Param("fromDate") String fromDate, @Param("toDate") String toDate, @Param("itemId") int itemId);
 	
-	int getOpeningStock( @Param("frId") int frId, @Param("currentMonth") int currentMonth, @Param("itemId") int itemId);
+	PostFrItemStockDetail getOpeningStock( @Param("frId") int frId, @Param("currentMonth") int currentMonth, @Param("year") int year,@Param("itemId") int itemId , @Param("catId") int catId);
 
 
 }

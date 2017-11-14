@@ -19,11 +19,21 @@ public interface PostFrOpStockHeaderRepository extends JpaRepository<PostFrItemS
 	
 	@Transactional
 	@Modifying
-	@Query("UPDATE PostFrItemStockHeader SET isMonthClosed=1 WHERE openingStockHeaderId=:headerId")
-	int endMonth(@Param("headerId") int headerId);
+	@Query("UPDATE PostFrItemStockHeader SET isMonthClosed=1 WHERE openingStockHeaderId=:headerId ")
+	int endMonth(@Param("headerId") int headerId );
 	
 	//frId , from and to date
 	@Query(value="SELECT m_fr_opening_stock_header.*"
 			+ " from m_fr_opening_stock_header WHERE m_fr_opening_stock_header.fr_id =:frId AND m_fr_opening_stock_header.month=:month AND m_fr_opening_stock_header.year=:year ",nativeQuery=true)
 	PostFrItemStockHeader getFrHeader(@Param("frId")int frId, @Param("month")int month, @Param("year")int year );
+	
+	
+	
+	@Query(value = "SELECT m_fr_opening_stock_header.* FROM m_fr_opening_stock_header WHERE fr_id=:frId AND is_month_closed=0", nativeQuery = true)
+	PostFrItemStockHeader getRunningMonth(@Param("frId") int frId);
+
+	
+
+	
+	
 }

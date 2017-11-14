@@ -24,8 +24,12 @@ public class PostFrItemStockDetail {
 	@Column(name="item_id")
 	private int 	itemId;
 	
-	@Column(name="opening_stock")
-	private int openingStock;
+	@Column(name="reg_opening_stock")
+	private int regOpeningStock;
+	
+	@Column(name="sp_opening_stock")
+	private int spOpeningStock;
+	
 	
 	@Column(name="physical_stock")
 	private int physicalStock;
@@ -33,14 +37,20 @@ public class PostFrItemStockDetail {
 	@Column(name="stock_difference")
 	private int stockDifference;
 	
-	@Column(name="total_purchase")
-	private int totalPurchase;
+	@Column(name="reg_total_purchase")
+	private int regTotalPurchase;
 	
-	@Column(name="total_grn_gvn")
-	private int totalGrnGvn;
+	@Column(name="sp_total_purchase")
+	private int spTotalPurchase;
 	
-	@Column(name="total_sell")
-	private int totalSell;
+	@Column(name="reg_total_grn_gvn")
+	private int regTotalGrnGvn;
+	
+	@Column(name="reg_total_sell")
+	private int regTotalSell;
+	
+	@Column(name="sp_total_sell")
+	private int spTotalSell;
 	
 	@Column(name="remark")
 	private String remark;
@@ -74,13 +84,6 @@ public class PostFrItemStockDetail {
 		this.itemId = itemId;
 	}
 
-	public int getOpeningStock() {
-		return openingStock;
-	}
-
-	public void setOpeningStock(int openingStock) {
-		this.openingStock = openingStock;
-	}
 
 	public int getPhysicalStock() {
 		return physicalStock;
@@ -98,30 +101,7 @@ public class PostFrItemStockDetail {
 		this.stockDifference = stockDifference;
 	}
 
-	public int getTotalPurchase() {
-		return totalPurchase;
-	}
-
-	public void setTotalPurchase(int totalPurchase) {
-		this.totalPurchase = totalPurchase;
-	}
-
-	public int getTotalGrnGvn() {
-		return totalGrnGvn;
-	}
-
-	public void setTotalGrnGvn(int totalGrnGvn) {
-		this.totalGrnGvn = totalGrnGvn;
-	}
-
-	public int getTotalSell() {
-		return totalSell;
-	}
-
-	public void setTotalSell(int totalSell) {
-		this.totalSell = totalSell;
-	}
-
+	
 	public String getRemark() {
 		return remark;
 	}
@@ -138,21 +118,72 @@ public class PostFrItemStockDetail {
 		this.itemName = itemName;
 	}
 
+	public int getRegOpeningStock() {
+		return regOpeningStock;
+	}
+
+	public void setRegOpeningStock(int regOpeningStock) {
+		this.regOpeningStock = regOpeningStock;
+	}
+
+	public int getSpOpeningStock() {
+		return spOpeningStock;
+	}
+
+	public void setSpOpeningStock(int spOpeningStock) {
+		this.spOpeningStock = spOpeningStock;
+	}
+
+	public int getRegTotalPurchase() {
+		return regTotalPurchase;
+	}
+
+	public void setRegTotalPurchase(int regTotalPurchase) {
+		this.regTotalPurchase = regTotalPurchase;
+	}
+
+	public int getSpTotalPurchase() {
+		return spTotalPurchase;
+	}
+
+	public void setSpTotalPurchase(int spTotalPurchase) {
+		this.spTotalPurchase = spTotalPurchase;
+	}
+
+	public int getRegTotalGrnGvn() {
+		return regTotalGrnGvn;
+	}
+
+	public void setRegTotalGrnGvn(int regTotalGrnGvn) {
+		this.regTotalGrnGvn = regTotalGrnGvn;
+	}
+
+	public int getRegTotalSell() {
+		return regTotalSell;
+	}
+
+	public void setRegTotalSell(int regTotalSell) {
+		this.regTotalSell = regTotalSell;
+	}
+
+	public int getSpTotalSell() {
+		return spTotalSell;
+	}
+
+	public void setSpTotalSell(int spTotalSell) {
+		this.spTotalSell = spTotalSell;
+	}
+
 	@Override
 	public String toString() {
 		return "PostFrItemStockDetail [openingStockDetailId=" + openingStockDetailId + ", openingStockHeaderId="
-				+ openingStockHeaderId + ", itemId=" + itemId + ", openingStock=" + openingStock + ", physicalStock="
-				+ physicalStock + ", stockDifference=" + stockDifference + ", totalPurchase=" + totalPurchase
-				+ ", totalGrnGvn=" + totalGrnGvn + ", totalSell=" + totalSell + ", remark=" + remark + ", itemName="
-				+ itemName + "]";
+				+ openingStockHeaderId + ", itemId=" + itemId + ", regOpeningStock=" + regOpeningStock
+				+ ", spOpeningStock=" + spOpeningStock + ", physicalStock=" + physicalStock + ", stockDifference="
+				+ stockDifference + ", regTotalPurchase=" + regTotalPurchase + ", spTotalPurchase=" + spTotalPurchase
+				+ ", regTotalGrnGvn=" + regTotalGrnGvn + ", regTotalSell=" + regTotalSell + ", spTotalSell="
+				+ spTotalSell + ", remark=" + remark + ", itemName=" + itemName + "]";
 	}
 
 	
 	
-	
-	
-	
-	
-	
-
 }

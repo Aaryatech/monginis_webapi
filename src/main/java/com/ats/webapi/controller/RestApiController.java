@@ -399,44 +399,7 @@ public class RestApiController {
 	
 	
 
-	@RequestMapping(value = "/getCurrentStock", method = RequestMethod.POST)
-	public @ResponseBody List<GetCurrentStockDetails>  getCurrentStock(@RequestParam("frId") int frId, @RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("currentMonth") int currentMonth,
-			@RequestParam("itemIdList") List<Integer> itemIdList) {
-
-		System.out.println("inside rest getCurrentStock");
-		List<GetCurrentStockDetails> stockDetailsList=new ArrayList<GetCurrentStockDetails>();
-		
-		
-		List<Item> itemsList = itemService.findItemsByItemId(itemIdList);
-		for(int i=0;i<itemsList.size();i++) {
-			
-			int itemId=itemsList.get(i).getId();
-
-		int totalPurchase = getItemStockService.getTotalPurchase(frId, fromDate, toDate, itemId);
-
-		int totalGrnGvn = getItemStockService.getTotalGrnGvn(frId, fromDate, toDate, itemId);
-
-		int totalSell = getItemStockService.getTotalSell(frId, fromDate, toDate, itemId);
-
-		int openingBalance = getItemStockService.getOpeningStock(frId, currentMonth, itemId);
-		
-		
-		GetCurrentStockDetails getCurrentStockDetails=new GetCurrentStockDetails();
-		
-		getCurrentStockDetails.setOpeningBalance(openingBalance);
-		getCurrentStockDetails.setTotalGrnGvn(totalGrnGvn);
-		getCurrentStockDetails.setTotalPurchase(totalPurchase);
-		getCurrentStockDetails.setTotalSell(totalSell);
-		getCurrentStockDetails.setItemId(itemId);
-		getCurrentStockDetails.setItemName(itemsList.get(i).getItemName());
-		
-		stockDetailsList.add(getCurrentStockDetails);
-		}
-		
-		return stockDetailsList; 
-
-	}
+	
 	
 	
 	@RequestMapping(value = "/updateStoreGvn", method = RequestMethod.POST)

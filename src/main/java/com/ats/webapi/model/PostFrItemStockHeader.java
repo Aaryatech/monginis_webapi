@@ -35,15 +35,17 @@ public class PostFrItemStockHeader {
 	@Column(name="fr_id")
 	private int frId;
 	
+	@Column(name="cat_id")
+	private int catId;
+	
 	@Column(name="is_month_closed")
 	private int isMonthClosed;
 
 	@Transient
 	private List<PostFrItemStockDetail>postFrItemStockDetailList;
 	
- 	
-	
 
+	
 	public int getOpeningStockHeaderId() {
 		return openingStockHeaderId;
 	}
@@ -107,18 +109,21 @@ public class PostFrItemStockHeader {
 	public void setPostFrItemStockDetailList(List<PostFrItemStockDetail> postFrItemStockDetailList) {
 		this.postFrItemStockDetailList = postFrItemStockDetailList;
 	}
-	
-	
+
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
 
 	@Override
 	public String toString() {
 		return "PostFrItemStockHeader [openingStockHeaderId=" + openingStockHeaderId + ", month=" + month + ", year="
-				+ year + ", fromDate=" + fromDate + ", toDate=" + toDate + ", frId=" + frId + ", isMonthClosed="
-				+ isMonthClosed + ", postFrItemStockDetailList=" + postFrItemStockDetailList + "]";
+				+ year + ", fromDate=" + fromDate + ", toDate=" + toDate + ", frId=" + frId + ", catId=" + catId
+				+ ", isMonthClosed=" + isMonthClosed + ", postFrItemStockDetailList=" + postFrItemStockDetailList + "]";
 	}
-	
-	
-	
-	
+
 	
 }
