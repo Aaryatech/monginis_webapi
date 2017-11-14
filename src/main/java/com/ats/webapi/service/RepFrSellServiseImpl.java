@@ -7,10 +7,12 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
 import com.ats.webapi.model.report.GetRepItemwiseSell;
+import com.ats.webapi.model.report.GetRepMenuwiseSell;
 import com.ats.webapi.model.report.GetRepMonthwiseSell;
 import com.ats.webapi.model.report.GetRepTaxSell;
 import com.ats.webapi.repository.RepFrDatewiseSellRepository;
 import com.ats.webapi.repository.RepFrItemwiseSellRepository;
+import com.ats.webapi.repository.RepFrMenuwiseSellRepository;
 import com.ats.webapi.repository.RepFrMonthwiseSellRepository;
 import com.ats.webapi.repository.RepTaxSellRepository;
 
@@ -25,6 +27,10 @@ public class RepFrSellServiseImpl implements RepFrSellServise{
 	RepFrItemwiseSellRepository repFrItemwiseSellRepository;
 	@Autowired
 	RepTaxSellRepository repTaxSellRepository;
+	
+	@Autowired
+	RepFrMenuwiseSellRepository repFrMenuwiseSellRepository;
+	
 	@Override
 	public List<GetRepFrDatewiseSell> getDatewiseSellReport(String fromDate, String toDate,  List<String> frId) {
 		
@@ -49,7 +55,7 @@ List<GetRepItemwiseSell> getRepItemwiseSellList=repFrItemwiseSellRepository.getR
 	@Override
 	public List<GetRepItemwiseSell> getDateItemwiseSellReport(String fromDate, String toDate, List<String> frId,
 			List<String> catId) {
-List<GetRepItemwiseSell> getRepItemwiseSellList=repFrItemwiseSellRepository.getRepFrDateItemwiseSell(fromDate, toDate, frId, catId);
+		List<GetRepItemwiseSell> getRepItemwiseSellList=repFrItemwiseSellRepository.getRepFrDateItemwiseSell(fromDate, toDate, frId, catId);
 		
 		return getRepItemwiseSellList;
 	}
@@ -72,7 +78,21 @@ List<GetRepItemwiseSell> getRepItemwiseSellList=repFrItemwiseSellRepository.getR
 		
 		return getRepTaxSellList;
 	}
+	@Override
+	public List<GetRepMenuwiseSell> getMenuwiseSellReport(String fromDate, String toDate, List<String> frId) {
+		List<GetRepMenuwiseSell> getRepMenuwiseSellList=repFrMenuwiseSellRepository.getRepFrMenuwiseSell(fromDate, toDate, frId);
+		
+		return getRepMenuwiseSellList;
+	 
 
-	
+	}
+	@Override
+	public List<GetRepItemwiseSell> getDateCatwiseSellReport(String fromDate, String toDate, List<String> frId,
+			List<String> catId) {
+List<GetRepItemwiseSell> getRepCatwiseSellList=repFrItemwiseSellRepository.getRepFrDateCatwiseSell(fromDate, toDate, frId, catId);
+		
+		return getRepCatwiseSellList;
+	}
+ 
 
 }

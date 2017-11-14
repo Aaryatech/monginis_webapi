@@ -17,6 +17,7 @@ import com.ats.webapi.model.ItemWiseReportList;
 import com.ats.webapi.model.MonthWiseReportList;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
 import com.ats.webapi.model.report.GetRepItemwiseSell;
+import com.ats.webapi.model.report.GetRepMenuwiseSell;
 import com.ats.webapi.model.report.GetRepMonthwiseSell;
 import com.ats.webapi.model.report.GetRepTaxSell;
 import com.ats.webapi.service.RepFrSellServise;
@@ -121,6 +122,17 @@ public class ReportsController {
 		
 	}
 	
+	@RequestMapping(value = "/getRepMenuwiseSell", method = RequestMethod.POST)
+	public @ResponseBody List<GetRepMenuwiseSell> getRepMenuwiseSell(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("frId") List<String> frId) {
+		
+		fromDate = Common.convertToYMD(fromDate);
+		toDate = Common.convertToYMD(toDate);
+		List<GetRepMenuwiseSell> getRepMenuwiseSellList=repFrSellServise.getMenuwiseSellReport(fromDate, toDate, frId );
+		return getRepMenuwiseSellList;
+		
+	}
+	
 	@RequestMapping(value = "/getRepDateItemwiseSell", method = RequestMethod.POST)
 	public @ResponseBody List<GetRepItemwiseSell> getRepDateItemwiseSell(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("frId") List<String> frId, @RequestParam("catId") List<String> catId) {
@@ -128,6 +140,17 @@ public class ReportsController {
 		fromDate = Common.convertToYMD(fromDate);
 		toDate = Common.convertToYMD(toDate);
 		List<GetRepItemwiseSell> getRepItemwiseSellList=repFrSellServise.getDateItemwiseSellReport(fromDate, toDate, frId, catId);
+		return getRepItemwiseSellList;
+		
+	}
+	
+	@RequestMapping(value = "/getRepDateCatwiseSell", method = RequestMethod.POST)
+	public @ResponseBody List<GetRepItemwiseSell> getRepDateCatwiseSell(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("frId") List<String> frId, @RequestParam("catId") List<String> catId) {
+		
+		fromDate = Common.convertToYMD(fromDate);
+		toDate = Common.convertToYMD(toDate);
+		List<GetRepItemwiseSell> getRepItemwiseSellList=repFrSellServise.getDateCatwiseSellReport(fromDate, toDate, frId, catId);
 		return getRepItemwiseSellList;
 		
 	}
