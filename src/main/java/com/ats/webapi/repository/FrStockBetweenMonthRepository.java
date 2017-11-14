@@ -18,5 +18,5 @@ public interface FrStockBetweenMonthRepository extends JpaRepository<GetCurrentS
 			+ " opening_stock_header_id IN(SELECT opening_stock_header_id FROM m_fr_opening_stock_header WHERE  month BETWEEN :fromMonth AND :toMonth AND fr_id=:frId ) AND m_fr_opening_stock_detail.item_id IN(:itemIdList) GROUP BY item_id", nativeQuery = true)
 	List<GetCurrentStockDetails> getStockBetweenMonths(@Param("frId") int frId,@Param("fromMonth") int fromMonth,@Param("toMonth") int toMonth, @Param("itemIdList") List<Integer> itemIdList);
 
-	
+	 
 } 
