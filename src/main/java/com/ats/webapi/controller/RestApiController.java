@@ -3195,7 +3195,7 @@ public class RestApiController {
 			String pDate = "";
 
 			// bDate= inSDF.parse(date);
-			// pDate = outSDF.format(bDate);
+			// pDate = outSDF.format(bDate); 
 			// dDate=outSDF.parse(pDate);
 			//
 			java.util.Date tempDate = inSDF.parse(date);
@@ -3283,37 +3283,7 @@ public class RestApiController {
 
 	// ganesh 25-10-2017
 
-	@RequestMapping(value = { "/postFrOpStock" }, method = RequestMethod.POST)
-
-	public @ResponseBody Info postFrOpStock(@RequestBody PostFrItemStockHeader postFrItemStockHeader)
-			throws ParseException, JsonParseException, JsonMappingException, IOException {
-
-		System.out.println("Data Common " + postFrItemStockHeader.toString());
-
-		List<PostFrItemStockHeader> jsonBillHeader;
-
-		jsonBillHeader = postFrOpStockService.saveFrOpStockHeader(postFrItemStockHeader);
-
-		Info info = new Info();
-
-		if (jsonBillHeader.size() > 0) {
-
-			info.setError(false);
-			info.setMessage("post Fr Stock header inserted  Successfully");
-
-		}
-
-		else {
-
-			info.setError(true);
-			info.setMessage("Error in post Fr Stock header insertion : RestApi");
-
-		}
-
-		return info;
-
-	}
-
+	
 	// Ganesh 26-10-2017
 
 	@RequestMapping(value = "/getFrGvnDetails", method = RequestMethod.POST)
@@ -3377,68 +3347,8 @@ public class RestApiController {
 	}
 	
 	//31-10-2017
-	@RequestMapping(value = { "/updateEndMonth" }, method = RequestMethod.POST)
-
-	public @ResponseBody Info updateEndMonth(@RequestBody PostFrItemStockHeader postFrItemStockHeader)
-		//	throws ParseException, JsonParseException, JsonMappingException, IOException 
-	{
-
-		System.out.println("Data  " + postFrItemStockHeader.toString());
-
 		
-		int a = postFrOpStockService.updateEndMonth(postFrItemStockHeader);
-
-		Info info = new Info();
-
-		if (a > 0) {
-
-			info.setError(false);
-			info.setMessage("End Month  Successfully");
-
-		}
-
-		else {
-
-			info.setError(true);
-			info.setMessage("End Month Unsuccessfull : RestApi");
-
-		}
-
-		return info;
-
-	}
 	
-	@RequestMapping(value = { "/getPostFrOpStock" }, method = RequestMethod.POST)
-
-	public @ResponseBody PostFrItemStockHeader getPostFrOpStock(@RequestParam("month") int month,
-			@RequestParam("year") int year, @RequestParam("frId") int frId )
-			throws ParseException, JsonParseException, JsonMappingException, IOException {
-
-		
-		PostFrItemStockHeader postFrItemStockHeader;
-
-		postFrItemStockHeader = postFrOpStockService.getFrOpStockHeader(frId, month, year);
-		System.out.println("Data Common " + postFrItemStockHeader.toString());
-
-		Info info = new Info();
-
-		if (postFrItemStockHeader.toString()!=null) {
-
-			info.setError(false);
-			info.setMessage("post Fr Stock header inserted  Successfully");
-
-		}
-
-		else {
-
-			info.setError(true);
-			info.setMessage("Error in post Fr Stock header insertion : RestApi");
-
-		}
-
-		return postFrItemStockHeader;
-
-	}
 	
 	@RequestMapping(value = { "/placePushDumpOrder" }, method = RequestMethod.POST)
 
