@@ -501,12 +501,23 @@ public class RestApiController {
 	@RequestMapping(value = "/getGrnDetail", method = RequestMethod.POST)
 	public @ResponseBody GetGrnGvnDetailsList getGrnGvnDetailService(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
+		GetGrnGvnDetailsList grnDetailList=null;
+		try {
 		System.out.println("inside rest");
 
 		fromDate = Common.convertToYMD(fromDate);
 		toDate = Common.convertToYMD(toDate);
 
-		GetGrnGvnDetailsList grnDetailList = getGrnGvnDetailService.getGrnDetails(fromDate, toDate);
+		 grnDetailList = getGrnGvnDetailService.getGrnDetails(fromDate, toDate);
+		 
+		 System.out.println("list is "+grnDetailList.toString());
+		 
+		}catch (Exception e) {
+		
+			System.out.println("get grn detail rest  error "+e.getMessage());
+		
+			e.printStackTrace();
+		}
 
 		return grnDetailList;
 
@@ -514,9 +525,22 @@ public class RestApiController {
 
 	@RequestMapping(value = "/getGvnItemConfig", method = RequestMethod.POST)
 	public @ResponseBody GetGrnItemConfigList getGvnItemConfig(@RequestParam("billNo") int billNo) {
-		System.out.println("inside rest");
+		GetGrnItemConfigList gvnItemConfigList=null;
+		try {
+		
 
-		GetGrnItemConfigList gvnItemConfigList = getGrnItemConfigService.getGvnItemConfig(billNo);
+		 gvnItemConfigList = getGrnItemConfigService.getGvnItemConfig(billNo);
+		 
+		 System.out.println("List getGvnItemConfig "+gvnItemConfigList.toString());
+		}
+		catch (Exception e) {
+			System.out.println("inside rest: getGvnItemConfig  Error "+e.getMessage());
+			
+			
+			e.printStackTrace();
+
+			
+		}
 
 		return gvnItemConfigList;
 
