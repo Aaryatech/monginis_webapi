@@ -113,6 +113,7 @@ import com.ats.webapi.model.SpecialCake;
 import com.ats.webapi.model.SpecialCakeList;
 import com.ats.webapi.model.StockDetails;
 import com.ats.webapi.model.SubCategory;
+import com.ats.webapi.model.UpdateBillStatus;
 import com.ats.webapi.model.User;
 import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
@@ -3346,5 +3347,37 @@ public class RestApiController {
 		public @ResponseBody AllMenuJsonResponse findMenuByCat(@RequestParam("catId") int catId) {
 			AllMenuJsonResponse menus = menuService.findMenuByCat(catId);
 			return menus;
+		}
+		
+		@RequestMapping(value = { "/updateBillStatus" }, method = RequestMethod.POST)
+
+		public @ResponseBody Info updateBillStatus(@RequestBody UpdateBillStatus updateBillStatus)
+			//	throws ParseException, JsonParseException, JsonMappingException, IOException 
+		{
+
+			System.out.println("Data  " + updateBillStatus.toString());
+			String date=updateBillStatus.getBillDate();
+			
+			updateBillStatus.setBillDate(Common.convertToYMD(date));
+			UpdateBillStatus updateBillStatusRes = getBillHeaderService.updateBillStatus(updateBillStatus);
+
+			Info info = new Info();
+
+			if (updateBillStatusRes.getBillDate()!=null) {
+
+				info.setError(false);
+				info.setMessage("Update   Successfully");
+
+			}
+
+			else {
+
+				info.setError(true);
+				info.setMessage("update Unsuccessfull : RestApi");
+
+			}
+
+			return info;
+
 		}
 }

@@ -8,13 +8,18 @@ import org.springframework.stereotype.Service;
 import com.ats.webapi.model.GetBillHeader;
 import com.ats.webapi.model.GetBillHeaderList;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.UpdateBillStatus;
 import com.ats.webapi.repository.GetBillHeaderRepository;
+import com.ats.webapi.repository.UpdateBillStatusRepository;
 
 @Service
 public class GetBillHeaderServiceImpl implements GetBillHeaderService {
 	
 	@Autowired
 	GetBillHeaderRepository getBillHeaderRepository;
+	
+	@Autowired
+	UpdateBillStatusRepository updateBillStatusRepository;
 
 	@Override
 	public GetBillHeaderList getBillHeader(List<String> frId, String fromDate, String toDate) {
@@ -75,5 +80,15 @@ GetBillHeaderList getBillHeaderList=new GetBillHeaderList();
 		return getBillHeaderList;
 		
 	}
+
+	@Override
+	public UpdateBillStatus updateBillStatus(UpdateBillStatus updateBillStatus) {
+		
+		UpdateBillStatus updateBillStatusRes=updateBillStatusRepository.save(updateBillStatus);
+		
+		return updateBillStatusRes;
+	}
+
+	 
 
 }

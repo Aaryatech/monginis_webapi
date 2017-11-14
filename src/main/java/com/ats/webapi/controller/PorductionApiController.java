@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
+import com.ats.webapi.model.GetBillHeader;
 import com.ats.webapi.model.GetOrderItemQty;
 import com.ats.webapi.model.GetProductionDetail;
 import com.ats.webapi.model.GetRegSpCakeOrderQty;
@@ -23,10 +24,12 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.PostProductionDetail;
 import com.ats.webapi.model.PostProductionHeader;
+import com.ats.webapi.model.UpdateBillStatus;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
 import com.ats.webapi.model.report.GetRepItemwiseSell;
 import com.ats.webapi.model.report.GetRepMonthwiseSell;
 import com.ats.webapi.model.report.GetRepTaxSell;
+import com.ats.webapi.service.GetBillHeaderService;
 import com.ats.webapi.service.GetOrderItemQtyService;
 import com.ats.webapi.service.ProductionService;
 import com.ats.webapi.service.RepFrSellServise;
@@ -41,6 +44,8 @@ public class PorductionApiController {
 	
 	@Autowired
 	private ProductionService productionService;
+	
+ 
 	
 	@Autowired
 	RepFrSellServise repFrSellServise;
@@ -205,6 +210,6 @@ System.out.println(productionDate);
 
 	}
 	
-	
+	 
 	
 }
