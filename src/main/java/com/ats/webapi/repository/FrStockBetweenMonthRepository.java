@@ -19,4 +19,4 @@ public interface FrStockBetweenMonthRepository extends JpaRepository<GetCurrentS
 	List<GetCurrentStockDetails> getStockBetweenMonths(@Param("frId") int frId,@Param("fromMonth") int fromMonth,@Param("toMonth") int toMonth, @Param("itemIdList") List<Integer> itemIdList);
 
 	
-}
+} 
