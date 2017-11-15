@@ -24,6 +24,8 @@ public class PostFrItemStockDetail {
 	@Column(name="item_id")
 	private int 	itemId;
 	
+	
+	
 	@Column(name="reg_opening_stock")
 	private int regOpeningStock;
 	
