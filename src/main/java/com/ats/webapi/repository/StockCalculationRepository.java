@@ -13,7 +13,7 @@ public interface StockCalculationRepository extends JpaRepository<RegularSpecial
 	
 	@Query(value = "SELECT  COALESCE(SUM(CASE WHEN grn_type != 3 THEN bill_qty ELSE 0 END),0) as reg , COALESCE(SUM(CASE WHEN grn_type = 3 THEN bill_qty ELSE 0 END),0) as sp  "
 			+ "  FROM t_bill_detail WHERE t_bill_detail.item_id=:itemId AND t_bill_detail.bill_no"
-			+ " IN(SELECT t_bill_header.bill_no FROM t_bill_header WHERE t_bill_header.fr_id=:frId  AND t_bill_header.status =1  AND t_bill_header.bill_date BETWEEN :fromDate AND :toDate )", nativeQuery = true)
+			+ " IN(SELECT t_bill_header.bill_no FROM t_bill_header WHERE t_bill_header.fr_id=:frId  AND t_bill_header.status =2  AND t_bill_header.bill_date BETWEEN :fromDate AND :toDate )", nativeQuery = true)
 	RegularSpecialStockCal getTotalPurchase(@Param("frId") int frId, @Param("fromDate") String fromDate,
 			@Param("toDate") String toDate, @Param("itemId") int itemId);
 

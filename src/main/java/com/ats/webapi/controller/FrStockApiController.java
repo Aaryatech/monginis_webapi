@@ -179,7 +179,7 @@ public class FrStockApiController {
 	
 	
 	@RequestMapping(value = "/getRunningMonth", method = RequestMethod.POST)
-	public @ResponseBody PostFrItemStockHeader  getRunningMonth(@RequestParam("frId") int frId) {
+	public @ResponseBody PostFrItemStockHeader  getRunningMonth(@RequestParam("frId") int frId ) {
 
 		System.out.println("inside rest getRunningMonth");
 		

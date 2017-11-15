@@ -29,7 +29,7 @@ public interface PostFrOpStockHeaderRepository extends JpaRepository<PostFrItemS
 	
 	
 	
-	@Query(value = "SELECT m_fr_opening_stock_header.* FROM m_fr_opening_stock_header WHERE fr_id=:frId AND is_month_closed=0", nativeQuery = true)
+	@Query(value = "SELECT m_fr_opening_stock_header.* FROM m_fr_opening_stock_header WHERE fr_id=:frId AND is_month_closed=0 LIMIT 1", nativeQuery = true)
 	PostFrItemStockHeader getRunningMonth(@Param("frId") int frId);
 
 	
