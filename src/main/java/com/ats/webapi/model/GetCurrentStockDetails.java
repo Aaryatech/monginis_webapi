@@ -59,7 +59,8 @@ public class GetCurrentStockDetails {
 	@Transient
 	private int currentSpStock;
 	
-	
+	@Transient
+	private int id;
 	
 	
 	@PostLoad
@@ -245,6 +246,17 @@ public class GetCurrentStockDetails {
 		this.currentSpStock = currentSpStock;
 	}
 
+	
+
+	public int getId() {
+		return id;
+	}
+
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 
 	@Override
 	public String toString() {
@@ -253,9 +265,10 @@ public class GetCurrentStockDetails {
 				+ ", regTotalPurchase=" + regTotalPurchase + ", spTotalPurchase=" + spTotalPurchase
 				+ ", regTotalGrnGvn=" + regTotalGrnGvn + ", regTotalSell=" + regTotalSell + ", spTotalSell="
 				+ spTotalSell + ", stockHeaderId=" + stockHeaderId + ", currentRegStock=" + currentRegStock
-				+ ", currentSpStock=" + currentSpStock + "]";
+				+ ", currentSpStock=" + currentSpStock + ", id=" + id + "]";
 	}
-	
 
+
+	
 
 }

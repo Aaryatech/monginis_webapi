@@ -114,6 +114,7 @@ public class FrStockApiController {
 		getCurrentStockDetails.setSpTotalPurchase(totalRegPurchase.getSp());
 		getCurrentStockDetails.setRegTotalSell(totalRegSell.getReg());
 		getCurrentStockDetails.setSpTotalSell(totalRegSell.getSp());
+		getCurrentStockDetails.setId(postFrItemStockDetail.getItemId());
 		getCurrentStockDetails.setItemId( Integer.parseInt(itemsList.get(i).getItemId()) );
 		getCurrentStockDetails.setItemName(itemsList.get(i).getItemName());
 		getCurrentStockDetails.setCurrentRegStock((postFrItemStockDetail.getRegOpeningStock()+totalRegPurchase.getReg()) - (totalRegGrnGvn+totalRegSell.getReg()));
