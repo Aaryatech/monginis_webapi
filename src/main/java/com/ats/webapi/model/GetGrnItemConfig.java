@@ -8,6 +8,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostLoad;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -26,6 +28,9 @@ public class GetGrnItemConfig implements Serializable {
 	@Column(name="fr_id")
 	private int  frId;
 	
+	//new grnQty
+	@Transient
+	private int autoGrnQty;
 	
 
 	@Column(name="item_name")
@@ -72,7 +77,12 @@ public class GetGrnItemConfig implements Serializable {
 	@Column(name="invoice_no")
 	private String invoiceNo;
 	
-	
+	@PostLoad
+	public void onLoad() {
+		
+		this.autoGrnQty=0;
+		
+	}
 	
 	public String getInvoiceNo() {
 		return invoiceNo;
@@ -202,16 +212,26 @@ public class GetGrnItemConfig implements Serializable {
 		this.igstPer = igstPer;
 	}
 
+	public int getAutoGrnQty() {
+		return autoGrnQty;
+	}
+
+	public void setAutoGrnQty(int autoGrnQty) {
+		this.autoGrnQty = autoGrnQty;
+	}
+
 	@Override
 	public String toString() {
 		return "GetGrnItemConfig [billDetailNo=" + billDetailNo + ", itemId=" + itemId + ", frId=" + frId
-				+ ", itemName=" + itemName + ", grnType=" + grnType + ", billNo=" + billNo + ", rate=" + rate
-				+ ", billDate=" + billDate + ", mrp=" + mrp + ", billQty=" + billQty + ", sgstPer=" + sgstPer
-				+ ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", menuId=" + menuId + ", catId=" + catId
-				+ ", invoiceNo=" + invoiceNo + "]";
+				+ ", autoGrnQty=" + autoGrnQty + ", itemName=" + itemName + ", grnType=" + grnType + ", billNo="
+				+ billNo + ", rate=" + rate + ", billDate=" + billDate + ", mrp=" + mrp + ", billQty=" + billQty
+				+ ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", menuId=" + menuId
+				+ ", catId=" + catId + ", invoiceNo=" + invoiceNo + "]";
 	}
+	
+	
+	
 
-		
 	
 
 }

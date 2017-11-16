@@ -9,10 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 
 @Entity
+
 public class GetGrnGvnForCreditNote implements Serializable {
 	
 	
@@ -168,11 +170,12 @@ public class GetGrnGvnForCreditNote implements Serializable {
 	@Column(name = "ref_invoice_date")
 	private Date refInvoiceDate;
 	
-	
-	
+	 
 	
 	
 
+
+	
 
 	public int getMenuId() {
 		return menuId;
@@ -630,13 +633,11 @@ public class GetGrnGvnForCreditNote implements Serializable {
 				+ ", delStatus=" + delStatus + ", grnGvnQtyAuto=" + grnGvnQtyAuto + ", isTallySync=" + isTallySync
 				+ ", baseRate=" + baseRate + ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer
 				+ ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt="
-				+ finalAmt + ", itemName=" + itemName + ", frName=" + frName + ", isCreditNote=" + isCreditNote + "]";
+				+ finalAmt + ", itemName=" + itemName + ", frName=" + frName + ", isCreditNote=" + isCreditNote
+				+ ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo=" + invoiceNo + ", refInvoiceDate="
+				+ refInvoiceDate + "]";
 	}
 
 
 	
-	
-	
-	
-
 }

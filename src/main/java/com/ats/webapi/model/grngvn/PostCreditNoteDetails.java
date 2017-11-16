@@ -101,7 +101,7 @@ public class PostCreditNoteDetails implements Serializable {
 		@Column(name = "ref_invoice_no")
 		private String  refInvoiceNo;
 		
-	
+		
 
 	public int getBillNo() {
 		return billNo;
