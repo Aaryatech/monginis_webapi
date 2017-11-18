@@ -5,16 +5,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.model.report.GetCustBillTax;
+import com.ats.webapi.model.report.GetCustomerBill;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
 import com.ats.webapi.model.report.GetRepItemwiseSell;
 import com.ats.webapi.model.report.GetRepMenuwiseSell;
 import com.ats.webapi.model.report.GetRepMonthwiseSell;
 import com.ats.webapi.model.report.GetRepTaxSell;
+import com.ats.webapi.repository.GetCustBillTaxRepository;
+import com.ats.webapi.repository.GetCustomerBillRepository;
 import com.ats.webapi.repository.RepFrDatewiseSellRepository;
 import com.ats.webapi.repository.RepFrItemwiseSellRepository;
 import com.ats.webapi.repository.RepFrMenuwiseSellRepository;
 import com.ats.webapi.repository.RepFrMonthwiseSellRepository;
 import com.ats.webapi.repository.RepTaxSellRepository;
+ 
 
 @Service
 public class RepFrSellServiseImpl implements RepFrSellServise{
@@ -30,7 +35,12 @@ public class RepFrSellServiseImpl implements RepFrSellServise{
 	
 	@Autowired
 	RepFrMenuwiseSellRepository repFrMenuwiseSellRepository;
+
+	@Autowired
+	GetCustomerBillRepository getCustomerBillRepository;
 	
+	@Autowired
+	GetCustBillTaxRepository getCustBillTaxRepository;
 	@Override
 	public List<GetRepFrDatewiseSell> getDatewiseSellReport(String fromDate, String toDate,  List<String> frId) {
 		
@@ -92,6 +102,21 @@ List<GetRepItemwiseSell> getRepItemwiseSellList=repFrItemwiseSellRepository.getR
 List<GetRepItemwiseSell> getRepCatwiseSellList=repFrItemwiseSellRepository.getRepFrDateCatwiseSell(fromDate, toDate, frId, catId);
 		
 		return getRepCatwiseSellList;
+	}
+	@Override
+	public List<GetCustomerBill> getCustBill(int billNo) {
+		List<GetCustomerBill> getCustomerBillList=getCustomerBillRepository.getCustBill(billNo);
+		
+		
+		
+		
+		return getCustomerBillList;
+	}
+	@Override
+	public List<GetCustBillTax> getCustBillTax(int billNo) {
+		
+		List<GetCustBillTax> getCustBillTaxList=getCustBillTaxRepository.getCustBill(billNo);
+		return getCustBillTaxList;
 	}
  
 

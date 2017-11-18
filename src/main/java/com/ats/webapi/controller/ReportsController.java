@@ -15,6 +15,8 @@ import com.ats.webapi.model.BillWiseTaxReportList;
 import com.ats.webapi.model.ItemWiseDetailList;
 import com.ats.webapi.model.ItemWiseReportList;
 import com.ats.webapi.model.MonthWiseReportList;
+import com.ats.webapi.model.report.GetCustBillTax;
+import com.ats.webapi.model.report.GetCustomerBill;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
 import com.ats.webapi.model.report.GetRepItemwiseSell;
 import com.ats.webapi.model.report.GetRepMenuwiseSell;
@@ -192,6 +194,27 @@ public class ReportsController {
 	}
 	
 	//Sell Report End-------------------------------------------------------------------
+	
+	//customer bill-----------------------
+	
+	@RequestMapping(value = "/getCustomerBill", method = RequestMethod.POST)
+	public @ResponseBody List<GetCustomerBill> getCustomerBill(@RequestParam("billNo") int billNo) {
+		
+		
+		List<GetCustomerBill> getCustomerBillList=repFrSellServise.getCustBill(billNo);
+		System.out.println("  List  :" +getCustomerBillList);
+		return getCustomerBillList;
+		
+	}
+	@RequestMapping(value = "/getCustomerBillTax", method = RequestMethod.POST)
+	public @ResponseBody List<GetCustBillTax> getCustomerBillTax(@RequestParam("billNo") int billNo) {
+		
+		
+		List<GetCustBillTax> getCustBillTaxList=repFrSellServise.getCustBillTax(billNo);
+		System.out.println("  List  :" +getCustBillTaxList);
+		return getCustBillTaxList;
+		
+	}
 }
 	
 

@@ -811,7 +811,7 @@ public class RestApiController {
 
 	@RequestMapping(value = { "/insertSellBillData" }, method = RequestMethod.POST)
 
-	public @ResponseBody Info sellBillData(@RequestBody SellBillDataCommon sellBillDataCommon)
+	public @ResponseBody List<SellBillHeader> sellBillData(@RequestBody SellBillDataCommon sellBillDataCommon)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
 
 		System.out.println("Data Common " + sellBillDataCommon.toString());
@@ -829,17 +829,17 @@ public class RestApiController {
 
 			info.setError(false);
 			info.setMessage("Sell bill header inserted  Successfully");
-
+			System.out.println("Response : "+info.toString());
 		}
 
 		else {
 
 			info.setError(true);
 			info.setMessage("Error in Sell bill header insertion : RestApi");
-
+			System.out.println("Response : "+info.toString());
 		}
 
-		return info;
+		return jsonSellBillHeader;
 
 	}
 
