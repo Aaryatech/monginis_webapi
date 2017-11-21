@@ -1,20 +1,13 @@
 package com.ats.webapi.model;
 
-import java.io.Serializable;
-import java.util.List;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
-@Table(name ="t_sell_bill_detail")
-public class SellBillDetail implements Serializable{
-
+public class SellBillDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,7 +23,9 @@ public class SellBillDetail implements Serializable{
 	@Column(name="item_id")
 	private int itemId;
 	
-
+	@Column(name="item_name")
+	private String itemName;
+	
 	@Column(name="mrp")
 	private float mrp;
 	
@@ -73,24 +68,12 @@ public class SellBillDetail implements Serializable{
 	@Column(name="del_status")
 	private int delStatus;
 
-	@Column(name="bill_stock_type")
-	private int billStockType;
-	
 	public int getSellBillDetailNo() {
 		return sellBillDetailNo;
 	}
 
 	public void setSellBillDetailNo(int sellBillDetailNo) {
 		this.sellBillDetailNo = sellBillDetailNo;
-	}
-    
-	
-	public int getBillStockType() {
-		return billStockType;
-	}
-
-	public void setBillStockType(int billStockType) {
-		this.billStockType = billStockType;
 	}
 
 	public int getSellBillNo() {
@@ -115,6 +98,14 @@ public class SellBillDetail implements Serializable{
 
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
 	}
 
 	public float getMrp() {
@@ -229,14 +220,6 @@ public class SellBillDetail implements Serializable{
 		this.delStatus = delStatus;
 	}
 
-	@Override
-	public String toString() {
-		return "SellBillDetail [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo + ", catId="
-				+ catId + ", itemId=" + itemId + ", mrp=" + mrp + ", qty=" + qty + ", mrpBaseRate=" + mrpBaseRate
-				+ ", taxableAmt=" + taxableAmt + ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer
-				+ ", cgstRs=" + cgstRs + ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", totalTax=" + totalTax
-				+ ", grandTotal=" + grandTotal + ", remark=" + remark + ", delStatus=" + delStatus + "]";
-	}
 	
 	
 }

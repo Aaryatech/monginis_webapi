@@ -21,7 +21,7 @@ public class GetCurrentStockDetails {
 	
 
 	@Column(name = "item_id")
-	private int itemId;
+	private String itemId;
 
 	@Column(name = "item_name")
 	private String itemName;
@@ -81,18 +81,14 @@ public class GetCurrentStockDetails {
 	}
 
 
-	public int getItemId() {
+	public String getItemId() {
 		return itemId;
 	}
 
 
-
-
-	public void setItemId(int itemId) {
+	public void setItemId(String itemId) {
 		this.itemId = itemId;
 	}
-
-
 
 
 	public String getItemName() {

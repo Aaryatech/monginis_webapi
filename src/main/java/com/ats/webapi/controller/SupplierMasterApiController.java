@@ -12,8 +12,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.SupplierMaster.SupPaymentTerms;
+import com.ats.webapi.model.SupplierMaster.SupPaymentTermsList;
 import com.ats.webapi.model.SupplierMaster.SupplierDetails;
+import com.ats.webapi.model.SupplierMaster.Transporter;
+import com.ats.webapi.model.SupplierMaster.TransporterList;
+import com.ats.webapi.model.rawmaterial.RmItemCatList;
+import com.ats.webapi.model.rawmaterial.RmItemCategory;
 import com.ats.webapi.service.SuppilerMasterService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -101,4 +108,55 @@ public class SupplierMasterApiController {
 		return info;
 		
 	}
+	
+	//----------------------Get Data Of Transporter---------------
+	@RequestMapping(value = { "/showTransporters" }, method = RequestMethod.GET)
+	public @ResponseBody TransporterList showAllTransporter() {
+
+		TransporterList transporterList=suppilerMasterService.showAllTransporter();
+			    
+		return transporterList;
+	}
+	//-------------------------END---------------------------------------------------
+		
+	//----------------------Get Data Of Transporter---------------
+	@RequestMapping(value = { "/showPaymentTerms" }, method = RequestMethod.GET)
+	public @ResponseBody SupPaymentTermsList showPaymentTerms() {
+
+		SupPaymentTermsList supPaymentTermsList=suppilerMasterService.showPaymentTerms();
+					    
+		return supPaymentTermsList;
+	}
+	//-------------------------END---------------------------------------------------
+				
+	//----------------------Save Transporter---------------
+		@RequestMapping(value = { "/saveTransporter" }, method = RequestMethod.POST)
+		public @ResponseBody ErrorMessage saveTransporter(@RequestBody Transporter transporter)
+		{
+			
+			ErrorMessage errorMessage=suppilerMasterService.saveTransporter(transporter);
+			
+			return errorMessage;
+		}
+		//--------------------------END--------------------------------------------------
+		//----------------------Save Transporter---------------
+		@RequestMapping(value = { "/saveSupPaymenTerms" }, method = RequestMethod.POST)
+		public @ResponseBody ErrorMessage saveSupPaymentTerms(@RequestBody SupPaymentTerms supPaymentTerms)
+		{
+			
+			ErrorMessage errorMessage=suppilerMasterService.saveSupPaymentTerms(supPaymentTerms);
+			
+			return errorMessage;
+		}
+		//--------------------------END--------------------------------------------------
+		//--------------------------END--------------------------------------------------
+		@RequestMapping(value = { "/deleteTransporter" }, method = RequestMethod.POST)
+		public @ResponseBody ErrorMessage deleteTransporter(@RequestParam("tranId")int tranId)
+		{
+			
+			ErrorMessage errorMessage=suppilerMasterService.deleteTransporter(tranId);
+			
+			return errorMessage;
+		}
+		//--------------------------END--------------------------------------------------
 }
