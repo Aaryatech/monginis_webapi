@@ -12,4 +12,6 @@ public interface SupPaymentTermsRepository extends JpaRepository<SupPaymentTerms
 
 	List<SupPaymentTerms> findSupPaymentTermsByDelStatus(int i);
 
+	SupPaymentTerms findSupPaymentTermsByPayId(int payId);
+
 }

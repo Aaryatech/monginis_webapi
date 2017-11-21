@@ -12,4 +12,6 @@ public interface TransporterRepository extends JpaRepository<Transporter, Long>{
 
 	List<Transporter> findTransporterByDelStatus(int delStatus);
 
+	Transporter findTransporterByTranId(int tranId);
+
 }

@@ -28,4 +28,6 @@ public interface SuppilerMasterService {
 	ErrorMessage saveSupPaymentTerms(SupPaymentTerms supPaymentTerms);
 
 	ErrorMessage deleteTransporter(int tranId);
+
+	ErrorMessage deleteSupPaymentTerm(int payId);
 }

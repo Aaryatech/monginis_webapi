@@ -162,7 +162,55 @@ public class SuppilerMasterServiceImpl implements SuppilerMasterService{
 	@Override
 	public ErrorMessage deleteTransporter(int tranId) {
 
-		return null;
+		Transporter transporter=transporterRepository.findTransporterByTranId(tranId);
+		
+		transporter.setDelStatus(1);
+		
+		Transporter TransporterRes=transporterRepository.save(transporter);
+		
+		ErrorMessage errorMessage=new ErrorMessage();
+		
+		if(TransporterRes!=null)
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("Transporter deleted Successfully.");
+			
+		}
+		else
+		{
+			
+			errorMessage.setError(true);
+			errorMessage.setMessage("Transporter Deletion Failed.");
+			
+		}
+		return errorMessage;
+	}
+
+	@Override
+	public ErrorMessage deleteSupPaymentTerm(int payId) {
+
+		SupPaymentTerms supPaymentTerms=supPaymentTermsRepository.findSupPaymentTermsByPayId(payId);
+		
+		supPaymentTerms.setDelStatus(1);
+		
+		SupPaymentTerms supPaymentTermsRes=supPaymentTermsRepository.save(supPaymentTerms);
+		
+		ErrorMessage errorMessage=new ErrorMessage();
+		
+		if(supPaymentTermsRes!=null)
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("SupPaymentTerms deleted Successfully.");
+			
+		}
+		else
+		{
+			
+			errorMessage.setError(true);
+			errorMessage.setMessage("SupPaymentTerms Deletion Failed.");
+			
+		}
+		return errorMessage;
 	}
 
 }

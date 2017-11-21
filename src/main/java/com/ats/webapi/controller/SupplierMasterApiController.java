@@ -139,8 +139,8 @@ public class SupplierMasterApiController {
 			return errorMessage;
 		}
 		//--------------------------END--------------------------------------------------
-		//----------------------Save Transporter---------------
-		@RequestMapping(value = { "/saveSupPaymenTerms" }, method = RequestMethod.POST)
+		//----------------------Save SupPaymentTerms---------------
+		@RequestMapping(value = { "/saveSupPaymentTerms" }, method = RequestMethod.POST)
 		public @ResponseBody ErrorMessage saveSupPaymentTerms(@RequestBody SupPaymentTerms supPaymentTerms)
 		{
 			
@@ -149,7 +149,7 @@ public class SupplierMasterApiController {
 			return errorMessage;
 		}
 		//--------------------------END--------------------------------------------------
-		//--------------------------END--------------------------------------------------
+		//--------------------------Delete Transporter--------------------------------------------------
 		@RequestMapping(value = { "/deleteTransporter" }, method = RequestMethod.POST)
 		public @ResponseBody ErrorMessage deleteTransporter(@RequestParam("tranId")int tranId)
 		{
@@ -159,4 +159,14 @@ public class SupplierMasterApiController {
 			return errorMessage;
 		}
 		//--------------------------END--------------------------------------------------
+		//--------------------------Delete Sup Payment Term--------------------------------------------------
+	    @RequestMapping(value = { "/deleteSupPaymentTerm" }, method = RequestMethod.POST)
+	    public @ResponseBody ErrorMessage deleteSupPaymenTerm(@RequestParam("payId")int payId)
+	    {
+					
+		  ErrorMessage errorMessage=suppilerMasterService.deleteSupPaymentTerm(payId);
+					
+		  return errorMessage;
+	    }
+	//--------------------------END--------------------------------------------------
 }
