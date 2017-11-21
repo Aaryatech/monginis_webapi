@@ -1,5 +1,7 @@
 package com.ats.webapi.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +19,29 @@ public class SuppilerMasterServiceImpl implements SuppilerMasterService{
 		
 		SupplierDetails supplier=supplierDetailRepository.save(supplierDetails);
 		return supplier;
+	}
+
+	@Override
+	public SupplierDetails getSupplier(int suppId) {
+		 
+		
+		SupplierDetails supplierDetails=supplierDetailRepository.findBySuppId(suppId);
+		return supplierDetails;
+	}
+
+	@Override
+	public int deleteSupplier(int suppId) {
+
+		int result=supplierDetailRepository.deleteSupplier(suppId);
+		return result;
+	}
+
+	@Override
+	public List<SupplierDetails> getAllSupplier() {
+		
+		int delStatus=0;
+		List<SupplierDetails> supplierDetailsList=supplierDetailRepository.findByDelStatus(delStatus);
+		return supplierDetailsList;
 	}
 
 }

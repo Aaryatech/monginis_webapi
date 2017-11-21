@@ -73,6 +73,9 @@ public class SupplierDetails {
 	@Column(name="supp_pay_id")
 	private int suppPayId;
 	
+	@Column(name="del_status")
+	private int delStatus;
+	
 	@Column(name="supp_credit_days")
 	private int suppCreditDays;
 	
@@ -255,6 +258,14 @@ public class SupplierDetails {
 		this.suppCPerson = suppCPerson;
 	}
 
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "SupplierDetails [suppId=" + suppId + ", suppName=" + suppName + ", suppAddr=" + suppAddr + ", suppCity="
@@ -263,8 +274,11 @@ public class SupplierDetails {
 				+ suppPhone2 + ", suppEmail1=" + suppEmail1 + ", suppEmail2=" + suppEmail2 + ", suppEmail3="
 				+ suppEmail3 + ", suppEmail4=" + suppEmail4 + ", suppEmail5=" + suppEmail5 + ", suppGstin=" + suppGstin
 				+ ", suppPanNo=" + suppPanNo + ", suppFdaLic=" + suppFdaLic + ", suppPayId=" + suppPayId
-				+ ", suppCreditDays=" + suppCreditDays + ", suppCPerson=" + suppCPerson + "]";
+				+ ", delStatus=" + delStatus + ", suppCreditDays=" + suppCreditDays + ", suppCPerson=" + suppCPerson
+				+ "]";
 	}
+
+ 
 
 	 
 }
