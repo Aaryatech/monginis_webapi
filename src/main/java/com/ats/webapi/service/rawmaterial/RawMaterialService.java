@@ -39,7 +39,7 @@ public interface RawMaterialService {
 
 	RmItemSubCategory getRmItemSubCategory(int subCatId);
 
-	List<RmItemSubCategory> getRmItemSubCategories(int subCatId);
+	List<RmItemSubCategory> getRmItemSubCategories(int catId);
 	
 	
 }

@@ -113,10 +113,10 @@ public class RawMaterialApiCotroller {
 	//--------------------------END--------------------------------------------------
 	//--------------------------GetOneBySubCatId--------------------------------------------------
 		@RequestMapping(value = { "/getRmItemSubCategories" }, method = RequestMethod.POST)
-		public @ResponseBody List<RmItemSubCategory> getRmItemSubCategories(@RequestParam("subCatId")int subCatId)
+		public @ResponseBody List<RmItemSubCategory> getRmItemSubCategories(@RequestParam("catId")int catId)
 		{
 			
-			List<RmItemSubCategory> rmItemSubCategories=rawMaterialService.getRmItemSubCategories(subCatId);
+			List<RmItemSubCategory> rmItemSubCategories=rawMaterialService.getRmItemSubCategories(catId);
 			
 			return rmItemSubCategories;
 		}

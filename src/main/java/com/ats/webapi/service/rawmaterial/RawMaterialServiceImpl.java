@@ -309,7 +309,9 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	public List<RmItemSubCategory> getRmItemSubCategories(int catId) {
 		List<RmItemSubCategory> rmItemSubCategories=null;
 		try {
+			
 			rmItemSubCategories=rmItemSubCategoryRepository.findRmItemSubCategoryByCatId(catId);
+	        	
 		}
 		catch(Exception e)
 		{
