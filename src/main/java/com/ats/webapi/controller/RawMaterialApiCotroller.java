@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
+import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetails;
+import com.ats.webapi.model.rawmaterial.RawMaterialUom;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
 import com.ats.webapi.model.rawmaterial.RmItemCategory;
 import com.ats.webapi.model.rawmaterial.RmItemGroup;
@@ -155,8 +157,8 @@ public class RawMaterialApiCotroller {
 		
 	}
 	//------------------------------------Get Rm Master------------------------------------
-	@RequestMapping(value = { "/getRawMasterDetail" }, method = RequestMethod.POST)
-	public @ResponseBody RawMaterialDetails getRawMasterDetail(@RequestParam ("rmId")int rmId)
+	@RequestMapping(value = { "/getRawMaterialDetail" }, method = RequestMethod.POST)
+	public @ResponseBody RawMaterialDetails getRawMaterialDetail(@RequestParam ("rmId")int rmId)
 	{
 		RawMaterialDetails rawMaterialDetails=rawMaterialService.getRawMaterialDetails(rmId);
 		return rawMaterialDetails;
@@ -179,5 +181,20 @@ public class RawMaterialApiCotroller {
 	{
 		List<RmItemGroup> rmItemGroupList=rawMaterialService.getAllGroup();
 		return rmItemGroupList;
+	}
+	//-----------------------------------get RM UOM--------------------------
+	@RequestMapping(value = { "/getRmUom" }, method = RequestMethod.GET)
+	public @ResponseBody List<RawMaterialUom> getRmUom()
+	{
+		List<RawMaterialUom> rawMaterialUomList=rawMaterialService.getAllUom();
+		return rawMaterialUomList;
+	}
+	//-----------------------------getRM Gst--------------------------------------
+	
+	@RequestMapping(value = { "/getAllRmTax" }, method = RequestMethod.GET)
+	public @ResponseBody List<RawMaterialTaxDetails> getAllRmTax()
+	{
+		List<RawMaterialTaxDetails> rawMaterialTaxDetailsList=rawMaterialService.getAllRmTax();
+		return rawMaterialTaxDetailsList;
 	}
 }

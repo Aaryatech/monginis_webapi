@@ -12,6 +12,8 @@ import com.ats.webapi.model.SupplierMaster.Transporter;
 import com.ats.webapi.model.rawmaterial.GetRmItemCategory;
 import com.ats.webapi.model.rawmaterial.GetRmItemSubCat;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
+import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetails;
+import com.ats.webapi.model.rawmaterial.RawMaterialUom;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
 import com.ats.webapi.model.rawmaterial.RmItemCategory;
 import com.ats.webapi.model.rawmaterial.RmItemGroup;
@@ -23,6 +25,8 @@ import com.ats.webapi.repository.RmItemSubCategoryRepository;
 import com.ats.webapi.repository.GetRmItemCatRepository;
 import com.ats.webapi.repository.GetRmItemSubCatRepository;
 import com.ats.webapi.repository.RawMaterialDetailsRepository;
+import com.ats.webapi.repository.RawMaterialTaxDetailsRepository;
+import com.ats.webapi.repository.RawMaterialUomRepository;
 
 @Service
 public class RawMaterialServiceImpl implements RawMaterialService{
@@ -45,6 +49,12 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	
 	@Autowired
 	GetRmItemSubCatRepository getRmItemSubCatRepository;
+	
+	@Autowired
+	RawMaterialUomRepository rawMaterialUomRepository;
+	
+	@Autowired
+	RawMaterialTaxDetailsRepository rawMaterialTaxDetailsRepository;
 	
 	@Override
 	public RmItemCatList getRmItemCategories() {
@@ -259,7 +269,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 
 	@Override
 	public List<RawMaterialDetails> getAllRawMaterial() {
-		List<RawMaterialDetails> rawMaterialMasterDetailList=RawMaterialDetailsRepository.findByDelStatus(1);
+		List<RawMaterialDetails> rawMaterialMasterDetailList=RawMaterialDetailsRepository.findByDelStatus(0);
 		if(rawMaterialMasterDetailList!=null)
 		{
 			System.out.println("RM  Details List : "+rawMaterialMasterDetailList.toString());
@@ -365,5 +375,36 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 			System.out.println("Group Not found");
 		}
 		return rmItemGroupList;
+	}
+
+	@Override
+	public List<RawMaterialUom> getAllUom() {
+		 
+		List<RawMaterialUom> rawMaterialUomList=rawMaterialUomRepository.findAll();
+		if(rawMaterialUomList!=null)
+		{
+			System.out.println("RM UOM List : "+rawMaterialUomList.toString());
+		}
+		else
+		{
+			System.out.println("RM UOM List empty");
+		}
+		return rawMaterialUomList;
+	}
+
+	@Override
+	public List<RawMaterialTaxDetails> getAllRmTax() {
+		
+
+		List<RawMaterialTaxDetails> rawMaterialTaxDetailsList=rawMaterialTaxDetailsRepository.findAll();
+		if(rawMaterialTaxDetailsList!=null)
+		{
+			System.out.println("Tax details : "+rawMaterialTaxDetailsList.toString());
+		}
+		else 
+		{
+			System.out.println("Problen in geting Tax details");
+		}
+		return rawMaterialTaxDetailsList;
 	}
 }

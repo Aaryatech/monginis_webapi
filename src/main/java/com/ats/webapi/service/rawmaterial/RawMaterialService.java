@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
+import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetails;
+import com.ats.webapi.model.rawmaterial.RawMaterialUom;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
 import com.ats.webapi.model.rawmaterial.RmItemCategory;
 import com.ats.webapi.model.rawmaterial.RmItemGroup;
@@ -45,6 +47,10 @@ public interface RawMaterialService {
 	List<RmItemCategory> getCategories(int grpId);
 
 	List<RmItemGroup> getAllGroup();
+
+	List<RawMaterialUom> getAllUom();
+
+	List<RawMaterialTaxDetails> getAllRmTax();
 	
 	
 }
