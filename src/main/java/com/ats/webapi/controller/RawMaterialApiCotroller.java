@@ -89,6 +89,41 @@ public class RawMaterialApiCotroller {
 		return errorMessage;
 	}
 	//--------------------------END--------------------------------------------------
+	
+	//--------------------------GetOne Item Category By catId--------------------------------------------------
+	@RequestMapping(value = { "/getRmItemCategory" }, method = RequestMethod.POST)
+	public @ResponseBody RmItemCategory getRmItemCategory(@RequestParam("catId")int catId)
+	{
+		
+		RmItemCategory rmItemCategory=rawMaterialService.getRmItemCategory(catId);
+		
+		return rmItemCategory;
+	}
+	//--------------------------END--------------------------------------------------
+	
+	//--------------------------GetOneBySubCatId--------------------------------------------------
+	@RequestMapping(value = { "/getRmItemSubCategory" }, method = RequestMethod.POST)
+	public @ResponseBody RmItemSubCategory getRmItemSubCategory(@RequestParam("subCatId")int subCatId)
+	{
+		
+		RmItemSubCategory rmItemSubCategory=rawMaterialService.getRmItemSubCategory(subCatId);
+		
+		return rmItemSubCategory;
+	}
+	//--------------------------END--------------------------------------------------
+	//--------------------------GetOneBySubCatId--------------------------------------------------
+		@RequestMapping(value = { "/getRmItemSubCategories" }, method = RequestMethod.POST)
+		public @ResponseBody List<RmItemSubCategory> getRmItemSubCategories(@RequestParam("subCatId")int subCatId)
+		{
+			
+			List<RmItemSubCategory> rmItemSubCategories=rawMaterialService.getRmItemSubCategories(subCatId);
+			
+			return rmItemSubCategories;
+		}
+		//--------------------------END--------------------------------------------------
+	
+	
+	
 	//---------------------------addNew RM Master----------------------------------
 	
 	@RequestMapping(value = { "/addRawMaterial" }, method = RequestMethod.POST)

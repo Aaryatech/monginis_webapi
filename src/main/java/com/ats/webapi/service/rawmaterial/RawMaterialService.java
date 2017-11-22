@@ -34,6 +34,12 @@ public interface RawMaterialService {
 	List<RawMaterialDetails> getAllRawMaterial();
 	
 	Info deleteRawMaterial(int rmId);
+
+	RmItemCategory getRmItemCategory(int catId);
+
+	RmItemSubCategory getRmItemSubCategory(int subCatId);
+
+	List<RmItemSubCategory> getRmItemSubCategories(int subCatId);
 	
 	
 }

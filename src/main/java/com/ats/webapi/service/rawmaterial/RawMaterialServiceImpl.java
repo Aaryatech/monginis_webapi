@@ -1,5 +1,6 @@
 package com.ats.webapi.service.rawmaterial;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.SupplierMaster.Transporter;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
 import com.ats.webapi.model.rawmaterial.RmItemCategory;
@@ -272,5 +274,48 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 			
 		}
 		return info;
+	}
+
+	@Override
+	public RmItemCategory getRmItemCategory(int catId) {
+		RmItemCategory rmItemCategory=null;
+		try {
+			rmItemCategory=rmItemCategoryRepository.findRmItemCategoryByCatId(catId);
+		}
+		catch(Exception e)
+		{
+			rmItemCategory=new RmItemCategory();
+		}
+		
+		return rmItemCategory;
+	}
+
+	@Override
+	public RmItemSubCategory getRmItemSubCategory(int subCatId) {
+		
+		RmItemSubCategory rmItemSubCategory=null;
+		try {
+			rmItemSubCategory=rmItemSubCategoryRepository.findRmItemSubCategoryBySubCatId(subCatId);
+		}
+		catch(Exception e)
+		{
+			rmItemSubCategory=new RmItemSubCategory();
+		}
+		
+		return rmItemSubCategory;
+	}
+
+	@Override
+	public List<RmItemSubCategory> getRmItemSubCategories(int catId) {
+		List<RmItemSubCategory> rmItemSubCategories=null;
+		try {
+			rmItemSubCategories=rmItemSubCategoryRepository.findRmItemSubCategoryByCatId(catId);
+		}
+		catch(Exception e)
+		{
+			rmItemSubCategories=new ArrayList<RmItemSubCategory>();
+		}
+		
+		return rmItemSubCategories;
 	}
 }

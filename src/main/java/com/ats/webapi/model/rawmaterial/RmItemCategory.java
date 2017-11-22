@@ -18,6 +18,9 @@ public class RmItemCategory  implements Serializable{
 	@Column(name="cat_id")
 	private int catId;
 	
+	@Column(name="grp_id")
+	private int grpId;
+	
 	@Column(name="cat_name")
 	private String catName;
 	
@@ -26,6 +29,17 @@ public class RmItemCategory  implements Serializable{
 	
 	@Column(name="del_status")
 	private int delStatus;
+
+	
+	
+	
+	public int getGrpId() {
+		return grpId;
+	}
+
+	public void setGrpId(int grpId) {
+		this.grpId = grpId;
+	}
 
 	public String getCatDesc() {
 		return catDesc;
