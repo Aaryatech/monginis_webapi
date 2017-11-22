@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.SupplierMaster.Transporter;
+import com.ats.webapi.model.rawmaterial.GetRmItemCategory;
+import com.ats.webapi.model.rawmaterial.GetRmItemSubCat;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
 import com.ats.webapi.model.rawmaterial.RmItemCategory;
@@ -18,6 +20,8 @@ import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
 import com.ats.webapi.repository.RmItemCategoryRepository;
 import com.ats.webapi.repository.RmItemGroupRepostitory;
 import com.ats.webapi.repository.RmItemSubCategoryRepository;
+import com.ats.webapi.repository.GetRmItemCatRepository;
+import com.ats.webapi.repository.GetRmItemSubCatRepository;
 import com.ats.webapi.repository.RawMaterialDetailsRepository;
 
 @Service
@@ -36,12 +40,18 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	@Autowired
 	RmItemGroupRepostitory rmItemGroupRepostitory;
 	
+	@Autowired
+	GetRmItemCatRepository getRmItemCatRepository;
+	
+	@Autowired
+	GetRmItemSubCatRepository getRmItemSubCatRepository;
+	
 	@Override
 	public RmItemCatList getRmItemCategories() {
 
 		RmItemCatList rmItemCategoryList=new RmItemCatList();
 		
-		List<RmItemCategory> rmItemCatList=rmItemCategoryRepository.findRmItemCategoryByDelStatus(0); 
+		List<GetRmItemCategory> rmItemCatList=getRmItemCatRepository.findRmItemCategoryByDelStatus(); 
 		ErrorMessage errorMessage=new ErrorMessage();
 		
 		if(rmItemCatList==null) {
@@ -68,7 +78,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 
 		RmItemSubCatList rmItemSubCategoryList=new RmItemSubCatList();
 		
-		List<RmItemSubCategory> rmItemSubCatList=rmItemSubCategoryRepository.findRmItemSubCategoryByDelStatus(0); 
+		List<GetRmItemSubCat> rmItemSubCatList=getRmItemSubCatRepository.findRmItemSubCategoryByDelStatus(); 
 		ErrorMessage errorMessage=new ErrorMessage();
 		
 		if(rmItemSubCatList==null) {

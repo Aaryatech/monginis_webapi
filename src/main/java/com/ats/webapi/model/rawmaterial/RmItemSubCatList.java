@@ -6,16 +6,15 @@ import java.util.List;
 import com.ats.webapi.model.ErrorMessage;
 
 public class RmItemSubCatList implements Serializable{
-	List<RmItemSubCategory> rmItemSubCategory;
+	List<GetRmItemSubCat> rmItemSubCategory;
 
 	ErrorMessage errorMessage;
 
-   
-	public List<RmItemSubCategory> getRmItemSubCategory() {
+	public List<GetRmItemSubCat> getRmItemSubCategory() {
 		return rmItemSubCategory;
 	}
 
-	public void setRmItemSubCategory(List<RmItemSubCategory> rmItemSubCategory) {
+	public void setRmItemSubCategory(List<GetRmItemSubCat> rmItemSubCategory) {
 		this.rmItemSubCategory = rmItemSubCategory;
 	}
 

@@ -1,18 +1,13 @@
 package com.ats.webapi.model.rawmaterial;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name = "m_rm_item_sub_cat")
-public class RmItemSubCategory  implements Serializable{
-
+public class GetRmItemSubCat {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="sub_cat_id")
@@ -21,6 +16,8 @@ public class RmItemSubCategory  implements Serializable{
 	@Column(name="cat_id")
 	private int catId;
 	
+	@Column(name="cat_name")
+	private String catName;
 	
 	@Column(name="sub_cat_name")
 	private String subCatName;
@@ -30,17 +27,6 @@ public class RmItemSubCategory  implements Serializable{
 	
 	@Column(name="del_status")
 	private int delStatus;
-
-	
-	
-	
-	public String getSubCatDesc() {
-		return subCatDesc;
-	}
-
-	public void setSubCatDesc(String subCatDesc) {
-		this.subCatDesc = subCatDesc;
-	}
 
 	public int getSubCatId() {
 		return subCatId;
@@ -58,12 +44,28 @@ public class RmItemSubCategory  implements Serializable{
 		this.catId = catId;
 	}
 
+	public String getCatName() {
+		return catName;
+	}
+
+	public void setCatName(String catName) {
+		this.catName = catName;
+	}
+
 	public String getSubCatName() {
 		return subCatName;
 	}
 
 	public void setSubCatName(String subCatName) {
 		this.subCatName = subCatName;
+	}
+
+	public String getSubCatDesc() {
+		return subCatDesc;
+	}
+
+	public void setSubCatDesc(String subCatDesc) {
+		this.subCatDesc = subCatDesc;
 	}
 
 	public int getDelStatus() {
@@ -73,13 +75,7 @@ public class RmItemSubCategory  implements Serializable{
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
 	}
-
-	@Override
-	public String toString() {
-		return "RmItemSubCategory [subCatId=" + subCatId + ", catId=" + catId + ", subCatName=" + subCatName
-				+ ", subCatDesc=" + subCatDesc + ", delStatus=" + delStatus + "]";
-	}
-
+	
 	
 	
 }
