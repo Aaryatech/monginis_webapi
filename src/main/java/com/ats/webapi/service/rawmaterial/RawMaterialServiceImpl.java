@@ -12,9 +12,11 @@ import com.ats.webapi.model.SupplierMaster.Transporter;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
 import com.ats.webapi.model.rawmaterial.RmItemCategory;
+import com.ats.webapi.model.rawmaterial.RmItemGroup;
 import com.ats.webapi.model.rawmaterial.RmItemSubCatList;
 import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
 import com.ats.webapi.repository.RmItemCategoryRepository;
+import com.ats.webapi.repository.RmItemGroupRepostitory;
 import com.ats.webapi.repository.RmItemSubCategoryRepository;
 import com.ats.webapi.repository.RawMaterialDetailsRepository;
 
@@ -29,6 +31,10 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	
 	@Autowired
 	RawMaterialDetailsRepository RawMaterialDetailsRepository;
+ 
+	
+	@Autowired
+	RmItemGroupRepostitory rmItemGroupRepostitory;
 	
 	@Override
 	public RmItemCatList getRmItemCategories() {
@@ -319,5 +325,35 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		}
 		
 		return rmItemSubCategories;
+	}
+
+	@Override
+	public List<RmItemCategory> getCategories(int grpId) {
+		
+		List<RmItemCategory> rmItemCategoryList=rmItemCategoryRepository.findRmItemCategoryByGrpId(grpId);
+		if(rmItemCategoryList!=null)
+		{
+			System.out.println("Category List  : "+rmItemCategoryList.toString());
+		}
+		else
+		{
+			System.out.println("Category Not found");
+		}
+		return rmItemCategoryList;
+	}
+
+	@Override
+	public List<RmItemGroup> getAllGroup() {
+		
+		List<RmItemGroup> rmItemGroupList=rmItemGroupRepostitory.findByDelStatus(0);
+		if(rmItemGroupList!=null)
+		{
+			System.out.println("Group List  : "+rmItemGroupList.toString());
+		}
+		else
+		{
+			System.out.println("Group Not found");
+		}
+		return rmItemGroupList;
 	}
 }

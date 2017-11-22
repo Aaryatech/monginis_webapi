@@ -16,5 +16,7 @@ public interface RmItemCategoryRepository extends JpaRepository<RmItemCategory, 
 	List<RmItemSubCategory> findRmItemSubCategoryByDelStatus(int i);
 
 	RmItemCategory findRmItemCategoryByCatId(int catId);
+	List<RmItemCategory> findRmItemCategoryByGrpId(int grpId);
+	
 
 }

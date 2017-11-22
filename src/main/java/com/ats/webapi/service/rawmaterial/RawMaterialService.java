@@ -9,6 +9,7 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
 import com.ats.webapi.model.rawmaterial.RmItemCategory;
+import com.ats.webapi.model.rawmaterial.RmItemGroup;
 import com.ats.webapi.model.rawmaterial.RmItemSubCatList;
 import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
 
@@ -40,6 +41,10 @@ public interface RawMaterialService {
 	RmItemSubCategory getRmItemSubCategory(int subCatId);
 
 	List<RmItemSubCategory> getRmItemSubCategories(int catId);
+
+	List<RmItemCategory> getCategories(int grpId);
+
+	List<RmItemGroup> getAllGroup();
 	
 	
 }

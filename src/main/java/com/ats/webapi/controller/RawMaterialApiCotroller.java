@@ -17,6 +17,7 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
 import com.ats.webapi.model.rawmaterial.RmItemCategory;
+import com.ats.webapi.model.rawmaterial.RmItemGroup;
 import com.ats.webapi.model.rawmaterial.RmItemSubCatList;
 import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
 import com.ats.webapi.service.rawmaterial.RawMaterialService;
@@ -145,7 +146,7 @@ public class RawMaterialApiCotroller {
 	}
 	
 	//------------------------------Get All RM Master-------------------------------------
-	@RequestMapping(value = { "/getAllRawMaterial" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/getAllRawMaterial" }, method = RequestMethod.GET)
 	public @ResponseBody List<RawMaterialDetails> getAllRawMaterial()
 	{
 		List<RawMaterialDetails> rawMaterialDetailsList=rawMaterialService.getAllRawMaterial();
@@ -161,5 +162,22 @@ public class RawMaterialApiCotroller {
 		return rawMaterialDetails;
 		 
 		
+	}
+	
+	//-------------------------------getCategory-----------------------------------------------
+	@RequestMapping(value = { "/getRmItemCategories" }, method = RequestMethod.POST)
+	public @ResponseBody List<RmItemCategory> getRmItemCategories(@RequestParam("grpId")int grpId)
+	{
+		
+		List<RmItemCategory> rmItemCategorieList=rawMaterialService.getCategories(grpId);
+		
+		return rmItemCategorieList;
+	}
+	//----------------------------getAllGroup----------------------------------------
+	@RequestMapping(value = { "/getAllRmItemGroup" }, method = RequestMethod.GET)
+	public @ResponseBody List<RmItemGroup> getAllRmItemGroup()
+	{
+		List<RmItemGroup> rmItemGroupList=rawMaterialService.getAllGroup();
+		return rmItemGroupList;
 	}
 }
