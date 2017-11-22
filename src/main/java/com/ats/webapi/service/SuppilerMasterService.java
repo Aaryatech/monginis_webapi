@@ -30,4 +30,8 @@ public interface SuppilerMasterService {
 	ErrorMessage deleteTransporter(int tranId);
 
 	ErrorMessage deleteSupPaymentTerm(int payId);
+
+	SupPaymentTerms getSupPaymentTerm(int payId);
+
+	Transporter getTransporter(int tranId);
 }

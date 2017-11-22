@@ -21,8 +21,19 @@ public class RmItemCategory  implements Serializable{
 	@Column(name="cat_name")
 	private String catName;
 	
+	@Column(name="cat_desc")
+	private String catDesc;
+	
 	@Column(name="del_status")
 	private int delStatus;
+
+	public String getCatDesc() {
+		return catDesc;
+	}
+
+	public void setCatDesc(String catDesc) {
+		this.catDesc = catDesc;
+	}
 
 	public int getCatId() {
 		return catId;
@@ -50,9 +61,9 @@ public class RmItemCategory  implements Serializable{
 
 	@Override
 	public String toString() {
-		return "RmItemCategory [catId=" + catId + ", catName=" + catName + ", delStatus=" + delStatus + "]";
+		return "RmItemCategory [catId=" + catId + ", catName=" + catName + ", catDesc=" + catDesc + ", delStatus="
+				+ delStatus + "]";
 	}
-	
-	
 
+	
 }

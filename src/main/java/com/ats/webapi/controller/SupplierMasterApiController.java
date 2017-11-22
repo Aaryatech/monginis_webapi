@@ -169,4 +169,24 @@ public class SupplierMasterApiController {
 		  return errorMessage;
 	    }
 	//--------------------------END--------------------------------------------------
+	  //--------------------------GetOneByPayId Sup Payment Term--------------------------------------------------
+	    @RequestMapping(value = { "/getSupPaymentTerm" }, method = RequestMethod.POST)
+	    public @ResponseBody SupPaymentTerms getSupPaymentTerm(@RequestParam("payId")int payId)
+	    {
+					
+	    	SupPaymentTerms paymentTermRes=suppilerMasterService.getSupPaymentTerm(payId);
+					
+		  return paymentTermRes;
+	    }
+	//--------------------------END------------------------------------------------------------------ 
+	  //--------------------------GetOneByTranId Transporter--------------------------------------------------
+	  		@RequestMapping(value = { "/getTransporter" }, method = RequestMethod.POST)
+	  		public @ResponseBody Transporter getTransporter(@RequestParam("tranId")int tranId)
+	  		{
+	  			
+	  			Transporter transporter=suppilerMasterService.getTransporter(tranId);
+	  			
+	  			return transporter;
+	  		}
+	//--------------------------END--------------------------------------------------------------------   
 }

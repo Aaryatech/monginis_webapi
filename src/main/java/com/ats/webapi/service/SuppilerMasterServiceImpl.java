@@ -213,4 +213,32 @@ public class SuppilerMasterServiceImpl implements SuppilerMasterService{
 		return errorMessage;
 	}
 
+	@Override
+	public SupPaymentTerms getSupPaymentTerm(int payId) {
+		SupPaymentTerms supPaymentTerms=null;
+		try {
+			 supPaymentTerms=supPaymentTermsRepository.findSupPaymentTermsByPayId(payId);
+		}
+		catch(Exception e)
+		{
+			supPaymentTerms=new SupPaymentTerms();
+		}
+		
+		return supPaymentTerms;
+	}
+
+	@Override
+	public Transporter getTransporter(int tranId) {
+		Transporter transporter=null;
+		try {
+			transporter=transporterRepository.findTransporterByTranId(tranId);
+		}
+		catch(Exception e)
+		{
+			transporter=new Transporter();
+		}
+		
+		return transporter;
+	}
+
 }
