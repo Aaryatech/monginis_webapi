@@ -6,12 +6,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
+import com.ats.webapi.model.Info;
+import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
 import com.ats.webapi.model.rawmaterial.RmItemCategory;
 import com.ats.webapi.model.rawmaterial.RmItemSubCatList;
 import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
 import com.ats.webapi.repository.RmItemCategoryRepository;
 import com.ats.webapi.repository.RmItemSubCategoryRepository;
+import com.ats.webapi.repository.RawMaterialDetailsRepository;
 
 @Service
 public class RawMaterialServiceImpl implements RawMaterialService{
@@ -21,6 +24,9 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	
 	@Autowired
 	RmItemSubCategoryRepository rmItemSubCategoryRepository;
+	
+	@Autowired
+	RawMaterialDetailsRepository RawMaterialDetailsRepository;
 	
 	@Override
 	public RmItemCatList getRmItemCategories() {
@@ -195,5 +201,76 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		}
 		return errorMessage;
 
+	}
+
+	@Override
+	public Info addRawMaterial(RawMaterialDetails rawMaterialMasterDetails) {
+		
+		RawMaterialDetails rawMaterialMaster=RawMaterialDetailsRepository.save(rawMaterialMasterDetails);
+		
+		Info info=new Info();
+		if(rawMaterialMaster!=null)
+		{
+			info.setError(false);
+			info.setMessage("Add new Raw material ");
+		}
+		else
+		{
+			
+				info.setError(true);
+				info.setMessage("Failed add new Raw material ");
+			
+		}
+		return info;
+	}
+
+	@Override
+	public RawMaterialDetails getRawMaterialDetails(int rmId) {
+		
+		RawMaterialDetails rawMaterialMaster=RawMaterialDetailsRepository.findByRmId(rmId);
+		if(rawMaterialMaster!=null)
+		{
+			System.out.println("RM  Details : "+rawMaterialMaster.toString());
+		}
+		else
+		{
+			System.out.println("Raw material  Not exist");
+		}
+		return rawMaterialMaster;
+	}
+
+	@Override
+	public List<RawMaterialDetails> getAllRawMaterial() {
+		List<RawMaterialDetails> rawMaterialMasterDetailList=RawMaterialDetailsRepository.findByDelStatus(1);
+		if(rawMaterialMasterDetailList!=null)
+		{
+			System.out.println("RM  Details List : "+rawMaterialMasterDetailList.toString());
+		}
+		else
+		{
+			System.out.println("Raw material  Not exist");
+		}
+		return rawMaterialMasterDetailList;
+	}
+
+	@Override
+	public Info deleteRawMaterial(int rmId) {
+		
+		int res=RawMaterialDetailsRepository.deleteRawMaterial(rmId);
+	
+		Info info=new Info();
+		if(res>0)
+		{
+			info.setError(false);
+			info.setMessage("Delete Raw material ");
+		}
+		else
+		{
+			
+				info.setError(true);
+				info.setMessage("Failed delete Raw material ");
+			
+		}
+		return info;
 	}
 }
