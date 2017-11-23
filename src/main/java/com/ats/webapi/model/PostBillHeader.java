@@ -68,6 +68,10 @@ public class PostBillHeader implements Serializable {
 	private String remark;
 	
 	
+	@Column(name="time")
+	private String time;
+	
+	
 
 	@Transient
 	List<PostBillDetail> postBillDetailsList;
@@ -180,14 +184,15 @@ public class PostBillHeader implements Serializable {
 		this.taxApplicable = taxApplicable;
 	}
 
-	
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
 	
 
-
-	
-	
-	
-	
-	
 	
 }

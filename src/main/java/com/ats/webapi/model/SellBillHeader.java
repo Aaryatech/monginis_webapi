@@ -72,12 +72,22 @@ public class SellBillHeader implements Serializable{
 	@Column(name="status")
 	private int status;
 	
-	@Column(name="bill_type")
-	private char billType;
-	
 	@Column(name="del_status")
 	private int DelStatus;
 
+	@Column(name="bill_type")
+	private int billType;
+
+	
+	
+
+	public int getBillType() {
+		return billType;
+	}
+
+	public void setBillType(int billType) {
+		this.billType = billType;
+	}
 
 	@Transient
 	List<SellBillDetail> sellBillDetailsList;
@@ -88,16 +98,6 @@ public class SellBillHeader implements Serializable{
 
 	public void setSellBillDetailsList(List<SellBillDetail> sellBillDetailsList) {
 		this.sellBillDetailsList = sellBillDetailsList;
-	}
-
-	
-	
-	public char getBillType() {
-		return billType;
-	}
-
-	public void setBillType(char billType) {
-		this.billType = billType;
 	}
 
 	public int getSellBillNo() {
@@ -264,5 +264,8 @@ public class SellBillHeader implements Serializable{
 				+ ", userPhone=" + userPhone + ", status=" + status + ", DelStatus=" + DelStatus
 				+ ", sellBillDetailsList=" + sellBillDetailsList + "]";
 	}
+
+	
+	
 
 }

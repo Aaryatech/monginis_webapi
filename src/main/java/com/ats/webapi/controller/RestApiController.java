@@ -63,6 +63,7 @@ import com.ats.webapi.model.GetGrnItemConfigList;
 import com.ats.webapi.model.GetItemByCatIdList;
 import com.ats.webapi.model.GetMCategoryList;
 import com.ats.webapi.model.GetOrder;
+import com.ats.webapi.model.GetOrderDataForPushOrderList;
 import com.ats.webapi.model.GetOrderList;
 import com.ats.webapi.model.GetSellBillDetail;
 import com.ats.webapi.model.GetSellBillHeader;
@@ -118,6 +119,7 @@ import com.ats.webapi.model.User;
 import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeaderList;
+import com.ats.webapi.model.remarks.GetAllRemarksList;
 import com.ats.webapi.service.AllFrIdNameService;
 import com.ats.webapi.service.BillDetailUpdateService;
 import com.ats.webapi.service.CategoryService;
@@ -132,6 +134,7 @@ import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.FrNameIdByRouteIdService;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.GenerateBillService;
+import com.ats.webapi.service.GetAllRemarkService;
 import com.ats.webapi.service.GetBillDetailOnlyService;
 import com.ats.webapi.service.GetBillDetailsService;
 import com.ats.webapi.service.GetBillHeaderService;
@@ -145,6 +148,7 @@ import com.ats.webapi.service.GetGrnItemConfigService;
 import com.ats.webapi.service.GetItemByCatIdService;
 import com.ats.webapi.service.GetItemStockService;
 import com.ats.webapi.service.GetMCategoryService;
+import com.ats.webapi.service.GetOrderDataForPushOrderService;
 import com.ats.webapi.service.GetOrderService;
 import com.ats.webapi.service.GetSellBillDetailService;
 import com.ats.webapi.service.GetSellBillHeaderService;
@@ -353,6 +357,38 @@ public class RestApiController {
 	
 	@Autowired
 	PostCreditNoteService postCreditNoteService;
+	
+	@Autowired
+	GetOrderDataForPushOrderService getOrderDataForPushOrderService;
+	
+	@Autowired
+	GetAllRemarkService getAllRemarkService;
+	
+	
+	@RequestMapping(value = "/getAllRemarks", method = RequestMethod.GET)
+	public @ResponseBody GetAllRemarksList getAllRemarks() {
+		
+		GetAllRemarksList allRemarksList=getAllRemarkService.getAllRemarkFor();
+		
+		return allRemarksList;
+
+	}
+
+	@RequestMapping(value = "/getOrderDataForPushOrder", method = RequestMethod.GET)
+	public @ResponseBody GetOrderDataForPushOrderList getOrderDataForPushOrder() {
+		System.out.println("inside rest");
+		
+		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		int grnType=4;
+		
+		System.out.println(" current date "+cDate);
+		
+		GetOrderDataForPushOrderList getOrderDataForPushOrderList=getOrderDataForPushOrderService.getOrderDataForPushOrder(cDate, grnType);
+		
+		return getOrderDataForPushOrderList;
+
+	}
+
 	
 	
 	@RequestMapping(value = { "/postCreditNote" }, method = RequestMethod.POST)
