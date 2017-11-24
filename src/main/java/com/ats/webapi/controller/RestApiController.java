@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -608,12 +609,52 @@ public class RestApiController {
 	@RequestMapping(value = "/getGrnItemConfig", method = RequestMethod.POST)
 	public @ResponseBody GetGrnItemConfigList getGrnItemConfig(@RequestParam("frId") int frId) {
 		System.out.println("inside rest");
-
-		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-
-		GetGrnItemConfigList grnItemConfigList = getGrnItemConfigService.getAllGrnItemConfiguration(cDate, frId);
+		GetGrnItemConfigList grnItemConfigList=null;
+		java.util.Date cDate = new java.util.Date(Calendar.getInstance().getTime().getTime());
 		
-		System.out.println("grn Item config  with Rest: "+grnItemConfigList.toString());
+		
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(cDate);
+		
+		int currentHour= calendar.get(Calendar.HOUR_OF_DAY);
+		System.out.println("current Hour "+currentHour);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+
+		
+		java.util.Date currentDate=null;
+			
+		    if(currentHour >=22) {
+		    	
+		    	Calendar cal = Calendar.getInstance();
+		    	cal.setTime(cDate);
+		    	cal.add(Calendar.DATE, 1);
+				java.util.Date cDateAdded = cal.getTime();
+				
+		    	java.util.Date grnDate=cDateAdded;
+		    	
+		    	
+		    	String dateNow= dateFormat.format(grnDate);;
+
+				try {
+					currentDate=dateFormat.parse(dateNow);
+				} catch (ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		    	System.out.println("currentDate "+currentDate);
+				
+		    }
+
+		    else {
+		    	
+		    	currentDate=new java.util.Date(Calendar.getInstance().getTime().getTime());
+		    	
+		    }
+		    
+		    grnItemConfigList = getGrnItemConfigService.getAllGrnItemConfiguration(currentDate, frId);
+
+			System.out.println("grn Item config  with Rest: "+grnItemConfigList.toString());
 
 		return grnItemConfigList;
 

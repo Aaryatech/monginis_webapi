@@ -10,7 +10,9 @@ import org.springframework.data.repository.query.Param;
 import com.ats.webapi.model.GetGrnItemConfig;
 
 public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConfig, Integer> {
-
+	
+	
+    
 	@Query(value = "SELECT t_bill_header.bill_no," + 
 			"t_bill_header.bill_date,t_bill_detail.item_id,m_item.item_name,t_bill_detail.grn_type," + 
 			"t_bill_detail.rate,t_bill_detail.mrp,t_bill_detail.bill_qty,t_bill_detail.bill_detail_no," + 
