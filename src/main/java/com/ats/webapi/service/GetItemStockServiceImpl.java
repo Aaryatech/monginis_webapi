@@ -69,6 +69,75 @@ public class GetItemStockServiceImpl implements GetItemStockService{
 		 return stockDetail;
 	}
 
+//	@Override
+//	public RegularSpecialStockCal getTotalSellBetweenTimeSlot(int frId, String fromDate, String fromTime, String toDate,
+//			String toTime, int itemId) {
+//		
+//		
+//		
+//		RegularSpecialStockCal totalSell=calculationRepository.getTotalSellBetweenSlot(frId,fromDate,fromTime,toDate,toTime,itemId);
+//		System.out.println("Total Sell "+totalSell);
+//		
+//		
+//		return totalSell;
+//	}
+
+	
+	
+	// auto grn /gvn
+	
+	@Override
+	public int getTotalGrnGvnUptoDateTime(int frId, String fromDateTime, String toDateTime, int itemId) {
+
+		int grnGvn =calculationRepository.getTotalGrnGvnUptoDateTime(frId, fromDateTime, toDateTime, itemId);
+		
+		return grnGvn;
+	}
+
+	@Override
+	public RegularSpecialStockCal getTotalPurchaseUptoDateTime(int frId, String fromDateTime, String toDateTime,
+			int itemId) {
+		
+		
+		RegularSpecialStockCal totalPurchase=calculationRepository.getTotalPurchaseUptoDateTime(frId, fromDateTime, toDateTime, itemId);
+		
+		return totalPurchase;
+	}
+
+	@Override
+	public RegularSpecialStockCal getTotalSellUpToDateTime(int frId, String fromDateTime, String toDateTime,
+			int itemId) {
+		
+
+		RegularSpecialStockCal totalSell=calculationRepository.getTotalSellUpToDateTime(frId, fromDateTime, toDateTime, itemId);
+		
+		return totalSell;
+	}
+
+	@Override
+	public RegularSpecialStockCal getTotalPurchaseOfDate(int frId, String fromDate, int itemId) {
+		
+		
+		RegularSpecialStockCal totalPurchaseOfDate=calculationRepository.getTotalPurchaseOfDate(frId, fromDate, itemId);
+				
+		
+		return totalPurchaseOfDate;
+	}
+
+	@Override
+	public RegularSpecialStockCal getRegTotalSellBetweenDateTime(int frId, String fromDateTime, String toDateTime, int itemId) {
+		
+		RegularSpecialStockCal totalSellBetweenDate=calculationRepository.getRegTotalSellBetweenDateTime(frId, fromDateTime, toDateTime, itemId);
+		
+		
+		return totalSellBetweenDate;
+	}
+
+	
+	
+
+
+	
 	
 	
 	

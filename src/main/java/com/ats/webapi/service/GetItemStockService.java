@@ -20,6 +20,49 @@ public interface GetItemStockService {
 	
 	PostFrItemStockDetail getOpeningStock( @Param("frId") int frId, @Param("currentMonth") int currentMonth, @Param("year") int year,@Param("itemId") int itemId , @Param("catId") int catId);
 
+	
+	
+
+	
+	// auto grn /gvn
+	
+	// current stock
+
+	int getTotalGrnGvnUptoDateTime(@Param("frId") int frId, @Param("fromDateTime") String fromDateTime, @Param("toDateTime") String toDateTime,
+			@Param("itemId") int itemId);
+
+	RegularSpecialStockCal	getTotalPurchaseUptoDateTime(@Param("frId") int frId, @Param("fromDateTime") String fromDateTime, @Param("toDateTime") String toDateTime,
+			@Param("itemId") int itemId);
+	
+	
+	
+	RegularSpecialStockCal getTotalSellUpToDateTime(@Param("frId") int frId, @Param("fromDateTime") String fromDateTime, @Param("toDateTime") String toDateTime,
+			@Param("itemId") int itemId);
+
+   //end of current stock
+	
+	
+	
+	
+	// purchase of particular date
+	
+	RegularSpecialStockCal getTotalPurchaseOfDate(@Param("frId") int frId, @Param("fromDate") String fromDate, @Param("itemId") int itemId);
+
+	
+	
+	// sell
+	
+	RegularSpecialStockCal getRegTotalSellBetweenDateTime(@Param("frId") int frId, @Param("fromDateTime") String fromDate, @Param("toDateTime") String toDate,
+			@Param("itemId") int itemId);
+
+	
+	
+	
+	
+	// grn/gvn
+	
+	
+	
 
 }
  
