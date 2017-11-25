@@ -13,7 +13,7 @@ public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConf
 	
 	
     
-	@Query(value = "SELECT t_bill_header.bill_no," + 
+	@Query(value = "SELECT t_bill_header.bill_no,t_bill_header.bill_date_time," + 
 			"t_bill_header.bill_date,t_bill_detail.item_id,m_item.item_name,t_bill_detail.grn_type," + 
 			"t_bill_detail.rate,t_bill_detail.mrp,t_bill_detail.bill_qty,t_bill_detail.bill_detail_no," + 
 			"t_bill_detail.bill_no,t_bill_detail.sgst_per,t_bill_detail.cgst_per,t_bill_detail.igst_per,"

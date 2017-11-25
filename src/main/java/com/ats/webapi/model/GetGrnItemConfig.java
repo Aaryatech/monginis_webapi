@@ -42,6 +42,8 @@ public class GetGrnItemConfig implements Serializable {
 	@Column(name="bill_no")
 	private int billNo;
 	
+	@Column(name="bill_date_time")
+	private String billDateTime;
 
 	@Column(name="rate")
 	private float rate;
@@ -220,18 +222,21 @@ public class GetGrnItemConfig implements Serializable {
 		this.autoGrnQty = autoGrnQty;
 	}
 
+	public String getBillDateTime() {
+		return billDateTime;
+	}
+
+	public void setBillDateTime(String billDateTime) {
+		this.billDateTime = billDateTime;
+	}
+
 	@Override
 	public String toString() {
 		return "GetGrnItemConfig [billDetailNo=" + billDetailNo + ", itemId=" + itemId + ", frId=" + frId
 				+ ", autoGrnQty=" + autoGrnQty + ", itemName=" + itemName + ", grnType=" + grnType + ", billNo="
-				+ billNo + ", rate=" + rate + ", billDate=" + billDate + ", mrp=" + mrp + ", billQty=" + billQty
-				+ ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", menuId=" + menuId
-				+ ", catId=" + catId + ", invoiceNo=" + invoiceNo + "]";
+				+ billNo + ", billDateTime=" + billDateTime + ", rate=" + rate + ", billDate=" + billDate + ", mrp="
+				+ mrp + ", billQty=" + billQty + ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer + ", igstPer="
+				+ igstPer + ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo=" + invoiceNo + "]";
 	}
-	
-	
-	
-
-	
 
 }

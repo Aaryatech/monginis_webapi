@@ -93,6 +93,8 @@ public class FrStockApiController {
 		System.out.println("inside rest getPurchaseAndSell : I/p : frId: "+frId);
 		System.out.println(" I/p : fromDate: "+fromDate);
 		System.out.println(" I/p : fromDateTime: "+fromDateTime);
+		System.out.println(" I/p : toDateTime: "+toDateTime);
+
 		System.out.println(" I/p : currentMonth: "+currentMonth);
 		System.out.println(" I/p : year: "+year);
 		
