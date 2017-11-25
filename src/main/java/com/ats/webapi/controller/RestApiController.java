@@ -578,7 +578,8 @@ public class RestApiController {
 
 	public @ResponseBody Info postGrnGvn(@RequestBody PostGrnGvnList postGrnGvnList)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
-
+		Info info = new Info();
+try {
 		System.out.println("inside rest Insert Grn Gvn ");
 		System.out.println("list== " + postGrnGvnList.toString());
 
@@ -586,7 +587,7 @@ public class RestApiController {
 
 		jsonGrnGvn = postGrnGvnService.saveGrnGvn(postGrnGvnList.getGrnGvn());
 
-		Info info = new Info();
+		
 
 		if (jsonGrnGvn != null) {
 
@@ -601,7 +602,10 @@ public class RestApiController {
 			info.setMessage("Error in Grn Gvn insertion : RestApi");
 
 		}
-
+}catch (Exception e) {
+	System.out.println("Error in gvn insert rest api "+e.getMessage());
+	e.printStackTrace();
+}
 		return info;
 
 	}
@@ -680,7 +684,7 @@ public class RestApiController {
 
 		orderService.updateBillStatus(orderId, status);
 
-		return "resulted ";
+		return "success ";
 
 	}
 
