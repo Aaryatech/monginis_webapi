@@ -614,9 +614,11 @@ try {
 	public @ResponseBody GetGrnItemConfigList getGrnItemConfig(@RequestParam("frId") int frId) {
 		System.out.println("inside rest");
 		GetGrnItemConfigList grnItemConfigList=null;
-		java.util.Date cDate = new java.util.Date(Calendar.getInstance().getTime().getTime());
 		
+		try {
+		//java.util.Date cDate = new java.util.Date(Calendar.getInstance().getTime().getTime());
 		
+			java.util.Date cDate = new java.util.Date();
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(cDate);
 		
@@ -652,13 +654,24 @@ try {
 
 		    else {
 		    	
-		    	currentDate=new java.util.Date(Calendar.getInstance().getTime().getTime());
+		    	currentDate=new java.util.Date();
 		    	
-		    }
+		    	
 		    
-		    grnItemConfigList = getGrnItemConfigService.getAllGrnItemConfiguration(currentDate, frId);
+		    	//String s=dateFormat2.format(currentDate);
+		    
+		    	System.out.println("current Date in else "+ currentDate);
+		    }
+			DateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd");
+		    grnItemConfigList = getGrnItemConfigService.getAllGrnItemConfiguration(dateFormat2.format(currentDate), frId);
 
 			System.out.println("grn Item config  with Rest: "+grnItemConfigList.toString());
+			
+		}catch (Exception e) {
+			
+			System.out.println("rest Exce for Getting grn Item Conf "+e.getMessage());
+			e.printStackTrace();
+		}
 
 		return grnItemConfigList;
 

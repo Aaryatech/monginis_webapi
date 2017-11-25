@@ -24,15 +24,16 @@ public class GetGrnItemConfigServiceImpl implements GetGrnItemConfigService {
 	
 
 	@Override
-	public GetGrnItemConfigList getAllGrnItemConfiguration(Date cDate,int frId) {
+	public GetGrnItemConfigList getAllGrnItemConfiguration(String cDate,int frId) {
 	
 		GetGrnItemConfigList getGrnItemConfigList=new GetGrnItemConfigList();
 		
 		Info info=new Info();
+		try {
 		
 		List<GetGrnItemConfig> getGrnItemConfigs=grnItemConfigRepository.getAllGrnItemConfig(cDate, frId);
 		
-		if(getGrnItemConfigs!=null) {
+		if(!getGrnItemConfigs.isEmpty()) {
 			
 			getGrnItemConfigList.setGetGrnItemConfigs(getGrnItemConfigs);
 			
@@ -50,6 +51,10 @@ public class GetGrnItemConfigServiceImpl implements GetGrnItemConfigService {
 		}
 		
 		getGrnItemConfigList.setInfo(info);
+		}
+		catch (Exception e) {
+			System.out.println("exce in service Impl get Grn Item Conf");
+		}
 		
 	return getGrnItemConfigList;
 	

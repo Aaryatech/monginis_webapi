@@ -23,7 +23,7 @@ public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConf
 			"AND t_bill_detail.item_id=m_item.id AND t_bill_detail.grn_type !=3 AND "
 			+ "t_bill_detail.expiry_date=:cDate AND t_bill_detail.is_grngvn_applied=0", nativeQuery = true)
 	
-	public List<GetGrnItemConfig> getAllGrnItemConfig(@Param("cDate") Date cDate,@Param("frId") int frId);
+	public List<GetGrnItemConfig> getAllGrnItemConfig(@Param("cDate") String cDate,@Param("frId") int frId);
 
 	
 	

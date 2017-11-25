@@ -7,7 +7,7 @@ import com.ats.webapi.model.GetGrnItemConfigList;
 public interface GetGrnItemConfigService {
 	
 	
-	GetGrnItemConfigList getAllGrnItemConfiguration(Date cDate,int frId);
+	GetGrnItemConfigList getAllGrnItemConfiguration(String cDate,int frId);
 	
 	GetGrnItemConfigList getGvnItemConfig(int billNo);
 
