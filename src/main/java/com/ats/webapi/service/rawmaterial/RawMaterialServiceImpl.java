@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
-import com.ats.webapi.model.Info;
-import com.ats.webapi.model.SupplierMaster.Transporter;
+import com.ats.webapi.model.Info; 
+import com.ats.webapi.model.rawmaterial.GetRawMaterialByGroup;
 import com.ats.webapi.model.rawmaterial.GetRmItemCategory;
 import com.ats.webapi.model.rawmaterial.GetRmItemSubCat;
+import com.ats.webapi.model.rawmaterial.GetUomAndTax;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialUom;
@@ -19,11 +20,15 @@ import com.ats.webapi.model.rawmaterial.RmItemCategory;
 import com.ats.webapi.model.rawmaterial.RmItemGroup;
 import com.ats.webapi.model.rawmaterial.RmItemSubCatList;
 import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
+import com.ats.webapi.model.rawmaterial.RmRateVerification;
 import com.ats.webapi.repository.RmItemCategoryRepository;
 import com.ats.webapi.repository.RmItemGroupRepostitory;
 import com.ats.webapi.repository.RmItemSubCategoryRepository;
+import com.ats.webapi.repository.RmRateVerificationRepository;
+import com.ats.webapi.repository.GetRawMaterialByGroupRepository;
 import com.ats.webapi.repository.GetRmItemCatRepository;
 import com.ats.webapi.repository.GetRmItemSubCatRepository;
+import com.ats.webapi.repository.GetUomAndTaxRepository;
 import com.ats.webapi.repository.RawMaterialDetailsRepository;
 import com.ats.webapi.repository.RawMaterialTaxDetailsRepository;
 import com.ats.webapi.repository.RawMaterialUomRepository;
@@ -55,6 +60,15 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	
 	@Autowired
 	RawMaterialTaxDetailsRepository rawMaterialTaxDetailsRepository;
+	
+	@Autowired
+	RmRateVerificationRepository rmRateVerificationRepository;
+	
+	@Autowired
+	GetRawMaterialByGroupRepository getRawMaterialByGroupRepository;
+	
+	@Autowired
+	GetUomAndTaxRepository getUomAndTaxRepository;
 	
 	@Override
 	public RmItemCatList getRmItemCategories() {
@@ -407,4 +421,73 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		}
 		return rawMaterialTaxDetailsList;
 	}
+
+	@Override
+	public RmRateVerification getRmRateTaxVerification(int suppId, int rmId) {
+	
+		RmRateVerification rmRateVerification=rmRateVerificationRepository.getRmTaxVer(suppId, rmId);
+		
+		if(rmRateVerification!=null)
+		{
+			System.out.println("Verification : "+rmRateVerification.toString());
+		}
+		else
+		{
+			System.out.println("Error in Rate Verification or not found ");
+			
+		}
+		return rmRateVerification;
+		
+	}
+
+	@Override
+	public RmRateVerification postRmRateVerification(RmRateVerification rmRateVerification) {
+		RmRateVerification rmRateVerify=rmRateVerificationRepository.save(rmRateVerification);
+		return rmRateVerify;
+	}
+
+	@Override
+	public List<GetRawMaterialByGroup> getRawMaterialDetailByGroup(int grpId) {
+		List<GetRawMaterialByGroup> getRawMaterialByGroupList=getRawMaterialByGroupRepository.getRmByGroup(grpId);
+		if(getRawMaterialByGroupList!=null)
+		{
+			System.out.println("rawMaterialDetailsList is: "+getRawMaterialByGroupList.toString());
+		}
+		else
+		{
+			System.out.println("Problem in getting RM Details  ");
+		}
+		return getRawMaterialByGroupList;
+	}
+
+	@Override
+	public RawMaterialTaxDetails insertRmTax(RawMaterialTaxDetails rawMaterialTaxDetails) {
+		
+		RawMaterialTaxDetails rawMaterialTax=rawMaterialTaxDetailsRepository.save(rawMaterialTaxDetails);
+		return rawMaterialTax;
+		
+	}
+
+	@Override
+	public RawMaterialUom insertRmUom(RawMaterialUom rawMaterialUom) {
+		RawMaterialUom rMUom=rawMaterialUomRepository.save(rawMaterialUom);
+		return rMUom;
+		
+	}
+
+	@Override
+	public GetUomAndTax getUomAndTax(int rmId) {
+		GetUomAndTax getUomAndTax=getUomAndTaxRepository.getUomTax(rmId);
+		
+		if(getUomAndTax!=null)
+		{
+			System.out.println("List is : "+getUomAndTax.toString());
+	}
+	else
+	{
+		System.out.println("Not found ");
+	}
+		return getUomAndTax;
+	}
+	
 }

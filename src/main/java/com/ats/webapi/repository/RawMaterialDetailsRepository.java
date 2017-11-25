@@ -23,4 +23,6 @@ public interface RawMaterialDetailsRepository extends JpaRepository<RawMaterialD
 	@Modifying
 	@Query(" UPDATE RawMaterialDetails SET delStatus=1 WHERE rmId=:rmId ")
 	int deleteRawMaterial(@Param("rmId") int rmId);
+	
+	List<RawMaterialDetails> findByGrpIdAndDelStatus(int grpId, int delStatus);
 }

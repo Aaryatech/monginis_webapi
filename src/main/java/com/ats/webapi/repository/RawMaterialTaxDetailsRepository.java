@@ -9,5 +9,7 @@ import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetails;
 public interface RawMaterialTaxDetailsRepository extends JpaRepository<RawMaterialTaxDetails, Integer>{
 	
 	List<RawMaterialTaxDetails> findAll();
+	
+	RawMaterialTaxDetails save(RawMaterialTaxDetails rawMaterialTaxDetails);
 
 }

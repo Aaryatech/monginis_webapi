@@ -6,6 +6,8 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.rawmaterial.GetRawMaterialByGroup;
+import com.ats.webapi.model.rawmaterial.GetUomAndTax;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialUom;
@@ -14,6 +16,7 @@ import com.ats.webapi.model.rawmaterial.RmItemCategory;
 import com.ats.webapi.model.rawmaterial.RmItemGroup;
 import com.ats.webapi.model.rawmaterial.RmItemSubCatList;
 import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
+import com.ats.webapi.model.rawmaterial.RmRateVerification;
 
 @Service
 public interface RawMaterialService {
@@ -51,6 +54,18 @@ public interface RawMaterialService {
 	List<RawMaterialUom> getAllUom();
 
 	List<RawMaterialTaxDetails> getAllRmTax();
+
+	RmRateVerification getRmRateTaxVerification(int suppId, int rmId);
+
+	RmRateVerification postRmRateVerification(RmRateVerification rmRateVerification);
+
+	List<GetRawMaterialByGroup> getRawMaterialDetailByGroup(int grpId);
+
+	RawMaterialTaxDetails insertRmTax(RawMaterialTaxDetails rawMaterialTaxDetails);
+
+	RawMaterialUom insertRmUom(RawMaterialUom rawMaterialUom);
+
+	GetUomAndTax getUomAndTax(int rmId);
 	
 	
 }

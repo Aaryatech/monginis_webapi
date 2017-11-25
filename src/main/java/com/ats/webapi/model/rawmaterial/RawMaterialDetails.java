@@ -32,8 +32,8 @@ public class RawMaterialDetails {
 	@Column(name="sub_cat_id")
 	private int subCatId;
 	
-	@Column(name="rm_uom")
-	private String rmUom;
+	@Column(name="rm_uom_id")
+	private int rmUomId;
 	
 	@Column(name="rm_specification")
 	private String rmSpecification;
@@ -51,8 +51,8 @@ public class RawMaterialDetails {
 	@Column(name="rm_rate")
 	private int rmRate;
 	
-	@Column(name="rm_gst_per")
-	private int rmGstPer;
+	@Column(name="tax_id")
+	private int rmTaxId;
 	
 	@Column(name="rm_min_qty")
 	private int rmMinQty;
@@ -106,13 +106,7 @@ public class RawMaterialDetails {
 		this.rmCode = rmCode;
 	}
 
-	public String getRmUom() {
-		return rmUom;
-	}
-
-	public void setRmUom(String rmUom) {
-		this.rmUom = rmUom;
-	}
+	 
 
 	public String getRmSpecification() {
 		return rmSpecification;
@@ -154,13 +148,9 @@ public class RawMaterialDetails {
 		this.rmRate = rmRate;
 	}
 
-	public int getRmGstPer() {
-		return rmGstPer;
-	}
+	 
 
-	public void setRmGstPer(int rmGstPer) {
-		this.rmGstPer = rmGstPer;
-	}
+	 
 
 	public int getRmMinQty() {
 		return rmMinQty;
@@ -285,16 +275,36 @@ public class RawMaterialDetails {
 		this.subCatId = subCatId;
 	}
 
+	public int getRmTaxId() {
+		return rmTaxId;
+	}
+
+	public void setRmTaxId(int rmTaxId) {
+		this.rmTaxId = rmTaxId;
+	}
+
+	public int getRmUomId() {
+		return rmUomId;
+	}
+
+	public void setRmUomId(int rmUomId) {
+		this.rmUomId = rmUomId;
+	}
+
 	@Override
 	public String toString() {
 		return "RawMaterialDetails [rmId=" + rmId + ", rmName=" + rmName + ", rmCode=" + rmCode + ", grpId=" + grpId
-				+ ", catId=" + catId + ", subCatId=" + subCatId + ", rmUom=" + rmUom + ", rmSpecification="
+				+ ", catId=" + catId + ", subCatId=" + subCatId + ", rmUomId=" + rmUomId + ", rmSpecification="
 				+ rmSpecification + ", rmIcon=" + rmIcon + ", rmWeight=" + rmWeight + ", rmPackQty=" + rmPackQty
-				+ ", rmRate=" + rmRate + ", rmGstPer=" + rmGstPer + ", rmMinQty=" + rmMinQty + ", rmMaxQty=" + rmMaxQty
+				+ ", rmRate=" + rmRate + ", rmTaxId=" + rmTaxId + ", rmMinQty=" + rmMinQty + ", rmMaxQty=" + rmMaxQty
 				+ ", rmRolQty=" + rmRolQty + ", rmOpRate=" + rmOpRate + ", rmOpQty=" + rmOpQty + ", rmReceivedQty="
 				+ rmReceivedQty + ", rmIssQty=" + rmIssQty + ", rmRejQty=" + rmRejQty + ", rmCloQty=" + rmCloQty
 				+ ", rmIsCritical=" + rmIsCritical + ", delStatus=" + delStatus + "]";
 	}
+
+	 
+	 
+	 
 
  
  

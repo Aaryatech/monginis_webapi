@@ -10,4 +10,5 @@ public interface RawMaterialUomRepository extends JpaRepository<RawMaterialUom, 
 	
 	List<RawMaterialUom> findAll();
 
+	RawMaterialUom save(RawMaterialUom rawMaterialUom);
 }
