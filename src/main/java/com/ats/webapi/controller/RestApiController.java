@@ -121,6 +121,7 @@ import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeaderList;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
+import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 import com.ats.webapi.service.AllFrIdNameService;
 import com.ats.webapi.service.BillDetailUpdateService;
 import com.ats.webapi.service.CategoryService;
@@ -364,6 +365,37 @@ public class RestApiController {
 	
 	@Autowired
 	GetAllRemarkService getAllRemarkService;
+	
+	@Autowired
+	UpdateSeetingForPBRepo updateSeetingForPBRepo;
+	
+	
+	@RequestMapping(value = { "/updateSeetingForPB" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateSeetingForPB(@RequestParam("settingValue") int  settingValue,
+			@RequestParam("settingKey") String  settingKey) {
+						
+		Info info=new Info();
+		
+		int result=updateSeetingForPBRepo.updateSeetingForPurBill(settingValue, settingKey);
+		
+		
+		if(result>0) {
+			
+			info.setError(false);
+			info.setMessage("Setting for Pur Bill updated successfully");
+		}
+		
+		else {
+			
+			info.setError(true);
+			info.setMessage("Error: updating setting table failed for pur Bill");
+		}
+		
+		return info;
+		
+	}
+	
+	
 	
 	
 	@RequestMapping(value = "/getAllRemarks", method = RequestMethod.GET)

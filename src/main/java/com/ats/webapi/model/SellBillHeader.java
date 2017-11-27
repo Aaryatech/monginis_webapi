@@ -76,16 +76,16 @@ public class SellBillHeader implements Serializable{
 	private int DelStatus;
 
 	@Column(name="bill_type")
-	private int billType;
+	private char billType;
 
 	
 	
 
-	public int getBillType() {
+	public char getBillType() {
 		return billType;
 	}
 
-	public void setBillType(int billType) {
+	public void setBillType(char billType) {
 		this.billType = billType;
 	}
 

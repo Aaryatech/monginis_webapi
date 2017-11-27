@@ -37,7 +37,7 @@ public class PostBillHeader implements Serializable {
 	private int taxApplicable;
 	
 	@Column(name="invoice_no")
-	private int invoiceNo;
+	private String invoiceNo;
 	
 	@Column(name="bill_date")
 	private Date billDate;
@@ -94,13 +94,15 @@ public class PostBillHeader implements Serializable {
 		this.billNo = billNo;
 	}
 
-	public int getInvoiceNo() {
+	
+	public String getInvoiceNo() {
 		return invoiceNo;
 	}
 
-	public void setInvoiceNo(int invoiceNo) {
+	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
+
 	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getBillDate() {
 		return billDate;
