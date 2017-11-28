@@ -16,9 +16,11 @@ import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.rawmaterial.GetRawMaterialByGroup;
+import com.ats.webapi.model.rawmaterial.GetRawMaterialDetailList;
 import com.ats.webapi.model.rawmaterial.GetUomAndTax;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetails;
+import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetailsList;
 import com.ats.webapi.model.rawmaterial.RawMaterialUom;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
 import com.ats.webapi.model.rawmaterial.RmItemCategory;
@@ -294,5 +296,52 @@ public class RawMaterialApiCotroller {
 		GetUomAndTax getUomAndTax=rawMaterialService.getUomAndTax( rmId);
 		return getUomAndTax;
 	}
+	
+	@RequestMapping(value = { "/getAllRawMaterialList" }, method = RequestMethod.GET)
+	public @ResponseBody GetRawMaterialDetailList getAllRawMaterialList()
+	{
+		List<RawMaterialDetails> rawMaterialDetails=rawMaterialService.getAllRawMaterial();
+		GetRawMaterialDetailList rawMaterialDetailsList=new GetRawMaterialDetailList();
+		rawMaterialDetailsList.setRawMaterialDetailsList(rawMaterialDetails);
+		Info info=new Info();
+		if(rawMaterialDetails!=null)
+		{
+			info.setError(false);
+			info.setMessage("successFully");
+			rawMaterialDetailsList.setInfo(info);
+		}
+		else
+		{
+		 
+				info.setError(true);
+				info.setMessage("unsuccessFully");
+				rawMaterialDetailsList.setInfo(info);
+			 
+		}
+		return rawMaterialDetailsList;
+		 
+		
+	}
+	
+	@RequestMapping(value = { "/getAllRmTaxList" }, method = RequestMethod.GET)
+	public @ResponseBody RawMaterialTaxDetailsList getAllRmTaxList()
+	{
+		List<RawMaterialTaxDetails> rawMaterialTaxDetails=rawMaterialService.getAllRmTax();
+		RawMaterialTaxDetailsList rawMaterialTaxDetailsList=new RawMaterialTaxDetailsList();
+		rawMaterialTaxDetailsList.setRawMaterialTaxDetailsList(rawMaterialTaxDetails);
+		Info info=new Info();
+		if(rawMaterialTaxDetailsList!=null)
+		{
+			info.setError(false);
+			info.setMessage("successfully");
+		}
+		else
+		{
+			info.setError(true);
+			info.setMessage("unsuccessfully");
+		}
+		return rawMaterialTaxDetailsList;
+	}
+	
 	
 }
