@@ -13,140 +13,154 @@ import com.ats.webapi.repository.GetGrnGvnDetailsRepository;
 
 @Service
 public class GetGrnGvnDetailServiceImpl implements GetGrnGvnDetailService {
-	
+
 	@Autowired
 	GetGrnGvnDetailsRepository getGrnGvnDetailsRepository;
 
 	@Override
 	public GetGrnGvnDetailsList getGrnDetails(String fromDate, String toDate) {
-		
-		GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
-		
-		List<GetGrnGvnDetails> grnGvnDetails=getGrnGvnDetailsRepository.getAllGrnDetails(fromDate, toDate);
-		
-		Info info=new Info();
-		
-		
-		if(grnGvnDetails!=null) {
-			
-			grnGvnDetailsList.setGrnGvnDetails(grnGvnDetails);
-			
-			info.setError(false);
-			info.setMessage("received :success grn Gvn details ");
-		
+
+		GetGrnGvnDetailsList grnGvnDetailsList = new GetGrnGvnDetailsList();
+
+		try {
+
+			List<GetGrnGvnDetails> grnGvnDetails = getGrnGvnDetailsRepository.getAllGrnDetails(fromDate, toDate);
+
+			Info info = new Info();
+
+			if (grnGvnDetails != null) {
+
+				grnGvnDetailsList.setGrnGvnDetails(grnGvnDetails);
+
+				info.setError(false);
+				info.setMessage("received :success grn Gvn details ");
+
+			}
+
+			else {
+
+				info.setError(true);
+				info.setMessage(" Error :failed to get grn Gvn Details ");
+
+			}
+
+			grnGvnDetailsList.setInfo(info);
+
+		} catch (Exception e) {
+			System.out.println("Exce in getting grnGvn Details " + e.getMessage());
+			e.printStackTrace();
 		}
-		
-		else {
-			
-			info.setError(true);
-			info.setMessage(" Error :failed to get grn Gvn Details "  );
-			
-		}
-		
-		
-		grnGvnDetailsList.setInfo(info);
-		
-	return grnGvnDetailsList;
+
+		return grnGvnDetailsList;
 	}
 
 	@Override
 	public GetGrnGvnDetailsList getGvnDetails(String fromDate, String toDate) {
-		
-		
-		
-GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
-		
-		List<GetGrnGvnDetails> grnGvnDetails=getGrnGvnDetailsRepository.getAllGvnDetails(fromDate, toDate);
-		
-		Info info=new Info();
-		
-		
-		if(grnGvnDetails!=null) {
+
+		GetGrnGvnDetailsList grnGvnDetailsList = new GetGrnGvnDetailsList();
+
+		try {
+
+			List<GetGrnGvnDetails> grnGvnDetails = getGrnGvnDetailsRepository.getAllGvnDetails(fromDate, toDate);
+
+			Info info = new Info();
+
+			if (grnGvnDetails != null) {
+
+				grnGvnDetailsList.setGrnGvnDetails(grnGvnDetails);
+
+				info.setError(false);
+				info.setMessage("received :success grn Gvn details ");
+
+			}
+
+			else {
+
+				info.setError(true);
+				info.setMessage(" Error :failed to get grn Gvn Details ");
+
+			}
+
+			grnGvnDetailsList.setInfo(info);
 			
-			grnGvnDetailsList.setGrnGvnDetails(grnGvnDetails);
-			
-			info.setError(false);
-			info.setMessage("received :success grn Gvn details ");
-		
+		} catch (Exception e) {
+			System.out.println("Exce in getting grnGvn Details " + e.getMessage());
+			e.printStackTrace();
 		}
-		
-		else {
-			
-			info.setError(true);
-			info.setMessage(" Error :failed to get grn Gvn Details "  );
-			
-		}
-		
-		
-		grnGvnDetailsList.setInfo(info);
-		
-	return grnGvnDetailsList;
-		
+		return grnGvnDetailsList;
+
 	}
 
 	@Override
 	public GetGrnGvnDetailsList getFrGrnDetails(String fromDate, String toDate, List<String> frId) {
-GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
 		
-		List<GetGrnGvnDetails> grnGvnDetails=getGrnGvnDetailsRepository.getFrGrnDetails(fromDate, toDate, frId);
-		
-		Info info=new Info();
-		
-		
-		if(grnGvnDetails!=null) {
-			
+		GetGrnGvnDetailsList grnGvnDetailsList = new GetGrnGvnDetailsList();
+		try {
+
+		List<GetGrnGvnDetails> grnGvnDetails = getGrnGvnDetailsRepository.getFrGrnDetails(fromDate, toDate, frId);
+
+		Info info = new Info();
+
+		if (grnGvnDetails != null) {
+
 			grnGvnDetailsList.setGrnGvnDetails(grnGvnDetails);
-			
+
 			info.setError(false);
 			info.setMessage("received :success grn Gvn details ");
-		
+
 		}
-		
+
 		else {
-			
+
 			info.setError(true);
-			info.setMessage(" Error :failed to get grn Gvn Details "  );
-			
+			info.setMessage(" Error :failed to get grn Gvn Details ");
+
 		}
-		
-		
+
 		grnGvnDetailsList.setInfo(info);
-		
-	return grnGvnDetailsList;
+		}catch (Exception e) {
+			System.out.println("Exce in getting grnGvn Details "+e.getMessage());
+			e.printStackTrace();
+		}
+
+		return grnGvnDetailsList;
 	}
 
 	@Override
 	public GetGrnGvnDetailsList getFrGvnDetails(String fromDate, String toDate, List<String> frId) {
+
+		GetGrnGvnDetailsList grnGvnDetailsList = new GetGrnGvnDetailsList();
 		
+		try {
+
+		List<GetGrnGvnDetails> grnGvnDetails = getGrnGvnDetailsRepository.getFrGvnDetails(fromDate, toDate, frId);
+
+		Info info = new Info();
+
+		if (grnGvnDetails != null) {
+
+			grnGvnDetailsList.setGrnGvnDetails(grnGvnDetails);
+
+			info.setError(false);
+			info.setMessage("received :success grn Gvn details ");
+
+		}
+
+		else {
+
+			info.setError(true);
+			info.setMessage(" Error :failed to get grn Gvn Details ");
+
+		}
+
+		grnGvnDetailsList.setInfo(info);
 		
-		
-		GetGrnGvnDetailsList grnGvnDetailsList=new GetGrnGvnDetailsList();
-				
-				List<GetGrnGvnDetails> grnGvnDetails=getGrnGvnDetailsRepository.getFrGvnDetails(fromDate, toDate, frId);
-				
-				Info info=new Info();
-				
-				
-				if(grnGvnDetails!=null) {
-					
-					grnGvnDetailsList.setGrnGvnDetails(grnGvnDetails);
-					
-					info.setError(false);
-					info.setMessage("received :success grn Gvn details ");
-				
-				}
-				
-				else {
-					
-					info.setError(true);
-					info.setMessage(" Error :failed to get grn Gvn Details "  );
-					
-				}
-				
-				
-				grnGvnDetailsList.setInfo(info);
-				
-			return grnGvnDetailsList;
+		}catch (Exception e) {
+			System.out.println("Exce in getting grnGvn Details "+e.getMessage());
+			e.printStackTrace();
+		}
+
+		return grnGvnDetailsList;
 	}
 
 }

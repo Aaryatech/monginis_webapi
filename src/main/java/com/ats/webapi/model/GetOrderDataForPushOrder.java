@@ -24,6 +24,9 @@ public class GetOrderDataForPushOrder implements Serializable {
 	
 	@Column(name="order_qty")
 	int orderQty;
+	
+	@Column(name="fr_id")
+	int frId;
 
 
 	public int getOrderId() {
@@ -56,13 +59,19 @@ public class GetOrderDataForPushOrder implements Serializable {
 	}
 
 
+	public int getFrId() {
+		return frId;
+	}
+
+
+	public void setFrId(int frId) {
+		this.frId = frId;
+	}
+
 	@Override
 	public String toString() {
-		return "GetOrderDataForPushOrder [orderId=" + orderId + ", itemId=" + itemId + ", orderQty=" + orderQty + "]";
+		return "GetOrderDataForPushOrder [orderId=" + orderId + ", itemId=" + itemId + ", orderQty=" + orderQty
+				+ ", frId=" + frId + "]";
 	}
-	
-	
-	
-	
 
 }

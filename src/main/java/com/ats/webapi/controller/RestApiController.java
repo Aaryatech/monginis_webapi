@@ -437,8 +437,8 @@ public class RestApiController {
 
 	}
 
-	@RequestMapping(value = "/getOrderDataForPushOrder", method = RequestMethod.GET)
-	public @ResponseBody GetOrderDataForPushOrderList getOrderDataForPushOrder() {
+	@RequestMapping(value = "/getOrderDataForPushOrder", method = RequestMethod.POST)
+	public @ResponseBody GetOrderDataForPushOrderList getOrderDataForPushOrder(@RequestParam("frIdList") List<String> frIdList) {
 		System.out.println("inside rest");
 		
 		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
@@ -446,7 +446,10 @@ public class RestApiController {
 		
 		System.out.println(" current date "+cDate);
 		
-		GetOrderDataForPushOrderList getOrderDataForPushOrderList=getOrderDataForPushOrderService.getOrderDataForPushOrder(cDate, grnType);
+		System.out.println(" frIdList  "+frIdList.toString());
+		
+		
+		GetOrderDataForPushOrderList getOrderDataForPushOrderList=getOrderDataForPushOrderService.getOrderDataForPushOrder(cDate, grnType, frIdList);
 		
 		return getOrderDataForPushOrderList;
 
@@ -907,10 +910,12 @@ try {
 
 		List<PostBillHeader> jsonBillHeader;
 		List<PostBillDetail> jsonBillDetail;
-
+		
+		Info info = new Info();
+		try {
 		jsonBillHeader = postBillDataService.saveBillHeader(postBillDataCommon.getPostBillHeadersList());
 
-		Info info = new Info();
+	
 
 		if (jsonBillHeader.size() > 0) {
 
@@ -925,7 +930,13 @@ try {
 			info.setMessage("Error in post bill header insertion : RestApi");
 
 		}
-
+		
+		}catch (Exception e) {
+			
+			System.out.println("Exc in insertBillData rest Api "+e.getMessage());
+			e.printStackTrace();
+		}
+		
 		return info;
 
 	}
@@ -1002,11 +1013,17 @@ try {
 	@RequestMapping(value = "/getBillHeader", method = RequestMethod.POST)
 	public @ResponseBody GetBillHeaderList getBillHeader(@RequestParam("frId") List<String> frId,
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+		GetBillHeaderList billHeaderList=null;
+		try {
 
 		fromDate = Common.convertToYMD(fromDate);
 		toDate = Common.convertToYMD(toDate);
-
-		GetBillHeaderList billHeaderList = getBillHeaderService.getBillHeader(frId, fromDate, toDate);
+			billHeaderList = getBillHeaderService.getBillHeader(frId, fromDate, toDate);
+		}catch (Exception e) {
+			System.out.println("Exc in getBillHeader Rest Api "+e.getMessage());
+			e.printStackTrace();
+		}
+		
 
 		return billHeaderList;
 
@@ -1015,11 +1032,18 @@ try {
 	@RequestMapping(value = "/getBillHeaderForAllFr", method = RequestMethod.POST)
 	public @ResponseBody GetBillHeaderList getBillHeaderForAllFr(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
+		
+		GetBillHeaderList billHeaderList=null;
+		try {
+				fromDate = Common.convertToYMD(fromDate);
+				toDate = Common.convertToYMD(toDate);
 
-		fromDate = Common.convertToYMD(fromDate);
-		toDate = Common.convertToYMD(toDate);
-
-		GetBillHeaderList billHeaderList = getBillHeaderService.getBillHeaderForAllFr(fromDate, toDate);
+				billHeaderList = getBillHeaderService.getBillHeaderForAllFr(fromDate, toDate);
+			}catch (Exception e) {
+				System.out.println("Exc in getBillHeader Rest Api "+e.getMessage());
+				e.printStackTrace();
+		}
+		
 
 		return billHeaderList;
 
@@ -3536,4 +3560,39 @@ try {
 			return info;
 
 		}
+		
+		
+		@RequestMapping(value = { "/frItemStockPost" }, method = RequestMethod.POST)
+		public @ResponseBody Info info(@RequestBody List<FrItemStockConfigurePost> frItemStockConfigurePosts)
+				throws ParseException, JsonParseException, JsonMappingException, IOException {
+
+			List<FrItemStockConfigurePost> jsonResult;
+			Info info = new Info();
+
+			try {
+
+			jsonResult = frItemStockConfigurePostService.saveFrItemStockConf(frItemStockConfigurePosts);
+
+
+			if (jsonResult.size() > 0) {
+
+				info.setError(false);
+				info.setMessage("fr Item stock Inserted Successfully");
+
+			}
+
+			else {
+				info.setError(true);
+				info.setMessage("Error in frItem Stock Insertion  : RestApi");
+			}
+			}catch (Exception e) {
+				
+				System.out.println("Exce in frItem Stock Insertion  : RestApi"+e.getMessage());
+				e.printStackTrace();
+			}
+
+			return info;
+
+		}
+
 }

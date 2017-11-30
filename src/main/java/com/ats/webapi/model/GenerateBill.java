@@ -21,6 +21,9 @@ public class GenerateBill {
 	@Column(name="fr_id")
 	int  frId;
 	
+	@Column(name="is_positive")
+	int  isPositive;
+	
 	@Column(name="menu_id")
 	int  menuId;
 	
@@ -242,6 +245,14 @@ public class GenerateBill {
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
+	}
+
+	public int getIsPositive() {
+		return isPositive;
+	}
+
+	public void setIsPositive(int isPositive) {
+		this.isPositive = isPositive;
 	}
 	
 	

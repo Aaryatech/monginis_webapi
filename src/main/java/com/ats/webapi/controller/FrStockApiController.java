@@ -229,9 +229,6 @@ public class FrStockApiController {
 		}
 	
 	
-	
-	
-	
 	@RequestMapping(value = "/getCurrentStock", method = RequestMethod.POST)
 	public @ResponseBody List<GetCurrentStockDetails>  getCurrentStock(@RequestParam("frId") int frId, @RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("currentMonth") int currentMonth,@RequestParam("year") int year,
@@ -430,38 +427,6 @@ public class FrStockApiController {
 	
 	
 
-	@RequestMapping(value = { "/frItemStockPost" }, method = RequestMethod.POST)
-	public @ResponseBody Info info(@RequestBody List<FrItemStockConfigurePost> frItemStockConfigurePosts)
-			throws ParseException, JsonParseException, JsonMappingException, IOException {
-
-		List<FrItemStockConfigurePost> jsonResult;
-
-		jsonResult = frItemStockConfigurePostService.saveFrItemStockConf(frItemStockConfigurePosts);
-
-		Info info = new Info();
-
-		if (jsonResult.size() > 0) {
-
-			info.setError(false);
-			info.setMessage("fr Item stock Inserted Successfully");
-
-		}
-
-		else {
-			info.setError(true);
-			info.setMessage("Error in frItem Stock Insertion  : RestApi");
-		}
-
-		return info;
-
-	}
-
 	
-	
-	
-
-	
-
-	
-	
+		
 }

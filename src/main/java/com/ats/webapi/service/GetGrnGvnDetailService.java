@@ -15,6 +15,4 @@ public interface GetGrnGvnDetailService {
 	
 	GetGrnGvnDetailsList getFrGvnDetails(String fromDate, String toDate, List<String> frId);
 	
-	
-	
 }
