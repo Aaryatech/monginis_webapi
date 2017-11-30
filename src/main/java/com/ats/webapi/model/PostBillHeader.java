@@ -71,6 +71,8 @@ public class PostBillHeader implements Serializable {
 	@Column(name="time")
 	private String time;
 	
+	@Column(name="bill_date_time")
+	private String billDateTime;
 	
 
 	@Transient
@@ -192,6 +194,14 @@ public class PostBillHeader implements Serializable {
 
 	public void setTime(String time) {
 		this.time = time;
+	}
+
+	public String getBillDateTime() {
+		return billDateTime;
+	}
+
+	public void setBillDateTime(String billDateTime) {
+		this.billDateTime = billDateTime;
 	}
 
 	

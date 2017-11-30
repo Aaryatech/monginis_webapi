@@ -121,6 +121,7 @@ import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeaderList;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
+import com.ats.webapi.repository.UpdatePBTimeRepo;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 import com.ats.webapi.service.AllFrIdNameService;
 import com.ats.webapi.service.BillDetailUpdateService;
@@ -368,6 +369,35 @@ public class RestApiController {
 	
 	@Autowired
 	UpdateSeetingForPBRepo updateSeetingForPBRepo;
+	
+	@Autowired
+	UpdatePBTimeRepo updatePBTimeRepo;
+	
+//This web api Not used Anywhere	
+	@RequestMapping(value = { "/updatePBTime" }, method = RequestMethod.POST)
+	public @ResponseBody Info updatePBTime(@RequestParam("billNo") int  billNo,
+			@RequestParam("time") String  time) {
+						
+		Info info=new Info();
+		
+		int result=updatePBTimeRepo.updateTimeForPurBill(time, billNo);
+		
+		if(result>0) {
+			
+			info.setError(false);
+			info.setMessage("time for Pur Bill updated successfully");
+		}
+		
+		else {
+			
+			info.setError(true);
+			info.setMessage("Error: updating time table failed for pur Bill");
+		}
+		
+		return info;
+		
+	}
+	
 	
 	
 	@RequestMapping(value = { "/updateSeetingForPB" }, method = RequestMethod.POST)

@@ -17,16 +17,20 @@ public class UpdateBillStatus {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="bill_no")
 	private int billNo;
-	
 	 
-	
+	@Column(name="time")
+	private String time;
+	 
+	@Column(name="bill_date_time")
+	private String billDateTime;
+	 
 	
 
 	@Column(name="tax_applicable")
 	private int taxApplicable;
 	
 	@Column(name="invoice_no")
-	private int invoiceNo;
+	private String invoiceNo;
 	
 	@Column(name="bill_date")
 	private String billDate;
@@ -72,11 +76,12 @@ public class UpdateBillStatus {
 		this.taxApplicable = taxApplicable;
 	}
 
-	public int getInvoiceNo() {
+	
+	public String getInvoiceNo() {
 		return invoiceNo;
 	}
 
-	public void setInvoiceNo(int invoiceNo) {
+	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
 
@@ -152,12 +157,21 @@ public class UpdateBillStatus {
 		this.remark = remark;
 	}
 
-	@Override
-	public String toString() {
-		return "UpdateBillStatus [billNo=" + billNo + ", taxApplicable=" + taxApplicable + ", invoiceNo=" + invoiceNo
-				+ ", billDate=" + billDate + ", frId=" + frId + ", frCode=" + frCode + ", grandTotal=" + grandTotal
-				+ ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", status=" + status + ", DelStatus="
-				+ DelStatus + ", remark=" + remark + "]";
+	public String getTime() {
+		return time;
 	}
+
+	public String getBillDateTime() {
+		return billDateTime;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	public void setBillDateTime(String billDateTime) {
+		this.billDateTime = billDateTime;
+	}
+
 	
 }
