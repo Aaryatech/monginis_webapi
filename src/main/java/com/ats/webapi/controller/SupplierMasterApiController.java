@@ -133,7 +133,7 @@ public class SupplierMasterApiController {
 		@RequestMapping(value = { "/saveTransporter" }, method = RequestMethod.POST)
 		public @ResponseBody ErrorMessage saveTransporter(@RequestBody Transporter transporter)
 		{
-			
+			System.out.println("Transporter:"+transporter.toString());
 			ErrorMessage errorMessage=suppilerMasterService.saveTransporter(transporter);
 			
 			return errorMessage;
