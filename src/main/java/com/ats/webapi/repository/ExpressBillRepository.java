@@ -16,6 +16,8 @@ public interface ExpressBillRepository extends JpaRepository<SellBillHeader, Int
 	
 	List<SellBillHeader> findByBillTypeAndGrandTotalAndFrId(char billType,float grandTotal,int frId);
 
-
+	
+	//function to get sellBillHeader to close a day
+	SellBillHeader getBysellBillNo(int sellBillNo);
 
 }

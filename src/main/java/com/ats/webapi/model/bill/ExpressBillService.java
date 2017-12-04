@@ -20,4 +20,7 @@ public interface ExpressBillService {
 
 	SellBillDetail saveSellBillDetail(SellBillDetail sellBillDetail);
 
+	
+	SellBillHeader getSellBillHeaderBysellBillNo(int sellBillNo);
+	
 }

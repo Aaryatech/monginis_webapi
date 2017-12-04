@@ -84,6 +84,28 @@ public class ExpressBillServiceImpl implements ExpressBillService{
 		return sellBillDetailRes;
 	}
 
+	@Override
+	public SellBillHeader getSellBillHeaderBysellBillNo(int sellBillNo) {
+		
+		SellBillHeader sellBillHeader=null;
+		
+		try {
+			
+				sellBillHeader=expressBillRepository.getBysellBillNo(sellBillNo);
+		 
+		}
+		catch (Exception e) {
+			
+			e.printStackTrace();
+			
+			System.out.println("Exception in getting sell Bill Header for Day Close " +e.getMessage());
+		}
+		
+	return sellBillHeader;
+	
+	
+	}
+
 	
 
 }

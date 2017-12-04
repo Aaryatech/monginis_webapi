@@ -270,7 +270,7 @@ public class FrStockApiController {
 		
 		try {
 		postFrItemStockDetail = getItemStockService.getOpeningStock(frId, currentMonth, year,itemId ,catId);
-			
+			System.out.println("fr stock response "+postFrItemStockDetail.toString());
 		GetCurrentStockDetails getCurrentStockDetails=new GetCurrentStockDetails();
 		
 		getCurrentStockDetails.setStockHeaderId(postFrItemStockDetail.getOpeningStockHeaderId());

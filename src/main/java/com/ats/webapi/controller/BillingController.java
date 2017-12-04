@@ -52,4 +52,23 @@ public class BillingController {
 		    
 			return SellBillDetailRes;
 	  }
+	
+	
+	@RequestMapping(value = { "/getSellBillHeaderForDayClose" }, method = RequestMethod.POST)
+	public @ResponseBody SellBillHeader getSellBillHeader(@RequestParam("sellBillNo") int sellBillNo) {
+		
+		SellBillHeader sellBillHeader=null;
+		
+		try {
+
+		 sellBillHeader=expressBillService.getSellBillHeaderBysellBillNo(sellBillNo);
+		 
+		}catch (Exception e) {
+			
+			System.out.println("Exce in getting sell Bill Header "+e.getMessage());
+			e.printStackTrace();
+			
+		}
+			return sellBillHeader;
+	  }
 }

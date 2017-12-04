@@ -71,11 +71,22 @@ public class PostBillDataServiceImpl implements PostBillDataService {
 				PostBillDetail billDetail = postBillDetailList.get(j);
 
 				billDetail.setBillNo(billNo);
+				
+				
+				if(billDetail.getOrderQty()==0) {
+					
+					
+					
+					System.out.println("order qty 0 received ");
+					
+					int  updateOrderStatus = orderRepository.updateBillStatus(billDetail.getOrderId(), 1);
+
+					
+				}
+				
+				else {
 
 				postBillDetailRepository.save(billDetail);
-				
-				
-				
 				
 				int res=0;
 				if (billDetail.getCatId() != 5) { 
@@ -100,6 +111,7 @@ public class PostBillDataServiceImpl implements PostBillDataService {
 			// postBillDetail.get(i).setBillNo(billNo);
 			// postBillDetailRepository.save(postBillDetail);
 
+		}
 		}
 
 		return postBillHeaders;
