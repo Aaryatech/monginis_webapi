@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.model.Info;
 import com.ats.webapi.model.SellBillDataCommon;
 import com.ats.webapi.model.SellBillDetail;
 import com.ats.webapi.model.SellBillDetailList;
@@ -70,5 +71,30 @@ public class BillingController {
 			
 		}
 			return sellBillHeader;
+	  }
+	
+	
+	
+	@RequestMapping(value = { "/deleteSellBillDetail" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSellBillDetail(@RequestParam("delStatus") int delStatus,
+			@RequestParam("sellBillDetailNo") int sellBillDetailNo) {
+
+		int result= expressBillService.deleteBillDetail(delStatus, sellBillDetailNo);
+		
+		Info info=new Info();
+		
+		if(result>0) {
+			
+			info.setError(false);
+			info.setMessage(" Sell Bill Detail Updated Successfully");
+			
+		}
+		else {
+			info.setError(true);
+			info.setMessage("Error: Sell Bill Detail update  failed");
+			
+			
+		}
+			return info;
 	  }
 }
