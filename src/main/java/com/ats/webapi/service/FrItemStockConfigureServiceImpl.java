@@ -37,4 +37,12 @@ public class FrItemStockConfigureServiceImpl implements FrItemStockConfigureServ
 		return productionTimeSlot;
 	}
 
+	@Override
+	public int findbykey(String key) {
+		
+		int valuebykey=frItemStockConfRepo.findBySettingKey(key);
+		return valuebykey;
+		
+	}
+
 }

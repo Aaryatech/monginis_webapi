@@ -10,5 +10,7 @@ public interface FrItemStockConfigureService {
 
 	public int findTotalAvailableSlot();
 	public int findProductionTimeSlot();
-
+	
+	public int findbykey(String key);
+ 
 }

@@ -15,7 +15,7 @@ public interface FrItemStockConfigureRepository extends JpaRepository<FrItemStoc
 
 	@Query(value="Select setting_value from t_setting where setting_key=:settingKey",nativeQuery=true)
 	public int findBySettingKey(@Param("settingKey")String settingKey);
-	
+
 	
 	
 
