@@ -12,9 +12,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.GetMaterialRecNoteList;
-import com.ats.webapi.model.MaterialRNoteResponse;
+
 import com.ats.webapi.model.MaterialRecNote;
 import com.ats.webapi.service.MaterialRcNote.MaterialRecNoteService;
 
@@ -27,7 +26,7 @@ public class MaterialReceiptNoteController {
 	
 	
 	@RequestMapping(value = { "/postMaterialRecNote" }, method = RequestMethod.POST)
-	public @ResponseBody ErrorMessage postMaterialRecNote(@RequestBody MaterialRecNote materialRecNote)
+	public @ResponseBody MaterialRecNote postMaterialRecNote(@RequestBody MaterialRecNote materialRecNote)
 	{
 		
 		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
@@ -49,9 +48,9 @@ public class MaterialReceiptNoteController {
 		}
         
 
-		ErrorMessage errorMessage = materialRecNoteService.postMaterialRecNote(materialRecNote);
-
-		return errorMessage;
+		MaterialRecNote materialRecNotes = materialRecNoteService.postMaterialRecNote(materialRecNote);
+		System.out.println(materialRecNotes.toString());
+		return materialRecNotes;
 
 	}
 

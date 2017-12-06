@@ -22,9 +22,13 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
 	
 	@Autowired
 	MaterialRNoteDetailRepository materialRNoteDetailRepository;
+
+	
+
+	
 	
 	@Override
-	public ErrorMessage postMaterialRecNote(MaterialRecNote materialRecNote) {
+	public MaterialRecNote postMaterialRecNote(MaterialRecNote materialRecNote) {
 
 		ErrorMessage errorMessage = null;
 		try {
@@ -33,6 +37,7 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
 		MaterialRecNote materialRecNotes=materialRecNoteRepository.save(materialRecNote);
 		
         int mrnId=materialRecNotes.getMrnId();
+        System.out.println(materialRecNotes.getGateEntryDate());
         
         for(MaterialRecNoteDetails materialRecNoteDetails:materialRecNotes.getMaterialRecNoteDetails())
         {
@@ -59,8 +64,9 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
       	     errorMessage.setError(true);
       	     errorMessage.setMessage("MaterialRecNote Insertion Failed.");
 		}
+		return materialRecNote;
 		
-		return errorMessage;
+		
 	}
 
 	@Override

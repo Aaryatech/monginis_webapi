@@ -189,11 +189,11 @@ public class MaterialRecNote implements Serializable{
 	public void setMrnNo(String mrnNo) {
 		this.mrnNo = mrnNo;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getGateEntryDate() {
 		return gateEntryDate;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setGateEntryDate(Date gateEntryDate) {
 		this.gateEntryDate = gateEntryDate;
 	}
@@ -230,12 +230,12 @@ public class MaterialRecNote implements Serializable{
 		this.lrNo = lrNo;
 	}
 	
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getLrDate() {
 		return lrDate;
 	}
 	
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setLrDate(Date lrDate) {
 		this.lrDate = lrDate;
 	}
@@ -346,12 +346,12 @@ public class MaterialRecNote implements Serializable{
 		this.poNo = poNo;
 	}
 	
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getPoDate() {
 		return poDate;
 	}
 	
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setPoDate(Date poDate) {
 		this.poDate = poDate;
 	}
@@ -372,12 +372,12 @@ public class MaterialRecNote implements Serializable{
 		this.storesRemark = storesRemark;
 	}
 	
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getInvBookDate() {
 		return invBookDate;
 	}
 	
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setInvBookDate(Date invBookDate) {
 		this.invBookDate = invBookDate;
 	}
@@ -390,12 +390,12 @@ public class MaterialRecNote implements Serializable{
 		this.invoiceNumber = invoiceNumber;
 	}
 
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getInvDate() {
 		return invDate;
 	}
 	
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setInvDate(Date invDate) {
 		this.invDate = invDate;
 	}

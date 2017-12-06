@@ -9,7 +9,7 @@ import com.ats.webapi.model.MaterialRecNote;
 @Service
 public interface MaterialRecNoteService {
 
-	ErrorMessage postMaterialRecNote(MaterialRecNote materialRecNote);
+	MaterialRecNote postMaterialRecNote(MaterialRecNote materialRecNote);
 
 	GetMaterialRecNoteList getMaterialRecNote();
 

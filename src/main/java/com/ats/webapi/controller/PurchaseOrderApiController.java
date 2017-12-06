@@ -9,11 +9,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.purchaseorder.GetPurchaseOrder;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderDetail;
+import com.ats.webapi.model.purchaseorder.PurchaseOrderDetailedList;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderHeader;
 import com.ats.webapi.model.purchaseorder.TransporterDetails;
 import com.ats.webapi.service.purchaseorder.PurchaseOrderService;
@@ -48,6 +51,28 @@ public class PurchaseOrderApiController {
 			Info info=purchaseOrderService.insertHeader(purchaseOrderHeader);
 		 
 			return info;
+		}
+		
+		@RequestMapping(value = { "/perchaseorderList" }, method = RequestMethod.POST)
+		public GetPurchaseOrder perchaseorderList(@RequestParam("suppId")int suppId)throws ParseException, JsonParseException, JsonMappingException, IOException 
+		{
+			GetPurchaseOrder getPurchaseOrder = purchaseOrderService.perchaseorderList(suppId);
+			
+			System.out.println(getPurchaseOrder);
+			return getPurchaseOrder;
+			
+			
+		}
+		
+		@RequestMapping(value = { "/perchaseorderdetailedList" }, method = RequestMethod.POST)
+		public PurchaseOrderDetailedList perchaseorderdetailedList(@RequestParam("poId")int poId)throws ParseException, JsonParseException, JsonMappingException, IOException 
+		{
+			PurchaseOrderDetailedList PurchaseOrderDetailedList = purchaseOrderService.purchaseOrderDetailedList(poId);
+			
+			
+			return PurchaseOrderDetailedList;
+			
+			
 		}
  
  

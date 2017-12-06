@@ -786,6 +786,18 @@ try {
 		return totalAvailableSlot;
 
 	}
+	
+	@RequestMapping(value = "/findvaluebykey", method = RequestMethod.POST)
+	public @ResponseBody int findvaluebykey(@RequestParam("key") String key) {
+
+		int value = frItemConfService.findbykey(key);
+
+		return value;
+
+	}
+	
+	
+	
 	@RequestMapping(value = "/getProductionTimeSlot", method = RequestMethod.GET)
 	public @ResponseBody int getProductionTimeSlot() {
 
