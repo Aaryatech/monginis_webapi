@@ -1,6 +1,7 @@
 package com.ats.webapi.model.rawmaterial;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -8,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="m_item_sf_header")
@@ -45,6 +47,18 @@ public class ItemSfHeader implements Serializable{
 
 	@Column(name="del_status")
 	private int delStatus;
+
+	
+	@Transient
+	List<ItemSfDetail> itemSfDetail;
+	
+	public List<ItemSfDetail> getItemSfDetail() {
+		return itemSfDetail;
+	}
+
+	public void setItemSfDetail(List<ItemSfDetail> itemSfDetail) {
+		this.itemSfDetail = itemSfDetail;
+	}
 
 	public int getSfId() {
 		return sfId;
@@ -133,8 +147,10 @@ public class ItemSfHeader implements Serializable{
 		return "ItemSfHeader [sfId=" + sfId + ", sfName=" + sfName + ", sfType=" + sfType + ", sfUomId=" + sfUomId
 				+ ", sfWeight=" + sfWeight + ", stockQty=" + stockQty + ", minLevelQty=" + minLevelQty
 				+ ", maxLevelQty=" + maxLevelQty + ", reorderLevelQty=" + reorderLevelQty + ", delStatus=" + delStatus
-				+ "]";
+				+ ", itemSfDetail=" + itemSfDetail + "]";
 	}
-    
+
+	
+	
 	
 }
