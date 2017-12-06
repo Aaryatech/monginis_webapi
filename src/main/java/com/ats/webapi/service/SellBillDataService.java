@@ -6,6 +6,6 @@ import com.ats.webapi.model.SellBillHeader;
 
 public interface SellBillDataService {
 
-	List<SellBillHeader> saveSellBillHeader(List<SellBillHeader> sellBillHeaderList);
+	SellBillHeader saveSellBillHeader(SellBillHeader sellBillHeader);
 
 }

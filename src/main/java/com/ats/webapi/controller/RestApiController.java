@@ -978,21 +978,21 @@ try {
 
 	@RequestMapping(value = { "/insertSellBillData" }, method = RequestMethod.POST)
 
-	public @ResponseBody List<SellBillHeader> sellBillData(@RequestBody SellBillDataCommon sellBillDataCommon)
+	public @ResponseBody SellBillHeader sellBillData(@RequestBody SellBillHeader sellBillHeader)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
 
-		System.out.println("Data Common " + sellBillDataCommon.toString());
+		System.out.println("Data for insert  " + sellBillHeader.toString());
 
-		List<SellBillHeader> jsonSellBillHeader;
-		List<SellBillDetail> jsonBillDetail;
+		SellBillHeader jsonSellBillHeader;
+		//List<SellBillDetail> jsonBillDetail;
 
-		jsonSellBillHeader = sellBillDataService.saveSellBillHeader(sellBillDataCommon.getSellBillHeaderList());
+		jsonSellBillHeader = sellBillDataService.saveSellBillHeader(sellBillHeader );
 
-		System.out.println("SellBillHeader data: " + sellBillDataCommon.getSellBillHeaderList());
+		System.out.println("SellBillHeader data: " + sellBillHeader.toString());
 
 		Info info = new Info();
 
-		if (jsonSellBillHeader.size() > 0) {
+		if (jsonSellBillHeader!=null) {
 
 			info.setError(false);
 			info.setMessage("Sell bill header inserted  Successfully");

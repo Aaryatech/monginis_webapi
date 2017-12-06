@@ -20,21 +20,22 @@ public class SellBillDataServiceImpl implements SellBillDataService{
 	@Autowired
 	SellBillDetailRepository sellBillDetailRepository;
 	
-	public List<SellBillHeader> saveSellBillHeader(List<SellBillHeader> sellBillHeaderList) {
+	public SellBillHeader saveSellBillHeader(SellBillHeader sellBillHeader) {
 		
 		
 
-		List<SellBillHeader> sellBillHeaders=new ArrayList<SellBillHeader>();
+		SellBillHeader sellBillHeaderRes=new SellBillHeader();
 		
-  for(int i=0;i<sellBillHeaderList.size();i++) {
+			 
 			
-			      sellBillHeaders=sellBillHeaderRepository.save(sellBillHeaderList);
+		sellBillHeaderRes=sellBillHeaderRepository.save(sellBillHeader);
 		
-		          int sellBillNo=sellBillHeaderList.get(i).getSellBillNo();
+		          int sellBillNo=sellBillHeaderRes.getSellBillNo();
 		
+		 
+		           List<SellBillDetail> sellBillDetailList=sellBillHeaderRes.getSellBillDetailsList();
 		
-		           List<SellBillDetail> sellBillDetailList=sellBillHeaderList.get(i).getSellBillDetailsList();
-		
+		           List<SellBillDetail> sellBillDetailRes=new ArrayList<SellBillDetail>();
 		       for(int j=0;j<sellBillDetailList.size();j++) {
 			
 		             	   SellBillDetail sellBillDetail=sellBillDetailList.get(j);
@@ -42,13 +43,13 @@ public class SellBillDataServiceImpl implements SellBillDataService{
 			               sellBillDetail.setSellBillNo(sellBillNo);
 			
 			
-			              SellBillDetail sellBillDetails=sellBillDetailRepository.save(sellBillDetail);
-			
+			               sellBillDetail=sellBillDetailRepository.save(sellBillDetail);
+			               sellBillDetailRes.add(sellBillDetail);
 		            }
 		
 	
-		}
-		return sellBillHeaders;
+		       sellBillHeaderRes.setSellBillDetailsList(sellBillDetailRes);
+		return sellBillHeaderRes;
 	}
 	
 
