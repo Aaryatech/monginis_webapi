@@ -18,7 +18,12 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.rawmaterial.GetRawMaterialByGroup;
 import com.ats.webapi.model.rawmaterial.GetRawMaterialDetailList;
 import com.ats.webapi.model.rawmaterial.GetUomAndTax;
+import com.ats.webapi.model.rawmaterial.ItemDetail;
+import com.ats.webapi.model.rawmaterial.ItemDetailList;
+import com.ats.webapi.model.rawmaterial.ItemSfHeader;
+import com.ats.webapi.model.rawmaterial.ItemSfHeaderList;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
+import com.ats.webapi.model.rawmaterial.RawMaterialDetailsList;
 import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetailsList;
 import com.ats.webapi.model.rawmaterial.RawMaterialUom;
@@ -155,10 +160,30 @@ public class RawMaterialApiCotroller {
 	
 	//------------------------------Get All RM Master-------------------------------------
 	@RequestMapping(value = { "/getAllRawMaterial" }, method = RequestMethod.GET)
-	public @ResponseBody List<RawMaterialDetails> getAllRawMaterial()
+	public @ResponseBody RawMaterialDetailsList getAllRawMaterial()
 	{
+		RawMaterialDetailsList rawMaterialDetails=new RawMaterialDetailsList();
+		ErrorMessage errorMessage;
 		List<RawMaterialDetails> rawMaterialDetailsList=rawMaterialService.getAllRawMaterial();
-		return rawMaterialDetailsList;
+		
+		if(rawMaterialDetailsList!=null)
+		{
+			errorMessage=new ErrorMessage();
+			errorMessage.setError(false);
+			errorMessage.setMessage("RM Details Found Successfully");
+			
+			rawMaterialDetails.setErrorMessage(errorMessage);
+			rawMaterialDetails.setRawMaterialDetailsList(rawMaterialDetailsList);
+		}
+		else
+		{
+			errorMessage=new ErrorMessage();
+			errorMessage.setError(true);
+			errorMessage.setMessage("RM Details Not Found");
+			
+			rawMaterialDetails.setErrorMessage(errorMessage);
+		}
+		return rawMaterialDetails;
 		 
 		
 	}
@@ -343,5 +368,99 @@ public class RawMaterialApiCotroller {
 		return rawMaterialTaxDetailsList;
 	}
 	
+	//-----------------------------------Insert Item Detail--------------------------
+		@RequestMapping(value = { "/saveItemDetail" }, method = RequestMethod.POST)
+		public @ResponseBody Info saveItemDetail(@RequestBody ItemDetail itemDetail)
+		{
+			ItemDetail iDetail=rawMaterialService.saveItemDetail(itemDetail);
+			Info info=new Info();
+			if(iDetail!=null)
+			{
+				info.setError(false);
+				info.setMessage("ItemDetail  inserted successFully");
+			}
+			else
+			{
+				info.setError(true);
+				info.setMessage("failed to insert ItemDetail");
+			}
+			return info;
+		}
+		
+		//----------------------------------END-------------------------------------
+		
+		//-----------------------------------Get Item Detail--------------------------
+				@RequestMapping(value = { "/getItemDetails" }, method = RequestMethod.GET)
+				public @ResponseBody ItemDetailList getItemDetails()
+				{
+					List<ItemDetail> iDetails=rawMaterialService.getItemDetails();
+					
+					ItemDetailList itemDetailList=new ItemDetailList();
+					
+					ErrorMessage errorMessage=new ErrorMessage();
+					if(iDetails!=null)
+					{
+						errorMessage.setError(false);
+						errorMessage.setMessage("ItemDetail List  Found successFully");
+						itemDetailList.setErrorMessage(errorMessage);
+						itemDetailList.setItemDetailList(iDetails);
+					}
+					else
+					{
+						errorMessage.setError(true);
+						errorMessage.setMessage("ItemDetail List Not Found.");
+						itemDetailList.setErrorMessage(errorMessage);
+					}
+					return itemDetailList;
+				}
+				
+		//---------------------------------------END------------------------------
+		//---------------------------------------Delete Item Detail------------------------------
+		
+		@RequestMapping(value = { "/deleteItemDetail" }, method = RequestMethod.POST)
+		public @ResponseBody Info deleteItemDetail(@RequestParam ("itemDetailId")int itemDetailId)
+		{
+					Info info=rawMaterialService.deleteItemDetail(itemDetailId);
+					return info;
+					
+		}	
+		//-----------------------------------------------------------------------------------
+
+	//--------------------------GetOneByItemDetailId--------------------------------------------------
+	@RequestMapping(value = { "/getItemDetail" }, method = RequestMethod.POST)
+	public @ResponseBody ItemDetail getItemDetail(@RequestParam("itemDetailId")int itemDetailId)
+		{
+					
+		ItemDetail itemDetailRes=rawMaterialService.getItemDetail(itemDetailId);
+					
+		return itemDetailRes;
+		}
+	//--------------------------END--------------------------------------------------	
 	
+	//-----------------------------------Get Item Detail--------------------------
+	@RequestMapping(value = { "/getItemSfHeaders" }, method = RequestMethod.GET)
+	public @ResponseBody ItemSfHeaderList getItemSfHeaders()
+	{
+		List<ItemSfHeader> itemSfHeaders=rawMaterialService.getItemSfHeaders();
+		
+		ItemSfHeaderList itemSfHeaderList=new ItemSfHeaderList();
+		
+		ErrorMessage errorMessage=new ErrorMessage();
+		if(itemSfHeaders!=null)
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("ItemSfHeader List  Found successFully");
+			itemSfHeaderList.setErrorMessage(errorMessage);
+			itemSfHeaderList.setItemSfHeaderList(itemSfHeaders);
+		}
+		else
+		{
+			errorMessage.setError(true);
+			errorMessage.setMessage("ItemSfHeader List Not Found.");
+			itemSfHeaderList.setErrorMessage(errorMessage);
+		}
+		return itemSfHeaderList;
+	}
+	
+//---------------------------------------END------------------------------
 }

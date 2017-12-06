@@ -1276,14 +1276,16 @@ try {
 
 	// For Getting List Of Special day Cake List by Current Date Between
 	// DeliveryFromDate to DeliveryToDate
-	@RequestMapping(value = "/getSpDayCkList", method = RequestMethod.GET)
-	public @ResponseBody ConfiguredSpDayCkResponse getSpDayCkList() {
+	
+	@RequestMapping(value = "/getSpDayCkList", method = RequestMethod.POST)
+	public @ResponseBody ConfiguredSpDayCkResponse getSpDayCkList(@RequestParam int frId) {
 
-		ConfiguredSpDayCkResponse configuredSpDayCkResponse = configureSpDayCakeService.getSpDayCkList();
+		ConfiguredSpDayCkResponse configuredSpDayCkResponse = configureSpDayCakeService.getSpDayCkList(frId);
 
 		return configuredSpDayCkResponse;
 
 	}
+
 
 	// getConfSpDayCake
 	@RequestMapping(value = "/getConfSpDayCake", method = RequestMethod.POST)

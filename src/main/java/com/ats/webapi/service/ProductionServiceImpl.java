@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.GetProductionDetail;
-
+import com.ats.webapi.model.GetProductionItemQty;
 import com.ats.webapi.model.PostFrItemStockDetail;
 import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.PostProductionDetail;
 import com.ats.webapi.model.PostProductionHeader;
 import com.ats.webapi.repository.GetProdQytRepository;
+import com.ats.webapi.repository.GetProductionItemQtyRepository;
+import com.ats.webapi.repository.MainMenuConfigurationRepository;
 import com.ats.webapi.repository.PostPoductionHeaderRepository;
 import com.ats.webapi.repository.PostProductionDetailRepository;
 
@@ -27,6 +29,12 @@ public class ProductionServiceImpl implements ProductionService{
 	
 	@Autowired
 	GetProdQytRepository getProdQytRepository;
+	
+	@Autowired 
+	MainMenuConfigurationRepository menuRepository;
+
+	@Autowired
+	GetProductionItemQtyRepository getProductionItemQtyRepository;
 	
 	@Override
 	public List<PostProductionHeader> saveProductionHeader(PostProductionHeader postProductionHeader) {
@@ -68,6 +76,24 @@ public class ProductionServiceImpl implements ProductionService{
 		
 		
 		return getProductionDetailList;
+	}
+
+
+	@Override
+	public List<Integer> getMenuIdsByCatId(int catId) {
+
+		List<Integer> menuList=menuRepository.findMenuIdByMainCatId(catId);
+		
+		return menuList;
+	}
+
+
+	@Override
+	public List<GetProductionItemQty> getProdQty(String strDate, int catId) {
+
+		List<GetProductionItemQty> prodItemQty=getProductionItemQtyRepository.findProdItemQty(strDate,catId);
+		
+		return prodItemQty;
 	}
 
 

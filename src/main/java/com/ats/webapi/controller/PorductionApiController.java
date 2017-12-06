@@ -18,6 +18,7 @@ import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.GetBillHeader;
 import com.ats.webapi.model.GetOrderItemQty;
 import com.ats.webapi.model.GetProductionDetail;
+import com.ats.webapi.model.GetProductionItemQty;
 import com.ats.webapi.model.GetRegSpCakeOrderQty;
 import com.ats.webapi.model.GetSellBillHeader;
 import com.ats.webapi.model.Info;
@@ -139,13 +140,37 @@ e.printStackTrace();
 
 
 		} catch (Exception e) {
-e.printStackTrace();
-			System.out.println("exception in order list rest controller" + e.getMessage());
+			
+              e.printStackTrace();
+			  System.out.println("exception in order list rest controller" + e.getMessage());
 		}
 		return getOrderItemQtyList;
 
 	}
-	
+	@RequestMapping(value = { "/getProduItemQty" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<GetProductionItemQty> getProdItemQty(@RequestParam int catId,@RequestParam String productionDate) {
+		
+		List<GetProductionItemQty> getProdItemQtyList=new ArrayList<GetProductionItemQty>();
+		try {
+			
+			System.out.println("date str :" + productionDate);
+
+			String strDate = Common.convertToYMD(productionDate);
+			System.out.println("Converted date " + strDate);
+
+		
+			getProdItemQtyList = productionService.getProdQty(strDate, catId);
+
+
+		} catch (Exception e) {
+			
+              e.printStackTrace();
+			  System.out.println("Exception in Prod Qty list Rest controller" + e.getMessage());
+		}
+		return getProdItemQtyList;
+
+	}
 	
 	@RequestMapping(value = { "/postProduction" }, method = RequestMethod.POST)
 
@@ -209,7 +234,15 @@ System.out.println(productionDate);
 		return getProductionDetailList;
 
 	}
-	
+	@RequestMapping(value = { "/getMenuIdByCatId" }, method = RequestMethod.POST)
+	public @ResponseBody List<Integer> getMenuIdsByCatId(@RequestParam int catId)
+	{
+		
+		List<Integer> menuList=productionService.getMenuIdsByCatId(catId);
+		
+		return menuList;
+		
+	}
 	 
 	
 }

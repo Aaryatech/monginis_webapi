@@ -12,6 +12,8 @@ import com.ats.webapi.model.rawmaterial.GetRawMaterialByGroup;
 import com.ats.webapi.model.rawmaterial.GetRmItemCategory;
 import com.ats.webapi.model.rawmaterial.GetRmItemSubCat;
 import com.ats.webapi.model.rawmaterial.GetUomAndTax;
+import com.ats.webapi.model.rawmaterial.ItemDetail;
+import com.ats.webapi.model.rawmaterial.ItemSfHeader;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialUom;
@@ -29,6 +31,8 @@ import com.ats.webapi.repository.GetRawMaterialByGroupRepository;
 import com.ats.webapi.repository.GetRmItemCatRepository;
 import com.ats.webapi.repository.GetRmItemSubCatRepository;
 import com.ats.webapi.repository.GetUomAndTaxRepository;
+import com.ats.webapi.repository.ItemDetailRepository;
+import com.ats.webapi.repository.ItemSfHeaderRepository;
 import com.ats.webapi.repository.RawMaterialDetailsRepository;
 import com.ats.webapi.repository.RawMaterialTaxDetailsRepository;
 import com.ats.webapi.repository.RawMaterialUomRepository;
@@ -42,6 +46,12 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	@Autowired
 	RmItemSubCategoryRepository rmItemSubCategoryRepository;
 	
+	@Autowired
+	ItemDetailRepository itemDetailRepository;
+	
+	@Autowired
+	ItemSfHeaderRepository itemSfHeaderRepository;
+
 	@Autowired
 	RawMaterialDetailsRepository RawMaterialDetailsRepository;
  
@@ -488,6 +498,57 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		System.out.println("Not found ");
 	}
 		return getUomAndTax;
+	}
+
+	@Override
+	public ItemDetail saveItemDetail(ItemDetail itemDetail) {
+
+		ItemDetail itemDetailRes=itemDetailRepository.save(itemDetail);
+		return itemDetailRes;
+	}
+
+	@Override
+	public List<ItemDetail> getItemDetails() {
+
+		List<ItemDetail> ItemDetails=itemDetailRepository.findAllItemDetailByDelStatus(0);
+		return ItemDetails;
+	}
+
+	@Override
+	public Info deleteItemDetail(int itemDetailId) {
+		
+		Info info=null;
+		int res=itemDetailRepository.updateItemDetail(itemDetailId);
+		
+		if(res>0)
+		{	  info=new Info();
+
+			info.setError(false);
+			info.setMessage("ItemDetail Deleted Successfully ");
+		}
+		else
+		{
+			
+				info.setError(true);
+				info.setMessage("ItemDetail deletion Failed");
+			
+		}		
+		return info;
+	}
+
+	@Override
+	public ItemDetail getItemDetail(int itemDetailId) {
+
+		ItemDetail itemDetail=itemDetailRepository.findByItemDetailId(itemDetailId);
+		return itemDetail;
+	}
+
+	@Override
+	public List<ItemSfHeader> getItemSfHeaders() {
+
+		List<ItemSfHeader> itemSfHeaders=itemSfHeaderRepository.findItemSfHeaderByDelStatus(0);
+		
+		return itemSfHeaders;
 	}
 	
 }

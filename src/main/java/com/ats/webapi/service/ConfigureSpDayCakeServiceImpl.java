@@ -93,14 +93,14 @@ public class ConfigureSpDayCakeServiceImpl implements ConfigureSpDayCakeService{
 	}
 
 	@Override
-	public ConfiguredSpDayCkResponse getSpDayCkList() {
+	public ConfiguredSpDayCkResponse getSpDayCkList(int frId) {
 		ConfiguredSpDayCkResponse configuredSpDayCkResponse=new ConfiguredSpDayCkResponse();
 
 		
 		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 		System.out.println("date " + cDate);
 		
-		List<GetConfiguredSpDayCk> configuredSpDayCkList=getConfSpDayCakeRepository.findAllSpDayCake(cDate);
+		List<GetConfiguredSpDayCk> configuredSpDayCkList=getConfSpDayCakeRepository.findAllSpDayCake(cDate,frId);
           ErrorMessage errorMessage=new ErrorMessage();
 		
 		if(configuredSpDayCkList!=null)
