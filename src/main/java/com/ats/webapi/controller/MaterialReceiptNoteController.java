@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -55,7 +56,7 @@ public class MaterialReceiptNoteController {
 	}
 
 	@RequestMapping(value = { "/getMaterialRecNotes" }, method = RequestMethod.POST)
-	public @ResponseBody GetMaterialRecNoteList getMaterialRecNote(int status)
+	public @ResponseBody GetMaterialRecNoteList getMaterialRecNote(@RequestParam("status")int status)
 	{
 
 		GetMaterialRecNoteList materialRNoteResponse = materialRecNoteService.getMaterialRecNote(status);
