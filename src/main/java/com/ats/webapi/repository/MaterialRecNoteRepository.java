@@ -12,6 +12,8 @@ public interface MaterialRecNoteRepository extends JpaRepository<MaterialRecNote
 
 	MaterialRecNote save(MaterialRecNote materialRecNote);
 
-	List<MaterialRecNote> findMaterialRecNoteByStatus(int status);
+	List<MaterialRecNote> findByStatus(int status);
+
+	MaterialRecNote findByMrnId(int mrnId);
 
 }

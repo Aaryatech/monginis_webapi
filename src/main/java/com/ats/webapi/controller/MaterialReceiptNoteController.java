@@ -65,4 +65,15 @@ public class MaterialReceiptNoteController {
 
 	}
 	
+	
+	@RequestMapping(value = { "/getMaterialRecNotesHeaderDetails" }, method = RequestMethod.POST)
+	public @ResponseBody MaterialRecNote getMaterialRecNotesHeaderDetails(@RequestParam("mrnId")int mrnId)
+	{
+
+		MaterialRecNote materialRecNoteRes = materialRecNoteService.getMaterialRecNotesHeaderDetails(mrnId);
+
+		return materialRecNoteRes;
+
+	}
+	
 }

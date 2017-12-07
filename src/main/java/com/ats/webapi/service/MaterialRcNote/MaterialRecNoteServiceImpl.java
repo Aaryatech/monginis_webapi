@@ -77,7 +77,7 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
 		ErrorMessage errorMessage;
 		try
 		{
-			List<MaterialRecNote> materialRecNoteList=materialRecNoteRepository.findMaterialRecNoteByStatus( status);
+			List<MaterialRecNote> materialRecNoteList=materialRecNoteRepository.findByStatus( status);
 			 
 		
 		if(materialRecNoteList!=null) {
@@ -107,6 +107,18 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
 
 		}
 		return getMaterialRecNoteList;
+	}
+	@Override
+	public MaterialRecNote getMaterialRecNotesHeaderDetails(int mrnId) {
+		
+
+		MaterialRecNote materialRecNote=materialRecNoteRepository.findByMrnId(mrnId);
+		
+		//int mrnId=materialRecNote.getMrnId();
+		
+		List<MaterialRecNoteDetails> materialRecNoteDetailsList=materialRNoteDetailRepository.findByMrnId(mrnId);
+		materialRecNote.setMaterialRecNoteDetails(materialRecNoteDetailsList);
+		return materialRecNote;
 	}
 
 }
