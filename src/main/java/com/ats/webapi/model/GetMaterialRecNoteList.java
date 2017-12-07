@@ -1,19 +1,19 @@
 package com.ats.webapi.model;
 
-import java.io.Serializable;
 import java.util.List;
 
-public class GetMaterialRecNoteList implements Serializable{
+public class GetMaterialRecNoteList {
 
-	List<GetMaterialRecNote> materialRecNoteList;
+	
+	List<MaterialRecNote> materialRecNoteList;
 	
 	ErrorMessage errorMessage;
 
-	public List<GetMaterialRecNote> getMaterialRecNoteList() {
+	public List<MaterialRecNote> getMaterialRecNoteList() {
 		return materialRecNoteList;
 	}
 
-	public void setMaterialRecNoteList(List<GetMaterialRecNote> materialRecNoteList) {
+	public void setMaterialRecNoteList(List<MaterialRecNote> materialRecNoteList) {
 		this.materialRecNoteList = materialRecNoteList;
 	}
 
@@ -30,7 +30,5 @@ public class GetMaterialRecNoteList implements Serializable{
 		return "GetMaterialRecNoteList [materialRecNoteList=" + materialRecNoteList + ", errorMessage=" + errorMessage
 				+ "]";
 	}
-
-	
 	
 }

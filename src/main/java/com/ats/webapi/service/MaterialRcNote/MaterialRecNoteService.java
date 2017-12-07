@@ -11,7 +11,7 @@ public interface MaterialRecNoteService {
 
 	MaterialRecNote postMaterialRecNote(MaterialRecNote materialRecNote);
 
-	GetMaterialRecNoteList getMaterialRecNote();
+	GetMaterialRecNoteList getMaterialRecNote(int status);
 
 
 }

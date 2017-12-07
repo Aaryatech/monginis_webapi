@@ -54,11 +54,11 @@ public class MaterialReceiptNoteController {
 
 	}
 
-	@RequestMapping(value = { "/getMaterialRecNotes" }, method = RequestMethod.GET)
-	public @ResponseBody GetMaterialRecNoteList getMaterialRecNote()
+	@RequestMapping(value = { "/getMaterialRecNotes" }, method = RequestMethod.POST)
+	public @ResponseBody GetMaterialRecNoteList getMaterialRecNote(int status)
 	{
 
-		GetMaterialRecNoteList materialRNoteResponse = materialRecNoteService.getMaterialRecNote();
+		GetMaterialRecNoteList materialRNoteResponse = materialRecNoteService.getMaterialRecNote(status);
 
 		return materialRNoteResponse;
 

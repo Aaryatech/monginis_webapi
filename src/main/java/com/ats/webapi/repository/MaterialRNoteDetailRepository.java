@@ -12,7 +12,7 @@ public interface MaterialRNoteDetailRepository extends JpaRepository<MaterialRec
 
 	MaterialRecNoteDetails save(MaterialRecNoteDetails materialRecNoteDetails);
 
-	List<MaterialRecNoteDetails> findMaterialRecNoteDetailsByMrnId(int mrnId);
+	List<MaterialRecNoteDetails> findByMrnId(int mrnId);
 
 	
 }
