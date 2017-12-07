@@ -17,6 +17,7 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.SupplierMaster.SupPaymentTerms;
 import com.ats.webapi.model.SupplierMaster.SupPaymentTermsList;
 import com.ats.webapi.model.SupplierMaster.SupplierDetails;
+import com.ats.webapi.model.SupplierMaster.Supprlist;
 import com.ats.webapi.model.SupplierMaster.Transporter;
 import com.ats.webapi.model.SupplierMaster.TransporterList;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
@@ -189,4 +190,24 @@ public class SupplierMasterApiController {
 	  			return transporter;
 	  		}
 	//--------------------------END--------------------------------------------------------------------   
+	  		
+	  		
+	  		@RequestMapping(value = { "/getAllSupplierlist" }, method = RequestMethod.GET)
+	  		public @ResponseBody Supprlist getAllSupplierlist()
+	  		{
+	  			Supprlist supprlist= new Supprlist();
+	  			supprlist.setSupplierDetailslist(suppilerMasterService.getAllSupplier());
+	  			if(supprlist!=null)
+	  				System.out.println("Supplier List "+ supprlist.toString());
+	  			else
+	  				System.out.println("No supplier in List");
+	  			return supprlist;
+	  			
+	  		}
 }
+
+
+
+
+
+
