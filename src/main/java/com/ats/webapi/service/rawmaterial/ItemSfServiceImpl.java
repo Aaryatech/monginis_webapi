@@ -1,8 +1,11 @@
 package com.ats.webapi.service.rawmaterial;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.model.Info;
 import com.ats.webapi.model.rawmaterial.ItemSfDetail;
 import com.ats.webapi.model.rawmaterial.ItemSfHeader;
 import com.ats.webapi.repository.ItemSfDetailRepo;
@@ -24,15 +27,6 @@ public class ItemSfServiceImpl implements ItemSfService {
 
 			itemHeader = itemSfHeaderRepo.save(itemSfHeader);
 
-			for (int i = 0; i < itemSfHeader.getItemSfDetail().size(); i++) {
-
-				ItemSfDetail itemDetail = itemSfHeader.getItemSfDetail().get(i);
-
-				itemDetail.setSfId(itemSfHeader.getSfId());
-
-				ItemSfDetail detail = itemSfDetailRepo.save(itemDetail);
-
-			}
 		} catch (Exception e) {
 			
 			System.out.println("Exce in itemSf insert service "+e.getMessage());
@@ -40,6 +34,33 @@ public class ItemSfServiceImpl implements ItemSfService {
 			
 		}
 		return itemHeader;
+	}
+
+	@Override
+	public Info saveDetail(List<ItemSfDetail> itemSfDetailList) {
+		
+		ItemSfDetail itemSfDetail=new ItemSfDetail();
+		Info info=new Info();
+		
+		
+		for(int i=0;i<itemSfDetailList.size();i++) {
+			
+			 itemSfDetail=itemSfDetailRepo.save(itemSfDetailList.get(i));
+		}
+		
+		if(itemSfDetail!=null) {
+			
+			info.setError(false);
+			info.setMessage("success");
+		}
+		else {
+			
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		
+	return info;
+	
 	}
 
 }

@@ -59,9 +59,6 @@ public class PostCreditNoteHeader implements Serializable {
 	List<PostCreditNoteDetails> postCreditNoteDetails;
 	
 	
-	
-	
-	
 
 	public int getCrnId() {
 		return crnId;
