@@ -12,7 +12,7 @@ public interface PurchaseOrderDetailRepository extends JpaRepository<PurchaseOrd
 	
 	PurchaseOrderDetail save(PurchaseOrderDetail purchaseOrderDetail);
 	
-	@Query(value=" select * from t_purchase_order_detail where del_status=0 and po_id=:po_id",nativeQuery=true)
+	@Query(value=" select t_purchase_order_detail.* from t_purchase_order_detail where t_purchase_order_detail.del_status=0 and t_purchase_order_detail.po_id=:po_id",nativeQuery=true)
 	List<PurchaseOrderDetail> purchaseOrderDetaillist(@Param("po_id") int po_id);
 
 }

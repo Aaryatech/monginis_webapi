@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
-import com.ats.webapi.model.purchaseorder.GetPurchaseOrder;
+import com.ats.webapi.model.purchaseorder.GetPurchaseOrderList;
 import com.ats.webapi.model.purchaseorder.GetPurchaseOrderList;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderDetail;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderDetailedList;
@@ -63,44 +63,39 @@ public class PurchaseOrderServiceImlp implements PurchaseOrderService{
 
 
 	@Override
-	public GetPurchaseOrder perchaseorderList(int suppId) {
+	public GetPurchaseOrderList perchaseorderList(int suppId) {
 		
-		GetPurchaseOrder getPurchaseOrder = new GetPurchaseOrder();
-		List<GetPurchaseOrderList> getPurchaseOrderList = new ArrayList<GetPurchaseOrderList>();
-		ErrorMessage errorMessage=new ErrorMessage();
-		
+	 
+		GetPurchaseOrderList getPurchaseOrderList=new GetPurchaseOrderList();
+		ErrorMessage errorMessage=new   ErrorMessage();
 		try
 		{
 			
-			 List<PurchaseOrderHeader> purchaseOrderHeaderdata =purchaseOrderHeaderRepository.perchaseorderList(suppId);
-			 for(PurchaseOrderHeader purchaseOrderHeader: purchaseOrderHeaderdata)
-			 {
-				 GetPurchaseOrderList purchaseOrderlist = new GetPurchaseOrderList();
-				 List<PurchaseOrderDetail> purchaseOrderDetaillist = purchaseOrderDetailRepository.purchaseOrderDetaillist(purchaseOrderHeader.getPoId());
-				 purchaseOrderlist.setPurchaseOrderHeader(purchaseOrderHeader);
-				 purchaseOrderlist.setPurchaseOrderDetaillist(purchaseOrderDetaillist);
-				 getPurchaseOrderList.add(purchaseOrderlist);
-				 
-			 }
-			 if(getPurchaseOrderList!=null) {
-					
-					
-					errorMessage.setError(false);
-					errorMessage.setMessage(" Successfully");
-					getPurchaseOrder.setErrorMessage(errorMessage);
-					getPurchaseOrder.setGetPurchaseOrderList(getPurchaseOrderList);
-					
-				}
+			List<PurchaseOrderHeader> purchaseOrderHeaderList =purchaseOrderHeaderRepository.findBySuppId(suppId);
+			 
+			getPurchaseOrderList.setPurchaseOrderHeaderList(purchaseOrderHeaderList);
 			
+		
 			
+			if(purchaseOrderHeaderList!=null)
+			{
+				errorMessage.setError(false);
+				errorMessage.setMessage("Successfully");
+			}
+			else
+			{
+				errorMessage.setError(true);
+				errorMessage.setMessage("UnSuccessfully");
+			}
+			 
 		}catch(Exception e)
 		{
 			System.out.println(e.getMessage());
 			errorMessage.setError(true);
 			errorMessage.setMessage(" failed");
-			getPurchaseOrder.setErrorMessage(errorMessage);
+			getPurchaseOrderList.setErrorMessage(errorMessage);
 		}
-		return getPurchaseOrder;
+		return getPurchaseOrderList;
 		
 		
 		
@@ -113,11 +108,21 @@ public class PurchaseOrderServiceImlp implements PurchaseOrderService{
 		
 		PurchaseOrderDetailedList purchaseOrderDetailed = new PurchaseOrderDetailedList();
 		ErrorMessage errorMessage=new ErrorMessage();
-		List<PurchaseOrderDetail> purchaseOrderDetaillist = purchaseOrderDetailRepository.purchaseOrderDetaillist(poId);
-		purchaseOrderDetailed.setPurchaseOrderDetaillist(purchaseOrderDetaillist);
-		errorMessage.setError(false);
-		errorMessage.setMessage("success");
-		purchaseOrderDetailed.setErrorMessage(errorMessage);
+		try
+		{
+			List<PurchaseOrderDetail> purchaseOrderDetaillist = purchaseOrderDetailRepository.purchaseOrderDetaillist(poId);
+			purchaseOrderDetailed.setPurchaseOrderDetaillist(purchaseOrderDetaillist);
+			errorMessage.setError(false);
+			errorMessage.setMessage("success");
+			purchaseOrderDetailed.setErrorMessage(errorMessage);
+			System.out.println("LIst in nService :"+purchaseOrderDetailed.toString() );
+		}catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			errorMessage.setError(true);
+			errorMessage.setMessage("unsuccess");
+			purchaseOrderDetailed.setErrorMessage(errorMessage);
+		}
 		return purchaseOrderDetailed;
 		
 	}

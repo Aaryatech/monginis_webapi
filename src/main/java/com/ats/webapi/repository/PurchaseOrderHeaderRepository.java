@@ -14,5 +14,5 @@ public interface PurchaseOrderHeaderRepository extends JpaRepository<PurchaseOrd
 	PurchaseOrderHeader save(PurchaseOrderHeader purchaseOrderHeader);
 
 	@Query(value=" select * from t_purchase_order_header where del_status=0 and supp_id=:suppId",nativeQuery=true)
-	List<PurchaseOrderHeader> perchaseorderList(@Param("suppId") int suppId);
+	List<PurchaseOrderHeader> findBySuppId(@Param("suppId") int suppId);
 }

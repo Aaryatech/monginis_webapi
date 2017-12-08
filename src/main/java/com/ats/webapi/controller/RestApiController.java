@@ -187,6 +187,7 @@ import com.ats.webapi.service.UpdateGrnGvnService;
 import com.ats.webapi.service.UpdateOrderService;
 import com.ats.webapi.service.UserService;
 import com.ats.webapi.service.spMessageList;
+import com.ats.webapi.service.MaterialRcNote.SettingService;
 import com.ats.webapi.util.JsonUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -372,6 +373,9 @@ public class RestApiController {
 	
 	@Autowired
 	UpdatePBTimeRepo updatePBTimeRepo;
+	
+	@Autowired
+	SettingService settingService;
 	
 //This web api Not used Anywhere	
 	@RequestMapping(value = { "/updatePBTime" }, method = RequestMethod.POST)
@@ -793,6 +797,17 @@ try {
 		int value = frItemConfService.findbykey(key);
 
 		return value;
+
+	}
+	
+	@RequestMapping(value = "/updateValuekey", method = RequestMethod.GET)
+	public @ResponseBody int updateValuekey() {
+		
+		int value = frItemConfService.findbykey("mrn_no");
+		value=value+1;
+		int Updatevalue = settingService.updateValue(value);
+
+		return Updatevalue;
 
 	}
 	
