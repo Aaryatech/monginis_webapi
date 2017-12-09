@@ -9,6 +9,8 @@ import com.ats.webapi.model.remarks.GetAllRemarks;
 public interface GetAllRemarksRepo extends JpaRepository<GetAllRemarks, Integer> {
 
 	
-	
-	List<GetAllRemarks> findAll();
+	 
+
+	List<GetAllRemarks> findByIsFrUsedAndModuleIdAndSubModuleIdAndIsDelStatusAndIsActive(int isFrUsed, int moduleId,
+			int subModuleId, int isDelStatus, int isActive);
 }

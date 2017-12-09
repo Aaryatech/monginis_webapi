@@ -31,7 +31,12 @@ public class GetAllRemarks implements Serializable {
 
 	@Column(name="is_fr_used")
 	private int isFrUsed;
+	
+	@Column(name="is_active")
+	int isActive;
 
+	@Column(name="is_del_status")
+	int isDelStatus;
 
 	public int getRemarkId() {
 		return remarkId;
@@ -82,11 +87,35 @@ public class GetAllRemarks implements Serializable {
 		this.isFrUsed = isFrUsed;
 	}
 
+	public int getIsActive() {
+		return isActive;
+	}
+
+
+	public void setIsActive(int isActive) {
+		this.isActive = isActive;
+	}
+
+
+	public int getIsDelStatus() {
+		return isDelStatus;
+	}
+
+
+	public void setIsDelStatus(int isDelStatus) {
+		this.isDelStatus = isDelStatus;
+	}
+
+
 	@Override
 	public String toString() {
 		return "GetAllRemarks [remarkId=" + remarkId + ", remark=" + remark + ", moduleId=" + moduleId
-				+ ", subModuleId=" + subModuleId + ", isFrUsed=" + isFrUsed + "]";
+				+ ", subModuleId=" + subModuleId + ", isFrUsed=" + isFrUsed + ", isActive=" + isActive
+				+ ", isDelStatus=" + isDelStatus + "]";
 	}
+
+
+	 
 	
 
 }

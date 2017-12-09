@@ -17,7 +17,7 @@ public class GetAllRemarkServiceImpl implements GetAllRemarkService {
 	GetAllRemarksRepo getAllRemarksRepo;
 
 	@Override
-	public GetAllRemarksList getAllRemarkFor() {
+	public GetAllRemarksList getAllRemarkFor(int isFrUsed, int moduleId, int subModuleId) {
 		
 		GetAllRemarksList allRemarkList=new GetAllRemarksList();
 		
@@ -25,7 +25,7 @@ public class GetAllRemarkServiceImpl implements GetAllRemarkService {
 		
 		
 		
-		List<GetAllRemarks> allRemark=getAllRemarksRepo.findAll();
+		List<GetAllRemarks> allRemark=getAllRemarksRepo.findByIsFrUsedAndModuleIdAndSubModuleIdAndIsDelStatusAndIsActive(isFrUsed,moduleId,subModuleId,0,1);
 		
 		if(!allRemark.isEmpty()) {
 			

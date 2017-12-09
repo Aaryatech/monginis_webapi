@@ -1,5 +1,7 @@
 package com.ats.webapi.service.MaterialRcNote;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
@@ -11,7 +13,7 @@ public interface MaterialRecNoteService {
 
 	MaterialRecNote postMaterialRecNote(MaterialRecNote materialRecNote);
 
-	GetMaterialRecNoteList getMaterialRecNote(int status);
+	GetMaterialRecNoteList getMaterialRecNote(List<String> status);
 
 	MaterialRecNote getMaterialRecNotesHeaderDetails(int mrnId);
 

@@ -4,6 +4,7 @@ package com.ats.webapi.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +30,7 @@ public class MaterialReceiptNoteController {
 	@RequestMapping(value = { "/postMaterialRecNote" }, method = RequestMethod.POST)
 	public @ResponseBody MaterialRecNote postMaterialRecNote(@RequestBody MaterialRecNote materialRecNote)
 	{
-		
+		System.out.println("Input List :"+materialRecNote.toString());
 		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 
 		try {
@@ -56,9 +57,10 @@ public class MaterialReceiptNoteController {
 	}
 
 	@RequestMapping(value = { "/getMaterialRecNotes" }, method = RequestMethod.POST)
-	public @ResponseBody GetMaterialRecNoteList getMaterialRecNote(@RequestParam("status")int status)
+	public @ResponseBody GetMaterialRecNoteList getMaterialRecNote(@RequestParam("status")List<String> status)
 	{
-
+System.out.println("Status : "+status);
+System.out.println("Status : "+status.toString());
 		GetMaterialRecNoteList materialRNoteResponse = materialRecNoteService.getMaterialRecNote(status);
 
 		return materialRNoteResponse;

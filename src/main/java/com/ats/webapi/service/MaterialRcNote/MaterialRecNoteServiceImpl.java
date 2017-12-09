@@ -70,14 +70,14 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
         
     }
 	@Override
-	public GetMaterialRecNoteList getMaterialRecNote(int status) {
+	public GetMaterialRecNoteList getMaterialRecNote(List<String> status) {
 
 		GetMaterialRecNoteList getMaterialRecNoteList=new GetMaterialRecNoteList();
 		 
 		ErrorMessage errorMessage;
 		try
 		{
-			List<MaterialRecNote> materialRecNoteList=materialRecNoteRepository.findByStatus( status);
+			List<MaterialRecNote> materialRecNoteList=materialRecNoteRepository.getMaterialByStatus( status);
 			 
 		
 		if(materialRecNoteList!=null) {

@@ -428,10 +428,10 @@ public class RestApiController {
 	
 	
 	
-	@RequestMapping(value = "/getAllRemarks", method = RequestMethod.GET)
-	public @ResponseBody GetAllRemarksList getAllRemarks() {
+	@RequestMapping(value = "/getAllRemarks", method = RequestMethod.POST)
+	public @ResponseBody GetAllRemarksList getAllRemarks(@RequestParam("isFrUsed") int isFrUsed, @RequestParam("subModuleId") int subModuleId, @RequestParam("moduleId") int moduleId) {
 		
-		GetAllRemarksList allRemarksList=getAllRemarkService.getAllRemarkFor();
+		GetAllRemarksList allRemarksList=getAllRemarkService.getAllRemarkFor(isFrUsed,moduleId,subModuleId);
 		
 		return allRemarksList;
 
