@@ -40,10 +40,10 @@ public class MaterialReceiptNoteController {
 			    Date now = new Date();
 
 			    String strTime = sdfTime.format(now);
-			    
+			    if(materialRecNote.getMrnId()!=0) {
 			materialRecNote.setGateEntryDate(utilCurrentDate);
 			materialRecNote.setGateEntryTime(strTime);
-
+			    }
 		} catch (ParseException e) {
 
 			e.printStackTrace();

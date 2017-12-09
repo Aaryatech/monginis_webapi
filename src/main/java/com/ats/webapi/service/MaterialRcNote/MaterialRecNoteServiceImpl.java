@@ -1,6 +1,8 @@
 package com.ats.webapi.service.MaterialRcNote;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +34,18 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
         MaterialRecNote materialRec=new MaterialRecNote();
         try {
             
-        
+        if(materialRec.getStatus()==1)
+        {
+        	SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+        	Date utilCurrentDate = sf.parse(sf.format(new Date()));
+			 SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm:ss");
+
+			    Date now = new Date();
+			    
+			    materialRec.setMrnStoreDate(now);
+			    
+        }
+        if(materialRec.getStatus()==1)
             materialRec=materialRecNoteRepository.save(materialRecNote);
         
         int mrnId=materialRec.getMrnId();
