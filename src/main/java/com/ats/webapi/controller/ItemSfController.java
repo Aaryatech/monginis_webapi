@@ -17,7 +17,9 @@ import com.ats.webapi.model.rawmaterial.GetItemSfHeader;
 import com.ats.webapi.model.rawmaterial.GetSfType;
 import com.ats.webapi.model.rawmaterial.ItemSfDetail;
 import com.ats.webapi.model.rawmaterial.ItemSfHeader;
-import com.ats.webapi.repository.GetItemSfHeaderRepo;
+import com.ats.webapi.model.rawmaterial.SfItemDetailList;
+import com.ats.webapi.repository.ItemSfDetailRepo;
+import com.ats.webapi.repository.ItemSfHeaderRepository;
 import com.ats.webapi.repository.SfTypeRepository;
 import com.ats.webapi.service.rawmaterial.ItemSfService;
 
@@ -31,7 +33,10 @@ public class ItemSfController {
 	SfTypeRepository sfTypeRepository;
 	
 	@Autowired
-	GetItemSfHeaderRepo  getItemSfHeaderRepo;
+	ItemSfHeaderRepository  getItemSfHeaderRepo;
+	
+	@Autowired
+	ItemSfDetailRepo itemSfDetailRepo;
 
 	@RequestMapping(value = { "/postSfItemHeader" }, method = RequestMethod.POST)
 	public @ResponseBody Info postSfItemHeader(@RequestBody ItemSfHeader itemSfHeader) {
@@ -112,15 +117,14 @@ public class ItemSfController {
 	}
 	
 	
-	@RequestMapping(value = { "/getItemSfHeader" }, method = RequestMethod.GET)
-	public @ResponseBody List<GetItemSfHeader> getItemSfHeader() {
+	@RequestMapping(value = { "/getItemSfHeaderList" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetItemSfHeader> getItemSfHeader(@RequestParam("delStatus")int delStatus) {
 		
 		List<GetItemSfHeader> sfHeader=null;
 		
 		try {
 			
-			sfHeader=getItemSfHeaderRepo.getItemSfHeaderDetail();
-		
+			sfHeader=getItemSfHeaderRepo.getSfItemHeader(delStatus);
 		}catch (Exception e) {
 			
 			System.out.println("Exe getting Sf Item Header  "+e.getMessage());
@@ -130,5 +134,27 @@ public class ItemSfController {
 	return sfHeader;
 	
 	}
+	
+	
+	@RequestMapping(value = { "/getSfItemDetailList" }, method = RequestMethod.POST)
+	public @ResponseBody SfItemDetailList getSfItemDetailList(@RequestParam("delStatus")int delStatus,
+			@RequestParam("sfId")int sfId) {
 		
+		SfItemDetailList itemDetails=new SfItemDetailList();
+		
+		try {
+			
+		List<ItemSfDetail>	itemList=itemSfDetailRepo.findByDelStatusAndSfId(delStatus, sfId);
+		
+		itemDetails.setSfItemDetail(itemList);
+		}catch (Exception e) {
+			
+			System.out.println("Exe getting Sf Item Details  "+e.getMessage());
+			e.printStackTrace();
+		}
+		
+	return itemDetails;
+	
+	}
+	
 }

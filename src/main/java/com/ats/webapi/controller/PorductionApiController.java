@@ -23,6 +23,7 @@ import com.ats.webapi.model.GetRegSpCakeOrderQty;
 import com.ats.webapi.model.GetSellBillHeader;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.PostFrItemStockHeader;
+import com.ats.webapi.model.PostProdPlanHeader;
 import com.ats.webapi.model.PostProductionDetail;
 import com.ats.webapi.model.PostProductionHeader;
 import com.ats.webapi.model.UpdateBillStatus;
@@ -178,7 +179,7 @@ e.printStackTrace();
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
 
 		
-
+        System.out.println("postProductionHeaderBean:"+postProductionHeader.toString());
 		List<PostProductionHeader> jsonBillHeader;
 
 		jsonBillHeader = productionService.saveProductionHeader(postProductionHeader);
@@ -186,6 +187,36 @@ e.printStackTrace();
 		Info info = new Info();
 
 		if (jsonBillHeader.size() > 0) {
+
+			info.setError(false);
+			info.setMessage("post Fr Stock header inserted  Successfully");
+
+		}
+
+		else {
+
+			info.setError(true);
+			info.setMessage("Error in post Fr Stock header insertion : RestApi");
+
+		}
+
+		return info;
+
+	}
+	@RequestMapping(value = { "/postProductionPlan" }, method = RequestMethod.POST)
+
+	public @ResponseBody Info postProductionPlan(@RequestBody PostProdPlanHeader postProdPlanHeader)
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
+
+		
+        System.out.println("postProductionHeaderBean:"+postProdPlanHeader.toString());
+        PostProdPlanHeader jsonBillHeader;
+
+		jsonBillHeader = productionService.saveProductionPlanHeader(postProdPlanHeader);
+
+		Info info = new Info();
+
+		if (jsonBillHeader!=null) {
 
 			info.setError(false);
 			info.setMessage("post Fr Stock header inserted  Successfully");

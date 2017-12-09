@@ -1,6 +1,6 @@
 package com.ats.webapi.model;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -29,7 +29,7 @@ public class PostProductionHeader {
 	private int timeSlot;
 	
 	@Column(name="production_date")
-	private String productionDate;
+	private Date productionDate;
 	
 	@Transient
 	private List<PostProductionDetail> postProductionDetail;
@@ -51,11 +51,11 @@ public class PostProductionHeader {
 		this.timeSlot = timeSlot;
 	}
 
-	public String getProductionDate() {
+	public Date getProductionDate() {
 		return productionDate;
 	}
 
-	public void setProductionDate(String productionDate) {
+	public void setProductionDate(Date productionDate) {
 		this.productionDate = productionDate;
 	}
 

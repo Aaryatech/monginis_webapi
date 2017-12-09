@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.rawmaterial.GetItemSfHeader;
 import com.ats.webapi.model.rawmaterial.ItemSfDetail;
 import com.ats.webapi.model.rawmaterial.ItemSfHeader;
 import com.ats.webapi.repository.ItemSfDetailRepo;
 import com.ats.webapi.repository.ItemSfHeaderRepo;
+import com.ats.webapi.repository.ItemSfHeaderRepository;
 
 @Service
 public class ItemSfServiceImpl implements ItemSfService {
@@ -19,6 +21,9 @@ public class ItemSfServiceImpl implements ItemSfService {
 
 	@Autowired
 	ItemSfDetailRepo itemSfDetailRepo;
+	
+	@Autowired
+	ItemSfHeaderRepository itemSfHeaderRepository;
 
 	@Override
 	public ItemSfHeader saveHeader(ItemSfHeader itemSfHeader) {
@@ -62,5 +67,15 @@ public class ItemSfServiceImpl implements ItemSfService {
 	return info;
 	
 	}
+
+	@Override
+	public List<GetItemSfHeader> getItemSfHeaders(int delStatus) {
+		
+		List<GetItemSfHeader> headerList=itemSfHeaderRepository.getSfItemHeader(delStatus);
+		
+		return headerList;
+	}
+
+	
 
 }

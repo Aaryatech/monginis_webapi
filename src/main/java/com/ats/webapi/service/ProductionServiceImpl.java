@@ -10,12 +10,16 @@ import com.ats.webapi.model.GetProductionDetail;
 import com.ats.webapi.model.GetProductionItemQty;
 import com.ats.webapi.model.PostFrItemStockDetail;
 import com.ats.webapi.model.PostFrItemStockHeader;
+import com.ats.webapi.model.PostProdPlanHeader;
 import com.ats.webapi.model.PostProductionDetail;
 import com.ats.webapi.model.PostProductionHeader;
+import com.ats.webapi.model.PostProductionPlanDetail;
 import com.ats.webapi.repository.GetProdQytRepository;
 import com.ats.webapi.repository.GetProductionItemQtyRepository;
 import com.ats.webapi.repository.MainMenuConfigurationRepository;
 import com.ats.webapi.repository.PostPoductionHeaderRepository;
+import com.ats.webapi.repository.PostProdPlanDetailRepository;
+import com.ats.webapi.repository.PostProdPlanHeaderRepository;
 import com.ats.webapi.repository.PostProductionDetailRepository;
 
 @Service
@@ -35,6 +39,12 @@ public class ProductionServiceImpl implements ProductionService{
 
 	@Autowired
 	GetProductionItemQtyRepository getProductionItemQtyRepository;
+	
+	@Autowired
+	PostProdPlanDetailRepository postProdPlanDetailRepository;
+	
+	@Autowired
+	PostProdPlanHeaderRepository postProdPlanHeaderRepository;
 	
 	@Override
 	public List<PostProductionHeader> saveProductionHeader(PostProductionHeader postProductionHeader) {
@@ -94,6 +104,39 @@ public class ProductionServiceImpl implements ProductionService{
 		List<GetProductionItemQty> prodItemQty=getProductionItemQtyRepository.findProdItemQty(strDate,catId);
 		
 		return prodItemQty;
+	}
+
+
+	@Override
+	public PostProdPlanHeader saveProductionPlanHeader(PostProdPlanHeader postProdPlanHeader) {
+
+		PostProdPlanHeader postProductionHeaders=new PostProdPlanHeader();
+		
+			
+			
+		postProductionHeaders=postProdPlanHeaderRepository.save(postProdPlanHeader);
+			int headerId=postProductionHeaders.getProductionHeaderId();
+			
+			
+			List<PostProductionPlanDetail> postProductionDetailList=postProdPlanHeader.getPostProductionPlanDetail();
+			
+			for(int j=0;j<postProductionDetailList.size();j++) {
+				
+				PostProductionPlanDetail postProductionPlanDetail=postProductionDetailList.get(j);
+				
+				postProductionPlanDetail.setProductionHeaderId(headerId);
+				
+				postProductionPlanDetail.setProductionBatch(postProdPlanHeader.getProductionBatch());
+				
+				postProductionPlanDetail.setProductionDate(postProdPlanHeader.getProductionDate());
+				
+				postProdPlanDetailRepository.save(postProductionPlanDetail);
+				
+			
+			}
+			
+		
+		return postProductionHeaders;
 	}
 
 

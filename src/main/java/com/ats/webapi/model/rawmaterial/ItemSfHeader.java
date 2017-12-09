@@ -26,7 +26,6 @@ public class ItemSfHeader implements Serializable{
 	@Column(name="sf_type")
 	private String sfType;
 	
-	
 	@Column(name="sf_uom_id")
 	private int sfUomId;
 	
@@ -130,6 +129,7 @@ public class ItemSfHeader implements Serializable{
 		this.delStatus = delStatus;
 	}
 
+	
 	
 	
 	

@@ -5,6 +5,7 @@ import java.util.List;
 import com.ats.webapi.model.GetProductionDetail;
 import com.ats.webapi.model.GetProductionItemQty;
 import com.ats.webapi.model.PostFrItemStockHeader;
+import com.ats.webapi.model.PostProdPlanHeader;
 import com.ats.webapi.model.PostProductionHeader;
 
 public interface ProductionService {
@@ -17,5 +18,7 @@ public interface ProductionService {
 	public List<Integer> getMenuIdsByCatId(int catId);
 
 	public List<GetProductionItemQty> getProdQty(String strDate, int catId);
+
+	public PostProdPlanHeader saveProductionPlanHeader(PostProdPlanHeader postProdPlanHeader);
 	
 	}

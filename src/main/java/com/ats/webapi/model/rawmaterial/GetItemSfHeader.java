@@ -10,7 +10,6 @@ import javax.persistence.Id;
 public class GetItemSfHeader {
 
 	
-	
 	@Column(name="sf_name")
 	private String sfName;
 	
@@ -23,6 +22,8 @@ public class GetItemSfHeader {
 	@Column(name="sf_type")
 	private String sfType;
 	
+	@Column(name="sf_type_name")
+	private String sfTypeName;
 	
 	@Column(name="sf_uom_id")
 	private int sfUomId;
@@ -89,6 +90,14 @@ public class GetItemSfHeader {
 
 	
 	
+
+	public String getSfTypeName() {
+		return sfTypeName;
+	}
+
+	public void setSfTypeName(String sfTypeName) {
+		this.sfTypeName = sfTypeName;
+	}
 
 	public void setSfId(int sfId) {
 		this.sfId = sfId;

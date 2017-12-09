@@ -16,8 +16,8 @@ public class GetSfType {
 	@Column(name="id")
 	private int id;
     
-	@Column(name="sf_name")
-	private String sfName;
+	@Column(name="sf_type_name")
+	private String sfTypeName;
 	
 	@Column(name="del_status")
 	private int delStatus;
@@ -26,10 +26,7 @@ public class GetSfType {
 		return id;
 	}
 
-	public String getSfName() {
-		return sfName;
-	}
-
+	
 	public int getDelStatus() {
 		return delStatus;
 	}
@@ -38,12 +35,19 @@ public class GetSfType {
 		this.id = id;
 	}
 
-	public void setSfName(String sfName) {
-		this.sfName = sfName;
-	}
 
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
+	}
+
+
+	public String getSfTypeName() {
+		return sfTypeName;
+	}
+
+
+	public void setSfTypeName(String sfTypeName) {
+		this.sfTypeName = sfTypeName;
 	}
 	
 }

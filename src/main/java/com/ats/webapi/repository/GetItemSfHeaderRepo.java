@@ -1,4 +1,4 @@
-package com.ats.webapi.repository;
+/*package com.ats.webapi.repository;
 
 import java.sql.Date;
 import java.util.List;
@@ -19,3 +19,4 @@ public interface GetItemSfHeaderRepo extends JpaRepository<GetItemSfHeader, Inte
 	List<GetItemSfHeader> getItemSfHeaderDetail();
 
 }
+*/

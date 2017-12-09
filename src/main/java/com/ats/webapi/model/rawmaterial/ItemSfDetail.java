@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="m_sf_detail")
+@Table(name="m_item_sf_detail")
 
 public class ItemSfDetail implements Serializable{
 	
@@ -22,6 +22,9 @@ public class ItemSfDetail implements Serializable{
 	
 	@Column(name="sf_id")
 	private int sfId;
+	
+	@Column(name="rm_type")
+	private int rmType;
 	
 	@Column(name="rm_id")
 	private int rmId;
@@ -105,11 +108,12 @@ public class ItemSfDetail implements Serializable{
 		this.delStatus = delStatus;
 	}
 
-	@Override
-	public String toString() {
-		return "ItemSfDetail [sfDid=" + sfDid + ", sfId=" + sfId + ", rmId=" + rmId + ", rmName=" + rmName + ", rmQty="
-				+ rmQty + ", rmUnit=" + rmUnit + ", rmWeight=" + rmWeight + ", delStatus=" + delStatus + "]";
+	public int getRmType() {
+		return rmType;
 	}
-	
+
+	public void setRmType(int rmType) {
+		this.rmType = rmType;
+	}
 
 }

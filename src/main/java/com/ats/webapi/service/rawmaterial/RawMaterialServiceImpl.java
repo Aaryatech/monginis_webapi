@@ -32,6 +32,7 @@ import com.ats.webapi.repository.GetRmItemCatRepository;
 import com.ats.webapi.repository.GetRmItemSubCatRepository;
 import com.ats.webapi.repository.GetUomAndTaxRepository;
 import com.ats.webapi.repository.ItemDetailRepository;
+import com.ats.webapi.repository.ItemSfHeaderRawRepo;
 import com.ats.webapi.repository.ItemSfHeaderRepository;
 import com.ats.webapi.repository.RawMaterialDetailsRepository;
 import com.ats.webapi.repository.RawMaterialTaxDetailsRepository;
@@ -50,7 +51,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	ItemDetailRepository itemDetailRepository;
 	
 	@Autowired
-	ItemSfHeaderRepository itemSfHeaderRepository;
+	ItemSfHeaderRawRepo itemSfHeaderRepository;
 
 	@Autowired
 	RawMaterialDetailsRepository RawMaterialDetailsRepository;
