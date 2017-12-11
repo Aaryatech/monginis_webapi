@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.rawmaterial.GetItemDetail;
 import com.ats.webapi.model.rawmaterial.GetRawMaterialByGroup;
 import com.ats.webapi.model.rawmaterial.GetRawMaterialDetailList;
 import com.ats.webapi.model.rawmaterial.GetUomAndTax;
@@ -369,10 +370,12 @@ public class RawMaterialApiCotroller {
 	}
 	
 	//-----------------------------------Insert Item Detail--------------------------
-		@RequestMapping(value = { "/saveItemDetail" }, method = RequestMethod.POST)
-		public @ResponseBody Info saveItemDetail(@RequestBody ItemDetail itemDetail)
+		@RequestMapping(value = { "/saveItemDetails" }, method = RequestMethod.POST)
+		public @ResponseBody Info saveItemDetail(@RequestBody List<ItemDetail> itemDetailList)
 		{
-			ItemDetail iDetail=rawMaterialService.saveItemDetail(itemDetail);
+			System.out.println("Item Deatil:"+itemDetailList.toString());
+			
+			List<ItemDetail> iDetail=rawMaterialService.saveItemDetail(itemDetailList);
 			Info info=new Info();
 			if(iDetail!=null)
 			{
@@ -390,10 +393,10 @@ public class RawMaterialApiCotroller {
 		//----------------------------------END-------------------------------------
 		
 		//-----------------------------------Get Item Detail--------------------------
-				@RequestMapping(value = { "/getItemDetails" }, method = RequestMethod.GET)
-				public @ResponseBody ItemDetailList getItemDetails()
+				@RequestMapping(value = { "/getItemDetails" }, method = RequestMethod.POST)
+				public @ResponseBody ItemDetailList getItemDetails(@RequestParam ("id")int itemId)
 				{
-					List<ItemDetail> iDetails=rawMaterialService.getItemDetails();
+					List<GetItemDetail> iDetails=rawMaterialService.getItemDetails(itemId);
 					
 					ItemDetailList itemDetailList=new ItemDetailList();
 					

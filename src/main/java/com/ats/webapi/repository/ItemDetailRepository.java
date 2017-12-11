@@ -15,7 +15,6 @@ import com.ats.webapi.model.rawmaterial.ItemDetail;
 @Repository
 public interface ItemDetailRepository extends JpaRepository<ItemDetail, Integer>{
 
-	List<ItemDetail> findAllItemDetailByDelStatus(int delStatus);
 
 
 	@Transactional

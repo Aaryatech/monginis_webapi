@@ -43,11 +43,24 @@ public class PostProdPlanHeader {
 	@Column(name="is_bom")
 	private int isBom;
 	
+	@Column(name="is_planned")
+	private int isPlanned;
+	
 	@Column(name="del_status")
 	private int delStatus;
 	
 	@Transient
 	private List<PostProductionPlanDetail> postProductionPlanDetail;
+
+	
+	
+	public int getIsPlanned() {
+		return isPlanned;
+	}
+
+	public void setIsPlanned(int isPlanned) {
+		this.isPlanned = isPlanned;
+	}
 
 	public int getProductionHeaderId() {
 		return productionHeaderId;

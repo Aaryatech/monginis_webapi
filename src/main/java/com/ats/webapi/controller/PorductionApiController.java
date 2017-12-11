@@ -22,6 +22,7 @@ import com.ats.webapi.model.GetProductionItemQty;
 import com.ats.webapi.model.GetRegSpCakeOrderQty;
 import com.ats.webapi.model.GetSellBillHeader;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.MaxTimeSlot;
 import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.PostProdPlanHeader;
 import com.ats.webapi.model.PostProductionDetail;
@@ -121,6 +122,28 @@ e.printStackTrace();
 			System.out.println("exception in order list rest controller" + e.getMessage());
 		}
 		return getRegSpCakeOrederList;
+
+	}
+	@RequestMapping(value = { "/getTimeSlot" }, method = RequestMethod.POST)
+	@ResponseBody
+	public PostProdPlanHeader getTimeSlot(@RequestParam int catId,@RequestParam String productionDate) {
+		PostProdPlanHeader maxTimeSlot =null;
+		try {
+			
+			System.out.println("date str :" + productionDate);
+
+			String strDate = Common.convertToYMD(productionDate);
+			System.out.println("Converted date " + strDate);
+
+		
+			 maxTimeSlot = productionService.getMaxTimeSlot(strDate, catId);
+
+
+		} catch (Exception e) {
+				e.printStackTrace();
+			System.out.println("exception in  /getTimeSlot rest controller" + e.getMessage());
+		}
+		return maxTimeSlot;
 
 	}
 	
@@ -235,14 +258,13 @@ e.printStackTrace();
 	}
 	
 	@RequestMapping(value = { "/getProdOrderQty" }, method = RequestMethod.POST)
-
 	public @ResponseBody List<GetProductionDetail> getProdOrderQty(@RequestParam("catId") List<String> catId,
 			@RequestParam("productionDate") String productionDate, @RequestParam("timeSlot") int timeSlot )
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
 
 		productionDate = Common.convertToYMD(productionDate);
 		List<GetProductionDetail> getProductionDetailList;
-System.out.println(productionDate);
+        System.out.println(productionDate);
 		getProductionDetailList = productionService.getProdQty(catId, productionDate, timeSlot);
 		System.out.println("Data Common " + getProductionDetailList.toString());
 

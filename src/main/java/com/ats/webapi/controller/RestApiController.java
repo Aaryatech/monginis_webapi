@@ -2548,7 +2548,7 @@ try {
 	}
 
 	// Get Item
-	@RequestMapping(value = { "/getItem" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/getItem" }, method = RequestMethod.POST)
 	public @ResponseBody Item findItem(@RequestParam("id") int id) {
 		Item item = itemService.findItem(id);
 		return item;

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.GetProductionDetail;
 import com.ats.webapi.model.GetProductionItemQty;
+import com.ats.webapi.model.MaxTimeSlot;
 import com.ats.webapi.model.PostFrItemStockDetail;
 import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.PostProdPlanHeader;
@@ -137,6 +138,15 @@ public class ProductionServiceImpl implements ProductionService{
 			
 		
 		return postProductionHeaders;
+	}
+
+
+	@Override
+	public PostProdPlanHeader getMaxTimeSlot(String strDate, int catId) {
+
+		PostProdPlanHeader maxTimeSlot=postProdPlanHeaderRepository.findTopTimeSlotByProductionDateAndCatId(strDate,catId);
+		
+		return maxTimeSlot;
 	}
 
 

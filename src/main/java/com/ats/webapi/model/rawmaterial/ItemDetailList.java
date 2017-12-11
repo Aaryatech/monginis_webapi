@@ -6,12 +6,12 @@ import com.ats.webapi.model.ErrorMessage;
 
 public class ItemDetailList {
 
-	List<ItemDetail> itemDetailList;
+	List<GetItemDetail> itemDetailList;
 	ErrorMessage errorMessage;
-	public List<ItemDetail> getItemDetailList() {
+	public List<GetItemDetail> getItemDetailList() {
 		return itemDetailList;
 	}
-	public void setItemDetailList(List<ItemDetail> itemDetailList) {
+	public void setItemDetailList(List<GetItemDetail> itemDetailList) {
 		this.itemDetailList = itemDetailList;
 	}
 	public ErrorMessage getErrorMessage() {

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="m_item_detail")
@@ -27,6 +28,12 @@ public class ItemDetail implements Serializable{
 	@Column(name="rm_name")
 	private String rmName;
 	
+	@Transient
+	private String itemName;
+	
+	@Column(name="no_pieces_per_item")
+	private int noOfPiecesPerItem;
+	
 	@Column(name="rm_type")
 	private int rmType;
 	
@@ -44,6 +51,14 @@ public class ItemDetail implements Serializable{
 
 	
 	
+	public int getNoOfPiecesPerItem() {
+		return noOfPiecesPerItem;
+	}
+
+	public void setNoOfPiecesPerItem(int noOfPiecesPerItem) {
+		this.noOfPiecesPerItem = noOfPiecesPerItem;
+	}
+
 	public int getItemDetailId() {
 		return itemDetailId;
 	}
@@ -119,9 +134,20 @@ public class ItemDetail implements Serializable{
 		this.rmWeight = rmWeight;
 	}
 
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
 	@Override
 	public String toString() {
-		return "ItemDetail [itemDetailId=" + itemDetailId + ", itemId=" + itemId + ", rmId=" + rmId + ", rmType="
-				+ rmType + ", rmQty=" + rmQty + ", delStatus=" + delStatus + "]";
+		return "ItemDetail [itemDetailId=" + itemDetailId + ", itemId=" + itemId + ", rmId=" + rmId + ", rmName="
+				+ rmName + ", itemName=" + itemName + ", noOfPiecesPerItem=" + noOfPiecesPerItem + ", rmType=" + rmType
+				+ ", rmUomId=" + rmUomId + ", rmQty=" + rmQty + ", rmWeight=" + rmWeight + ", delStatus=" + delStatus
+				+ "]";
 	}
+   
 }

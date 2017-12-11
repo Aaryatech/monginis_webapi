@@ -7,7 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
-import com.ats.webapi.model.Info; 
+import com.ats.webapi.model.Info;
+import com.ats.webapi.model.rawmaterial.GetItemDetail;
 import com.ats.webapi.model.rawmaterial.GetRawMaterialByGroup;
 import com.ats.webapi.model.rawmaterial.GetRmItemCategory;
 import com.ats.webapi.model.rawmaterial.GetRmItemSubCat;
@@ -27,6 +28,7 @@ import com.ats.webapi.repository.RmItemCategoryRepository;
 import com.ats.webapi.repository.RmItemGroupRepostitory;
 import com.ats.webapi.repository.RmItemSubCategoryRepository;
 import com.ats.webapi.repository.RmRateVerificationRepository;
+import com.ats.webapi.repository.GetItemDetailRepository;
 import com.ats.webapi.repository.GetRawMaterialByGroupRepository;
 import com.ats.webapi.repository.GetRmItemCatRepository;
 import com.ats.webapi.repository.GetRmItemSubCatRepository;
@@ -80,6 +82,9 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	
 	@Autowired
 	GetUomAndTaxRepository getUomAndTaxRepository;
+	
+	@Autowired
+	GetItemDetailRepository getItemDetailRepository;
 	
 	@Override
 	public RmItemCatList getRmItemCategories() {
@@ -500,19 +505,19 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	}
 		return getUomAndTax;
 	}
-
+/*
 	@Override
 	public ItemDetail saveItemDetail(ItemDetail itemDetail) {
 
 		ItemDetail itemDetailRes=itemDetailRepository.save(itemDetail);
 		return itemDetailRes;
-	}
+	}*/
 
 	@Override
-	public List<ItemDetail> getItemDetails() {
+	public List<GetItemDetail> getItemDetails(int itemId) {
 
-		List<ItemDetail> ItemDetails=itemDetailRepository.findAllItemDetailByDelStatus(0);
-		return ItemDetails;
+		List<GetItemDetail> itemDetails=getItemDetailRepository.findAllItemDetailByDelStatus(itemId);
+		return itemDetails;
 	}
 
 	@Override
@@ -550,6 +555,19 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		List<ItemSfHeader> itemSfHeaders=itemSfHeaderRepository.findItemSfHeaderByDelStatus(0);
 		
 		return itemSfHeaders;
+	}
+
+	@Override
+	public List<ItemDetail> saveItemDetail(List<ItemDetail> itemDetail) {
+
+		List<ItemDetail>  itemDetails=new ArrayList<ItemDetail>();
+
+		for(int i=0;i<itemDetail.size();i++)
+		{
+			ItemDetail itemDetailRes=itemDetailRepository.save(itemDetail.get(i));
+			itemDetails.add(itemDetailRes);
+		}
+		return itemDetails;
 	}
 	
 }

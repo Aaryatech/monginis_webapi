@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.rawmaterial.GetItemDetail;
 import com.ats.webapi.model.rawmaterial.GetRawMaterialByGroup;
 import com.ats.webapi.model.rawmaterial.GetUomAndTax;
 import com.ats.webapi.model.rawmaterial.ItemDetail;
@@ -69,9 +70,9 @@ public interface RawMaterialService {
 
 	GetUomAndTax getUomAndTax(int rmId);
 
-	ItemDetail saveItemDetail(ItemDetail itemDetail);
+	List<ItemDetail> saveItemDetail(List<ItemDetail> itemDetail);
 
-	List<ItemDetail> getItemDetails();
+	List<GetItemDetail> getItemDetails(int itemId);
 
 	Info deleteItemDetail(int itemDetailId);
 
