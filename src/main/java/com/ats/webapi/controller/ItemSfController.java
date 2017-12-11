@@ -72,6 +72,9 @@ public class ItemSfController {
 		
 		Info info =new Info();
 		
+		System.out.println("size of input object "+itemSfDetailList.size());
+		System.out.println("input ="+itemSfDetailList.toString());
+		
 		try {
 				info=itemSfService.saveDetail(itemSfDetailList);
 				
