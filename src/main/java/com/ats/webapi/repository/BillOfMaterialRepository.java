@@ -18,6 +18,9 @@ public interface BillOfMaterialRepository extends JpaRepository<BillOfMaterialHe
 	
 	@Query(value=" select * from t_req_bom where  req_id=:reqId and del_status=0",nativeQuery=true)
 	BillOfMaterialHeader getByReqstId(@Param("reqId")int reqId);
+
+	@Query(value=" select * from t_req_bom where del_status=0",nativeQuery=true)
+	List<BillOfMaterialHeader> getBOMAlllist();
 	
 	/*@Query(value=" update BillOfMaterialHeader set status=3 and req_id=:reqId")
 	int updatestatus(@Param("reqId")int reqId);*/

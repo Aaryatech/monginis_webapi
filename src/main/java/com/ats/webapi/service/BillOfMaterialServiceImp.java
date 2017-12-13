@@ -79,6 +79,40 @@ public class BillOfMaterialServiceImp implements BillOfMaterialService{
 		return billOfMaterial;
 		
 	}
+
+	@Override
+	public GetBillOfMaterialList getallBOMHeaderList() {
+		
+		GetBillOfMaterialList getBillOfMaterialList = new GetBillOfMaterialList();
+		ErrorMessage errorMessage = new ErrorMessage();
+		try
+		{
+			List<BillOfMaterialHeader> billOfMaterialHeaderList =  billOfMaterialRepository.getBOMAlllist();
+			
+			for(int i=0;i<billOfMaterialHeaderList.size();i++)
+			{
+				List<BillOfMaterialDetailed> listBillOfMaterialDetailed = new ArrayList<BillOfMaterialDetailed>();
+				int req=billOfMaterialHeaderList.get(i).getReqId();
+				System.out.println("reqId  "+req);
+				listBillOfMaterialDetailed = billOfMaterialDetailedRepository.getBomdetailedListById(req);
+				billOfMaterialHeaderList.get(i).setBillOfMaterialDetailed(listBillOfMaterialDetailed);
+			}
+			getBillOfMaterialList.setBillOfMaterialHeader(billOfMaterialHeaderList);
+			errorMessage.setError(false);
+			errorMessage.setMessage("success");
+			getBillOfMaterialList.setErrorMessage(errorMessage);
+			
+			
+		}catch(Exception e)
+		{
+			e.getStackTrace();
+			errorMessage.setError(true);
+			errorMessage.setMessage("unsuccess");
+			getBillOfMaterialList.setErrorMessage(errorMessage);
+		}
+		return getBillOfMaterialList;
+		
+	}
 	
 	/*@Override
 	public ErrorMessage updatestatus(int reqId) {

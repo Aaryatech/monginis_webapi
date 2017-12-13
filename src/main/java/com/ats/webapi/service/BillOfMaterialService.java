@@ -10,6 +10,8 @@ public interface BillOfMaterialService{
 
 	BillOfMaterialHeader gettBomdetaildwithId(int reqId);
 
+	GetBillOfMaterialList getallBOMHeaderList();
+
 	/*ErrorMessage updatestatus(int reqId);*/
 
 }
