@@ -4,6 +4,7 @@ package com.ats.webapi.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,8 +17,20 @@ import com.ats.webapi.model.prod.GetProdPlanDetail;
 import com.ats.webapi.model.prod.GetProdPlanDetailList;
 import com.ats.webapi.model.prod.GetProdPlanHeader;
 import com.ats.webapi.model.prod.GetProdPlanHeaderList;
+
+import com.ats.webapi.model.prod.temp.GetSFDataForMixing;
+import com.ats.webapi.model.prod.temp.GetSFDataForMixingList;
+import com.ats.webapi.model.prod.temp.GetSFPlanDetailForMixing;
+import com.ats.webapi.model.prod.temp.GetSFPlanDetailForMixingList;
+import com.ats.webapi.model.prod.temp.GetTempMixItemDetail;
+import com.ats.webapi.model.prod.temp.GetTempMixItemDetailList;
+import com.ats.webapi.model.prod.temp.TempMixing;
+import com.ats.webapi.model.prod.temp.TempMixingList;
 import com.ats.webapi.repository.prod.GetProdHeaderRepo;
 import com.ats.webapi.repository.prod.GetProdPlanDetailRepo;
+import com.ats.webapi.repository.prod.GetSFPlanDetailForMixingRepo;
+import com.ats.webapi.repository.prod.GetTempMixItemDetailRepo;
+import com.ats.webapi.repository.prod.TempMixingRepo;
 
 @RestController
 public class TempProdApi {
@@ -27,6 +40,150 @@ public class TempProdApi {
 	
 	@Autowired
 	GetProdPlanDetailRepo prodDetaiRepo;
+	
+	/*@Autowired
+	GetItemwiseProdPlanRepo getItemwiseProdPlanRepo;
+	
+	@Autowired
+	GetItemDetailForMixingRepo getItemDetailForMixingRepo;
+	
+	@Autowired
+	GetSfDetailForMixingRepo getSfDetailForMixingRepo;
+	
+	
+	@Autowired
+	GetSFDataForMixingRepo getSFDataForMixingRepo;
+	*/
+	@Autowired
+	TempMixingRepo tempMixingRepo;
+	
+	@Autowired
+	GetTempMixItemDetailRepo getTempMixItemDetailRepo;
+	
+	@Autowired
+	GetSFPlanDetailForMixingRepo getSFPlanDetailForMixingRepo; //New And Final
+	
+	
+	// used 1
+	
+	@RequestMapping(value = { "/getTempMixItemDetail" }, method = RequestMethod.POST)
+	public @ResponseBody GetTempMixItemDetailList getTempMixItemDetailRepo(@RequestParam("prodHeaderId") int prodHeaderId) {
+		
+		GetTempMixItemDetailList tempMixList=new GetTempMixItemDetailList();
+		
+		try {
+			
+			List<GetTempMixItemDetail> tempMixItemDetail=getTempMixItemDetailRepo.getMxItemDetail(prodHeaderId);
+			
+			
+			tempMixList.setTempMixItemDetail(tempMixItemDetail);
+			
+			if(!tempMixItemDetail.isEmpty()) {
+				
+				tempMixingRepo.deleteAllInBatch();
+				
+			}
+			
+			
+		}catch (Exception e) {
+			System.out.println("Get Error Temp Mixing");		
+			
+		}
+		
+		
+		
+		return tempMixList;
+		
+	}
+	
+	// used 2
+	@RequestMapping(value = { "/insertTempMixing" }, method = RequestMethod.POST)
+	public @ResponseBody Info insertTempMixing(@RequestBody List<TempMixing> tempMixing ) {
+		
+		TempMixing tempMix;
+		Info info=new Info();
+		
+		try {
+			
+			for(int i=0;i<tempMixing.size();i++) {
+				
+				 tempMix=new TempMixing();
+				 
+				 TempMixing saveMe=tempMixingRepo.save(tempMixing.get(i));
+			
+			}
+			
+		}catch (Exception e) {
+			System.out.println("Insert Error Temp Mixing");		
+			
+		}
+		
+		return info;
+		
+	}
+	
+	
+	//used 3
+	
+		@RequestMapping(value = { "/getSfPlanDetailForMixing" }, method = RequestMethod.POST)
+		public @ResponseBody GetSFPlanDetailForMixingList getSfPlanDetailForMixing(@RequestParam("headerId")int headerId) {
+
+			GetSFPlanDetailForMixingList sfAndPlanDetailList = new GetSFPlanDetailForMixingList();
+			
+			Info info=new Info();
+
+			try {
+			
+				List<GetSFPlanDetailForMixing> sfPlanDetailForMixing=getSFPlanDetailForMixingRepo.getSFAndPlanDetailForMixing(headerId);
+			
+			if(!sfPlanDetailForMixing.isEmpty()) {
+				
+				info.setError(false);
+				info.setMessage("success");
+				
+			}
+			else {
+				
+				info.setError(true);
+				info.setMessage("failed");
+			}
+	  
+			sfAndPlanDetailList.setSfPlanDetailForMixing(sfPlanDetailForMixing);
+			sfAndPlanDetailList.setInfo(info);
+			
+			
+			}catch (Exception e) {
+				System.out.println("Error getting sf and Plan Detail For Mixing ");
+				e.printStackTrace();
+				
+			}
+				return sfAndPlanDetailList;
+		  }
+		
+		
+	
+	@RequestMapping(value = { "/getTempMix" }, method = RequestMethod.POST)
+	public @ResponseBody TempMixingList getTempMix(@RequestParam("prodHeaderId") int prodHeaderId) {
+		
+		TempMixingList tempMix=new TempMixingList();
+		
+		try {
+			
+			List<TempMixing> tempMixing=tempMixingRepo.findByProdHeaderId(prodHeaderId);
+			
+			
+			tempMix.setTempMixing(tempMixing);
+			
+			
+		}catch (Exception e) {
+			System.out.println("Get Error Temp Mixing");		
+			
+		}
+		
+		return tempMix;
+		
+	}
+	
 	
 	
 	@RequestMapping(value = { "/getProdPlanHeader" }, method = RequestMethod.POST)
@@ -98,5 +255,162 @@ public class TempProdApi {
 		}
 			return prodDetailList;
 	  }
+	
+	
+	/*@RequestMapping(value = { "/getItemwisePlanDetail" }, method = RequestMethod.GET)
+	public @ResponseBody GetItemwisePlanDetailList getItemwisePlanDetail() {
+
+		GetItemwisePlanDetailList planDetailList = new GetItemwisePlanDetailList();
+		
+		Info info=new Info();
+
+		try {
+		
+			List<GetItemwisePlanDetail> itemWisePlan=getItemwiseProdPlanRepo.getItemQty();
+		
+		if(!itemWisePlan.isEmpty()) {
+			
+			info.setError(false);
+			info.setMessage("success: list size = "+itemWisePlan.size());
+			
+		}
+		else {
+			info.setError(true);
+			info.setMessage("failed :");
+		}
+  
+		planDetailList.setItemwisePlanDetail(itemWisePlan);
+		planDetailList.setInfo(info);
+		
+		
+		}catch (Exception e) {
+			System.out.println("Error getting prod item wise Plan detail ");
+			e.printStackTrace();
+			
+		}
+			return planDetailList;
+	  }
+	
+	
+	@RequestMapping(value = { "/getItemDetailForMixing" }, method = RequestMethod.POST)
+	public @ResponseBody GetItemDetailForMixingList getItemDetailForMixing(@RequestParam("itemIdList") List<String> itemIdList) {
+		
+		System.out.println("input para "+itemIdList.toString());
+		
+	//	itemIdList=itemIdList.toString();
+
+		GetItemDetailForMixingList itemMixList = new GetItemDetailForMixingList();
+		
+		Info info=new Info();
+
+		try {
+		
+			List<GetItemDetailForMixing> itemForMixing=getItemDetailForMixingRepo.getMixingItem(itemIdList);
+		
+		if(!itemForMixing.isEmpty()) {
+			
+			info.setError(false);
+			info.setMessage("success: list size = "+itemForMixing.size());
+			
+		}
+		else {
+			info.setError(true);
+			info.setMessage("failed :");
+		}
+  
+		itemMixList.setItemDetailForMixing(itemForMixing);
+		itemMixList.setInfo(info);
+		
+		
+		}catch (Exception e) {
+			System.out.println("Error getting prod item wise Mixing detail ");
+			e.printStackTrace();
+			
+		}
+		
+		System.out.println("output lits mixing "+itemMixList.toString());
+		
+		return itemMixList;
+	  }
+	
+	
+	@RequestMapping(value = { "/getSfDetailForMixing" }, method = RequestMethod.POST)
+	public @ResponseBody GetSfDetailForMixingList getSfDetailForMixing(@RequestParam("sfIdList") List<String> sfIdList) {
+		
+		System.out.println("input para "+sfIdList.toString());
+		
+	//	itemIdList=itemIdList.toString();
+
+		GetSfDetailForMixingList sfDetailMix = new GetSfDetailForMixingList();
+		
+		Info info=new Info();
+
+		try {
+		
+			List<GetSfDetailForMixing> sfDetailLits= getSfDetailForMixingRepo.getSfDetailForMixing(sfIdList);
+		
+		if(!sfDetailLits.isEmpty()) {
+			
+			info.setError(false);
+			info.setMessage("success: list size = "+sfDetailLits.size());
+			
+		}
+		else {
+			info.setError(true);
+			info.setMessage("failed :");
+		}
+  
+		sfDetailMix.setSfDetailForMixing(sfDetailLits);
+		sfDetailMix.setInfo(info);
+		
+		
+		}catch (Exception e) {
+			System.out.println("Error getting sf  detail  for Mixing");
+			e.printStackTrace();
+			
+		}
+		
+		System.out.println("output lits sf List "+sfDetailMix.toString());
+		
+		return sfDetailMix;
+	  }
+*/	
+	/*@RequestMapping(value = { "/getSFDataForMixing" }, method = RequestMethod.POST)
+	public @ResponseBody GetSFDataForMixingList getSFData(@RequestParam("qty")int qty,@RequestParam("sfId")int sfId) {
+
+		GetSFDataForMixingList sfDataForMixList = new GetSFDataForMixingList();
+		
+		Info info=new Info();
+
+		try {
+		
+			List<GetSFDataForMixing> sFDataForMixing=getSFDataForMixingRepo.getSFData(qty, sfId);
+		
+		if(!sFDataForMixing.isEmpty()) {
+			
+			info.setError(false);
+			info.setMessage("success");
+			
+		}
+		else {
+			
+			info.setError(true);
+			info.setMessage("failed");
+		}
+  
+		sfDataForMixList.setsFDataForMixing(sFDataForMixing);
+		sfDataForMixList.setInfo(info);
+		
+		
+		}catch (Exception e) {
+			System.out.println("Error getting sf Data For Mixing ");
+			e.printStackTrace();
+			
+		}
+		
+		System.out.println("sfDataForMixList "+sfDataForMixList.toString());
+
+			return sfDataForMixList;
+	  }*/
 	
 }
