@@ -27,7 +27,10 @@ import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.PostProdPlanHeader;
 import com.ats.webapi.model.PostProductionDetail;
 import com.ats.webapi.model.PostProductionHeader;
+import com.ats.webapi.model.PostProductionPlanDetail;
+import com.ats.webapi.model.ProdQty;
 import com.ats.webapi.model.UpdateBillStatus;
+import com.ats.webapi.model.rawmaterial.ItemDetail;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
 import com.ats.webapi.model.report.GetRepItemwiseSell;
 import com.ats.webapi.model.report.GetRepMonthwiseSell;
@@ -296,6 +299,16 @@ e.printStackTrace();
 		return menuList;
 		
 	}
-	 
+	@RequestMapping(value = { "/updateProdQty" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateProdQty(@RequestBody List<PostProductionPlanDetail> getProductionDetailList)
+	{
+		System.out.println("Item Detail:"+getProductionDetailList.toString());
+		
+		Info info=productionService.updateProdQty(getProductionDetailList);
+		
+		return info;
+	}
+	
+	//----------------------------------END------------------------------------- 
 	
 }
