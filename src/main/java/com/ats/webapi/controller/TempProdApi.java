@@ -162,6 +162,46 @@ public class TempProdApi {
 		
 		
 	
+		
+		//bom started
+		@RequestMapping(value = { "/getSfPlanDetailForBom" }, method = RequestMethod.POST)
+		public @ResponseBody GetSFPlanDetailForMixingList getSfPlanDetailForBom(@RequestParam("headerId")int headerId) {
+
+			GetSFPlanDetailForMixingList sfAndPlanDetailList = new GetSFPlanDetailForMixingList();
+			
+			Info info=new Info();
+
+			try {
+			
+				List<GetSFPlanDetailForMixing> sfPlanDetailForBom=getSFPlanDetailForMixingRepo.getSfPlanDetailForBom(headerId);
+			
+			if(!sfPlanDetailForBom.isEmpty()) {
+				
+				info.setError(false);
+				info.setMessage("success");
+				
+			}
+			else {
+				
+				info.setError(true);
+				info.setMessage("failed");
+			}
+	  
+			sfAndPlanDetailList.setSfPlanDetailForMixing(sfPlanDetailForBom);
+			sfAndPlanDetailList.setInfo(info);
+			
+			
+			}catch (Exception e) {
+				System.out.println("Error getting sf and Plan Detail For Bom ");
+				e.printStackTrace();
+				
+			}
+				return sfAndPlanDetailList;
+		  }
+		
+		
+		
+		
 	@RequestMapping(value = { "/getTempMix" }, method = RequestMethod.POST)
 	public @ResponseBody TempMixingList getTempMix(@RequestParam("prodHeaderId") int prodHeaderId) {
 		

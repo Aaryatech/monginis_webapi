@@ -8,7 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
+//same Bean Used for Bom and Mixing
 @Entity
 public class GetSFPlanDetailForMixing implements Serializable {
 	
