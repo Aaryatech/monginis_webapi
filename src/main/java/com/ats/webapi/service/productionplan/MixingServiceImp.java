@@ -1,6 +1,7 @@
 package com.ats.webapi.service.productionplan;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,10 @@ public class MixingServiceImp implements MixingService {
 		MixingHeader mixingdata = new MixingHeader();
 		try
 		{
+			
+			Date Mixdate = new Date();
+			System.out.println("date "+Mixdate);
+			mixingHeader.setMixDate(Mixdate);
 			
 			mixingdata = mixingRepository.save(mixingHeader);
 			

@@ -10,7 +10,6 @@ import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.PostProdPlanHeader;
 import com.ats.webapi.model.PostProductionHeader;
 import com.ats.webapi.model.PostProductionPlanDetail;
-import com.ats.webapi.model.ProdQty;
 
 public interface ProductionService {
 
@@ -29,5 +28,7 @@ public interface ProductionService {
 
 
 	public Info updateProdQty(List<PostProductionPlanDetail> getProductionDetailList);
+	
+	public int updateisMixing(int productionId);
 	
 	}

@@ -16,7 +16,6 @@ import com.ats.webapi.model.PostProdPlanHeader;
 import com.ats.webapi.model.PostProductionDetail;
 import com.ats.webapi.model.PostProductionHeader;
 import com.ats.webapi.model.PostProductionPlanDetail;
-import com.ats.webapi.model.ProdQty;
 import com.ats.webapi.repository.GetProdQytRepository;
 import com.ats.webapi.repository.GetProductionItemQtyRepository;
 import com.ats.webapi.repository.MainMenuConfigurationRepository;
@@ -177,6 +176,19 @@ public class ProductionServiceImpl implements ProductionService{
 		}
 
 		return info;
+	}
+
+	@Override
+	public int updateisMixing(int productionId) {
+		int update = 0;
+		try
+		{
+			 update=postProdPlanHeaderRepository.updateisMixing(productionId);
+		}catch(Exception e)
+		{
+			System.out.println("in implementation "+e.getMessage());
+		}
+		return update;
 	}
 
 

@@ -59,7 +59,19 @@ public class MixingDetailed {
 	@Column(name="ex_bool1")
 	private int exBool1;
 	
+	@Column(name="uom")
+	private int uom;
+	
 	 
+	
+	public int getUom() {
+		return uom;
+	}
+
+	public void setUom(int uom) {
+		this.uom = uom;
+	}
+
 	public int getMixing_detailId() {
 		return mixing_detailId;
 	}
@@ -179,7 +191,7 @@ public class MixingDetailed {
 				+ ", sfName=" + sfName + ", receivedQty=" + receivedQty + ", productionQty=" + productionQty
 				+ ", mixingDate=" + mixingDate + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3
 				+ ", exVarchar1=" + exVarchar1 + ", exVarchar2=" + exVarchar2 + ", exVarchar3=" + exVarchar3
-				+ ", exBool1=" + exBool1 + "]";
+				+ ", exBool1=" + exBool1 + ", uom=" + uom + "]";
 	}
 	
 	

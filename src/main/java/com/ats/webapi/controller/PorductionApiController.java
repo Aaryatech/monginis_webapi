@@ -28,7 +28,6 @@ import com.ats.webapi.model.PostProdPlanHeader;
 import com.ats.webapi.model.PostProductionDetail;
 import com.ats.webapi.model.PostProductionHeader;
 import com.ats.webapi.model.PostProductionPlanDetail;
-import com.ats.webapi.model.ProdQty;
 import com.ats.webapi.model.UpdateBillStatus;
 import com.ats.webapi.model.rawmaterial.ItemDetail;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
@@ -310,5 +309,13 @@ e.printStackTrace();
 	}
 	
 	//----------------------------------END------------------------------------- 
-	
+	@RequestMapping(value = { "/updateisMixing" }, method = RequestMethod.POST)
+	public @ResponseBody int updateisMixing(@RequestParam("productionId") int productionId)
+	{
+		
+		int menuList=productionService.updateisMixing(productionId);
+		
+		return menuList;
+		
+	}
 }
