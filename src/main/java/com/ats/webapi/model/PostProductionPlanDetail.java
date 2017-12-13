@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "t_production_plan_detail")
 public class PostProductionPlanDetail {
@@ -51,11 +53,11 @@ public class PostProductionPlanDetail {
 		public String getProductionBatch() {
 			return productionBatch;
 		}
-
+		@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 		public void setProductionBatch(String productionBatch) {
 			this.productionBatch = productionBatch;
 		}
-
+		@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 		public Date getProductionDate() {
 			return productionDate;
 		}
