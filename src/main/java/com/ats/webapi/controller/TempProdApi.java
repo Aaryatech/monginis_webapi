@@ -20,6 +20,8 @@ import com.ats.webapi.model.prod.GetProdPlanHeaderList;
 
 import com.ats.webapi.model.prod.temp.GetSFDataForMixing;
 import com.ats.webapi.model.prod.temp.GetSFDataForMixingList;
+import com.ats.webapi.model.prod.temp.GetSFMixingForBom;
+import com.ats.webapi.model.prod.temp.GetSFMixingForBomList;
 import com.ats.webapi.model.prod.temp.GetSFPlanDetailForMixing;
 import com.ats.webapi.model.prod.temp.GetSFPlanDetailForMixingList;
 import com.ats.webapi.model.prod.temp.GetTempMixItemDetail;
@@ -28,6 +30,7 @@ import com.ats.webapi.model.prod.temp.TempMixing;
 import com.ats.webapi.model.prod.temp.TempMixingList;
 import com.ats.webapi.repository.prod.GetProdHeaderRepo;
 import com.ats.webapi.repository.prod.GetProdPlanDetailRepo;
+import com.ats.webapi.repository.prod.GetSFMixingForBomRepo;
 import com.ats.webapi.repository.prod.GetSFPlanDetailForMixingRepo;
 import com.ats.webapi.repository.prod.GetTempMixItemDetailRepo;
 import com.ats.webapi.repository.prod.TempMixingRepo;
@@ -63,7 +66,8 @@ public class TempProdApi {
 	@Autowired
 	GetSFPlanDetailForMixingRepo getSFPlanDetailForMixingRepo; //New And Final
 	
-	
+	@Autowired
+	GetSFMixingForBomRepo getSFMixingForBomRepo;
 	// used 1
 	
 	@RequestMapping(value = { "/getTempMixItemDetail" }, method = RequestMethod.POST)
@@ -199,6 +203,43 @@ public class TempProdApi {
 				return sfAndPlanDetailList;
 		  }
 		
+		//bom second web service
+		
+
+		@RequestMapping(value = { "/getSFMixingForBom" }, method = RequestMethod.POST)
+		public @ResponseBody GetSFMixingForBomList getSFMixingForBom(@RequestParam("mixingId")int mixingId) {
+
+			GetSFMixingForBomList sfMixingForBomList = new GetSFMixingForBomList();
+			
+			Info info=new Info();
+
+			try {
+			
+				List<GetSFMixingForBom> sFMixingForBom=getSFMixingForBomRepo.getSFMixingForBom(mixingId);
+			
+			if(!sFMixingForBom.isEmpty()) {
+				
+				info.setError(false);
+				info.setMessage("success");
+				
+			}
+			else {
+				
+				info.setError(true);
+				info.setMessage("failed");
+			}
+	  
+			sfMixingForBomList.setsFMixingForBom(sFMixingForBom);
+			sfMixingForBomList.setInfo(info);
+			
+			
+			}catch (Exception e) {
+				System.out.println("Error getting sf Mixing For BOM ");
+				e.printStackTrace();
+				
+			}
+				return sfMixingForBomList;
+		  }
 		
 		
 		
