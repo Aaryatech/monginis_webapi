@@ -60,15 +60,15 @@ public class MixingDetailed {
 	private int exBool1;
 	
 	@Column(name="uom")
-	private int uom;
+	private String uom;
 	
 	 
 	
-	public int getUom() {
+	public String getUom() {
 		return uom;
 	}
 
-	public void setUom(int uom) {
+	public void setUom(String uom) {
 		this.uom = uom;
 	}
 
