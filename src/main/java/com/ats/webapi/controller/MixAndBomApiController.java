@@ -177,5 +177,15 @@ public class MixAndBomApiController {
 
 	}
 	
+	@RequestMapping(value = { "/updateisBomInMixing" }, method = RequestMethod.POST)
+	public @ResponseBody int updateisMixing(@RequestParam("mixId") int mixId)
+	{
+		
+		int update=mixingService.updateisBom(mixId);
+		
+		return update;
+		
+	}
+	
 
 }

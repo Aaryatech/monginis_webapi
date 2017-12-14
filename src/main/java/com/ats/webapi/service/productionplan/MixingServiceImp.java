@@ -128,4 +128,20 @@ public class MixingServiceImp implements MixingService {
 		
 	}
 
+	@Override
+	public int updateisBom(int mixId) {
+		int updateisBom=0;
+		
+		try
+		{
+			updateisBom=mixingRepository.updateisBom(mixId);
+		}catch(Exception e)
+		{
+			System.out.println("int updateIsbom "+e.getMessage());
+		}
+		return updateisBom;
+		
+		
+	}
+
 }

@@ -309,11 +309,11 @@ e.printStackTrace();
 	}
 	
 	//----------------------------------END------------------------------------- 
-	@RequestMapping(value = { "/updateisMixing" }, method = RequestMethod.POST)
-	public @ResponseBody int updateisMixing(@RequestParam("productionId") int productionId)
+	@RequestMapping(value = { "/updateisMixingandBom" }, method = RequestMethod.POST)
+	public @ResponseBody int updateisMixing(@RequestParam("productionId") int productionId,@RequestParam("flag") int flag)
 	{
 		
-		int menuList=productionService.updateisMixing(productionId);
+		int menuList=productionService.updateisMixing(productionId,flag);
 		
 		return menuList;
 		

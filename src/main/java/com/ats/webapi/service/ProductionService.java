@@ -29,6 +29,6 @@ public interface ProductionService {
 
 	public Info updateProdQty(List<PostProductionPlanDetail> getProductionDetailList);
 	
-	public int updateisMixing(int productionId);
+	public int updateisMixing(int productionId,int flag);
 	
 	}

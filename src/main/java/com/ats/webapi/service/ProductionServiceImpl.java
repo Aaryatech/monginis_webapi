@@ -179,11 +179,21 @@ public class ProductionServiceImpl implements ProductionService{
 	}
 
 	@Override
-	public int updateisMixing(int productionId) {
+	public int updateisMixing(int productionId,int flag) {
 		int update = 0;
 		try
 		{
-			 update=postProdPlanHeaderRepository.updateisMixing(productionId);
+			if(flag==0)
+			{
+				System.out.println("flag 0 in if");
+				update=postProdPlanHeaderRepository.updateisMixing(productionId);
+			}
+			else if(flag==1)
+			{
+				System.out.println("flag 1 in if else");
+				update=postProdPlanHeaderRepository.updateisBom(productionId);	
+			}
+			 
 		}catch(Exception e)
 		{
 			System.out.println("in implementation "+e.getMessage());

@@ -10,6 +10,8 @@ public interface MixingService {
 	GetMixingList gettMixingHeaderndDetailed(String frmdate, String todate);
 
 	MixingHeader gettMixingdetaildwithId(int mixId);
+
+	int updateisBom(int mixId);
 	
 	
 
