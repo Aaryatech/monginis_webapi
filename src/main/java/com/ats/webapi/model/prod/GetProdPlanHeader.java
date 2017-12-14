@@ -47,6 +47,11 @@ public class GetProdPlanHeader implements Serializable {
 	
 	@Column(name="cat_name")
 	private String  catName;
+	
+	
+	@Column(name="is_planned")
+	private int isPlanned;
+	
 
 	public int getProductionHeaderId() {
 		return productionHeaderId;
@@ -127,6 +132,14 @@ public class GetProdPlanHeader implements Serializable {
 
 	public void setCatName(String catName) {
 		this.catName = catName;
+	}
+
+	public int getIsPlanned() {
+		return isPlanned;
+	}
+
+	public void setIsPlanned(int isPlanned) {
+		this.isPlanned = isPlanned;
 	}
 	
 

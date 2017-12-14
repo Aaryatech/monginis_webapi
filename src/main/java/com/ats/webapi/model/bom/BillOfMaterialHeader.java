@@ -79,6 +79,13 @@ public class BillOfMaterialHeader {
 
 	@Transient
 	List<BillOfMaterialDetailed> billOfMaterialDetailed;
+	//new Fields
+	
+	@Column(name="is_plan")
+	private int isPlan;
+	@Column(name="is_manual")
+	private int isManual;
+
 
 	public int getReqId() {
 		return reqId;
@@ -243,20 +250,20 @@ public class BillOfMaterialHeader {
 		this.billOfMaterialDetailed = billOfMaterialDetailed;
 	}
 
-	@Override
-	public String toString() {
-		return "BillOfMaterialHeader [reqId=" + reqId + ", productionId=" + productionId + ", productionDate="
-				+ productionDate + ", isProduction=" + isProduction + ", fromDeptId=" + fromDeptId + ", fromDeptName="
-				+ fromDeptName + ", toDeptId=" + toDeptId + ", toDeptName=" + toDeptName + ", senderUserid="
-				+ senderUserid + ", reqDate=" + reqDate + ", approvedUserId=" + approvedUserId + ", approvedDate="
-				+ approvedDate + ", status=" + status + ", exBool1=" + exBool1 + ", delStatus=" + delStatus
-				+ ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVarchar1=" + exVarchar1 + ", exVarchar2="
-				+ exVarchar2 + ", billOfMaterialDetailed=" + billOfMaterialDetailed + "]";
+	public int getIsPlan() {
+		return isPlan;
 	}
-	
-	
-	
-	
-	
-	
+
+	public void setIsPlan(int isPlan) {
+		this.isPlan = isPlan;
+	}
+
+	public int getIsManual() {
+		return isManual;
+	}
+
+	public void setIsManual(int isManual) {
+		this.isManual = isManual;
+	}
+
 }

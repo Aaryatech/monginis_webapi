@@ -13,7 +13,7 @@ public interface GetProdHeaderRepo extends JpaRepository<GetProdPlanHeader, Inte
 	
 	
 	
-@Query(value=" SELECT t_production_plan_header.production_header_id,\n" + 
+@Query(value=" SELECT t_production_plan_header.production_header_id,t_production_plan_header.is_planned,\n" + 
 		"t_production_plan_header.production_date,\n" + 
 		"t_production_plan_header.cat_id,\n" + 
 		"t_production_plan_header.production_batch,\n" + 

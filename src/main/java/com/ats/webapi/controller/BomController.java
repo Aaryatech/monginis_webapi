@@ -29,7 +29,8 @@ public class BomController {
 	public @ResponseBody Info saveBom(@RequestBody BillOfMaterialHeader billOfMaterialHeader) {
 
 		Info info = new Info();
-System.out.println("Input Req Param "+billOfMaterialHeader.toString());
+		
+		System.out.println("Input Req Param "+billOfMaterialHeader.toString());
 		try {
 
 			BillOfMaterialDetailed bDetail=null;

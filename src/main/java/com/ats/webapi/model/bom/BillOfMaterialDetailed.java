@@ -67,6 +67,9 @@ public class BillOfMaterialDetailed {
 	@Column(name="auto_rm_req_qty")
 	private float autoRmReqQty;
 	
+	@Column(name="rejected_qty")
+	private float rejectedQty;
+	
 
 	public float getAutoRmReqQty() {
 		return autoRmReqQty;
@@ -204,15 +207,23 @@ public class BillOfMaterialDetailed {
 		this.delStatus = delStatus;
 	}
 
+	public float getRejectedQty() {
+		return rejectedQty;
+	}
+
+	public void setRejectedQty(float rejectedQty) {
+		this.rejectedQty = rejectedQty;
+	}
+
 	@Override
 	public String toString() {
 		return "BillOfMaterialDetailed [reqDetailId=" + reqDetailId + ", reqId=" + reqId + ", rmType=" + rmType
 				+ ", rmId=" + rmId + ", rmName=" + rmName + ", uom=" + uom + ", rmReqQty=" + rmReqQty + ", rmIssueQty="
 				+ rmIssueQty + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVarchar1=" + exVarchar1
 				+ ", exVarchar2=" + exVarchar2 + ", exVarchar3=" + exVarchar3 + ", exBool1=" + exBool1 + ", exBool2="
-				+ exBool2 + ", delStatus=" + delStatus + ", autoRmReqQty=" + autoRmReqQty + "]";
+				+ exBool2 + ", delStatus=" + delStatus + ", autoRmReqQty=" + autoRmReqQty + ", rejectedQty="
+				+ rejectedQty + "]";
 	}
 
 	
-
 }
