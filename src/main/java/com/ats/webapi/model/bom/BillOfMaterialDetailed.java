@@ -61,6 +61,20 @@ public class BillOfMaterialDetailed {
 	
 	@Column(name="del_status")
 	private int delStatus;
+	
+	
+	//Newly Added
+	@Column(name="auto_rm_req_qty")
+	private float autoRmReqQty;
+	
+
+	public float getAutoRmReqQty() {
+		return autoRmReqQty;
+	}
+
+	public void setAutoRmReqQty(float autoRmReqQty) {
+		this.autoRmReqQty = autoRmReqQty;
+	}
 
 	public int getReqDetailId() {
 		return reqDetailId;
@@ -196,11 +210,9 @@ public class BillOfMaterialDetailed {
 				+ ", rmId=" + rmId + ", rmName=" + rmName + ", uom=" + uom + ", rmReqQty=" + rmReqQty + ", rmIssueQty="
 				+ rmIssueQty + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exVarchar1=" + exVarchar1
 				+ ", exVarchar2=" + exVarchar2 + ", exVarchar3=" + exVarchar3 + ", exBool1=" + exBool1 + ", exBool2="
-				+ exBool2 + ", delStatus=" + delStatus + "]";
+				+ exBool2 + ", delStatus=" + delStatus + ", autoRmReqQty=" + autoRmReqQty + "]";
 	}
-	
-	
-	
+
 	
 
 }

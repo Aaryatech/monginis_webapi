@@ -28,6 +28,9 @@ public class User implements Serializable{
 	@Column(name="del_status")
     private int delStatus;
 	
+	@Column(name="dept_id")
+    private int deptId;
+	
     
     public int getDelStatus() {
 		return delStatus;
@@ -65,12 +68,18 @@ public class User implements Serializable{
 		this.password = password;
 	}
 
+	public int getDeptId() {
+		return deptId;
+	}
+
+	public void setDeptId(int deptId) {
+		this.deptId = deptId;
+	}
+
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", username=" + username + ", password=" + password + ", usertype=" + usertype
-				+ ", delStatus=" + delStatus + "]";
+				+ ", delStatus=" + delStatus + ", deptId=" + deptId + "]";
 	}
-
-	    
 
 }

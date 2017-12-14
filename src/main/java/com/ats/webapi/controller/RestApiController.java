@@ -1415,7 +1415,7 @@ try {
 	@RequestMapping(value = { "/insertUser" }, method = RequestMethod.POST)
 	@ResponseBody
 	public String saveUser(@RequestParam("username") String username, @RequestParam("userpassword") String userpwd,
-			@RequestParam("usertype") int usertype) {
+			@RequestParam("usertype") int usertype,@RequestParam("deptId") int deptId) {
 
 		System.out.println("input user" + username.toString());
 
@@ -1423,6 +1423,8 @@ try {
 		user.setUsername(username);
 		user.setPassword(userpwd);
 		user.setUsertype(usertype);
+		
+		user.setDeptId(deptId);
 		user.setDelStatus(0);
 
 		String jsonResult = userService.save(user);
