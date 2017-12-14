@@ -35,7 +35,7 @@ System.out.println("Input Req Param "+billOfMaterialHeader.toString());
 			BillOfMaterialDetailed bDetail=null;
 			BillOfMaterialHeader billMatHeader = billOfMaterialRepository.save(billOfMaterialHeader);
 
-			List<BillOfMaterialDetailed> bomDetailList = billMatHeader.getBillOfMaterialDetailed();
+			List<BillOfMaterialDetailed> bomDetailList = billOfMaterialHeader.getBillOfMaterialDetailed();
 
 			int reqId = billMatHeader.getReqId();
 
