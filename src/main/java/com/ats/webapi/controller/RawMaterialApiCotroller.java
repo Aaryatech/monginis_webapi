@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.RawMaterialUomList;
 import com.ats.webapi.model.rawmaterial.GetItemDetail;
 import com.ats.webapi.model.rawmaterial.GetRawMaterialByGroup;
 import com.ats.webapi.model.rawmaterial.GetRawMaterialDetailList;
@@ -229,6 +230,19 @@ public class RawMaterialApiCotroller {
 	{
 		List<RawMaterialUom> rawMaterialUomList=rawMaterialService.getAllUom();
 		return rawMaterialUomList;
+	}
+	
+	@RequestMapping(value = { "/getRmUomList" }, method = RequestMethod.GET)
+	public @ResponseBody RawMaterialUomList getRmUomList()
+	{
+		RawMaterialUomList rmList = new RawMaterialUomList();
+		
+		List<RawMaterialUom> rawMaterialUomList=rawMaterialService.getAllUom();
+		
+		rmList.setRawMaterialUom(rawMaterialUomList);
+		
+		return rmList;
+		
 	}
 	//-----------------------------getRM Gst--------------------------------------
 	
