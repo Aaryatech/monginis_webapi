@@ -25,4 +25,6 @@ public interface BillOfMaterialRepository extends JpaRepository<BillOfMaterialHe
 	/*@Query(value=" update BillOfMaterialHeader set status=3 and req_id=:reqId")
 	int updatestatus(@Param("reqId")int reqId);*/
 
+	
+	
 }
