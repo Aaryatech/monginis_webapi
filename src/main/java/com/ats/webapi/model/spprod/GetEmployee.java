@@ -19,6 +19,10 @@ public class GetEmployee implements Serializable{
 	@Column(name="emp_name")
 	private String empName;
 	
+	private int empType;
+	
+	private String typeName;
+	
 	@Column(name="dept_id")
 	private int deptId;
 	
@@ -30,6 +34,23 @@ public class GetEmployee implements Serializable{
 	
 	@Column(name="del_status")
 	private int delStatus;
+
+	
+	public int getEmpType() {
+		return empType;
+	}
+
+	public void setEmpType(int empType) {
+		this.empType = empType;
+	}
+
+	public String getTypeName() {
+		return typeName;
+	}
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
 
 	public int getEmpId() {
 		return empId;

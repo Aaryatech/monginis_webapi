@@ -24,7 +24,7 @@ public interface MDeptRepository extends JpaRepository<MDept, Integer>{
 	 @Query("UPDATE MDept SET del_status=1 WHERE dept_id=:deptId")
 	 public int deleteById(@Param("deptId")int deptId);
 
-	public MDept findMDeptByDelStatusAndDeptId(int i, int deptId);
+	public MDept findMDeptByDeptId( int deptId);
 
 	
 }

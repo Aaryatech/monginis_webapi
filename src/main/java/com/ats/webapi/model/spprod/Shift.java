@@ -11,44 +11,30 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="m_emp")
-public class Employee implements Serializable{
-
-
+@Table(name="m_shift")
+public class Shift implements Serializable{
+	
 	@Transient
 	private boolean isError;
 	
 	@Transient
 	private String message;
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="emp_id")
-	private int empId;
+	@Column(name="shift_id")
+	private int shiftId;
 	
-	@Column(name="emp_name")
-	private String empName;
+	@Column(name="shift_no")
+	private int shiftNo;
 	
-	@Column(name="dept_id")
-	private int deptId;
+	@Column(name="shift_name")
+	private String shiftName;
 	
 	@Column(name="is_used")
 	private int isUsed;
 	
-	@Column(name="emp_type")
-	private int empType;
-	
-	
 	@Column(name="del_status")
 	private int delStatus;
-	
-	public int getEmpType() {
-		return empType;
-	}
-
-	public void setEmpType(int empType) {
-		this.empType = empType;
-	}
 
 	public boolean isError() {
 		return isError;
@@ -66,28 +52,28 @@ public class Employee implements Serializable{
 		this.message = message;
 	}
 
-	public int getEmpId() {
-		return empId;
+	public int getShiftId() {
+		return shiftId;
 	}
 
-	public void setEmpId(int empId) {
-		this.empId = empId;
+	public void setShiftId(int shiftId) {
+		this.shiftId = shiftId;
 	}
 
-	public String getEmpName() {
-		return empName;
+	public int getShiftNo() {
+		return shiftNo;
 	}
 
-	public void setEmpName(String empName) {
-		this.empName = empName;
+	public void setShiftNo(int shiftNo) {
+		this.shiftNo = shiftNo;
 	}
 
-	public int getDeptId() {
-		return deptId;
+	public String getShiftName() {
+		return shiftName;
 	}
 
-	public void setDeptId(int deptId) {
-		this.deptId = deptId;
+	public void setShiftName(String shiftName) {
+		this.shiftName = shiftName;
 	}
 
 	public int getIsUsed() {
@@ -108,9 +94,8 @@ public class Employee implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Employee [isError=" + isError + ", message=" + message + ", empId=" + empId + ", empName=" + empName
-				+ ", deptId=" + deptId + ", isUsed=" + isUsed + ", delStatus=" + delStatus + "]";
+		return "Shift [isError=" + isError + ", message=" + message + ", shiftId=" + shiftId + ", shiftNo=" + shiftNo
+				+ ", shiftName=" + shiftName + ", isUsed=" + isUsed + ", delStatus=" + delStatus + "]";
 	}
-    
-    
+
 }

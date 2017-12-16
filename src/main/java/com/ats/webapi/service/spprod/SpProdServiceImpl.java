@@ -10,23 +10,41 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.spprod.Employee;
 import com.ats.webapi.model.spprod.EmployeeList;
 import com.ats.webapi.model.spprod.GetEmployee;
+import com.ats.webapi.model.spprod.GetEmployeeList;
 import com.ats.webapi.model.spprod.GetSpStation;
+import com.ats.webapi.model.spprod.GetStationAllocation;
 import com.ats.webapi.model.spprod.Instrument;
 import com.ats.webapi.model.spprod.InstrumentList;
 import com.ats.webapi.model.spprod.MDept;
 import com.ats.webapi.model.spprod.MDeptList;
+import com.ats.webapi.model.spprod.MType;
+import com.ats.webapi.model.spprod.Shift;
+import com.ats.webapi.model.spprod.ShiftList;
 import com.ats.webapi.model.spprod.SpStation;
 import com.ats.webapi.model.spprod.SpStationList;
+import com.ats.webapi.model.spprod.StationAllocList;
+import com.ats.webapi.model.spprod.StationAllocation;
+import com.ats.webapi.model.spprod.TypeList;
 import com.ats.webapi.repository.EmployeeRepository;
 import com.ats.webapi.repository.GetEmployeeRepository;
 import com.ats.webapi.repository.GetSpStationRepository;
+import com.ats.webapi.repository.GetStationAllocRepository;
 import com.ats.webapi.repository.InstrumentRepository;
 import com.ats.webapi.repository.MDeptRepository;
+import com.ats.webapi.repository.ProdStationAllocRepository;
+import com.ats.webapi.repository.ShiftRepository;
 import com.ats.webapi.repository.SpStationRepository;
+import com.ats.webapi.repository.TypeRepository;
 
 @Service
 public class SpProdServiceImpl implements SpProdService{
 
+	@Autowired
+	ProdStationAllocRepository prodStationAllocRepository;
+	
+	@Autowired
+	GetStationAllocRepository getStationAllocRepository;
+	
 	@Autowired
 	SpStationRepository spStationRepository;
 	
@@ -44,6 +62,12 @@ public class SpProdServiceImpl implements SpProdService{
 	
 	@Autowired
 	private MDeptRepository mDeptRepository;
+	
+	@Autowired
+	private ShiftRepository shiftRepository;
+	
+	@Autowired
+	TypeRepository typeRepository;
 	
 	@Override
 	public SpStation saveStation(SpStation spStation) {
@@ -94,12 +118,12 @@ public class SpProdServiceImpl implements SpProdService{
 	}
 
 	@Override
-	public EmployeeList getEmployeeList() {
+	public EmployeeList getEmployeeList(int empType) {
 
 		EmployeeList employeeList=new EmployeeList();
 		Info info=new Info();
 		
-		List<GetEmployee> empListRes=getEmployeeRepository.findGetEmployeeByDelStatus();
+		List<GetEmployee> empListRes=getEmployeeRepository.findGetEmployeeByDelStatus(empType);
 		
 		if(!empListRes.isEmpty())
 		{
@@ -118,12 +142,12 @@ public class SpProdServiceImpl implements SpProdService{
 	}
 
 	@Override
-	public InstrumentList getInstrumentList() {
+	public InstrumentList getInstrumentList(int instType) {
 		
 		InstrumentList instrumentList=new InstrumentList();
 		Info info=new Info();
 		
-		List<Instrument> instrumentRes=instrumentRepository.findAllByDelStatus(0);
+		List<Instrument> instrumentRes=instrumentRepository.findAllByDelStatus(0,instType);
 		
 		if(!instrumentRes.isEmpty())
 		{
@@ -331,8 +355,214 @@ public class SpProdServiceImpl implements SpProdService{
 	@Override
 	public MDept getDepartment(int deptId) {
 
-		MDept mDept=mDeptRepository.findMDeptByDelStatusAndDeptId(0,deptId);
+		MDept mDept=mDeptRepository.findMDeptByDeptId(deptId);
 		return mDept;
 	}
+
+	@Override
+	public Shift saveShift(Shift shift) {
+
+		Shift shiftRes=shiftRepository.save(shift);
+		return shiftRes;
+	}
+
+	@Override
+	public Shift getShift(int shiftId) {
+
+		Shift shiftRes=shiftRepository.findShiftByShiftId(shiftId);
+		return shiftRes;
+	}
+
+	@Override
+	public ShiftList getShiftList() {
+
+		ShiftList shiftList = new ShiftList();
+		ErrorMessage errorMessage = new ErrorMessage();
+		try
+		{
+			List<Shift> shiftListRes = shiftRepository.findShiftByDelStatus(0);
+			
+			if(!shiftListRes.isEmpty())
+			{
+				shiftList.setShiftList(shiftListRes);
+			       errorMessage.setError(false);
+			       errorMessage.setMessage("ShiftList Found Successfully.");
+			       shiftList.setErrorMessage(errorMessage);
+			}
+			else
+			{
+				errorMessage.setError(false);
+				errorMessage.setMessage("ShiftList Not Found.");
+				shiftList.setErrorMessage(errorMessage);
+			}
+			
+		}catch(Exception e)
+		{
+			
+			errorMessage.setError(true);
+			errorMessage.setMessage("ShiftList Not Found");
+			shiftList.setErrorMessage(errorMessage);
+		}
+		return shiftList;
+	}
+
+	@Override
+	public ErrorMessage deleteShift(int shiftId) {
+		ErrorMessage errorMessage = new ErrorMessage();
+		try
+		{
+			int deleteRes = shiftRepository.deleteByShiftId(shiftId);
+			if(deleteRes==0)
+			{
+				errorMessage.setError(true);
+				errorMessage.setMessage("Shift Deletion Failed");
+			}
+			else
+			{
+				errorMessage.setError(false);
+				errorMessage.setMessage("Shift Successfully Deleted");
+			}
+			
+		}catch(Exception e)
+		{
+			errorMessage.setError(true);
+			errorMessage.setMessage("Shift Deletion Failed EXC");
+		}
+		return errorMessage;
+	}
+
+	@Override
+	public TypeList getTypeList(int typeId) {
+
+		TypeList typeList = new TypeList();
+		ErrorMessage errorMessage = new ErrorMessage();
+		try
+		{
+			List<MType> typeListRes = typeRepository.findMTypeByDelStatusAndSubType(0,typeId);
+			
+			if(!typeListRes.isEmpty())
+			{
+				   typeList.setTypeList(typeListRes);
+			       errorMessage.setError(false);
+			       errorMessage.setMessage("TypeList Found Successfully.");
+			       typeList.setErrorMessage(errorMessage);
+			}
+			else
+			{
+				errorMessage.setError(false);
+				errorMessage.setMessage("TypeList Not Found.");
+				typeList.setErrorMessage(errorMessage);
+			}
+			
+		}catch(Exception e)
+		{
+			
+			errorMessage.setError(true);
+			errorMessage.setMessage("TypeList Not Found");
+			typeList.setErrorMessage(errorMessage);
+		}
+		return typeList;
+	}
+
+	@Override
+	public StationAllocation saveProdStationAllocation(StationAllocation stationAllocation) {
+
+		StationAllocation sTAllocation=prodStationAllocRepository.save(stationAllocation);
+		
+		return sTAllocation;
+	}
+
+	@Override
+	public ErrorMessage deleteStationAllocation(int allocationId) {
+		ErrorMessage errorMessage = new ErrorMessage();
+		try
+		{
+			int deleteRes = prodStationAllocRepository.deleteByAllocationId(allocationId);
+			if(deleteRes==0)
+			{
+				errorMessage.setError(true);
+				errorMessage.setMessage("StationAllocation Deletion Failed");
+			}
+			else
+			{
+				errorMessage.setError(false);
+				errorMessage.setMessage("StationAllocation Successfully Deleted");
+			}
+			
+		}catch(Exception e)
+		{
+			errorMessage.setError(true);
+			errorMessage.setMessage("StationAllocation Deletion Failed EXC");
+		}
+		return errorMessage;
+	}
+
+	@Override
+	public StationAllocList getStationAllocList() {
+
+		StationAllocList stationAllocList = new StationAllocList();
+		ErrorMessage errorMessage = new ErrorMessage();
+		try
+		{
+			List<GetStationAllocation> stationListRes = getStationAllocRepository.findStationAllocations();
+			
+			if(!stationListRes.isEmpty())
+			{
+				stationAllocList.setStationAllocationList(stationListRes);
+			       errorMessage.setError(false);
+			       errorMessage.setMessage("StationAllocList Found Successfully.");
+			       stationAllocList.setErrorMessage(errorMessage);
+			}
+			else
+			{
+				errorMessage.setError(false);
+				errorMessage.setMessage("StationAllocList Not Found.");
+				stationAllocList.setErrorMessage(errorMessage);
+			}
+			
+		}catch(Exception e)
+		{
+			
+			errorMessage.setError(true);
+			errorMessage.setMessage("StationAllocList Not Found");
+			stationAllocList.setErrorMessage(errorMessage);
+		}
+		return stationAllocList;
+	}
+
+	@Override
+	public StationAllocation getStationAlloc(int allocationId) {
+
+		StationAllocation stationAllocationRes = prodStationAllocRepository.findStationAllocationByAllocationId(allocationId);
+		return stationAllocationRes;
+	}
+
+	@Override
+	public GetEmployeeList getEmployeesByType(int empType) {
+		
+		
+		GetEmployeeList employeeList=new GetEmployeeList();
+		ErrorMessage errorMessage=new ErrorMessage();
+		
+		List<Employee> empListRes=employeeRepository.findEmployeeByEmpTypeAndDelStatus(empType,0);
+		
+		if(!empListRes.isEmpty())
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("Employee List Found Successfully");
+			employeeList.setGetEmpList(empListRes);
+			employeeList.setErrorMessage(errorMessage);
+		}
+		else
+		{
+			errorMessage.setError(true);
+			errorMessage.setMessage("Employee List Not Found");
+			employeeList.setErrorMessage(errorMessage);
+		}
+		
+		
+		return employeeList;
+	}
+
 
 }

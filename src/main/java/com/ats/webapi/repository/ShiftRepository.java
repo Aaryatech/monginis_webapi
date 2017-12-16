@@ -9,18 +9,17 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ats.webapi.model.spprod.Employee;
-
+import com.ats.webapi.model.spprod.Shift;
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
+public interface ShiftRepository extends JpaRepository<Shift, Integer>{
 
-	Employee findEmployeeByEmpId(int empId);
+	Shift findShiftByShiftId(int shiftId);
 
-	 @Transactional
+	List<Shift> findShiftByDelStatus(int i);
+	 
+	@Transactional
 	 @Modifying
-	 @Query("UPDATE Employee SET del_status=1 WHERE emp_id=:empId")
-	 int deleteByEmpId(@Param("empId")int empId);
-
-	List<Employee> findEmployeeByEmpTypeAndDelStatus(int empType,int delStatus);
+	 @Query("UPDATE Shift SET del_status=1 WHERE shift_id=:shiftId")
+	int deleteByShiftId(@Param("shiftId")int shiftId);
 
 }

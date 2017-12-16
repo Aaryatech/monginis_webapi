@@ -1,7 +1,5 @@
 package com.ats.webapi.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,18 +7,16 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ats.webapi.model.spprod.Employee;
+import com.ats.webapi.model.spprod.StationAllocation;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Integer>{
+public interface ProdStationAllocRepository extends JpaRepository<StationAllocation, Integer>{
 
-	Employee findEmployeeByEmpId(int empId);
-
-	 @Transactional
+	@Transactional
 	 @Modifying
-	 @Query("UPDATE Employee SET del_status=1 WHERE emp_id=:empId")
-	 int deleteByEmpId(@Param("empId")int empId);
+	 @Query("UPDATE StationAllocation SET del_status=1 WHERE allocation_id=:allocationId")
+	int deleteByAllocationId(@Param("allocationId")int allocationId);
 
-	List<Employee> findEmployeeByEmpTypeAndDelStatus(int empType,int delStatus);
+	StationAllocation findStationAllocationByAllocationId(int allocationId);
 
 }

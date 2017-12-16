@@ -41,11 +41,21 @@ public class Instrument implements Serializable{
 	
 	@Column(name="stock_qty")
 	private int stockQty;
+	
+	@Column(name="inst_type")
+	private int instType;
 
 	@Column(name="del_status")
 	private int delStatus;
 	
-	
+	public int getInstType() {
+		return instType;
+	}
+
+	public void setInstType(int instType) {
+		this.instType = instType;
+	}
+
 	public int getDelStatus() {
 		return delStatus;
 	}
