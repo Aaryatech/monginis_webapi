@@ -83,9 +83,21 @@ public class BillOfMaterialHeader {
 	
 	@Column(name="is_plan")
 	private int isPlan;
+	
 	@Column(name="is_manual")
 	private int isManual;
+	
+	@Column(name="rej_user_id")
+	private int rejUserId;
+	@Column(name="rej_date")
+	private Date rejDate;
+	@Column(name="rej_approve_user_id")
+	private int rejApproveUserId;
+	@Column(name="rej_approve_date")
+	private Date rejApproveDate;
+	
 
+	
 
 	public int getReqId() {
 		return reqId;
@@ -264,6 +276,38 @@ public class BillOfMaterialHeader {
 
 	public void setIsManual(int isManual) {
 		this.isManual = isManual;
+	}
+
+	public int getRejUserId() {
+		return rejUserId;
+	}
+
+	public void setRejUserId(int rejUserId) {
+		this.rejUserId = rejUserId;
+	}
+
+	public Date getRejDate() {
+		return rejDate;
+	}
+
+	public void setRejDate(Date rejDate) {
+		this.rejDate = rejDate;
+	}
+
+	public int getRejApproveUserId() {
+		return rejApproveUserId;
+	}
+
+	public void setRejApproveUserId(int rejApproveUserId) {
+		this.rejApproveUserId = rejApproveUserId;
+	}
+
+	public Date getRejApproveDate() {
+		return rejApproveDate;
+	}
+
+	public void setRejApproveDate(Date rejApproveDate) {
+		this.rejApproveDate = rejApproveDate;
 	}
 
 }
