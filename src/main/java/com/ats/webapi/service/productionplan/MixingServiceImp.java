@@ -29,31 +29,59 @@ public class MixingServiceImp implements MixingService {
 		MixingHeader mixingdata = new MixingHeader();
 		try
 		{
-			
-			Date Mixdate = new Date();
-			System.out.println("date "+Mixdate);
-			mixingHeader.setMixDate(Mixdate);
-			
-			mixingdata = mixingRepository.save(mixingHeader);
-			
-			System.out.println("mixingdata  "+mixingdata.toString());
-		//	List<MixingDetailed> mixingDetailedlist = new ArrayList<MixingDetailed>();
-			//mixingDetailedlist = mixingHeader.getMixingDetailed();
-			int mixId=mixingdata.getMixId();
-			
-			for(int i=0;i<mixingHeader.getMixingDetailed().size();i++)
-			{ 
-				  
-					MixingDetailed mixingDetailed = mixingHeader.getMixingDetailed().get(i);
-					mixingDetailed.setMixingId(mixId);
-					mixingDetailed=mixingDetailedRepository.save(mixingDetailed);
-				 
-			}
-			
-			if(mixingdata!=null)
+			if(mixingHeader.getMixId()==0)
 			{
-				System.out.println("successfullyinsertted");
+				Date Mixdate = new Date();
+				System.out.println("date "+Mixdate);
+				mixingHeader.setMixDate(Mixdate);
+				
+				mixingdata = mixingRepository.save(mixingHeader);
+				
+				System.out.println("mixingdata  "+mixingdata.toString());
+			//	List<MixingDetailed> mixingDetailedlist = new ArrayList<MixingDetailed>();
+				//mixingDetailedlist = mixingHeader.getMixingDetailed();
+				int mixId=mixingdata.getMixId();
+				
+				for(int i=0;i<mixingHeader.getMixingDetailed().size();i++)
+				{ 
+					  
+						MixingDetailed mixingDetailed = mixingHeader.getMixingDetailed().get(i);
+						mixingDetailed.setMixingId(mixId);
+						mixingDetailed=mixingDetailedRepository.save(mixingDetailed);
+					 
+				}
+				
+				if(mixingdata!=null)
+				{
+					System.out.println("successfullyinsertted");
+				}
+				
 			}
+			else
+			{
+				
+				mixingdata = mixingRepository.save(mixingHeader);
+				
+				System.out.println("mixingdata  "+mixingdata.toString());
+			//	List<MixingDetailed> mixingDetailedlist = new ArrayList<MixingDetailed>();
+				//mixingDetailedlist = mixingHeader.getMixingDetailed();
+				int mixId=mixingdata.getMixId();
+				
+				for(int i=0;i<mixingHeader.getMixingDetailed().size();i++)
+				{ 
+					  
+						MixingDetailed mixingDetailed = mixingHeader.getMixingDetailed().get(i);
+						mixingDetailed.setMixingId(mixId);
+						mixingDetailed=mixingDetailedRepository.save(mixingDetailed);
+					 
+				}
+				
+				if(mixingdata!=null)
+				{
+					System.out.println("successfullyinsertted");
+				}
+			}
+			
 		}catch(Exception e)
 		{
 			e.printStackTrace();

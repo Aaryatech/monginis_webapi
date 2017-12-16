@@ -33,7 +33,7 @@ public class MixingDetailed {
 	private float receivedQty;
 	
 	@Column(name="production_qty")
-	private int productionQty;
+	private float productionQty;
 	
 	@Column(name="mixing_date")
 	private Date mixingDate;
@@ -62,8 +62,20 @@ public class MixingDetailed {
 	@Column(name="uom")
 	private String uom;
 	
+	@Column(name="rejected_qty")
+	private float rejectedQty;
+	
+	
 	 
 	
+	public float getRejectedQty() {
+		return rejectedQty;
+	}
+
+	public void setRejectedQty(float rejectedQty) {
+		this.rejectedQty = rejectedQty;
+	}
+
 	public String getUom() {
 		return uom;
 	}
@@ -112,11 +124,11 @@ public class MixingDetailed {
 		this.receivedQty = receivedQty;
 	}
 
-	public int getProductionQty() {
+	public float getProductionQty() {
 		return productionQty;
 	}
 
-	public void setProductionQty(int productionQty) {
+	public void setProductionQty(float productionQty) {
 		this.productionQty = productionQty;
 	}
 
@@ -191,7 +203,7 @@ public class MixingDetailed {
 				+ ", sfName=" + sfName + ", receivedQty=" + receivedQty + ", productionQty=" + productionQty
 				+ ", mixingDate=" + mixingDate + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3
 				+ ", exVarchar1=" + exVarchar1 + ", exVarchar2=" + exVarchar2 + ", exVarchar3=" + exVarchar3
-				+ ", exBool1=" + exBool1 + ", uom=" + uom + "]";
+				+ ", exBool1=" + exBool1 + ", uom=" + uom + ", rejectedQty=" + rejectedQty + "]";
 	}
 	
 	
