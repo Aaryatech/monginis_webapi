@@ -39,7 +39,7 @@ public class BmsStockController {
 
 		try {
 
-			List<GetBmsCurrentStock> bmsCurrentStock = currentBmsStockRepo.getBmsCurStock(cDate, storeDeptId, storeDeptId, storeDeptId, rmType);
+			List<GetBmsCurrentStock> bmsCurrentStock = currentBmsStockRepo.getBmsCurStock(cDate,prodDeptId,mixDeptId, storeDeptId,rmType);
 
 			if (!bmsCurrentStock.isEmpty()) {
 
