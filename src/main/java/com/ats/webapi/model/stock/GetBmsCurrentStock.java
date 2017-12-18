@@ -19,7 +19,23 @@ public class GetBmsCurrentStock {
 	@Column(name="rm_name")
 	private String rmName;
 	
+	@Column(name="rm_uom_id")
+	private int rmUomId;
 	
+	public int getRmUomId() {
+		return rmUomId;
+	}
+	public void setRmUomId(int rmUomId) {
+		this.rmUomId = rmUomId;
+	}
+	@Override
+	public String toString() {
+		return "GetBmsCurrentStock [rmId=" + rmId + ", rmName=" + rmName + ", rmUomId=" + rmUomId + ", prod_issue_qty="
+				+ prod_issue_qty + ", prod_rejected_qty=" + prod_rejected_qty + ", prod_return_qty=" + prod_return_qty
+				+ ", mixing_issue_qty=" + mixing_issue_qty + ", mixing_rejected_qty=" + mixing_rejected_qty
+				+ ", mixing_return_qty=" + mixing_return_qty + ", store_issue_qty=" + store_issue_qty
+				+ ", store_rejected_qty=" + store_rejected_qty + ", openingQty=" + openingQty + "]";
+	}
 	float prod_issue_qty;
 	float prod_rejected_qty;
 	

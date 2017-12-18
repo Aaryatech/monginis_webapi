@@ -15,7 +15,7 @@ import com.ats.webapi.model.stock.GetBmsCurrentStock;
 public interface GetCurrentBmsStockRepo extends JpaRepository<GetBmsCurrentStock, Integer> {
 	
 	
-	@Query(value=" SELECT m_rm.rm_id, m_rm.rm_name, coalesce((Select SUM(t_req_bom_detail.rm_issue_qty) "
+	@Query(value=" SELECT m_rm.rm_uom_id,m_rm.rm_id, m_rm.rm_name, coalesce((Select SUM(t_req_bom_detail.rm_issue_qty) "
 			+ "FROM t_req_bom_detail,t_req_bom where t_req_bom.approved_date=:curDate AND t_req_bom.from_dept_id=:prodDeptId  AND t_req_bom_detail.rm_type=:rmType AND "
 			+ "t_req_bom.req_id=t_req_bom_detail.req_id AND t_req_bom.status>0 AND m_rm.rm_id=t_req_bom_detail.rm_id),0) AS prod_issue_qty,\n" + 
 			"\n" + 
