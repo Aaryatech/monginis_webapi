@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.FrItemStockConfigure;
+import com.ats.webapi.model.FrItemStockConfigureList;
+import com.ats.webapi.model.Info;
 import com.ats.webapi.repository.FrItemStockConfigureRepository;
 
 @Service
@@ -43,6 +45,43 @@ public class FrItemStockConfigureServiceImpl implements FrItemStockConfigureServ
 		int valuebykey=frItemStockConfRepo.findBySettingKey(key);
 		return valuebykey;
 		
+	}
+
+	@Override
+	public FrItemStockConfigureList findBySettingKeyList(List<String> settingKeyList) {
+		
+		Info info=new Info();
+		
+		FrItemStockConfigureList settingList=new FrItemStockConfigureList();
+		
+		try {
+		
+		List<FrItemStockConfigure> frItemStockConfigures=frItemStockConfRepo.findBySettingKeyIn(settingKeyList);
+		
+		
+		if(!frItemStockConfigures.isEmpty()) {
+			
+			info.setError(false);
+			info.setMessage("Success: Getting SettingValue for BMS Stock");
+			
+		}
+		else {
+			info.setError(true);
+			info.setMessage("Error: Getting SettingValue for BMS Stock");
+			
+		}
+		
+		settingList.setFrItemStockConfigure(frItemStockConfigures);
+
+		settingList.setInfo(info);
+		
+		}catch (Exception e) {
+
+			System.out.println("Ex in getting setting List for BMS Stock"+e.getMessage());
+			e.printStackTrace();
+		}
+		
+		return settingList;
 	}
 
 }
