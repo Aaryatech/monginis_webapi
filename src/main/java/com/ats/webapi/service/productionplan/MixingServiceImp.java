@@ -105,14 +105,14 @@ public class MixingServiceImp implements MixingService {
 			System.out.println("from date "+frmdate+"  todate  :"+todate);
 			mixingHeaderlist=mixingRepository.getAlllist(frmdate,todate);
 			
-			for(int i=0;i<mixingHeaderlist.size();i++)
+			/*for(int i=0;i<mixingHeaderlist.size();i++)
 			{
 				List<MixingDetailed> mixingDetailed= new ArrayList<MixingDetailed>();
 				int mixId=mixingHeaderlist.get(i).getMixId();
 				mixingDetailed=mixingDetailedRepository.gemixdetailedListById(mixId);
 				mixingHeaderlist.get(i).setMixingDetailed(mixingDetailed);
 				System.out.println(mixingDetailed.toString());
-			}
+			}*/
 			
 			getMixingList.setMixingHeaderList(mixingHeaderlist);
 			errorMessage.setError(false);

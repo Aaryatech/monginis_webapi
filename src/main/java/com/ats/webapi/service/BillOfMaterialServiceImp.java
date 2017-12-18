@@ -32,14 +32,14 @@ public class BillOfMaterialServiceImp implements BillOfMaterialService{
 		{
 			List<BillOfMaterialHeader> billOfMaterialHeaderList =  billOfMaterialRepository.getAlllist(frmdate, todate);
 			
-			for(int i=0;i<billOfMaterialHeaderList.size();i++)
+			/*for(int i=0;i<billOfMaterialHeaderList.size();i++)
 			{
 				List<BillOfMaterialDetailed> listBillOfMaterialDetailed = new ArrayList<BillOfMaterialDetailed>();
 				int req=billOfMaterialHeaderList.get(i).getReqId();
 				System.out.println("reqId  "+req);
 				listBillOfMaterialDetailed = billOfMaterialDetailedRepository.getBomdetailedListById(req);
 				billOfMaterialHeaderList.get(i).setBillOfMaterialDetailed(listBillOfMaterialDetailed);
-			}
+			}*/
 			getBillOfMaterialList.setBillOfMaterialHeader(billOfMaterialHeaderList);
 			errorMessage.setError(false);
 			errorMessage.setMessage("success");
@@ -89,14 +89,14 @@ public class BillOfMaterialServiceImp implements BillOfMaterialService{
 		{
 			List<BillOfMaterialHeader> billOfMaterialHeaderList =  billOfMaterialRepository.getBOMAlllist();
 			
-			for(int i=0;i<billOfMaterialHeaderList.size();i++)
+			/*for(int i=0;i<billOfMaterialHeaderList.size();i++)
 			{
 				List<BillOfMaterialDetailed> listBillOfMaterialDetailed = new ArrayList<BillOfMaterialDetailed>();
 				int req=billOfMaterialHeaderList.get(i).getReqId();
 				System.out.println("reqId  "+req);
 				listBillOfMaterialDetailed = billOfMaterialDetailedRepository.getBomdetailedListById(req);
 				billOfMaterialHeaderList.get(i).setBillOfMaterialDetailed(listBillOfMaterialDetailed);
-			}
+			}*/
 			getBillOfMaterialList.setBillOfMaterialHeader(billOfMaterialHeaderList);
 			errorMessage.setError(false);
 			errorMessage.setMessage("success");
