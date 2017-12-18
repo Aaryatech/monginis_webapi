@@ -1,12 +1,15 @@
 package com.ats.webapi.service.bmsstock;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.BmsStockDetailed;
 import com.ats.webapi.model.BmsStockHeader;
+import com.ats.webapi.model.stock.GetBmsStock;
 import com.ats.webapi.repository.BmsStockDetailedRepository;
 import com.ats.webapi.repository.BmsStockHeaderRepository;
 
@@ -50,6 +53,22 @@ public class BmsStockServiceImp implements BmsStockService {
 		}
 		return bmsStockHeaderloc;
 		
+	}
+
+	@Override
+	public	List<BmsStockDetailed> getBmsStock(String fromDate, String toDate, int rmType) {
+		 
+	 
+		
+		 
+		
+		 
+		List<BmsStockDetailed> bmsStockDetailedList=bmsStockDetailedRepository.getStockDetails(fromDate, toDate,rmType);
+		 
+		 
+		System.out.println("BmsStock : "+bmsStockDetailedList.toString());
+		
+		return bmsStockDetailedList;
 	}
 
 }
