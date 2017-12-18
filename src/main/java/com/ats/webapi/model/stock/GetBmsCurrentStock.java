@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class GetBmsCurrentStock {
@@ -29,8 +30,9 @@ public class GetBmsCurrentStock {
 	float store_issue_qty; 
 	float store_rejected_qty;
 	
-	float openingQty;
-	float closingQty;
+	@Transient
+	float openingQty=0;
+	
 	
 	public int getRmId() {
 		return rmId;
@@ -98,12 +100,6 @@ public class GetBmsCurrentStock {
 	}
 	public void setOpeningQty(float openingQty) {
 		this.openingQty = openingQty;
-	}
-	public float getClosingQty() {
-		return closingQty;
-	}
-	public void setClosingQty(float closingQty) {
-		this.closingQty = closingQty;
 	}
 	
 }

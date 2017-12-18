@@ -52,10 +52,9 @@ public interface GetCurrentBmsStockRepo extends JpaRepository<GetBmsCurrentStock
 			"coalesce((Select SUM( t_req_bom_detail.rejected_qty) FROM "
 			+ " t_req_bom_detail,t_req_bom where t_req_bom.rej_approve_date=:curDate "
 			+ "AND t_req_bom.from_dept_id=:storeDeptId AND t_req_bom.req_id=t_req_bom_detail.req_id "
-			+ "AND t_req_bom_detail.rm_type=:rmType AND  t_req_bom.status>2 AND m_rm.rm_id=t_req_bom_detail.rm_id),0) AS store_rejected_qty ,\n" +
-			" coalesce((select t_bms_stock_deatil.bms_opening_stock from t_bms_stock_deatil where t_bms_stock_deatil.bms_stock_date=:curDate AND t_bms_stock_deatil.rm_type=:rmType and m_rm.rm_id=t_bms_stock_deatil.rm_id),0) as opening_qty,"
-			+"coalesce((select t_bms_stock_deatil.closing_qty from t_bms_stock_deatil where t_bms_stock_deatil.bms_stock_date=:curDate AND t_bms_stock_deatil.rm_type=:rmType and m_rm.rm_id=t_bms_stock_deatil.rm_id),0) as closing_qty"
-			+" from t_req_bom,m_rm Group by rm_id",nativeQuery=true)
+			+ "AND t_req_bom_detail.rm_type=:rmType AND  t_req_bom.status>2 AND m_rm.rm_id=t_req_bom_detail.rm_id),0) AS store_rejected_qty \n" +
+	
+			" from t_req_bom,m_rm Group by rm_id",nativeQuery=true)
 		
 			List<GetBmsCurrentStock> getBmsCurStock(@Param("curDate") Date curDate,@Param("prodDeptId") int prodDeptId,@Param("mixDeptId") int mixDeptId,
 					@Param("storeDeptId") int storeDeptId,@Param("rmType") int rmType);
