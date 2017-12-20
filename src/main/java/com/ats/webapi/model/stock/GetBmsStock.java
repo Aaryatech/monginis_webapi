@@ -1,4 +1,4 @@
-package com.ats.webapi.model;
+package com.ats.webapi.model.stock;
 
 import java.util.Date;
 
@@ -7,17 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "t_bms_stock_details")
-public class BmsStockDetailed {
+public class GetBmsStock {
+
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "bms_stock_deatil_id")
-	private int bmsStockDeatilId;
+private int bmsStockDeatilId;
 	
 	@Column(name = "bms_stock_id")
 	private int bmsStockId;
@@ -37,7 +36,7 @@ public class BmsStockDetailed {
 	@Column(name = "rm_uom")
 	private int rmUom;
 
-	@Transient
+	 
 	@Column(name = "uom")
 	private String uom;
 	

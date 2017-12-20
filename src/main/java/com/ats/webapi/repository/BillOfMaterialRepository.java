@@ -21,6 +21,13 @@ public interface BillOfMaterialRepository extends JpaRepository<BillOfMaterialHe
 
 	@Query(value=" select * from t_req_bom where del_status=0",nativeQuery=true)
 	List<BillOfMaterialHeader> getBOMAlllist();
+
+	
+	@Query(value=" select * from t_req_bom where  req_date BETWEEN :frmdate and :todate and from_dept_id=:fromDept and to_dept_id=:toDept and del_status=0",nativeQuery=true)
+	List<BillOfMaterialHeader> getAlllist(@Param("fromDept")int fromDept, @Param("toDept")int toDept, @Param("frmdate")String frmdate, @Param("todate")String todate);
+
+	@Query(value=" select * from t_req_bom where  status IN(:status) and from_dept_id=:fromDept and to_dept_id=:toDept and del_status=0",nativeQuery=true)
+	List<BillOfMaterialHeader> getAlllist(@Param("fromDept")int fromDept, @Param("toDept")int toDept, @Param("status")List<String> status);
 	
 	/*@Query(value=" update BillOfMaterialHeader set status=3 and req_id=:reqId")
 	int updatestatus(@Param("reqId")int reqId);*/

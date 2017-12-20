@@ -5,6 +5,7 @@ package com.ats.webapi.controller;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -129,6 +130,45 @@ public class MixAndBomApiController {
 			
 			
 			getBillOfMaterialList = billOfMaterialService.getBillOfMaterialithDate(frmdate, todate);
+
+
+		} catch (Exception e) {
+				e.printStackTrace();
+			System.out.println("exception in order list rest controller" + e.getMessage());
+		}
+		return getBillOfMaterialList;
+
+	}
+	
+
+	@RequestMapping(value = { "/getBOMHeaderListBmsAndStore" }, method = RequestMethod.POST)
+	@ResponseBody
+	public GetBillOfMaterialList getBOMHeaderListBmsAndStore(@RequestParam("fromDept")int fromDept, @RequestParam("toDept")int toDept,@RequestParam("frmdate")String frmdate, @RequestParam("todate")String todate) {
+		
+		GetBillOfMaterialList getBillOfMaterialList=new GetBillOfMaterialList();
+		try {
+			
+			
+			getBillOfMaterialList = billOfMaterialService.getBillOfMaterialBmsToStoreDate(fromDept,toDept,frmdate, todate);
+
+
+		} catch (Exception e) {
+				e.printStackTrace();
+			System.out.println("exception in order list rest controller" + e.getMessage());
+		}
+		return getBillOfMaterialList;
+
+	}
+	
+	@RequestMapping(value = { "/getBOMHeaderBmsAndStore" }, method = RequestMethod.POST)
+	@ResponseBody
+	public GetBillOfMaterialList getBOMHeaderBmsAndStore(@RequestParam("fromDept")int fromDept, @RequestParam("toDept")int toDept,@RequestParam("status")List<String> status ) {
+		
+		GetBillOfMaterialList getBillOfMaterialList=new GetBillOfMaterialList();
+		try {
+			
+			
+			getBillOfMaterialList = billOfMaterialService.getBillOfMaterialBmsToStoreDate(fromDept,toDept,status);
 
 
 		} catch (Exception e) {

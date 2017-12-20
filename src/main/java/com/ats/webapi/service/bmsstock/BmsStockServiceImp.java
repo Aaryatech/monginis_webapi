@@ -12,6 +12,7 @@ import com.ats.webapi.model.BmsStockHeader;
 import com.ats.webapi.model.stock.GetBmsStock;
 import com.ats.webapi.repository.BmsStockDetailedRepository;
 import com.ats.webapi.repository.BmsStockHeaderRepository;
+import com.ats.webapi.repository.bmsstock.GetBmsStockRepository;
 
 
 @Service
@@ -22,6 +23,9 @@ public class BmsStockServiceImp implements BmsStockService {
 	
 	@Autowired
 	BmsStockDetailedRepository bmsStockDetailedRepository;
+	
+	@Autowired
+	GetBmsStockRepository getBmsStockRepository;
 	
 	@Override
 	public BmsStockHeader insertBmsStock(BmsStockHeader bmsStockHeader) {
@@ -56,19 +60,28 @@ public class BmsStockServiceImp implements BmsStockService {
 	}
 
 	@Override
-	public	List<BmsStockDetailed> getBmsStock(String fromDate, String toDate, int rmType) {
+	public	List<GetBmsStock> getBmsStock(String fromDate, String toDate, int rmType) {
 		 
 	 
 		
 		 
 		
 		 
-		List<BmsStockDetailed> bmsStockDetailedList=bmsStockDetailedRepository.getStockDetails(fromDate, toDate,rmType);
+		List<GetBmsStock> bmsStockDetailedList=getBmsStockRepository.getStockDetails(fromDate, toDate,rmType);
 		 
 		 
 		System.out.println("BmsStock : "+bmsStockDetailedList.toString());
 		
 		return bmsStockDetailedList;
+	}
+
+	@Override
+	public BmsStockHeader getBmsStockHeader(String stockDate, int rmType) {
+		BmsStockHeader bmsStockHeader=new BmsStockHeader();
+		
+		bmsStockHeader=bmsStockHeaderRepository.getStockDetails(stockDate,  rmType);
+		
+		return bmsStockHeader;
 	}
 
 }

@@ -51,9 +51,9 @@ public class BmsStockApiController {
 	}
 	
 	@RequestMapping(value = { "/getBmsStock" }, method = RequestMethod.POST)
-	public @ResponseBody List<BmsStockDetailed> getBmsStock(@RequestParam("fromDate")String fromDate , @RequestParam("toDate")String toDate , @RequestParam("rmType")int rmType) {
+	public @ResponseBody List<GetBmsStock> getBmsStock(@RequestParam("fromDate")String fromDate , @RequestParam("toDate")String toDate , @RequestParam("rmType")int rmType) {
 
-		List<BmsStockDetailed> bmsStockDetailedList = new ArrayList<BmsStockDetailed>();
+		List<GetBmsStock> bmsStockDetailedList = new ArrayList<GetBmsStock>();
 		try {
 
 	
@@ -75,6 +75,29 @@ public class BmsStockApiController {
 
 	}
 	
-	
+	@RequestMapping(value = { "/getBmsStockHeader" }, method = RequestMethod.POST)
+	public @ResponseBody BmsStockHeader getBmsStockHeader(@RequestParam("stockDate")String stockDate ,  @RequestParam("rmType")int rmType) {
+
+		BmsStockHeader bmsStockHeader = new BmsStockHeader();
+		try {
+
+	System.out.println("Date : "+stockDate +"And rmType : "+rmType);
+			bmsStockHeader = bmsStockService.getBmsStockHeader(stockDate,  rmType );
+			
+			if(bmsStockHeader!=null )
+			{
+				System.out.println("successfully  ");
+			}
+			
+System.out.println("Response from getBms Header  : "+bmsStockHeader.toString());
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			System.out.println("Exce in bmsstock   " + e.getMessage());
+		}
+
+		return bmsStockHeader;
+
+	}
 
 }
