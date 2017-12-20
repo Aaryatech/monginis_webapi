@@ -34,12 +34,7 @@ public class BmsStockServiceImp implements BmsStockService {
 		
 		try
 		{
-			if(bmsStockHeader.getBmsStockId()==0) //while inserting----------
-			{
-				Date date = new Date();
-				bmsStockHeader.setBmsStockDate(date);
-			}
-				
+							
 			bmsStockHeaderloc=bmsStockHeaderRepository.save(bmsStockHeader);
 			int BmsHeaderId=bmsStockHeaderloc.getBmsStockId();
 					
