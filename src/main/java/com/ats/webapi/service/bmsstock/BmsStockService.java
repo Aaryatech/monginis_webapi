@@ -13,7 +13,7 @@ public interface BmsStockService {
 
 	List<GetBmsStock> getBmsStock(String fromDate, String toDate, int rmType);
 
-	BmsStockHeader getBmsStockHeader(String stockDate, int rmType);
+	BmsStockHeader getBmsStockHeader(int status, int rmType);
 
 	 
 

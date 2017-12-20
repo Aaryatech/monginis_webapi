@@ -76,13 +76,13 @@ public class BmsStockApiController {
 	}
 	
 	@RequestMapping(value = { "/getBmsStockHeader" }, method = RequestMethod.POST)
-	public @ResponseBody BmsStockHeader getBmsStockHeader(@RequestParam("stockDate")String stockDate ,  @RequestParam("rmType")int rmType) {
+	public @ResponseBody BmsStockHeader getBmsStockHeader(@RequestParam("status")int status ,  @RequestParam("rmType")int rmType) {
 
 		BmsStockHeader bmsStockHeader = new BmsStockHeader();
 		try {
 
-	System.out.println("Date : "+stockDate +"And rmType : "+rmType);
-			bmsStockHeader = bmsStockService.getBmsStockHeader(stockDate,  rmType );
+	System.out.println("status : "+status +"And rmType : "+rmType);
+			bmsStockHeader = bmsStockService.getBmsStockHeader(status,  rmType );
 			
 			if(bmsStockHeader!=null )
 			{

@@ -19,9 +19,9 @@ public interface BmsStockHeaderRepository extends JpaRepository<BmsStockHeader,L
 
 
 	@Query(value=" SELECT * FROM t_bms_stock WHERE "
-			+ "bms_stock_date =:stockDate AND rm_type=:rmType"
+			+ "bms_status =:status AND rm_type=:rmType"
 			+ "",nativeQuery=true)
-	BmsStockHeader getStockDetails(@Param("stockDate")String stockDate, @Param("rmType")int rmType);
+	BmsStockHeader getStockDetails(@Param("status")int status, @Param("rmType")int rmType);
 
 
 
