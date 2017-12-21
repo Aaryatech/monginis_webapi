@@ -32,6 +32,9 @@ public class BmsStockController {
 			@RequestParam("mixDeptId") int mixDeptId,@RequestParam("storeDeptId") int storeDeptId,@RequestParam("rmType") int rmType) {
 
 		Info info = new Info();
+		
+		
+		System.out.println(" RM type Received "+rmType);
 
 		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
 
