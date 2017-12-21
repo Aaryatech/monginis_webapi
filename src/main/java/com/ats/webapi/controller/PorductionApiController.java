@@ -29,11 +29,16 @@ import com.ats.webapi.model.PostProductionDetail;
 import com.ats.webapi.model.PostProductionHeader;
 import com.ats.webapi.model.PostProductionPlanDetail;
 import com.ats.webapi.model.UpdateBillStatus;
+import com.ats.webapi.model.Variance;
+import com.ats.webapi.model.VarianceList;
 import com.ats.webapi.model.rawmaterial.ItemDetail;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
 import com.ats.webapi.model.report.GetRepItemwiseSell;
 import com.ats.webapi.model.report.GetRepMonthwiseSell;
 import com.ats.webapi.model.report.GetRepTaxSell;
+import com.ats.webapi.repository.PostProdPlanDetailRepository;
+import com.ats.webapi.repository.PostProdPlanHeaderRepository;
+import com.ats.webapi.repository.VarianceRepository;
 import com.ats.webapi.service.GetBillHeaderService;
 import com.ats.webapi.service.GetOrderItemQtyService;
 import com.ats.webapi.service.ProductionService;
@@ -50,11 +55,17 @@ public class PorductionApiController {
 	@Autowired
 	private ProductionService productionService;
 	
- 
+	@Autowired
+	PostProdPlanDetailRepository postProdPlanDetailRepository;
+	
+	@Autowired
+	PostProdPlanHeaderRepository postProdPlanHeaderRepository;
 	
 	@Autowired
 	RepFrSellServise repFrSellServise;
 	
+	@Autowired
+	VarianceRepository varianceRepository;
 	/*@RequestMapping(value = { "/getOrderItemQty" }, method = RequestMethod.POST)
 	@ResponseBody
 	public GetOrderItemQty getOrderItemQty(@RequestParam int itemId,
@@ -316,6 +327,49 @@ e.printStackTrace();
 		int menuList=productionService.updateisMixing(productionId,flag);
 		
 		return menuList;
+		
+	}
+	
+	@RequestMapping(value = { "/PostProdPlanHeaderVariationlist" }, method = RequestMethod.GET)
+	public @ResponseBody List<PostProdPlanHeader> PostProdPlanHeaderVariationlist()
+	{
+		List<PostProdPlanHeader> PostProdPlanHeaderVariationlist=productionService.planVariationList();
+		
+		return PostProdPlanHeaderVariationlist;
+		
+	}
+	
+	@RequestMapping(value = { "/PostProdPlanHeaderwithDetailed" }, method = RequestMethod.POST)
+	public @ResponseBody PostProdPlanHeader PostProdPlanHeaderwithDetailed(@RequestParam("planHeaderId") int planHeaderId)
+	{
+		PostProdPlanHeader postProdPlanHeader=postProdPlanHeaderRepository.planVariationList(planHeaderId);
+		
+		
+		List<PostProductionPlanDetail> postProductionPlanDetail = new ArrayList<PostProductionPlanDetail>();
+		postProductionPlanDetail=postProdPlanDetailRepository.getlistbyproductiondetaildlist(planHeaderId);
+		postProdPlanHeader.setPostProductionPlanDetail(postProductionPlanDetail);
+		return postProdPlanHeader;
+		
+	}
+	
+	@RequestMapping(value = { "/getQtyforVariance" }, method = RequestMethod.POST)
+	public @ResponseBody VarianceList getQtyforVariance(@RequestParam("Date") String Date,@RequestParam("groupType") String groupType)
+	{
+		VarianceList varianceList = new VarianceList();
+		List<Variance> Varianceorderlist = new ArrayList<Variance>();
+		try
+		{
+			
+			Varianceorderlist=varianceRepository.variancelist(Date, groupType);
+			varianceList.setVarianceorderlist(Varianceorderlist);
+			System.out.println(Varianceorderlist.size());
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+		return varianceList;
 		
 	}
 }

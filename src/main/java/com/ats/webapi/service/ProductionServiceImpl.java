@@ -1,6 +1,7 @@
 package com.ats.webapi.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -113,9 +114,13 @@ public class ProductionServiceImpl implements ProductionService{
 	public PostProdPlanHeader saveProductionPlanHeader(PostProdPlanHeader postProdPlanHeader) {
 
 		PostProdPlanHeader postProductionHeaders=new PostProdPlanHeader();
-		
+		Date date = new Date();
 			
-			
+			if(postProdPlanHeader.getProductionHeaderId()==0)
+			{
+				
+				postProdPlanHeader.setProductionDate(date);
+			}
 		postProductionHeaders=postProdPlanHeaderRepository.save(postProdPlanHeader);
 			int headerId=postProductionHeaders.getProductionHeaderId();
 			
@@ -125,6 +130,11 @@ public class ProductionServiceImpl implements ProductionService{
 			for(int j=0;j<postProductionDetailList.size();j++) {
 				
 				PostProductionPlanDetail postProductionPlanDetail=postProductionDetailList.get(j);
+				
+				if(postProductionDetailList.get(j).getProductionDetailId()==0)
+				{
+					postProductionPlanDetail.setProductionDate(date);
+				}
 				
 				postProductionPlanDetail.setProductionHeaderId(headerId);
 				
@@ -202,6 +212,20 @@ public class ProductionServiceImpl implements ProductionService{
 	}
 
 
+	@Override
+	public List<PostProdPlanHeader> planVariationList() {
+		List<PostProdPlanHeader> PostProdPlanHeaderVariationlist = new ArrayList<PostProdPlanHeader>();
+		try
+		{
+			PostProdPlanHeaderVariationlist=postProdPlanHeaderRepository.planVariationList();
+				
+			 
+		}catch(Exception e)
+		{
+			System.out.println("in implementation "+e.getMessage());
+		}
+		return PostProdPlanHeaderVariationlist;
+	}
 	
 
 }
