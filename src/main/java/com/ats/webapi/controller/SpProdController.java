@@ -1,5 +1,6 @@
 package com.ats.webapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,19 +17,30 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.MixingHeader;
 import com.ats.webapi.model.spprod.Employee;
 import com.ats.webapi.model.spprod.EmployeeList;
+import com.ats.webapi.model.spprod.GetAllocStationCk;
 import com.ats.webapi.model.spprod.GetEmployeeList;
+import com.ats.webapi.model.spprod.GetInstVerifHeader;
+import com.ats.webapi.model.spprod.GetInstrVerifHeader;
 import com.ats.webapi.model.spprod.GetSpStation;
+import com.ats.webapi.model.spprod.InstAllocToStation;
+import com.ats.webapi.model.spprod.InstAllocToStationList;
+import com.ats.webapi.model.spprod.InstVerificationDetail;
+import com.ats.webapi.model.spprod.InstVerificationHeader;
 import com.ats.webapi.model.spprod.Instrument;
 import com.ats.webapi.model.spprod.InstrumentList;
 import com.ats.webapi.model.spprod.MDept;
 import com.ats.webapi.model.spprod.MDeptList;
 import com.ats.webapi.model.spprod.Shift;
 import com.ats.webapi.model.spprod.ShiftList;
+import com.ats.webapi.model.spprod.SpCkAllocHeader;
 import com.ats.webapi.model.spprod.SpStation;
 import com.ats.webapi.model.spprod.SpStationList;
 import com.ats.webapi.model.spprod.StationAllocList;
 import com.ats.webapi.model.spprod.StationAllocation;
+import com.ats.webapi.model.spprod.StationSpCakeList;
+import com.ats.webapi.model.spprod.StationWiseCkCount;
 import com.ats.webapi.model.spprod.TypeList;
+import com.ats.webapi.repository.InstVerificationDetailRepository;
 import com.ats.webapi.service.spprod.SpProdService;
 
 @RestController
@@ -37,6 +49,8 @@ public class SpProdController {
 
 	@Autowired
 	private SpProdService spProdService;
+	@Autowired
+	InstVerificationDetailRepository instVerificationDetailRepository;
 
 	// ----------------------------SAVE SPStation---------------------------
 	@RequestMapping(value = { "/saveStation" }, method = RequestMethod.POST)
@@ -177,25 +191,27 @@ public class SpProdController {
 
 	// ---------------------------Getting Employee List-------------------------
 	@RequestMapping(value = { "/getEmployeeList" }, method = RequestMethod.POST)
-	public @ResponseBody EmployeeList getEmployeeList(@RequestParam("empType")int empType) {
+	public @ResponseBody EmployeeList getEmployeeList(@RequestParam("empType") int empType) {
 
 		EmployeeList employeeList = spProdService.getEmployeeList(empType);
 
 		return employeeList;
 
 	}
+
 	// ---------------------------Getting Employee List-------------------------
 	@RequestMapping(value = { "/getEmployeesByType" }, method = RequestMethod.POST)
-	public @ResponseBody GetEmployeeList getEmployeesByType(@RequestParam("empType")int empType) {
+	public @ResponseBody GetEmployeeList getEmployeesByType(@RequestParam("empType") int empType) {
 
 		GetEmployeeList employeeList = spProdService.getEmployeesByType(empType);
 
 		return employeeList;
 
 	}
+
 	// ---------------------------Getting Instrument List----------------------
 	@RequestMapping(value = { "/getInstrumentList" }, method = RequestMethod.POST)
-	public @ResponseBody InstrumentList getInstrumentList(@RequestParam("instType")int instType) {
+	public @ResponseBody InstrumentList getInstrumentList(@RequestParam("instType") int instType) {
 
 		InstrumentList instrumentList = spProdService.getInstrumentList(instType);
 
@@ -376,7 +392,8 @@ public class SpProdController {
 		return info;
 
 	}
-   //---------------------------Get Shift By Shift Id-----------------------
+
+	// ---------------------------Get Shift By Shift Id-----------------------
 	@RequestMapping(value = { "/getShift" }, method = RequestMethod.POST)
 	@ResponseBody
 	public Shift getShift(@RequestParam int shiftId) {
@@ -411,15 +428,16 @@ public class SpProdController {
 		ShiftList shiftList = spProdService.getShiftList();
 		return shiftList;
 	}
+
 	// ---------------------------------------------------------------------------
 	// ---------------------------Getting Type List-------------------------
-		@RequestMapping(value = { "/getTypeList" }, method = RequestMethod.POST)
-		public @ResponseBody TypeList getTypeList(@RequestParam int typeId) {
+	@RequestMapping(value = { "/getTypeList" }, method = RequestMethod.POST)
+	public @ResponseBody TypeList getTypeList(@RequestParam int typeId) {
 
-			TypeList typeList = spProdService.getTypeList(typeId);
-			return typeList;
-		}
-		// ---------------------------------------------------------------------------
+		TypeList typeList = spProdService.getTypeList(typeId);
+		return typeList;
+	}
+	// ---------------------------------------------------------------------------
 
 	// ------------------------Delete Shift------------------------------------
 	@RequestMapping(value = { "/deleteShift" }, method = RequestMethod.POST)
@@ -429,6 +447,7 @@ public class SpProdController {
 		ErrorMessage errorMessage = spProdService.deleteShift(shiftId);
 		return errorMessage;
 	}
+
 	// ------------------------------END-----------------------------------
 	// ----------------------------SAVE ProdStationAllocation-----------------------------
 	@RequestMapping(value = { "/saveProdStationAllocation" }, method = RequestMethod.POST)
@@ -462,49 +481,285 @@ public class SpProdController {
 		return info;
 
 	}
+
 	// ------------------------Delete Station Allocation------------------------------------
-		@RequestMapping(value = { "/deleteStationAllocation" }, method = RequestMethod.POST)
-		@ResponseBody
-		public ErrorMessage deleteStationAllocation(@RequestParam int allocationId) {
+	@RequestMapping(value = { "/deleteStationAllocation" }, method = RequestMethod.POST)
+	@ResponseBody
+	public ErrorMessage deleteStationAllocation(@RequestParam int allocationId) {
 
-			ErrorMessage errorMessage = spProdService.deleteStationAllocation(allocationId);
-			return errorMessage;
-		}
+		ErrorMessage errorMessage = spProdService.deleteStationAllocation(allocationId);
+		return errorMessage;
+	}
+
 	// ------------------------------END---------------------------------------------------
-	// ---------------------------Getting StationAllocation List-------------------------
-		@RequestMapping(value = { "/getStationAllocList" }, method = RequestMethod.GET)
-		public @ResponseBody StationAllocList getStationAllocList() {
+	// ---------------------------Getting StationAllocation
+	// List-------------------------
+	@RequestMapping(value = { "/getStationAllocList" }, method = RequestMethod.GET)
+	public @ResponseBody StationAllocList getStationAllocList() {
 
-			StationAllocList stationAllocList = spProdService.getStationAllocList();
-			return stationAllocList;
-		}
-	// ---------------------------------------------------------------------------	
-		 //---------------------------Get StationAllocation By Id-----------------------
-		@RequestMapping(value = { "/getStationAlloc" }, method = RequestMethod.POST)
-		@ResponseBody
-		public StationAllocation getStationAlloc(@RequestParam int allocationId) {
+		StationAllocList stationAllocList = spProdService.getStationAllocList();
+		return stationAllocList;
+	}
 
-			StationAllocation stationAllocationRes = null;
-			try {
-				stationAllocationRes = spProdService.getStationAlloc(allocationId);
+	// ---------------------------------------------------------------------------
+	// ---------------------------Get StationAllocation By Id-----------------------
+	@RequestMapping(value = { "/getStationAlloc" }, method = RequestMethod.POST)
+	@ResponseBody
+	public StationAllocation getStationAlloc(@RequestParam int allocationId) {
 
-				if (stationAllocationRes != null) {
-					stationAllocationRes.setError(false);
-					stationAllocationRes.setMessage("StationAllocation Found Successfully");
-				} else {
-					stationAllocationRes = new StationAllocation();
-					stationAllocationRes.setError(true);
-					stationAllocationRes.setMessage("StationAllocation Not Found");
-				}
-			} catch (Exception e) {
+		StationAllocation stationAllocationRes = null;
+		try {
+			stationAllocationRes = spProdService.getStationAlloc(allocationId);
 
+			if (stationAllocationRes != null) {
+				stationAllocationRes.setError(false);
+				stationAllocationRes.setMessage("StationAllocation Found Successfully");
+			} else {
 				stationAllocationRes = new StationAllocation();
 				stationAllocationRes.setError(true);
 				stationAllocationRes.setMessage("StationAllocation Not Found");
-
 			}
-			return stationAllocationRes;
+		} catch (Exception e) {
+
+			stationAllocationRes = new StationAllocation();
+			stationAllocationRes.setError(true);
+			stationAllocationRes.setMessage("StationAllocation Not Found");
+
+		}
+		return stationAllocationRes;
+	}
+
+	// ---------------------------------------------------------------------------
+	// ----------------------------SAVE InstAllocToStation------------------------------------
+	@RequestMapping(value = { "/saveInstAllocToStation" }, method = RequestMethod.POST)
+	@ResponseBody
+	public Info saveInstAllocToStation(@RequestBody InstAllocToStation instAllocToStation) {
+
+		InstAllocToStation instAllocToStationRes = null;
+		Info info = new Info();
+		try {
+
+			System.out.println("SpStation :" + instAllocToStation);
+			instAllocToStationRes = spProdService.saveInstAllocToStation(instAllocToStation);
+
+			if (instAllocToStationRes != null) {
+				info.setError(false);
+				info.setMessage("instAllocToStation Saved Successfully.");
+			} else {
+				info.setError(true);
+				info.setMessage("instAllocToStation Not Saved .");
+			}
+
+		} catch (Exception e) {
+
+			info.setError(true);
+			info.setMessage("instAllocToStation Not Saved .");
+
+			e.printStackTrace();
+			System.out.println("Exception In SpProdController /saveInstAllocToStation" + e.getMessage());
+
+		}
+		return info;
+
+	}
+
+	// ------------------------Delete InstAllocToStation------------------------------------
+	@RequestMapping(value = { "/deleteInstAllocToStation" }, method = RequestMethod.POST)
+	@ResponseBody
+	public ErrorMessage deleteInstAllocToStation(@RequestParam int instAllocId) {
+
+		ErrorMessage errorMessage = spProdService.deleteInstAllocToStation(instAllocId);
+		return errorMessage;
+	}
+
+	// ------------------------------END---------------------------------------------------
+	// ---------------------------Getting InstAllocToStation List-------------------------
+	@RequestMapping(value = { "/getInstAllocToStList" }, method = RequestMethod.GET)
+	public @ResponseBody InstAllocToStationList getInstAllocToStationList() {
+
+		InstAllocToStationList instAllocToStationList = spProdService.getInstAllocToStationList();
+		return instAllocToStationList;
+	}
+
+	// ---------------------------------------------------------------------------
+	// ---------------------------Get InstAllocToStation By Id-----------------------
+	@RequestMapping(value = { "/getInstAllocToStation" }, method = RequestMethod.POST)
+	@ResponseBody
+	public InstAllocToStation getInstAllocToStation(@RequestParam int instAllocId) {
+
+		InstAllocToStation instAllocToStationRes = null;
+		try {
+			instAllocToStationRes = spProdService.getInstAllocToStation(instAllocId);
+
+			if (instAllocToStationRes != null) {
+				instAllocToStationRes.setError(false);
+				instAllocToStationRes.setMessage("InstAllocToStation Found Successfully");
+			} else {
+				instAllocToStationRes = new InstAllocToStation();
+				instAllocToStationRes.setError(true);
+				instAllocToStationRes.setMessage("InstAllocToStation Not Found");
+			}
+		} catch (Exception e) {
+
+			instAllocToStationRes = new InstAllocToStation();
+			instAllocToStationRes.setError(true);
+			instAllocToStationRes.setMessage("InstAllocToStation Not Found");
+
+		}
+		return instAllocToStationRes;
+	}
+
+	// ---------------------------------------------------------------------------
+	// ------------------------Get Station Status------------------------------------
+	@RequestMapping(value = { "/getStationStatus" }, method = RequestMethod.POST)
+	@ResponseBody
+	public InstVerificationHeader getStationStatus(@RequestParam int stationId) {
+
+		InstVerificationHeader instVerifHeader = spProdService.getStationStatus(stationId);
+		System.out.println("InstVerificationHeader: " + instVerifHeader.toString());
+		// System.out.println("InstVerificationHeader:
+		// "+instVerifHeader.getInstVerificationDetailList().toString());
+		return instVerifHeader;
+	}
+
+	// ------------------------------END---------------------------------------------------
+	// ----------------------------SAVE InstVerification------------------------------------
+	@RequestMapping(value = { "/saveInstVerification" }, method = RequestMethod.POST)
+	@ResponseBody
+	public Info saveInstVerification(@RequestBody InstVerificationHeader instVerificationHeader) {
+
+		InstVerificationHeader instVerificationHeaderRes = null;
+		Info info = new Info();
+		try {
+
+			System.out.println(
+					"instVerificationHeader :" + instVerificationHeader.getInstVerificationDetailList().toString());
+			instVerificationHeaderRes = spProdService.saveInstVerificationHeader(instVerificationHeader);
+
+			if (instVerificationHeaderRes != null) {
+				info.setError(false);
+				info.setMessage("InstVerificationHeader Saved Successfully.");
+			} else {
+				info.setError(true);
+				info.setMessage("InstVerificationHeader Not Saved .");
+			}
+
+		} catch (Exception e) {
+
+			info.setError(true);
+			info.setMessage("InstVerificationHeader Not Saved .");
+
+			e.printStackTrace();
+			System.out.println("Exception In SpProdController /saveInstVerification" + e.getMessage());
+
+		}
+		return info;
+
+	}
+
+	// ----------------------------getInstVerHeaders-------------------------------------------------------------------
+	@RequestMapping(value = { "/getInstVerHeaders" }, method = RequestMethod.GET)
+	@ResponseBody
+	public List<GetInstVerifHeader> getInstVerHeaders() {
+
+		List<GetInstVerifHeader> instVerificationHeaderRes = null;
+		try {
+			instVerificationHeaderRes = spProdService.getInstVerHeaders();
+		} catch (Exception e) {
+			instVerificationHeaderRes = new ArrayList<GetInstVerifHeader>();
+			System.out.println("Exc In /getInstVerHeaders:" + e.getMessage());
 		}
 
-		// ---------------------------------------------------------------------------	
+		return instVerificationHeaderRes;
+	}
+
+	// --------------------------------------------------------------------------------------------------------------------
+	// ------------------------Get InstVerifHeader With Details------------------------------------
+	@RequestMapping(value = { "/getInstVerifHDetails" }, method = RequestMethod.POST)
+	@ResponseBody
+	public GetInstrVerifHeader getInstVerifHDetails(@RequestParam int instVerifId) {
+
+		System.out.println("InstVerifId" + instVerifId);
+		GetInstrVerifHeader instVerifHeader = spProdService.getInstVerifHDetails(instVerifId);
+		return instVerifHeader;
+	}
+
+	// ------------------------------END---------------------------------------------------
+	
+	@RequestMapping(value = { "/saveSpCkAllocHeader" }, method = RequestMethod.POST)
+	@ResponseBody
+	public Info saveSpCkAllocHeader(@RequestBody SpCkAllocHeader spCkAllocHeader) {
+
+		SpCkAllocHeader spCkAllocHeaderRes = null;
+		Info info = new Info();
+		try {
+
+			System.out.println(
+					"spCkAllocHeader :" + spCkAllocHeader.getSpCkAllocDetailList().toString());
+			spCkAllocHeaderRes = spProdService.saveSpCkAllocHeader(spCkAllocHeader);
+
+			if (spCkAllocHeaderRes != null) {
+				info.setError(false);
+				info.setMessage("SpCkAllocHeader Saved Successfully.");
+			} else {
+				info.setError(true);
+				info.setMessage("SpCkAllocHeader Not Saved .");
+			}
+
+		} catch (Exception e) {
+
+			info.setError(true);
+			info.setMessage("SpCkAllocHeader Not Saved .");
+
+			e.printStackTrace();
+			System.out.println("Exception In SpCkAllocHeader /saveSpCkAllocHeader" + e.getMessage());
+
+		}
+		return info;
+
+	}
+	//--------------------------------------------------------------------------------------------------
+	
+	@RequestMapping(value = { "/getStationSpCakeList" }, method = RequestMethod.GET)
+	public @ResponseBody StationSpCakeList getStationSpCakeList() {
+
+		StationSpCakeList stationSpCakeList = spProdService.getStationSpCakeList();
+		return stationSpCakeList;
+	}
+	//--------------------------------------------------------------------------------------------------
+	//--------------------------------------------------------------------------------------------------
+	
+		@RequestMapping(value = { "/getAllocStationCk" }, method = RequestMethod.POST)
+		public @ResponseBody List<GetAllocStationCk> getAllocStationCk(@RequestParam List<String> stationId,@RequestParam String fromDate,@RequestParam String toDate) {
+
+			List<GetAllocStationCk>  stationSpCakeList=null;
+			try {
+			
+		     stationSpCakeList = spProdService.getAllocStationCk(stationId,fromDate,toDate);
+			
+			}
+			catch(Exception e)
+			{
+				stationSpCakeList=new ArrayList<GetAllocStationCk>();
+			}
+			return stationSpCakeList;
+		}      
+		//--------------------------------------------------------------------------------------------------
+		@RequestMapping(value = { "/getStationwiseCkCount" }, method = RequestMethod.GET)
+		public @ResponseBody List<StationWiseCkCount> getStationwiseCkCount() {
+
+			List<StationWiseCkCount>  stationWiseCkCount=null;
+			try {
+			
+				stationWiseCkCount = spProdService.getStationwiseCkCount();
+			
+			}
+			catch(Exception e)
+			{
+				stationWiseCkCount=new ArrayList<StationWiseCkCount>();
+			}
+			return stationWiseCkCount;
+		}      
+		//--------------------------------------------------------------------------------------------------
+
 }

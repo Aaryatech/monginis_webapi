@@ -20,5 +20,10 @@ public class Info {
 	public void setError(boolean isError) {
 		this.isError = isError;
 	}
+
+	@Override
+	public String toString() {
+		return "Info [message=" + message + ", isError=" + isError + "]";
+	}
 	
 }

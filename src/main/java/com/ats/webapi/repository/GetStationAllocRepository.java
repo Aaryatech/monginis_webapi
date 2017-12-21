@@ -11,22 +11,7 @@ import com.ats.webapi.model.spprod.GetStationAllocation;
 @Repository
 public interface GetStationAllocRepository extends JpaRepository<GetStationAllocation, Integer>{
 
-	@Query(value="Select c.allocation_id,\n" + 
-			"c.station_id,\n" + 
-			"st.st_name,\n" + 
-			"c.shift_id,\n" + 
-			"s.shift_name,\n" + 
-			"c.emp_mistry_id,\n" + 
-			"e.emp_name as emp_mistry_name,\n" + 
-			"c.emp_helper_id,e.emp_name as emp_helper_name,\n" + 
-			"c.del_status \n" + 
-			"from          m_emp e,          m_shift s,                t_prod_station_allocation c ,       m_sp_station st \n" + 
-			"WHERE c.del_status=0 \n" + 
-			"AND c.shift_id=s.shift_id \n" + 
-			"AND c.emp_mistry_id=e.emp_id \n" + 
-			"OR c.emp_helper_id=e.emp_id \n" + 
-			"AND c.station_id=st.st_id\n" + 
-			"group by c.allocation_id",nativeQuery=true)
+	@Query(value="Select c.allocation_id, c.station_id, st.st_name, s.shift_id, s.shift_name, c.emp_mistry_id, c.emp_helper_id, c.del_status,(Select e1.emp_name from m_emp As e1 where e1.emp_id=c.emp_mistry_id )as emp_mistry_name,(Select e2.emp_name from m_emp As e2 where e2.emp_id=c.emp_helper_id )as emp_helper_name from m_shift s, t_prod_station_allocation c ,m_sp_station st WHERE c.del_status=0 AND c.shift_id=s.shift_id AND c.station_id=st.st_id",nativeQuery=true)
   List<GetStationAllocation> findStationAllocations();
 
 }
