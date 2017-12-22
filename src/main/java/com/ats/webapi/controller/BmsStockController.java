@@ -1,6 +1,7 @@
 package com.ats.webapi.controller;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.BmsStockHeader;
 import com.ats.webapi.model.FrItemStockConfigure;
 import com.ats.webapi.model.FrItemStockConfigureList;
@@ -197,5 +199,27 @@ public class BmsStockController {
 		return finishHeader;
 
 	}
+	
+	@RequestMapping(value = { "/getFinGoodStockDetail" }, method = RequestMethod.POST)
+	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockDetail(@RequestParam("stockDate") String stockDate) {
+
+		List<FinishedGoodStockDetail> finishedGoodStockDetail=null;
+		try {
+
+			
+			Date stkDate= Common.convertToSqlDate(stockDate);
+			finishedGoodStockDetail=finishedGoodStockDetailRepo.findByStockDate(stkDate);
+		} catch (Exception e) {
+			
+			System.out.println("Exce in getting Finished Good Stock Detail By Date " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		
+	System.out.println("output finished Good Detail  = "+finishedGoodStockDetail.toString());
+		return finishedGoodStockDetail;
+
+	}
+
 
 }

@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
 
 @Entity
 public class GetCurProdAndBillQty implements Serializable{
@@ -23,6 +24,17 @@ public class GetCurProdAndBillQty implements Serializable{
 	int prodQty;
 	int rejectedQty;
 	int billQty;
+	
+	@Transient
+	int damagedQty;
+	
+	
+	public int getDamagedQty() {
+		return damagedQty;
+	}
+	public void setDamagedQty(int damagedQty) {
+		this.damagedQty = damagedQty;
+	}
 	public int getId() {
 		return id;
 	}
@@ -54,11 +66,11 @@ public class GetCurProdAndBillQty implements Serializable{
 	public void setBillQty(int billQty) {
 		this.billQty = billQty;
 	}
-	
 	@Override
 	public String toString() {
 		return "GetCurProdAndBillQty [id=" + id + ", itemName=" + itemName + ", prodQty=" + prodQty + ", rejectedQty="
-				+ rejectedQty + ", billQty=" + billQty + "]";
+				+ rejectedQty + ", billQty=" + billQty + ", damagedQty=" + damagedQty + "]";
 	}
+	
 	
 }
