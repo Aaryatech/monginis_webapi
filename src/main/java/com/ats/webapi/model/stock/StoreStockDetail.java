@@ -32,7 +32,10 @@ public class StoreStockDetail {
 	Date storeStockDate;
 	
 	@Column(name="store_opening_stock")
-	int storeOpeningStock;
+	float storeOpeningStock;
+	
+	@Column(name="store_closing_stock")
+	float storeClosingStock;
 	
 	@Column(name="rm_id")
 	private int rmId;
@@ -82,22 +85,16 @@ public class StoreStockDetail {
 	public void setStoreStockId(int storeStockId) {
 		this.storeStockId = storeStockId;
 	}
-	/*@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")*/
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getStoreStockDate() {
 		return storeStockDate;
 	}
-	/*@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")*/
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setStoreStockDate(Date storeStockDate) {
 		this.storeStockDate = storeStockDate;
 	}
 
-	public int getStoreOpeningStock() {
-		return storeOpeningStock;
-	}
-
-	public void setStoreOpeningStock(int storeOpeningStock) {
-		this.storeOpeningStock = storeOpeningStock;
-	}
+	 
 
 	public int getRmId() {
 		return rmId;
@@ -179,14 +176,34 @@ public class StoreStockDetail {
 		this.exBool = exBool;
 	}
 
+	 
+
+	public float getStoreOpeningStock() {
+		return storeOpeningStock;
+	}
+
+	public void setStoreOpeningStock(float storeOpeningStock) {
+		this.storeOpeningStock = storeOpeningStock;
+	}
+
+	public float getStoreClosingStock() {
+		return storeClosingStock;
+	}
+
+	public void setStoreClosingStock(float storeClosingStock) {
+		this.storeClosingStock = storeClosingStock;
+	}
+
 	@Override
 	public String toString() {
 		return "StoreStockDetail [storeStockDetailId=" + storeStockDetailId + ", storeStockId=" + storeStockId
-				+ ", storeStockDate=" + storeStockDate + ", storeOpeningStock=" + storeOpeningStock + ", rmId=" + rmId
-				+ ", rmName=" + rmName + ", rmGroup=" + rmGroup + ", rmUom=" + rmUom + ", purRecQty=" + purRecQty
-				+ ", bmsIssueQty=" + bmsIssueQty + ", isDelete=" + isDelete + ", exInt1=" + exInt1 + ", exInt2="
-				+ exInt2 + ", exBool=" + exBool + "]";
+				+ ", storeStockDate=" + storeStockDate + ", storeOpeningStock=" + storeOpeningStock
+				+ ", storeClosingStock=" + storeClosingStock + ", rmId=" + rmId + ", rmName=" + rmName + ", rmGroup="
+				+ rmGroup + ", rmUom=" + rmUom + ", purRecQty=" + purRecQty + ", bmsIssueQty=" + bmsIssueQty
+				+ ", isDelete=" + isDelete + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exBool=" + exBool + "]";
 	}
+
+	 
 	
  
 }

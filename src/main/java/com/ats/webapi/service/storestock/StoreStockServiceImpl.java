@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.stock.GetStoreCurrentStock;
 import com.ats.webapi.model.stock.StoreStockDetail;
 import com.ats.webapi.model.stock.StoreStockHeader;
+import com.ats.webapi.repository.storestock.GetStoreCurrentStockRepository;
 import com.ats.webapi.repository.storestock.StoreStockDetailRepository;
 import com.ats.webapi.repository.storestock.StoreStockHeaderRepository;
 
@@ -19,6 +21,9 @@ public class StoreStockServiceImpl implements StoreStockService{
 	
 	@Autowired
 	StoreStockDetailRepository storeStockDetailRepository;
+	
+	@Autowired
+	GetStoreCurrentStockRepository getStoreCurrentStockRepository;
 
 	@Override
 	public StoreStockHeader insertStoreOpStock(StoreStockHeader storeStockHeader) {
@@ -43,6 +48,37 @@ public class StoreStockServiceImpl implements StoreStockService{
 			info.setMessage("insert Successfullt");
 		}
 		return storeHeader;
+	}
+
+	@Override
+	public List<StoreStockDetail> getMonthWiseStoreStock(String fromDate, String toDate) {
+		 
+		List<StoreStockDetail> storeStockDetailList= storeStockDetailRepository.getMonthWiseSoreStock(fromDate,toDate);
+		
+		return storeStockDetailList;
+	}
+
+	@Override
+	public List<GetStoreCurrentStock> getCurrentStock(int deptId) {
+
+
+		List<GetStoreCurrentStock> getStoreCurrentStockList=getStoreCurrentStockRepository.getCurrentStock(deptId);
+		
+		return getStoreCurrentStockList;
+	}
+
+	@Override
+	public StoreStockHeader getCurrentStockHeader(int status) {
+		 
+		StoreStockHeader storeStockHeader=storeStockHeaderRepository.findByStoreStockStatus(status);
+		
+		int storeStockHeaderId=storeStockHeader.getStoreStockId();
+		
+		List<StoreStockDetail> storeStockDetailList=storeStockDetailRepository.findByStoreStockId(storeStockHeaderId);
+		
+		storeStockHeader.setStoreStockDetailList(storeStockDetailList);
+		
+		return storeStockHeader;
 	}
 	
 	
