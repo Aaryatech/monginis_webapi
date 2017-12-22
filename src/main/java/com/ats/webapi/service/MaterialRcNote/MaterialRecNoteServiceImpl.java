@@ -33,22 +33,22 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
 		ErrorMessage errorMessage = null;
         MaterialRecNote materialRec=new MaterialRecNote();
         try {
-        	SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
-        	Date utilCurrentDate = sf.parse(sf.format(new Date()));
-			 SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm:ss");
-			 Date now = new Date();
+        	//SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+        	//Date utilCurrentDate = sf.parse(sf.format(new Date()));
+			// SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm:ss");
+			// Date now = new Date();
             
-        if(materialRec.getStatus()==1)
-        {
-        		materialRec.setMrnStoreDate(now);
-			    materialRec=materialRecNoteRepository.save(materialRecNote);
+      //  if(materialRecNote.getStatus()==1)
+      //  {
+       // 	materialRecNote.setMrnStoreDate(now);
+			 materialRec=materialRecNoteRepository.save(materialRecNote);
 			    
-        }
-        if(materialRec.getStatus()==0)
-        {
-        	materialRec.setGateEntryDate(now);
-            materialRec=materialRecNoteRepository.save(materialRecNote);
-        }
+       // }
+       // if(materialRec.getStatus()==0)
+       // {
+      //  	materialRec.setGateEntryDate(now);
+        //    materialRec=materialRecNoteRepository.save(materialRecNote);
+       // }
         
         int mrnId=materialRec.getMrnId();
         System.out.println(materialRec.getGateEntryDate());
