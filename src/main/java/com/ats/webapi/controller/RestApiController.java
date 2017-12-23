@@ -1629,7 +1629,7 @@ try {
 			@RequestParam("fbaLicenseDate") String fbaLicenseDate,
 			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
 			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
-			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget) throws ParseException {
+			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget,@RequestParam("isSameState")int isSameState) throws ParseException {
 		// DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		// java.util.Date date = sdf.parse(frOpeningDate);
 		// java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
@@ -1671,6 +1671,7 @@ try {
 		franchisee.setFbaLicenseDate(SQLfbaLicenseDate);
 		franchisee.setStockType(stockType);
 		franchisee.setFrTarget(frTarget);
+		franchisee.setIsSameState(isSameState);
 
 		System.out.println("" + franchisee.toString());
 		String jsonResult = franchiseeService.saveFranchisee(franchisee);
@@ -2962,7 +2963,7 @@ try {
 			@RequestParam("fbaLicenseDate") String fbaLicenseDate,
 			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
 			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
-			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget) {
+			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget,@RequestParam("isSameState")int isSameState) {
 		String jsonResult = "";
 		try {
 
@@ -3022,6 +3023,8 @@ try {
 			franchisee.setFbaLicenseDate(utilFbaLicenseDate);
 			franchisee.setStockType(stockType);
 			franchisee.setFrTarget(frTarget);
+			franchisee.setIsSameState(isSameState);
+			
 			System.out.println("" + franchisee.toString());
 			jsonResult = franchiseeService.saveFranchisee(franchisee);
 		} catch (Exception e) {

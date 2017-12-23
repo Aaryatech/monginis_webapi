@@ -7,14 +7,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
+import com.ats.webapi.model.GetItemSup;
+import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
+import com.ats.webapi.model.ItemSup;
+import com.ats.webapi.model.ItemSupList;
+import com.ats.webapi.repository.GetItemSupRepository;
 import com.ats.webapi.repository.ItemRepository;
+import com.ats.webapi.repository.ItemSupRepository;
 
 @Service
 public class ItemServiceImpl implements ItemService{
 
 	@Autowired
 	private ItemRepository itemRepository;
+	
+	@Autowired
+	private ItemSupRepository itemSupRepository;
+	@Autowired
+	private GetItemSupRepository getItemSupRepository;
+	
 	String jsonUser = "{}";
 
 	public Item findItems(int id) {
@@ -27,30 +39,11 @@ public class ItemServiceImpl implements ItemService{
 		Item tempItem =null;
 		ErrorMessage errorMessage=new ErrorMessage();
 		try {
-		/*	
-			if (item != null||item.getId()!=0||item.getItemGrp1().equalsIgnoreCase("")||item.getItemGrp2().equalsIgnoreCase("")||item.getItemGrp3().equalsIgnoreCase("")||item.getItemId().equalsIgnoreCase("")||item.getItemId().equalsIgnoreCase("")||item.getItemName().equalsIgnoreCase("")) {
-				
-				errorMessage.setError(false);
-				errorMessage.setMessage("Item Inserted Successfully");
-			}
-			else
-			{
-				errorMessage.setError(true);
-				errorMessage.setMessage("Item Fields are empty");
-			}*/
-			
-				/*tempItem = itemRepository.findByItemId(item.getItemId());
-				if(tempItem==null)
-				{*/
+		
 					item= itemRepository.save(item);
 					errorMessage.setError(false);
 					errorMessage.setMessage("Item Inserted/Updated Successfully");
-			/*	}
-				else
-				{
-					errorMessage.setError(true);
-					errorMessage.setMessage("Item Already Exist");
-				}*/
+		
 		
 		} catch (Exception e) {
 			errorMessage.setError(true);
@@ -108,6 +101,76 @@ public class ItemServiceImpl implements ItemService{
 		
 		 List<Item> items=itemRepository.findByDelStatusAndItemIdIn(itemList);
 		return items;
+	}
+
+	@Override
+	public ItemSup saveItemSup(ItemSup itemSup) {
+
+		ItemSup itemSupRes=itemSupRepository.saveAndFlush(itemSup);
+		
+		return itemSupRes;
+	}
+
+	@Override
+	public Info deleteItemSup(int itemId) {
+
+		int isDel=itemSupRepository.deleteItemSup(itemId);
+		Info info=new Info();
+		if(isDel==1)
+		{
+			info.setError(false);
+			info.setMessage("ItemSup Deleted Successfully.");
+		}
+		else
+		{
+			info.setError(true);
+			info.setMessage("ItemSup Deletion Failed.");
+		}
+		return info;
+	}
+
+	@Override
+	public ItemSupList getItemSupList() {
+
+		ItemSupList itemSupList=new ItemSupList();
+		try {
+		List<GetItemSup> itemSupListRes=getItemSupRepository.findAllByDelStatus(0);
+		
+		if(!itemSupListRes.isEmpty())
+		{
+			Info info=new Info();
+			info.setError(true);
+			info.setMessage("ItemList Found Successfully.");
+			
+			itemSupList.setItemSupList(itemSupListRes);
+			itemSupList.setInfo(info);
+		}
+		else
+		{
+			Info info=new Info();
+			info.setError(true);
+			info.setMessage("ItemList Not Found.");
+			itemSupList.setInfo(info);
+
+		}
+		}
+		catch(Exception e)
+		{
+			System.out.println("Exception In GetItemSup List ");
+			e.printStackTrace();
+			Info info=new Info();
+			info.setError(true);
+			info.setMessage("ItemList Not Found.");
+			itemSupList.setInfo(info);
+		}
+		return itemSupList;
+	}
+
+	@Override
+	public GetItemSup getItemSup(int id) {
+
+		GetItemSup itemSup=getItemSupRepository.findGetItemSupById(id);
+		return itemSup;
 	}
 
 	

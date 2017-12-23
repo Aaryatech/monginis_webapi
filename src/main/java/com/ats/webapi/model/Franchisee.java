@@ -118,6 +118,17 @@ public class Franchisee implements Serializable{
 	@Column(name="fr_target")
  	private int frTarget;
 
+	private int isSameState;
+
+	
+	public int getIsSameState() {
+		return isSameState;
+	}
+
+	public void setIsSameState(int isSameState) {
+		this.isSameState = isSameState;
+	}
+
 	public int getFrId() {
 		return frId;
 	}

@@ -1,0 +1,163 @@
+package com.ats.webapi.model;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+@Entity
+@Table(name="m_item_sup")
+public class ItemSup implements Serializable{
+
+	@Transient
+	private boolean error;
+	
+	@Transient
+	private String message;
+	
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name="id")
+	private int id;
+
+	@Column(name="item_id")
+	private int itemId;
+	
+	private String itemHsncd;
+	
+	private String itemUom;
+	
+	private float actualWeight;
+	
+	private float baseWeight;
+	
+	private float inputPerQty;
+	
+	private int isGateSale;
+	
+	private int isGateSaleDisc;
+	
+	private int isAllowBday;
+	
+	private int delStatus;
+
+	
+	public boolean getError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
+	public String getItemHsncd() {
+		return itemHsncd;
+	}
+
+	public void setItemHsncd(String itemHsncd) {
+		this.itemHsncd = itemHsncd;
+	}
+
+	public String getItemUom() {
+		return itemUom;
+	}
+
+	public void setItemUom(String itemUom) {
+		this.itemUom = itemUom;
+	}
+
+	public float getActualWeight() {
+		return actualWeight;
+	}
+
+	public void setActualWeight(float actualWeight) {
+		this.actualWeight = actualWeight;
+	}
+
+	public float getBaseWeight() {
+		return baseWeight;
+	}
+
+	public void setBaseWeight(float baseWeight) {
+		this.baseWeight = baseWeight;
+	}
+
+	public float getInputPerQty() {
+		return inputPerQty;
+	}
+
+	public void setInputPerQty(float inputPerQty) {
+		this.inputPerQty = inputPerQty;
+	}
+
+	public int getIsGateSale() {
+		return isGateSale;
+	}
+
+	public void setIsGateSale(int isGateSale) {
+		this.isGateSale = isGateSale;
+	}
+
+	public int getIsGateSaleDisc() {
+		return isGateSaleDisc;
+	}
+
+	public void setIsGateSaleDisc(int isGateSaleDisc) {
+		this.isGateSaleDisc = isGateSaleDisc;
+	}
+
+	public int getIsAllowBday() {
+		return isAllowBday;
+	}
+
+	public void setIsAllowBday(int isAllowBday) {
+		this.isAllowBday = isAllowBday;
+	}
+
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
+
+	@Override
+	public String toString() {
+		return "ItemSup [id=" + id + ", itemId=" + itemId + ", itemHsncd=" + itemHsncd + ", itemUom=" + itemUom
+				+ ", actualWeight=" + actualWeight + ", baseWeight=" + baseWeight + ", inputPerQty=" + inputPerQty
+				+ ", isGateSale=" + isGateSale + ", isGateSaleDisc=" + isGateSaleDisc + ", isAllowBday=" + isAllowBday
+				+ ", delStatus=" + delStatus + "]";
+	}
+
+}

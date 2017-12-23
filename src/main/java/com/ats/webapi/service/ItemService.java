@@ -4,7 +4,11 @@ package com.ats.webapi.service;
 import java.util.List;
 
 import com.ats.webapi.model.ErrorMessage;
+import com.ats.webapi.model.GetItemSup;
+import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
+import com.ats.webapi.model.ItemSup;
+import com.ats.webapi.model.ItemSupList;
 import com.ats.webapi.model.ItemWithSubCat;
 
 public interface ItemService {
@@ -16,5 +20,9 @@ public interface ItemService {
 	public List<Item> findFrItems(String itemGrp1);
 	public List<Item> getAllItems();
 	public List<Item> findItemsByItemId(List<Integer> itemList);
+	public ItemSup saveItemSup(ItemSup itemSup);
+	public Info deleteItemSup(int itemId);
+	public ItemSupList getItemSupList();
+	public GetItemSup getItemSup(int id);
 
 }

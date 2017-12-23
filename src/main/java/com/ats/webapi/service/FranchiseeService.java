@@ -2,7 +2,13 @@ package com.ats.webapi.service;
 
 import java.util.List;
 
+import com.ats.webapi.model.FrTarget;
+import com.ats.webapi.model.FrTargetList;
+import com.ats.webapi.model.FrTotalSale;
+import com.ats.webapi.model.FranchiseSup;
+import com.ats.webapi.model.FranchiseSupList;
 import com.ats.webapi.model.Franchisee;
+import com.ats.webapi.model.Info;
 
 public interface FranchiseeService {
 
@@ -14,5 +20,19 @@ public interface FranchiseeService {
 	public Franchisee findFranchisee(int frId);
 
 	public String findFranchiseeByFrCode(String frCode, String passwordKey);
+
+	public FranchiseSup saveFranchiseSup(FranchiseSup franchiseSup);
+
+	public Info deleteFranchiseSup(int frId);
+
+	public FranchiseSupList getFranchiseSupList();
+
+	public FranchiseSup getFranchiseSup(int id);
+
+	public Info saveFrTarget(List<FrTarget> frTargetList);
+
+	public FrTargetList getFrTargetList(int frId, int year);
+
+	public FrTotalSale getFrTargetList(int frId, int month, int year);
 	
 }
