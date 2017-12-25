@@ -1,13 +1,14 @@
 package com.ats.webapi.model;
 
 public class FrLoginResponse {
-	ErrorMessage errorMessage;
+	LoginInfo loginInfo;
 	Franchisee franchisee;
-	public ErrorMessage getErrorMessage() {
-		return errorMessage;
+    
+	public LoginInfo getLoginInfo() {
+		return loginInfo;
 	}
-	public void setErrorMessage(ErrorMessage errorMessage) {
-		this.errorMessage = errorMessage;
+	public void setLoginInfo(LoginInfo loginInfo) {
+		this.loginInfo = loginInfo;
 	}
 	public Franchisee getFranchisee() {
 		return franchisee;

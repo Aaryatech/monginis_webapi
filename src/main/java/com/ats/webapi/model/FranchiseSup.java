@@ -10,6 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+/**
+ * @author ats-12
+ *
+ */
 @Entity
 @Table(name="m_franchise_sup")
 public class FranchiseSup implements Serializable{
@@ -33,9 +37,40 @@ public class FranchiseSup implements Serializable{
 	
 	private String frCountry;
 	
+	private String pass1;
+
+	private String pass2;
+
+	private String pass3;
+
+	
 	private int delStatus;
 
 	
+	public String getPass1() {
+		return pass1;
+	}
+
+	public void setPass1(String pass1) {
+		this.pass1 = pass1;
+	}
+
+	public String getPass2() {
+		return pass2;
+	}
+
+	public void setPass2(String pass2) {
+		this.pass2 = pass2;
+	}
+
+	public String getPass3() {
+		return pass3;
+	}
+
+	public void setPass3(String pass3) {
+		this.pass3 = pass3;
+	}
+
 	public boolean isError() {
 		return error;
 	}
@@ -102,7 +137,9 @@ public class FranchiseSup implements Serializable{
 
 	@Override
 	public String toString() {
-		return "FranchiseSup [id=" + id + ", frId=" + frId + ", frPanNo=" + frPanNo + ", frState=" + frState
-				+ ", frCountry=" + frCountry + ", delStatus=" + delStatus + "]";
+		return "FranchiseSup [error=" + error + ", message=" + message + ", id=" + id + ", frId=" + frId + ", frPanNo="
+				+ frPanNo + ", frState=" + frState + ", frCountry=" + frCountry + ", pass1=" + pass1 + ", pass2="
+				+ pass2 + ", pass3=" + pass3 + ", delStatus=" + delStatus + "]";
 	}
+    
 }

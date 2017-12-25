@@ -34,5 +34,11 @@ public interface FranchiseeService {
 	public FrTargetList getFrTargetList(int frId, int year);
 
 	public FrTotalSale getFrTargetList(int frId, int month, int year);
+
+	public Info updateAdminPwd(int frId, String adminPwd);
+
+	public Info updateFranchiseSupUsrPwd(int frId, String pass1, String pass2, String pass3);
+
+	public FranchiseSup getFrSupByFrId(int frId);
 	
 }

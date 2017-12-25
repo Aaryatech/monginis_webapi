@@ -212,6 +212,49 @@ public class MasterController {
 					return frTotalSale; 
 
 				}
+	        //------------------------------------------------------------------------		
+				// --------------------------------Update Fr Admin password------------------
+				@RequestMapping(value = { "/updateAdminPwd" }, method = RequestMethod.POST)
+				public @ResponseBody Info updateAdminPwd(@RequestParam("frId")int frId,@RequestParam("adminPwd")String adminPwd) {
+
+					Info info = franchiseeService.updateAdminPwd(frId,adminPwd);
+
+					return info; 
+
+				}
 	        //------------------------------------------------------------------------			
-				
+				// ------------------------Update FranchiseSup Passwords------------------------------------
+				@RequestMapping(value = { "/updateFranchiseSupUsrPwd" }, method = RequestMethod.POST)
+				public @ResponseBody Info updateFranchiseUsrPwd(@RequestParam int frId,@RequestParam String pass1,@RequestParam String pass2,@RequestParam String pass3) {
+
+					Info info = franchiseeService.updateFranchiseSupUsrPwd(frId,pass1,pass2,pass3);
+					return info;
+				}
+	 //------------------------------------------------------------------------				
+				// ------------------------Getting One FranchiseSup by Id-----------------------
+				@RequestMapping(value = { "/getFrSupByFrId" }, method = RequestMethod.POST)
+				public @ResponseBody FranchiseSup getFrSupByFrId(@RequestParam("frId") int frId) {
+
+					FranchiseSup getFranchiseSupRes = null;
+					try {
+						getFranchiseSupRes = franchiseeService.getFrSupByFrId(frId);
+
+						if (getFranchiseSupRes != null) {
+							getFranchiseSupRes.setError(false);
+							getFranchiseSupRes.setMessage("FranchiseSup Found Successfully");
+						} else {
+							getFranchiseSupRes = new FranchiseSup();
+							getFranchiseSupRes.setError(true);
+							getFranchiseSupRes.setMessage("FranchiseSup Not Found");
+						}
+					} catch (Exception e) {
+						getFranchiseSupRes = new FranchiseSup();
+						getFranchiseSupRes.setError(true);
+						getFranchiseSupRes.setMessage("FranchiseSup Not Found");
+						System.out.println("Exception In getFranchiseSup:" + e.getMessage());
+					}
+
+					return getFranchiseSupRes;
+
+				}		
 }
