@@ -33,6 +33,19 @@ public class GetFrItemStockConfiguration implements Serializable {
 	@Column(name="item_name")
 	private String itemName;
 	
+	@Column(name="reorder_qty")
+	private int reorderQty;
+	
+	
+	
+	public int getReorderQty() {
+		return reorderQty;
+	}
+
+	public void setReorderQty(int reorderQty) {
+		this.reorderQty = reorderQty;
+	}
+
 	public String getItemName() {
 		return itemName;
 	}
@@ -84,8 +97,9 @@ public class GetFrItemStockConfiguration implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FrItemStockConfigurePost [frStockId=" + frStockId + ", itemId=" + itemId + ", type=" + type
-				+ ", minQty=" + minQty + ", maxQty=" + maxQty + ", itemName=" + itemName + "]";
+		return "GetFrItemStockConfiguration [frStockId=" + frStockId + ", itemId=" + itemId + ", type=" + type
+				+ ", minQty=" + minQty + ", maxQty=" + maxQty + ", itemName=" + itemName + ", reorderQty=" + reorderQty
+				+ "]";
 	}
 	
 

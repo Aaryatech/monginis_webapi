@@ -66,6 +66,8 @@ import com.ats.webapi.model.GetMCategoryList;
 import com.ats.webapi.model.GetOrder;
 import com.ats.webapi.model.GetOrderDataForPushOrderList;
 import com.ats.webapi.model.GetOrderList;
+import com.ats.webapi.model.GetReorderByStockType;
+import com.ats.webapi.model.GetReorderByStockTypeList;
 import com.ats.webapi.model.GetSellBillDetail;
 import com.ats.webapi.model.GetSellBillHeader;
 import com.ats.webapi.model.GrnGvn;
@@ -121,6 +123,7 @@ import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeaderList;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
+import com.ats.webapi.repository.GetReorderByStockTypeRepository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 import com.ats.webapi.service.AllFrIdNameService;
@@ -376,6 +379,9 @@ public class RestApiController {
 	
 	@Autowired
 	SettingService settingService;
+	
+	@Autowired
+	GetReorderByStockTypeRepository getReorderByStockTypeRepository;
 	
 //This web api Not used Anywhere	
 	@RequestMapping(value = { "/updatePBTime" }, method = RequestMethod.POST)
@@ -1196,7 +1202,7 @@ try {
 						stockDetails.setType(frItemStockConfigurePostChild.getType());
 						stockDetails.setMinQty(frItemStockConfigurePostChild.getMinQty());
 						stockDetails.setMaxQty(frItemStockConfigurePostChild.getMaxQty());
-
+						stockDetails.setReorderQty(frItemStockConfigurePostChild.getReorderQty());
 						stockDetailsList.add(stockDetails);
 
 					}
@@ -3626,6 +3632,28 @@ try {
 			}
 
 			return info;
+
+		}
+		
+		@RequestMapping(value = { "/getReorderByType" }, method = RequestMethod.POST)
+		public @ResponseBody GetReorderByStockTypeList getReorderByType(@RequestParam("ItemId") List<String> ItemId,@RequestParam("StockType") int StockType)
+				throws ParseException, JsonParseException, JsonMappingException, IOException {
+			GetReorderByStockTypeList getReorderByStockTypeList = new GetReorderByStockTypeList();
+			List<GetReorderByStockType> getReorderByType = new ArrayList<GetReorderByStockType>();
+
+			try {
+
+				getReorderByType = getReorderByStockTypeRepository.GetRegSpCakeOrderQty(ItemId,StockType);
+				getReorderByStockTypeList.setGetReorderByStockTypeList(getReorderByType);
+				System.out.println("getReorderByType  "+getReorderByType.toString());
+
+			}catch (Exception e) {
+				
+				System.out.println("Exce in frItem Stock Insertion  : RestApi"+e.getMessage());
+				e.printStackTrace();
+			}
+			return getReorderByStockTypeList;
+
 
 		}
 

@@ -8,6 +8,16 @@ public class StockDetails {
 	private int type;
 	private int minQty;
 	private int maxQty;
+	private int reorderQty;
+	
+	
+	
+	public int getReorderQty() {
+		return reorderQty;
+	}
+	public void setReorderQty(int reorderQty) {
+		this.reorderQty = reorderQty;
+	}
 	public int getFrStockId() {
 		return frStockId;
 	}
@@ -35,7 +45,7 @@ public class StockDetails {
 	@Override
 	public String toString() {
 		return "StockDetails [frStockId=" + frStockId + ", type=" + type + ", minQty=" + minQty + ", maxQty=" + maxQty
-				+ "]";
+				+ ", reorderQty=" + reorderQty + "]";
 	}
 	
 	

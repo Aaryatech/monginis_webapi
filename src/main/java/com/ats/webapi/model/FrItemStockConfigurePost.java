@@ -26,6 +26,19 @@ public class FrItemStockConfigurePost {
 	
 	@Column(name="max_qty")
 	private int maxQty;
+	
+	@Column(name="reorder_qty")
+	private int reorderQty;
+	
+	
+
+	public int getReorderQty() {
+		return reorderQty;
+	}
+
+	public void setReorderQty(int reorderQty) {
+		this.reorderQty = reorderQty;
+	}
 
 	public int getFrStockId() {
 		return frStockId;
