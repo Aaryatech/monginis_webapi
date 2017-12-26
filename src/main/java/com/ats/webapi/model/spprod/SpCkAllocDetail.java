@@ -41,7 +41,16 @@ public class SpCkAllocDetail implements Serializable{
 	
 	private int delStatus;
 
-	
+	private int isBom;
+
+	public int getIsBom() {
+		return isBom;
+	}
+
+	public void setIsBom(int isBom) {
+		this.isBom = isBom;
+	}
+
 	public int getFrId() {
 		return frId;
 	}

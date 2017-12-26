@@ -13,8 +13,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.bom.BillOfMaterialDetailed;
 import com.ats.webapi.model.bom.BillOfMaterialHeader;
+import com.ats.webapi.model.prod.temp.GetSpDetailForBom;
+import com.ats.webapi.model.prod.temp.GetSpDetailForBomList;
+import com.ats.webapi.model.spprod.GetSpStation;
+import com.ats.webapi.model.spprod.SpStationList;
 import com.ats.webapi.repository.BillOfMaterialDetailedRepository;
 import com.ats.webapi.repository.BillOfMaterialRepository;
+import com.ats.webapi.repository.GetSpDetailForBomRepository;
+import com.ats.webapi.repository.SpCkAllocDetailRepository;
 
 @RestController
 public class BomController {
@@ -24,7 +30,13 @@ public class BomController {
 
 	@Autowired
 	BillOfMaterialDetailedRepository billOfMaterialDetailedRepository;
-
+    
+	@Autowired
+	GetSpDetailForBomRepository getSpDetailForBomRepository;
+	
+	@Autowired
+	SpCkAllocDetailRepository spCkAllocDetailRepository;
+	
 	@RequestMapping(value = { "/saveBom" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveBom(@RequestBody BillOfMaterialHeader billOfMaterialHeader) {
 
@@ -64,5 +76,50 @@ public class BomController {
 		return info;
 
 	}
-
+	@RequestMapping(value = { "/getSpDetailForBom" }, method = RequestMethod.POST)
+	public @ResponseBody GetSpDetailForBomList getSpDetailForBom(@RequestParam int spId) {
+		
+		GetSpDetailForBomList getSpDetailForBom=new GetSpDetailForBomList();
+		Info info=new Info();
+		
+		List<GetSpDetailForBom> getSpDetailForBomRes=getSpDetailForBomRepository.findSpDetailForBom(spId);
+		
+		if(!getSpDetailForBomRes.isEmpty())
+		{
+			info.setError(false);
+            info.setMessage("GetSpDetailForBom List Found Successfully");
+            getSpDetailForBom.setGetSpDetailForBomList(getSpDetailForBomRes);
+            getSpDetailForBom.setInfo(info);
+		}
+		else
+		{
+			info.setError(true);
+            info.setMessage("GetSpDetailForBom List Not Found");
+            getSpDetailForBom.setInfo(info);	
+         }
+	                
+		
+		return getSpDetailForBom;
+	}
+	@RequestMapping(value = { "/updateIsBomOfSpAllocn" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateIsBomOfSpAlloc(@RequestParam("spCkAllocDId") int spCkAllocDId) {
+		
+		int spCkAllocdId=spCkAllocDetailRepository.updateIsBomOfSpAlloc(spCkAllocDId);
+	    Info info=new Info();
+		
+		if(spCkAllocdId==1)
+		{
+			info.setError(false);
+			info.setMessage("Sp Alloc Is Bom Updated Successfully");
+		}
+		else
+		{
+			info.setError(true);
+			info.setMessage("Sp Alloc Is Bom Updation Failed");
+		}
+		
+		
+		return info;
+	}
+	
 }

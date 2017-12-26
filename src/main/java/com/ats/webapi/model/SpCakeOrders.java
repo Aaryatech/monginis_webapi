@@ -148,7 +148,17 @@ public class SpCakeOrders  {
 	@Column(name = "is_bill_generated")
 	private int isBillGenerated;
 	
+	@Column(name = "is_allocated")
+	private int isAllocated;
 	
+    
+	public int getIsAllocated() {
+		return isAllocated;
+	}
+
+	public void setIsAllocated(int isAllocated) {
+		this.isAllocated = isAllocated;
+	}
 
 	public int getSpOrderNo() {
 		return spOrderNo;

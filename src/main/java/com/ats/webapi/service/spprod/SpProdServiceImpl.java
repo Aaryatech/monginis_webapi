@@ -58,6 +58,7 @@ import com.ats.webapi.repository.InstrumentRepository;
 import com.ats.webapi.repository.MDeptRepository;
 import com.ats.webapi.repository.ProdStationAllocRepository;
 import com.ats.webapi.repository.ShiftRepository;
+import com.ats.webapi.repository.SpCakeOrdersRepository;
 import com.ats.webapi.repository.SpCkAllocDetailRepository;
 import com.ats.webapi.repository.SpCkAllocHeaderRepository;
 import com.ats.webapi.repository.SpStationRepository;
@@ -133,6 +134,9 @@ public class SpProdServiceImpl implements SpProdService{
 	
 	@Autowired
 	StationWiseCkCountRepository stationWiseCkCountRepository;
+	
+	@Autowired
+	SpCakeOrdersRepository spCakeOrdersRepository;
 	
 	@Override
 	public SpStation saveStation(SpStation spStation) {
@@ -805,7 +809,8 @@ public class SpProdServiceImpl implements SpProdService{
 		{  
 			SpCkAllocDetail spCkAllocDetailRes=spCkAllocDetailList.get(i);
 			spCkAllocDetailRes.setSpCkAllocId(spCakeAllocId);
-			
+			int updateIsAllocated=spCakeOrdersRepository.updateSpCkAllocDId(spCkAllocDetailList.get(i).gettSpCakeId());
+					
 			SpCkAllocDetail spCkAllocDetail=spCkAllocDetailRepository.saveAndFlush(spCkAllocDetailRes);
 		} 
 		return spCakeHeaderRes;
