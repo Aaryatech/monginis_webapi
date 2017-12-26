@@ -93,14 +93,14 @@ public class PostBillDataServiceImpl implements PostBillDataService {
 					
 					if(billDetail.getMenuId()!= 42) {//item
 						
-					 res = orderRepository.updateBillStatus(billDetail.getOrderId(), 1);
+					 res = orderRepository.updateBillStatus(billDetail.getOrderId(), 2);
 					
 					}else { // regular sp cake
-						regularSpCkOrderRepository.updateRegSpCakeBillStatus(billDetail.getOrderId(), 1);
+						regularSpCkOrderRepository.updateRegSpCakeBillStatus(billDetail.getOrderId(), 2);
 					}
 					
 				} else if (billDetail.getCatId() == 5){ //special cake
-					 res = spCakeOrdersRepository.updateSpBillStatus(billDetail.getOrderId(), 1);
+					 res = spCakeOrdersRepository.updateSpBillStatus(billDetail.getOrderId(), 2);
 				}
 				
 				
