@@ -18,6 +18,7 @@ import com.ats.webapi.model.MixingHeader;
 import com.ats.webapi.model.spprod.Employee;
 import com.ats.webapi.model.spprod.EmployeeList;
 import com.ats.webapi.model.spprod.GetAllocStationCk;
+import com.ats.webapi.model.spprod.GetAllocStationCkList;
 import com.ats.webapi.model.spprod.GetEmployeeList;
 import com.ats.webapi.model.spprod.GetInstVerifHeader;
 import com.ats.webapi.model.spprod.GetInstrVerifHeader;
@@ -730,19 +731,35 @@ public class SpProdController {
 	//--------------------------------------------------------------------------------------------------
 	
 		@RequestMapping(value = { "/getAllocStationCk" }, method = RequestMethod.POST)
-		public @ResponseBody List<GetAllocStationCk> getAllocStationCk(@RequestParam List<String> stationId,@RequestParam String fromDate,@RequestParam String toDate) {
+		public @ResponseBody GetAllocStationCkList getAllocStationCk(@RequestParam List<String> stationId,@RequestParam String fromDate,@RequestParam String toDate) {
 
 			List<GetAllocStationCk>  stationSpCakeList=null;
+			GetAllocStationCkList getAllocStationCkList=new GetAllocStationCkList();
 			try {
 			
 		     stationSpCakeList = spProdService.getAllocStationCk(stationId,fromDate,toDate);
-			
+		     if(!stationSpCakeList.isEmpty())
+		     {
+		    	 Info info=new Info();
+		    	 info.setError(false);
+		    	 info.setMessage("Allocated Station Cake List Found");
+		         getAllocStationCkList.setGetAllocStationCkList(stationSpCakeList);
+		         getAllocStationCkList.setInfo(info);
+		     }
+		     else
+		     {
+                 Info info=new Info();
+		    	 info.setError(true);
+		    	 info.setMessage("Allocated Station Cake List Not Found");
+		         getAllocStationCkList.setInfo(info);
+		     }
+		     
 			}
 			catch(Exception e)
 			{
-				stationSpCakeList=new ArrayList<GetAllocStationCk>();
-			}
-			return stationSpCakeList;
+              System.out.println("Exception in /getAllocStationCk");
+            }
+			return getAllocStationCkList;
 		}      
 		//--------------------------------------------------------------------------------------------------
 		@RequestMapping(value = { "/getStationwiseCkCount" }, method = RequestMethod.GET)
@@ -761,5 +778,6 @@ public class SpProdController {
 			return stationWiseCkCount;
 		}      
 		//--------------------------------------------------------------------------------------------------
+		
 
 }

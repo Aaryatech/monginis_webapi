@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ats.webapi.model.SpCakeOrders;
 
 
-public interface SpCakeOrdersRepository extends JpaRepository<SpCakeOrders,Long>{
+public interface SpCakeOrdersRepository extends JpaRepository<SpCakeOrders,Integer>{
 	
 	
 	
@@ -29,6 +29,11 @@ public interface SpCakeOrdersRepository extends JpaRepository<SpCakeOrders,Long>
 	@Modifying	
 	@Query("UPDATE SpCakeOrders t SET t.isBillGenerated =:status  WHERE t.spOrderNo=:orderId")
 	int updateSpBillStatus(@Param("orderId") int orderId,@Param("status") int status);
+
+	@Transactional
+	@Modifying	
+	@Query("UPDATE SpCakeOrders t SET t.isAllocated=1  WHERE t.spOrderNo=:gettSpCakeId")	
+	int updateSpCkAllocDId(@Param("gettSpCakeId")int gettSpCakeId);
 	
 
 
