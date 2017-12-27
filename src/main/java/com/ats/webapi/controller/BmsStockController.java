@@ -205,9 +205,12 @@ public class BmsStockController {
 
 		List<FinishedGoodStockDetail> finishedGoodStockDetail=null;
 		try {
-
+						System.out.println("date received for Stock Detail "+stockDate);
 			
 			Date stkDate= Common.convertToSqlDate(stockDate);
+			
+			System.out.println("date After convert for Stock Detail "+stkDate);
+
 			finishedGoodStockDetail=finishedGoodStockDetailRepo.findByStockDate(stkDate);
 		} catch (Exception e) {
 			
@@ -221,5 +224,36 @@ public class BmsStockController {
 
 	}
 
+	
+	//get Finished Good Stock Bet Date
+
+	@RequestMapping(value = { "/getFinGoodStockBetDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockBetDate(@RequestParam("stockFromDate") String stockFromDate,
+			@RequestParam("stockToDate") String stockToDate,@RequestParam("stockStatus")int stockStatus) {
+
+		List<FinishedGoodStockDetail> finishedGoodStockDetail=null;
+		try {
+			
+			System.out.println("date received for Stock Detail bet date = "+stockFromDate);
+			
+			Date stkFrDate= Common.convertToSqlDate(stockFromDate);
+			
+			Date stkToDate= Common.convertToSqlDate(stockToDate);
+			
+			System.out.println("date After convert for Stock Detail bet date  "+stkFrDate);
+			
+
+			finishedGoodStockDetail=finishedGoodStockDetailRepo.findByStockDateBetween(stkFrDate, stkToDate, stockStatus);
+		} catch (Exception e) {
+			
+			System.out.println("Exce in getting Finished Good Stock Detail Between two Date " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		
+	System.out.println("output finished Good Detail bet two dates  = "+finishedGoodStockDetail.toString());
+		return finishedGoodStockDetail;
+
+	}
 
 }

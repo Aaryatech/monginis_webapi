@@ -74,6 +74,9 @@ public class FinishedGoodStockDetail implements Serializable {
 	
 	@Column(name = "total_clo_stk")
 	float totalCloStk;
+	
+	@Column(name = "del_status")
+	int delStatus;
 
 	public int getFinStockId() {
 		return finStockId;
@@ -219,14 +222,24 @@ public class FinishedGoodStockDetail implements Serializable {
 		this.finStockDetailId = finStockDetailId;
 	}
 
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "FinishedGoodStockDetail [finStockDetailId=" + finStockDetailId + ", finStockId=" + finStockId
 				+ ", itemId=" + itemId + ", stockDate=" + stockDate + ", itemName=" + itemName + ", opT1=" + opT1
 				+ ", opT2=" + opT2 + ", opT3=" + opT3 + ", opTotal=" + opTotal + ", prodQty=" + prodQty + ", rejQty="
 				+ rejQty + ", frSaleQty=" + frSaleQty + ", gateSaleQty=" + gateSaleQty + ", cloT1=" + cloT1 + ", cloT2="
-				+ cloT2 + ", cloT3=" + cloT3 + ", cloCurrent=" + cloCurrent + ", totalCloStk=" + totalCloStk + "]";
+				+ cloT2 + ", cloT3=" + cloT3 + ", cloCurrent=" + cloCurrent + ", totalCloStk=" + totalCloStk
+				+ ", delStatus=" + delStatus + "]";
 	}
+
 
 
 }

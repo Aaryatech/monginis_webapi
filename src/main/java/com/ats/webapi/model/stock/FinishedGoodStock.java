@@ -32,6 +32,9 @@ public class FinishedGoodStock implements Serializable{
 	int finGoodStockStatus;
 	
 	
+	@Column(name = "del_status")
+	int delStatus;
+	
 	@Transient
 	List<FinishedGoodStockDetail> finishedGoodStockDetail;
 
@@ -71,11 +74,23 @@ public class FinishedGoodStock implements Serializable{
 		return finishedGoodStockDetail;
 	}
 
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
+
+	public void setFinishedGoodStockDetail(List<FinishedGoodStockDetail> finishedGoodStockDetail) {
+		this.finishedGoodStockDetail = finishedGoodStockDetail;
+	}
+
 	@Override
 	public String toString() {
 		return "FinishedGoodStock [finStockId=" + finStockId + ", catId=" + catId + ", finGoodStockDate="
-				+ finGoodStockDate + ", finGoodStockStatus=" + finGoodStockStatus + ", finishedGoodStockDetail="
-				+ finishedGoodStockDetail + "]";
+				+ finGoodStockDate + ", finGoodStockStatus=" + finGoodStockStatus + ", delStatus=" + delStatus
+				+ ", finishedGoodStockDetail=" + finishedGoodStockDetail + "]";
 	}
 
 
