@@ -40,14 +40,8 @@ public class ConfigureFrBean {
 	@Column(name="day")
 	private int day;
 	
-	
-
-	/*@JsonFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE)*/
-	
-	
 	@Column(name="date")
-	private Date date;
+	private int date;
 	
 	@Column(name="item_show")
 	private String itemShow;
@@ -121,12 +115,11 @@ public class ConfigureFrBean {
 		this.day = day;
 	}
 
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getDate() {
+	public int getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(int date) {
 		this.date = date;
 	}
 

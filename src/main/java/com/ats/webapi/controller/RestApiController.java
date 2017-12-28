@@ -1561,7 +1561,7 @@ try {
 	public String configureFranchisee(@RequestParam("frId") int frId, @RequestParam("menuId") int menuId,
 			@RequestParam("catId") int catId, @RequestParam("settingType") int settingType,
 			@RequestParam("fromTime") String fromTime, @RequestParam("toTime") String toTime,
-			@RequestParam("day") int day, @RequestParam("date") String date, @RequestParam("itemShow") String itemShow)
+			@RequestParam("day") int day, @RequestParam("date") int date, @RequestParam("itemShow") String itemShow)
 			throws ParseException {
 
 		/*
@@ -1571,9 +1571,9 @@ try {
 		 * java.sql.Date sqlDate = new java.sql.Date(fDate.getTime());
 		 */
 
-		DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
-		Date fromDate, toDate;
-		toDate = formatter.parse(date);
+		//DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+		///Date fromDate, toDate;
+		//toDate = formatter.parse(date);
 		// java.sql.Date sqlDate = new java.sql.Date(toDate.getTime());
 
 		ConfigureFranchisee configureFr = new ConfigureFranchisee();
@@ -1584,7 +1584,7 @@ try {
 		configureFr.setFromTime(fromTime);
 		configureFr.setToTime(toTime);
 		configureFr.setDay(day);
-		configureFr.setDate(toDate);
+		configureFr.setDate(date);
 		configureFr.setItemShow(itemShow);
 		configureFr.setCatId(catId);
 		configureFr.setSubCatId(11);
@@ -3375,29 +3375,24 @@ try {
 	@RequestMapping(value = { "/updateConfFr" }, method = RequestMethod.POST)
 	public @ResponseBody String updateFrConfig(@RequestParam int settingId, @RequestParam int settingType,
 			@RequestParam String fromTime, @RequestParam String toTime, @RequestParam int day,
-			@RequestParam String date, @RequestParam String itemShow) {
+			@RequestParam int date, @RequestParam String itemShow) {
 
 		ConfigureFranchisee configureFranchisee = connfigureService.findFranchiseeById(settingId);
 		Info info = new Info();
 		try {
-			SimpleDateFormat inSDF = new SimpleDateFormat("dd-MM-yyyy");
+			//SimpleDateFormat inSDF = new SimpleDateFormat("dd-MM-yyyy");
+			//SimpleDateFormat outSDF = new SimpleDateFormat("yyyy-mm-dd");
 
-			SimpleDateFormat outSDF = new SimpleDateFormat("yyyy-mm-dd");
+			//System.out.println("DATE" + date);
+		//	java.sql.Date bDate, dDate;
+			//String pDate = "";
 
-			System.out.println("DATE" + date);
-			java.sql.Date bDate, dDate;
-			String pDate = "";
+			//java.util.Date tempDate = inSDF.parse(date);
 
-			// bDate= inSDF.parse(date);
-			// pDate = outSDF.format(bDate); 
-			// dDate=outSDF.parse(pDate);
-			//
-			java.util.Date tempDate = inSDF.parse(date);
+		//	dDate = new java.sql.Date(tempDate.getTime());
 
-			dDate = new java.sql.Date(tempDate.getTime());
-
-			System.out.println("DATE after conversion" + dDate);
-			configureFranchisee.setDate(dDate);
+			//System.out.println("DATE after conversion" + dDate);
+			configureFranchisee.setDate(date);
 			configureFranchisee.setDay(day);
 
 			configureFranchisee.setFromTime(fromTime);

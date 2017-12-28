@@ -21,7 +21,7 @@ public class GetConfiguredSpDayCk implements Serializable{
 		private int spdayId;
 
 		@Column(name = "fr_id")
-		private int frId;
+		private String frId;
 
 		@Column(name = "item_id")
 		private String itemId;
@@ -104,11 +104,11 @@ public class GetConfiguredSpDayCk implements Serializable{
 
 	   
 
-		public int getFrId() {
+		public String getFrId() {
 			return frId;
 		}
 
-		public void setFrId(int frId) {
+		public void setFrId(String frId) {
 			this.frId = frId;
 		}
 

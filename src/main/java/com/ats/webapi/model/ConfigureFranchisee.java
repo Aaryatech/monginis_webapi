@@ -50,7 +50,7 @@ public class ConfigureFranchisee {
 	private int day;
 	
 	@Column(name="date")
-	private Date date;
+	private int date;
 	
 	@Column(name="item_show")
 	private String itemShow;
@@ -58,187 +58,81 @@ public class ConfigureFranchisee {
 	@Column(name="is_del")
 	private int delStatus;
 	
-
-	
-	
-
-
-
-
 	public int getSettingId() {
 		return settingId;
 	}
 
+	public int getDate() {
+		return date;
+	}
 
-
+	public void setDate(int date) {
+		this.date = date;
+	}
 
 	public void setSettingId(int settingId) {
 		this.settingId = settingId;
 	}
-
-
-
-
 	public int getFrId() {
 		return frId;
 	}
-
-
-
-
 	public void setFrId(int frId) {
 		this.frId = frId;
 	}
-
-
-
-
 	public int getMenuId() {
 		return menuId;
 	}
-
-
-
-
 	public void setMenuId(int menuId) {
 		this.menuId = menuId;
 	}
-
-
-
-
 	public int getCatId() {
 		return catId;
 	}
-
-
-
-
 	public void setCatId(int catId) {
 		this.catId = catId;
 	}
-
-
-
-
 	public int getSubCatId() {
 		return subCatId;
 	}
-
-
-
-
 	public void setSubCatId(int subCatId) {
 		this.subCatId = subCatId;
 	}
-
-
-
-
 	public int getSettingType() {
 		return settingType;
 	}
-
-
-
-
 	public void setSettingType(int settingType) {
 		this.settingType = settingType;
 	}
-
-
-
-
 	public String getFromTime() {
 		return fromTime;
 	}
-
-
-
-
 	public void setFromTime(String fromTime) {
 		this.fromTime = fromTime;
 	}
-
-
-
-
 	public String getToTime() {
 		return toTime;
 	}
-
-
-
-
 	public void setToTime(String toTime) {
 		this.toTime = toTime;
 	}
-
-
-
-
 	public int getDay() {
 		return day;
 	}
-
-
-
-
 	public void setDay(int day) {
 		this.day = day;
 	}
-
-
-
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getDate() {
-		return date;
-	}
-
-
-
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
-
-
-
-
+	
 	public String getItemShow() {
 		return itemShow;
 	}
-
-
-
-
 	public void setItemShow(String itemShow) {
 		this.itemShow = itemShow;
 	}
-
-
-
-
 	public int getDelStatus() {
 		return delStatus;
 	}
-
-
-
-
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
 	}
-
-
-
-
-
-
-
-
-
-	
-
 		
 }
