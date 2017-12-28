@@ -53,6 +53,44 @@ public class PurchaseOrderApiController {
 			return info;
 		}
 		
+		@RequestMapping(value = { "/getpurchaseorderList" }, method = RequestMethod.POST)
+		public GetPurchaseOrderList getpurchaseorderList(@RequestParam("status")List<String> status)
+		{
+			GetPurchaseOrderList getPurchaseOrderList = purchaseOrderService.getStatusWisePerchaseOrderList(status);
+			
+			System.out.println(getPurchaseOrderList);
+			return getPurchaseOrderList;
+			
+			
+		}
+		
+		@RequestMapping(value = { "/getpurchaseorderHeaderWithDetailed" }, method = RequestMethod.POST)
+		public PurchaseOrderHeader getpurchaseorderHeaderWithDetailed(@RequestParam("poId")int poId)
+		{
+			PurchaseOrderHeader getPurchaseOrder = purchaseOrderService.getpurchaseorderHeaderWithDetailed(poId);
+			
+			System.out.println(getPurchaseOrder);
+			return getPurchaseOrder;
+			
+			
+		}
+		
+		@RequestMapping(value = { "/deletePoRecord" }, method = RequestMethod.POST)
+		public Info deletePoRecord(@RequestParam("poId")int poId)
+		{
+			Info info = purchaseOrderService.deletePoRecord(poId);
+			
+			System.out.println(info);
+			return info;
+			
+			
+		}
+		
+		
+		
+		
+		
+		
 		@RequestMapping(value = { "/purchaseorderList" }, method = RequestMethod.POST)
 		public GetPurchaseOrderList perchaseorderList(@RequestParam("suppId")int suppId)
 		{

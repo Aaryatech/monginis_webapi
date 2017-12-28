@@ -37,11 +37,13 @@ public class PurchaseOrderServiceImlp implements PurchaseOrderService{
 		int headerId=pOHeader.getPoId();
 		
 		//PurchaseOrderDetail PurchaseOrderDetail=new PurchaseOrderDetail();
-		List<PurchaseOrderDetail> purchaseOrderDetailList=purchaseOrderHeader.getPurchaseOrderDetail();
+		//List<PurchaseOrderDetail> purchaseOrderDetailList=purchaseOrderHeader.getPurchaseOrderDetail();
+		System.out.println("purchaseOrderHeader"+purchaseOrderHeader.toString());
+		System.out.println("purchaseOrderHeader"+purchaseOrderHeader.getPurchaseOrderDetail().toString());
 		
-		for(int i=0;i<purchaseOrderDetailList.size();i++)
+		for(int i=0;i<purchaseOrderHeader.getPurchaseOrderDetail().size();i++)
 		{
-			PurchaseOrderDetail purchaseOrderDetail=purchaseOrderDetailList.get(i);
+			PurchaseOrderDetail purchaseOrderDetail=purchaseOrderHeader.getPurchaseOrderDetail().get(i);
 			purchaseOrderDetail.setPoId(headerId);
 			purchaseOrderDetailRepository.save(purchaseOrderDetail);
 		}
@@ -124,6 +126,90 @@ public class PurchaseOrderServiceImlp implements PurchaseOrderService{
 			purchaseOrderDetailed.setErrorMessage(errorMessage);
 		}
 		return purchaseOrderDetailed;
+		
+	}
+
+
+	@Override
+	public GetPurchaseOrderList getStatusWisePerchaseOrderList(List<String> status) {
+		
+		GetPurchaseOrderList getPurchaseOrderList=new GetPurchaseOrderList();
+		ErrorMessage errorMessage=new   ErrorMessage();
+		try
+		{
+			
+			List<PurchaseOrderHeader> purchaseOrderHeaderList =purchaseOrderHeaderRepository.getPoByStatus(status);
+			 
+			getPurchaseOrderList.setPurchaseOrderHeaderList(purchaseOrderHeaderList);
+			if(purchaseOrderHeaderList!=null)
+			{
+				errorMessage.setError(false);
+				errorMessage.setMessage("Successfully");
+			}
+			else
+			{
+				errorMessage.setError(true);
+				errorMessage.setMessage("UnSuccessfully");
+			}
+			 
+		}catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			errorMessage.setError(true);
+			errorMessage.setMessage(" failed");
+			getPurchaseOrderList.setErrorMessage(errorMessage);
+		}
+		return getPurchaseOrderList;
+		
+	}
+
+
+	@Override
+	public Info deletePoRecord(int poId) {
+		Info info = new Info();
+		
+		try
+		{
+			int deletepo =purchaseOrderHeaderRepository.deletePoRecord(poId);
+			if(deletepo==1)
+			{
+				info.setError(false);
+				info.setMessage("successfully deleted");
+			}
+			else
+			{
+				info.setError(true);
+				info.setMessage("error while deleting");
+			}
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
+	@Override
+	public PurchaseOrderHeader getpurchaseorderHeaderWithDetailed(int poId) {
+		PurchaseOrderHeader pOHeader=new PurchaseOrderHeader();
+		try
+		{
+			pOHeader = purchaseOrderHeaderRepository.findbyPoId(poId);
+			
+			List<PurchaseOrderDetail> purchaseOrderDetaillist = purchaseOrderDetailRepository.purchaseOrderDetaillist(poId);
+			pOHeader.setPurchaseOrderDetail(purchaseOrderDetaillist);
+			
+			
+			System.out.println("purchase order header with detailed "+pOHeader.toString());
+			
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return pOHeader;
+		
 		
 	}
 

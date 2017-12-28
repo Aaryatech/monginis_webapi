@@ -12,16 +12,11 @@ import com.ats.webapi.model.purchaseorder.TransporterDetails;
 public interface PurchaseOrderService {
 
 	Info insertHeader(PurchaseOrderHeader purchaseOrderHeader);
-
-	
-
-	 
 	PurchaseOrderDetailedList purchaseOrderDetailedList(int poId);
-
-
-
-
 	GetPurchaseOrderList perchaseorderList(int suppId);
+	GetPurchaseOrderList getStatusWisePerchaseOrderList(List<String> status);
+	Info deletePoRecord(int poId);
+	PurchaseOrderHeader getpurchaseorderHeaderWithDetailed(int poId);
 
  
  
