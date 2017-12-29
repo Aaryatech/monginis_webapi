@@ -46,6 +46,19 @@ public class ItemSfHeader implements Serializable{
 
 	@Column(name="del_status")
 	private int delStatus;
+	
+	@Column(name="mul_factor")
+	private float mulFactor;
+
+
+	
+	public float getMulFactor() {
+		return mulFactor;
+	}
+
+	public void setMulFactor(float mulFactor) {
+		this.mulFactor = mulFactor;
+	}
 
 	public int getSfId() {
 		return sfId;
@@ -129,7 +142,14 @@ public class ItemSfHeader implements Serializable{
 		this.delStatus = delStatus;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "ItemSfHeader [sfId=" + sfId + ", sfName=" + sfName + ", sfType=" + sfType + ", sfUomId=" + sfUomId
+				+ ", sfWeight=" + sfWeight + ", stockQty=" + stockQty + ", minLevelQty=" + minLevelQty
+				+ ", maxLevelQty=" + maxLevelQty + ", reorderLevelQty=" + reorderLevelQty + ", delStatus=" + delStatus
+				+ ", mulFactor=" + mulFactor + "]";
+	}
+
 	
 	
 	
