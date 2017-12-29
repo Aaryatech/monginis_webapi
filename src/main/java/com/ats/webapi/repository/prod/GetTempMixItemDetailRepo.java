@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.ats.webapi.model.prod.temp.GetTempMixItemDetail;
+import com.ats.webapi.model.prod.mixing.GetTempMixItemDetail;
 
 public interface GetTempMixItemDetailRepo extends JpaRepository<GetTempMixItemDetail, Integer> {
 	

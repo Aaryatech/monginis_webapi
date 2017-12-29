@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.ats.webapi.model.prod.temp.GetSFMixingForBom;
-import com.ats.webapi.model.prod.temp.GetSFPlanDetailForMixing;
+import com.ats.webapi.model.prod.mixing.GetSFMixingForBom;
+import com.ats.webapi.model.prod.mixing.GetSFPlanDetailForMixing;
 
 public interface GetSFMixingForBomRepo extends JpaRepository<GetSFMixingForBom, Integer>{
 	

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.ats.webapi.model.prod.temp.GetSFPlanDetailForMixing;
+import com.ats.webapi.model.prod.mixing.GetSFPlanDetailForMixing;
 
 //New Repo Sachin
 

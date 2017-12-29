@@ -1,4 +1,4 @@
-package com.ats.webapi.model.prod.temp;
+package com.ats.webapi.model.prod.mixing;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

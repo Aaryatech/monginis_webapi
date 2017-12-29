@@ -1,4 +1,4 @@
-package com.ats.webapi.model.prod.temp;
+package com.ats.webapi.model.prod.mixing;
 
 import java.io.Serializable;
 
@@ -9,24 +9,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class GetSFMixingForBom implements Serializable {
-	
-/*	sf_id
-	rm_id
-	rm_name
-	rm_type
-	rm_unit
-	total
-*/
-	
-	
+public class GetSpDetailForBom implements Serializable {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="sf_did")
-	private int sfDid;
+	@Column(name="sp_cake_detailed_id")
+	private int spCakeDetailedId;
 	
-	@Column(name="sf_id")
-	private int sfId;
+	@Column(name="sp_id")
+	private int spId;
 	
 	@Column(name="rm_id")
 	private int rmId;
@@ -40,22 +31,23 @@ public class GetSFMixingForBom implements Serializable {
 	@Column(name="uom")
 	private String uom;
 	
-	int total;
+	@Column(name="total")
+	private int total;
 
-	public int getSfDid() {
-		return sfDid;
+	public int getSpCakeDetailedId() {
+		return spCakeDetailedId;
 	}
 
-	public void setSfDid(int sfDid) {
-		this.sfDid = sfDid;
+	public void setSpCakeDetailedId(int spCakeDetailedId) {
+		this.spCakeDetailedId = spCakeDetailedId;
 	}
 
-	public int getSfId() {
-		return sfId;
+	public int getSpId() {
+		return spId;
 	}
 
-	public void setSfId(int sfId) {
-		this.sfId = sfId;
+	public void setSpId(int spId) {
+		this.spId = spId;
 	}
 
 	public int getRmId() {
@@ -97,6 +89,12 @@ public class GetSFMixingForBom implements Serializable {
 	public void setTotal(int total) {
 		this.total = total;
 	}
-	
 
+	@Override
+	public String toString() {
+		return "GetSpMixingForBom [spCakeDetailedId=" + spCakeDetailedId + ", spId=" + spId + ", rmId=" + rmId
+				+ ", rmName=" + rmName + ", rmType=" + rmType + ", uom=" + uom + ", total=" + total + "]";
+	}
+	
+	
 }
