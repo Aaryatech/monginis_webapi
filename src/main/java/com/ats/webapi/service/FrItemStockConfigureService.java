@@ -16,6 +16,8 @@ public interface FrItemStockConfigureService {
 	
 	
 	 public FrItemStockConfigureList findBySettingKeyList(List<String> settingKeyList);
+
+	public int getPoNo();
  
 }
 ;

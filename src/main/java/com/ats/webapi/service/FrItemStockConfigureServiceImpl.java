@@ -84,4 +84,10 @@ public class FrItemStockConfigureServiceImpl implements FrItemStockConfigureServ
 		return settingList;
 	}
 
+	@Override
+	public int getPoNo() {
+		int poNo=frItemStockConfRepo.findBySettingKey("po_no");
+		return poNo;
+	}
+
 }

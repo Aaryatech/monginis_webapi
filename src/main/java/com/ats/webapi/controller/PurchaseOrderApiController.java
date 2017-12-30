@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.purchaseorder.GetPurchaseOrderList;
+import com.ats.webapi.model.purchaseorder.GetRmRateAndTax;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderDetail;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderDetailedList;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderHeader;
 import com.ats.webapi.model.purchaseorder.TransporterDetails;
+import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.purchaseorder.PurchaseOrderService;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -29,6 +31,9 @@ public class PurchaseOrderApiController {
 
 	@Autowired
 	PurchaseOrderService purchaseOrderService;
+	
+	@Autowired
+	FrItemStockConfigureService frItemStockConfigureService;
 	
 	//----------------------Get Data Of Raw Material Item Categories---------------
 		@RequestMapping(value = { "/insertPurchaseOrder" }, method = RequestMethod.POST)
@@ -113,4 +118,23 @@ public class PurchaseOrderApiController {
 		}
  
  
+		@RequestMapping(value = { "/getRmDetailByRmId" }, method = RequestMethod.POST)
+		public GetRmRateAndTax getRmDetailByRmId(@RequestParam("rmId")int rmId, @RequestParam("suppId")int suppId )
+		{
+			GetRmRateAndTax getRmRateAndTax= purchaseOrderService.getRmDetailById(rmId, suppId);
+			
+			 
+			return getRmRateAndTax;
+	 	
+			
+		}
+		
+		@RequestMapping(value = { "/getPoNo" }, method = RequestMethod.GET)
+		public int getPoNo()
+		{
+			int poNo=frItemStockConfigureService.getPoNo();
+			return poNo;
+		}
+		
+		
 }

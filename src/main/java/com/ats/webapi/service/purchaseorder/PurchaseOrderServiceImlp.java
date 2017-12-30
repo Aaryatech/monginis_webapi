@@ -9,13 +9,17 @@ import org.springframework.stereotype.Service;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.purchaseorder.GetPurchaseOrderList;
+import com.ats.webapi.model.purchaseorder.GetRmRateAndTax;
 import com.ats.webapi.model.purchaseorder.GetPurchaseOrderList;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderDetail;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderDetailedList;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderHeader;
 import com.ats.webapi.model.purchaseorder.TransporterDetails;
+import com.ats.webapi.repository.FrItemStockConfigureRepository;
+import com.ats.webapi.repository.GetRmRateAndTaxRepository;
 import com.ats.webapi.repository.PurchaseOrderDetailRepository;
 import com.ats.webapi.repository.PurchaseOrderHeaderRepository;
+import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 
 @Service
 public class PurchaseOrderServiceImlp implements PurchaseOrderService{
@@ -27,6 +31,13 @@ public class PurchaseOrderServiceImlp implements PurchaseOrderService{
 	
 	@Autowired
 	PurchaseOrderDetailRepository purchaseOrderDetailRepository;
+	
+	@Autowired
+	GetRmRateAndTaxRepository getRmRateAndTaxRepository;
+	
+	@Autowired
+	UpdateSeetingForPBRepo updateSeetingForPBRepo;
+	
 	
 	
 	@Override
@@ -52,6 +63,7 @@ public class PurchaseOrderServiceImlp implements PurchaseOrderService{
 		{
 			info.setError(false);
 			info.setMessage("Insert Successfully");
+			updateSeetingForPBRepo.updateSeetingForPurBill( purchaseOrderHeader.getPoNo()+1, "po_no");
 			
 		}
 		else
@@ -211,6 +223,24 @@ public class PurchaseOrderServiceImlp implements PurchaseOrderService{
 		return pOHeader;
 		
 		
+	}
+
+
+	@Override
+	public GetRmRateAndTax getRmDetailById(int rmId, int suppId) {
+		 
+		GetRmRateAndTax getRmRateAndTax=null;
+		GetRmRateAndTax getRmRateAndTax1=getRmRateAndTaxRepository.getRmDetailById(rmId,suppId);
+		if(getRmRateAndTax1==null)
+		{
+			System.out.println("List is null");
+		}
+		else {
+			getRmRateAndTax = getRmRateAndTax1;
+			System.out.println("List  :  "+getRmRateAndTax1.toString());
+		}
+		
+		return getRmRateAndTax;
 	}
 
  
