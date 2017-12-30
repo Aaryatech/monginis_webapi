@@ -20,6 +20,7 @@ import com.ats.webapi.model.PostProductionPlanDetail;
 import com.ats.webapi.repository.GetProdQytRepository;
 import com.ats.webapi.repository.GetProductionItemQtyRepository;
 import com.ats.webapi.repository.MainMenuConfigurationRepository;
+import com.ats.webapi.repository.OrderRepository;
 import com.ats.webapi.repository.PostPoductionHeaderRepository;
 import com.ats.webapi.repository.PostProdPlanDetailRepository;
 import com.ats.webapi.repository.PostProdPlanHeaderRepository;
@@ -48,6 +49,9 @@ public class ProductionServiceImpl implements ProductionService{
 	
 	@Autowired
 	PostProdPlanHeaderRepository postProdPlanHeaderRepository;
+	
+	@Autowired
+	OrderRepository orderRepository;
 	
 	@Override
 	public List<PostProductionHeader> saveProductionHeader(PostProductionHeader postProductionHeader) {
@@ -225,6 +229,12 @@ public class ProductionServiceImpl implements ProductionService{
 			System.out.println("in implementation "+e.getMessage());
 		}
 		return PostProdPlanHeaderVariationlist;
+	}
+
+
+	@Override
+	public int updateBillStatus(int orderId, int i) {
+		  return orderRepository.updateStatus(orderId, i);
 	}
 	
 

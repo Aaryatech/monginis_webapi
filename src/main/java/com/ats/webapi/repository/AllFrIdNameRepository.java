@@ -14,12 +14,11 @@ public interface AllFrIdNameRepository extends JpaRepository<AllFrIdName, Intege
 	
 	List<AllFrIdName> getAllFrIdName();
 	
-@Query(value="select m_franchisee.fr_id,m_franchisee.fr_name from m_franchisee where m_franchisee.fr_id NOT IN(select t_order.fr_id from t_order where order_date=:orderDate) "
-			
-			
-			,nativeQuery=true)
+		@Query(value="select m_franchisee.fr_id,m_franchisee.fr_name from m_franchisee where m_franchisee.fr_id NOT"
+					+" IN(select t_order.fr_id from t_order where order_date=:orderDate AND menu_id=:menuId) "
+					,nativeQuery=true)
 	
-	public List<AllFrIdName> findNonOrder(@Param("orderDate") String orderDate);
+	public List<AllFrIdName> findNonOrder(@Param("orderDate") String orderDate, @Param("menuId") int menuId);
 
 }
 

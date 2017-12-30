@@ -32,5 +32,9 @@ public interface ProductionService {
 	public int updateisMixing(int productionId,int flag);
 
 	List<PostProdPlanHeader> planVariationList();
+
+	public int updateBillStatus(int orderId, int i);
+	
+	
 	
 	}

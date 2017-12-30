@@ -44,13 +44,13 @@ public class AllFrIdNameServiceImpl implements AllFrIdNameService {
 		return allFrIdNameList;
 	}
 	@Override
-	public AllFrIdNameList findNonOrderFranchisee(String orderDate) {
+	public AllFrIdNameList findNonOrderFranchisee(String orderDate, int menuId) {
 		
 		
 AllFrIdNameList allFrIdNameList=new AllFrIdNameList();
 		
-		List<AllFrIdName> allFrIdNames=allFrIdNameRepository.findNonOrder(orderDate);
-		Info info=new Info();
+List<AllFrIdName> allFrIdNames=allFrIdNameRepository.findNonOrder(orderDate, menuId);
+	Info info=new Info();
 		
 		if(allFrIdNames!=null) {
 			allFrIdNameList.setFrIdNamesList(allFrIdNames);

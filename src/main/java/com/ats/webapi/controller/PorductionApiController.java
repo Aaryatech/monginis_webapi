@@ -41,6 +41,7 @@ import com.ats.webapi.repository.PostProdPlanHeaderRepository;
 import com.ats.webapi.repository.VarianceRepository;
 import com.ats.webapi.service.GetBillHeaderService;
 import com.ats.webapi.service.GetOrderItemQtyService;
+import com.ats.webapi.service.OrderService;
 import com.ats.webapi.service.ProductionService;
 import com.ats.webapi.service.RepFrSellServise;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -66,6 +67,10 @@ public class PorductionApiController {
 	
 	@Autowired
 	VarianceRepository varianceRepository;
+	
+	@Autowired
+	OrderService orderService;
+
 	/*@RequestMapping(value = { "/getOrderItemQty" }, method = RequestMethod.POST)
 	@ResponseBody
 	public GetOrderItemQty getOrderItemQty(@RequestParam int itemId,
@@ -371,5 +376,32 @@ e.printStackTrace();
 		
 		return varianceList;
 		
+	}
+	
+	@RequestMapping(value = { "/updateIsBillGenerate" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateIsBillGenerate(@RequestBody List<GetOrderItemQty> getOrderItemQty)
+	{
+		 
+		System.out.println("Order Id  "+getOrderItemQty.toString());
+		
+		Info info = new Info();
+		int res =0;
+		for(int i=0;i<getOrderItemQty.size();i++) {
+		  res =productionService.updateBillStatus(getOrderItemQty.get(i).getOrderId(), 1);
+		}
+		if (res>0) {
+
+			info.setError(false);
+			info.setMessage("  Successfully");
+
+		}
+
+		else {
+
+			info.setError(true);
+			info.setMessage("Error in  changing status : RestApi");
+
+		}
+		return info;
 	}
 }

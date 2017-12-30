@@ -29,4 +29,10 @@ public interface OrderRepository extends JpaRepository<Orders, Long> {
 	@Query("UPDATE Orders t SET t.isBillGenerated =:status  WHERE t.orderId=:orderId")
 	int updateBillStatus(@Param("orderId") int orderId,@Param("status") int status);
 
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Orders t SET t.isBillGenerated =:status  WHERE t.orderId =:orderId")
+	int updateStatus(@Param("orderId")int orderId, @Param("status")int status);
+
 }

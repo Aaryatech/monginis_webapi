@@ -3420,11 +3420,12 @@ try {
 	}
 
 	// Ganesh 16/10
+	//Change  3012-2017
 	// List of Franchisee - not place order
 	@RequestMapping(value = "/getNonOrderFr", method = RequestMethod.POST)
-	public @ResponseBody AllFrIdNameList getNonOrderFr(@RequestParam("orderDate") String orderDate) {
+	public @ResponseBody AllFrIdNameList getNonOrderFr(@RequestParam("orderDate") String orderDate, @RequestParam("menuId") int menuId) {
 
-		AllFrIdNameList allFrIdNamesList = allFrIdNameService.findNonOrderFranchisee(orderDate);
+		AllFrIdNameList allFrIdNamesList = allFrIdNameService.findNonOrderFranchisee(orderDate,menuId);
 
 		return allFrIdNamesList;
 
