@@ -16,6 +16,7 @@ import com.ats.webapi.model.rawmaterial.GetUomAndTax;
 import com.ats.webapi.model.rawmaterial.ItemDetail;
 import com.ats.webapi.model.rawmaterial.ItemSfHeader;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
+import com.ats.webapi.model.rawmaterial.RawMaterialDetailsList;
 import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialUom;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
@@ -568,6 +569,32 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 			itemDetails.add(itemDetailRes);
 		}
 		return itemDetails;
+	}
+
+	
+	//  -----Ganesh  29-12-------
+	@Override
+	public RawMaterialDetailsList getRMByCatId(int catId) {
+		
+			RawMaterialDetailsList rawMaterialDetailsList=new RawMaterialDetailsList();
+		List<RawMaterialDetails> rawMaterialList=RawMaterialDetailsRepository.findByCatId(catId);
+		
+		ErrorMessage errorMessage=new ErrorMessage();
+		
+		if(rawMaterialList!=null)
+		{
+			System.out.println("List RM "+rawMaterialList.toString());
+			
+			rawMaterialDetailsList.setRawMaterialDetailsList(rawMaterialList);
+			errorMessage.setError(false);
+			errorMessage.setMessage("Success");
+		}
+		else{
+			errorMessage.setError(true);
+			errorMessage.setMessage("Failed");
+		}
+		rawMaterialDetailsList.setErrorMessage(errorMessage);
+		return rawMaterialDetailsList;
 	}
 	
 }

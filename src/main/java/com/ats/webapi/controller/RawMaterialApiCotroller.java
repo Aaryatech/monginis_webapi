@@ -480,4 +480,14 @@ public class RawMaterialApiCotroller {
 	}
 	
 //---------------------------------------END------------------------------
+	
+	
+	//------------------Ganesh   29-12---------------
+		@RequestMapping(value = { "/getRawMaterialByCategory" }, method = RequestMethod.POST)
+		public @ResponseBody RawMaterialDetailsList getRawMaterialByCategory(@RequestParam("catId")int catId)
+		{
+			
+			RawMaterialDetailsList rawMaterialDetailsList=rawMaterialService.getRMByCatId(catId);
+			return rawMaterialDetailsList;
+		}
 }

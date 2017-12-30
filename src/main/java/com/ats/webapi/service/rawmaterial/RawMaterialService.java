@@ -12,6 +12,7 @@ import com.ats.webapi.model.rawmaterial.GetUomAndTax;
 import com.ats.webapi.model.rawmaterial.ItemDetail;
 import com.ats.webapi.model.rawmaterial.ItemSfHeader;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
+import com.ats.webapi.model.rawmaterial.RawMaterialDetailsList;
 import com.ats.webapi.model.rawmaterial.RawMaterialTaxDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialUom;
 import com.ats.webapi.model.rawmaterial.RmItemCatList;
@@ -79,5 +80,7 @@ public interface RawMaterialService {
 	ItemDetail getItemDetail(int itemDetailId);
 
 	List<ItemSfHeader> getItemSfHeaders();
+
+	RawMaterialDetailsList getRMByCatId(int catId);
 	
 }

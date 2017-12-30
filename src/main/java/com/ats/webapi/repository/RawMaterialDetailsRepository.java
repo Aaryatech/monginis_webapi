@@ -25,4 +25,6 @@ public interface RawMaterialDetailsRepository extends JpaRepository<RawMaterialD
 	int deleteRawMaterial(@Param("rmId") int rmId);
 	
 	List<RawMaterialDetails> findByGrpIdAndDelStatus(int grpId, int delStatus);
+
+	List<RawMaterialDetails> findByCatId(int catId);
 }
