@@ -41,6 +41,7 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
       //  if(materialRecNote.getStatus()==1)
       //  {
        // 	materialRecNote.setMrnStoreDate(now);
+        	System.out.println("podate in service imp "+materialRecNote.getPoDate());
 			 materialRec=materialRecNoteRepository.save(materialRecNote);
 			    
        // }
@@ -131,7 +132,7 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
 		
 		//int mrnId=materialRecNote.getMrnId();
 		
-		List<MaterialRecNoteDetails> materialRecNoteDetailsList=materialRNoteDetailRepository.findByMrnId(mrnId);
+		List<MaterialRecNoteDetails> materialRecNoteDetailsList=materialRNoteDetailRepository.getByMrnId(mrnId);
 		materialRecNote.setMaterialRecNoteDetails(materialRecNoteDetailsList);
 		return materialRecNote;
 	}

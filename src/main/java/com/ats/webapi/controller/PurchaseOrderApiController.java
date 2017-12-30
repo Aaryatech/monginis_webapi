@@ -20,6 +20,7 @@ import com.ats.webapi.model.purchaseorder.PurchaseOrderDetail;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderDetailedList;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderHeader;
 import com.ats.webapi.model.purchaseorder.TransporterDetails;
+import com.ats.webapi.repository.PurchaseOrderHeaderRepository;
 import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.purchaseorder.PurchaseOrderService;
 import com.fasterxml.jackson.core.JsonParseException;
@@ -34,6 +35,10 @@ public class PurchaseOrderApiController {
 	
 	@Autowired
 	FrItemStockConfigureService frItemStockConfigureService;
+	
+	@Autowired
+	PurchaseOrderHeaderRepository purchaseOrderHeaderRepository;
+
 	
 	//----------------------Get Data Of Raw Material Item Categories---------------
 		@RequestMapping(value = { "/insertPurchaseOrder" }, method = RequestMethod.POST)
@@ -79,6 +84,25 @@ public class PurchaseOrderApiController {
 			
 			
 		}
+		
+		@RequestMapping(value = { "/getpurchaseorderHeader" }, method = RequestMethod.POST)
+		public PurchaseOrderHeader getpurchaseorderHeader(@RequestParam("poId")int poId)
+		{
+			PurchaseOrderHeader getPurchaseOrder = new PurchaseOrderHeader ();
+			try {
+				 getPurchaseOrder = purchaseOrderHeaderRepository.findbyPoId(poId);
+				
+				System.out.println(getPurchaseOrder);
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			return getPurchaseOrder;
+			
+			
+		}
+
 		
 		@RequestMapping(value = { "/deletePoRecord" }, method = RequestMethod.POST)
 		public Info deletePoRecord(@RequestParam("poId")int poId)

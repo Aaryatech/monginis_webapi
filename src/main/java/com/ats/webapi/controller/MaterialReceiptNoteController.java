@@ -3,6 +3,7 @@ package com.ats.webapi.controller;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.GetMaterialRecNoteList;
-
+import com.ats.webapi.model.GetTaxByRmId;
+import com.ats.webapi.model.GetTaxListByRmId;
 import com.ats.webapi.model.MaterialRecNote;
+import com.ats.webapi.repository.GetTaxListByRmIdRepository;
 import com.ats.webapi.service.MaterialRcNote.MaterialRecNoteService;
 
 
@@ -26,12 +29,14 @@ public class MaterialReceiptNoteController {
 	@Autowired
 	MaterialRecNoteService materialRecNoteService;
 	
+	@Autowired
+	GetTaxListByRmIdRepository getTaxListByRmIdRepository;
 	
 	@RequestMapping(value = { "/postMaterialRecNote" }, method = RequestMethod.POST)
 	public @ResponseBody MaterialRecNote postMaterialRecNote(@RequestBody MaterialRecNote materialRecNote)
 	{
 		System.out.println("Input List :"+materialRecNote.toString());
-		SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd");
 
 		try {
 			Date utilCurrentDate = sf.parse(sf.format(new Date()));
@@ -39,8 +44,8 @@ public class MaterialReceiptNoteController {
 
 			    Date now = new Date();
 
-			    String strTime = sdfTime.format(now);
-			    if(materialRecNote.getMrnId()!=0) {
+			    String strTime = sdfTime.format(now.getTime());
+			    if(materialRecNote.getMrnId()==0) {
 			materialRecNote.setGateEntryDate(utilCurrentDate);
 			materialRecNote.setGateEntryTime(strTime);
 			    }
@@ -49,7 +54,7 @@ public class MaterialReceiptNoteController {
 			e.printStackTrace();
 		}
         
-
+		System.out.println("Podate "+materialRecNote.getPoDate());
 		MaterialRecNote materialRecNotes = materialRecNoteService.postMaterialRecNote(materialRecNote);
 		System.out.println(materialRecNotes.toString());
 		return materialRecNotes;
@@ -64,6 +69,20 @@ System.out.println("Status : "+status.toString());
 		GetMaterialRecNoteList materialRNoteResponse = materialRecNoteService.getMaterialRecNote(status);
 
 		return materialRNoteResponse;
+
+	}
+	
+	
+	@RequestMapping(value = { "/getTaxByRmId" }, method = RequestMethod.POST)
+	public @ResponseBody GetTaxListByRmId getTaxByRmId(@RequestParam("rmId")List<String> rmId)
+	{
+		GetTaxListByRmId getTaxListByRmId = new GetTaxListByRmId();
+		List<GetTaxByRmId> getTaxByRmIdList = new ArrayList<GetTaxByRmId>();
+
+		getTaxByRmIdList = getTaxListByRmIdRepository.GetTaxByRmIdlist(rmId);
+		getTaxListByRmId.setGetTaxByRmIdList(getTaxByRmIdList);
+
+		return getTaxListByRmId;
 
 	}
 	
