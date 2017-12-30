@@ -81,6 +81,12 @@ public interface RawMaterialService {
 
 	List<ItemSfHeader> getItemSfHeaders();
 
+	RawMaterialUom getUomById(int uomId);
+
+	int deleteRmUom(int uomId);
+
+	RawMaterialTaxDetails getRMTax(int taxId);
+
+	int deleteRmTax(int taxId);
 	RawMaterialDetailsList getRMByCatId(int catId);
-	
 }

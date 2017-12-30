@@ -1,7 +1,4 @@
 package com.ats.webapi.controller;
-
-
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +33,6 @@ import com.ats.webapi.model.rawmaterial.RmItemSubCatList;
 import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
 import com.ats.webapi.model.rawmaterial.RmRateVerification;
 import com.ats.webapi.service.rawmaterial.RawMaterialService;
-
 
 @RestController
 @RequestMapping("/rawMaterial")
@@ -231,7 +227,15 @@ public class RawMaterialApiCotroller {
 		List<RawMaterialUom> rawMaterialUomList=rawMaterialService.getAllUom();
 		return rawMaterialUomList;
 	}
-	
+	//-----------------------------------get RM UOM by uomId--------------------------
+		@RequestMapping(value = { "/getRmUomByUomId" }, method = RequestMethod.POST)
+		public @ResponseBody RawMaterialUom getRmUomByUomId(@RequestParam("uomId")int uomId)
+		{
+			RawMaterialUom rawMaterialUom=rawMaterialService.getUomById(uomId);
+			return rawMaterialUom;
+		} 
+	//-------------------------------------------------------------------------------
+    
 	@RequestMapping(value = { "/getRmUomList" }, method = RequestMethod.GET)
 	public @ResponseBody RawMaterialUomList getRmUomList()
 	{
@@ -327,8 +331,25 @@ public class RawMaterialApiCotroller {
 		}
 		return info;
 	}
-	
-	//---------------------------------------getRmUomAndTax------------------------------
+	//-----------------------------------Delete RM UOM--------------------------
+		@RequestMapping(value = { "/deleteRmUom" }, method = RequestMethod.POST)
+		public @ResponseBody Info deleteRmUom(@RequestParam("uomId")int uomId)
+		{
+			int isDelete=rawMaterialService.deleteRmUom(uomId);
+			Info info=new Info();
+			if(isDelete==1)
+			{
+				info.setError(false);
+				info.setMessage("RM Uom Deleted successFully");
+			}
+			else
+			{
+				info.setError(true);
+				info.setMessage("Failed to Delete RM Uom");
+			}
+			return info;
+		}
+	//-------------------------getRmTax------------------------------
 	
 	@RequestMapping(value = { "/getUomAndTax" }, method = RequestMethod.POST)
 	public @ResponseBody GetUomAndTax getUomAndTax(@RequestParam("rmId")int rmId)
@@ -336,7 +357,30 @@ public class RawMaterialApiCotroller {
 		GetUomAndTax getUomAndTax=rawMaterialService.getUomAndTax( rmId);
 		return getUomAndTax;
 	}
-	
+	//-----------------------------------Delete RM Tax--------------------------
+			@RequestMapping(value = { "/deleteRmTax" }, method = RequestMethod.POST)
+			public @ResponseBody Info deleteRmTax(@RequestParam("taxId")int taxId)
+			{
+				int isDelete=rawMaterialService.deleteRmTax(taxId);
+				Info info=new Info();
+				if(isDelete==1)
+				{
+					info.setError(false);
+					info.setMessage("RM Tax Deleted successFully");
+				}
+				else
+				{
+					info.setError(true);
+					info.setMessage("Failed to Delete RM Tax");
+				}
+				return info;
+			}
+	@RequestMapping(value = { "/getRMTax" }, method = RequestMethod.POST)
+	public @ResponseBody RawMaterialTaxDetails getRMTax(@RequestParam("taxId")int taxId)
+	{
+		RawMaterialTaxDetails rmTaxRes=rawMaterialService.getRMTax(taxId);
+		return rmTaxRes;
+	}
 	@RequestMapping(value = { "/getAllRawMaterialList" }, method = RequestMethod.GET)
 	public @ResponseBody GetRawMaterialDetailList getAllRawMaterialList()
 	{
@@ -480,14 +524,12 @@ public class RawMaterialApiCotroller {
 	}
 	
 //---------------------------------------END------------------------------
-	
-	
 	//------------------Ganesh   29-12---------------
-		@RequestMapping(value = { "/getRawMaterialByCategory" }, method = RequestMethod.POST)
-		public @ResponseBody RawMaterialDetailsList getRawMaterialByCategory(@RequestParam("catId")int catId)
-		{
-			
-			RawMaterialDetailsList rawMaterialDetailsList=rawMaterialService.getRMByCatId(catId);
-			return rawMaterialDetailsList;
-		}
+			@RequestMapping(value = { "/getRawMaterialByCategory" }, method = RequestMethod.POST)
+			public @ResponseBody RawMaterialDetailsList getRawMaterialByCategory(@RequestParam("catId")int catId)
+			{
+				
+				RawMaterialDetailsList rawMaterialDetailsList=rawMaterialService.getRMByCatId(catId);
+				return rawMaterialDetailsList;
+			}
 }

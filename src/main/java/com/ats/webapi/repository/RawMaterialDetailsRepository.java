@@ -17,7 +17,6 @@ public interface RawMaterialDetailsRepository extends JpaRepository<RawMaterialD
 	RawMaterialDetails findByRmId(int rmId);
 	
 	List<RawMaterialDetails> findByDelStatus(int delStatus);
-	
 
 	@Transactional
 	@Modifying

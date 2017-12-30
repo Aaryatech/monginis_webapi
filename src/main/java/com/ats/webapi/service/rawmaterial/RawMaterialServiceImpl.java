@@ -411,7 +411,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	@Override
 	public List<RawMaterialUom> getAllUom() {
 		 
-		List<RawMaterialUom> rawMaterialUomList=rawMaterialUomRepository.findAll();
+		List<RawMaterialUom> rawMaterialUomList=rawMaterialUomRepository.findAllByDelStatus(0);
 		if(rawMaterialUomList!=null)
 		{
 			System.out.println("RM UOM List : "+rawMaterialUomList.toString());
@@ -427,7 +427,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	public List<RawMaterialTaxDetails> getAllRmTax() {
 		
 
-		List<RawMaterialTaxDetails> rawMaterialTaxDetailsList=rawMaterialTaxDetailsRepository.findAll();
+		List<RawMaterialTaxDetails> rawMaterialTaxDetailsList=rawMaterialTaxDetailsRepository.findAllByDelStatus(0);
 		if(rawMaterialTaxDetailsList!=null)
 		{
 			System.out.println("Tax details : "+rawMaterialTaxDetailsList.toString());
@@ -506,13 +506,6 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	}
 		return getUomAndTax;
 	}
-/*
-	@Override
-	public ItemDetail saveItemDetail(ItemDetail itemDetail) {
-
-		ItemDetail itemDetailRes=itemDetailRepository.save(itemDetail);
-		return itemDetailRes;
-	}*/
 
 	@Override
 	public List<GetItemDetail> getItemDetails(int itemId) {
@@ -571,8 +564,36 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		return itemDetails;
 	}
 
+	@Override
+	public RawMaterialUom getUomById(int uomId) {
+		
+		RawMaterialUom rawMaterialUomRes=rawMaterialUomRepository.findByUomId(uomId);
 	
-	//  -----Ganesh  29-12-------
+		return rawMaterialUomRes;
+	}
+
+	@Override
+	public int deleteRmUom(int uomId) {
+
+		int isDelete=rawMaterialUomRepository.deleteRmUom(uomId);
+		return isDelete;
+	}
+
+	@Override
+	public RawMaterialTaxDetails getRMTax(int taxId) {
+
+		  RawMaterialTaxDetails  rawMaterialTaxDetails=rawMaterialTaxDetailsRepository.findByTaxId(taxId);	
+			return rawMaterialTaxDetails;
+	
+	}
+
+	@Override
+	public int deleteRmTax(int taxId) {
+
+		int isDelete=rawMaterialTaxDetailsRepository.deleteRmTax(taxId);
+		return isDelete;
+	}
+//  -----Ganesh  29-12-------
 	@Override
 	public RawMaterialDetailsList getRMByCatId(int catId) {
 		
@@ -596,5 +617,6 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		rawMaterialDetailsList.setErrorMessage(errorMessage);
 		return rawMaterialDetailsList;
 	}
+	
 	
 }

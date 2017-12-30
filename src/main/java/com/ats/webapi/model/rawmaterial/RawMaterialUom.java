@@ -19,6 +19,18 @@ public class RawMaterialUom {
 	@Column(name="uom")
 	private String uom;
 
+	@Column(name="del_status")
+	private int delStatus;
+	
+	
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
+
 	public int getUomId() {
 		return uomId;
 	}
@@ -37,8 +49,7 @@ public class RawMaterialUom {
 
 	@Override
 	public String toString() {
-		return "RawMaterialUom [uomId=" + uomId + ", uom=" + uom + "]";
+		return "RawMaterialUom [uomId=" + uomId + ", uom=" + uom + ", delStatus=" + delStatus + "]";
 	}
-
 	
 }

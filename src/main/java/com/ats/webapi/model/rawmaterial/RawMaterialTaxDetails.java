@@ -28,6 +28,16 @@ public class RawMaterialTaxDetails {
 	@Column(name="igst_per")
 	private float igstPer;
 
+	private int delStatus;
+	
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
+
 	public int getTaxId() {
 		return taxId;
 	}
