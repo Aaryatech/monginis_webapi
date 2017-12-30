@@ -18,7 +18,7 @@ public interface PurchaseOrderHeaderRepository extends JpaRepository<PurchaseOrd
 	@Query(value=" select * from t_purchase_order_header where del_status=0 and po_id=:poId",nativeQuery=true)
 	PurchaseOrderHeader findbyPoId(@Param("poId")int poId);
 
-	@Query(value=" select * from t_purchase_order_header where del_status=0 and supp_id=:suppId",nativeQuery=true)
+	@Query(value=" select * from t_purchase_order_header where del_status=0 and supp_id=:suppId and po_status in (5,6)",nativeQuery=true)
 	List<PurchaseOrderHeader> findBySuppId(@Param("suppId") int suppId);
 
 	@Query(value=" select * from t_purchase_order_header where del_status=0 and po_status in (:status)",nativeQuery=true)
