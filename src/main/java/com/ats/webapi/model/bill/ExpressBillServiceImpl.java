@@ -12,6 +12,7 @@ import com.ats.webapi.model.SellBillDetailList;
 import com.ats.webapi.model.SellBillDetails;
 import com.ats.webapi.model.SellBillHeader;
 import com.ats.webapi.repository.ExpressBillRepository;
+import com.ats.webapi.repository.GetItemHsnCodeRepository;
 import com.ats.webapi.repository.SellBillDetailRepository;
 import com.ats.webapi.repository.SellBillDetailsRepository;
 
@@ -27,6 +28,8 @@ public class ExpressBillServiceImpl implements ExpressBillService{
 	@Autowired
 	SellBillDetailsRepository sellBillDetailsRepository;
 
+	@Autowired
+	GetItemHsnCodeRepository getItemHsnCodeRepository;
 	
 	@Override
 	public SellBillDataCommon showNotDayClosedRecord(int frId) {
@@ -112,6 +115,11 @@ public class ExpressBillServiceImpl implements ExpressBillService{
 		int result=sellBillDetailRepository.deleteSellBillDetail(delStatus, sellBillDetailNo);
 		
 		return result;
+	}
+
+	@Override
+	public GetItemHsnCode getItemHsnCode(int itemId) {
+		return getItemHsnCodeRepository.getHsnCode(itemId);
 	}
 
 	
