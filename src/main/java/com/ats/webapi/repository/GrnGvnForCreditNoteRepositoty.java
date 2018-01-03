@@ -11,12 +11,21 @@ public interface GrnGvnForCreditNoteRepositoty extends JpaRepository<GetGrnGvnFo
 	
 	
 	@Query(value = " \n" + 
-			"SELECT t_grn_gvn.* ,CASE WHEN t_grn_gvn.cat_id=5 THEN s.sp_name \n" + 
+			"SELECT t_grn_gvn.grn_gvn_id,t_grn_gvn.grn_gvn_entry_datetime,t_grn_gvn.grn_gvn_date,t_grn_gvn.bill_no,t_grn_gvn.fr_id,t_grn_gvn.item_id,t_grn_gvn.item_rate,\n" + 
+			"t_grn_gvn.item_mrp,t_grn_gvn.grn_gvn_qty,t_grn_gvn.grn_gvn_amt,t_grn_gvn.grn_type,t_grn_gvn.is_grn,t_grn_gvn.is_grn_edit,\n" + 
+			"t_grn_gvn.fr_grn_gvn_remark,t_grn_gvn.gvn_photo_upload1,t_grn_gvn.gvn_photo_upload2,t_grn_gvn.grn_gvn_status,\n" + 
+			"t_grn_gvn.approved_login_gate,t_grn_gvn.approved_remark_gate,t_grn_gvn.approved_login_store,t_grn_gvn.approved_remark_store,\n" + 
+			"t_grn_gvn.approved_login_acc,t_grn_gvn.approved_remark_acc,t_grn_gvn.del_status,t_grn_gvn.grn_gvn_qty_auto,\n" + 
+			"t_grn_gvn.is_tally_sync,t_grn_gvn.base_rate,t_grn_gvn.sgst_per,t_grn_gvn.cgst_per,t_grn_gvn.igst_per,t_grn_gvn.taxable_amt,\n" + 
+			"t_grn_gvn.total_tax,t_grn_gvn.round_up_amt,t_grn_gvn.final_amt,t_grn_gvn.is_credit_note,t_grn_gvn.menu_id,t_grn_gvn.cat_id,\n" + 
+			"t_grn_gvn.invoice_no,t_grn_gvn.ref_invoice_date, CAST(t_grn_gvn.approved_datetime_gate AS CHAR) as approved_datetime_gate,\n" + 
+			"CAST(t_grn_gvn.approved_datetime_store AS CHAR) as approved_datetime_store,CAST(t_grn_gvn.approved_datetime_acc AS CHAR) as approved_datetime_acc,\n" + 
+			"CASE WHEN t_grn_gvn.cat_id=5 THEN s.sp_name \n" + 
 			"ELSE  m_item.item_name END AS item_name,m_franchisee.fr_name FROM m_franchisee,\n" + 
-			"			m_item,t_grn_gvn,m_sp_cake s WHERE t_grn_gvn.fr_id=m_franchisee.fr_id AND \n" + 
-			"			 CASE WHEN t_grn_gvn.cat_id=5 THEN t_grn_gvn.item_id=s.sp_id ELSE\n" + 
-			" t_grn_gvn.item_id=m_item.id END AND \n" + 
-			"			t_grn_gvn.is_credit_note=0  AND t_grn_gvn.grn_gvn_status=6  group by  t_grn_gvn.grn_gvn_id "
+			"m_item,t_grn_gvn,m_sp_cake s WHERE t_grn_gvn.fr_id=m_franchisee.fr_id AND  \n" + 
+			"CASE WHEN t_grn_gvn.cat_id=5 THEN t_grn_gvn.item_id=s.sp_id ELSE\n" + 
+			"t_grn_gvn.item_id=m_item.id END AND \n" + 
+			"t_grn_gvn.is_credit_note=0  AND t_grn_gvn.grn_gvn_status=6  group by  t_grn_gvn.grn_gvn_id "
 			, nativeQuery = true)
 	
 	List<GetGrnGvnForCreditNote> getGrnGvnDetailForCreditNote();
