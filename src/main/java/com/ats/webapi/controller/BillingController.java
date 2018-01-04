@@ -24,7 +24,7 @@ public class BillingController {
 	@Autowired
 	ExpressBillService expressBillService;
 	
-	
+	 
 	@RequestMapping(value = { "/showNotDayClosedRecord" }, method = RequestMethod.POST)
 	public @ResponseBody SellBillDataCommon showNotDayClosedRecord(@RequestParam("frId") int frId) {
 
