@@ -16,6 +16,7 @@ import com.ats.webapi.model.SellBillDetail;
 import com.ats.webapi.model.SellBillDetailList;
 import com.ats.webapi.model.SellBillHeader;
 import com.ats.webapi.model.bill.ExpressBillService;
+import com.ats.webapi.model.bill.GetItemHsnCode;
 
 @RestController
 public class BillingController {
@@ -97,4 +98,11 @@ public class BillingController {
 		}
 			return info;
 	  }
+	@RequestMapping(value = { "/getItemHsnCode" }, method = RequestMethod.POST)
+	public @ResponseBody GetItemHsnCode getItemHsnCode(@RequestParam("itemId") int itemId) {
+	
+		GetItemHsnCode getItemHsnCode=expressBillService.getItemHsnCode(itemId);
+		
+		return getItemHsnCode;
+	}
 }
