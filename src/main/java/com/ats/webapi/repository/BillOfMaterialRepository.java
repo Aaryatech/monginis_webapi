@@ -3,8 +3,10 @@ package com.ats.webapi.repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.bom.BillOfMaterialHeader;
@@ -28,6 +30,12 @@ public interface BillOfMaterialRepository extends JpaRepository<BillOfMaterialHe
 
 	@Query(value=" select * from t_req_bom where  status IN(:status) and from_dept_id=:fromDept and to_dept_id=:toDept and del_status=0",nativeQuery=true)
 	List<BillOfMaterialHeader> getAlllist(@Param("fromDept")int fromDept, @Param("toDept")int toDept, @Param("status")List<String> status);
+
+	
+	@Transactional
+	 @Modifying
+	 @Query("UPDATE BillOfMaterialHeader SET status=4 WHERE production_id=:prodId and is_production=:isProduction")
+	int updateStatusWhileCompletProd(@Param("prodId")int prodId,@Param("isProduction")int isProduction);
 	
 	/*@Query(value=" update BillOfMaterialHeader set status=3 and req_id=:reqId")
 	int updatestatus(@Param("reqId")int reqId);*/

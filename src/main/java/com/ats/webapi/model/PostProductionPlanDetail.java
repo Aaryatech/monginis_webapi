@@ -48,12 +48,24 @@ public class PostProductionPlanDetail {
 		@Column(name="production_date")
 		private Date productionDate;
 		
+		@Column(name="remaining_qty")
+		private int int4;
 		
 		
+		
+		public int getInt4() {
+			return int4;
+		}
+
+		public void setInt4(int int4) {
+			this.int4 = int4;
+		}
+
 		public String getProductionBatch() {
 			return productionBatch;
 		}
-		@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+		
+		//@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 		public void setProductionBatch(String productionBatch) {
 			this.productionBatch = productionBatch;
 		}
@@ -135,7 +147,8 @@ public class PostProductionPlanDetail {
 			return "PostProductionPlanDetail [productionDetailId=" + productionDetailId + ", productionHeaderId="
 					+ productionHeaderId + ", planQty=" + planQty + ", orderQty=" + orderQty + ", openingQty="
 					+ openingQty + ", rejectedQty=" + rejectedQty + ", productionQty=" + productionQty + ", itemId="
-					+ itemId + ", productionBatch=" + productionBatch + ", productionDate=" + productionDate + "]";
+					+ itemId + ", productionBatch=" + productionBatch + ", productionDate=" + productionDate + ", int4="
+					+ int4 + "]";
 		}
 
 }
