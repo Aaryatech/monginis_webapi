@@ -22,8 +22,8 @@ public interface GetSFPlanDetailForMixingRepo extends JpaRepository<GetSFPlanDet
 			+ "ELSE " + 
 			"sum((t_production_plan_detail.order_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item) "
 			+ "END " + 
-			" AS total  from m_item_detail,t_production_plan_header,m_rm_uom,t_production_plan_detail "
-			+ " where  m_rm_uom.uom_id=m_item_detail.rm_uom_id AND  "
+			" AS total,m_item_sf_detail.sf_id, m_item_sf_header.mul_factor  from m_item_detail,t_production_plan_header,m_rm_uom,t_production_plan_detail,m_item_sf_header,m_item_sf_detail "
+			+ " where  m_rm_uom.uom_id=m_item_detail.rm_uom_id AND m_item_sf_header.sf_id=m_item_sf_detail.sf_id AND  "
 			+ "t_production_plan_detail.item_id=m_item_detail.item_id AND m_item_detail.rm_type=2 AND "
 			+ "t_production_plan_header.production_header_id=t_production_plan_detail.production_header_id AND "
 			+ "t_production_plan_header.production_header_id=:headerId GROUP BY rm_id" + 
@@ -45,8 +45,8 @@ public interface GetSFPlanDetailForMixingRepo extends JpaRepository<GetSFPlanDet
 			+ "ELSE " + 
 			"sum((t_production_plan_detail.order_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item) "
 			+ "END " + 
-			" AS total  from m_item_detail,t_production_plan_header,m_rm_uom,t_production_plan_detail "
-			+ "where  m_rm_uom.uom_id=m_item_detail.rm_uom_id AND  "
+			" AS total,m_item_sf_detail.sf_id, m_item_sf_header.mul_factor  FROM m_item_detail,t_production_plan_header,m_rm_uom,t_production_plan_detail,m_item_sf_detail,m_item_sf_header "
+			+ "WHERE  m_rm_uom.uom_id=m_item_detail.rm_uom_id AND m_item_sf_header.sf_id=m_item_sf_detail.sf_id AND "
 			+ "t_production_plan_detail.item_id=m_item_detail.item_id AND "
 			+ "t_production_plan_header.production_header_id=t_production_plan_detail.production_header_id AND "
 			+ "t_production_plan_header.production_header_id=:headerId GROUP BY rm_id" + 

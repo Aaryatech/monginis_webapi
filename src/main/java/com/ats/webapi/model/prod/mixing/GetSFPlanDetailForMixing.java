@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 //same Bean Used for Bom and Mixing
+//2 new Field Added on 5 Jan for mul_factor
 @Entity
 public class GetSFPlanDetailForMixing implements Serializable {
 	
@@ -47,8 +48,25 @@ public class GetSFPlanDetailForMixing implements Serializable {
 	@Column(name="plan_qty")
 	private float planQty;
 	
+	@Column(name="mul_factor")
+	private float mulFactor;
+	
+	@Column(name="sf_id")
+	private int sfId;
 	
 	
+	public int getSfId() {
+		return sfId;
+	}
+	public void setSfId(int sfId) {
+		this.sfId = sfId;
+	}
+	public float getMulFactor() {
+		return mulFactor;
+	}
+	public void setMulFactor(float mulFactor) {
+		this.mulFactor = mulFactor;
+	}
 	int total;
 	
 	
