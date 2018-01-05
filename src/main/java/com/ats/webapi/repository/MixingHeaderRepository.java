@@ -23,7 +23,7 @@ public interface MixingHeaderRepository extends JpaRepository<MixingHeader, Inte
 	
 	@Transactional
 	@Modifying
-	@Query(" UPDATE MixingHeader SET is_bom=1 WHERE mix_id=:mixId")
+	@Query(" UPDATE MixingHeader SET is_bom=1,status=1 WHERE mix_id=:mixId")
 	int updateisBom(@Param("mixId")int mixId);
 	
 

@@ -27,7 +27,7 @@ public interface PostProdPlanHeaderRepository extends JpaRepository<PostProdPlan
 	
 	@Transactional
 	@Modifying
-	@Query(" UPDATE PostProdPlanHeader SET is_bom=1 WHERE production_header_id=:productionId")
+	@Query(" UPDATE PostProdPlanHeader SET is_bom=1, production_status=3 WHERE production_header_id=:productionId")
 	int updateisBom(@Param("productionId")int productionId);
 
 	
