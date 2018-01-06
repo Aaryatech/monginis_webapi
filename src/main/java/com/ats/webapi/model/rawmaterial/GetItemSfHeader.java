@@ -29,7 +29,7 @@ public class GetItemSfHeader {
 	private int sfUomId;
 	
 	@Column(name="sf_weight")
-	private int sfWeight;
+	private float sfWeight;
 	
 	@Column(name="stock_qty")
 	private int stockQty;
@@ -64,7 +64,7 @@ public class GetItemSfHeader {
 		return sfUomId;
 	}
 
-	public int getSfWeight() {
+	public float getSfWeight() {
 		return sfWeight;
 	}
 
@@ -115,7 +115,7 @@ public class GetItemSfHeader {
 		this.sfUomId = sfUomId;
 	}
 
-	public void setSfWeight(int sfWeight) {
+	public void setSfWeight(float sfWeight) {
 		this.sfWeight = sfWeight;
 	}
 

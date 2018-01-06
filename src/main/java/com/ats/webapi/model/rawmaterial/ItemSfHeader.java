@@ -30,7 +30,7 @@ public class ItemSfHeader implements Serializable{
 	private int sfUomId;
 	
 	@Column(name="sf_weight")
-	private int sfWeight;
+	private float sfWeight;
 	
 	@Column(name="stock_qty")
 	private int stockQty;
@@ -126,11 +126,11 @@ public class ItemSfHeader implements Serializable{
 		this.sfType = sfType;
 	}
 
-	public int getSfWeight() {
+	public float getSfWeight() {
 		return sfWeight;
 	}
 
-	public void setSfWeight(int sfWeight) {
+	public void setSfWeight(float sfWeight) {
 		this.sfWeight = sfWeight;
 	}
 
