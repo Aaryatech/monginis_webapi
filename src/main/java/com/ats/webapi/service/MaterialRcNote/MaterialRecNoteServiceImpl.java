@@ -12,8 +12,13 @@ import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.GetMaterialRecNoteList;
 import com.ats.webapi.model.MaterialRecNote;
 import com.ats.webapi.model.MaterialRecNoteDetails;
+import com.ats.webapi.model.tally.MaterialRecNoteDetail;
+import com.ats.webapi.model.tally.MaterialRecNoteList;
+import com.ats.webapi.model.tally.MaterialReceiptNote;
 import com.ats.webapi.repository.MaterialRNoteDetailRepository;
 import com.ats.webapi.repository.MaterialRecNoteRepository;
+import com.ats.webapi.repository.tally.MaterialRecNoteDetailRepository;
+import com.ats.webapi.repository.tally.MaterialReceiptNoteRepository;
 
 @Service
 public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
@@ -24,9 +29,11 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
 	@Autowired
 	MaterialRNoteDetailRepository materialRNoteDetailRepository;
 
-	
+	@Autowired
+	MaterialReceiptNoteRepository materialReceiptNoteRepository;
 
-	
+	@Autowired
+	MaterialRecNoteDetailRepository materialRecNoteDetailRepository;
 	
 	@Override
 	public MaterialRecNote postMaterialRecNote(MaterialRecNote materialRecNote) {
@@ -135,6 +142,49 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
 		List<MaterialRecNoteDetails> materialRecNoteDetailsList=materialRNoteDetailRepository.getByMrnId(mrnId);
 		materialRecNote.setMaterialRecNoteDetails(materialRecNoteDetailsList);
 		return materialRecNote;
+	}
+	@Override
+	public MaterialRecNoteList getAllInwards() {
+
+		MaterialRecNoteList materialRecNoteList=new MaterialRecNoteList();
+		List<MaterialReceiptNote> materialRecNoteResList=materialReceiptNoteRepository.getAllInwards();
+		if(!materialRecNoteResList.isEmpty())
+		{
+			
+		  ErrorMessage errorMessage=new ErrorMessage();
+		  errorMessage.setError(false);
+		  errorMessage.setMessage("Material Receipt Notes Found");
+		  materialRecNoteList.setMaterialRecNoteResList(materialRecNoteResList);
+		  materialRecNoteList.setErrorMessage(errorMessage);
+		}
+		else
+		{
+			 ErrorMessage errorMessage=new ErrorMessage();
+			  errorMessage.setError(false);
+			  errorMessage.setMessage("Material Receipt Notes Found");
+			  materialRecNoteList.setErrorMessage(errorMessage);
+		}
+		return materialRecNoteList;
+	}
+	@Override
+	public ErrorMessage updateInward(int mrnId, int isTallySync) {
+
+		ErrorMessage errorMessage=new ErrorMessage();
+		
+		int i=materialRecNoteRepository.updateInward(mrnId,isTallySync);
+	
+		if(i==1) {
+		
+		errorMessage.setError(false);
+		errorMessage.setMessage("Inward Updated Successfully");
+		}
+		else
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("Inward Updation Failed");
+			
+		}
+		return errorMessage;
 	}
 
 }

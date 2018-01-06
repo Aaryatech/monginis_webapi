@@ -26,4 +26,12 @@ public interface RawMaterialDetailsRepository extends JpaRepository<RawMaterialD
 	List<RawMaterialDetails> findByGrpIdAndDelStatus(int grpId, int delStatus);
 
 	List<RawMaterialDetails> findByCatId(int catId);
+
+	List<RawMaterialDetails> findByDelStatusAndIsTallySync(int i, int j);
+
+	@Transactional
+	@Modifying
+	@Query(" UPDATE RawMaterialDetails SET isTallySync=:isTallySync WHERE rmId=:rmId ")
+	int updateRawMaterial(@Param("rmId")int rmId,@Param("isTallySync")int isTallySync);
+
 }

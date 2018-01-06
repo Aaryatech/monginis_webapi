@@ -29,6 +29,7 @@ public class FranchiseSup implements Serializable{
 	@Column(name="id")
 	private int id;
 	
+	@Column(name="fr_id")
 	private int frId;
 	
 	private String frPanNo;
