@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "t_production_plan_header")
 public class PostProdPlanHeader {
@@ -119,6 +121,7 @@ public class PostProdPlanHeader {
 		this.timeSlot = timeSlot;
 	}
 
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getProductionDate() {
 		return productionDate;
 	}

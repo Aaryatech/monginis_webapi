@@ -8,10 +8,13 @@ import org.springframework.data.repository.query.Param;
 
 import com.ats.webapi.model.GetProductionDetail;
 import com.ats.webapi.model.PostProductionDetail;
+import com.ats.webapi.model.PostProductionPlanDetail;
 
 public interface PostProductionDetailRepository extends JpaRepository<PostProductionDetail, Integer>{
 	
 	PostProductionDetail save(PostProductionDetail postProductionDetail);
+
+	
 
 	 
 
