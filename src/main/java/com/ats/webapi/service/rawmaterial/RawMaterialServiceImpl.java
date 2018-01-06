@@ -1,11 +1,14 @@
 package com.ats.webapi.service.rawmaterial;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.rawmaterial.GetItemDetail;
@@ -446,11 +449,27 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		
 		if(rmRateVerification!=null)
 		{
+			
 			System.out.println("Verification : "+rmRateVerification.toString());
+			 
+			rmRateVerification.setDate2(Common.convertToDMY(rmRateVerification.getDate2()));
+			rmRateVerification.setDate1(Common.convertToDMY(rmRateVerification.getDate1()));
+			rmRateVerification.setRateDate(Common.convertToDMY(rmRateVerification.getRateDate()));
+			  
 		}
 		else
 		{
 			System.out.println("Error in Rate Verification or not found ");
+			rmRateVerification=new RmRateVerification();
+			rmRateVerification.setDate1(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+			rmRateVerification.setDate2(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+			rmRateVerification.setRateDate(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
+			rmRateVerification.setRmId(rmId);
+			rmRateVerification.setSuppId(suppId);
+			int taxId=rmRateVerificationRepository.getTaxId(rmRateVerification.getRmId());
+			System.out.println("Tax Id ----------"+taxId);
+			rmRateVerification.setTaxId(taxId);
+			 
 			
 		}
 		return rmRateVerification;
@@ -459,6 +478,8 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 
 	@Override
 	public RmRateVerification postRmRateVerification(RmRateVerification rmRateVerification) {
+		
+		 
 		RmRateVerification rmRateVerify=rmRateVerificationRepository.save(rmRateVerification);
 		return rmRateVerify;
 	}

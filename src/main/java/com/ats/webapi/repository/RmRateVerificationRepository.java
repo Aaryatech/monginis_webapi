@@ -13,4 +13,7 @@ public interface RmRateVerificationRepository extends JpaRepository<RmRateVerifi
 	
 	RmRateVerification save(RmRateVerification rmRateVerification);
 
+	@Query(value=" select tax_id from m_rm where rm_id=:rmId",nativeQuery=true)
+	int getTaxId(@Param("rmId")int rmId);
+
 }

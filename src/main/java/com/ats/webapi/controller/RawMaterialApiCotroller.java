@@ -262,12 +262,8 @@ public class RawMaterialApiCotroller {
 	@RequestMapping(value = { "/getRmRateVerification" }, method = RequestMethod.POST)
 	public @ResponseBody RmRateVerification getRmRateVerification(@RequestParam("suppId")int suppId, @RequestParam("rmId")int rmId)
 	{
-		RmRateVerification rmRateVerification=rawMaterialService.getRmRateTaxVerification(suppId, rmId);
-		rmRateVerification.setDate2(Common.convertToDMY(rmRateVerification.getDate2()));
-		rmRateVerification.setDate1(Common.convertToDMY(rmRateVerification.getDate1()));
-		rmRateVerification.setRateDate(Common.convertToDMY(rmRateVerification.getRateDate()));
 		
-		return rmRateVerification;
+		return rawMaterialService.getRmRateTaxVerification(suppId, rmId);
 	}
 	//------------------------------------------SubmitRmRateVerification---------------------
 	@RequestMapping(value = { "/insertRmRateVerification" }, method = RequestMethod.POST)
