@@ -55,6 +55,11 @@ public class FrBillHeaderForPrint implements Serializable {
 	
 	@Column(name="fr_address")
 	private String frAddress;
+	
+	@Column(name="is_same_state")
+	private String isSameState;
+	
+	
 
 	public int getBillNo() {
 		return billNo;
@@ -168,12 +173,22 @@ public class FrBillHeaderForPrint implements Serializable {
 		this.frAddress = frAddress;
 	}
 
+	public String getIsSameState() {
+		return isSameState;
+	}
+
+	public void setIsSameState(String isSameState) {
+		this.isSameState = isSameState;
+	}
+
 	@Override
 	public String toString() {
 		return "FrBillHeaderForPrint [billNo=" + billNo + ", frName=" + frName + ", taxApplicable=" + taxApplicable
 				+ ", invoiceNo=" + invoiceNo + ", billDate=" + billDate + ", frId=" + frId + ", frCode=" + frCode
 				+ ", grandTotal=" + grandTotal + ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", status="
-				+ status + ", DelStatus=" + DelStatus + ", remark=" + remark + ", frAddress=" + frAddress + "]";
+				+ status + ", DelStatus=" + DelStatus + ", remark=" + remark + ", frAddress=" + frAddress
+				+ ", isSameState=" + isSameState + "]";
 	}
+
 	
 }
