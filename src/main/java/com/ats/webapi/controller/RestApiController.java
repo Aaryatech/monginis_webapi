@@ -123,6 +123,7 @@ import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeaderList;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
+import com.ats.webapi.repository.GetBillDetailsRepository;
 import com.ats.webapi.repository.GetReorderByStockTypeRepository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
@@ -307,7 +308,8 @@ public class RestApiController {
 
 	@Autowired
 	GetBillDetailsService getBillDetailsService;
-
+	@Autowired
+	GetBillDetailsRepository getBillDetailsRepository;
 	@Autowired
 	FrNameIdByRouteIdService frNameIdByRouteIdService;
 
@@ -933,6 +935,17 @@ try {
 		return billDetailsList;
 
 	}
+	
+	@RequestMapping(value = "/getBillDetailsForPrint", method = RequestMethod.POST)
+	public @ResponseBody 	List<GetBillDetails> getBillDetailsForPrint(@RequestParam("billNoList") List<String> billNoList) {
+		System.out.println("inside rest for getting bill detail for print fr bill ");
+		System.out.println("input received as billNoList "+billNoList.toString());
+
+		List<GetBillDetails> billDetailsForPrint = getBillDetailsRepository.getBillDetailsForPrint(billNoList);
+		return billDetailsForPrint;
+
+	}
+
 
 	@RequestMapping(value = { "/insertBillData" }, method = RequestMethod.POST)
 
@@ -941,7 +954,7 @@ try {
 
 		System.out.println("Data Common " + postBillDataCommon.toString());
 
-		List<PostBillHeader> jsonBillHeader;
+		List<PostBillHeader> jsonBillHeader=null;
 		List<PostBillDetail> jsonBillDetail;
 		
 		Info info = new Info();
@@ -950,7 +963,7 @@ try {
 
 	
 
-		if (jsonBillHeader.size() > 0) {
+		if (jsonBillHeader!= null && !jsonBillHeader.isEmpty()) {
 
 			info.setError(false);
 			info.setMessage("post bill header inserted  Successfully");

@@ -18,4 +18,12 @@ public interface GetBillDetailsRepository extends JpaRepository<GetBillDetails, 
 	List<GetBillDetails> showBillDetails(@Param("billNo") int billNo);
 	
 	
+	@Query(value="SELECT t_bill_detail.* ,m_item.item_name,m_category.cat_name,t_bill_header.bill_date "
+			+ " FROM t_bill_detail,m_item,m_category,t_bill_header WHERE t_bill_detail.bill_no IN (:billNoList)  "
+			+ "AND t_bill_detail.item_id=m_item.id AND m_category.cat_id=t_bill_detail.cat_id "
+			+ "AND t_bill_detail.bill_no=t_bill_header.bill_no",nativeQuery=true)
+	
+	List<GetBillDetails> getBillDetailsForPrint(@Param("billNoList") List<String> billNoList);
+	
+	
 }
