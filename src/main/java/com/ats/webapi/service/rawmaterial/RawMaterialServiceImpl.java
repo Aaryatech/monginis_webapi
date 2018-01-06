@@ -57,7 +57,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	ItemSfHeaderRawRepo itemSfHeaderRepository;
 
 	@Autowired
-	RawMaterialDetailsRepository RawMaterialDetailsRepository;
+	RawMaterialDetailsRepository rawMaterialDetailsRepository;
  
 	
 	@Autowired
@@ -265,7 +265,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	@Override
 	public Info addRawMaterial(RawMaterialDetails rawMaterialMasterDetails) {
 		
-		RawMaterialDetails rawMaterialMaster=RawMaterialDetailsRepository.save(rawMaterialMasterDetails);
+		RawMaterialDetails rawMaterialMaster=rawMaterialDetailsRepository.save(rawMaterialMasterDetails);
 		
 		Info info=new Info();
 		if(rawMaterialMaster!=null)
@@ -286,7 +286,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	@Override
 	public RawMaterialDetails getRawMaterialDetails(int rmId) {
 		
-		RawMaterialDetails rawMaterialMaster=RawMaterialDetailsRepository.findByRmId(rmId);
+		RawMaterialDetails rawMaterialMaster=rawMaterialDetailsRepository.findByRmId(rmId);
 		if(rawMaterialMaster!=null)
 		{
 			System.out.println("RM  Details : "+rawMaterialMaster.toString());
@@ -300,7 +300,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 
 	@Override
 	public List<RawMaterialDetails> getAllRawMaterial() {
-		List<RawMaterialDetails> rawMaterialMasterDetailList=RawMaterialDetailsRepository.findByDelStatus(0);
+		List<RawMaterialDetails> rawMaterialMasterDetailList=rawMaterialDetailsRepository.findByDelStatus(0);
 		if(rawMaterialMasterDetailList!=null)
 		{
 			System.out.println("RM  Details List : "+rawMaterialMasterDetailList.toString());
@@ -315,7 +315,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	@Override
 	public Info deleteRawMaterial(int rmId) {
 		
-		int res=RawMaterialDetailsRepository.deleteRawMaterial(rmId);
+		int res=rawMaterialDetailsRepository.deleteRawMaterial(rmId);
 	
 		Info info=new Info();
 		if(res>0)
@@ -598,7 +598,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	public RawMaterialDetailsList getRMByCatId(int catId) {
 		
 			RawMaterialDetailsList rawMaterialDetailsList=new RawMaterialDetailsList();
-		List<RawMaterialDetails> rawMaterialList=RawMaterialDetailsRepository.findByCatId(catId);
+		List<RawMaterialDetails> rawMaterialList=rawMaterialDetailsRepository.findByCatId(catId);
 		
 		ErrorMessage errorMessage=new ErrorMessage();
 		
@@ -616,6 +616,54 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		}
 		rawMaterialDetailsList.setErrorMessage(errorMessage);
 		return rawMaterialDetailsList;
+	}
+
+	@Override
+	public RawMaterialDetailsList getAllRawMaterialForTally() {
+		
+		RawMaterialDetailsList rawMaterialDetails=new RawMaterialDetailsList();
+		ErrorMessage errorMessage;
+		List<RawMaterialDetails> rawMaterialMasterDetailList=rawMaterialDetailsRepository.findByDelStatusAndIsTallySync(0,0);
+
+		if(!rawMaterialMasterDetailList.isEmpty())
+		{
+			errorMessage=new ErrorMessage();
+			errorMessage.setError(false);
+			errorMessage.setMessage("RM Details Found Successfully");
+			
+			rawMaterialDetails.setErrorMessage(errorMessage);
+			rawMaterialDetails.setRawMaterialDetailsList(rawMaterialMasterDetailList);
+		}
+		else
+		{
+			errorMessage=new ErrorMessage();
+			errorMessage.setError(true);
+			errorMessage.setMessage("RM Details Not Found");
+			
+			rawMaterialDetails.setErrorMessage(errorMessage);
+		}
+		return rawMaterialDetails;
+	}
+
+	@Override
+	public ErrorMessage updateRawMaterial(int rmId, int isTallySync) {
+		
+		ErrorMessage errorMessage=new ErrorMessage();
+		
+			int i=rawMaterialDetailsRepository.updateRawMaterial(rmId,isTallySync);
+	
+		if(i==1) {
+		
+		errorMessage.setError(false);
+		errorMessage.setMessage("Raw Material Updated Successfully");
+		}
+		else
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("Raw Material Updation Failed");
+			
+		}
+		return errorMessage;
 	}
 	
 	

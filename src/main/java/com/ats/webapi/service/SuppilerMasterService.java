@@ -8,6 +8,7 @@ import com.ats.webapi.model.SupplierMaster.SupPaymentTermsList;
 import com.ats.webapi.model.SupplierMaster.SupplierDetails;
 import com.ats.webapi.model.SupplierMaster.Transporter;
 import com.ats.webapi.model.SupplierMaster.TransporterList;
+import com.ats.webapi.model.tally.SuppliersList;
 
 public interface SuppilerMasterService {
 	
@@ -34,4 +35,8 @@ public interface SuppilerMasterService {
 	SupPaymentTerms getSupPaymentTerm(int payId);
 
 	Transporter getTransporter(int tranId);
+
+	SuppliersList getAllSupplierForTally();
+
+	ErrorMessage updateSupplier(int suppId, int isTallySync);
 }

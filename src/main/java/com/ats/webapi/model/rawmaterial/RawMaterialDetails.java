@@ -85,10 +85,20 @@ public class RawMaterialDetails {
 	@Column(name="rm_is_critical")
 	private int rmIsCritical;
 	
-	
-	
 	@Column(name="del_status")
 	private int delStatus;
+	
+	@Column(name="is_tally_sync")
+	private int isTallySync;
+
+	
+	public int getIsTallySync() {
+		return isTallySync;
+	}
+
+	public void setIsTallySync(int isTallySync) {
+		this.isTallySync = isTallySync;
+	}
 
 	public int getRmId() {
 		return rmId;

@@ -89,4 +89,8 @@ public interface RawMaterialService {
 
 	int deleteRmTax(int taxId);
 	RawMaterialDetailsList getRMByCatId(int catId);
+
+	RawMaterialDetailsList getAllRawMaterialForTally();
+
+	ErrorMessage updateRawMaterial(int rmId, int isTallySync);
 }

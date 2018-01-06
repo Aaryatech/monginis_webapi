@@ -334,7 +334,15 @@ e.printStackTrace();
 		return menuList;
 		
 	}
-	
+	@RequestMapping(value = { "/updateProductionStatus" }, method = RequestMethod.POST)
+	public @ResponseBody int updateProductionStatus(@RequestParam("productionId") int productionId,@RequestParam("prodStatus") int prodStatus)
+	{
+		
+		int isUpdated=productionService.updateProductionStatus(productionId,prodStatus);
+		
+		return isUpdated;
+		
+	}
 	@RequestMapping(value = { "/PostProdPlanHeaderVariationlist" }, method = RequestMethod.GET)
 	public @ResponseBody List<PostProdPlanHeader> PostProdPlanHeaderVariationlist()
 	{

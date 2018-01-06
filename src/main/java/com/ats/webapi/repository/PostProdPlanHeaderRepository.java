@@ -36,4 +36,11 @@ public interface PostProdPlanHeaderRepository extends JpaRepository<PostProdPlan
 	
 	@Query(value="select * from t_production_plan_header where production_header_id=:planHeaderId",nativeQuery=true)
 	PostProdPlanHeader planVariationList(@Param("planHeaderId") int planHeaderId);
+	
+	
+
+	@Transactional
+	@Modifying
+	@Query(" UPDATE PostProdPlanHeader SET production_status=:prodStatus WHERE production_header_id=:productionId")
+	int updateProductionStatus(@Param("productionId")int productionId,@Param("prodStatus") int prodStatus);
 }

@@ -26,4 +26,14 @@ public interface SupplierDetailRepository extends JpaRepository<SupplierDetails,
 
 	List<SupplierDetails> findByDelStatus(int delStatus);
 
+
+	List<SupplierDetails> findByIsTallySyncAndDelStatus(int i, int j);
+
+	@Transactional
+	@Modifying
+	@Query(" UPDATE SupplierDetails SET isTallySync=:isTallySync WHERE suppId=:suppId ")
+	int updateSupplier(@Param("suppId") int suppId,@Param("isTallySync") int isTallySync);
+
+
+
 }

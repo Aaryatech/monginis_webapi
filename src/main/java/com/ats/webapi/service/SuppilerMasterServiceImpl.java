@@ -12,6 +12,7 @@ import com.ats.webapi.model.SupplierMaster.SupPaymentTermsList;
 import com.ats.webapi.model.SupplierMaster.SupplierDetails;
 import com.ats.webapi.model.SupplierMaster.Transporter;
 import com.ats.webapi.model.SupplierMaster.TransporterList;
+import com.ats.webapi.model.tally.SuppliersList;
 import com.ats.webapi.repository.SupPaymentTermsRepository;
 import com.ats.webapi.repository.SupplierDetailRepository;
 import com.ats.webapi.repository.TransporterRepository;
@@ -239,6 +240,59 @@ public class SuppilerMasterServiceImpl implements SuppilerMasterService{
 		}
 		
 		return transporter;
+	}
+
+	@Override
+	public SuppliersList getAllSupplierForTally() {
+        ErrorMessage eMessage=new ErrorMessage();
+        SuppliersList supplierList=new SuppliersList();
+
+		try
+		{
+			List<SupplierDetails> supplierDetailsList=supplierDetailRepository.findByIsTallySyncAndDelStatus(0,0);
+            
+			if(!supplierDetailsList.isEmpty())
+			{
+				eMessage.setError(false);
+				eMessage.setMessage("Suppliers Found Successfully");
+				supplierList.setSupplierList(supplierDetailsList);
+				supplierList.setErrorMessage(eMessage);
+				
+			}
+			else
+			{
+				eMessage.setError(true);
+				eMessage.setMessage("Suppliers Not Found");
+				supplierList.setErrorMessage(eMessage);
+			}
+		}
+		catch(Exception e)
+		{
+			eMessage.setError(true);
+			eMessage.setMessage("Suppliers Not Found:Exc");
+			supplierList.setErrorMessage(eMessage);
+		}
+		return supplierList;
+	}
+
+	@Override
+	public ErrorMessage updateSupplier(int suppId, int isTallySync) {
+		ErrorMessage errorMessage=new ErrorMessage();
+	
+			int i=supplierDetailRepository.updateSupplier(suppId,isTallySync);
+		
+		if(i==1) {
+		
+		errorMessage.setError(false);
+		errorMessage.setMessage("Supplier Updated Successfully");
+		}
+		else
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("Supplier Updation Failed");
+			
+		}
+		return errorMessage;
 	}
 
 }

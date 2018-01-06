@@ -236,6 +236,22 @@ public class ProductionServiceImpl implements ProductionService{
 	public int updateBillStatus(int orderId, int i) {
 		  return orderRepository.updateStatus(orderId, i);
 	}
+
+
+	@Override
+	public int updateProductionStatus(int productionId, int prodStatus) {
+		int update = 0;
+		try
+		{
+				update=postProdPlanHeaderRepository.updateProductionStatus(productionId,prodStatus);
+		
+			
+		}catch(Exception e)
+		{
+			System.out.println("updateProductionStatus "+e.getMessage());
+		}
+		return update;
+	}
 	
 
 }

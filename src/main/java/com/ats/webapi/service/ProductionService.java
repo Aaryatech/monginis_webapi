@@ -34,6 +34,8 @@ public interface ProductionService {
 	List<PostProdPlanHeader> planVariationList();
 
 	public int updateBillStatus(int orderId, int i);
+
+	public int updateProductionStatus(int productionId, int prodStatus);
 	
 	
 	
