@@ -31,7 +31,7 @@ public class PostProdPlanHeader {
 	
 	@Column(name="production_batch")
 	private String productionBatch;
-	
+	 
 	@Column(name="production_status")
 	private String productionStatus;
 	
