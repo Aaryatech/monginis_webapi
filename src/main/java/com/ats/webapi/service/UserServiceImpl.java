@@ -1,13 +1,18 @@
 package com.ats.webapi.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.ats.webapi.model.Department;
 import com.ats.webapi.model.ErrorMessage;
+import com.ats.webapi.model.GetUserType;
+import com.ats.webapi.model.Info;
 import com.ats.webapi.model.LoginResponse;
 import com.ats.webapi.model.User;
-
+import com.ats.webapi.repository.DepartmentRepository;
+import com.ats.webapi.repository.GetUserTypeRepository;
 import com.ats.webapi.repository.UserRepository;
 import com.ats.webapi.util.JsonUtil;
 
@@ -16,6 +21,12 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	DepartmentRepository departmentRepository;
+	
+	@Autowired
+	GetUserTypeRepository getUserTypeRepository;
 	
 	String jsonUser = "{}";
 	User user = null;
@@ -141,6 +152,35 @@ public class UserServiceImpl implements UserService {
 			
 		}
 		return jsonUser;
+	}
+
+	@Override
+	public Info insertUser(User user) {
+		 
+		Info info=new Info();
+		user=userRepository.save(user);
+		if(user!=null)
+		{
+			info.setError(false);
+			info.setMessage("success");
+		}
+		{
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		return info;
+	}
+
+	@Override
+	public List<Department> getAllDept() {
+		 
+	return departmentRepository.getAllDept();
+	}
+
+	@Override
+	public List<GetUserType> getAllUserType() {
+	 
+		return getUserTypeRepository.getType();
 	}
 	
 	

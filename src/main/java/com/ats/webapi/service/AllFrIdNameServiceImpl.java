@@ -49,7 +49,7 @@ public class AllFrIdNameServiceImpl implements AllFrIdNameService {
 		
 AllFrIdNameList allFrIdNameList=new AllFrIdNameList();
 		
-List<AllFrIdName> allFrIdNames=allFrIdNameRepository.findNonOrder(orderDate, menuId);
+List<AllFrIdName> allFrIdNames=allFrIdNameRepository.findNonOrders(orderDate, menuId);
 	Info info=new Info();
 		
 		if(allFrIdNames!=null) {

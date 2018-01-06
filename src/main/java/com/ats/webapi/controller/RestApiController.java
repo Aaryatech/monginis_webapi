@@ -21,104 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
-import com.ats.webapi.model.AllFrIdName;
-import com.ats.webapi.model.AllFrIdNameList;
-import com.ats.webapi.model.AllFranchiseeAndMenu;
-import com.ats.webapi.model.AllMenuJsonResponse;
-import com.ats.webapi.model.AllMenus;
-import com.ats.webapi.model.AllRegularSpCkItems;
-import com.ats.webapi.model.CategoryList;
-import com.ats.webapi.model.ConfigureFrBean;
-import com.ats.webapi.model.ConfigureFrBeanList;
-import com.ats.webapi.model.ConfigureFranchisee;
-import com.ats.webapi.model.ConfiguredSpDayCkResponse;
-import com.ats.webapi.model.ErrorMessage;
-import com.ats.webapi.model.Event;
-import com.ats.webapi.model.EventList;
-import com.ats.webapi.model.Flavour;
-import com.ats.webapi.model.FlavourList;
-import com.ats.webapi.model.FrItemStockConfigure;
-import com.ats.webapi.model.FrItemStockConfigureList;
-import com.ats.webapi.model.FrItemStockConfigurePost;
-import com.ats.webapi.model.GetFrItemStockConfiguration;
-import com.ats.webapi.model.FrItemStockConfigurePostList;
-import com.ats.webapi.model.FrMenus;
-import com.ats.webapi.model.FrMenusList;
-import com.ats.webapi.model.FrNameIdByRouteIdList;
-import com.ats.webapi.model.FrStockResponse;
-import com.ats.webapi.model.Franchisee;
-import com.ats.webapi.model.FranchiseeAndMenuList;
-import com.ats.webapi.model.FranchiseeList;
-import com.ats.webapi.model.GenerateBillList;
-import com.ats.webapi.model.GetBillDetails;
-import com.ats.webapi.model.GetBillDetailsList;
-import com.ats.webapi.model.GetBillHeaderList;
-import com.ats.webapi.model.GetBillsForFrList;
-import com.ats.webapi.model.GetConfiguredSpDayCk;
-import com.ats.webapi.model.GetCurrentStockDetails;
-import com.ats.webapi.model.GetDumpOrder;
-import com.ats.webapi.model.GetDumpOrderList;
-import com.ats.webapi.model.GetFrItems;
-import com.ats.webapi.model.GetGrnGvnDetailsList;
-import com.ats.webapi.model.GetGrnItemConfigList;
-import com.ats.webapi.model.GetItemByCatIdList;
-import com.ats.webapi.model.GetMCategoryList;
-import com.ats.webapi.model.GetOrder;
-import com.ats.webapi.model.GetOrderDataForPushOrderList;
-import com.ats.webapi.model.GetOrderList;
-import com.ats.webapi.model.GetReorderByStockType;
-import com.ats.webapi.model.GetReorderByStockTypeList;
-import com.ats.webapi.model.GetSellBillDetail;
-import com.ats.webapi.model.GetSellBillHeader;
-import com.ats.webapi.model.GrnGvn;
-import com.ats.webapi.model.Info;
-import com.ats.webapi.model.Item;
-import com.ats.webapi.model.ItemOrderList;
-import com.ats.webapi.model.ItemResponse;
-import com.ats.webapi.model.ItemWithSubCat;
-
-import com.ats.webapi.model.LoginResponse;
-import com.ats.webapi.model.MCategory;
-import com.ats.webapi.model.MainModuleWithSubModule;
-import com.ats.webapi.model.Message;
-import com.ats.webapi.model.MessageList;
-import com.ats.webapi.model.Order;
-import com.ats.webapi.model.OrderCounts;
-import com.ats.webapi.model.OrderCountsList;
-import com.ats.webapi.model.OrderSpecialCake;
-import com.ats.webapi.model.Orders;
-import com.ats.webapi.model.PostBillDataCommon;
-import com.ats.webapi.model.PostBillDetail;
-import com.ats.webapi.model.PostBillHeader;
-import com.ats.webapi.model.PostFrItemStockDetail;
-import com.ats.webapi.model.PostFrItemStockHeader;
-import com.ats.webapi.model.PostGrnGvnList;
-import com.ats.webapi.model.Rates;
-import com.ats.webapi.model.RegSpCkOrderResponse;
-import com.ats.webapi.model.RegularSpCake;
-import com.ats.webapi.model.RegularSpCkOrders;
-import com.ats.webapi.model.Route;
-import com.ats.webapi.model.RouteList;
-import com.ats.webapi.model.Scheduler;
-import com.ats.webapi.model.SchedulerList;
-import com.ats.webapi.model.SearchSpCakeResponse;
-import com.ats.webapi.model.SellBillDataCommon;
-import com.ats.webapi.model.SellBillDetail;
-import com.ats.webapi.model.SellBillHeader;
-import com.ats.webapi.model.SpCakeOrderRes;
-import com.ats.webapi.model.SpCakeOrders;
-import com.ats.webapi.model.SpCakeOrdersBean;
-import com.ats.webapi.model.SpCakeOrdersBeanList;
-import com.ats.webapi.model.SpCakeOrdersList;
-import com.ats.webapi.model.SpCkOrderHisList;
-import com.ats.webapi.model.SpDayConfigure;
-import com.ats.webapi.model.SpMessage;
-import com.ats.webapi.model.SpecialCake;
-import com.ats.webapi.model.SpecialCakeList;
-import com.ats.webapi.model.StockDetails;
-import com.ats.webapi.model.SubCategory;
-import com.ats.webapi.model.UpdateBillStatus;
-import com.ats.webapi.model.User;
+import com.ats.webapi.model.*;
 import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeaderList;
@@ -3666,4 +3569,51 @@ try {
 
 		}
 
+		@RequestMapping(value = { "/insertNewUser" }, method = RequestMethod.POST)
+		public @ResponseBody Info insertNewUser(@RequestBody User user)
+		{
+			
+			Info info=new Info();
+			info=userService.insertUser(user);
+			return info;
+		}
+		@RequestMapping(value = { "/getAllDept" }, method = RequestMethod.GET)
+		public @ResponseBody DepartmentList getAllDept()
+		{
+			Info info=new Info();
+			DepartmentList departmentList=new DepartmentList();
+		List<Department> department=userService.getAllDept();
+		if(department!=null && !department.isEmpty())
+		{
+			departmentList.setDepartmentList(department);
+			info.setError(false);
+			info.setMessage("success");
+		}
+		else {
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		departmentList.setInfo(info);
+		return departmentList;
+		}
+		
+		@RequestMapping(value = { "/getAllUserType" }, method = RequestMethod.GET)
+		public @ResponseBody GetUserTypeList getAllUserType()
+		{
+			Info info=new Info();
+			GetUserTypeList getUserTypeList=new GetUserTypeList();
+		List<GetUserType> getUserType=userService.getAllUserType();
+		if(getUserType!=null && !getUserType.isEmpty())
+		{
+			getUserTypeList.setGetUserTypeList(getUserType);
+			info.setError(false);
+			info.setMessage("success");
+		}
+		else {
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		getUserTypeList.setInfo(info);
+		return getUserTypeList;
+		}
 }
