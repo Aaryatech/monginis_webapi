@@ -32,9 +32,9 @@ import com.ats.webapi.service.MaterialRcNote.MaterialRecNoteService;
 import com.ats.webapi.service.rawmaterial.RawMaterialService;
 import com.ats.webapi.service.tally.CreditNoteService;
 import com.ats.webapi.service.tally.FranchiseeService;
-import com.ats.webapi.service.tally.ItemService;
 import com.ats.webapi.service.tally.SalesVoucherService;
 import com.ats.webapi.service.tally.SpCakeService;
+import com.ats.webapi.service.tally.TallyItemService;
 import com.ats.webapi.util.JsonUtil;
 
 @RestController
@@ -45,7 +45,7 @@ public class TallySyncController {
 	FranchiseeService franchiseeService;
 	
 	@Autowired
-	ItemService itemService;
+	TallyItemService itemService;
 	
 	@Autowired
 	SpCakeService specialCakeService;

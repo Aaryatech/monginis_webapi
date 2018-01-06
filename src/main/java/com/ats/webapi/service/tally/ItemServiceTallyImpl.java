@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
-import com.ats.webapi.model.tally.Item;
 import com.ats.webapi.model.tally.ItemList;
+import com.ats.webapi.model.tally.TallyItem;
 import com.ats.webapi.repository.tally.TallyItemRepository;
 import com.ats.webapi.repository.tally.TallyItemUpdateRepository;
 
 @Service
-public class ItemServiceTallyImpl implements ItemService{
+public class ItemServiceTallyImpl implements TallyItemService{
 
 	@Autowired
 	TallyItemRepository tallyItemRepository;
@@ -23,7 +23,7 @@ public class ItemServiceTallyImpl implements ItemService{
 	@Override
 	public ItemList getAllItems() {
 		
-    List<Item> itemList=tallyItemRepository.findByIsTallySync();
+    List<TallyItem> itemList=tallyItemRepository.findByIsTallySync();
 		
 		ItemList allItemList=new ItemList();
 		ErrorMessage errorMessage=new ErrorMessage();

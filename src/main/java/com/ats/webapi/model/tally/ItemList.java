@@ -7,12 +7,12 @@ import com.ats.webapi.model.ErrorMessage;
 
 public class ItemList implements Serializable{
 	
-	List<Item> itemList;
+	List<TallyItem> itemList;
 	ErrorMessage errorMessage;
-	public List<Item> getItemList() {
+	public List<TallyItem> getItemList() {
 		return itemList;
 	}
-	public void setItemList(List<Item> itemList) {
+	public void setItemList(List<TallyItem> itemList) {
 		this.itemList = itemList;
 	}
 	public ErrorMessage getErrorMessage() {

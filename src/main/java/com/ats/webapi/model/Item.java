@@ -85,8 +85,7 @@ public class Item implements Serializable {
 	
 	@Column(name="item_shelf_life")
 	private int shelfLife;
-	
-	
+
 	public double getItemRate3() {
 		return itemRate3;
 	}

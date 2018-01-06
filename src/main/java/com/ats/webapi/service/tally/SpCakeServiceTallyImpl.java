@@ -6,8 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
-import com.ats.webapi.model.tally.Item;
-import com.ats.webapi.model.tally.ItemList;
 import com.ats.webapi.model.tally.SpCakeList;
 import com.ats.webapi.model.tally.SpecialCake;
 import com.ats.webapi.repository.tally.TallySpCakeRepository;
