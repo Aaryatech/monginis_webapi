@@ -839,7 +839,7 @@ try {
 
 	}
 	
-	@RequestMapping(value = "/getBillDetailsForPrint", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/getBillDetailsForPrint", method = RequestMethod.POST)
 	public @ResponseBody 	List<GetBillDetails> getBillDetailsForPrint(@RequestParam("billNoList") List<String> billNoList) {
 		System.out.println("inside rest for getting bill detail for print fr bill ");
 		System.out.println("input received as billNoList "+billNoList.toString());
@@ -847,7 +847,7 @@ try {
 		List<GetBillDetails> billDetailsForPrint = getBillDetailsRepository.getBillDetailsForPrint(billNoList);
 		return billDetailsForPrint;
 
-	}
+	}*/
 
 
 	@RequestMapping(value = { "/insertBillData" }, method = RequestMethod.POST)
