@@ -3616,4 +3616,15 @@ try {
 		getUserTypeList.setInfo(info);
 		return getUserTypeList;
 		}
+		
+		@RequestMapping(value = { "/getSpCakeOrderBySpOrderNo" }, method = RequestMethod.POST)
+		@ResponseBody
+		public List<GetSpCakeOrders> getSpCakeOrderBySpOrderNo(@RequestParam List<String> spOrderNo) {
+			System.out.println("Order Id "+spOrderNo.toString());
+			List<GetSpCakeOrders> spCakeOrder = spCkOrdersService.getSpCakeOrder(spOrderNo);
+		
+			System.out.println("Res  :"+spCakeOrder.toString());
+			return spCakeOrder;
+		}
+
 }
