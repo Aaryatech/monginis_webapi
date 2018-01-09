@@ -7,9 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
+import com.ats.webapi.model.GetRegSpCakeOrders;
 import com.ats.webapi.model.RegSpCkOrderResponse;
 import com.ats.webapi.model.RegularSpCake;
 import com.ats.webapi.model.RegularSpCkOrders;
+import com.ats.webapi.repository.GetRegSpCakeOrdersRepository;
 import com.ats.webapi.repository.RegularSpCkOrderAdminRepo;
 import com.ats.webapi.repository.RegularSpCkOrderRepository;
 
@@ -21,6 +23,9 @@ public class RegularSpCkOrderServiceImpl implements RegularSpCkOrderService{
 	RegularSpCkOrderRepository regularSpCkOrderRepository;
 	@Autowired
 	RegularSpCkOrderAdminRepo regularSpCkOrderAdminRepo;
+	
+	@Autowired
+	GetRegSpCakeOrdersRepository getRegSpCakeOrdersRepository;
 	
 	@Override
 	public ErrorMessage placeRegularSpCakeOrder(RegularSpCake regularSpCake) {
@@ -112,6 +117,13 @@ public class RegularSpCkOrderServiceImpl implements RegularSpCkOrderService{
 		}
 		
 		return regSpCkOrderResponse;
+	}
+
+
+	@Override
+	public List<GetRegSpCakeOrders> getRegSpCakeOrder(List<String> orderNo) {
+		 
+		return getRegSpCakeOrdersRepository.getRegSpOrders(orderNo);
 	}
 
 }

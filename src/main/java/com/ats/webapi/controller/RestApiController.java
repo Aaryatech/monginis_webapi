@@ -3626,5 +3626,16 @@ try {
 			System.out.println("Res  :"+spCakeOrder.toString());
 			return spCakeOrder;
 		}
+		
+		@RequestMapping(value = { "/getRegSpCakeOrderBySpOrderNo" }, method = RequestMethod.POST)
+		@ResponseBody
+		public List<GetRegSpCakeOrders> getRegSpCakeOrderBySpOrderNo(@RequestParam List<String>  orderNo) {
+			System.out.println("Order Id "+ orderNo.toString());
+			List<GetRegSpCakeOrders> regSpCakeOrder = regularSpCkOrderService.getRegSpCakeOrder( orderNo);
+		
+			System.out.println("Res  :"+regSpCakeOrder.toString());
+			return regSpCakeOrder;
+		}
+		
 
 }
