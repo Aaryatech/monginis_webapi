@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.GetMaterialRecNoteList;
 import com.ats.webapi.model.GetTaxByRmId;
+import com.ats.webapi.model.CheckSuppGst;
 import com.ats.webapi.model.GetTaxListByRmId;
 import com.ats.webapi.model.MaterialRecNote;
+import com.ats.webapi.repository.GetSuppGstRepository;
 import com.ats.webapi.repository.GetTaxListByRmIdRepository;
 import com.ats.webapi.service.MaterialRcNote.MaterialRecNoteService;
 
@@ -31,6 +33,9 @@ public class MaterialReceiptNoteController {
 	
 	@Autowired
 	GetTaxListByRmIdRepository getTaxListByRmIdRepository;
+	
+	@Autowired
+	GetSuppGstRepository getSuppGstRepository;
 	
 	@RequestMapping(value = { "/postMaterialRecNote" }, method = RequestMethod.POST)
 	public @ResponseBody MaterialRecNote postMaterialRecNote(@RequestBody MaterialRecNote materialRecNote)
@@ -86,6 +91,26 @@ System.out.println("Status : "+status.toString());
 
 	}
 	
+	@RequestMapping(value = { "/CheckSuppGst" }, method = RequestMethod.POST)
+	public @ResponseBody int CheckSuppGst(@RequestParam("suppId")int suppId)
+	{
+
+		CheckSuppGst checkSuppGst = getSuppGstRepository.checkSuppGst(suppId);
+		
+		String value = String.valueOf(checkSuppGst.getSettingValue());
+		String gst = checkSuppGst.getSuppGstin();
+		System.out.println("value "+value);
+		System.out.println("gst "+gst);
+		int flag = 0;
+		if(gst.substring(0, 2).equals(value.substring(0, 2)))
+		{
+			flag=1;
+		}
+		
+
+		return flag;
+
+	}
 	
 	@RequestMapping(value = { "/getMaterialRecNotesHeaderDetails" }, method = RequestMethod.POST)
 	public @ResponseBody MaterialRecNote getMaterialRecNotesHeaderDetails(@RequestParam("mrnId")int mrnId)

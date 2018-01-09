@@ -76,6 +76,28 @@ public class BomController {
 		return info;
 
 	}
+	
+	@RequestMapping(value = { "/updateStatusWhileCompletProd" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateStatusWhileCompletProd(@RequestParam("prodId") int prodId,@RequestParam("isProduction") int isProduction) {
+		
+		int updateStatus=billOfMaterialRepository.updateStatusWhileCompletProd(prodId,isProduction);
+	    Info info=new Info();
+		
+		if(updateStatus==1)
+		{
+			info.setError(false);
+			info.setMessage("status Updated Successfully");
+		}
+		else
+		{
+			info.setError(true);
+			info.setMessage("status Updation Failed");
+		}
+		
+		
+		return info;
+	}
+	
 	@RequestMapping(value = { "/getSpDetailForBom" }, method = RequestMethod.POST)
 	public @ResponseBody GetSpDetailForBomList getSpDetailForBom(@RequestParam int spId) {
 		
