@@ -42,9 +42,9 @@ public class GetOrderItemQtyServiceImpl implements GetOrderItemQtyService{
 		try
 		{
 			System.out.println("productionDate "+productionDate+"         menuId"+menuId);
-			List<GetRegSpCakeOrderQty> getRegSpCakeOrderItemQtyList=getRegSpCakeOrderQtyRepository.getRegSpCakeOrderAllItemQty(productionDate, menuId);
+			  getRegSpCakeOrderItemQtyList=getRegSpCakeOrderQtyRepository.getRegSpCakeOrderAllItemQty(productionDate, menuId);
 			
-			System.out.println("inside service impl "+getRegSpCakeOrderItemQtyList);
+			System.out.println("getRegSpCakeOrderQty "+getRegSpCakeOrderItemQtyList);
 		}catch(Exception e)
 		{
 			System.out.println(e.getMessage());
@@ -58,7 +58,7 @@ public class GetOrderItemQtyServiceImpl implements GetOrderItemQtyService{
 	public List<GetOrderItemQty> getOrderQty(String productionDate, List<String> menuId) {
 List<GetOrderItemQty> getOrderItemQtyList=getOrderItemRepository.getOrderAllItemQty(productionDate, menuId);
 		
-		System.out.println("inside service impl "+getOrderItemQtyList);
+		System.out.println("getOrderQty  "+getOrderItemQtyList);
 		
 		return getOrderItemQtyList;
 	}

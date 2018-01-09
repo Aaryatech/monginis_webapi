@@ -31,6 +31,7 @@ import com.ats.webapi.model.PostProductionPlanDetail;
 import com.ats.webapi.model.UpdateBillStatus;
 import com.ats.webapi.model.Variance;
 import com.ats.webapi.model.VarianceList;
+import com.ats.webapi.model.prod.UpdateOrderStatus;
 import com.ats.webapi.model.rawmaterial.ItemDetail;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
 import com.ats.webapi.model.report.GetRepItemwiseSell;
@@ -387,29 +388,13 @@ e.printStackTrace();
 	}
 	
 	@RequestMapping(value = { "/updateIsBillGenerate" }, method = RequestMethod.POST)
-	public @ResponseBody Info updateIsBillGenerate(@RequestBody List<GetOrderItemQty> getOrderItemQty)
+	public @ResponseBody Info updateIsBillGenerate(@RequestBody UpdateOrderStatus updateOrderStatus)
 	{
 		 
-		System.out.println("Order Id  "+getOrderItemQty.toString());
+		System.out.println("Order Id  "+updateOrderStatus.toString());
 		
-		Info info = new Info();
-		int res =0;
-		for(int i=0;i<getOrderItemQty.size();i++) {
-		  res =productionService.updateBillStatus(getOrderItemQty.get(i).getOrderId(), 1);
-		}
-		if (res>0) {
-
-			info.setError(false);
-			info.setMessage("  Successfully");
-
-		}
-
-		else {
-
-			info.setError(true);
-			info.setMessage("Error in  changing status : RestApi");
-
-		}
+		Info info=productionService.updateBillStatus(updateOrderStatus);
+		 
 		return info;
 	}
 }

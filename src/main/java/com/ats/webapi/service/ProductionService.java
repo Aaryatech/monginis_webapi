@@ -10,6 +10,7 @@ import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.PostProdPlanHeader;
 import com.ats.webapi.model.PostProductionHeader;
 import com.ats.webapi.model.PostProductionPlanDetail;
+import com.ats.webapi.model.prod.UpdateOrderStatus;
 
 public interface ProductionService {
 
@@ -33,9 +34,11 @@ public interface ProductionService {
 
 	List<PostProdPlanHeader> planVariationList();
 
-	public int updateBillStatus(int orderId, int i);
+	 
 
 	public int updateProductionStatus(int productionId, int prodStatus);
+
+	public Info updateBillStatus(UpdateOrderStatus updateOrderStatus);
 	
 	
 	

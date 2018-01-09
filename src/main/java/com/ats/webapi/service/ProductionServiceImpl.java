@@ -17,6 +17,7 @@ import com.ats.webapi.model.PostProdPlanHeader;
 import com.ats.webapi.model.PostProductionDetail;
 import com.ats.webapi.model.PostProductionHeader;
 import com.ats.webapi.model.PostProductionPlanDetail;
+import com.ats.webapi.model.prod.UpdateOrderStatus;
 import com.ats.webapi.repository.GetProdQytRepository;
 import com.ats.webapi.repository.GetProductionItemQtyRepository;
 import com.ats.webapi.repository.MainMenuConfigurationRepository;
@@ -25,6 +26,7 @@ import com.ats.webapi.repository.PostPoductionHeaderRepository;
 import com.ats.webapi.repository.PostProdPlanDetailRepository;
 import com.ats.webapi.repository.PostProdPlanHeaderRepository;
 import com.ats.webapi.repository.PostProductionDetailRepository;
+import com.ats.webapi.repository.RegularSpCkOrderRepository;
 
 @Service
 public class ProductionServiceImpl implements ProductionService{
@@ -52,6 +54,9 @@ public class ProductionServiceImpl implements ProductionService{
 	
 	@Autowired
 	OrderRepository orderRepository;
+	
+	@Autowired
+	RegularSpCkOrderRepository regularSpCkOrderRepository;
 	
 	@Override
 	public List<PostProductionHeader> saveProductionHeader(PostProductionHeader postProductionHeader) {
@@ -233,8 +238,27 @@ public class ProductionServiceImpl implements ProductionService{
 
 
 	@Override
-	public int updateBillStatus(int orderId, int i) {
-		  return orderRepository.updateStatus(orderId, i);
+	public Info updateBillStatus(UpdateOrderStatus updateOrderStatus) {
+		int res=0,res2=0;
+		Info info=new Info();
+		
+		//if(updateOrderStatus.getOrderId()!=null || !updateOrderStatus.getOrderId().isEmpty())
+		 res2=  orderRepository.updateStatus(updateOrderStatus.getOrderItemId(), updateOrderStatus.getProdDate());
+		
+		//if(updateOrderStatus.getRegOrderId()!=null || !updateOrderStatus.getRegOrderId().isEmpty())
+			res=regularSpCkOrderRepository.updateRegSpCakeBillStatus(updateOrderStatus.getRegOrderItemId(), updateOrderStatus.getProdDate());
+		
+		if(res>0 || res2>0)
+		{
+			info.setError(false);
+			info.setMessage("success");
+		}
+		else
+		{
+			info.setError(false);
+			info.setMessage("success");
+		}
+		return info;
 	}
 
 
