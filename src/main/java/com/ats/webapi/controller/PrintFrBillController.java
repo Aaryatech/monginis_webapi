@@ -44,6 +44,25 @@ public class PrintFrBillController {
 		}
 		return billHeaderPrintList;
 	}
+	
+	//for FrId
+	@RequestMapping(value = { "/getBillHeaderForPrintByFrId" }, method = RequestMethod.POST)
+	public @ResponseBody List<FrBillHeaderForPrint> getBillHeaderForPrintByFrId(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate,@RequestParam("frIdList") List<String> frIdList) {
+
+		List<FrBillHeaderForPrint> billHeaderPrintList = null;
+		try {
+			fromDate = Common.convertToYMD(fromDate);
+			toDate = Common.convertToYMD(toDate);
+
+			billHeaderPrintList = billHeaderForPrintRepo.getFrBillHeaderForPrintByFrIds(fromDate, toDate, frIdList);
+
+		} catch (Exception e) {
+			System.out.println(" Exce in bill Header List for Print Using frIds,from,to Date " + e.getMessage());
+			e.printStackTrace();
+		}
+		return billHeaderPrintList;
+	}
 
 	@RequestMapping(value = "/getBillDetailsForPrint", method = RequestMethod.POST)
 	public @ResponseBody List<GetBillDetailPrint> getBillDetailsForPrint(

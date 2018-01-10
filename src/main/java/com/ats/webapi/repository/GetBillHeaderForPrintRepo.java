@@ -21,5 +21,17 @@ public interface GetBillHeaderForPrintRepo extends JpaRepository<FrBillHeaderFor
 			"",nativeQuery=true)
 	
 	List<FrBillHeaderForPrint> getFrBillHeaderForPrint(@Param("fromDate")String fromDate, @Param("toDate")String toDate);
+	
+	@Query(value=" SELECT t_bill_header.bill_no ,t_bill_header.invoice_no, t_bill_header.bill_date "
+			+ ",t_bill_header.fr_id,t_bill_header.fr_code,"
+			+ " t_bill_header.tax_applicable,t_bill_header.grand_total,t_bill_header.taxable_amt, "
+			+ " t_bill_header.total_tax,t_bill_header.status,t_bill_header.remark,t_bill_header.del_status, "
+			+ " m_franchisee.fr_name,m_franchisee.fr_address,m_franchisee.is_same_state FROM t_bill_header,m_franchisee WHERE "
+			+ " t_bill_header.bill_date BETWEEN :fromDate AND :toDate AND t_bill_header.fr_id IN (:frIdList) "
+			+ " AND t_bill_header.fr_id=m_franchisee.fr_id AND t_bill_header.del_status=0 " + 
+			"",nativeQuery=true)
+	
+	List<FrBillHeaderForPrint> getFrBillHeaderForPrintByFrIds(@Param("fromDate")String fromDate, @Param("toDate")String toDate,
+			@Param("frIdList") List<String> frIdList);
 
 }
