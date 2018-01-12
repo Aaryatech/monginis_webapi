@@ -20,14 +20,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name = "t_bill_header")
 public class PostBillHeader implements Serializable {
 	
-	@Override
-	public String toString() {
-		return "PostBillHeader [billNo=" + billNo + ", taxApplicable=" + taxApplicable + ", invoiceNo=" + invoiceNo
-				+ ", billDate=" + billDate + ", frId=" + frId + ", frCode=" + frCode + ", grandTotal=" + grandTotal
-				+ ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", status=" + status + ", DelStatus="
-				+ DelStatus + ", remark=" + remark + ", postBillDetailsList=" + postBillDetailsList + "]";
-	}
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="bill_no")
@@ -73,6 +66,16 @@ public class PostBillHeader implements Serializable {
 	
 	@Column(name="bill_date_time")
 	private String billDateTime;
+	
+	
+	@Column(name="sgst_sum")
+	private float sgstSum;
+	
+	@Column(name="cgst_sum")
+	private float cgstSum;
+	
+	@Column(name="igst_sum")
+	private float igstSum;
 	
 
 	@Transient
@@ -204,7 +207,39 @@ public class PostBillHeader implements Serializable {
 		this.billDateTime = billDateTime;
 	}
 
-	
+	public float getSgstSum() {
+		return sgstSum;
+	}
 
-	
+	public void setSgstSum(float sgstSum) {
+		this.sgstSum = sgstSum;
+	}
+
+	public float getCgstSum() {
+		return cgstSum;
+	}
+
+	public void setCgstSum(float cgstSum) {
+		this.cgstSum = cgstSum;
+	}
+
+	public float getIgstSum() {
+		return igstSum;
+	}
+
+	public void setIgstSum(float igstSum) {
+		this.igstSum = igstSum;
+	}
+
+	@Override
+	public String toString() {
+		return "PostBillHeader [billNo=" + billNo + ", taxApplicable=" + taxApplicable + ", invoiceNo=" + invoiceNo
+				+ ", billDate=" + billDate + ", frId=" + frId + ", frCode=" + frCode + ", grandTotal=" + grandTotal
+				+ ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", status=" + status + ", DelStatus="
+				+ DelStatus + ", remark=" + remark + ", time=" + time + ", billDateTime=" + billDateTime + ", sgstSum="
+				+ sgstSum + ", cgstSum=" + cgstSum + ", igstSum=" + igstSum + ", postBillDetailsList="
+				+ postBillDetailsList + "]";
+	}
+
+
 }
