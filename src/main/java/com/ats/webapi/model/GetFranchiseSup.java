@@ -38,6 +38,17 @@ public class GetFranchiseSup implements Serializable{
 
 	private String pass5;
 
+	private int isTallySync;
+	
+	
+	public int getIsTallySync() {
+		return isTallySync;
+	}
+
+	public void setIsTallySync(int isTallySync) {
+		this.isTallySync = isTallySync;
+	}
+
 	public String getPass1() {
 		return pass1;
 	}
@@ -138,8 +149,8 @@ public class GetFranchiseSup implements Serializable{
 	public String toString() {
 		return "GetFranchiseSup [id=" + id + ", frId=" + frId + ", frName=" + frName + ", frPanNo=" + frPanNo
 				+ ", frState=" + frState + ", frCountry=" + frCountry + ", delStatus=" + delStatus + ", pass1=" + pass1
-				+ ", pass2=" + pass2 + ", pass3=" + pass3 + ", pass4=" + pass4 + ", pass5=" + pass5 + "]";
+				+ ", pass2=" + pass2 + ", pass3=" + pass3 + ", pass4=" + pass4 + ", pass5=" + pass5 + ", isTallySync="
+				+ isTallySync + "]";
 	}
 
-	
 }
