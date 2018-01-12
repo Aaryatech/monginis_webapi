@@ -1128,7 +1128,7 @@ try {
 
 			} // end of unique if
 		}
-
+        System.out.println("frStockResponseList"+frStockResponseList.toString());
 		Info info = new Info();
 
 		info.setError(false);
