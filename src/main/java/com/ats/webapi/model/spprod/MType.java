@@ -9,7 +9,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="m_type")
+@Table(name="m_emp_type")
 public class MType {
 
 	@Transient

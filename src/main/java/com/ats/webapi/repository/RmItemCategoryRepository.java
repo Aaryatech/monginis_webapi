@@ -15,7 +15,7 @@ import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
 public interface RmItemCategoryRepository extends JpaRepository<RmItemCategory, Long>{
 
 	RmItemCategory findRmItemCategoryByCatId(int catId);
-	List<RmItemCategory> findRmItemCategoryByGrpId(int grpId);
+	List<RmItemCategory> findRmItemCategoryByGrpIdAndDelStatus(int grpId, int i);
 	
 
 }

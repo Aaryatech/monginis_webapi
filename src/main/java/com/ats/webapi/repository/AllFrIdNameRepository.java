@@ -14,7 +14,7 @@ public interface AllFrIdNameRepository extends JpaRepository<AllFrIdName, Intege
 	
 	List<AllFrIdName> getAllFrIdName();
 	
-		@Query(value="select m_franchisee.fr_id,m_franchisee.fr_name from m_franchisee where m_franchisee.fr_id NOT"
+		@Query(value="select m_franchisee.fr_id,m_franchisee.fr_name from m_franchisee where m_franchisee.del_status=0 And  m_franchisee.fr_id NOT"
 					+" IN(select t_order.fr_id from t_order where order_date=:orderDate AND menu_id=:menuId) "
 					,nativeQuery=true)
 	

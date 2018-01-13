@@ -370,7 +370,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		List<RmItemSubCategory> rmItemSubCategories=null;
 		try {
 			
-			rmItemSubCategories=rmItemSubCategoryRepository.findRmItemSubCategoryByCatId(catId);
+			rmItemSubCategories=rmItemSubCategoryRepository.findRmItemSubCategoryByCatIdAndDelStatus(catId,0);
 	        	
 		}
 		catch(Exception e)
@@ -384,7 +384,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	@Override
 	public List<RmItemCategory> getCategories(int grpId) {
 		
-		List<RmItemCategory> rmItemCategoryList=rmItemCategoryRepository.findRmItemCategoryByGrpId(grpId);
+		List<RmItemCategory> rmItemCategoryList=rmItemCategoryRepository.findRmItemCategoryByGrpIdAndDelStatus(grpId,0);
 		if(rmItemCategoryList!=null)
 		{
 			System.out.println("Category List  : "+rmItemCategoryList.toString());

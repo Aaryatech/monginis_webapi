@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.model.FrListForSupp;
 import com.ats.webapi.model.FrTarget;
 import com.ats.webapi.model.FrTargetList;
 import com.ats.webapi.model.FrTotalSale;
@@ -19,6 +20,7 @@ import com.ats.webapi.model.GetItemSup;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
+import com.ats.webapi.repository.FrListForSuppRepository;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.ItemService;
 
@@ -29,7 +31,8 @@ public class MasterController {
 	ItemService itemService;
 	@Autowired
 	FranchiseeService franchiseeService;
-	
+	@Autowired
+	FrListForSuppRepository frListForSuppRepository;
 	
 	// ----------------------------SAVE Item Sup---------------------------
 		@RequestMapping(value = { "/saveItemSup" }, method = RequestMethod.POST)
@@ -257,4 +260,14 @@ public class MasterController {
 					return getFranchiseSupRes;
 
 				}		
+				// ---------------------------Getting Franchise List For Supplement-----------------------
+				@RequestMapping(value = { "/getFrListForSupp" }, method = RequestMethod.GET)
+				public @ResponseBody List<FrListForSupp> getFrListForSupp() {
+
+					List<FrListForSupp> franchiseSupList = frListForSuppRepository.getFrListForSupp();
+
+					return franchiseSupList;
+
+				}
+	              //------------------------------------------------------------------------	
 }

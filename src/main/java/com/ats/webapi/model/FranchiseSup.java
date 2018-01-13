@@ -49,8 +49,18 @@ public class FranchiseSup implements Serializable{
 	private String pass5;
 	
 	private int delStatus;
+	@Column(name="is_tally_sync")
+	private int isTallySync;
 
 	
+	public int getIsTallySync() {
+		return isTallySync;
+	}
+
+	public void setIsTallySync(int isTallySync) {
+		this.isTallySync = isTallySync;
+	}
+
 	public String getPass4() {
 		return pass4;
 	}
@@ -162,6 +172,4 @@ public class FranchiseSup implements Serializable{
 				+ pass2 + ", pass3=" + pass3 + ", pass4=" + pass4 + ", pass5=" + pass5 + ", delStatus=" + delStatus
 				+ "]";
 	}
-
-	
 }
