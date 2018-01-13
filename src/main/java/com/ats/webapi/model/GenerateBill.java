@@ -76,7 +76,8 @@ public class GenerateBill {
 	@Column(name="item_shelf_life")//newly added
 	int  itemShelfLife;
 	
-	
+	@Column(name="is_same_state")//newly added
+	int  isSameState;
 	
 	@Column(name="delivery_date")//newly added
 	Date  deliveryDate;
@@ -253,6 +254,14 @@ public class GenerateBill {
 
 	public void setIsPositive(int isPositive) {
 		this.isPositive = isPositive;
+	}
+
+	public int getIsSameState() {
+		return isSameState;
+	}
+
+	public void setIsSameState(int isSameState) {
+		this.isSameState = isSameState;
 	}
 	
 	

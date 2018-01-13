@@ -51,12 +51,19 @@ public class BmsStockController {
 	public @ResponseBody GetBmsCurrentStockList getCurrentBmsStockList(@RequestParam("prodDeptId") int prodDeptId,
 			@RequestParam("mixDeptId") int mixDeptId, @RequestParam("storeDeptId") int storeDeptId,
 			@RequestParam("rmType") int rmType) {
+		
+		System.out.println("Inside Get bms current stock get web Service");
+		System.out.println(" RM type Received " + rmType);
 
 		Info info = new Info();
 
-		System.out.println(" RM type Received " + rmType);
 
-		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
+		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime()); 
+		
+		
+		System.out.println("Input received for BMS Current Stock ");
+		System.out.println("Current Date"+cDate + "prod Dept Id"+prodDeptId+"mixDept Id"+mixDeptId+ "storeDept Id "+storeDeptId);
+		
 
 		GetBmsCurrentStockList bmsStockList = new GetBmsCurrentStockList();
 
@@ -79,13 +86,20 @@ public class BmsStockController {
 			}
 
 			bmsStockList.setInfo(info);
+			System.out.println("Stock List BMS 11 " + bmsStockList.toString());
+
+			/*for(int p=0;p<bmsCurrentStock.size();p++) {
+				System.out.println("BMS Stock Element No "+p);
+				System.out.println("Element "+bmsCurrentStock.get(p));
+			}*/
 
 		} catch (Exception e) {
 
 			System.out.println("Exc in Getting Current BMS stock List " + e.getMessage());
 			e.printStackTrace();
 		}
-		System.out.println("Stock List BMS " + bmsStockList.toString());
+		
+		
 		return bmsStockList;
 	}
 

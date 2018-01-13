@@ -40,6 +40,11 @@ public class GenerateRegSpBill {
 	    @Column(name="qty")
 	    private int qty;
 	    
+	    
+	    @Column(name="is_same_state")
+	    private int isSameState;
+	    
+	    
 	    @Column(name="rsp_delivery_dt")
 	    private Date rspDeliveryDt;
 	    
@@ -76,9 +81,14 @@ public class GenerateRegSpBill {
 		private int item_shelf_life;
 
 		
-		
-		
-		
+		public int getIsSameState() {
+			return isSameState;
+		}
+
+		public void setIsSameState(int isSameState) {
+			this.isSameState = isSameState;
+		}
+
 		public int getRspId() {
 			return rspId;
 		}
@@ -236,13 +246,12 @@ public class GenerateRegSpBill {
 		public String toString() {
 			return "GenerateRegSpBill [rspId=" + rspId + ", frId=" + frId + ", frCode=" + frCode + ", itemId=" + itemId
 					+ ", menuId=" + menuId + ", rate=" + rate + ", mrp=" + mrp + ", rateCat=" + rateCat + ", qty=" + qty
-					+ ", rspDeliveryDt=" + rspDeliveryDt + ", frName=" + frName + ", itemName=" + itemName
-					+ ", menuTitle=" + menuTitle + ", itemGrp1=" + itemGrp1 + ", itemGrp2=" + itemGrp2 + ", itemTax1="
-					+ itemTax1 + ", itemTax2=" + itemTax2 + ", itemTax3=" + itemTax3 + ", item_shelf_life="
-					+ item_shelf_life + "]";
+					+ ", isSameState=" + isSameState + ", rspDeliveryDt=" + rspDeliveryDt + ", frName=" + frName
+					+ ", itemName=" + itemName + ", menuTitle=" + menuTitle + ", itemGrp1=" + itemGrp1 + ", itemGrp2="
+					+ itemGrp2 + ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2 + ", itemTax3=" + itemTax3
+					+ ", item_shelf_life=" + item_shelf_life + "]";
 		}
-
 		
-	
+
 	
 }

@@ -22,6 +22,9 @@ public class GenerateSpBill {
 	@Column(name="fr_id")
 	int  frId;
 	
+	@Column(name="is_same_state")
+	int  isSameState;
+	
 	@Column(name="menu_id")
 	int  menuId;
 	
@@ -244,16 +247,27 @@ public class GenerateSpBill {
 	}
 
 
-	@Override
-	public String toString() {
-		return "GenerateSpBill [spOrderNo=" + spOrderNo + ", frId=" + frId + ", menuId=" + menuId + ", spId=" + spId
-				+ ", spBackendRate=" + spBackendRate + ", spGrandTotal=" + spGrandTotal + ", frName=" + frName
-				+ ", menuTitle=" + menuTitle + ", spName=" + spName + ", catId=" + catId + ", frCode=" + frCode
-				+ ", rateType=" + rateType + ", subCatId=" + subCatId + ", spTax1=" + spTax1 + ", spTax2=" + spTax2
-				+ ", spTax3=" + spTax3 + ", spDeliveryDate=" + spDeliveryDate + "]";
+	public int getIsSameState() {
+		return isSameState;
 	}
 
 
+	public void setIsSameState(int isSameState) {
+		this.isSameState = isSameState;
+	}
+
+
+	@Override
+	public String toString() {
+		return "GenerateSpBill [spOrderNo=" + spOrderNo + ", frId=" + frId + ", isSameState=" + isSameState
+				+ ", menuId=" + menuId + ", spId=" + spId + ", spBackendRate=" + spBackendRate + ", spGrandTotal="
+				+ spGrandTotal + ", frName=" + frName + ", menuTitle=" + menuTitle + ", spName=" + spName + ", catId="
+				+ catId + ", frCode=" + frCode + ", rateType=" + rateType + ", subCatId=" + subCatId + ", spTax1="
+				+ spTax1 + ", spTax2=" + spTax2 + ", spTax3=" + spTax3 + ", spDeliveryDate=" + spDeliveryDate + "]";
+	}
+
+
+	
 	
 	
 	

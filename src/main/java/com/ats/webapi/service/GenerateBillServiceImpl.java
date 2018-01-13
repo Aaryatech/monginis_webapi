@@ -224,7 +224,7 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 			generateBill.setOrderRate(regSpBill.getRate());
 			generateBill.setRateType(regSpBill.getRateCat());
 			generateBill.setSubCatId(regSpBill.getItemGrp2());
-
+			generateBill.setIsSameState(regSpBill.getIsSameState());
 			generateBillList.add(generateBill);
 			
 			System.out.println("converted Bill : "+generateBillList.toString());
@@ -264,6 +264,7 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 			generateBill.setOrderRate(spBill.getSpBackendRate());
 			generateBill.setRateType(spBill.getRateType());
 			generateBill.setSubCatId(spBill.getSubCatId());
+			generateBill.setIsSameState(spBill.getIsSameState());
 
 			generateBillList.add(generateBill);
 		}
