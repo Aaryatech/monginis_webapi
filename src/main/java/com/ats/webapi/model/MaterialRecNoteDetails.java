@@ -115,6 +115,18 @@ public class MaterialRecNoteDetails implements Serializable{
 	
 	@Column(name="status")
 	private int status;
+	
+	@Column(name="other1")
+	private float other1;
+	
+	@Column(name="other2")
+	private float other2;
+	
+	@Column(name="other3")
+	private float other3;
+	
+	@Column(name="other4")
+	private float other4;
 
 	public int getMrnDetailId() {
 		return mrnDetailId;
@@ -379,6 +391,40 @@ public class MaterialRecNoteDetails implements Serializable{
 	public void setStatus(int status) {
 		this.status = status;
 	}
+	
+	
+
+	public float getOther1() {
+		return other1;
+	}
+
+	public void setOther1(float other1) {
+		this.other1 = other1;
+	}
+
+	public float getOther2() {
+		return other2;
+	}
+
+	public void setOther2(float other2) {
+		this.other2 = other2;
+	}
+
+	public float getOther3() {
+		return other3;
+	}
+
+	public void setOther3(float other3) {
+		this.other3 = other3;
+	}
+
+	public float getOther4() {
+		return other4;
+	}
+
+	public void setOther4(float other4) {
+		this.other4 = other4;
+	}
 
 	@Override
 	public String toString() {
@@ -390,7 +436,8 @@ public class MaterialRecNoteDetails implements Serializable{
 				+ freightAmt + ", insurancePer=" + insurancePer + ", insurance_amt=" + insurance_amt + ", cgstPer="
 				+ cgstPer + ", cgstRs=" + cgstRs + ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", igstPer="
 				+ igstPer + ", igstRs=" + igstRs + ", cessPer=" + cessPer + ", cessRs=" + cessRs + ", amount=" + amount
-				+ ", directorApproved=" + directorApproved + ", delStatus=" + delStatus + ", status=" + status + "]";
+				+ ", directorApproved=" + directorApproved + ", delStatus=" + delStatus + ", status=" + status
+				+ ", other1=" + other1 + ", other2=" + other2 + ", other3=" + other3 + ", other4=" + other4 + "]";
 	}
    
 }
