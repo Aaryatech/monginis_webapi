@@ -27,8 +27,8 @@ public class UpdateOrderServiceImpl implements UpdateOrderService {
 
 
 	@Override
-	public int deleteOrder(int orderId, int orderStatus) {
-		int x=	updateOrdersRepository.deleteOrder(orderId,orderStatus);
+	public int deleteOrder(int orderId) {
+		int x=	updateOrdersRepository.deleteOrder(orderId);
 		
 		
 		return x;

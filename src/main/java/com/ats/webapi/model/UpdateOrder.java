@@ -22,8 +22,8 @@ public class UpdateOrder {
 	@Column(name="order_qty")
 	private int orderQty;
 	
-	@Column(name="order_status")
-	private int orderStatus;
+	@Column(name="is_edit")
+	private int isEdit;
 
 
 	public int getOrderId() {
@@ -42,18 +42,12 @@ public class UpdateOrder {
 		this.orderQty = orderQty;
 	}
 
-	public int getOrderStatus() {
-		return orderStatus;
+	public int getIsEdit() {
+		return isEdit;
 	}
 
-	public void setOrderStatus(int orderStatus) {
-		this.orderStatus = orderStatus;
+	public void setIsEdit(int isEdit) {
+		this.isEdit = isEdit;
 	}
-
-	
-
-	
-
-
-	
+    
 }
