@@ -73,6 +73,17 @@ public class PurchaseOrderApiController {
 			
 			
 		}
+		@RequestMapping(value = { "/dateWisePo" }, method = RequestMethod.POST)
+		public GetPurchaseOrderList dateWisePo(@RequestParam("status")List<String> status,@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate)
+		{
+			 List<PurchaseOrderHeader> getDateWisePerchaseOrderList = purchaseOrderHeaderRepository.getDateWisePerchaseOrderList(status,fromDate,toDate);
+			 GetPurchaseOrderList getPurchaseOrderList = new GetPurchaseOrderList();
+			 getPurchaseOrderList.setPurchaseOrderHeaderList(getDateWisePerchaseOrderList);
+			System.out.println(getPurchaseOrderList);
+			return getPurchaseOrderList;
+			
+			
+		}
 		
 		@RequestMapping(value = { "/getpurchaseorderHeaderWithDetailed" }, method = RequestMethod.POST)
 		public PurchaseOrderHeader getpurchaseorderHeaderWithDetailed(@RequestParam("poId")int poId)
