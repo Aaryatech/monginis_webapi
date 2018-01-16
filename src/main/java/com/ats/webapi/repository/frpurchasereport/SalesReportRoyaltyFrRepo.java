@@ -51,7 +51,7 @@ public interface SalesReportRoyaltyFrRepo extends JpaRepository<SalesReportRoyal
 		List<SalesReportRoyaltyFr> getSaleReportRoyaltyFr(@Param("frIdList") List<String> frIdList,@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 */
 	
-	
+	//report 6 
 	@Query(value="SELECT\n" + 
 			"        m_franchisee.fr_id,\n" + 
 			"        m_franchisee.fr_code,\n" + 

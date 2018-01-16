@@ -39,9 +39,7 @@ public class SalesReportController {
 	@Autowired
 	SaleReportItemwiseRepo saleReportItemwiseRepo; //report 8
 	
-	
-	
-	
+	//Report 1 sales report bill wise order by date
 	@RequestMapping(value = { "/getSaleReportBillwise" }, method = RequestMethod.POST)
 	public @ResponseBody List<SalesReportBillwise> getSaleReportBillwise(@RequestParam("frIdList") List<String> frIdList,@RequestParam("fromDate")
 	String fromDate,
@@ -62,7 +60,30 @@ public class SalesReportController {
 		return salesReportBillwiseList;
 	}
 	
+	//Report 1 sales report bill wise order by date All Fr
+		@RequestMapping(value = { "/getSaleReportBillwiseAllFrSelected" }, method = RequestMethod.POST)
+		public @ResponseBody List<SalesReportBillwise> getSaleReportBillwiseAllFrSelected(@RequestParam("fromDate")
+		String fromDate,
+				@RequestParam("toDate") String toDate) {
+
+			List<SalesReportBillwise> salesReportBillwiseList = null;
+			try {
+				fromDate = Common.convertToYMD(fromDate);
+				toDate = Common.convertToYMD(toDate);
+				System.out.println("Input received "+fromDate+""+toDate+"");
+				salesReportBillwiseList = saleReportBillwiseRepo.getSaleReportBillwiseAllFr(fromDate, toDate);
+				System.out.println("getSaleReportBillwise"+salesReportBillwiseList.toString());
+
+			} catch (Exception e) {
+				System.out.println(" Exce in sale Report Billwise  " + e.getMessage());
+				e.printStackTrace();
+			}
+			return salesReportBillwiseList;
+		}
+		
+
 	
+	//report 2 sales report Summary Group By Party ie Fr Name
 	@RequestMapping(value = { "/getSaleReportBillwiseByFr" }, method = RequestMethod.POST)
 	public @ResponseBody List<SalesReportBillwise> getSaleReportBillwiseByFr(@RequestParam("frIdList") List<String> frIdList,@RequestParam("fromDate")
 	String fromDate,
@@ -82,7 +103,29 @@ public class SalesReportController {
 		}
 		return salesReportBillwiseList;
 	}
-	
+
+	//report 2 sales report Summary Group By Party ie Fr Name All Fr Selected
+	@RequestMapping(value = { "/getSaleReportBillwiseByFrAllFr" }, method = RequestMethod.POST)
+	public @ResponseBody List<SalesReportBillwise> getSaleReportBillwiseByFrAllFrSel(@RequestParam("fromDate")
+	String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<SalesReportBillwise> salesReportBillwiseList = null;
+		try {
+			fromDate = Common.convertToYMD(fromDate);
+			toDate = Common.convertToYMD(toDate);
+			System.out.println("Input received " +fromDate+ "" +toDate+ "");
+
+			salesReportBillwiseList = saleReportBillwiseRepo.getSaleReportBillwiseByFrAllFr(fromDate, toDate);
+			System.out.println("getSaleReportBillwiseByFr"+salesReportBillwiseList.toString());
+		} catch (Exception e) {
+			System.out.println(" Exce in sale Report Billwise  by Fr " + e.getMessage());
+			e.printStackTrace();
+		}
+		return salesReportBillwiseList;
+	}
+
+	//report 3 sales report datewise group by date
 	@RequestMapping(value = { "/getSaleReportBillwiseByDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<SalesReportBillwise> getSaleReportBillwiseByDate(@RequestParam("frIdList") List<String> frIdList,@RequestParam("fromDate")
 	String fromDate,
@@ -103,7 +146,30 @@ public class SalesReportController {
 		return salesReportBillwiseList;
 	}
 	
-	
+
+	//report 3 sales report datewise group by date   all Fr Se
+		@RequestMapping(value = { "/getSaleReportBillwiseByDateAllFr" }, method = RequestMethod.POST)
+		public @ResponseBody List<SalesReportBillwise> getSaleReportBillwiseByDate(@RequestParam("fromDate")
+		String fromDate,
+				@RequestParam("toDate") String toDate) {
+
+			List<SalesReportBillwise> salesReportBillwiseList = null;
+			try {
+				fromDate = Common.convertToYMD(fromDate);
+				toDate = Common.convertToYMD(toDate);
+				System.out.println("Input received " +fromDate+ "" +toDate+ "");
+
+				salesReportBillwiseList = saleReportBillwiseRepo.getSaleReportBillwiseByDateAllFr(fromDate, toDate);
+				System.out.println("getSaleReportBillwiseByDate"+salesReportBillwiseList.toString());
+			} catch (Exception e) {
+				System.out.println(" Exce in sale Report Billwise by Date " + e.getMessage());
+				e.printStackTrace();
+			}
+			return salesReportBillwiseList;
+		}
+		
+
+	//report 4
 	@RequestMapping(value = { "/getSaleReportBillwiseByMonth" }, method = RequestMethod.POST)
 	public @ResponseBody List<SalesReportBillwise> getSaleReportBillwiseByMonth(@RequestParam("frIdList") List<String> frIdList,@RequestParam("fromDate")
 	String fromDate,
@@ -119,11 +185,36 @@ public class SalesReportController {
 			System.out.println("getSaleReportBillwiseByMonth "+salesReportBillwiseList.toString());
 		} catch (Exception e) {
 			System.out.println(" Exce in sale Report Billwise by Month " + e.getMessage());
+ 			e.printStackTrace();
+		}
+		return salesReportBillwiseList;
+	}
+
+	//report 4 all Fr selected
+	@RequestMapping(value = { "/getSaleReportBillwiseByMonthAllFr" }, method = RequestMethod.POST)
+	public @ResponseBody List<SalesReportBillwise> getSaleReportBillwiseByMonthAllFrSel(@RequestParam("fromDate")
+	String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<SalesReportBillwise> salesReportBillwiseList = null;
+		try {
+			fromDate = Common.convertToYMD(fromDate);
+			toDate = Common.convertToYMD(toDate);
+			System.out.println("Input received " +fromDate+ "" +toDate+ "");
+
+			salesReportBillwiseList = saleReportBillwiseRepo.getSaleReportBillwiseByMonthAllFr(fromDate, toDate);
+			System.out.println("getSaleReportBillwiseByMonth "+salesReportBillwiseList.toString());
+		} catch (Exception e) {
+			System.out.println(" Exce in sale Report Billwise by Month " + e.getMessage());
 			e.printStackTrace();
 		}
 		return salesReportBillwiseList;
 	}
+
 	
+	
+	
+	// Royalty report Started 
 	@RequestMapping(value = { "/getSalesReportRoyalty" }, method = RequestMethod.POST)
 	public @ResponseBody List<SalesReportRoyalty> getSalesReportRoyalty(@RequestParam("frIdList") List<String> frIdList,@RequestParam("fromDate")
 	String fromDate,
@@ -145,6 +236,7 @@ public class SalesReportController {
 	}
 	
 	
+	//report no 6 
 	@RequestMapping(value = { "/getSalesReportRoyaltyFr" }, method = RequestMethod.POST)
 	public @ResponseBody List<SalesReportRoyaltyFr> getSalesReportRoyaltyFr(@RequestParam("frIdList") List<String> frIdList,@RequestParam("fromDate")
 	String fromDate,

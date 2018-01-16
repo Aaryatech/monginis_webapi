@@ -25,8 +25,8 @@ public class GetCurProdAndBillQty implements Serializable{
 	int rejectedQty;
 	int billQty;
 	
-	@Transient
-	int damagedQty;
+	
+	int damagedQty;//ie gateSaleQty
 	
 	
 	public int getDamagedQty() {
@@ -66,10 +66,12 @@ public class GetCurProdAndBillQty implements Serializable{
 	public void setBillQty(int billQty) {
 		this.billQty = billQty;
 	}
+	
 	@Override
 	public String toString() {
 		return "GetCurProdAndBillQty [id=" + id + ", itemName=" + itemName + ", prodQty=" + prodQty + ", rejectedQty="
-				+ rejectedQty + ", billQty=" + billQty + ", damagedQty=" + damagedQty + "]";
+				+ rejectedQty + ", billQty=" + billQty + ",  damagedQty=" + damagedQty
+				+ "]";
 	}
 	
 	

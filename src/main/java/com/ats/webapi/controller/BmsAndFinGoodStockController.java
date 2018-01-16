@@ -30,7 +30,7 @@ import com.ats.webapi.repository.bmsstock.GetCurrentBmsStockRepo;
 import com.ats.webapi.service.FrItemStockConfigureService;
 
 @RestController
-public class BmsStockController {
+public class BmsAndFinGoodStockController {
 
 	@Autowired
 	GetCurrentBmsStockRepo currentBmsStockRepo;
@@ -75,18 +75,18 @@ public class BmsStockController {
 			if (!bmsCurrentStock.isEmpty()) {
 
 				info.setError(false);
-				info.setMessage("success stock list ");
+				info.setMessage("success getting bms current stock list ");
 
 				bmsStockList.setBmsCurrentStock(bmsCurrentStock);
 			} else {
 
 				info.setError(true);
-				info.setMessage("Error stock list ");
+				info.setMessage("Error getting bms current  stock list ");
 
 			}
 
 			bmsStockList.setInfo(info);
-			System.out.println("Stock List BMS 11 " + bmsStockList.toString());
+			System.out.println("Stock List BMS Current Stock  " + bmsStockList.toString());
 
 			/*for(int p=0;p<bmsCurrentStock.size();p++) {
 				System.out.println("BMS Stock Element No "+p);
