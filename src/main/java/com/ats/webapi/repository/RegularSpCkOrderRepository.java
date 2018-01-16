@@ -29,4 +29,5 @@ public interface RegularSpCkOrderRepository extends JpaRepository<RegularSpCake,
 	@Modifying
 	@Query("UPDATE RegularSpCake t SET t.isBillGenerated =1  WHERE item_id IN(:regOrderItemId) AND rsp_produ_date=:prodDate AND t.isBillGenerated=0")
 	int updateRegSpCakeBillStatus(@Param("regOrderItemId")List<Integer> regOrderItemId,@Param("prodDate") String prodDate);
+
 }

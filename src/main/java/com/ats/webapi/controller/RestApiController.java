@@ -3379,12 +3379,12 @@ try {
 	}
 
 	@RequestMapping(value = "/DeleteOrder", method = RequestMethod.POST)
-	public @ResponseBody String DeleteOrder(@RequestParam int orderId) {
+	public @ResponseBody int DeleteOrder(@RequestParam int orderId) {
 		System.out.println("inside rest");
-		int orderStatus = 1;
-		updateorderService.deleteOrder(orderId, orderStatus);
+		
+		int isDelete=updateorderService.deleteOrder(orderId);
 
-		return "resulted ";
+		return isDelete;
 	}
 
 	// ganesh 25-10-2017

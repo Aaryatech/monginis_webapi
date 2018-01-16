@@ -4,14 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.GetRegSpCakeOrders;
+import com.ats.webapi.model.Info;
 import com.ats.webapi.model.RegSpCkOrderResponse;
 import com.ats.webapi.model.RegularSpCake;
 import com.ats.webapi.model.RegularSpCkOrders;
 import com.ats.webapi.repository.GetRegSpCakeOrdersRepository;
+import com.ats.webapi.repository.RegularCkOrderDelRepository;
 import com.ats.webapi.repository.RegularSpCkOrderAdminRepo;
 import com.ats.webapi.repository.RegularSpCkOrderRepository;
 
@@ -26,6 +32,9 @@ public class RegularSpCkOrderServiceImpl implements RegularSpCkOrderService{
 	
 	@Autowired
 	GetRegSpCakeOrdersRepository getRegSpCakeOrdersRepository;
+	
+	@Autowired
+	RegularCkOrderDelRepository regularCkOrderDelRepository;
 	
 	@Override
 	public ErrorMessage placeRegularSpCakeOrder(RegularSpCake regularSpCake) {
@@ -124,6 +133,28 @@ public class RegularSpCkOrderServiceImpl implements RegularSpCkOrderService{
 	public List<GetRegSpCakeOrders> getRegSpCakeOrder(List<String> orderNo) {
 		 
 		return getRegSpCakeOrdersRepository.getRegSpOrders(orderNo);
+	}
+
+
+	@Override
+	public Info deleteRegularSpOrder(int rspId) {
+
+		int isDeleted=regularCkOrderDelRepository.deleteRegularSpOrder(rspId);
+		Info info=new Info();
+		
+		if(isDeleted==1)
+		{
+			info.setError(false);
+			info.setMessage("Regular Sp Order Deleted Successfully");
+		}
+		else
+		{
+			info.setError(true);
+			info.setMessage("Regular Sp Order Deletion Failed");
+
+		}
+		
+		return info;
 	}
 
 }

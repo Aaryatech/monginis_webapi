@@ -21,8 +21,11 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
 import com.ats.webapi.repository.FrListForSuppRepository;
+import com.ats.webapi.repository.SpCkDeleteOrderRepository;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.ItemService;
+import com.ats.webapi.service.OrderService;
+import com.ats.webapi.service.RegularSpCkOrderService;
 
 @RestController
 public class MasterController {
@@ -31,6 +34,12 @@ public class MasterController {
 	ItemService itemService;
 	@Autowired
 	FranchiseeService franchiseeService;
+	
+	@Autowired
+	RegularSpCkOrderService regularSpCkOrderService;
+	
+	@Autowired
+	SpCkDeleteOrderRepository spCkDeleteOrderRepository;
 	@Autowired
 	FrListForSuppRepository frListForSuppRepository;
 	
@@ -270,4 +279,32 @@ public class MasterController {
 
 				}
 	              //------------------------------------------------------------------------	
+				// ------------------------Delete RegularSpOrder------------------------------------
+				@RequestMapping(value = { "/deleteRegularSpOrder" }, method = RequestMethod.POST)
+				public @ResponseBody Info deleteRegularSpOrder(@RequestParam int rspId) {
+
+					Info info = regularSpCkOrderService.deleteRegularSpOrder(rspId);
+					return info;
+				}
+	          //------------------------------------------------------------------------
+				// ------------------------DeleteSpCkOrder------------------------------------
+				@RequestMapping(value = { "/deleteSpCkOrder" }, method = RequestMethod.POST)
+				public @ResponseBody Info deleteSpCkOrder(@RequestParam int spOrderNo) {
+
+					int isDeleted =spCkDeleteOrderRepository.deleteSpCkOrder(spOrderNo);
+					Info info=new Info();
+					if(isDeleted==1)
+					{
+						info.setError(false);
+						info.setMessage("SpCkOrder Deleted");
+					}
+					else
+					{
+						info.setError(true);
+						info.setMessage("SpCkOrder Deletion Failed");
+					}
+					return info;
+				}
+	          //------------------------------------------------------------------------	
+				
 }
