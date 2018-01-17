@@ -12,7 +12,7 @@ import com.ats.webapi.model.spprod.GetEmployee;
 @Repository
 public interface GetEmployeeRepository extends JpaRepository<GetEmployee, Integer>{
 
-	@Query(value="Select e.emp_id ,e.emp_name,e.emp_type,e.dept_id,d.dept_name,e.is_used,e.del_status,t.type_name from m_emp e,m_cm_dept d ,m_type t where e.dept_id=d.dept_id AND t.type_id=e.emp_type AND  e.del_status=0 And t.sub_type=:empType",nativeQuery=true)
+	@Query(value="Select e.emp_id ,e.emp_name,e.emp_type,e.dept_id,d.dept_name,e.is_used,e.del_status,t.type_name from m_emp e,m_cm_dept d ,m_emp_type t where e.dept_id=d.dept_id AND t.type_id=e.emp_type AND  e.del_status=0 And t.sub_type=:empType",nativeQuery=true)
 	List<GetEmployee> findGetEmployeeByDelStatus(@Param("empType")int empType);
 
 

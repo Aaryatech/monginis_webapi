@@ -87,7 +87,7 @@ public class BillOfMaterialServiceImp implements BillOfMaterialService{
 		ErrorMessage errorMessage = new ErrorMessage();
 		try
 		{
-			List<BillOfMaterialHeader> billOfMaterialHeaderList =  billOfMaterialRepository.getBOMAlllist();
+			List<BillOfMaterialHeader> billOfMaterialHeaderList =  billOfMaterialRepository.findBillOfMaterialHeaderByDelStatusOrderByReqIdDesc(0);
 			
 			/*for(int i=0;i<billOfMaterialHeaderList.size();i++)
 			{

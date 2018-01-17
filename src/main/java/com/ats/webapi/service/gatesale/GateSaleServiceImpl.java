@@ -1,6 +1,10 @@
 package com.ats.webapi.service.gatesale;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +23,15 @@ import com.ats.webapi.model.gatesale.GateSaleUserList;
 import com.ats.webapi.model.gatesale.GetGateSaleEmp;
 import com.ats.webapi.model.gatesale.GetGateSaleEmpList;
 import com.ats.webapi.model.gatesale.GetGateSaleUser;
+import com.ats.webapi.model.gatesale.OtherItem;
+import com.ats.webapi.model.gatesale.OtherItemList;
+import com.ats.webapi.model.gatesale.OtherItemRes;
+import com.ats.webapi.model.gatesale.OtherSupplier;
+import com.ats.webapi.model.gatesale.OtherSupplierList;
 import com.ats.webapi.repository.gatesale.GateEmployeeRepository;
+import com.ats.webapi.repository.gatesale.GateOtherItemRepository;
+import com.ats.webapi.repository.gatesale.GateOtherItemResRepository;
+import com.ats.webapi.repository.gatesale.GateOtherSupplierRepository;
 import com.ats.webapi.repository.gatesale.GateSaleBillDetailRepository;
 import com.ats.webapi.repository.gatesale.GateSaleBillDetailResRepository;
 import com.ats.webapi.repository.gatesale.GateSaleBillHeaderRepository;
@@ -57,6 +69,15 @@ public class GateSaleServiceImpl implements GateSaleService{
 	
 	@Autowired
 	GateSaleBillHeaderRepository gateSaleBillHeaderRepository;
+	
+	@Autowired
+	GateOtherSupplierRepository gateOtherSupplierRepository;
+	
+	@Autowired
+	GateOtherItemRepository gateOtherItemRepository;
+	
+	@Autowired
+	GateOtherItemResRepository gateOtherItemResRepository;
 	
 	@Override
 	public ErrorMessage saveGateSaleUser(GateSaleUser gateSaleUser) {
@@ -299,7 +320,20 @@ public class GateSaleServiceImpl implements GateSaleService{
 	@Override
 	public GetGateSaleEmpList getGateEmpList() {
 	
-		List<GetGateSaleEmp> gateEmpListRes=getGateEmployeeRepository.getGateEmpList(); 
+		     Date today = new Date();  
+
+	        Calendar calendar = Calendar.getInstance();  
+	        calendar.setTime(today);  
+
+	        calendar.add(Calendar.MONTH, 1);  
+	        calendar.set(Calendar.DAY_OF_MONTH, 1);  
+	        calendar.add(Calendar.DATE, -1);  
+
+	        Date lastDayOfMonth = calendar.getTime();  
+	        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+	        System.out.println("Last Day of Month: " + sdf.format(lastDayOfMonth));  
+
+		List<GetGateSaleEmp> gateEmpListRes=getGateEmployeeRepository.getGateEmpList(sdf.format(lastDayOfMonth)); 
 		ErrorMessage errorMessage=new ErrorMessage();
 		GetGateSaleEmpList getGateSaleEmpList=new GetGateSaleEmpList();
 
@@ -557,6 +591,194 @@ public class GateSaleServiceImpl implements GateSaleService{
 			}
 			return errorMessage;
 		
+	}
+
+	@Override
+	public ErrorMessage saveGateOtherSupplier(OtherSupplier otherSupplier) {
+		ErrorMessage errorMessage=new ErrorMessage();
+
+		try {
+			OtherSupplier otherSupplierRes=gateOtherSupplierRepository.saveAndFlush(otherSupplier);
+		
+		if(otherSupplierRes==null)
+		{
+			errorMessage.setError(true);
+			errorMessage.setMessage("Failed To Save OtherSupplier.");
+			
+		}else
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("OtherSupplier Saved Successfully.");
+			
+		}
+		}catch(Exception e)
+		{
+			errorMessage.setError(true);
+		    errorMessage.setMessage("Exception:Failed To Save OtherSupplier.");
+			return errorMessage;
+		}
+		return errorMessage;
+	}
+
+	@Override
+	public ErrorMessage saveGateOtherItem(OtherItem otherItem) {
+		ErrorMessage errorMessage=new ErrorMessage();
+
+		try {
+			OtherItem otherItemRes=gateOtherItemRepository.saveAndFlush(otherItem);
+		
+		if(otherItemRes==null)
+		{
+			errorMessage.setError(true);
+			errorMessage.setMessage("Failed To Save otherItem.");
+			
+		}else
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("otherItem Saved Successfully.");
+			
+		}
+		}catch(Exception e)
+		{
+			errorMessage.setError(true);
+		    errorMessage.setMessage("Exception:Failed To Save otherItem.");
+			return errorMessage;
+		}
+		return errorMessage;
+	}
+
+	@Override
+	public ErrorMessage deleteGateOtherItem(int itemId) {
+	    ErrorMessage errorMessage=new ErrorMessage();
+		
+				int isUpdated=gateOtherItemRepository.deleteGateOtherItem(itemId);
+			
+				if(isUpdated==1) {
+				
+				errorMessage.setError(false);
+				errorMessage.setMessage("GateOtherItem Deleted Successfully");
+				}
+				else
+				{
+					errorMessage.setError(false);
+					errorMessage.setMessage("GateOtherItem Deletion Failed");
+					
+				}
+				return errorMessage;
+	}
+
+	@Override
+	public ErrorMessage deleteGateOtherSupplier(int suppId) {
+	    ErrorMessage errorMessage=new ErrorMessage();
+		
+				int isUpdated=gateOtherSupplierRepository.deleteGateOtherSupplier(suppId);
+			
+				if(isUpdated==1) {
+				
+				errorMessage.setError(false);
+				errorMessage.setMessage("GateOtherSupplier Deleted Successfully");
+				}
+				else
+				{
+					errorMessage.setError(false);
+					errorMessage.setMessage("GateOtherSupplier Deletion Failed");
+					
+				}
+				return errorMessage;
+	}
+
+	@Override
+	public OtherSupplierList getGateOtherSuppList() {
+		
+		List<OtherSupplier> otherSupplierRes=gateOtherSupplierRepository.findOtherSupplierByDelStatus(0); 
+		ErrorMessage errorMessage=new ErrorMessage();
+		OtherSupplierList otherSupplierList=new OtherSupplierList();
+
+		if(otherSupplierRes.isEmpty()) {
+			
+			errorMessage.setError(true);
+			errorMessage.setMessage("Gate OtherSupplier List Not Found.");
+			otherSupplierList.setErrorMessage(errorMessage);
+		}
+		else
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("Gate OtherSupplier List Found Successfully.");
+			
+			otherSupplierList.setErrorMessage(errorMessage);
+			otherSupplierList.setOtherSupplierList(otherSupplierRes);
+			
+		}
+		return otherSupplierList;
+		
+	}
+
+	@Override
+	public OtherItemList getGateOtherItemBySuppId(int suppId) {
+
+		List<OtherItemRes> otherItemRes=gateOtherItemResRepository.findOtherItemByDelStatusAndSuppId(0,suppId); 
+		ErrorMessage errorMessage=new ErrorMessage();
+		OtherItemList otherItemList=new OtherItemList();
+
+		if(otherItemRes.isEmpty()) {
+			
+			errorMessage.setError(true);
+			errorMessage.setMessage("Gate OtherItem List Not Found.");
+			otherItemList.setErrorMessage(errorMessage);
+		}
+		else
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("Gate OtherItem List Found Successfully.");
+			
+			otherItemList.setErrorMessage(errorMessage);
+			otherItemList.setOtherItemList(otherItemRes);
+			
+		}
+		return otherItemList;
+	}
+
+	@Override
+	public OtherItem getGateOtherItemByItemId(int itemId) {
+		OtherItem otherItemRes=gateOtherItemRepository.findOtherItemByItemId(itemId); 
+		
+		if(otherItemRes==null)
+		{
+			otherItemRes=new OtherItem();
+			otherItemRes.setError(true);
+			otherItemRes.setMessage("Gate OtherItem Not Found");
+			
+		}
+		else
+		{
+			otherItemRes.setError(false);
+			otherItemRes.setMessage("Gate OtherItem Found Successfully");
+		}
+		
+		return otherItemRes; 
+
+	}
+
+	@Override
+	public OtherSupplier getGateOtherSupplierBySuppId(int suppId) {
+		OtherSupplier getGateOtherSupplierRes=gateOtherSupplierRepository.findOtherSupplierBySuppId(suppId); 
+		
+		if(getGateOtherSupplierRes==null)
+		{
+			getGateOtherSupplierRes=new OtherSupplier();
+			getGateOtherSupplierRes.setError(true);
+			getGateOtherSupplierRes.setMessage("Gate OtherSupplier Not Found");
+			
+		}
+		else
+		{
+			getGateOtherSupplierRes.setError(false);
+			getGateOtherSupplierRes.setMessage("Gate OtherSupplier Found Successfully");
+		}
+		
+		return getGateOtherSupplierRes; 
+		
+
 	}
 
 }
