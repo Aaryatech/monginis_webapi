@@ -30,6 +30,6 @@ public interface GetStoreCurrentStockRepository extends JpaRepository<GetStoreCu
 			+" GROUP by m_rm.rm_id",nativeQuery=true)
 	List<GetStoreCurrentStock> getCurrentStock(@Param("deptId")int deptId);
 
-	
+	 
 	
 }
