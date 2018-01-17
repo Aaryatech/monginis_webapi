@@ -67,8 +67,31 @@ public class GetGateSaleEmp implements Serializable{
 	@Column(name="yearly_limit")
 	private int yearlyLimit;
 	
+	@Column(name="monthly_consumed")
+	private int monthlyConsumed;
+	
+	@Column(name="yearly_consumed")
+	private int yearlyConsumed;
+	
 	@Column(name="del_status")
 	private int delStatus;
+
+	
+	public int getMonthlyConsumed() {
+		return monthlyConsumed;
+	}
+
+	public void setMonthlyConsumed(int monthlyConsumed) {
+		this.monthlyConsumed = monthlyConsumed;
+	}
+
+	public int getYearlyConsumed() {
+		return yearlyConsumed;
+	}
+
+	public void setYearlyConsumed(int yearlyConsumed) {
+		this.yearlyConsumed = yearlyConsumed;
+	}
 
 	public String getMessage() {
 		return message;
@@ -216,10 +239,14 @@ public class GetGateSaleEmp implements Serializable{
 
 	@Override
 	public String toString() {
-		return "GetGateSaleEmp [empId=" + empId + ", empName=" + empName + ", deptId=" + deptId + ", deptName="
-				+ deptName + ", isUsed=" + isUsed + ", empType=" + empType + ", empMobile=" + empMobile + ", empDob="
-				+ empDob + ", empDoj=" + empDoj + ", empFamMemb=" + empFamMemb + ", discId=" + discId
-				+ ", discountHead=" + discountHead + ", discountPer=" + discountPer + ", monthlyLimit=" + monthlyLimit
-				+ ", yearlyLimit=" + yearlyLimit + ", delStatus=" + delStatus + "]";
+		return "GetGateSaleEmp [message=" + message + ", isError=" + isError + ", empId=" + empId + ", empName="
+				+ empName + ", deptId=" + deptId + ", deptName=" + deptName + ", isUsed=" + isUsed + ", empType="
+				+ empType + ", empMobile=" + empMobile + ", empDob=" + empDob + ", empDoj=" + empDoj + ", empFamMemb="
+				+ empFamMemb + ", discId=" + discId + ", discountHead=" + discountHead + ", discountPer=" + discountPer
+				+ ", monthlyLimit=" + monthlyLimit + ", yearlyLimit=" + yearlyLimit + ", monthlyConsumed="
+				+ monthlyConsumed + ", yearlyConsumed=" + yearlyConsumed + ", delStatus=" + delStatus + "]";
 	}
+
+	
+    
 }

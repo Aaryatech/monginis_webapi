@@ -12,6 +12,6 @@ public interface GetUserTypeRepository extends JpaRepository<GetUserType, Intege
 	
 
 	
-	@Query(value="SELECT type_id, type_name from m_type where del_status=0 ",nativeQuery=true)
+	@Query(value="SELECT type_id, type_name from m_emp_type where del_status=0 ",nativeQuery=true)
 	List<GetUserType> getType();
 }

@@ -23,6 +23,10 @@ import com.ats.webapi.model.gatesale.GateSaleUser;
 import com.ats.webapi.model.gatesale.GateSaleUserList;
 import com.ats.webapi.model.gatesale.GetGateSaleEmp;
 import com.ats.webapi.model.gatesale.GetGateSaleEmpList;
+import com.ats.webapi.model.gatesale.OtherItem;
+import com.ats.webapi.model.gatesale.OtherItemList;
+import com.ats.webapi.model.gatesale.OtherSupplier;
+import com.ats.webapi.model.gatesale.OtherSupplierList;
 import com.ats.webapi.service.gatesale.GateSaleService;
 
 @RestController
@@ -226,6 +230,85 @@ public class GateSaleController {
 					
 					return errorMessage;
 				}
-				//--------------------------END--------------------------------------------------		
-				
+				//--------------------------END--------------------------------------------------	
+				//----------------------Save GateSaleOtherSupplier------------------------------------
+				@RequestMapping(value = { "/saveGateOtherSupplier" }, method = RequestMethod.POST)
+				public @ResponseBody ErrorMessage saveGateOtherSupplier(@RequestBody OtherSupplier otherSupplier)
+				{
+					
+					ErrorMessage errorMessage=gateSaleService.saveGateOtherSupplier(otherSupplier);
+					
+					return errorMessage;
+				}
+				//--------------------------END--------------------------------------------------
+				//----------------------Save GateSaleSaleOtherItem------------------------------------
+				@RequestMapping(value = { "/saveGateOtherItem" }, method = RequestMethod.POST)
+				public @ResponseBody ErrorMessage saveGateOtherItem(@RequestBody OtherItem otherItem)
+				{
+					
+					ErrorMessage errorMessage=gateSaleService.saveGateOtherItem(otherItem);
+					
+					return errorMessage;
+				}
+				//--------------------------END--------------------------------------------------
+				//--------------------------Delete GateOtherItem--------------------------------------------------
+				@RequestMapping(value = { "/deleteGateOtherItem" }, method = RequestMethod.POST)
+				public @ResponseBody ErrorMessage deleteGateOtherItem(@RequestParam("itemId")int itemId)
+				{
+							
+					ErrorMessage errorMessage=gateSaleService.deleteGateOtherItem(itemId);
+							
+					return errorMessage;
+				}
+				//--------------------------END--------------------------------------------------
+				//--------------------------Delete GateOtherSupplier--------------------------------------------------
+				@RequestMapping(value = { "/deleteGateOtherSupplier" }, method = RequestMethod.POST)
+				public @ResponseBody ErrorMessage deleteGateOtherSupplier(@RequestParam("suppId")int suppId)
+				{
+							
+					ErrorMessage errorMessage=gateSaleService.deleteGateOtherSupplier(suppId);
+							
+					return errorMessage;
+				}
+				//--------------------------END--------------------------------------------------
+				//---------------------------Getting GateSupplierList-------------------------
+				@RequestMapping(value = { "/getGateOtherSuppList" }, method = RequestMethod.GET)
+				public @ResponseBody OtherSupplierList getGateOtherSuppList() {
+
+					OtherSupplierList otherSupplierListRes = gateSaleService.getGateOtherSuppList();
+
+					return otherSupplierListRes;
+
+				}
+				//------------------------------END-----------------------------------------------
+				// ---------------------------Getting Gate OtherItem List By suppId-----------------------
+				@RequestMapping(value = { "/getGateOtherItemBySuppId" }, method = RequestMethod.POST)
+				public @ResponseBody OtherItemList getGateOtherItemBySuppId(@RequestParam("suppId")int suppId) {
+
+					OtherItemList otherItemListRes = gateSaleService.getGateOtherItemBySuppId(suppId);
+
+					return otherItemListRes;
+
+				}
+				//-------------------------------END----------------------------------------------
+				// ---------------------------Getting GateOtherItem By itemId-------------------------
+				@RequestMapping(value = { "/getGateOtherItemByItemId" }, method = RequestMethod.POST)
+				public @ResponseBody OtherItem getGateOtherItemByItemId(@RequestParam("itemId")int itemId) {
+
+					OtherItem gateOtherItemRes = gateSaleService.getGateOtherItemByItemId(itemId);
+		            
+					return gateOtherItemRes;
+
+				}
+			    //------------------------------------------------------------------------------------
+				// ---------------------------Getting GateOtherSupplier By SuppId-------------------------
+				@RequestMapping(value = { "/getGateOtherSupplierBySuppId" }, method = RequestMethod.POST)
+				public @ResponseBody OtherSupplier getGateOtherSupplierBySuppId(@RequestParam("suppId")int suppId) {
+
+					OtherSupplier gateOtherSupplierRes = gateSaleService.getGateOtherSupplierBySuppId(suppId);
+		            
+					return gateOtherSupplierRes;
+
+				}
+			    //------------------------------------------------------------------------------------
 }

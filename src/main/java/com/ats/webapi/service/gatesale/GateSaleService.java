@@ -12,6 +12,10 @@ import com.ats.webapi.model.gatesale.GateSaleUser;
 import com.ats.webapi.model.gatesale.GateSaleUserList;
 import com.ats.webapi.model.gatesale.GetGateSaleEmp;
 import com.ats.webapi.model.gatesale.GetGateSaleEmpList;
+import com.ats.webapi.model.gatesale.OtherItem;
+import com.ats.webapi.model.gatesale.OtherItemList;
+import com.ats.webapi.model.gatesale.OtherSupplier;
+import com.ats.webapi.model.gatesale.OtherSupplierList;
 
 public interface GateSaleService {
 
@@ -53,5 +57,21 @@ public interface GateSaleService {
 	ErrorMessage collectGetSaleAmt(int billId, int amtIsCollected, String collectedDate, int collectedUserId);
 
 	ErrorMessage updateUserToken(int userId, String token);
+
+	ErrorMessage saveGateOtherSupplier(OtherSupplier otherSupplier);
+
+	ErrorMessage saveGateOtherItem(OtherItem otherItem);
+
+	ErrorMessage deleteGateOtherItem(int itemId);
+
+	ErrorMessage deleteGateOtherSupplier(int suppId);
+
+	OtherSupplierList getGateOtherSuppList();
+
+	OtherItemList getGateOtherItemBySuppId(int suppId);
+
+	OtherItem getGateOtherItemByItemId(int itemId);
+
+	OtherSupplier getGateOtherSupplierBySuppId(int suppId);
 
 }
