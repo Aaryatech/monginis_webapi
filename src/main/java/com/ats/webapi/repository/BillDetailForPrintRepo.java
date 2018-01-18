@@ -10,7 +10,6 @@ import com.ats.webapi.model.bill.GetBillDetailPrint;
 
 public interface BillDetailForPrintRepo extends JpaRepository<GetBillDetailPrint, Integer>{
 	
-	
 
 	@Query(value="SELECT t_bill_detail.* ,m_item.item_name,m_category.cat_name,t_bill_header.bill_date,m_item_sup.item_hsncd,m_item_sup.item_uom "
 			+ " FROM t_bill_detail,m_item,m_category,t_bill_header,m_item_sup WHERE t_bill_detail.bill_no IN (:billNoList)  "

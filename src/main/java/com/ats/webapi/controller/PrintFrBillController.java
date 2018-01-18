@@ -81,5 +81,20 @@ public class PrintFrBillController {
 		return billDetailsForPrint;
 
 	}
+	
+	@RequestMapping(value = { "/getFrBillHeaderForPrintSelectedBill" }, method = RequestMethod.POST)
+	public @ResponseBody List<FrBillHeaderForPrint> getFrBillHeaderForPrintSelectedBill(@RequestParam("billNoList") List<String> billNoList) {
 
+		List<FrBillHeaderForPrint> billHeaderPrintList = null;
+		try {
+			
+			billHeaderPrintList = billHeaderForPrintRepo.getFrBillHeaderForPrintSelectedBill(billNoList);
+
+		} catch (Exception e) {
+			System.out.println(" Exce in bill Header List for Print " + e.getMessage());
+			e.printStackTrace();
+		}
+		return billHeaderPrintList;
+	}
+	
 }
