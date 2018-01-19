@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.GetMaterialRecNoteList;
+import com.ats.webapi.model.GetMaterialReceiptByDate;
 import com.ats.webapi.model.GetTaxByRmId;
 import com.ats.webapi.model.CheckSuppGst;
 import com.ats.webapi.model.GetTaxListByRmId;
 import com.ats.webapi.model.MaterialRecNote;
+import com.ats.webapi.repository.GetMaterialReceiptByDateRepository;
 import com.ats.webapi.repository.GetSuppGstRepository;
 import com.ats.webapi.repository.GetTaxListByRmIdRepository;
 import com.ats.webapi.service.MaterialRcNote.MaterialRecNoteService;
@@ -36,6 +38,9 @@ public class MaterialReceiptNoteController {
 	
 	@Autowired
 	GetSuppGstRepository getSuppGstRepository;
+	
+	@Autowired
+	GetMaterialReceiptByDateRepository getMaterialReceiptByDateRepository;
 	
 	@RequestMapping(value = { "/postMaterialRecNote" }, method = RequestMethod.POST)
 	public @ResponseBody MaterialRecNote postMaterialRecNote(@RequestBody MaterialRecNote materialRecNote)
@@ -65,12 +70,52 @@ public class MaterialReceiptNoteController {
 		return materialRecNotes;
 
 	}
+	
+	@RequestMapping(value = { "/getAllMaterialRecNotes" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetMaterialReceiptByDate> getAllMaterialRecNotes(@RequestParam("status")List<String> status,@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
+			@RequestParam("flag")int flag)
+	{
+		List<GetMaterialReceiptByDate> getMaterialReceiptByDateGateEntry= new ArrayList<GetMaterialReceiptByDate>();
+		try
+		{
+			System.out.println("Status : "+status);
+			System.out.println("fromDate : "+fromDate);
+			System.out.println("toDate : "+toDate);
+			System.out.println("flag : "+flag);
+			System.out.println("Status : "+status.toString());
+			if(flag==0)
+			{
+				getMaterialReceiptByDateGateEntry  = getMaterialReceiptByDateRepository.getMaterialReceiptByDateGateEntry(status,fromDate,toDate);
+				
+			}
+			else if(flag==1 || flag==2)
+			{
+				getMaterialReceiptByDateGateEntry  = getMaterialReceiptByDateRepository.getMaterialReceiptByDateStore(status,fromDate,toDate);
+				
+			}
+			else if(flag==3)
+			{
+				getMaterialReceiptByDateGateEntry  = getMaterialReceiptByDateRepository.getMaterialReceiptByDateAcc(status,fromDate,toDate);
+				
+			}
+
+					  }catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+
+
+		return getMaterialReceiptByDateGateEntry;
+
+	}
+	
+	 
 
 	@RequestMapping(value = { "/getMaterialRecNotes" }, method = RequestMethod.POST)
 	public @ResponseBody GetMaterialRecNoteList getMaterialRecNote(@RequestParam("status")List<String> status)
 	{
-System.out.println("Status : "+status);
-System.out.println("Status : "+status.toString());
+		System.out.println("Status : "+status);
+		System.out.println("Status : "+status.toString());
 		GetMaterialRecNoteList materialRNoteResponse = materialRecNoteService.getMaterialRecNote(status);
 
 		return materialRNoteResponse;

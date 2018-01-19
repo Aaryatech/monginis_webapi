@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ats.webapi.model.MaterialRecNote;
+import com.ats.webapi.model.tally.MaterialReceiptNote;
 
 @Repository
 public interface MaterialRecNoteRepository extends JpaRepository<MaterialRecNote, Integer>{
@@ -29,6 +30,6 @@ public interface MaterialRecNoteRepository extends JpaRepository<MaterialRecNote
 	@Query(" UPDATE MaterialRecNote SET isTallySync=:isTallySync WHERE mrnId=:mrnId")
 	int updateInward(@Param("mrnId")int mrnId,@Param("isTallySync") int isTallySync);
 
-
+	
 
 }

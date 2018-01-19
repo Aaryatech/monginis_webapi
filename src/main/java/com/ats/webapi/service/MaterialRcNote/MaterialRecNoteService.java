@@ -23,5 +23,7 @@ public interface MaterialRecNoteService {
 
 	ErrorMessage updateInward(int mrnId, int isTallySync);
 
+	 
+
 
 }
