@@ -37,7 +37,7 @@ public class StoreStockApiController {
 	@RequestMapping(value = { "/getMonthWiseStoreStock" }, method = RequestMethod.POST)
 	public @ResponseBody StoreStockDetailList getMonthWiseStoreStock(@RequestParam("fromDate")String fromDate, @RequestParam("toDate")String toDate) {
 		
-		
+		System.out.println("Dates from "+fromDate+"  toDate  "+toDate);
 		StoreStockDetailList storeStockDetailList=new StoreStockDetailList();
 		List<StoreStockDetail> resStoreStockDetailList=new ArrayList<>();
 		Info info=new Info();
