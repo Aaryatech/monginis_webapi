@@ -27,7 +27,7 @@ public interface RawMaterialDetailsRepository extends JpaRepository<RawMaterialD
 
 	List<RawMaterialDetails> findByCatId(int catId);
 
-	List<RawMaterialDetails> findByDelStatusAndIsTallySync(int i, int j);
+
 
 	@Transactional
 	@Modifying

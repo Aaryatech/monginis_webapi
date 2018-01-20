@@ -28,10 +28,13 @@ import com.ats.webapi.model.rawmaterial.RmItemGroup;
 import com.ats.webapi.model.rawmaterial.RmItemSubCatList;
 import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
 import com.ats.webapi.model.rawmaterial.RmRateVerification;
+import com.ats.webapi.model.tally.RawMaterialResList;
+import com.ats.webapi.model.tally.RawMaterialResponse;
 import com.ats.webapi.repository.RmItemCategoryRepository;
 import com.ats.webapi.repository.RmItemGroupRepostitory;
 import com.ats.webapi.repository.RmItemSubCategoryRepository;
 import com.ats.webapi.repository.RmRateVerificationRepository;
+import com.ats.webapi.repository.tally.RawMaterialResTallyRepository;
 import com.ats.webapi.repository.GetItemDetailRepository;
 import com.ats.webapi.repository.GetRawMaterialByGroupRepository;
 import com.ats.webapi.repository.GetRmItemCatRepository;
@@ -89,6 +92,9 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	
 	@Autowired
 	GetItemDetailRepository getItemDetailRepository;
+	
+	@Autowired
+	RawMaterialResTallyRepository rawMaterialResTallyRepository;
 	
 	@Override
 	public RmItemCatList getRmItemCategories() {
@@ -640,11 +646,11 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	}
 
 	@Override
-	public RawMaterialDetailsList getAllRawMaterialForTally() {
+	public RawMaterialResList getAllRawMaterialForTally() {
 		
-		RawMaterialDetailsList rawMaterialDetails=new RawMaterialDetailsList();
+		RawMaterialResList rawMaterialDetails=new RawMaterialResList();
 		ErrorMessage errorMessage;
-		List<RawMaterialDetails> rawMaterialMasterDetailList=rawMaterialDetailsRepository.findByDelStatusAndIsTallySync(0,0);
+		List<RawMaterialResponse> rawMaterialMasterDetailList=rawMaterialResTallyRepository.findByDelStatusAndIsTallySync();
 
 		if(!rawMaterialMasterDetailList.isEmpty())
 		{
@@ -653,7 +659,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 			errorMessage.setMessage("RM Details Found Successfully");
 			
 			rawMaterialDetails.setErrorMessage(errorMessage);
-			rawMaterialDetails.setRawMaterialDetailsList(rawMaterialMasterDetailList);
+			rawMaterialDetails.setRawMaterialList(rawMaterialMasterDetailList);
 		}
 		else
 		{

@@ -24,6 +24,7 @@ import com.ats.webapi.model.tally.FranchiseeList;
 import com.ats.webapi.model.tally.ItemList;
 import com.ats.webapi.model.tally.MaterialRecNoteList;
 import com.ats.webapi.model.tally.MaterialReceiptNote;
+import com.ats.webapi.model.tally.RawMaterialResList;
 import com.ats.webapi.model.tally.SalesVoucherList;
 import com.ats.webapi.model.tally.SpCakeList;
 import com.ats.webapi.model.tally.SuppliersList;
@@ -292,7 +293,7 @@ public class TallySyncController {
 
 				    responseHeaders.setContentLength(output.length);
 
-				    responseHeaders.set("Content-disposition", "attachment; filename=allCreditNotes.txt");
+				    responseHeaders.set("Content-disposition", "attachment; filename=allSuppliers.txt");
 
 				    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 				
@@ -302,7 +303,7 @@ public class TallySyncController {
 			@RequestMapping(value = { "/getAllRawMaterial" }, method = RequestMethod.GET)
 			public @ResponseBody ResponseEntity<byte[]> getAllRawMaterial()
 			{
-				RawMaterialDetailsList rawMaterialDetailsList=rawMaterialService.getAllRawMaterialForTally();
+				RawMaterialResList rawMaterialDetailsList=rawMaterialService.getAllRawMaterialForTally();
 				
 				 String regData =JsonUtil.javaToJson(rawMaterialDetailsList);
 
@@ -314,7 +315,7 @@ public class TallySyncController {
 
 				    responseHeaders.setContentLength(output.length);
 
-				    responseHeaders.set("Content-disposition", "attachment; filename=allCreditNotes.txt");
+				    responseHeaders.set("Content-disposition", "attachment; filename=allRawMaterial.txt");
 
 				    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 				
@@ -336,7 +337,7 @@ public class TallySyncController {
 
 				    responseHeaders.setContentLength(output.length);
 
-				    responseHeaders.set("Content-disposition", "attachment; filename=updateCreditNotes.txt");
+				    responseHeaders.set("Content-disposition", "attachment; filename=updateSupplier.txt");
 
 				    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 				  }
@@ -357,7 +358,7 @@ public class TallySyncController {
 
 					    responseHeaders.setContentLength(output.length);
 
-					    responseHeaders.set("Content-disposition", "attachment; filename=updateCreditNotes.txt");
+					    responseHeaders.set("Content-disposition", "attachment; filename=updateRawMaterial.txt");
 
 					    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 					  }	
@@ -376,7 +377,7 @@ public class TallySyncController {
 
 						    responseHeaders.setContentLength(output.length);
 
-						    responseHeaders.set("Content-disposition", "attachment; filename=updateCreditNotes.txt");
+						    responseHeaders.set("Content-disposition", "attachment; filename=allInwards.txt");
 
 						    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 					}
@@ -398,7 +399,7 @@ public class TallySyncController {
 
 						    responseHeaders.setContentLength(output.length);
 
-						    responseHeaders.set("Content-disposition", "attachment; filename=updateCreditNotes.txt");
+						    responseHeaders.set("Content-disposition", "attachment; filename=updateInward.txt");
 
 						    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 						  }	

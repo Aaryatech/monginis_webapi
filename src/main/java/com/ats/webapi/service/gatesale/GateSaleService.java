@@ -54,7 +54,7 @@ public interface GateSaleService {
 
 	ErrorMessage approveGetSaleBill(int billId, int isApproved, String approvedDate, int approvedUserId);
 
-	ErrorMessage collectGetSaleAmt(int billId, int amtIsCollected, String collectedDate, int collectedUserId);
+	ErrorMessage collectGetSaleAmt(String collectedDate, int collectedUserId);
 
 	ErrorMessage updateUserToken(int userId, String token);
 
@@ -73,5 +73,7 @@ public interface GateSaleService {
 	OtherItem getGateOtherItemByItemId(int itemId);
 
 	OtherSupplier getGateOtherSupplierBySuppId(int suppId);
+
+	List<GateSaleBillHeaderRes> gateBillDetailsAmtPending();
 
 }

@@ -197,13 +197,23 @@ public class GateSaleController {
 			return errorMessage;
 		}
 		//--------------------------END--------------------------------------------------
-		// ---------------------------Getting GateBillHeaderAndDetails By userId-------------------------
+		     // ---------------------------Getting GateBillHeaderAndDetails By userId-------------------------
 				@RequestMapping(value = { "/gateBillHeaderAndDetails" }, method = RequestMethod.POST)
 				public @ResponseBody List<GateSaleBillHeaderRes> gateBillHeaderAndDetails(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
 						@RequestParam("isApproved")int isApproved,@RequestParam("approvedUserId")int approvedUserId,@RequestParam("amtIsCollected")int amtIsCollected,
 						@RequestParam("collectedUserId")int collectorUserId) {
 
 					List<GateSaleBillHeaderRes> gateBillHeadersRes = gateSaleService.gateBillHeaderAndDetails(fromDate,toDate,isApproved,approvedUserId,amtIsCollected,collectorUserId);
+		            
+					return gateBillHeadersRes;
+
+				}
+			    //------------------------------------------------------------------------------------
+				// ---------------------------Getting GateBillHeaderAndDetails By userId-------------------------
+				@RequestMapping(value = { "/gateBillDetailsAmtPending" }, method = RequestMethod.GET)
+				public @ResponseBody List<GateSaleBillHeaderRes> gateBillDetailsAmtPending() {
+
+					List<GateSaleBillHeaderRes> gateBillHeadersRes = gateSaleService.gateBillDetailsAmtPending();
 		            
 					return gateBillHeadersRes;
 
@@ -222,11 +232,11 @@ public class GateSaleController {
 				//--------------------------END--------------------------------------------------	
 				//----------------------collectGetSaleAmt------------------------------------
 				@RequestMapping(value = { "/collectGetSaleAmt" }, method = RequestMethod.POST)
-				public @ResponseBody ErrorMessage collectGetSaleAmt(@RequestParam("billId")int billId,@RequestParam("amtIsCollected")int amtIsCollected,@RequestParam("collectedUserId")int collectedUserId)
+				public @ResponseBody ErrorMessage collectGetSaleAmt(@RequestParam("collectedUserId")int collectedUserId)
 				{
 					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 					LocalDate localDate = LocalDate.now();
-					ErrorMessage errorMessage=gateSaleService.collectGetSaleAmt(billId,amtIsCollected,dtf.format(localDate),collectedUserId);
+					ErrorMessage errorMessage=gateSaleService.collectGetSaleAmt(dtf.format(localDate),collectedUserId);
 					
 					return errorMessage;
 				}

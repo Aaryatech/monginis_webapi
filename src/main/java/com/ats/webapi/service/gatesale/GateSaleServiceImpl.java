@@ -1,5 +1,6 @@
 package com.ats.webapi.service.gatesale;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.commons.Firebase;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.gatesale.GateEmployee;
 import com.ats.webapi.model.gatesale.GateSaleBillDetail;
@@ -426,31 +428,51 @@ public class GateSaleServiceImpl implements GateSaleService{
          
 		GateSaleBillHeader gateSaleBillHeaderRes=gateSaleBillHeaderRepository.saveAndFlush(gateSaleBillHeader);
 		ErrorMessage errorMessage=new ErrorMessage();
-		try {
+try {
+			int initiatorUserType=gateSaleBillHeaderRepository.findUserTypeById(gateSaleBillHeader.getInitiatorUserId());
 		if(gateSaleBillHeaderRes!=null)
 		{
-		int billId=gateSaleBillHeaderRes.getBillId();
-		for(GateSaleBillDetail gateSaleBillDetail:gateSaleBillHeader.getGateSaleBillDetailList())
-		{
+		 int billId=gateSaleBillHeaderRes.getBillId();
+		 for(GateSaleBillDetail gateSaleBillDetail:gateSaleBillHeader.getGateSaleBillDetailList())
+		 {
 			gateSaleBillDetail.setBillId(billId);
 			GateSaleBillDetail gateSaleBillDetailRes=gateSaleBillDetailRepository.saveAndFlush(gateSaleBillDetail);
 			
-		}
-		errorMessage.setError(false);
-		errorMessage.setMessage("GateSaleBill Inserted Successfully.");
-		}
+		 }
+		 errorMessage.setError(false);
+		 errorMessage.setMessage("GateSaleBill Inserted Successfully.");
+		
+		 List<String> userTokens=gateSaleBillHeaderRepository.findUserTokensByBillId();
+		
+		 if(initiatorUserType==1)
+		 {
+		    if(gateSaleBillHeaderRes.getCategory()!=1&&gateSaleBillHeaderRes.getCategory()!=6)
+		    {	
+		     try {
+		    	 for(String approverToken:userTokens)
+		    	 {
+		          Firebase.sendPushNotification(approverToken,"hsdd","ahjhfda",1);
+		    	 }
+		         }
+		         catch(Exception e)
+		         {
+			       e.printStackTrace();
+		         }
+		    }
+		 }
+	   }
 		else
 		{
 			errorMessage.setError(true);
 			errorMessage.setMessage("GateSaleBill Insertion Failed.");
 		}
-		}catch(Exception e)
-		{
+	}catch(Exception e)
+	{       e.printStackTrace();
 			errorMessage.setError(true);
 			errorMessage.setMessage("GateSaleBill Insertion Failed.Exc");
-		}
-		return errorMessage;
 	}
+		return errorMessage;
+}
 
 	@Override
 	public List<GateSaleBillHeaderRes> gateBillHeaderAndDetails(String fromDate, String toDate, int isApproved,
@@ -538,6 +560,28 @@ public class GateSaleServiceImpl implements GateSaleService{
 			
 			errorMessage.setError(false);
 			errorMessage.setMessage("GetSaleBill updated Successfully");
+			
+			String userToken=gateSaleBillHeaderRepository.findUserTokenByBillId(billId);
+			
+			if(isApproved==2)
+			{
+			try {
+				Firebase.sendPushNotification(userToken, "Approved", "hfbsffgggggggggggggggggggdaffrsfrfsfs",2);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			}
+			else if(isApproved==3)
+			{
+				try {
+					Firebase.sendPushNotification(userToken, "Rejected", "Approved",3);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			
 			}
 			else
 			{
@@ -550,13 +594,13 @@ public class GateSaleServiceImpl implements GateSaleService{
 	}
 
 	@Override
-	public ErrorMessage collectGetSaleAmt(int billId, int amtIsCollected, String collectedDate, int collectedUserId) {
+	public ErrorMessage collectGetSaleAmt(String collectedDate, int collectedUserId) {
 
 		 ErrorMessage errorMessage=new ErrorMessage();
 			
-			int isUpdated=gateSaleBillHeaderRepository.updateCollectGetSaleAmt(billId,amtIsCollected,collectedDate,collectedUserId);
+			int isUpdated=gateSaleBillHeaderRepository.updateCollectGetSaleAmt(collectedDate,collectedUserId);
 		
-			if(isUpdated==1) {
+			if(isUpdated>0) {
 			
 			errorMessage.setError(false);
 			errorMessage.setMessage("GetSaleBill updated Successfully");
@@ -779,6 +823,18 @@ public class GateSaleServiceImpl implements GateSaleService{
 		return getGateOtherSupplierRes; 
 		
 
+	}
+
+	@Override
+	public List<GateSaleBillHeaderRes> gateBillDetailsAmtPending() {
+		List<GateSaleBillHeaderRes> gateSaleBillHeaderRes=gateSaleBillHeaderResRepository.findByAmtIsCollectedAndDelStatus(1,0);
+		for(int i=0;i<gateSaleBillHeaderRes.size();i++)
+		{
+		List<GateSaleBillDetailRes> gateSaleBillDetailList=gateSaleBillDetailsRepository.findGateSaleBillDetailByBillId(gateSaleBillHeaderRes.get(i).getBillId());
+		gateSaleBillHeaderRes.get(i).setGateSaleBillDetailList(gateSaleBillDetailList);
+		}
+		
+		return gateSaleBillHeaderRes;
 	}
 
 }

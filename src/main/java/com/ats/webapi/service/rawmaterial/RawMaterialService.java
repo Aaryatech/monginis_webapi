@@ -21,6 +21,7 @@ import com.ats.webapi.model.rawmaterial.RmItemGroup;
 import com.ats.webapi.model.rawmaterial.RmItemSubCatList;
 import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
 import com.ats.webapi.model.rawmaterial.RmRateVerification;
+import com.ats.webapi.model.tally.RawMaterialResList;
 
 @Service
 public interface RawMaterialService {
@@ -90,7 +91,7 @@ public interface RawMaterialService {
 	int deleteRmTax(int taxId);
 	RawMaterialDetailsList getRMByCatId(int catId);
 
-	RawMaterialDetailsList getAllRawMaterialForTally();
+	RawMaterialResList getAllRawMaterialForTally();
 
 	ErrorMessage updateRawMaterial(int rmId, int isTallySync);
 }

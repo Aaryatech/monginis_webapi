@@ -100,7 +100,7 @@ public class MaterialRecNoteServiceImpl implements MaterialRecNoteService{
 		ErrorMessage errorMessage;
 		try
 		{
-			List<MaterialRecNote> materialRecNoteList=materialRecNoteRepository.getMaterialByStatus( status);
+			List<MaterialRecNote> materialRecNoteList=materialRecNoteRepository.getMaterialByStatus(status);
 			 
 		
 		if(materialRecNoteList!=null) {

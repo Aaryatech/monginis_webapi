@@ -11,7 +11,34 @@ import com.ats.webapi.model.tally.CreditNote;
 @Repository
 public interface TallyCreditNoteRepository extends JpaRepository<CreditNote, Integer>{
 
-	@Query(value="select h.crn_id,h.crn_date, d.crnd_id,h.crn_no,f.fr_name,f.fr_gst_no,sup.fr_state,CASE WHEN d.cat_id = 5 THEN s.sp_name ELSE i.item_name END AS item_name,CASE WHEN d.cat_id = 5 THEN spsup.sp_hsncd ELSE itemsup.item_hsncd END AS hsn_code,CASE WHEN d.cat_id = 5 THEN spsup.sp_uom ELSE itemsup.item_uom END AS uom,d.grn_gvn_qty,d.base_rate,d.taxable_amt,d.cgst_per,d.sgst_per,d.igst_per,d.cess_per,d.cgst_rs,d.sgst_rs,d.igst_rs,d.cess_rs,h.round_off,h.crn_final_amt,d.ref_invoice_no,d.ref_invoice_date,d.grn_gvn_id,d.grn_gvn_date from t_credit_note_header h,t_credit_note_details d,m_item i,m_franchisee f,m_sp_cake s,m_spcake_sup spsup,m_franchise_sup sup,m_item_sup itemsup WHERE d.del_status=0 AND h.is_tally_sync=0 AND h.crn_id=d.crn_id AND h.fr_id=f.fr_id AND CASE WHEN d.cat_id = 5 THEN d.item_id=s.sp_id AND d.item_id=spsup.sp_id ELSE  d.item_id=i.id AND  d.item_id=itemsup.item_id END  GROUP BY d.crnd_id",nativeQuery=true)
+	@Query(value="select h.crn_id,\n" + 
+			"h.crn_date,\n" + 
+			" d.crnd_id,\n" + 
+			"h.crn_no,\n" + 
+			"f.fr_name,\n" + 
+			"f.fr_gst_no,\n" + 
+			"sup.fr_state,\n" + 
+			"CASE WHEN d.cat_id = 5 \n" + 
+			"THEN (select s.sp_name from m_sp_cake s where s.sp_id=d.item_id) ELSE (select i.item_name  from m_item i where i.id=d.item_id) END AS item_name,\n" + 
+			"CASE WHEN d.cat_id = 5 THEN (select spsup.sp_hsncd from  m_spcake_sup spsup where spsup.sp_id=d.item_id) ELSE  (select itemsup.item_hsncd from  m_item_sup itemsup where itemsup.item_id=d.item_id)  END AS hsn_code,\n" + 
+			"CASE WHEN d.cat_id = 5 THEN (select spsup.sp_uom from m_spcake_sup spsup where spsup.sp_id=d.item_id) ELSE (select itemsup.item_uom from m_item_sup itemsup where itemsup.item_id=d.item_id) END AS uom,\n" + 
+			"d.grn_gvn_qty,\n" + 
+			"d.base_rate,\n" + 
+			"d.taxable_amt,\n" + 
+			"d.cgst_per,\n" + 
+			"d.sgst_per,\n" + 
+			"d.igst_per,\n" + 
+			"d.cess_per,\n" + 
+			"d.cgst_rs,\n" + 
+			"d.sgst_rs,\n" + 
+			"d.igst_rs,\n" + 
+			"d.cess_rs,\n" + 
+			"h.round_off,\n" + 
+			"h.crn_final_amt,\n" + 
+			"d.ref_invoice_no,\n" + 
+			"d.ref_invoice_date,\n" + 
+			"d.grn_gvn_id,\n" + 
+			"d.grn_gvn_date from t_credit_note_header h,t_credit_note_details d,m_franchisee f,m_franchise_sup sup WHERE  h.is_tally_sync=0 AND h.crn_id=d.crn_id AND h.fr_id=f.fr_id AND h.fr_id=sup.fr_id",nativeQuery=true)
 	List<CreditNote> findByIsTallySync();
 
 
