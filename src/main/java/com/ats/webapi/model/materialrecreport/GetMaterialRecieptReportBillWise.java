@@ -55,6 +55,9 @@ public class GetMaterialRecieptReportBillWise {
 	@Column(name="insurance_amt")
 	private float insuranceAmt;
 	
+	@Column(name="other")
+	private float other;
+	
 	@Column(name="cgst")
 	private float cgst;
 	
@@ -69,6 +72,28 @@ public class GetMaterialRecieptReportBillWise {
 	
 	@Column(name="bill_amount")
 	private float billAmount;
+	
+	@Column(name="cess")
+	private float cess;
+	
+	
+	
+
+	public float getOther() {
+		return other;
+	}
+
+	public void setOther(float other) {
+		this.other = other;
+	}
+
+	public float getCess() {
+		return cess;
+	}
+
+	public void setCess(float cess) {
+		this.cess = cess;
+	}
 
 	public int getMrnId() {
 		return mrnId;
@@ -222,8 +247,8 @@ public class GetMaterialRecieptReportBillWise {
 				+ ", invoiceNumber=" + invoiceNumber + ", invDate=" + invDate + ", supplierId=" + supplierId
 				+ ", suppName=" + suppName + ", suppCity=" + suppCity + ", suppGstin=" + suppGstin + ", basicValue="
 				+ basicValue + ", discAmt=" + discAmt + ", freightAmt=" + freightAmt + ", insuranceAmt=" + insuranceAmt
-				+ ", cgst=" + cgst + ", sgst=" + sgst + ", igst=" + igst + ", roundOff=" + roundOff + ", billAmount="
-				+ billAmount + "]";
+				+ ", other=" + other + ", cgst=" + cgst + ", sgst=" + sgst + ", igst=" + igst + ", roundOff=" + roundOff
+				+ ", billAmount=" + billAmount + ", cess=" + cess + "]";
 	}
 	
 	
