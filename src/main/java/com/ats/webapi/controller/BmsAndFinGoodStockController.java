@@ -252,6 +252,7 @@ public class BmsAndFinGoodStockController {
 			
 			Date stkFrDate= Common.convertToSqlDate(stockFromDate);
 			
+			stockToDate=Common.convertToDMY(stockToDate);
 			Date stkToDate= Common.convertToSqlDate(stockToDate);
 			
 			System.out.println("date After convert for Stock Detail bet date  "+stkFrDate);

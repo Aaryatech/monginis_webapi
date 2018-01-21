@@ -61,6 +61,11 @@ public class StoreStockServiceImpl implements StoreStockService{
 
 
 		List<GetStoreCurrentStock> getStoreCurrentStockList=getStoreCurrentStockRepository.getCurrentStock(deptId);
+		for(int i=0;i<getStoreCurrentStockList.size();i++)
+		{
+			float closingQty=getStoreCurrentStockList.get(i).getStoreOpeningStock()-getStoreCurrentStockList.get(i).getBmsIssueQty()+getStoreCurrentStockList.get(i).getPurRecQty();
+			getStoreCurrentStockList.get(i).setStoreClosingStock(closingQty);
+		}
 		
 		return getStoreCurrentStockList;
 	}
