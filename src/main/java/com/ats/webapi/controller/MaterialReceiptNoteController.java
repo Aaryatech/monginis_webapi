@@ -19,8 +19,11 @@ import com.ats.webapi.model.GetMaterialRecNoteList;
 import com.ats.webapi.model.GetMaterialReceiptByDate;
 import com.ats.webapi.model.GetTaxByRmId;
 import com.ats.webapi.model.CheckSuppGst;
+import com.ats.webapi.model.GetItemRateByRmIdAndSuppId;
 import com.ats.webapi.model.GetTaxListByRmId;
+import com.ats.webapi.model.ItemRateByRmIdAndSuppId;
 import com.ats.webapi.model.MaterialRecNote;
+import com.ats.webapi.repository.GetItemRateByRmIdAndSuppIdRepository;
 import com.ats.webapi.repository.GetMaterialReceiptByDateRepository;
 import com.ats.webapi.repository.GetSuppGstRepository;
 import com.ats.webapi.repository.GetTaxListByRmIdRepository;
@@ -41,6 +44,9 @@ public class MaterialReceiptNoteController {
 	
 	@Autowired
 	GetMaterialReceiptByDateRepository getMaterialReceiptByDateRepository;
+	
+	@Autowired
+	GetItemRateByRmIdAndSuppIdRepository getItemRateByRmIdAndSuppIdRepository;
 	
 	@RequestMapping(value = { "/postMaterialRecNote" }, method = RequestMethod.POST)
 	public @ResponseBody MaterialRecNote postMaterialRecNote(@RequestBody MaterialRecNote materialRecNote)
@@ -164,6 +170,27 @@ public class MaterialReceiptNoteController {
 		MaterialRecNote materialRecNoteRes = materialRecNoteService.getMaterialRecNotesHeaderDetails(mrnId);
 
 		return materialRecNoteRes;
+
+	}
+	
+	@RequestMapping(value = { "/getRateByRmId" }, method = RequestMethod.POST)
+	public @ResponseBody ItemRateByRmIdAndSuppId getRateByRmId(@RequestParam("rmId")List<String> rmId,@RequestParam("suppId")int suppId)
+	{
+		ItemRateByRmIdAndSuppId itemRateByRmIdAndSuppId = new ItemRateByRmIdAndSuppId();
+		try
+		{
+			
+			List<GetItemRateByRmIdAndSuppId> getItemRateByRmIdAndSuppId = new ArrayList<GetItemRateByRmIdAndSuppId>();
+
+			getItemRateByRmIdAndSuppId = getItemRateByRmIdAndSuppIdRepository.getRateByRmId(rmId,suppId);
+			itemRateByRmIdAndSuppId.setItemRateByRmIdAndSuppId(getItemRateByRmIdAndSuppId);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+
+		return itemRateByRmIdAndSuppId;
 
 	}
 	

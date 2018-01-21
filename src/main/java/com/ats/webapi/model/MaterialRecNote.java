@@ -165,11 +165,13 @@ public class MaterialRecNote implements Serializable{
 	
 	@Column(name="other4")
 	private float other4;
+	 
 	
 	@Transient
 	List<MaterialRecNoteDetails> materialRecNoteDetails; 
 	
-	
+	 
+
 	public int getDelStatus() {
 		return delStatus;
 	}

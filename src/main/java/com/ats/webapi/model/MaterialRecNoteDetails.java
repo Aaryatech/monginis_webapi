@@ -17,8 +17,7 @@ public class MaterialRecNoteDetails implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="mrn_detail_id")
-	private int mrnDetailId;
-	
+	private int mrnDetailId; 
 	
 	@Column(name="mrn_id")
 	private int mrnId;
@@ -127,6 +126,9 @@ public class MaterialRecNoteDetails implements Serializable{
 	
 	@Column(name="other4")
 	private float other4;
+	
+	@Column(name="varified_rate")
+	private float varifiedRate;
 
 	public int getMrnDetailId() {
 		return mrnDetailId;
@@ -425,6 +427,16 @@ public class MaterialRecNoteDetails implements Serializable{
 	public void setOther4(float other4) {
 		this.other4 = other4;
 	}
+	
+	
+
+	public float getVarifiedRate() {
+		return varifiedRate;
+	}
+
+	public void setVarifiedRate(float varifiedRate) {
+		this.varifiedRate = varifiedRate;
+	}
 
 	@Override
 	public String toString() {
@@ -437,7 +449,8 @@ public class MaterialRecNoteDetails implements Serializable{
 				+ cgstPer + ", cgstRs=" + cgstRs + ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", igstPer="
 				+ igstPer + ", igstRs=" + igstRs + ", cessPer=" + cessPer + ", cessRs=" + cessRs + ", amount=" + amount
 				+ ", directorApproved=" + directorApproved + ", delStatus=" + delStatus + ", status=" + status
-				+ ", other1=" + other1 + ", other2=" + other2 + ", other3=" + other3 + ", other4=" + other4 + "]";
+				+ ", other1=" + other1 + ", other2=" + other2 + ", other3=" + other3 + ", other4=" + other4
+				+ ", varifiedRate=" + varifiedRate + "]";
 	}
    
 }
