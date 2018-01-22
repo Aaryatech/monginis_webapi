@@ -32,19 +32,8 @@
 			<version>2.3.1</version>
 		</dependency>
 
-<!-- https://mvnrepository.com/artifact/com.ganyo/gcm-server -->
-        <dependency>
-            <groupId>com.ganyo</groupId>
-            <artifactId>gcm-server</artifactId>
-            <version>1.0.2</version>
-        </dependency>
 
-<!-- https://mvnrepository.com/artifact/org.json/json -->
-        <dependency>
-            <groupId>org.json</groupId>
-            <artifactId>json</artifactId>
-            </dependency>
-	
+
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -79,9 +68,24 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.13</version>
 		</dependency>
-		
 	
-		
+	   <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-devtools</artifactId>
+       </dependency>
+
+<!-- https://mvnrepository.com/artifact/com.ganyo/gcm-server -->
+        <dependency>
+            <groupId>com.ganyo</groupId>
+            <artifactId>gcm-server</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+
+<!-- https://mvnrepository.com/artifact/org.json/json -->
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            </dependency>
 	</dependencies>
 
 	<build>
