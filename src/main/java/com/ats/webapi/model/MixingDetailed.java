@@ -65,6 +65,12 @@ public class MixingDetailed {
 	@Column(name="rejected_qty")
 	private float rejectedQty;
 	
+	@Column(name="original_qty")
+	private float originalQty;
+	
+	@Column(name="auto_order_qty")
+	private float autoOrderQty;
+	
 	
 	 
 	
@@ -197,17 +203,31 @@ public class MixingDetailed {
 		this.exBool1 = exBool1;
 	}
 
+	public float getOriginalQty() {
+		return originalQty;
+	}
+
+	public void setOriginalQty(float originalQty) {
+		this.originalQty = originalQty;
+	}
+
+	public float getAutoOrderQty() {
+		return autoOrderQty;
+	}
+
+	public void setAutoOrderQty(float autoOrderQty) {
+		this.autoOrderQty = autoOrderQty;
+	}
+
 	@Override
 	public String toString() {
 		return "MixingDetailed [mixing_detailId=" + mixing_detailId + ", mixingId=" + mixingId + ", sfId=" + sfId
 				+ ", sfName=" + sfName + ", receivedQty=" + receivedQty + ", productionQty=" + productionQty
 				+ ", mixingDate=" + mixingDate + ", exInt1=" + exInt1 + ", exInt2=" + exInt2 + ", exInt3=" + exInt3
 				+ ", exVarchar1=" + exVarchar1 + ", exVarchar2=" + exVarchar2 + ", exVarchar3=" + exVarchar3
-				+ ", exBool1=" + exBool1 + ", uom=" + uom + ", rejectedQty=" + rejectedQty + "]";
+				+ ", exBool1=" + exBool1 + ", uom=" + uom + ", rejectedQty=" + rejectedQty + ", originalQty="
+				+ originalQty + ", autoOrderQty=" + autoOrderQty + "]";
 	}
-	
-	
-	
-	
+
 
 }
