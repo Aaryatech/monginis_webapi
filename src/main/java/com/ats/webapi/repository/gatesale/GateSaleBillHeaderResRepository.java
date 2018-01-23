@@ -41,7 +41,7 @@ public interface GateSaleBillHeaderResRepository extends JpaRepository<GateSaleB
     		"  is_approved=:isApproved",nativeQuery=true)
 	List<GateSaleBillHeaderRes> findByIsApprovedAndBillDateBetween(@Param("isApproved")int isApproved,@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 
-	List<GateSaleBillHeaderRes> findByAmtIsCollectedAndDelStatus(int i, int j);
+	List<GateSaleBillHeaderRes> findByIsApprovedAndAmtIsCollectedAndDelStatus(int i, int j, int k);
 
    
 }

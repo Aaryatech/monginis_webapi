@@ -827,7 +827,7 @@ try {
 
 	@Override
 	public List<GateSaleBillHeaderRes> gateBillDetailsAmtPending() {
-		List<GateSaleBillHeaderRes> gateSaleBillHeaderRes=gateSaleBillHeaderResRepository.findByAmtIsCollectedAndDelStatus(1,0);
+		List<GateSaleBillHeaderRes> gateSaleBillHeaderRes=gateSaleBillHeaderResRepository.findByIsApprovedAndAmtIsCollectedAndDelStatus(2,1,0);
 		for(int i=0;i<gateSaleBillHeaderRes.size();i++)
 		{
 		List<GateSaleBillDetailRes> gateSaleBillDetailList=gateSaleBillDetailsRepository.findGateSaleBillDetailByBillId(gateSaleBillHeaderRes.get(i).getBillId());

@@ -49,7 +49,7 @@ public class Firebase {
 			info.put("body", body.trim()); // Notification
 			info.put("sound", "default");
 			info.put("vibrate", "true");
-			json.put("notification", info);
+			json.put("data", info);
 
 		} catch (JSONException e1) {
 			e1.printStackTrace();

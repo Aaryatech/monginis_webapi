@@ -22,7 +22,7 @@ public interface GateSaleBillHeaderRepository extends JpaRepository<GateSaleBill
 	   
 	    @Transactional
 		@Modifying
-		@Query("UPDATE GateSaleBillHeader  SET amt_is_collected=2,collected_date=:collectedDate,collected_user_id=:collectedUserId")
+		@Query("UPDATE GateSaleBillHeader  SET amt_is_collected=2,collected_date=:collectedDate,collected_user_id=:collectedUserId where is_approved=2")
 		int updateCollectGetSaleAmt(@Param("collectedDate")String collectedDate,@Param("collectedUserId") int collectedUserId);
 
 	    @Query(value="select token from m_gatesale_user where user_id=(select initiator_user_id from t_gatesale_bill_header where bill_id=:billId)",nativeQuery=true)
