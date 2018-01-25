@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "t_bms_stock")
 public class BmsStockHeader {
@@ -55,6 +57,7 @@ public class BmsStockHeader {
 		this.bmsStockId = bmsStockId;
 	}
 
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getBmsStockDate() {
 		return bmsStockDate;
 	}

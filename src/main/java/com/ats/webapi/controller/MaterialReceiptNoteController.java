@@ -152,6 +152,9 @@ public class MaterialReceiptNoteController {
 		String gst = checkSuppGst.getSuppGstin();
 		System.out.println("value "+value);
 		System.out.println("gst "+gst);
+		System.out.println("value "+gst.substring(0, 2));
+		System.out.println("gst "+value.substring(0, 2));
+		
 		int flag = 0;
 		if(gst.substring(0, 2).equals(value.substring(0, 2)))
 		{

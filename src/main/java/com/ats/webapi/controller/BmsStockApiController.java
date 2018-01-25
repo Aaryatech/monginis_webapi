@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.BmsStockDetailed;
 import com.ats.webapi.model.BmsStockHeader;
+import com.ats.webapi.model.Info;
 import com.ats.webapi.model.stock.GetBmsStock;
+import com.ats.webapi.repository.BmsStockDetailedRepository;
 import com.ats.webapi.service.bmsstock.BmsStockService;
 
 
@@ -24,6 +26,7 @@ public class BmsStockApiController {
 	
 	@Autowired
 	BmsStockService bmsStockService;
+	 
 	
 	@RequestMapping(value = { "/insertBmsStock" }, method = RequestMethod.POST)
 	public @ResponseBody BmsStockHeader insertBmsStock(@RequestBody BmsStockHeader bmsStockHeader) {
@@ -49,6 +52,31 @@ public class BmsStockApiController {
 		return bmsStockHeaderloc;
 
 	}
+	
+	@RequestMapping(value = { "/getBmsStockForEdit" }, method = RequestMethod.POST)
+	public @ResponseBody BmsStockHeader getBmsStockForEdit(@RequestParam("type") int type) {
+
+		BmsStockHeader bmsStockHeaderloc = new BmsStockHeader();
+		try {
+
+	
+			bmsStockHeaderloc = bmsStockService.getBmsStockForEdit(type);
+			
+			 	System.out.println("bmsStockHeaderloc"+bmsStockHeaderloc);
+			 
+			
+
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			System.out.println("Exce in bmsstock Insert " + e.getMessage());
+		}
+
+		return bmsStockHeaderloc;
+
+	}
+	
+	
 	
 	@RequestMapping(value = { "/getBmsStock" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetBmsStock> getBmsStock(@RequestParam("fromDate")String fromDate , @RequestParam("toDate")String toDate , @RequestParam("rmType")int rmType) {

@@ -14,6 +14,10 @@ import com.ats.webapi.model.stock.GetBmsStock;
 public interface BmsStockDetailedRepository extends JpaRepository<BmsStockDetailed,Long>{
 	
 	BmsStockDetailed save(BmsStockDetailed bmsStockDetailed);
+
+	
+	@Query(value="select * from t_bms_stock_details where bms_stock_id=:bmsStockId",nativeQuery=true)
+	List<BmsStockDetailed> getStockDetailsItem(@Param("bmsStockId")int bmsStockId);
  
 //	@Query(value=" SELECT d.bms_stock_deatil_id,u.uom, d.is_del_status, d.rm_type, d.rm_name, d.rm_id, d.rm_uom, d.bms_stock_date, d.bms_stock_id, b.bms_opening_stock, sum(d.store_rec_qty) as store_rec_qty, sum(d.store_rejected_qty) as store_rejected_qty, sum(d.mixing_rec_qty) as mixing_rec_qty,"
 //			+" sum(d.mixing_receive_rejected_qty) as mixing_receive_rejected_qty, sum(d.mixing_issue_qty) as mixing_issue_qty, sum(d.mixing_return_qty) as mixing_return_qty, sum(d.mixing_rejected) as mixing_rejected,"
