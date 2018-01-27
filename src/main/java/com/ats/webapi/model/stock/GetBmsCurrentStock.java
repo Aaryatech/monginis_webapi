@@ -50,6 +50,7 @@ public class GetBmsCurrentStock {
 	float openingQty=0;
 	
 	
+	
 	public int getRmId() {
 		return rmId;
 	}

@@ -21,6 +21,9 @@ public class FinishedGoodStock implements Serializable{
 	@Column(name = "fin_stock_id")
 	int finStockId;
 	
+	@Column(name = "timestamp")//new Field 27-01-2018
+	String timestamp;
+	
 	
 	@Column(name = "cat_id")
 	int catId;
@@ -86,11 +89,19 @@ public class FinishedGoodStock implements Serializable{
 		this.finishedGoodStockDetail = finishedGoodStockDetail;
 	}
 
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+
 	@Override
 	public String toString() {
-		return "FinishedGoodStock [finStockId=" + finStockId + ", catId=" + catId + ", finGoodStockDate="
-				+ finGoodStockDate + ", finGoodStockStatus=" + finGoodStockStatus + ", delStatus=" + delStatus
-				+ ", finishedGoodStockDetail=" + finishedGoodStockDetail + "]";
+		return "FinishedGoodStock [finStockId=" + finStockId + ", timestamp=" + timestamp + ", catId=" + catId
+				+ ", finGoodStockDate=" + finGoodStockDate + ", finGoodStockStatus=" + finGoodStockStatus
+				+ ", delStatus=" + delStatus + ", finishedGoodStockDetail=" + finishedGoodStockDetail + "]";
 	}
 
 

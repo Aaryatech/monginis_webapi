@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="finished_good_stock_detail")
@@ -25,6 +26,12 @@ public class FinishedGoodStockDetail implements Serializable {
 	@Column(name = "item_id")
 	int itemId;
 	
+
+	@Column(name = "cat_id")//new Field 27 Jan 18
+	int catId;
+	
+	@Transient			//new Field 27 Jan 18
+	int isDayEndEnable;
 	
 	@Column(name = "stock_date")
 	Date stockDate;
@@ -230,16 +237,32 @@ public class FinishedGoodStockDetail implements Serializable {
 		this.delStatus = delStatus;
 	}
 
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
+	public int getIsDayEndEnable() {
+		return isDayEndEnable;
+	}
+
+	public void setIsDayEndEnable(int isDayEndEnable) {
+		this.isDayEndEnable = isDayEndEnable;
+	}
+
 	@Override
 	public String toString() {
 		return "FinishedGoodStockDetail [finStockDetailId=" + finStockDetailId + ", finStockId=" + finStockId
-				+ ", itemId=" + itemId + ", stockDate=" + stockDate + ", itemName=" + itemName + ", opT1=" + opT1
-				+ ", opT2=" + opT2 + ", opT3=" + opT3 + ", opTotal=" + opTotal + ", prodQty=" + prodQty + ", rejQty="
-				+ rejQty + ", frSaleQty=" + frSaleQty + ", gateSaleQty=" + gateSaleQty + ", cloT1=" + cloT1 + ", cloT2="
-				+ cloT2 + ", cloT3=" + cloT3 + ", cloCurrent=" + cloCurrent + ", totalCloStk=" + totalCloStk
-				+ ", delStatus=" + delStatus + "]";
+				+ ", itemId=" + itemId + ", catId=" + catId + ", isDayEndEnable=" + isDayEndEnable + ", stockDate="
+				+ stockDate + ", itemName=" + itemName + ", opT1=" + opT1 + ", opT2=" + opT2 + ", opT3=" + opT3
+				+ ", opTotal=" + opTotal + ", prodQty=" + prodQty + ", rejQty=" + rejQty + ", frSaleQty=" + frSaleQty
+				+ ", gateSaleQty=" + gateSaleQty + ", cloT1=" + cloT1 + ", cloT2=" + cloT2 + ", cloT3=" + cloT3
+				+ ", cloCurrent=" + cloCurrent + ", totalCloStk=" + totalCloStk + ", delStatus=" + delStatus + "]";
 	}
 
 
-
+	
 }

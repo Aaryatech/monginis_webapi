@@ -46,6 +46,29 @@ public class BmsAndFinGoodStockController {
 
 	@Autowired
 	GetCurProdAndBillQtyRepo getCurProdAndBillQtyRepo;
+	
+	
+	/*
+	 //Get BMS Stock Bet Date
+	 
+	 SELECT d.bms_stock_deatil_id,d.bms_stock_id,d.bms_stock_date, d.rm_name,d.rm_id,d.rm_uom,d.rm_type, SUM(f.bms_opening_stock) AS OPQTY,SUM(t.closing_qty) AS CLOQTY,
+SUM(t.store_rec_qty) as storeRecQty,
+SUM(t.store_rejected_qty) as storeRejectedQty,
+SUM(t.mixing_rec_qty) as mixingRecQty,
+SUM(t.mixing_receive_rejected_qty) as mixingReceiveRejectedQty,
+SUM(t.mixing_issue_qty) as mixingIssueQty,
+SUM(t.mixing_return_qty) as mixingReturnQty,
+SUM(t.mixing_rejected) as mixingRejected,
+SUM(t.prod_issue_qty) as prodIssueQty,
+SUM(t.prod_rejected_qty) as prodRejectedQty,
+SUM(t.prod_return_qty) as prodReturnQty
+ FROM 
+t_bms_stock_details d,t_bms_stock_details f,t_bms_stock_details t ,t_bms_stock h1,t_bms_stock h2,t_bms_stock h3
+WHERE h1.bms_stock_id=d.bms_stock_id AND h2.bms_stock_id=f.bms_stock_id AND h3.bms_stock_id=t.bms_stock_id
+AND h1.bms_stock_date BETWEEN '2018-01-01' AND '2018-01-26' AND h2.bms_stock_date='2018-01-01' AND h3.bms_stock_date='2018-01-26' AND 
+h1.bms_status=1
+	 
+	 */
 
 	@RequestMapping(value = { "/getCuurentBmsStock" }, method = RequestMethod.POST)
 	public @ResponseBody GetBmsCurrentStockList getCurrentBmsStockList(@RequestParam("prodDeptId") int prodDeptId,
@@ -157,7 +180,8 @@ public class BmsAndFinGoodStockController {
 
 	@RequestMapping(value = { "/getCurrentProdAndBillQty" }, method = RequestMethod.POST)
 	public @ResponseBody GetCurProdAndBillQtyList getCurrentProdAndBillQty(@RequestParam("prodDate") String prodDate,
-			@RequestParam("catId") int catId, @RequestParam("delStatus") int delStatus) {
+			@RequestParam("catId") int catId, @RequestParam("delStatus") int delStatus, @RequestParam("timestamp") String timestamp,
+			@RequestParam("curTimeStamp") String curTimeStamp) {
 
 		Info info = new Info();
 		
@@ -168,7 +192,7 @@ public class BmsAndFinGoodStockController {
 		try {
 
 			List<GetCurProdAndBillQty> getCurProdAndBillQty = getCurProdAndBillQtyRepo.getCurProdAndBillQty(prodDate,
-					catId, delStatus);
+					catId, delStatus,timestamp,curTimeStamp);
 			if (!getCurProdAndBillQty.isEmpty()) {
 
 				info.setError(false);
@@ -189,10 +213,50 @@ public class BmsAndFinGoodStockController {
 			System.out.println("Exc in Getting cur Prod And Bill Qty list " + e.getMessage());
 			e.printStackTrace();
 		}
-		System.out.println("Stock List BMS " + curProdAndBillList.toString());
+		System.out.println("Stock List BMS curProdAndBillList " + curProdAndBillList.toString());
 		return curProdAndBillList;
 	}
 
+	
+	//All Category
+	@RequestMapping(value = { "/getCurrentProdAndBillQtyAllCat" }, method = RequestMethod.POST)
+	public @ResponseBody GetCurProdAndBillQtyList getCurrentProdAndBillQtyAllCat(@RequestParam("prodDate") String prodDate,
+			 @RequestParam("delStatus") int delStatus,@RequestParam("timestamp") String timestamp,
+			 @RequestParam("curTimeStamp") String curTimeStamp) {
+
+		Info info = new Info();
+		
+		System.out.println("Date Received "+prodDate);
+		
+		GetCurProdAndBillQtyList curProdAndBillList = new GetCurProdAndBillQtyList();
+
+		try {
+
+			List<GetCurProdAndBillQty> getCurProdAndBillQty = getCurProdAndBillQtyRepo.getCurProdAndBillQtyAllCat(prodDate,
+					 delStatus,timestamp,curTimeStamp);
+			if (!getCurProdAndBillQty.isEmpty()) {
+
+				info.setError(false);
+				info.setMessage("success stock list ");
+
+				curProdAndBillList.setGetCurProdAndBillQty(getCurProdAndBillQty);
+			} else {
+
+				info.setError(true);
+				info.setMessage("Error in Getting cur Prod And Bill Qty lis All Cat - size = " + getCurProdAndBillQty.size());
+
+			}
+
+			curProdAndBillList.setInfo(info);
+
+		} catch (Exception e) {
+
+			System.out.println("Exc in Getting cur Prod And Bill Qty list  All Cate" + e.getMessage());
+			e.printStackTrace();
+		}
+		System.out.println("Stock List BMS curProdAndBillList" + curProdAndBillList.toString());
+		return curProdAndBillList;
+	}
 	@RequestMapping(value = { "/getFinGoodStockHeader" }, method = RequestMethod.POST)
 	public @ResponseBody FinishedGoodStock getFinGoodStockHeader(@RequestParam("stockStatus") int stockStatus) {
 
@@ -215,7 +279,32 @@ public class BmsAndFinGoodStockController {
 	}
 	
 	@RequestMapping(value = { "/getFinGoodStockDetail" }, method = RequestMethod.POST)
-	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockDetail(@RequestParam("stockDate") String stockDate) {
+	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockDetail(@RequestParam("stockDate") String stockDate,int catId) {
+
+		List<FinishedGoodStockDetail> finishedGoodStockDetail=null;
+		try {
+						System.out.println("date received for Stock Detail "+stockDate);
+			
+			Date stkDate= Common.convertToSqlDate(stockDate);
+			
+			System.out.println("date After convert for Stock Detail "+stkDate);
+
+			finishedGoodStockDetail=finishedGoodStockDetailRepo.findByStockDateAndCatId(stkDate,catId);
+		} catch (Exception e) {
+			
+			System.out.println("Exce in getting Finished Good Stock Detail By Date " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		
+	System.out.println("output finished Good Detail  = "+finishedGoodStockDetail.toString());
+		return finishedGoodStockDetail;
+
+	}
+	
+	//getFinGoodStockDetail all Category
+	@RequestMapping(value = { "/getFinGoodStockDetailAllCat" }, method = RequestMethod.POST)
+	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockDetailAllCat(@RequestParam("stockDate") String stockDate) {
 
 		List<FinishedGoodStockDetail> finishedGoodStockDetail=null;
 		try {

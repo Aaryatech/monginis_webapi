@@ -18,6 +18,7 @@ import com.ats.webapi.model.BmsStockHeader;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.stock.GetBmsStock;
 import com.ats.webapi.repository.BmsStockDetailedRepository;
+import com.ats.webapi.repository.bmsstock.GetBmsStockRepository;
 import com.ats.webapi.service.bmsstock.BmsStockService;
 
 
@@ -102,6 +103,28 @@ public class BmsStockApiController {
 		return bmsStockDetailedList;
 
 	}
+	
+	@Autowired
+	GetBmsStockRepository getBmsStockRepository;
+	
+	@RequestMapping(value = { "/getBmsStockBetDateMonth" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetBmsStock> getBmsStockBetDateMonth(@RequestParam("fromDate")String fromDate , @RequestParam("toDate")String toDate , @RequestParam("rmType")int rmType,@RequestParam("bmsStatus") int bmsStatus) {
+
+		List<GetBmsStock> bmsStockDetailedList = new ArrayList<GetBmsStock>();
+		try {
+
+			bmsStockDetailedList=getBmsStockRepository.getStockBetDateMonth(fromDate, toDate, rmType, bmsStatus);
+
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			System.out.println("Exce in bmsstock bet date or month    " + e.getMessage());
+		}
+
+		return bmsStockDetailedList;
+
+	}
+	
 	
 	@RequestMapping(value = { "/getBmsStockHeader" }, method = RequestMethod.POST)
 	public @ResponseBody BmsStockHeader getBmsStockHeader(@RequestParam("status")int status ,  @RequestParam("rmType")int rmType) {
