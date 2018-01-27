@@ -1,6 +1,7 @@
 package com.ats.webapi.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * @author ats-12
@@ -48,11 +51,41 @@ public class FranchiseSup implements Serializable{
 	
 	private String pass5;
 	
+    private int frequency;
+	
+	private Date pestControlDate;
+	
+	private Date remainderDate;
+	
 	private int delStatus;
 	@Column(name="is_tally_sync")
 	private int isTallySync;
 
 	
+	public int getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(int frequency) {
+		this.frequency = frequency;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getPestControlDate() {
+		return pestControlDate;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public void setPestControlDate(Date pestControlDate) {
+		this.pestControlDate = pestControlDate;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getRemainderDate() {
+		return remainderDate;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public void setRemainderDate(Date remainderDate) {
+		this.remainderDate = remainderDate;
+	}
+
 	public int getIsTallySync() {
 		return isTallySync;
 	}
@@ -169,7 +202,9 @@ public class FranchiseSup implements Serializable{
 	public String toString() {
 		return "FranchiseSup [error=" + error + ", message=" + message + ", id=" + id + ", frId=" + frId + ", frPanNo="
 				+ frPanNo + ", frState=" + frState + ", frCountry=" + frCountry + ", pass1=" + pass1 + ", pass2="
-				+ pass2 + ", pass3=" + pass3 + ", pass4=" + pass4 + ", pass5=" + pass5 + ", delStatus=" + delStatus
-				+ "]";
+				+ pass2 + ", pass3=" + pass3 + ", pass4=" + pass4 + ", pass5=" + pass5 + ", frequency=" + frequency
+				+ ", pestControlDate=" + pestControlDate + ", remainderDate=" + remainderDate + ", delStatus="
+				+ delStatus + ", isTallySync=" + isTallySync + "]";
 	}
+    
 }

@@ -12,9 +12,11 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
+import com.ats.webapi.model.tray.TrayType;
 import com.ats.webapi.repository.GetItemSupRepository;
 import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.ItemSupRepository;
+import com.ats.webapi.repository.tray.TrayTypeRepository;
 
 @Service
 public class ItemServiceImpl implements ItemService{
@@ -24,8 +26,12 @@ public class ItemServiceImpl implements ItemService{
 	
 	@Autowired
 	private ItemSupRepository itemSupRepository;
+	
 	@Autowired
 	private GetItemSupRepository getItemSupRepository;
+	
+	@Autowired
+	TrayTypeRepository trayTypeRepository;
 	
 	String jsonUser = "{}";
 
@@ -171,6 +177,20 @@ public class ItemServiceImpl implements ItemService{
 
 		GetItemSup itemSup=getItemSupRepository.findGetItemSupById(id);
 		return itemSup;
+	}
+
+	@Override
+	public int getUniqueItemCode() {
+
+		int maxId=itemRepository.findMaxId();
+		return maxId;
+	}
+
+	@Override
+	public List<TrayType> getTrayTypes() {
+
+		List<TrayType> trayTypeList=trayTypeRepository.findAllByDelStatus(0);
+		return trayTypeList;
 	}
 
 	

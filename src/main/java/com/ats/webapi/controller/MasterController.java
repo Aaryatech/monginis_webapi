@@ -20,6 +20,7 @@ import com.ats.webapi.model.GetItemSup;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
+import com.ats.webapi.model.tray.TrayType;
 import com.ats.webapi.repository.FrListForSuppRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
 import com.ats.webapi.repository.SpCkDeleteOrderRepository;
@@ -317,6 +318,24 @@ public class MasterController {
 					int maxId =franchiseeRepository.getUnigueFrCode();
 					
 					return maxId;
+				}
+	          //------------------------------------------------------------------------
+				// ------------------------Get Unique Item Code------------------------------------
+				@RequestMapping(value = { "/getUniqueItemCode" }, method = RequestMethod.GET)
+				public @ResponseBody Integer getUniqueItemCode() {
+
+					int maxId =itemService.getUniqueItemCode();
+					
+					return maxId;
+				}
+	          //------------------------------------------------------------------------
+				// ------------------------Get TrayTypes------------------------------------
+				@RequestMapping(value = { "/getTrayTypes" }, method = RequestMethod.GET)
+				public @ResponseBody List<TrayType> getTrayTypes() {
+
+					List<TrayType> trayTypes =itemService.getTrayTypes();
+					
+					return trayTypes;
 				}
 	          //------------------------------------------------------------------------
 				

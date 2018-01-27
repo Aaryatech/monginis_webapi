@@ -1,12 +1,15 @@
 package com.ats.webapi.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class GetFranchiseSup implements Serializable{
@@ -38,9 +41,39 @@ public class GetFranchiseSup implements Serializable{
 
 	private String pass5;
 
+    private int frequency;
+	
+	private String pestControlDate;
+	
+	private String remainderDate;
+	
 	private int isTallySync;
 	
 	
+	public int getFrequency() {
+		return frequency;
+	}
+
+	public void setFrequency(int frequency) {
+		this.frequency = frequency;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public String getPestControlDate() {
+		return pestControlDate;
+	}
+
+	public void setPestControlDate(String pestControlDate) {
+		this.pestControlDate = pestControlDate;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public String getRemainderDate() {
+		return remainderDate;
+	}
+
+	public void setRemainderDate(String remainderDate) {
+		this.remainderDate = remainderDate;
+	}
+
 	public int getIsTallySync() {
 		return isTallySync;
 	}

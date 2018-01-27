@@ -10,6 +10,7 @@ import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
 import com.ats.webapi.model.ItemWithSubCat;
+import com.ats.webapi.model.tray.TrayType;
 
 public interface ItemService {
 
@@ -24,5 +25,7 @@ public interface ItemService {
 	public Info deleteItemSup(int itemId);
 	public ItemSupList getItemSupList();
 	public GetItemSup getItemSup(int id);
+	public int getUniqueItemCode();
+	public List<TrayType> getTrayTypes();
 
 }

@@ -34,6 +34,8 @@ public class GetItemSup implements Serializable{
 	
 	private String itemHsncd;
 	
+	private int uomId;
+	
 	private String itemUom;
 	
 	private float actualWeight;
@@ -49,8 +51,16 @@ public class GetItemSup implements Serializable{
 	private int isAllowBday;
 	
 	private int delStatus;
-
+    
 	
+	public int getUomId() {
+		return uomId;
+	}
+
+	public void setUomId(int uomId) {
+		this.uomId = uomId;
+	}
+
 	public boolean isError() {
 		return error;
 	}
@@ -165,10 +175,12 @@ public class GetItemSup implements Serializable{
 
 	@Override
 	public String toString() {
-		return "GetItemSup [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", itemHsncd=" + itemHsncd
-				+ ", itemUom=" + itemUom + ", actualWeight=" + actualWeight + ", baseWeight=" + baseWeight
-				+ ", inputPerQty=" + inputPerQty + ", isGateSale=" + isGateSale + ", isGateSaleDisc=" + isGateSaleDisc
-				+ ", isAllowBday=" + isAllowBday + ", delStatus=" + delStatus + "]";
+		return "GetItemSup [error=" + error + ", message=" + message + ", id=" + id + ", itemId=" + itemId
+				+ ", itemName=" + itemName + ", itemHsncd=" + itemHsncd + ", uomId=" + uomId + ", itemUom=" + itemUom
+				+ ", actualWeight=" + actualWeight + ", baseWeight=" + baseWeight + ", inputPerQty=" + inputPerQty
+				+ ", isGateSale=" + isGateSale + ", isGateSaleDisc=" + isGateSaleDisc + ", isAllowBday=" + isAllowBday
+				+ ", delStatus=" + delStatus + "]";
 	}
-	
+
+
 }

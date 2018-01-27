@@ -33,6 +33,8 @@ public class ItemSup implements Serializable{
 	
 	private String itemUom;
 	
+	private int uomId;
+	
 	private float actualWeight;
 	
 	private float baseWeight;
@@ -48,6 +50,14 @@ public class ItemSup implements Serializable{
 	private int delStatus;
 
 	
+	public int getUomId() {
+		return uomId;
+	}
+
+	public void setUomId(int uomId) {
+		this.uomId = uomId;
+	}
+
 	public boolean getError() {
 		return error;
 	}
