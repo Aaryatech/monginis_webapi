@@ -13,4 +13,5 @@ public interface FlavourRepository extends JpaRepository<Flavour, Integer>{
 	Flavour save(Flavour flavour);
     Flavour findOne(int spfId);
 	List<Flavour> findByDelStatus(int i);
+	List<Flavour> findByDelStatusOrderBySpfNameAsc(int i);
 }

@@ -43,7 +43,7 @@ public class SpMessageServiceImpl implements SpMessageService
 		 List<SpMessage> spmsg=new ArrayList<SpMessage>();
 		  spMessageList spmsglist=new spMessageList();
 		ErrorMessage errorMessage=new ErrorMessage();
-		spmsg=spMessageRepository.findByDelStatus(0);
+		spmsg=spMessageRepository.findByDelStatusOrderBySpMsgTextAsc(0);
 		if(spmsg!=null)
 		{
 			

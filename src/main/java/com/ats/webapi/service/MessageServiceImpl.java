@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.commons.Firebase;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Message;
+import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.MessageRepository;
 import com.ats.webapi.util.JsonUtil;
 
@@ -18,6 +20,9 @@ public class MessageServiceImpl implements MessageService {
 	@Autowired
 	MessageRepository messageRepository;
 
+	@Autowired
+	FranchiseSupRepository franchiseSupRepository;
+	
 	@Override
 	public String save(Message message) {
 		
@@ -28,6 +33,20 @@ public class MessageServiceImpl implements MessageService {
 					&& !message.getMsgImage().trim().equals("")&& message.getMsgImage()!=null 
 					&& !message.getMsgImage().trim().equals("")) {
 				message = messageRepository.save(message);
+				
+				List<String> frTokens=franchiseSupRepository.findTokens();
+				
+				 try {
+			    	 for(String token:frTokens)
+			    	 {
+			    	
+			          Firebase.sendPushNotifForCommunication(token,message.getMsgHeader(),message.getMsgDetails(),"notice");
+			    	 }
+			         }
+			         catch(Exception e)
+			         {
+				       e.printStackTrace();
+			         }
 				Info info= new Info();
 				info.setError(false);
 				info.setMessage("Message inserted Successfully");

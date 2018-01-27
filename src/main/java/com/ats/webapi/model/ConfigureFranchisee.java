@@ -47,10 +47,10 @@ public class ConfigureFranchisee {
 	private String toTime;
 
 	@Column(name="day")
-	private int day;
+	private String day;
 	
 	@Column(name="date")
-	private int date;
+	private String date;
 	
 	@Column(name="item_show")
 	private String itemShow;
@@ -61,12 +61,20 @@ public class ConfigureFranchisee {
 	public int getSettingId() {
 		return settingId;
 	}
+    
+	public String getDay() {
+		return day;
+	}
 
-	public int getDate() {
+	public void setDay(String day) {
+		this.day = day;
+	}
+
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(int date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -115,12 +123,6 @@ public class ConfigureFranchisee {
 	public void setToTime(String toTime) {
 		this.toTime = toTime;
 	}
-	public int getDay() {
-		return day;
-	}
-	public void setDay(int day) {
-		this.day = day;
-	}
 	
 	public String getItemShow() {
 		return itemShow;
@@ -134,5 +136,14 @@ public class ConfigureFranchisee {
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
 	}
+
+	@Override
+	public String toString() {
+		return "ConfigureFranchisee [settingId=" + settingId + ", frId=" + frId + ", menuId=" + menuId + ", catId="
+				+ catId + ", subCatId=" + subCatId + ", settingType=" + settingType + ", fromTime=" + fromTime
+				+ ", toTime=" + toTime + ", day=" + day + ", date=" + date + ", itemShow=" + itemShow + ", delStatus="
+				+ delStatus + "]";
+	}
+	
 		
 }

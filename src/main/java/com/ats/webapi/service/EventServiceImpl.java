@@ -47,7 +47,7 @@ public class EventServiceImpl implements EventService {
 
 	@Override
 	public List<Event> findAllEvent() {
-		List<Event> eventList=eventRepository.findByDelStatus(0);
+		List<Event> eventList=eventRepository.findByDelStatusOrderBySpeNameAsc(0);
 	return eventList;
 	}
 

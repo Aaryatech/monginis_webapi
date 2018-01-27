@@ -18,5 +18,7 @@ public interface RateRepository extends JpaRepository<Rates, Integer> {
 		List<Rates> findByDelStatus(int i);
 
 		Rates findOne(int sprId);
+
+		List<Rates> findByDelStatusOrderBySprNameAsc(int i);
 	}
 

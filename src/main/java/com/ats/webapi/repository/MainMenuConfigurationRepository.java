@@ -14,7 +14,7 @@ public interface MainMenuConfigurationRepository extends JpaRepository<AllMenus,
 	
 	public AllMenus save(AllMenus  allMenus);
 
-	public List<AllMenus> findByDelStatus(int i);
+	public List<AllMenus> findByDelStatusOrderByMenuTitleAsc(int i);
 	
 	@Query(value="SELECT m_fr_menu_show.* from m_fr_menu_show WHERE m_fr_menu_show.cat_id=:catId AND m_fr_menu_show.del_status=:i",nativeQuery=true)
 	public List<AllMenus> findByMainCatId(@Param("catId") int catId, @Param("i")int i);

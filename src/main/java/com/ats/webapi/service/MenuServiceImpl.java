@@ -71,7 +71,7 @@ public class MenuServiceImpl implements MenuService{
 
 	public AllMenuJsonResponse findAllMenu() {
 		 List<AllMenus> menus=new ArrayList<AllMenus>();
-		 menus=mainMenuConfigurationRepository.findByDelStatus(0);;
+		 menus=mainMenuConfigurationRepository.findByDelStatusOrderByMenuTitleAsc(0);;
 		 AllMenuJsonResponse menuJsonResponse=new AllMenuJsonResponse();
 
 		menuJsonResponse.setMenuConfigurationPage(menus);
@@ -83,7 +83,7 @@ public class MenuServiceImpl implements MenuService{
 	}
 	public List<AllMenus> findAllMenus() {
 		 List<AllMenus> menus=new ArrayList<AllMenus>();
-		 menus=mainMenuConfigurationRepository.findByDelStatus(0);;
+		 menus=mainMenuConfigurationRepository.findByDelStatusOrderByMenuTitleAsc(0);;
 		return menus;
 	}
 

@@ -7,9 +7,12 @@ import java.util.List;
 import org.hamcrest.core.IsAnything;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.ats.webapi.commons.Firebase;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Scheduler;
 import com.ats.webapi.model.SchedulerList;
+import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.SchedulerRepository;
 import com.ats.webapi.util.JsonUtil;
 
@@ -22,6 +25,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 	@Autowired
 	SchedulerRepository schedulerRepository;
 	
+	@Autowired
+	FranchiseSupRepository franchiseSupRepository;
+	
 	@Override
 	public String save(Scheduler scheduler) {
 		SchedulerList schedulerList=new SchedulerList();
@@ -32,6 +38,19 @@ public class SchedulerServiceImpl implements SchedulerService {
 					scheduler.getSchOccasionname()!=null && !scheduler.getSchOccasionname().trim().equals("")){
 					scheduler = schedulerRepository.save(scheduler);
 					
+					List<String> frTokens=franchiseSupRepository.findTokens();
+					
+					 try {
+				    	 for(String token:frTokens)
+				    	 {
+				    	
+				          Firebase.sendPushNotifForCommunication(token,scheduler.getSchOccasionname(),scheduler.getSchMessage(),"news");
+				    	 }
+				         }
+				         catch(Exception e)
+				         {
+					       e.printStackTrace();
+				         }
 					info.setError(false);
 					info.setMessage("Scheduler inserted Successfully");
 					jsonScheduler = JsonUtil.javaToJson(info);

@@ -42,7 +42,7 @@ public class FlavourServiceImpl implements FlavourService {
 
 	@Override
 	public List<Flavour> findAllFlavour() {
-		List<Flavour> flavourList=flavourRepository.findByDelStatus(0);
+		List<Flavour> flavourList=flavourRepository.findByDelStatusOrderBySpfNameAsc(0);
 	return flavourList;
 	}
 

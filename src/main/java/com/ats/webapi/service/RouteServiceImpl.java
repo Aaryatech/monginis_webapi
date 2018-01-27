@@ -46,7 +46,7 @@ public class RouteServiceImpl implements RouteService {
 	@Override
 	public List<Route> showAllRoute() {
 		String jsonRouteList="{}";
-		List<Route> routeList=routeRepository.findByDelStatus(0);
+		List<Route> routeList=routeRepository.findByDelStatusOrderByRouteNameAsc(0);
 		jsonRouteList=JsonUtil.javaToJson(routeList);
 	return routeList;
 	}

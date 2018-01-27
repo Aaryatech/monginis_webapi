@@ -11,6 +11,7 @@ public interface RouteRepository extends JpaRepository<Route, Integer> {
 	Route save(Route route);
 	List<Route> findAll();
 	Route findOne(int routeId);
-	List<Route> findByDelStatus(int id);	
+	List<Route> findByDelStatus(int id);
+	List<Route> findByDelStatusOrderByRouteNameAsc(int i);	
 
 }

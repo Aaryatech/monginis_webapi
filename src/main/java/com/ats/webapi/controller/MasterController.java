@@ -21,6 +21,7 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
 import com.ats.webapi.repository.FrListForSuppRepository;
+import com.ats.webapi.repository.FranchiseeRepository;
 import com.ats.webapi.repository.SpCkDeleteOrderRepository;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.ItemService;
@@ -37,6 +38,9 @@ public class MasterController {
 	
 	@Autowired
 	RegularSpCkOrderService regularSpCkOrderService;
+	
+	@Autowired
+	FranchiseeRepository franchiseeRepository;
 	
 	@Autowired
 	SpCkDeleteOrderRepository spCkDeleteOrderRepository;
@@ -306,5 +310,14 @@ public class MasterController {
 					return info;
 				}
 	          //------------------------------------------------------------------------	
+				// ------------------------Get Unique Franchise Code------------------------------------
+				@RequestMapping(value = { "/getUnigueFrCode" }, method = RequestMethod.GET)
+				public @ResponseBody Integer getUnigueFrCode() {
+
+					int maxId =franchiseeRepository.getUnigueFrCode();
+					
+					return maxId;
+				}
+	          //------------------------------------------------------------------------
 				
 }

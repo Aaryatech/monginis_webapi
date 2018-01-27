@@ -12,6 +12,7 @@ public interface EventRepository extends JpaRepository<Event, Integer>{
 	public List<Event> findAll();
 	public List<Event> findByDelStatus(int i);
 	public Event findOne(int speId);
+	public List<Event> findByDelStatusOrderBySpeNameAsc(int i);
 	
 		
 

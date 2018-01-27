@@ -1477,7 +1477,7 @@ try {
 	public String configureFranchisee(@RequestParam("frId") int frId, @RequestParam("menuId") int menuId,
 			@RequestParam("catId") int catId, @RequestParam("settingType") int settingType,
 			@RequestParam("fromTime") String fromTime, @RequestParam("toTime") String toTime,
-			@RequestParam("day") int day, @RequestParam("date") int date, @RequestParam("itemShow") String itemShow)
+			@RequestParam("day") String day, @RequestParam("date") String date, @RequestParam("itemShow") String itemShow)
 			throws ParseException {
 
 		/*
@@ -3290,8 +3290,8 @@ try {
 	// update config franchisee 11 sept
 	@RequestMapping(value = { "/updateConfFr" }, method = RequestMethod.POST)
 	public @ResponseBody String updateFrConfig(@RequestParam int settingId, @RequestParam int settingType,
-			@RequestParam String fromTime, @RequestParam String toTime, @RequestParam int day,
-			@RequestParam int date, @RequestParam String itemShow) {
+			@RequestParam String fromTime, @RequestParam String toTime, @RequestParam String day,
+			@RequestParam String date, @RequestParam String itemShow) {
 
 		ConfigureFranchisee configureFranchisee = connfigureService.findFranchiseeById(settingId);
 		Info info = new Info();

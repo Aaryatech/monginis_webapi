@@ -27,4 +27,16 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	 @Query("UPDATE User SET role_id=:roleId WHERE usr_id=:id")
 	 int updateRoleIdByEmpId(@Param("id")int id, @Param("roleId")int roleId);
 	
+	@Transactional
+	 @Modifying
+	 @Query("UPDATE User SET token=:token WHERE usr_id=:id")
+	int updateUserToken(@Param("id")int userId,@Param("token") String token);
+	
+	
+	@Query(value="select token from m_user where del_status=0",nativeQuery=true)
+	List<String> findTokens();
+	
+	@Query(value="select token from m_user where usr_id not in (:usrId) AND del_status=0",nativeQuery=true)
+	List<String> findTokensNotIn(@Param("usrId")int frId);
+	
 }

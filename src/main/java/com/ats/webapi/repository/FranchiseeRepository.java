@@ -22,7 +22,7 @@ public interface FranchiseeRepository extends JpaRepository<Franchisee, Integer>
 
 		//public Franchisee findByFrCode(String frCode);
 
-		public List<Franchisee> findAllByDelStatus(int i);
+		//public List<Franchisee> findAllByDelStatus(int i);
 
 		public Franchisee findByFrCodeAndDelStatus(String frCode, int i);
 
@@ -30,6 +30,11 @@ public interface FranchiseeRepository extends JpaRepository<Franchisee, Integer>
 		@Transactional
 		@Query("Update Franchisee  SET fr_password=:adminPwd WHERE fr_id=:frId")
 		public int updateAdminPwd(@Param("frId")int frId,@Param("adminPwd")String adminPwd);
+
+		@Query(value="select MAX(fr_id)+1 from m_franchisee",nativeQuery=true)
+		public int getUnigueFrCode();
+
+		public List<Franchisee> findAllByDelStatusOrderByFrNameAsc(int i);
 
 		
 		

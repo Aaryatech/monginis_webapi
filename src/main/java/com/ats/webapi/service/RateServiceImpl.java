@@ -49,7 +49,7 @@ public class RateServiceImpl implements RateService
 		 List<Rates> items=new ArrayList<Rates>();
 		 RateList rateList=new RateList();
 		ErrorMessage errorMessage=new ErrorMessage();
-		items=rateRepository.findByDelStatus(0);
+		items=rateRepository.findByDelStatusOrderBySprNameAsc(0);
 		if(items!=null)
 		{
 			
