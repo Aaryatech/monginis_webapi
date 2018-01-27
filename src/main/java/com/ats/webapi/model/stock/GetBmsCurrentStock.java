@@ -34,7 +34,8 @@ public class GetBmsCurrentStock {
 				+ prod_issue_qty + ", prod_rejected_qty=" + prod_rejected_qty + ", prod_return_qty=" + prod_return_qty
 				+ ", mixing_issue_qty=" + mixing_issue_qty + ", mixing_rejected_qty=" + mixing_rejected_qty
 				+ ", mixing_return_qty=" + mixing_return_qty + ", store_issue_qty=" + store_issue_qty
-				+ ", store_rejected_qty=" + store_rejected_qty + ", openingQty=" + openingQty + "]";
+				+ ", store_rejected_qty=" + store_rejected_qty + ", bmsOpeningStock=" + bmsOpeningStock
+				+ ", openingQty=" + openingQty + "]";
 	}
 	float prod_issue_qty;
 	float prod_rejected_qty;
@@ -45,12 +46,15 @@ public class GetBmsCurrentStock {
 	float mixing_return_qty;
 	float store_issue_qty; 
 	float store_rejected_qty;
-	float bms_opening_stock;
-	public float getBms_opening_stock() {
-		return bms_opening_stock;
+	float bmsOpeningStock;
+	
+	
+	
+	public float getBmsOpeningStock() {
+		return bmsOpeningStock;
 	}
-	public void setBms_opening_stock(float bms_opening_stock) {
-		this.bms_opening_stock = bms_opening_stock;
+	public void setBmsOpeningStock(float bmsOpeningStock) {
+		this.bmsOpeningStock = bmsOpeningStock;
 	}
 	@Transient
 	float openingQty=0;

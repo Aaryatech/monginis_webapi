@@ -126,7 +126,7 @@ h1.bms_status=1
 	}
 	
 	
-	@RequestMapping(value = { "/getCurentBmsStockRMBetDate" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/getBmsStockRMBetDate" }, method = RequestMethod.POST)
 	public @ResponseBody GetBmsCurrentStockList getCurrentBmsStocRMBetDate(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 		

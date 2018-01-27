@@ -14,7 +14,7 @@ public interface CurrentBmsSFStockRepo extends JpaRepository<GetCurrentBmsSFStoc
 	
 	@Query(value=" SELECT m_item_sf_header.sf_uom_id,"
 			+ "m_item_sf_header.sf_id,m_item_sf_header.sf_name,COALESCE(s7.bms_opening_stock,0) AS bms_opening_stock\n" + 
-			"as bms_opening_stock ,COALESCE(s1.prod_issue_qty,0) as prod_issue_qty, COALESCE(s3.prod_rejected_qty,0) as prod_rejected_qty, \n" + 
+			" ,COALESCE(s1.prod_issue_qty,0) as prod_issue_qty, COALESCE(s3.prod_rejected_qty,0) as prod_rejected_qty, \n" + 
 			"COALESCE(s3.prod_return_qty,0) as prod_return_qty,COALESCE(s2.mixing_production_qty,0) as mixing_issue_qty, \n" + 
 			"COALESCE(s4.mixing_rejected_qty,0) AS mixing_rejected_qty FROM m_item_sf_header\n" + 
 			"\n" + 
