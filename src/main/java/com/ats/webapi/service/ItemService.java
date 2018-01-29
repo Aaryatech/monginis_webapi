@@ -19,7 +19,7 @@ public interface ItemService {
 	public ItemsList findAllItems();
 	public Item findItem(int id);
 	public List<Item> findFrItems(String itemGrp1);
-	public List<Item> getAllItems();
+ 	public List<Item> getAllItems();
 	public List<Item> findItemsByItemId(List<Integer> itemList);
 	public ItemSup saveItemSup(ItemSup itemSup);
 	public Info deleteItemSup(int itemId);

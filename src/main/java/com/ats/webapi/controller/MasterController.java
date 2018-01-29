@@ -28,7 +28,7 @@ import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.OrderService;
 import com.ats.webapi.service.RegularSpCkOrderService;
-
+  
 @RestController
 public class MasterController {
 
