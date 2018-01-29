@@ -54,6 +54,9 @@ public class FrMenus {
 	@Column(name = "day")
 	private String day;
 	
+	@Column(name = "date")
+	private String date;
+	
 	
 	public String getDay() {
 		return day;
@@ -167,14 +170,24 @@ public class FrMenus {
 		this.selectedMenuImage = selectedMenuImage;
 	}
 
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
+	}
+
 	@Override
 	public String toString() {
 		return "FrMenus [settingId=" + settingId + ", fromTime=" + fromTime + ", toTime=" + toTime + ", itemShow="
 				+ itemShow + ", menuDesc=" + menuDesc + ", menuImage=" + menuImage + ", selectedMenuImage="
 				+ selectedMenuImage + ", menuTitle=" + menuTitle + ", settingType=" + settingType + ", frId=" + frId
 				+ ", menuId=" + menuId + ", catId=" + catId + ", isSameDayApplicable=" + isSameDayApplicable + ", day="
-				+ day + "]";
+				+ day + ", date=" + date + "]";
 	}
+
+	 
 
 	
 
