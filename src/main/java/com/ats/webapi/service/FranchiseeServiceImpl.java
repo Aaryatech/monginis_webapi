@@ -328,6 +328,9 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 		}
 		catch(Exception e)
 		{
+			frTotalSale.setFrId(frId);
+			frTotalSale.setFrId(month);
+			frTotalSale.setTotalSale(0);
 			System.out.println("Exc In getFrTargetList"+e.getMessage());
 		}
 		return frTotalSale;

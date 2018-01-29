@@ -35,6 +35,10 @@ public class ItemSup implements Serializable{
 	
 	private int uomId;
 	
+    private int trayType;
+	
+	private int noOfItemPerTray;
+	
 	private float actualWeight;
 	
 	private float baseWeight;
@@ -50,6 +54,22 @@ public class ItemSup implements Serializable{
 	private int delStatus;
 
 	
+	public int getTrayType() {
+		return trayType;
+	}
+
+	public void setTrayType(int trayType) {
+		this.trayType = trayType;
+	}
+
+	public int getNoOfItemPerTray() {
+		return noOfItemPerTray;
+	}
+
+	public void setNoOfItemPerTray(int noOfItemPerTray) {
+		this.noOfItemPerTray = noOfItemPerTray;
+	}
+
 	public int getUomId() {
 		return uomId;
 	}
