@@ -260,7 +260,7 @@ h1.bms_status=1
 	@RequestMapping(value = { "/getFinGoodStockHeader" }, method = RequestMethod.POST)
 	public @ResponseBody FinishedGoodStock getFinGoodStockHeader(@RequestParam("stockStatus") int stockStatus) {
 
-		FinishedGoodStock finishHeader = null;
+		FinishedGoodStock finishHeader =new FinishedGoodStock();
 
 		try {
 
@@ -272,11 +272,34 @@ h1.bms_status=1
 			e.printStackTrace();
 
 		}
+		if(finishHeader!=null)
+	System.out.println("output finished Good Header = "+finishHeader.toString());
+		return finishHeader;
+
+	}
+	
+	
+	@RequestMapping(value = { "/getFinGoodStockHeaderByDate" }, method = RequestMethod.POST)
+	public @ResponseBody FinishedGoodStock getFinGoodStockHeaderbyDate(@RequestParam("stockDate") String StockDate) {
+
+		FinishedGoodStock finishHeader = null;
+
+		try {
+				Date stkDate=Common.convertToSqlDate(StockDate);
+			finishHeader = finishedGoodStockRepo.findByFinGoodStockDate(stkDate);
+		} catch (Exception e) {
+
+			System.out.println("Exce in getting Finished Good Stock Header " + e.getMessage());
+			e.printStackTrace();
+
+		}
 		
 	System.out.println("output finished Good Header = "+finishHeader.toString());
 		return finishHeader;
 
 	}
+	
+	
 	
 	@RequestMapping(value = { "/getFinGoodStockDetail" }, method = RequestMethod.POST)
 	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockDetail(@RequestParam("stockDate") String stockDate,int catId) {
