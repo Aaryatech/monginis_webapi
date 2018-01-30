@@ -58,6 +58,7 @@ public class FranchiseSup implements Serializable{
 	private Date remainderDate;
 	
 	private int delStatus;
+	
 	@Column(name="is_tally_sync")
 	private int isTallySync;
 

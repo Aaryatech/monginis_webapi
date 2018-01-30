@@ -18,7 +18,7 @@ public interface MessageRepository extends JpaRepository<Message, Integer> {
 	Message findOne(int id);
 	List<Message> findByDelStatus(int i);
 	
-@Query(value="SELECT * from t_message WHERE  :cDate BETWEEN msg_frdt AND msg_todt AND is_active=1 AND del_status=0 "
+@Query(value="SELECT * from t_message WHERE  :cDate BETWEEN msg_frdt AND msg_todt AND is_active=1 AND del_status=0 order by msg_id Desc "
 			
 			
 			,nativeQuery=true)
