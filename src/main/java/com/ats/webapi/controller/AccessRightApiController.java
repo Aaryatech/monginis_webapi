@@ -26,7 +26,7 @@ public class AccessRightApiController {
 	@Autowired
 	AccessRightService accessRightService;
 	
-	
+	 
 	@RequestMapping(value = { "/getAllModuleAndSubModule" }, method = RequestMethod.GET)
 	public @ResponseBody AccessRightModuleList getAllModuleAndSubModule() {
 		
