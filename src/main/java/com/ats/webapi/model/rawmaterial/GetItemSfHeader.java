@@ -42,12 +42,23 @@ public class GetItemSfHeader {
 	
 	@Column(name="reorder_level_qty")
 	private float reorderLevelQty;
-
+	
+	@Column(name="mul_factor")
+	private float mulFactor;
+	
 	@Column(name="del_status")
 	private int delStatus;
 
 	
 	
+	public float getMulFactor() {
+		return mulFactor;
+	}
+
+	public void setMulFactor(float mulFactor) {
+		this.mulFactor = mulFactor;
+	}
+
 	public int getSfId() {
 		return sfId;
 	}
@@ -138,6 +149,15 @@ public class GetItemSfHeader {
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
 	}
+
+	@Override
+	public String toString() {
+		return "GetItemSfHeader [sfName=" + sfName + ", sfId=" + sfId + ", sfType=" + sfType + ", sfTypeName="
+				+ sfTypeName + ", sfUomId=" + sfUomId + ", sfWeight=" + sfWeight + ", stockQty=" + stockQty
+				+ ", minLevelQty=" + minLevelQty + ", maxLevelQty=" + maxLevelQty + ", reorderLevelQty="
+				+ reorderLevelQty + ", mulFactor=" + mulFactor + ", delStatus=" + delStatus + "]";
+	}
+	
 	
 	
 }

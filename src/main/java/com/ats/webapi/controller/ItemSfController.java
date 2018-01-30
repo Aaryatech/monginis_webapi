@@ -123,7 +123,7 @@ public class ItemSfController {
 	@RequestMapping(value = { "/getItemSfHeaderList" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetItemSfHeader> getItemSfHeader(@RequestParam("delStatus")int delStatus) {
 		
-		List<GetItemSfHeader> sfHeader=null;
+		List<GetItemSfHeader> sfHeader=new ArrayList<GetItemSfHeader>();
 		
 		try {
 			

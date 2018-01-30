@@ -17,14 +17,25 @@ public interface  ItemSfHeaderRepository extends JpaRepository<GetItemSfHeader, 
 
 //manual query two tables
 	
-	@Query(value = "SELECT m_sf_type.sf_type_name, m_item_sf_header.sf_name,m_item_sf_header.sf_id,"
-			+ "m_item_sf_header.sf_type,"
-			+ "m_item_sf_header.sf_uom_id,m_item_sf_header.sf_weight,m_item_sf_header.stock_qty,"
-			+ "m_item_sf_header.min_level_qty,"
-			+ "m_item_sf_header.max_level_qty,"
-			+ "m_item_sf_header.reorder_level_qty,m_item_sf_header.del_status"
-			+ " from m_item_sf_header,m_sf_type WHERE"
-			+ " m_item_sf_header.sf_type=m_sf_type.id AND m_item_sf_header.del_status=:delStatus", nativeQuery = true)
+	@Query(value = " SELECT\n" + 
+			"        m_sf_type.sf_type_name,\n" + 
+			"        m_item_sf_header.sf_name,\n" + 
+			"        m_item_sf_header.sf_id,\n" + 
+			"        m_item_sf_header.sf_type,\n" + 
+			"        m_item_sf_header.sf_uom_id,\n" + 
+			"        m_item_sf_header.sf_weight,\n" + 
+			"        m_item_sf_header.stock_qty,\n" + 
+			"        m_item_sf_header.min_level_qty,\n" + 
+			"        m_item_sf_header.max_level_qty,\n" + 
+			"        m_item_sf_header.reorder_level_qty,\n" + 
+			"        m_item_sf_header.mul_factor,\n" + 
+			"        m_item_sf_header.del_status \n" + 
+			"    from\n" + 
+			"        m_item_sf_header,\n" + 
+			"        m_sf_type \n" + 
+			"    WHERE\n" + 
+			"        m_item_sf_header.sf_type=m_sf_type.id \n" + 
+			"        AND m_item_sf_header.del_status=:delStatus", nativeQuery = true)
 
 	List<GetItemSfHeader> getSfItemHeader(@Param("delStatus")int delStatus);
 	
