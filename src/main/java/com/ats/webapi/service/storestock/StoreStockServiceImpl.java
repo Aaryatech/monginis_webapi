@@ -72,14 +72,23 @@ public class StoreStockServiceImpl implements StoreStockService{
 
 	@Override
 	public StoreStockHeader getCurrentStockHeader(int status) {
-		 
-		StoreStockHeader storeStockHeader=storeStockHeaderRepository.findByStoreStockStatus(status);
 		
-		int storeStockHeaderId=storeStockHeader.getStoreStockId();
+		StoreStockHeader storeStockHeader = new StoreStockHeader();
+		try
+		{
+		 storeStockHeader=storeStockHeaderRepository.findByStoreStockStatus(status);
 		
-		List<StoreStockDetail> storeStockDetailList=storeStockDetailRepository.findByStoreStockId(storeStockHeaderId);
+		if(storeStockHeader!=null)
+		{
+			int storeStockHeaderId=storeStockHeader.getStoreStockId(); 
+			List<StoreStockDetail> storeStockDetailList=storeStockDetailRepository.findByStoreStockId(storeStockHeaderId); 
+			storeStockHeader.setStoreStockDetailList(storeStockDetailList);
+		}
 		
-		storeStockHeader.setStoreStockDetailList(storeStockDetailList);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 		
 		return storeStockHeader;
 	}
