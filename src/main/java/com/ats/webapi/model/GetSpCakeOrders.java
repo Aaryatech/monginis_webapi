@@ -74,6 +74,11 @@ public class GetSpCakeOrders {
 	@Column(name="spf_name") 
 	private String spfName;
 
+	@Column(name="order_photo")
+	 private String cusChoicePhoto;
+	
+	@Column(name="order_photo2")
+	    private String orderPhoto;
 
 	public int getSpOrderNo() {
 		return spOrderNo;
@@ -235,6 +240,26 @@ public class GetSpCakeOrders {
 	}
 
 
+	public String getCusChoicePhoto() {
+		return cusChoicePhoto;
+	}
+
+
+	public void setCusChoicePhoto(String cusChoicePhoto) {
+		this.cusChoicePhoto = cusChoicePhoto;
+	}
+
+
+	public String getOrderPhoto() {
+		return orderPhoto;
+	}
+
+
+	public void setOrderPhoto(String orderPhoto) {
+		this.orderPhoto = orderPhoto;
+	}
+
+
 	@Override
 	public String toString() {
 		return "GetSpCakeOrders [spOrderNo=" + spOrderNo + ", frName=" + frName + ", frMob=" + frMob + ", spName="
@@ -242,10 +267,11 @@ public class GetSpCakeOrders {
 				+ spSelectedWeight + ", spInstructions=" + spInstructions + ", spSubTotal=" + spSubTotal
 				+ ", spAdvance=" + spAdvance + ", rmAmount=" + rmAmount + ", spDeliveryDate=" + spDeliveryDate
 				+ ", spDeliveryPlace=" + spDeliveryPlace + ", spCustName=" + spCustName + ", spCustMobNo=" + spCustMobNo
-				+ ", spfName=" + spfName + "]";
+				+ ", spfName=" + spfName + ", cusChoicePhoto=" + cusChoicePhoto + ", orderPhoto=" + orderPhoto + "]";
 	}
 
 
+	 
 	 
 	
 	
