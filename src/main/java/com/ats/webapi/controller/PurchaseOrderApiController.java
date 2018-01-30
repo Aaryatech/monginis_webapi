@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
+import com.ats.webapi.model.GetPoDetailedForPdf;
+import com.ats.webapi.model.GetPoHeaderForPdf;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.purchaseorder.GetPurchaseOrderList;
 import com.ats.webapi.model.purchaseorder.GetRmRateAndTax;
@@ -20,6 +22,9 @@ import com.ats.webapi.model.purchaseorder.PurchaseOrderDetail;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderDetailedList;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderHeader;
 import com.ats.webapi.model.purchaseorder.TransporterDetails;
+import com.ats.webapi.repository.GetPoDetailedForPdfRepository;
+import com.ats.webapi.repository.GetPoDetailedPdfRepository;
+import com.ats.webapi.repository.PurchaseOrderDetailRepository;
 import com.ats.webapi.repository.PurchaseOrderHeaderRepository;
 import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.purchaseorder.PurchaseOrderService;
@@ -38,6 +43,12 @@ public class PurchaseOrderApiController {
 	
 	@Autowired
 	PurchaseOrderHeaderRepository purchaseOrderHeaderRepository;
+	
+	@Autowired
+	GetPoDetailedForPdfRepository getPoDetailedForPdfRepository;
+	
+	@Autowired
+	GetPoDetailedPdfRepository getPoDetailedPdfRepository;
 
 	
 	//----------------------Get Data Of Raw Material Item Categories---------------
@@ -167,5 +178,25 @@ public class PurchaseOrderApiController {
 			return poNo;
 		}
 		
+		@RequestMapping(value = { "/poDetailedForPdf" }, method = RequestMethod.POST)
+		public GetPoHeaderForPdf poDetailedForPdf(@RequestParam("poId")int poId)
+		{
+			GetPoHeaderForPdf poDetailedForPdf = new GetPoHeaderForPdf();
+			try
+			{
+				 poDetailedForPdf = getPoDetailedForPdfRepository.poDetailedForPdf(poId);
+					List<GetPoDetailedForPdf> purchaseOrderDetaillist = getPoDetailedPdfRepository.purchaseOrderDetaillist(poId);
+					poDetailedForPdf.setPurchaseOrderDetail(purchaseOrderDetaillist);
+					System.out.println("poDetailedForPdf "+poDetailedForPdf);
+				
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+			
+			return poDetailedForPdf;
+			
+			
+		}
 		
 }
