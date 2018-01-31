@@ -11,9 +11,7 @@ import com.ats.webapi.model.BmsStockDetailed;
 import com.ats.webapi.model.stock.GetBmsStock;
 
 
-public interface BmsStockDetailedRepository extends JpaRepository<BmsStockDetailed,Long>{
-	
-	BmsStockDetailed save(BmsStockDetailed bmsStockDetailed);
+public interface BmsStockDetailedRepository extends JpaRepository<BmsStockDetailed,Long>{ 
 
 	
 	@Query(value="select * from t_bms_stock_details where bms_stock_id=:bmsStockId",nativeQuery=true)

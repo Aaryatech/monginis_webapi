@@ -28,6 +28,8 @@ public class BmsStockApiController {
 	@Autowired
 	BmsStockService bmsStockService;
 	 
+	@Autowired
+	BmsStockDetailedRepository bmsStockDetailedRepository;
 	
 	@RequestMapping(value = { "/insertBmsStock" }, method = RequestMethod.POST)
 	public @ResponseBody BmsStockHeader insertBmsStock(@RequestBody BmsStockHeader bmsStockHeader) {
@@ -74,6 +76,28 @@ public class BmsStockApiController {
 		}
 
 		return bmsStockHeaderloc;
+
+	}
+	
+	@RequestMapping(value = { "/insertBmsStockDetailed" }, method = RequestMethod.POST)
+	public @ResponseBody Info insertBmsStockDetailed(@RequestBody List<BmsStockDetailed> bmsStockDetailedlist) {
+
+		Info info = new Info();
+		try {
+ 
+			for(int i=0;i<bmsStockDetailedlist.size();i++)
+			{
+				BmsStockDetailed bmsStockDetailed=bmsStockDetailedlist.get(i); 
+				bmsStockDetailed=bmsStockDetailedRepository.save(bmsStockDetailed);
+			}
+
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			System.out.println("Exce in bmsstock Insert " + e.getMessage());
+		}
+
+		return info;
 
 	}
 	

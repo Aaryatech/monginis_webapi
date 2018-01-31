@@ -38,12 +38,10 @@ public class BmsStockServiceImp implements BmsStockService {
 			bmsStockHeaderloc=bmsStockHeaderRepository.save(bmsStockHeader);
 			int BmsHeaderId=bmsStockHeaderloc.getBmsStockId();
 					
-			for(int i=0;i<bmsStockHeader.getBmsStockDetailed().size();i++)
-			{
-				BmsStockDetailed bmsStockDetailed=bmsStockHeader.getBmsStockDetailed().get(i);
-				bmsStockDetailed.setBmsStockId(BmsHeaderId);
-				bmsStockDetailed=bmsStockDetailedRepository.save(bmsStockDetailed);
-			}
+			for(int i=0;i<bmsStockHeader.getBmsStockDetailed().size();i++) 
+				bmsStockHeader.getBmsStockDetailed().get(i).setBmsStockId(BmsHeaderId);
+			
+				bmsStockDetailedRepository.save(bmsStockHeader.getBmsStockDetailed()); 
 			
 			
 		}catch(Exception e)

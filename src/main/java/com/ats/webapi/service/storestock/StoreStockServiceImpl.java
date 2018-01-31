@@ -27,24 +27,32 @@ public class StoreStockServiceImpl implements StoreStockService{
 
 	@Override
 	public StoreStockHeader insertStoreOpStock(StoreStockHeader storeStockHeader) {
-	 
-		StoreStockHeader storeHeader=storeStockHeaderRepository.saveAndFlush(storeStockHeader);
-		int headerId=storeHeader.getStoreStockId();
-		
-		List<StoreStockDetail> storeStockDetailList=storeStockHeader.getStoreStockDetailList();
-		
-		for(int i=0;i<storeStockDetailList.size();i++)
-		 
-			storeStockDetailList.get(i).setStoreStockId(headerId);
-		 
-	storeStockDetailRepository.save(storeStockDetailList);
-		Info info=new Info();
-		if(storeHeader!=null)
+		StoreStockHeader storeHeader = new StoreStockHeader();
+		try
 		{
+			storeHeader=storeStockHeaderRepository.saveAndFlush(storeStockHeader);
+			int headerId=storeHeader.getStoreStockId();
 			
-			info.setError(false);
-			info.setMessage("insert Successfullt");
+			List<StoreStockDetail> storeStockDetailList=storeStockHeader.getStoreStockDetailList();
+			
+			for(int i=0;i<storeStockDetailList.size();i++) 
+				storeStockDetailList.get(i).setStoreStockId(headerId); 
+			
+			
+				storeStockDetailRepository.save(storeStockDetailList);
+			 
+			Info info=new Info();
+			if(storeHeader!=null)
+			{
+				
+				info.setError(false);
+				info.setMessage("insert Successfullt");
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
 		}
+		
 		return storeHeader;
 	}
 
