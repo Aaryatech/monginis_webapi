@@ -1,5 +1,6 @@
 package com.ats.webapi.controller;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -294,7 +295,7 @@ h1.bms_status=1
 
 		}
 		
-	System.out.println("output finished Good Header = "+finishHeader.toString());
+		System.out.println("output finished Good Header = "+finishHeader.toString());
 		return finishHeader;
 
 	}
@@ -302,11 +303,14 @@ h1.bms_status=1
 	
 	
 	@RequestMapping(value = { "/getFinGoodStockDetail" }, method = RequestMethod.POST)
-	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockDetail(@RequestParam("stockDate") String stockDate,int catId) {
+	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockDetail(@RequestParam("stockDate") String stockDate,@RequestParam("catId")int catId) {
 
-		List<FinishedGoodStockDetail> finishedGoodStockDetail=null;
+		List<FinishedGoodStockDetail> finishedGoodStockDetail=new ArrayList<FinishedGoodStockDetail>();
 		try {
 						System.out.println("date received for Stock Detail "+stockDate);
+						
+						System.out.println("cat Id  received for Stock Detail "+catId);
+						
 			
 			Date stkDate= Common.convertToSqlDate(stockDate);
 			
@@ -329,7 +333,7 @@ h1.bms_status=1
 	@RequestMapping(value = { "/getFinGoodStockDetailAllCat" }, method = RequestMethod.POST)
 	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockDetailAllCat(@RequestParam("stockDate") String stockDate) {
 
-		List<FinishedGoodStockDetail> finishedGoodStockDetail=null;
+		List<FinishedGoodStockDetail> finishedGoodStockDetail=new ArrayList<>();
 		try {
 						System.out.println("date received for Stock Detail "+stockDate);
 			

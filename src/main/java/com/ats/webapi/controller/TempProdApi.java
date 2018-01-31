@@ -17,6 +17,8 @@ import com.ats.webapi.model.prod.GetProdPlanDetail;
 import com.ats.webapi.model.prod.GetProdPlanDetailList;
 import com.ats.webapi.model.prod.GetProdPlanHeader;
 import com.ats.webapi.model.prod.GetProdPlanHeaderList;
+import com.ats.webapi.model.prod.ProdMixingReqP1;
+import com.ats.webapi.model.prod.ProdMixingReqP1List;
 import com.ats.webapi.model.prod.mixing.GetSFDataForMixing;
 import com.ats.webapi.model.prod.mixing.GetSFDataForMixingList;
 import com.ats.webapi.model.prod.mixing.GetSFMixingForBom;
@@ -32,6 +34,7 @@ import com.ats.webapi.repository.prod.GetProdPlanDetailRepo;
 import com.ats.webapi.repository.prod.GetSFMixingForBomRepo;
 import com.ats.webapi.repository.prod.GetSFPlanDetailForMixingRepo;
 import com.ats.webapi.repository.prod.GetTempMixItemDetailRepo;
+import com.ats.webapi.repository.prod.ProdMixingReqP1Repo;
 import com.ats.webapi.repository.prod.TempMixingRepo;
 
 @RestController
@@ -42,6 +45,11 @@ public class TempProdApi {
 	
 	@Autowired
 	GetProdPlanDetailRepo prodDetaiRepo;
+	
+	
+	@Autowired
+	ProdMixingReqP1Repo prodMixReqP1;
+	
 	
 	/*@Autowired
 	GetItemwiseProdPlanRepo getItemwiseProdPlanRepo;
@@ -129,16 +137,19 @@ public class TempProdApi {
 	//used 3
 	
 		@RequestMapping(value = { "/getSfPlanDetailForMixing" }, method = RequestMethod.POST)
-		public @ResponseBody GetSFPlanDetailForMixingList getSfPlanDetailForMixing(@RequestParam("headerId")int headerId) {
+		public @ResponseBody ProdMixingReqP1List getSfPlanDetailForMixing(@RequestParam("headerId")int headerId) {
 
-			GetSFPlanDetailForMixingList sfAndPlanDetailList = new GetSFPlanDetailForMixingList();
+			ProdMixingReqP1List sfAndPlanDetailList = new ProdMixingReqP1List();
 			
 			Info info=new Info();
 
 			try {
 			
-				List<GetSFPlanDetailForMixing> sfPlanDetailForMixing=getSFPlanDetailForMixingRepo.getSFAndPlanDetailForMixing(headerId);
+				//List<GetSFPlanDetailForMixing> sfPlanDetailForMixing=getSFPlanDetailForMixingRepo.getSFAndPlanDetailForMixing(headerId);
+				
+				List<ProdMixingReqP1> sfPlanDetailForMixing=prodMixReqP1.getSFAndPlanDetailForMixing(headerId);
 			
+				
 			if(!sfPlanDetailForMixing.isEmpty()) {
 				
 				info.setError(false);
@@ -151,18 +162,16 @@ public class TempProdApi {
 				info.setMessage("failed");
 			}
 	  
-			sfAndPlanDetailList.setSfPlanDetailForMixing(sfPlanDetailForMixing);
-			sfAndPlanDetailList.setInfo(info);
+			sfAndPlanDetailList.setProdMixingReqP1(sfPlanDetailForMixing);
 			
 			
 			}catch (Exception e) {
-				System.out.println("Error getting sf and Plan Detail For Mixing ");
+				System.out.println("Error getting sf and Plan Detail For Mixing  Phase 1");
 				e.printStackTrace();
 				
 			}
 				return sfAndPlanDetailList;
 		  }
-		
 		
 	
 		

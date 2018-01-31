@@ -245,18 +245,12 @@ public class FinishedGoodStockDetail implements Serializable {
 		this.catId = catId;
 	}
 
-	public int getIsDayEndEnable() {
-		return isDayEndEnable;
-	}
-
-	public void setIsDayEndEnable(int isDayEndEnable) {
-		this.isDayEndEnable = isDayEndEnable;
-	}
+	
 
 	@Override
 	public String toString() {
 		return "FinishedGoodStockDetail [finStockDetailId=" + finStockDetailId + ", finStockId=" + finStockId
-				+ ", itemId=" + itemId + ", catId=" + catId + ", isDayEndEnable=" + isDayEndEnable + ", stockDate="
+				+ ", itemId=" + itemId + ", catId=" + catId + ", stockDate="
 				+ stockDate + ", itemName=" + itemName + ", opT1=" + opT1 + ", opT2=" + opT2 + ", opT3=" + opT3
 				+ ", opTotal=" + opTotal + ", prodQty=" + prodQty + ", rejQty=" + rejQty + ", frSaleQty=" + frSaleQty
 				+ ", gateSaleQty=" + gateSaleQty + ", cloT1=" + cloT1 + ", cloT2=" + cloT2 + ", cloT3=" + cloT3

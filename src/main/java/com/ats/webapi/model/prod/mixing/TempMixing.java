@@ -32,7 +32,7 @@ public class TempMixing implements Serializable {
 	private int rmId;
 	
 	@Column(name="qty")
-	private int qty;
+	private float qty;
 
 	
 
@@ -62,11 +62,11 @@ public class TempMixing implements Serializable {
 		this.rmId = rmId;
 	}
 
-	public int getQty() {
+	public float getQty() {
 		return qty;
 	}
 
-	public void setQty(int qty) {
+	public void setQty(float qty) {
 		this.qty = qty;
 	}
 

@@ -31,7 +31,18 @@ public class GetTempMixItemDetail implements Serializable {
 	@Column(name="uom")
 	private String uom;
 	
-int total;
+	@Column(name="mul_factor")
+	private float mulFactor;
+	
+public float getMulFactor() {
+		return mulFactor;
+	}
+
+	public void setMulFactor(float mulFactor) {
+		this.mulFactor = mulFactor;
+	}
+
+float total;
 
 public int getTempId() {
 	return tempId;
@@ -82,11 +93,11 @@ public void setUom(String uom) {
 	this.uom = uom;
 }
 
-public int getTotal() {
+public float getTotal() {
 	return total;
 }
 
-public void setTotal(int total) {
+public void setTotal(float total) {
 	this.total = total;
 }
 
