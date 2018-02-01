@@ -23,14 +23,14 @@ public class BillOfMaterialServiceImp implements BillOfMaterialService{
 	BillOfMaterialDetailedRepository billOfMaterialDetailedRepository;
 	
 	@Override
-	public GetBillOfMaterialList getBillOfMaterialithDate(String frmdate, String todate) {
+	public GetBillOfMaterialList getBillOfMaterialithDate(String frmdate, String todate, int bmsDeptId, int mixDeptId) {
 
 		GetBillOfMaterialList getBillOfMaterialList = new GetBillOfMaterialList();
 		ErrorMessage errorMessage = new ErrorMessage();
 		System.out.println("frmdate  "+frmdate+"todate  "+todate);
 		try
 		{
-			List<BillOfMaterialHeader> billOfMaterialHeaderList =  billOfMaterialRepository.getAlllist(frmdate, todate);
+			List<BillOfMaterialHeader> billOfMaterialHeaderList =  billOfMaterialRepository.getAlllist(frmdate, todate,bmsDeptId,mixDeptId);
 			
 			/*for(int i=0;i<billOfMaterialHeaderList.size();i++)
 			{

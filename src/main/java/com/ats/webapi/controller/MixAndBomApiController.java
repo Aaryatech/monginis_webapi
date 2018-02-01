@@ -123,13 +123,14 @@ public class MixAndBomApiController {
 	
 	@RequestMapping(value = { "/getBOMHeaderList" }, method = RequestMethod.POST)
 	@ResponseBody
-	public GetBillOfMaterialList getBOMHeaderList(@RequestParam("frmdate")String frmdate, @RequestParam("todate")String todate) {
+	public GetBillOfMaterialList getBOMHeaderList(@RequestParam("frmdate")String frmdate, @RequestParam("todate")String todate,  @RequestParam("bmsDeptId")int bmsDeptId
+			 ,@RequestParam("mixDeptId")int mixDeptId) {
 		
 		GetBillOfMaterialList getBillOfMaterialList=new GetBillOfMaterialList();
 		try {
 			
 			
-			getBillOfMaterialList = billOfMaterialService.getBillOfMaterialithDate(frmdate, todate);
+			getBillOfMaterialList = billOfMaterialService.getBillOfMaterialithDate(frmdate, todate, bmsDeptId,mixDeptId);
 
 
 		} catch (Exception e) {

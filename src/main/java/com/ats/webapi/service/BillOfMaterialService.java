@@ -8,7 +8,7 @@ import com.ats.webapi.model.bom.GetBillOfMaterialList;
 
 public interface BillOfMaterialService{
 	
-	GetBillOfMaterialList getBillOfMaterialithDate(String frmdate, String todate);
+	GetBillOfMaterialList getBillOfMaterialithDate(String frmdate, String todate,int bmsDeptId, int mixDeptId);
 	
 	GetBillOfMaterialList getBillOfMaterialBmsToStoreDate(int fromDept, int toDept, String frmdate, String todate);
 

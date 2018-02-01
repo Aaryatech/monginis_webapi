@@ -43,13 +43,12 @@ public class MixingServiceImp implements MixingService {
 				int mixId=mixingdata.getMixId();
 				
 				for(int i=0;i<mixingHeader.getMixingDetailed().size();i++)
-				{ 
-					  
-						MixingDetailed mixingDetailed = mixingHeader.getMixingDetailed().get(i);
-						mixingDetailed.setMixingId(mixId);
-						mixingDetailed=mixingDetailedRepository.save(mixingDetailed);
+					mixingHeader.getMixingDetailed().get(i).setMixingId(mixId);
+				
+				
+				 mixingDetailedRepository.save(mixingHeader.getMixingDetailed());
 					 
-				}
+		 
 				
 				if(mixingdata!=null)
 				{
