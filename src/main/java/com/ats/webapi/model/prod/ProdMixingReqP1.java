@@ -9,6 +9,8 @@ import javax.persistence.Id;
 @Entity
 public class ProdMixingReqP1 {
 	
+	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="item_detail_id")
@@ -142,6 +144,12 @@ public class ProdMixingReqP1 {
 		this.total = total;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "ProdMixingReqP1 [itemDetailId=" + itemDetailId + ", itemId=" + itemId + ", rmType=" + rmType + ", rmId="
+				+ rmId + ", uom=" + uom + ", rmQty=" + rmQty + ", noPiecesPerItem=" + noPiecesPerItem + ", rmName="
+				+ rmName + ", planQty=" + planQty + ", orderQty=" + orderQty + ", mulFactor=" + mulFactor + ", total="
+				+ total + "]";
+	}
 
 }

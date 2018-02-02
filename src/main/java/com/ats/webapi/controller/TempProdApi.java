@@ -85,14 +85,18 @@ public class TempProdApi {
 		try {
 			
 			List<GetTempMixItemDetail> tempMixItemDetail=getTempMixItemDetailRepo.getMxItemDetail(prodHeaderId);
-			
+			System.out.println(" first List "+tempMixItemDetail.toString());
 			
 			tempMixList.setTempMixItemDetail(tempMixItemDetail);
+			
+
+			System.out.println("in web service /getTempMixItemDetail");
+			System.out.println("Phase 2 data temp mix:  "+tempMixList.toString());
 			
 			if(!tempMixItemDetail.isEmpty()) {
 				
 				tempMixingRepo.deleteAllInBatch();
-				
+				System.out.println("temp mix table deleted ");
 			}
 			
 			
@@ -118,10 +122,10 @@ public class TempProdApi {
 			
 			for(int i=0;i<tempMixing.size();i++) {
 				
-				 tempMix=new TempMixing();
+				 //tempMix=new TempMixing();
 				 
-				 TempMixing saveMe=tempMixingRepo.save(tempMixing.get(i));
-			
+				 TempMixing  saveMe=tempMixingRepo.save(tempMixing.get(i));
+				  System.out.println("Record Added in tempMix "+saveMe.toString());
 			}
 			
 		}catch (Exception e) {
@@ -163,8 +167,7 @@ public class TempProdApi {
 			}
 	  
 			sfAndPlanDetailList.setProdMixingReqP1(sfPlanDetailForMixing);
-			
-			
+			System.out.println(" Mixing Phase 1 web service o/p "+ sfAndPlanDetailList.toString() );			
 			}catch (Exception e) {
 				System.out.println("Error getting sf and Plan Detail For Mixing  Phase 1");
 				e.printStackTrace();

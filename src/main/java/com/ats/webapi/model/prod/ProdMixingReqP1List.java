@@ -13,6 +13,11 @@ public class ProdMixingReqP1List {
 	public void setProdMixingReqP1(List<ProdMixingReqP1> prodMixingReqP1) {
 		this.prodMixingReqP1 = prodMixingReqP1;
 	}
+
+	@Override
+	public String toString() {
+		return "ProdMixingReqP1List [prodMixingReqP1=" + prodMixingReqP1 + "]";
+	}
 	
 
 }

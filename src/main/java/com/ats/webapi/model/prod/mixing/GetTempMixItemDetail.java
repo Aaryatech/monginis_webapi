@@ -11,6 +11,12 @@ import javax.persistence.Id;
 @Entity
 public class GetTempMixItemDetail implements Serializable {
 	
+	@Override
+	public String toString() {
+		return "GetTempMixItemDetail [tempId=" + tempId + ", sfId=" + sfId + ", rmId=" + rmId + ", rmName=" + rmName
+				+ ", rmType=" + rmType + ", uom=" + uom + ", mulFactor=" + mulFactor + ", total=" + total + "]";
+	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="temp_id")
