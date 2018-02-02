@@ -125,7 +125,7 @@ public class PostProdPlanHeader {
 	public Date getProductionDate() {
 		return productionDate;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setProductionDate(Date productionDate) {
 		this.productionDate = productionDate;
 	}

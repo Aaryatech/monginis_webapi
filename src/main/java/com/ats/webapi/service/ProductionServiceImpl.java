@@ -1,6 +1,7 @@
 package com.ats.webapi.service;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -123,13 +124,9 @@ public class ProductionServiceImpl implements ProductionService{
 	public PostProdPlanHeader saveProductionPlanHeader(PostProdPlanHeader postProdPlanHeader) {
 
 		PostProdPlanHeader postProductionHeaders=new PostProdPlanHeader();
-		Date date = new Date();
+	
 			
-			if(postProdPlanHeader.getProductionHeaderId()==0)
-			{
-				
-				postProdPlanHeader.setProductionDate(date);
-			}
+			
 		postProductionHeaders=postProdPlanHeaderRepository.save(postProdPlanHeader);
 			int headerId=postProductionHeaders.getProductionHeaderId();
 			
@@ -139,11 +136,7 @@ public class ProductionServiceImpl implements ProductionService{
 			for(int j=0;j<postProductionDetailList.size();j++) {
 				
 				PostProductionPlanDetail postProductionPlanDetail=postProductionDetailList.get(j);
-				
-				if(postProductionDetailList.get(j).getProductionDetailId()==0)
-				{
-					postProductionPlanDetail.setProductionDate(date);
-				}
+			
 				
 				postProductionPlanDetail.setProductionHeaderId(headerId);
 				
