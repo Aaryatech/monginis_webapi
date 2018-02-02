@@ -4,9 +4,11 @@ import java.sql.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ats.webapi.model.Orders;
 import com.ats.webapi.model.rawmaterial.GetItemSfHeader;
@@ -38,5 +40,7 @@ public interface  ItemSfHeaderRepository extends JpaRepository<GetItemSfHeader, 
 			"        AND m_item_sf_header.del_status=:delStatus", nativeQuery = true)
 
 	List<GetItemSfHeader> getSfItemHeader(@Param("delStatus")int delStatus);
+	
+	
 	
 }

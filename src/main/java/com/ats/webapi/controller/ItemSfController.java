@@ -22,12 +22,16 @@ import com.ats.webapi.repository.ItemSfDetailRepo;
 import com.ats.webapi.repository.ItemSfHeaderRepository;
 import com.ats.webapi.repository.SfTypeRepository;
 import com.ats.webapi.service.rawmaterial.ItemSfService;
+import com.ats.webapi.repository.ItemSfHeaderRepo;;
 
 @RestController
 public class ItemSfController {
 	
 	@Autowired
 	ItemSfService itemSfService;
+	
+	@Autowired
+	ItemSfHeaderRepo itemSfHeaderRepo;
 	
 	@Autowired
 	SfTypeRepository sfTypeRepository;
@@ -59,6 +63,33 @@ public class ItemSfController {
 		}catch (Exception e) {
 			
 			System.out.println("Exce in itemSf insert Rest controller "+e.getMessage());
+			e.printStackTrace();
+		}
+	
+	return info;
+		
+	  }
+	@RequestMapping(value = { "/deleteSfItem" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSfItem(@RequestParam("sfId") int sfId) {
+		
+		Info info =new Info();
+		try {
+				int delete = itemSfHeaderRepo.deleteSfItem(sfId);
+			
+				if(delete!=1) {
+					
+					info.setError(false);
+					info.setMessage("Sf Header Inserted Successfully");
+				}
+				else {
+					
+					info.setError(true);
+					info.setMessage(" Error:Sf Header insert failed");
+				}
+			
+		}catch (Exception e) {
+			
+			System.out.println("Exce in itemSf delete Rest controller "+e.getMessage());
 			e.printStackTrace();
 		}
 	

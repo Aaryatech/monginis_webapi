@@ -25,8 +25,8 @@ public class Variance implements Serializable {
 	@Column(name="item_id")
     private String itemId;
 	
-    @Column(name="prod_rejected_qty")
-    private int prodRejectedQty;
+    @Column(name="sp_cake_qty")
+    private int spCakeQty;
     
 	@Column(name="t_order_qty")
 	private int orderQty;
@@ -60,12 +60,13 @@ public class Variance implements Serializable {
 		this.orderQty = orderQty;
 	}
 
-	public int getProdRejectedQty() {
-		return prodRejectedQty;
+	 
+	public int getSpCakeQty() {
+		return spCakeQty;
 	}
 
-	public void setProdRejectedQty(int prodRejectedQty) {
-		this.prodRejectedQty = prodRejectedQty;
+	public void setSpCakeQty(int spCakeQty) {
+		this.spCakeQty = spCakeQty;
 	}
 
 	public String getItemName() {
@@ -78,8 +79,8 @@ public class Variance implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Variance [id=" + id + ", itemName=" + itemName + ", itemId=" + itemId + ", prodRejectedQty="
-				+ prodRejectedQty + ", orderQty=" + orderQty + "]";
+		return "Variance [id=" + id + ", itemName=" + itemName + ", itemId=" + itemId + ", spCakeQty=" + spCakeQty
+				+ ", orderQty=" + orderQty + "]";
 	}
 	
 	

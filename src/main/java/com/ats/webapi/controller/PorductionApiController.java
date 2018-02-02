@@ -367,16 +367,26 @@ e.printStackTrace();
 	}
 	
 	@RequestMapping(value = { "/getQtyforVariance" }, method = RequestMethod.POST)
-	public @ResponseBody VarianceList getQtyforVariance(@RequestParam("Date") String Date,@RequestParam("groupType") String groupType)
+	public @ResponseBody VarianceList getQtyforVariance(@RequestParam("Date") String Date,@RequestParam("groupType") String groupType,
+			@RequestParam("frId") List<String> frId,@RequestParam("all") int all)
 	{
 		VarianceList varianceList = new VarianceList();
 		List<Variance> Varianceorderlist = new ArrayList<Variance>();
 		try
 		{
+			if(all==1)
+			{
+				Varianceorderlist=varianceRepository.variancelistAllFr(Date, groupType);
+				varianceList.setVarianceorderlist(Varianceorderlist);
+				System.out.println(Varianceorderlist.size());
+			}
+			else
+			{
+				Varianceorderlist=varianceRepository.variancelistSelectedFr(Date, groupType,frId);
+				varianceList.setVarianceorderlist(Varianceorderlist);
+				System.out.println(Varianceorderlist.size());
+			}
 			
-			Varianceorderlist=varianceRepository.variancelist(Date, groupType);
-			varianceList.setVarianceorderlist(Varianceorderlist);
-			System.out.println(Varianceorderlist.size());
 			
 		}catch(Exception e)
 		{
