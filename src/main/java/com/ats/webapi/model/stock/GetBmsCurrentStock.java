@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
-
+//rm stock bean 
 @Entity
 public class GetBmsCurrentStock {
 
@@ -45,7 +45,13 @@ public class GetBmsCurrentStock {
 	float mixing_return_qty;
 	float store_issue_qty; 
 	float store_rejected_qty;
-	
+	float bms_opening_stock;
+	public float getBms_opening_stock() {
+		return bms_opening_stock;
+	}
+	public void setBms_opening_stock(float bms_opening_stock) {
+		this.bms_opening_stock = bms_opening_stock;
+	}
 	@Transient
 	float openingQty=0;
 	
