@@ -49,7 +49,7 @@ public class BmsAndFinGoodStockController {
 	GetCurProdAndBillQtyRepo getCurProdAndBillQtyRepo;
 	
 	
-	/*
+	/*self Query 
 	 //Get BMS Stock Bet Date
 	 
 	 SELECT d.bms_stock_deatil_id,d.bms_stock_id,d.bms_stock_date, d.rm_name,d.rm_id,d.rm_uom,d.rm_type, SUM(f.bms_opening_stock) AS OPQTY,SUM(t.closing_qty) AS CLOQTY,
@@ -354,6 +354,76 @@ h1.bms_status=1
 
 	}
 
+	//Final Query For Fin good Stock bet two Date 3 Feb 
+	
+	@RequestMapping(value = { "/getFinGoodStockBetTwoDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockBetTwoDate(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<FinishedGoodStockDetail> finishedGoodStockDetail=null;
+		try {
+			
+			System.out.println("date received for Stock Detail bet date = "+fromDate);
+			
+			Date stkFrDate= Common.convertToSqlDate(fromDate);
+			
+			Date stkToDate= Common.convertToSqlDate(toDate);
+			
+			System.out.println("date After convert for Stock Detail bet date stkFrDate= "+stkFrDate);
+			
+			System.out.println("date After convert for Stock Detail bet date  stkToDate= "+stkToDate);
+			
+
+			finishedGoodStockDetail=finishedGoodStockDetailRepo.findByStockDateBetweenTwoDates(stkFrDate, stkToDate);
+		} catch (Exception e) {
+			
+			System.out.println("Exce in getting Finished Good Stock Detail Between two Date Final Query " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		
+	System.out.println("output finished Good Detail bet two dates FInal Query size: = "+finishedGoodStockDetail.size()+"Data :"+finishedGoodStockDetail.toString());
+		return finishedGoodStockDetail;
+
+	}
+	
+	
+	//Final Query For Fin good Stock bet two Date 3 Feb  Spec Category
+	
+		@RequestMapping(value = { "/getFinGoodStockBetTwoDateByCat" }, method = RequestMethod.POST)
+		public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockBetTwoDateByCat(@RequestParam("fromDate") String fromDate,
+				@RequestParam("toDate") String toDate,@RequestParam("catId") int catId) {
+
+			List<FinishedGoodStockDetail> finishedGoodStockDetail=null;
+			try {
+				
+				System.out.println("date received for Stock Detail bet date = "+fromDate);
+				
+				Date stkFrDate= Common.convertToSqlDate(fromDate);
+				
+				Date stkToDate= Common.convertToSqlDate(toDate);
+				
+				System.out.println("date After convert for Stock Detail bet date stkFrDate= "+stkFrDate);
+				
+				System.out.println("date After convert for Stock Detail bet date  stkToDate= "+stkToDate);
+				
+				finishedGoodStockDetail=finishedGoodStockDetailRepo.findByStockDateBetweenTwoDateByCat(stkFrDate, stkToDate, catId);
+			} catch (Exception e) {
+				
+				System.out.println("Exce in getting Finished Good Stock Detail Between two Date Final Query " + e.getMessage());
+				e.printStackTrace();
+
+			}
+			
+		System.out.println("output finished Good Detail bet two dates FInal Query size: = "+finishedGoodStockDetail.size()+"Data :"+finishedGoodStockDetail.toString());
+			return finishedGoodStockDetail;
+
+		}
+
+	
+	
+	
+	
 	
 	//get Finished Good Stock Bet Date
 

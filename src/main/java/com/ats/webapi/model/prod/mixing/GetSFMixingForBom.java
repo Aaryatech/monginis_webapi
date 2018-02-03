@@ -40,7 +40,7 @@ public class GetSFMixingForBom implements Serializable {
 	@Column(name="uom")
 	private String uom;
 	
-	int total;
+	float total;
 
 	public int getSfDid() {
 		return sfDid;
@@ -90,13 +90,20 @@ public class GetSFMixingForBom implements Serializable {
 		this.uom = uom;
 	}
 
-	public int getTotal() {
+	public float getTotal() {
 		return total;
 	}
 
-	public void setTotal(int total) {
+	public void setTotal(float total) {
 		this.total = total;
 	}
+
+	@Override
+	public String toString() {
+		return "GetSFMixingForBom [sfDid=" + sfDid + ", sfId=" + sfId + ", rmId=" + rmId + ", rmName=" + rmName
+				+ ", rmType=" + rmType + ", uom=" + uom + ", total=" + total + "]";
+	}
+	
 	
 
 }

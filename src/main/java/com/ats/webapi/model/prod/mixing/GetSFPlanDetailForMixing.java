@@ -57,7 +57,7 @@ public class GetSFPlanDetailForMixing implements Serializable {
 	
 	
 	
-	int total;
+	float total;
 	
 	
 	public int getItemDetailId() {
@@ -124,10 +124,10 @@ public class GetSFPlanDetailForMixing implements Serializable {
 		this.planQty = planQty;
 	}
 	
-	public int getTotal() {
+	public float getTotal() {
 		return total;
 	}
-	public void setTotal(int total) {
+	public void setTotal(float total) {
 		this.total = total;
 	}
 	@Override
