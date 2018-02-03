@@ -37,7 +37,7 @@ public interface  ItemSfHeaderRepository extends JpaRepository<GetItemSfHeader, 
 			"        m_sf_type \n" + 
 			"    WHERE\n" + 
 			"        m_item_sf_header.sf_type=m_sf_type.id \n" + 
-			"        AND m_item_sf_header.del_status=:delStatus", nativeQuery = true)
+			"        AND m_item_sf_header.del_status=:delStatus order by m_item_sf_header.sf_name Asc", nativeQuery = true)
 
 	List<GetItemSfHeader> getSfItemHeader(@Param("delStatus")int delStatus);
 	
