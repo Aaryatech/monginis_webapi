@@ -28,6 +28,7 @@ import com.ats.webapi.model.grngvn.PostCreditNoteHeaderList;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
 import com.ats.webapi.repository.GetBillDetailsRepository;
 import com.ats.webapi.repository.GetReorderByStockTypeRepository;
+import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 import com.ats.webapi.service.AllFrIdNameService;
@@ -287,6 +288,9 @@ public class RestApiController {
 	
 	@Autowired
 	GetReorderByStockTypeRepository getReorderByStockTypeRepository;
+	
+	@Autowired
+	ItemRepository itemRepository;
 	
 //This web api Not used Anywhere	
 	@RequestMapping(value = { "/updatePBTime" }, method = RequestMethod.POST)
@@ -2247,6 +2251,23 @@ try {
 
 	}
 
+	// Get Items By Category order by sub cat and sort id
+		@RequestMapping(value = "/getItemsByCatIdAndSortId", method = RequestMethod.POST)
+		public @ResponseBody List<Item> getItemsByCatIdAndSortId(@RequestParam String itemGrp1) {
+           
+			List<Item> items=null;
+			try {
+			 items = itemRepository.findByItemGrp1AndDelStatusOrderByItemGrp2AscItemSortIdAsc(itemGrp1,0);
+			}
+			catch(Exception e)
+			{
+				items=new ArrayList<>();
+				e.printStackTrace();
+				
+			}
+			return items;
+
+		}
 	// Get Items By Item Id and Delete Status 0
 	@RequestMapping(value = "/getItemsByItemId", method = RequestMethod.POST)
 	public @ResponseBody List<Item> getItems(@RequestParam List<Integer> itemList) {

@@ -16,7 +16,7 @@ public interface SpCakeOrdersRepoAdmin extends JpaRepository<SpCakeOrdersBean, I
 	
 	
 	@Query(value="SELECT m_franchisee.fr_name ,m_sp_cake.sp_code ,m_sp_cake.sp_name ,"
-			+ "t_sp_cake.item_id ,t_sp_cake.sp_order_no,"
+			+ "t_sp_cake.item_id ,t_sp_cake.sp_order_no,t_sp_cake.sp_selected_weight,"
 			+ "m_sp_flavour.spf_name,t_sp_cake.sp_events,"
 			+ " t_sp_cake.sp_delivery_date, t_sp_cake.sp_price,t_sp_cake.sp_total_add_rate"
 			+ " FROM m_franchisee ,m_sp_cake,m_sp_flavour,"
