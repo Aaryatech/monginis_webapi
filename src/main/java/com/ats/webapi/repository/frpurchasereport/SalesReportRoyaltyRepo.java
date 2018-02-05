@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 import com.ats.webapi.model.report.frpurchase.SalesReportRoyalty;
 
 public interface SalesReportRoyaltyRepo extends JpaRepository<SalesReportRoyalty, Integer> {
-	
+	//report 5
 	@Query(value=" SELECT m_item.id,m_item.item_name,m_category.cat_name,m_category.cat_id, COALESCE((SELECT SUM(t_bill_detail.bill_qty) FROM t_bill_detail,t_bill_header WHERE t_bill_header.bill_date BETWEEN :fromDate AND :toDate AND t_bill_header.bill_no=t_bill_detail.bill_no AND m_item.id=t_bill_detail.item_id AND t_bill_header.fr_id IN(:frIdList) AND t_bill_header.del_status=0),0) AS t_bill_qty,\n" + 
 			"\n" + 
 			"COALESCE((SELECT SUM(t_bill_detail.taxable_amt) FROM t_bill_detail,t_bill_header WHERE t_bill_header.bill_date BETWEEN :fromDate AND :toDate AND t_bill_header.bill_no=t_bill_detail.bill_no AND m_item.id=t_bill_detail.item_id AND t_bill_header.fr_id IN(:frIdList) AND t_bill_header.del_status=0),0) AS  t_bill_taxable_amt,\n" + 
@@ -24,7 +24,24 @@ public interface SalesReportRoyaltyRepo extends JpaRepository<SalesReportRoyalty
 		
 		List<SalesReportRoyalty> getSaleReportRoyalty(@Param("frIdList") List<String> frIdList,@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 
-	
+	//report 5 all fr
+		@Query(value=" SELECT m_item.id,m_item.item_name,m_category.cat_name,m_category.cat_id, COALESCE((SELECT SUM(t_bill_detail.bill_qty) FROM t_bill_detail,t_bill_header WHERE t_bill_header.bill_date BETWEEN :fromDate AND :toDate AND t_bill_header.bill_no=t_bill_detail.bill_no AND m_item.id=t_bill_detail.item_id AND t_bill_header.fr_id IN(:frIdList) AND t_bill_header.del_status=0),0) AS t_bill_qty,\n" + 
+				"\n" + 
+				"COALESCE((SELECT SUM(t_bill_detail.taxable_amt) FROM t_bill_detail,t_bill_header WHERE t_bill_header.bill_date BETWEEN :fromDate AND :toDate AND t_bill_header.bill_no=t_bill_detail.bill_no AND m_item.id=t_bill_detail.item_id  AND t_bill_header.del_status=0),0) AS  t_bill_taxable_amt,\n" + 
+				"\n" + 
+				"COALESCE((SELECT SUM(t_grn_gvn.grn_gvn_qty) FROM t_grn_gvn WHERE t_grn_gvn.grn_gvn_date  BETWEEN :fromDate AND :toDate AND   m_item.id=t_grn_gvn.item_id AND t_grn_gvn.is_credit_note=1 AND t_grn_gvn.is_grn=1  AND t_grn_gvn.del_status=0),0) AS  t_grn_qty,\n" + 
+				"\n" + 
+				"COALESCE((SELECT SUM(t_grn_gvn.taxable_amt) FROM t_grn_gvn WHERE t_grn_gvn.grn_gvn_date BETWEEN :fromDate AND :toDate AND   m_item.id=t_grn_gvn.item_id AND t_grn_gvn.is_credit_note=1 AND t_grn_gvn.is_grn=1  AND t_grn_gvn.del_status=0),0) AS  t_grn_taxable_amt,\n" + 
+				"\n" + 
+				"COALESCE((SELECT SUM(t_grn_gvn.grn_gvn_qty) FROM t_grn_gvn WHERE t_grn_gvn.grn_gvn_date BETWEEN :fromDate AND :toDate AND   m_item.id=t_grn_gvn.item_id AND t_grn_gvn.is_credit_note=1 AND t_grn_gvn.is_grn=0  AND t_grn_gvn.del_status=0),0) AS  t_gvn_qty,\n" + 
+				"\n" + 
+				"COALESCE((SELECT SUM(t_grn_gvn.taxable_amt) FROM t_grn_gvn WHERE t_grn_gvn.grn_gvn_date BETWEEN :fromDate AND :toDate AND   m_item.id=t_grn_gvn.item_id AND t_grn_gvn.is_credit_note=1 AND t_grn_gvn.is_grn=0  AND t_grn_gvn.del_status=0),0) AS  t_gvn_taxable_amt\n" + 
+				"\n" + 
+				"from m_item,m_category where m_item.item_grp1=m_category.cat_id group by m_item.id order by m_category.cat_id",nativeQuery=true)
+			
+			List<SalesReportRoyalty> getSaleReportRoyaltyAllFr(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
+
+		
 	//report no 10
 	@Query(value=" SELECT m_item.id,m_item.item_name,m_category.cat_name,m_category.cat_id, \n" + 
 			"\n" + 

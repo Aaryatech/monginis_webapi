@@ -214,7 +214,8 @@ public class SalesReportController {
 	
 	
 	
-	// Royalty report Started 
+	// Royalty report Started
+	//Report 5
 	@RequestMapping(value = { "/getSalesReportRoyalty" }, method = RequestMethod.POST)
 	public @ResponseBody List<SalesReportRoyalty> getSalesReportRoyalty(@RequestParam("frIdList") List<String> frIdList,@RequestParam("fromDate")
 	String fromDate,
@@ -234,6 +235,26 @@ public class SalesReportController {
 		}
 		return salesReportRoyaltyList;
 	}
+	
+	//Report 5 all Fr Selected
+		@RequestMapping(value = { "/getSalesReportRoyaltyAllFr" }, method = RequestMethod.POST)
+		public @ResponseBody List<SalesReportRoyalty> getSalesReportRoyaltyAllFrSelc(@RequestParam("fromDate")
+		String fromDate,@RequestParam("toDate") String toDate) {
+
+			List<SalesReportRoyalty> salesReportRoyaltyList = null;
+			try {
+				fromDate = Common.convertToYMD(fromDate);
+				toDate = Common.convertToYMD(toDate);
+				System.out.println("Input received "+fromDate+""+toDate);
+				salesReportRoyaltyList = salesReportRoyaltyRepo.getSaleReportRoyaltyAllFr(fromDate, toDate);
+				System.out.println("getSaleReportBillwise"+salesReportRoyaltyList.toString());
+
+			} catch (Exception e) {
+				System.out.println(" Exce in sales Report Royalty all fr " + e.getMessage());
+				e.printStackTrace();
+			}
+			return salesReportRoyaltyList;
+		}
 	
 	
 	//report no 6 
@@ -257,8 +278,29 @@ public class SalesReportController {
 		return salesReportRoyaltyFrList;
 	}
 	
+	//report no 6 All Fr
+		@RequestMapping(value = { "/getSalesReportRoyaltyFrAllFr" }, method = RequestMethod.POST)
+		public @ResponseBody List<SalesReportRoyaltyFr> getSalesReportRoyaltyFrAllFr(@RequestParam("fromDate")
+		String fromDate,
+				@RequestParam("toDate") String toDate) {
+
+			List<SalesReportRoyaltyFr> salesReportRoyaltyFrList = null;
+			try {
+				fromDate = Common.convertToYMD(fromDate);
+				toDate = Common.convertToYMD(toDate);
+				System.out.println("Input received "+fromDate+""+toDate);
+				salesReportRoyaltyFrList = salesReportRoyaltyFrRepo.getSaleReportRoyaltyFrAllFrSel(fromDate, toDate);
+				System.out.println("sale sReportRoyalty Fr List"+salesReportRoyaltyFrList.toString());
+
+			} catch (Exception e) {
+				System.out.println(" Exce in sales Report Royalty Fr all fr sel " + e.getMessage());
+				e.printStackTrace();
+			}
+			return salesReportRoyaltyFrList;
+		}
 	
-	//report 7
+	
+	//report 7 by default All Fr report
 	
 	@RequestMapping(value = { "/getSaleReportBillwiseAllFr" }, method = RequestMethod.POST)
 	public @ResponseBody List<SalesReportBillwiseAllFr> getSaleReportBillwiseAllFr(@RequestParam("fromDate")
