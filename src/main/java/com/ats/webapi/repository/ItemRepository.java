@@ -28,4 +28,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	public List<Item> findByItemGrp1AndDelStatusOrderByItemGrp2AscItemSortIdAsc(String itemGrp1, int i);
 
+	public List<Item> findByDelStatusOrderByItemGrp2AscItemSortIdAsc(int i);
+
 }

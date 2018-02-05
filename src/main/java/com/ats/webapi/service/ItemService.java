@@ -27,5 +27,6 @@ public interface ItemService {
 	public GetItemSup getItemSup(int id);
 	public int getUniqueItemCode();
 	public List<TrayType> getTrayTypes();
+	public ItemsList getAllItemsBySorting();
 
 }

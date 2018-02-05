@@ -2457,6 +2457,12 @@ try {
 		ItemsList itemsList = itemService.findAllItems();
 		return itemsList;
 	}
+	// Get All Items order By Sub category, Sort Id
+	@RequestMapping(value = { "/getAllItemsBySorting" }, method = RequestMethod.GET)
+	public @ResponseBody ItemsList getAllItemsBySorting() {
+		ItemsList itemsList = itemService.getAllItemsBySorting();
+		return itemsList;
+	}
 
 	// Get All Menus
 	@RequestMapping(value = { "/getAllMenu" }, method = RequestMethod.GET)
