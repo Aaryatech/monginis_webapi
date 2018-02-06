@@ -26,11 +26,16 @@ import com.ats.webapi.model.stock.GetCurProdAndBillQty;
 import com.ats.webapi.model.stock.GetCurProdAndBillQtyList;
 import com.ats.webapi.model.stock.GetCurrentBmsSFStock;
 import com.ats.webapi.model.stock.GetCurrentBmsSFStockList;
+import com.ats.webapi.model.stock.UpdateBmsSfStock;
+import com.ats.webapi.model.stock.UpdateBmsSfStockList;
+import com.ats.webapi.model.stock.UpdateBmsStock;
+import com.ats.webapi.model.stock.UpdateBmsStockList;
 import com.ats.webapi.repository.bmsstock.CurrentBmsSFStockRepo;
 import com.ats.webapi.repository.bmsstock.FinishedGoodStockDetailRepo;
 import com.ats.webapi.repository.bmsstock.FinishedGoodStockRepo;
 import com.ats.webapi.repository.bmsstock.GetCurProdAndBillQtyRepo;
 import com.ats.webapi.repository.bmsstock.GetCurrentBmsStockRepo;
+import com.ats.webapi.repository.bmsstock.UpdateBmsSfStockRepo;
 import com.ats.webapi.repository.bmsstock.UpdateBmsStockRepo;
 import com.ats.webapi.service.FrItemStockConfigureService;
 
@@ -63,24 +68,66 @@ public class BmsAndFinGoodStockController {
 	@Autowired
 	UpdateBmsStockRepo updateBmsStockRepo;
 	
+	@Autowired
+	UpdateBmsSfStockRepo updateBmsSfStockRepo;
+	
 	@RequestMapping(value = { "/updateBmsStockForRM" }, method = RequestMethod.POST)
-	public @ResponseBody int updateBmsStock(@RequestParam("bmsStockId") int bmsStockId,
-			@RequestParam("prodIssueQty") float prodIssueQty, @RequestParam("prodRejectedQty") float prodRejectedQty,
-			@RequestParam("prodReturnQty") float prodReturnQty, @RequestParam("mixingIssueQty") float mixingIssueQty,
-			@RequestParam("mixingRejectedQty") float mixingRejectedQty, @RequestParam("mixingReturnQty") float mixingReturnQty,
-			@RequestParam("storeIssueQty") float storeIssueQty, @RequestParam("storeRejectedQty") float storeRejectedQty,
-			@RequestParam("bmsClosingStock") float bmsClosingStock,@RequestParam("rmId") int rmId,
-			@RequestParam("mixingReceiveRejectedQty") float mixingReceiveRejectedQty,@RequestParam("mixingRecQty") float mixingRecQty) {
+	public @ResponseBody Info updateBmsStock(@RequestBody  UpdateBmsStockList rmUpdate) {
 		int updateBmsRmResponse=0;
+		
+		Info info=new Info();
 		try {
-		 updateBmsRmResponse=updateBmsStockRepo.updateBmsRmStock(bmsStockId, prodIssueQty, prodRejectedQty, prodReturnQty, mixingIssueQty, mixingRejectedQty, mixingReturnQty, storeIssueQty, storeRejectedQty, bmsClosingStock, rmId, mixingReceiveRejectedQty, mixingRecQty);
+			
+			for(int i=0;i<rmUpdate.getBmsStock().size();i++) {
+				
+				
+				UpdateBmsStock stock=rmUpdate.getBmsStock().get(i);
+		
+				updateBmsRmResponse=updateBmsStockRepo.updateBmsRmStock(stock.getBmsStockId(), stock.getProdIssueQty(), stock.getProdRejectedQty(),
+						
+				 stock.getProdReturnQty(), stock.getMixingIssueQty(), stock.getMixingRejectedQty(), stock.getMixingReturnQty(), stock.getStoreIssueQty(), 
+				 stock.getStoreRejectedQty(), stock.getBmsClosingStock(), stock.getRmId(), stock.getMixingReceiveRejectedQty(), stock.getMixingRecQty());
+			}
+			
+		 if(updateBmsRmResponse>0) {
+			 info.setError(false);
+			 info.setMessage("success updating RM Bms Stock ");
+		 }
 		}catch (Exception e) {
-		System.out.println("Exce in Bms Stock Update Process "+e.getMessage());
+		System.out.println("Exce in Bms Stock Update Process for RM  "+e.getMessage());
 		e.printStackTrace();
 		}
 		
-		return updateBmsRmResponse;
+		return info;
 	}
+	
+	
+	@RequestMapping(value = { "/updateBmsStockForSF" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateBmsStockForSf(@RequestBody UpdateBmsSfStockList sfUpdate) {
+		int updateBmsSfResponse=0;
+		
+		Info info=new Info();
+		try {
+			
+			for(int i=0;i<sfUpdate.getBmsSfStock().size();i++) {
+				
+				UpdateBmsSfStock bmsSf=sfUpdate.getBmsSfStock().get(i);
+				updateBmsSfResponse=updateBmsSfStockRepo.updateBmsSfStock(bmsSf.getBmsStockId(), bmsSf.getProdIssueQty(), bmsSf.getProdRejectedQty(), bmsSf.getProdReturnQty(), bmsSf.getMixingIssueQty(), bmsSf.getMixingRejectedQty(), bmsSf.getBmsClosingStock(), bmsSf.getSfId());
+				
+				if(updateBmsSfResponse>0) {
+					info.setError(false);
+					info.setMessage("sf Update Success ");
+				}
+			}
+		}catch (Exception e) {
+		System.out.println("Exce in Bms Stock Update Process for SF "+e.getMessage());
+		e.printStackTrace();
+		}
+		
+		return info;
+	}
+	
+	
 	
 	/*self Query 
 	 //Get BMS Stock Bet Date
