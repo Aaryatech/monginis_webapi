@@ -67,10 +67,12 @@ public class BmsStockApiController {
 			
 			 	System.out.println("bmsStockHeaderloc"+bmsStockHeaderloc);
 			 
-			
+			if(bmsStockHeaderloc ==null) {
+				 bmsStockHeaderloc = new BmsStockHeader();
+			}
 
 		} catch (Exception e) {
-			
+			 bmsStockHeaderloc = new BmsStockHeader();
 			e.printStackTrace();
 			System.out.println("Exce in bmsstock Insert " + e.getMessage());
 		}
