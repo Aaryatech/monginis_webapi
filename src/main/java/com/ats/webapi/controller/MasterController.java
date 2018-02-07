@@ -18,6 +18,7 @@ import com.ats.webapi.model.FranchiseSup;
 import com.ats.webapi.model.FranchiseSupList;
 import com.ats.webapi.model.GetItemSup;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
 import com.ats.webapi.model.tray.TrayType;
@@ -218,7 +219,15 @@ public class MasterController {
 					return frTargetList;
 
 				}
-	        //------------------------------------------------------------------------		
+	        //------------------------------------------------------------------------	
+				// Get Items
+				@RequestMapping(value = "/getItemsByIsAllowBday", method = RequestMethod.GET)
+				public @ResponseBody List<Item> getItemsByIsAllowBday() {
+
+					List<Item> items = itemService.getItemsByIsAllowBday();
+					return items;
+
+				}
 				// ---------------------------Getting TotalFrSale List-----------------------
 				@RequestMapping(value = { "/getFrTotalSale" }, method = RequestMethod.POST)
 				public @ResponseBody FrTotalSale getFrTotalSale(@RequestParam("frId")int frId,@RequestParam("month")int month,@RequestParam("year")int year) {
