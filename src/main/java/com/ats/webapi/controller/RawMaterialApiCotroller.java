@@ -282,6 +282,7 @@ public class RawMaterialApiCotroller {
 			System.out.println("rmRateVerificationList"+rmRateVerificationList);
 		}catch(Exception e)
 		{
+			
 			e.printStackTrace();
 		}
 		 
