@@ -98,7 +98,7 @@ public class BmsStockApiController {
 			 	if(bmsStockHeaderloc ==null) {
 					 bmsStockHeaderloc = new BmsStockHeader();
 				}
-
+			 	System.out.println("bmsStockHeaderloc"+bmsStockHeaderloc);
 			} catch (Exception e) {
 				 bmsStockHeaderloc = new BmsStockHeader();
 			e.printStackTrace();
