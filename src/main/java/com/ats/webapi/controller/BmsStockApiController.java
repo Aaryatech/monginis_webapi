@@ -31,6 +31,35 @@ public class BmsStockApiController {
 	@Autowired
 	BmsStockDetailedRepository bmsStockDetailedRepository;
 	
+	
+	
+	
+	@RequestMapping(value = { "/getBmsStockDetail" }, method = RequestMethod.POST)
+	public @ResponseBody List<BmsStockDetailed> getBmsStockDetail(@RequestParam("bmsStockId")int bmsStockId) {
+
+		List<BmsStockDetailed> bmsStockDetailedList = new ArrayList<BmsStockDetailed>();
+		try {
+
+	
+			bmsStockDetailedList = bmsStockDetailedRepository.findByBmsStockId(bmsStockId);
+			
+			if(bmsStockDetailedList!=null && !bmsStockDetailedList.isEmpty())
+			{
+				System.out.println("successfully  ");
+			}
+			
+
+		} catch (Exception e) {
+			
+			e.printStackTrace();
+			System.out.println("Exce in bmsstock   " + e.getMessage());
+		}
+
+		return bmsStockDetailedList;
+
+	}
+	
+	
 	@RequestMapping(value = { "/insertBmsStock" }, method = RequestMethod.POST)
 	public @ResponseBody BmsStockHeader insertBmsStock(@RequestBody BmsStockHeader bmsStockHeader) {
 
@@ -67,12 +96,10 @@ public class BmsStockApiController {
 			
 			 	System.out.println("bmsStockHeaderloc"+bmsStockHeaderloc);
 			 
-			if(bmsStockHeaderloc ==null) {
-				 bmsStockHeaderloc = new BmsStockHeader();
-			}
+			
 
 		} catch (Exception e) {
-			 bmsStockHeaderloc = new BmsStockHeader();
+			
 			e.printStackTrace();
 			System.out.println("Exce in bmsstock Insert " + e.getMessage());
 		}

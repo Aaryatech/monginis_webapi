@@ -26,4 +26,13 @@ public interface BmsStockDetailedRepository extends JpaRepository<BmsStockDetail
 //				+ "",nativeQuery=true)
 //	 List<BmsStockDetailed> getStockDetails(@Param("fromDate")String fromDate, @Param("toDate")String toDate, @Param("rmType")int rmType);
 	
+	
+	
+
+	//get Bms Stock Detail with Stock Id and rm type for Day end 7Feb
+	
+	 List<BmsStockDetailed> findByBmsStockId(int bmsStockId);
+	
+	
+	
 }

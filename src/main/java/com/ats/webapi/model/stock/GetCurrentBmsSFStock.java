@@ -23,98 +23,84 @@ public class GetCurrentBmsSFStock {
 	@Column(name="sf_uom_id")
 	private int sfUomId;
 	
-	float prod_issue_qty;
-	float prod_rejected_qty;
+	float prodIssueQty;
+	float prodRejectedQty;
 	
-	float prod_return_qty;
-	float mixing_issue_qty;
-	float mixing_rejected_qty; 
+	float prodReturnQty;
+	float mixingIssueQty;
+	float mixingRejectedQty; 
 	//float mixing_return_qty; not used in sf current stock
 	//float store_issue_qty; 
 	//float store_rejected_qty;
-	
+	float bmsClosingStock;//new for bet Date;
 	float bmsOpeningStock;
-
 	public int getSfId() {
 		return sfId;
 	}
-
 	public void setSfId(int sfId) {
 		this.sfId = sfId;
 	}
-
 	public String getSfName() {
 		return sfName;
 	}
-
 	public void setSfName(String sfName) {
 		this.sfName = sfName;
 	}
-
 	public int getSfUomId() {
 		return sfUomId;
 	}
-
 	public void setSfUomId(int sfUomId) {
 		this.sfUomId = sfUomId;
 	}
-
-	public float getProd_issue_qty() {
-		return prod_issue_qty;
+	public float getProdIssueQty() {
+		return prodIssueQty;
 	}
-
-	public void setProd_issue_qty(float prod_issue_qty) {
-		this.prod_issue_qty = prod_issue_qty;
+	public void setProdIssueQty(float prodIssueQty) {
+		this.prodIssueQty = prodIssueQty;
 	}
-
-	public float getProd_rejected_qty() {
-		return prod_rejected_qty;
+	public float getProdRejectedQty() {
+		return prodRejectedQty;
 	}
-
-	public void setProd_rejected_qty(float prod_rejected_qty) {
-		this.prod_rejected_qty = prod_rejected_qty;
+	public void setProdRejectedQty(float prodRejectedQty) {
+		this.prodRejectedQty = prodRejectedQty;
 	}
-
-	public float getProd_return_qty() {
-		return prod_return_qty;
+	public float getProdReturnQty() {
+		return prodReturnQty;
 	}
-
-	public void setProd_return_qty(float prod_return_qty) {
-		this.prod_return_qty = prod_return_qty;
+	public void setProdReturnQty(float prodReturnQty) {
+		this.prodReturnQty = prodReturnQty;
 	}
-
-	public float getMixing_issue_qty() {
-		return mixing_issue_qty;
+	public float getMixingIssueQty() {
+		return mixingIssueQty;
 	}
-
-	public void setMixing_issue_qty(float mixing_issue_qty) {
-		this.mixing_issue_qty = mixing_issue_qty;
+	public void setMixingIssueQty(float mixingIssueQty) {
+		this.mixingIssueQty = mixingIssueQty;
 	}
-
-	public float getMixing_rejected_qty() {
-		return mixing_rejected_qty;
+	public float getMixingRejectedQty() {
+		return mixingRejectedQty;
 	}
-
-	public void setMixing_rejected_qty(float mixing_rejected_qty) {
-		this.mixing_rejected_qty = mixing_rejected_qty;
+	public void setMixingRejectedQty(float mixingRejectedQty) {
+		this.mixingRejectedQty = mixingRejectedQty;
 	}
-
-	public float getBms_opening_stock() {
+	public float getBmsClosingStock() {
+		return bmsClosingStock;
+	}
+	public void setBmsClosingStock(float bmsClosingStock) {
+		this.bmsClosingStock = bmsClosingStock;
+	}
+	public float getBmsOpeningStock() {
 		return bmsOpeningStock;
 	}
-
-	public void setBms_opening_stock(float bms_opening_stock) {
-		this.bmsOpeningStock = bms_opening_stock;
+	public void setBmsOpeningStock(float bmsoOpeningStock) {
+		this.bmsOpeningStock = bmsoOpeningStock;
 	}
-
 	@Override
 	public String toString() {
-		return "GetCurrentBmsSFStock [sfId=" + sfId + ", sfName=" + sfName + ", sfUomId=" + sfUomId
-				+ ", prod_issue_qty=" + prod_issue_qty + ", prod_rejected_qty=" + prod_rejected_qty
-				+ ", prod_return_qty=" + prod_return_qty + ", mixing_issue_qty=" + mixing_issue_qty
-				+ ", mixing_rejected_qty=" + mixing_rejected_qty + ", bms_opening_stock=" + bmsOpeningStock + "]";
+		return "GetCurrentBmsSFStock [sfId=" + sfId + ", sfName=" + sfName + ", sfUomId=" + sfUomId + ", prodIssueQty="
+				+ prodIssueQty + ", prodRejectedQty=" + prodRejectedQty + ", prodReturnQty=" + prodReturnQty
+				+ ", mixingIssueQty=" + mixingIssueQty + ", mixingRejectedQty=" + mixingRejectedQty
+				+ ", bmsClosingStock=" + bmsClosingStock + ", bmsOpeningStock=" + bmsOpeningStock + "]";
 	}
-	
-	
 
+	
 }

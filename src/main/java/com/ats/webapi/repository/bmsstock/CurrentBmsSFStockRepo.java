@@ -13,7 +13,7 @@ public interface CurrentBmsSFStockRepo extends JpaRepository<GetCurrentBmsSFStoc
 
 	
 	@Query(value=" SELECT m_item_sf_header.sf_uom_id,"
-			+ "m_item_sf_header.sf_id,m_item_sf_header.sf_name,COALESCE(s7.bms_opening_stock,0) AS bms_opening_stock\n" + 
+			+ "m_item_sf_header.sf_id,m_item_sf_header.sf_name,COALESCE(s7.bms_opening_stock,0) AS bms_opening_stock,COALESCE(s7.bms_opening_stock,0) AS bms_closing_stock\n" + 
 			" ,COALESCE(s1.prod_issue_qty,0) as prod_issue_qty, COALESCE(s3.prod_rejected_qty,0) as prod_rejected_qty, \n" + 
 			"COALESCE(s3.prod_return_qty,0) as prod_return_qty,COALESCE(s2.mixing_production_qty,0) as mixing_issue_qty, \n" + 
 			"COALESCE(s4.mixing_rejected_qty,0) AS mixing_rejected_qty FROM m_item_sf_header\n" + 
@@ -45,5 +45,34 @@ public interface CurrentBmsSFStockRepo extends JpaRepository<GetCurrentBmsSFStoc
 			"WHERE m_item_sf_header.del_status=0 GROUP BY m_item_sf_header.sf_id ",nativeQuery=true)
 		
 			List<GetCurrentBmsSFStock> getBmsCurStockForSF(@Param("curDate") Date curDate,@Param("prodDeptId") int prodDeptId);
+	//BMS Stock between date Same finish (sf) 6 FEB 2018
+	
+	@Query(value=" SELECT m_item_sf_header.sf_uom_id, m_item_sf_header.sf_id,m_item_sf_header.sf_name,COALESCE(s7.bms_opening_stock,0) \n" + 
+			"as bms_opening_stock ,COALESCE(s1.prod_issue_qty,0) as prod_issue_qty, COALESCE(s1.prod_rejected_qty,0) as prod_rejected_qty, \n" + 
+			"COALESCE(s1.prod_return_qty,0) as prod_return_qty,COALESCE(s1.mixing_issue_qty,0) as mixing_issue_qty, \n" + 
+			"COALESCE(s1.mixing_rejected_qty,0) AS mixing_rejected_qty,COALESCE(s8.bms_closing_stock,0) as bms_closing_stock \n" + 
+			" FROM m_item_sf_header\n" + 
+			"\n" + 
+			"LEFT JOIN ( select SUM(t_bms_stock_details.prod_issue_qty) as prod_issue_qty,SUM(t_bms_stock_details.prod_rejected_qty)\n" + 
+			" as prod_rejected_qty,SUM(t_bms_stock_details.prod_return_qty) as prod_return_qty,SUM( t_bms_stock_details.mixing_issue_qty) \n" + 
+			"as mixing_issue_qty,SUM( t_bms_stock_details.mixing_rejected) as mixing_rejected_qty, t_bms_stock_details.rm_id AS rm_id \n" + 
+			"from t_bms_stock_details,t_bms_stock where t_bms_stock.bms_stock_date BETWEEN :fromDate AND :toDate \n" + 
+			" and t_bms_stock.bms_stock_id=t_bms_stock_details.bms_stock_id group by t_bms_stock_details.rm_id ) \n" + 
+			"s1 ON s1.rm_id = m_item_sf_header.sf_id\n" + 
+			"\n" + 
+			"\n" + 
+			"LEFT JOIN ( select SUM(t_bms_stock_details.bms_opening_stock) as bms_opening_stock, t_bms_stock_details.rm_id AS rm_id \n" + 
+			"from t_bms_stock_details,t_bms_stock where t_bms_stock.bms_stock_date=:fromDate \n" + 
+			"and t_bms_stock.bms_stock_id=t_bms_stock_details.bms_stock_id  group by t_bms_stock_details.rm_id ) \n" + 
+			"s7 ON s7.rm_id = m_item_sf_header.sf_id\n" + 
+			"\n" + 
+			"LEFT JOIN ( select SUM(t_bms_stock_details.closing_qty) as bms_closing_stock, t_bms_stock_details.rm_id AS rm_id \n" + 
+			"from t_bms_stock_details,t_bms_stock where t_bms_stock.bms_stock_date=:toDate and \n" + 
+			"t_bms_stock.bms_stock_id=t_bms_stock_details.bms_stock_id   group by t_bms_stock_details.rm_id ) \n" + 
+			"s8 ON s8.rm_id = m_item_sf_header.sf_id\n" + 
+			"\n" + 
+			"WHERE m_item_sf_header.del_status=0 GROUP BY m_item_sf_header.sf_id ",nativeQuery=true)
+		
+			List<GetCurrentBmsSFStock> getBmsStockForSFBetDate(@Param("fromDate") java.util.Date fromDate,@Param("toDate") java.util.Date toDate);
 		
 }

@@ -31,6 +31,7 @@ import com.ats.webapi.repository.bmsstock.FinishedGoodStockDetailRepo;
 import com.ats.webapi.repository.bmsstock.FinishedGoodStockRepo;
 import com.ats.webapi.repository.bmsstock.GetCurProdAndBillQtyRepo;
 import com.ats.webapi.repository.bmsstock.GetCurrentBmsStockRepo;
+import com.ats.webapi.repository.bmsstock.UpdateBmsStockRepo;
 import com.ats.webapi.service.FrItemStockConfigureService;
 
 @RestController
@@ -57,6 +58,29 @@ public class BmsAndFinGoodStockController {
 	
 	@Autowired
 	CurrentBmsSFStockRepo currentBmsSFStockRepo;
+	
+	//7feb 
+	@Autowired
+	UpdateBmsStockRepo updateBmsStockRepo;
+	
+	@RequestMapping(value = { "/updateBmsStockForRM" }, method = RequestMethod.POST)
+	public @ResponseBody int updateBmsStock(@RequestParam("bmsStockId") int bmsStockId,
+			@RequestParam("prodIssueQty") float prodIssueQty, @RequestParam("prodRejectedQty") float prodRejectedQty,
+			@RequestParam("prodReturnQty") float prodReturnQty, @RequestParam("mixingIssueQty") float mixingIssueQty,
+			@RequestParam("mixingRejectedQty") float mixingRejectedQty, @RequestParam("mixingReturnQty") float mixingReturnQty,
+			@RequestParam("storeIssueQty") float storeIssueQty, @RequestParam("storeRejectedQty") float storeRejectedQty,
+			@RequestParam("bmsClosingStock") float bmsClosingStock,@RequestParam("rmId") int rmId,
+			@RequestParam("mixingReceiveRejectedQty") float mixingReceiveRejectedQty,@RequestParam("mixingRecQty") float mixingRecQty) {
+		int updateBmsRmResponse=0;
+		try {
+		 updateBmsRmResponse=updateBmsStockRepo.updateBmsRmStock(bmsStockId, prodIssueQty, prodRejectedQty, prodReturnQty, mixingIssueQty, mixingRejectedQty, mixingReturnQty, storeIssueQty, storeRejectedQty, bmsClosingStock, rmId, mixingReceiveRejectedQty, mixingRecQty);
+		}catch (Exception e) {
+		System.out.println("Exce in Bms Stock Update Process "+e.getMessage());
+		e.printStackTrace();
+		}
+		
+		return updateBmsRmResponse;
+	}
 	
 	/*self Query 
 	 //Get BMS Stock Bet Date
@@ -215,6 +239,48 @@ h1.bms_status=1
 		
 		return bmsStockList;
 	}
+	//BMS Stock between date Same finish (sf)//6 feb 2018
+	@RequestMapping(value = { "/getBmsStockSFBetDate" }, method = RequestMethod.POST)
+	public @ResponseBody GetCurrentBmsSFStockList getBmsStockSFBetDate(@RequestParam("fromDate") String fromDate,@RequestParam("toDate") String toDate) {
+		
+		System.out.println("Inside Get bms current stock get web Service");
+	
+		Info info = new Info();
+
+		
+		GetCurrentBmsSFStockList bmsStockList = new GetCurrentBmsSFStockList();
+		try {
+			
+			Date fDate=Common.convertToSqlDate(fromDate);
+			Date tDate=Common.convertToSqlDate(toDate);
+
+			List<GetCurrentBmsSFStock> bmsCurrentStock = currentBmsSFStockRepo.getBmsStockForSFBetDate(fDate, tDate);
+			if (!bmsCurrentStock.isEmpty()) {
+
+				info.setError(false);
+				info.setMessage("success getting bms current stock list SF bet Date");
+
+				bmsStockList.setCurrentBmsSFStock(bmsCurrentStock);
+			} else {
+
+				info.setError(true);
+				info.setMessage("Error getting bms current  stock list for SF bet Date");
+
+			}
+
+			bmsStockList.setInfo(info);
+			System.out.println("Stock List BMS Current Stock for SF bet Date   " + bmsStockList.toString());
+
+		} catch (Exception e) {
+
+			System.out.println("Exc in Getting Current BMS stock List for SF Bet Date " + e.getMessage());
+			e.printStackTrace();
+		}
+		
+		
+		return bmsStockList;
+	}
+
 
 	@RequestMapping(value = { "/getDeptSettingValue" }, method = RequestMethod.POST)
 	public @ResponseBody FrItemStockConfigureList getSeetingValueOfDept(

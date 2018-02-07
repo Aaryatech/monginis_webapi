@@ -245,7 +245,10 @@ public class TempProdApi {
 			
 			
 			}catch (Exception e) {
-				System.out.println("Error getting sf Mixing For BOM ");
+				System.out.println("Error getting sf Mixing For BOM "+e.getCause());
+				
+				e.getStackTrace();
+				
 				e.printStackTrace();
 				
 			}

@@ -236,7 +236,7 @@ public class SalesReportController {
 		return salesReportRoyaltyList;
 	}
 	
-	//Report 5 all Fr Selected
+	//Report 5 all Fr Selected//Ok tested
 		@RequestMapping(value = { "/getSalesReportRoyaltyAllFr" }, method = RequestMethod.POST)
 		public @ResponseBody List<SalesReportRoyalty> getSalesReportRoyaltyAllFrSelc(@RequestParam("fromDate")
 		String fromDate,@RequestParam("toDate") String toDate) {
@@ -278,7 +278,7 @@ public class SalesReportController {
 		return salesReportRoyaltyFrList;
 	}
 	
-	//report no 6 All Fr
+	//report no 6 All Fr //Ok tested
 		@RequestMapping(value = { "/getSalesReportRoyaltyFrAllFr" }, method = RequestMethod.POST)
 		public @ResponseBody List<SalesReportRoyaltyFr> getSalesReportRoyaltyFrAllFr(@RequestParam("fromDate")
 		String fromDate,

@@ -60,7 +60,7 @@ public interface GetCurrentBmsStockRepo extends JpaRepository<GetBmsCurrentStock
 					@Param("storeDeptId") int storeDeptId,@Param("rmType") int rmType);
 		*/
 	//new Query get Bms RM current stock :Sir 5 Feb
-	@Query(value=" SELECT m_rm.rm_uom_id, m_rm.rm_id,m_rm.rm_name,COALESCE(s7.bms_opening_stock,0) as bms_opening_stock ,\n" + 
+	@Query(value=" SELECT m_rm.rm_uom_id, m_rm.rm_id,m_rm.rm_name,COALESCE(s7.bms_opening_stock,0) as bms_opening_stock,COALESCE(s7.bms_opening_stock,0) as bms_closing_stock ,\n" + 
 			"COALESCE(s1.prod_issue_qty,0) as prod_issue_qty, COALESCE(s4.prod_rejected_qty,0) as prod_rejected_qty, \n" + 
 			"COALESCE(s4.prod_return_qty,0) as prod_return_qty,COALESCE(s2.mixing_issue_qty,0) as mixing_issue_qty, \n" + 
 			"COALESCE(s5.mixing_rejected_qty,0) as mixing_rejected_qty,\n" + 
@@ -117,7 +117,7 @@ public interface GetCurrentBmsStockRepo extends JpaRepository<GetBmsCurrentStock
 			"COALESCE(s1.prod_return_qty,0) as prod_return_qty,COALESCE(s1.mixing_issue_qty,0) as mixing_issue_qty,\n" + 
 			" COALESCE(s1.mixing_rejected_qty,0) as mixing_rejected_qty, COALESCE(s1.mixing_return_qty,0) as mixing_return_qty,\n" + 
 			"COALESCE(s1.store_issue_qty,0) as store_issue_qty, COALESCE(s1.store_rejected_qty,0) as store_rejected_qty,\n" + 
-			"COALESCE(s3. bms_closing_stock,0) as closing_stock FROM m_rm\n" + 
+			"COALESCE(s3. bms_closing_stock,0) as bms_closing_stock FROM m_rm\n" + 
 			"\n" + 
 			"LEFT JOIN ( select SUM(t_bms_stock_details.prod_issue_qty) as prod_issue_qty,\n" + 
 			"SUM(t_bms_stock_details.prod_rejected_qty) as prod_rejected_qty,SUM(t_bms_stock_details.prod_return_qty) as prod_return_qty,\n" + 
