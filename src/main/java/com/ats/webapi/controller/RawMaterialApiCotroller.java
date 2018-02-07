@@ -1,4 +1,5 @@
 package com.ats.webapi.controller;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.RawMaterialUomList;
+import com.ats.webapi.model.RmRateVerificationList;
 import com.ats.webapi.model.rawmaterial.GetItemDetail;
 import com.ats.webapi.model.rawmaterial.GetRawMaterialByGroup;
 import com.ats.webapi.model.rawmaterial.GetRawMaterialDetailList;
@@ -32,6 +34,7 @@ import com.ats.webapi.model.rawmaterial.RmItemGroup;
 import com.ats.webapi.model.rawmaterial.RmItemSubCatList;
 import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
 import com.ats.webapi.model.rawmaterial.RmRateVerification;
+import com.ats.webapi.repository.RmRateVerificationListRepository;
 import com.ats.webapi.service.rawmaterial.RawMaterialService;
 
 @RestController
@@ -41,6 +44,8 @@ public class RawMaterialApiCotroller {
 	@Autowired
 	RawMaterialService rawMaterialService;
 	
+	@Autowired
+	RmRateVerificationListRepository rmRateVerificationListRepository;
 	//----------------------Get Data Of Raw Material Item Categories---------------
 	@RequestMapping(value = { "/showRmItemCategories" }, method = RequestMethod.GET)
 	public @ResponseBody RmItemCatList showRmItemCategories() {
@@ -264,6 +269,23 @@ public class RawMaterialApiCotroller {
 	{
 		
 		return rawMaterialService.getRmRateTaxVerification(suppId, rmId);
+	}
+	
+	@RequestMapping(value = { "/getRmRateVerificationList" }, method = RequestMethod.POST)
+	public @ResponseBody List<RmRateVerificationList> getRmRateVerificationList(@RequestParam("suppId")List<String> suppId, @RequestParam("rmId")List<String> rmId)
+	{
+		List<RmRateVerificationList> rmRateVerificationList= new ArrayList<RmRateVerificationList>();
+		try {
+			System.out.println("suppId"+suppId);
+			System.out.println("rmId"+rmId);
+			rmRateVerificationList = rmRateVerificationListRepository.rmRateVerificationList(suppId, rmId);
+			System.out.println("rmRateVerificationList"+rmRateVerificationList);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		 
+		return rmRateVerificationList;
 	}
 	//------------------------------------------SubmitRmRateVerification---------------------
 	@RequestMapping(value = { "/insertRmRateVerification" }, method = RequestMethod.POST)
