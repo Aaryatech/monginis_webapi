@@ -28,5 +28,6 @@ public interface ItemService {
 	public int getUniqueItemCode();
 	public List<TrayType> getTrayTypes();
 	public ItemsList getAllItemsBySorting();
+	public List<Item> getItemsByIsAllowBday();
 
 }

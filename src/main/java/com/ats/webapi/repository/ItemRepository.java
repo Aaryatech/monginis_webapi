@@ -30,4 +30,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	public List<Item> findByDelStatusOrderByItemGrp2AscItemSortIdAsc(int i);
 
-}
+	@Query(value="select * from m_item where m_item.id IN (Select m_item_sup.item_id from m_item_sup where m_item_sup.is_allow_bday=:isAllowBday) AND m_item.del_status=:delStatus",nativeQuery=true)
+	public List<Item> findByIsAllowBirthayAndDelStatus(@Param("isAllowBday")int isAllowBday,@Param("delStatus") int delStatus);
+
+} 

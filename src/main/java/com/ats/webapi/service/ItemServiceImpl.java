@@ -217,6 +217,26 @@ public class ItemServiceImpl implements ItemService{
 		return itemsList;
 	}
 
+	@Override
+	public List<Item> getItemsByIsAllowBday() {
+
+		List<Item> itemList=null;
+		try
+		{
+			itemList=itemRepository.findByIsAllowBirthayAndDelStatus(1,0);
+			if(itemList==null)
+			{
+				itemList=new ArrayList<>();
+			}
+		}catch(Exception e)
+		{
+			itemList=new ArrayList<>();
+			e.printStackTrace();
+		}
+		
+		return itemList;
+	}
+
 	
 
 }
