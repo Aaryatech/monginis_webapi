@@ -38,6 +38,7 @@ import com.ats.webapi.repository.communication.GetSuggestionRepository;
 import com.ats.webapi.repository.communication.NotificationRepository;
 import com.ats.webapi.repository.communication.SuggestionDetailRepository;
 import com.ats.webapi.repository.communication.SuggestionRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class CommunicationServiceImpl implements CommunicationService{
@@ -98,7 +99,9 @@ public class CommunicationServiceImpl implements CommunicationService{
 		try {
 			
 		Notification notificationRes=notificationRepository.saveAndFlush(notification);
-		
+ 
+        ObjectMapper om = new ObjectMapper();
+        String jsonStr = om.writeValueAsString(notificationRes);
 		if(notificationRes==null)
 		{
 			errorMessage.setError(true);
@@ -118,7 +121,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 		    	 for(String token:frTokens)
 		    	 {
 		    	
-		          Firebase.sendPushNotifForCommunication(token,notificationRes.getSubject(),notificationRes.getDescription(),"nf");
+		          Firebase.sendPushNotifForCommunication(token,notificationRes.getSubject(),jsonStr,"nf");
 		    	 }
 		         }
 		         catch(Exception e)
@@ -164,7 +167,8 @@ public class CommunicationServiceImpl implements CommunicationService{
 		try {
 			
 			Suggestion suggestionRes=suggestionRepository.saveAndFlush(suggestion);
-		
+			 ObjectMapper om = new ObjectMapper();
+		     String jsonStr = om.writeValueAsString(suggestionRes);
 		if(suggestionRes==null)
 		{
 			errorMessage.setError(true);
@@ -181,7 +185,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 		    	 for(String token:usrTokens)
 		    	 {
 		    	
-		          Firebase.sendPushNotifForCommunication(token,suggestionRes.getTitle(),suggestionRes.getDescription(),"s");
+		          Firebase.sendPushNotifForCommunication(token,suggestionRes.getTitle(),jsonStr,"s");
 		    	 }
 		         }
 		         catch(Exception e)
@@ -226,7 +230,8 @@ public class CommunicationServiceImpl implements CommunicationService{
 		try {
 			
 			Complaint complaintRes=complaintRepository.saveAndFlush(complaint);
-		
+			 ObjectMapper om = new ObjectMapper();
+		     String jsonStr = om.writeValueAsString(complaintRes);
 		if(complaintRes==null)
 		{
 			errorMessage.setError(true);
@@ -243,7 +248,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 		    	 for(String token:usrTokens)
 		    	 {
 		    	
-		          Firebase.sendPushNotifForCommunication(token,complaintRes.getTitle(),complaintRes.getDescription(),"c");
+		          Firebase.sendPushNotifForCommunication(token,complaintRes.getTitle(),jsonStr,"c");
 		    	 }
 		         }
 		         catch(Exception e)
@@ -288,7 +293,8 @@ public class CommunicationServiceImpl implements CommunicationService{
 		try {
 			
 			Feedback feedbackRes=feedbackRepository.saveAndFlush(feedback);
-		
+			 ObjectMapper om = new ObjectMapper();
+		     String jsonStr = om.writeValueAsString(feedbackRes);
 		if(feedbackRes==null)
 		{
 			errorMessage.setError(true);
@@ -308,7 +314,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 		    	 for(String token:frTokens)
 		    	 {
 		    	
-		          Firebase.sendPushNotifForCommunication(token,feedbackRes.getTitle(),feedbackRes.getDescription(),"f");
+		          Firebase.sendPushNotifForCommunication(token,feedbackRes.getTitle(),jsonStr,"f");
 		    	 }
 		         }
 		         catch(Exception e)
@@ -352,7 +358,8 @@ public class CommunicationServiceImpl implements CommunicationService{
 		try {
 			
 			SuggestionDetail suggestionDetailRes=suggestionDetailRepository.saveAndFlush(suggestionDetail);
-		
+			 ObjectMapper om = new ObjectMapper();
+		     String jsonStr = om.writeValueAsString(suggestionDetailRes);
 		if(suggestionDetailRes==null)
 		{
 			errorMessage.setError(true);
@@ -373,7 +380,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 			    	 for(String token:usrTokens)
 			    	 {
 			    	
-			          Firebase.sendPushNotifForCommunication(token,"Suggestion",suggestionDetailRes.getMessage(),"sd");
+			          Firebase.sendPushNotifForCommunication(token,"Suggestion",jsonStr,"sd");
 			    	 }
 			         }
 			         catch(Exception e)
@@ -395,7 +402,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 				    	 for(String token:usrTokens)
 				    	 {
 				    	
-				          Firebase.sendPushNotifForCommunication(token,"Suggestion",suggestionDetailRes.getMessage(),"sd");
+				          Firebase.sendPushNotifForCommunication(token,"Suggestion",jsonStr,"sd");
 				    	 }
 				         }
 				         catch(Exception e)
@@ -422,7 +429,8 @@ public class CommunicationServiceImpl implements CommunicationService{
 		try {
 			
 			ComplaintDetail complaintDetailRes=complaintDetailRepository.saveAndFlush(complaintDetail);
-		
+			 ObjectMapper om = new ObjectMapper();
+		     String jsonStr = om.writeValueAsString(complaintDetailRes);
 		if(complaintDetailRes==null)
 		{
 			errorMessage.setError(true);
@@ -442,7 +450,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 			    	 for(String token:usrTokens)
 			    	 {
 			    	
-			          Firebase.sendPushNotifForCommunication(token,complaintDetailRes.getMessage(),"","cd");
+			          Firebase.sendPushNotifForCommunication(token,complaintDetailRes.getMessage(),jsonStr,"cd");
 			    	 }
 			         }
 			         catch(Exception e)
@@ -464,7 +472,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 				    	 for(String token:usrTokens)
 				    	 {
 				    	
-				          Firebase.sendPushNotifForCommunication(token,complaintDetailRes.getMessage(),"","cd");
+				          Firebase.sendPushNotifForCommunication(token,complaintDetailRes.getMessage(),jsonStr,"cd");
 				    	 }
 				         }
 				         catch(Exception e)
@@ -490,7 +498,8 @@ public class CommunicationServiceImpl implements CommunicationService{
 		try {
 			
 			FeedbackDetail feedbackDetailRes=feedbackDetailRepository.saveAndFlush(feedbackDetail);
-		
+			 ObjectMapper om = new ObjectMapper();
+		     String jsonStr = om.writeValueAsString(feedbackDetailRes);
 		if(feedbackDetailRes==null)
 		{
 			errorMessage.setError(true);
@@ -510,7 +519,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 			    	 for(String token:usrTokens)
 			    	 {
 			    	
-			          Firebase.sendPushNotifForCommunication(token,feedbackDetailRes.getMessage(),"","fd");
+			          Firebase.sendPushNotifForCommunication(token,feedbackDetailRes.getMessage(),jsonStr,"fd");
 			    	 }
 			         }
 			         catch(Exception e)
@@ -530,7 +539,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 				    	 for(String token:usrTokens)
 				    	 {
 				    	
-				          Firebase.sendPushNotifForCommunication(token,feedbackDetailRes.getMessage(),"","fd");
+				          Firebase.sendPushNotifForCommunication(token,feedbackDetailRes.getMessage(),jsonStr,"fd");
 				    	 }
 				         }
 				         catch(Exception e)

@@ -15,6 +15,7 @@ import com.ats.webapi.model.SchedulerList;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.SchedulerRepository;
 import com.ats.webapi.util.JsonUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class SchedulerServiceImpl implements SchedulerService {
@@ -32,19 +33,20 @@ public class SchedulerServiceImpl implements SchedulerService {
 	public String save(Scheduler scheduler) {
 		SchedulerList schedulerList=new SchedulerList();
 		Info info=new Info();
-		
+		Scheduler schedularRes;
 		try {
 			if(scheduler.getSchMessage()!=null && ! scheduler.getSchMessage().trim().equals("")&& 
 					scheduler.getSchOccasionname()!=null && !scheduler.getSchOccasionname().trim().equals("")){
-					scheduler = schedulerRepository.save(scheduler);
-					
+				   schedularRes = schedulerRepository.save(scheduler);
+					 ObjectMapper om = new ObjectMapper();
+				     String jsonStr = om.writeValueAsString(schedularRes);
 					List<String> frTokens=franchiseSupRepository.findTokens();
 					
 					 try {
 				    	 for(String token:frTokens)
 				    	 {
 				    	
-				          Firebase.sendPushNotifForCommunication(token,scheduler.getSchOccasionname(),scheduler.getSchMessage(),"news");
+				          Firebase.sendPushNotifForCommunication(token,scheduler.getSchOccasionname(),jsonStr,"news");
 				    	 }
 				         }
 				         catch(Exception e)

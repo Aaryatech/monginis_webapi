@@ -12,6 +12,7 @@ import com.ats.webapi.model.Message;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.MessageRepository;
 import com.ats.webapi.util.JsonUtil;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service()
 public class MessageServiceImpl implements MessageService {
@@ -25,22 +26,23 @@ public class MessageServiceImpl implements MessageService {
 	
 	@Override
 	public String save(Message message) {
-		
+		Message messageRes;
 		try {
 			if(message.getMsgDetails()!=null && !message.getMsgDetails().trim().equals("") 
 					&& message.getMsgHeader()!=null &&!message.getMsgHeader().trim().equals("")
 					&& message.getMsgImage()!=null 
 					&& !message.getMsgImage().trim().equals("")&& message.getMsgImage()!=null 
 					&& !message.getMsgImage().trim().equals("")) {
-				message = messageRepository.save(message);
-				
+				 messageRes = messageRepository.save(message);
+				 ObjectMapper om = new ObjectMapper();
+			     String jsonStr = om.writeValueAsString(messageRes);
 				List<String> frTokens=franchiseSupRepository.findTokens();
 				
 				 try {
 			    	 for(String token:frTokens)
 			    	 {
 			    	
-			          Firebase.sendPushNotifForCommunication(token,message.getMsgHeader(),message.getMsgDetails(),"notice");
+			          Firebase.sendPushNotifForCommunication(token,message.getMsgHeader(),jsonStr,"notice");
 			    	 }
 			         }
 			         catch(Exception e)

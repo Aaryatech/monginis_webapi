@@ -24,4 +24,6 @@ public interface GateSaleDiscountRepository extends JpaRepository<GateSaleDiscou
 
 	List<GateSaleDiscount> findGateSaleDiscountByCatIdAndDelStatus(int catId, int delStatus);
 
+	List<GateSaleDiscount> findGateSaleDiscountByUserTypeAndDelStatus(int userType, int i);
+
 }

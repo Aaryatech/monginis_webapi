@@ -146,6 +146,16 @@ public class GateSaleController {
 
 		}
 	   //----------------------------END-------------------------------------------------
+		// ---------------------------Getting GateSaleDiscount By userType-------------------------
+				@RequestMapping(value = { "/getGateSaleDiscByUsrType" }, method = RequestMethod.POST)
+				public @ResponseBody List<GateSaleDiscount> getGateSaleDiscByUsrType(@RequestParam("userType")int userType) {
+
+					List<GateSaleDiscount> gateSaleDiscountRes = gateSaleService.getGateSaleDiscByUsrType(userType);
+				            
+					return gateSaleDiscountRes;
+
+				}
+			   //----------------------------END-------------------------------------------------
 		//----------------------Save Employee------------------------------------
 		@RequestMapping(value = { "/saveGateEmployee" }, method = RequestMethod.POST)
 		public @ResponseBody ErrorMessage saveGateEmployee(@RequestBody GateEmployee gateEmployee)

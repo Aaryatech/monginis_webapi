@@ -837,4 +837,25 @@ try {
 		return gateSaleBillHeaderRes;
 	}
 
+	@Override
+	public List<GateSaleDiscount> getGateSaleDiscByUsrType(int userType) {
+		
+		List<GateSaleDiscount> gateSaleDiscRes=null;
+		try {
+		 gateSaleDiscRes=gateSaleDiscountRepository.findGateSaleDiscountByUserTypeAndDelStatus(userType,0); 
+		
+		if(gateSaleDiscRes==null)
+		{
+			gateSaleDiscRes=new ArrayList<>();
+			
+		}
+		}catch(Exception e)
+		{
+			gateSaleDiscRes=new ArrayList<>();
+			e.printStackTrace();
+		}
+		
+		return gateSaleDiscRes;
+	}
+
 }

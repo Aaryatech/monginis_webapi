@@ -76,4 +76,6 @@ public interface GateSaleService {
 
 	List<GateSaleBillHeaderRes> gateBillDetailsAmtPending();
 
+	List<GateSaleDiscount> getGateSaleDiscByUsrType(int userType);
+
 }
