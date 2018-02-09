@@ -1,5 +1,6 @@
 package com.ats.webapi.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,11 @@ public class GetBillsForFrServiceImpl implements GetBillsForFrService  {
 	GetBillsForFrRepository getBillsForFrRepository;
 
 	@Override
-	public GetBillsForFrList getBillForFr(int frId) {
+	public GetBillsForFrList getBillForFr(int frId,Date back15Days,Date curDate) {
 		
 		GetBillsForFrList billsForFrList=new GetBillsForFrList();
 		
-		List<GetBillsForFr> getBillForFr=getBillsForFrRepository.getBillForSelectedFr(frId);
+		List<GetBillsForFr> getBillForFr=getBillsForFrRepository.getBillForSelectedFr(frId, back15Days, curDate);
 		
 		Info info=new Info();
 		

@@ -103,6 +103,25 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
 public class RestApiController {
+	
+	
+	public String incrementDate(String date, int day) {
+
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Calendar c = Calendar.getInstance();
+		try {
+			c.setTime(sdf.parse(date));
+
+		} catch (ParseException e) {
+			System.out.println("Exception while incrementing date " + e.getMessage());
+			e.printStackTrace();
+		}
+		c.add(Calendar.DATE, day); // number of days to add
+		date = sdf.format(c.getTime());
+
+		return date;
+
+	}
 
 	@Autowired
 	private UserService userService;
@@ -532,9 +551,21 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/getBillsForFr", method = RequestMethod.POST)
-	public @ResponseBody GetBillsForFrList getBillsForFrService(@RequestParam("frId") int frId) {
+	public @ResponseBody GetBillsForFrList getBillsForFrService(@RequestParam("frId") int frId,
+			@RequestParam("curDate") String curDate) {
+	//fff;
+	
+	//java.util.Date cDate = new java.util.Date();
 
-		GetBillsForFrList billsForFrLisr = getBillsForFrService.getBillForFr(frId);
+		String back15Days= incrementDate(curDate,-15);
+		java.sql.Date cDate=Common.convertToSqlDate(curDate);
+		java.sql.Date back15Date=Common.convertToSqlDate(back15Days);
+		
+		System.out.println("curDate "+curDate);
+		
+		System.out.println("15 Days Back Date "+back15Days);
+		
+		GetBillsForFrList billsForFrLisr = getBillsForFrService.getBillForFr(frId,back15Date,cDate);
 
 		return billsForFrLisr;
 
