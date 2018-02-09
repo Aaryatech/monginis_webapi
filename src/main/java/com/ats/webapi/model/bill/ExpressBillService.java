@@ -28,4 +28,14 @@ public interface ExpressBillService {
 	GetItemHsnCode getItemHsnCode(int itemId);
 	
 	
+	//delete sell bill Header if its details are empty //10 Feb Sachin
+	
+	int deleteSellBillHeader(int sellBillNo);
+	
+	
+	
+	
+
+	
+	
 }

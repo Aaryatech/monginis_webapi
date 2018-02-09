@@ -123,5 +123,28 @@ public class ExpressBillServiceImpl implements ExpressBillService{
 	}
 
 	
+	//delete sell bill Header if its detail are empty Sachin 10 Feb
+	@Override
+	public int deleteSellBillHeader(int sellBillNo) {
+		
+		int response=0;
+		
+		try {
+			
+			expressBillRepository.delete(sellBillNo);
+			response=1;
+		}catch (Exception e) {
+			
+			System.out.println("Exce In Deleting sell Bill Header  : ExpressBillService"+e.getMessage());
+			e.printStackTrace();
+		
+		}
+		
+		System.out.println("Ex Bill Delete Response " + response);
+		
+		return response;
+	}
+
+	
 
 }

@@ -19,5 +19,11 @@ public interface ExpressBillRepository extends JpaRepository<SellBillHeader, Int
 	
 	//function to get sellBillHeader to close a day
 	SellBillHeader getBysellBillNo(int sellBillNo);
+	
+	
+	//function to delete Sell Bill Header if its Details are empty 
+	int deleteBySellBillNo(int sellBillNo); 
+	
+	//int deleteInBatch(int sellBillNo);
 
 }

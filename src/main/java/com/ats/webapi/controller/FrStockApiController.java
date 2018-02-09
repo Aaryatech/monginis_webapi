@@ -137,11 +137,11 @@ public class FrStockApiController {
 		
 		
 			// current stock
-		int grnGvn = getItemStockService.getTotalGrnGvnUptoDateTime( frId,  strFirstDay,toDateTime, itemId );
+		int grnGvn = getItemStockService.getTotalGrnGvnUptoDateTime( frId,  strFirstDay,fromDateTime, itemId );
 
-		totalSellUptoDateTime = getItemStockService.getTotalSellUpToDateTime( frId,  strFirstDay,  toDateTime, itemId );
+		totalSellUptoDateTime = getItemStockService.getTotalSellUpToDateTime( frId,  strFirstDay,  fromDateTime, itemId );
 
-		totalPurchaseUptoDateTime=getItemStockService.getTotalPurchaseUptoDateTime(frId, strFirstDay, toDateTime, itemId);
+		totalPurchaseUptoDateTime=getItemStockService.getTotalPurchaseUptoDateTime(frId, strFirstDay, fromDateTime, itemId);
 		
 		postFrItemStockDetail = getItemStockService.getOpeningStock(frId, currentMonth, year,itemId ,catId);
 
@@ -154,7 +154,7 @@ public class FrStockApiController {
 		
 		
 		//purchase qty
-		RegularSpecialStockCal totalPurchaseOfDate=getItemStockService.getTotalPurchaseOfDate(frId, fromDate, itemId);
+		//RegularSpecialStockCal totalPurchaseOfDate=getItemStockService.getTotalPurchaseOfDate(frId, fromDate, itemId);
 		
 		//sell
 		
@@ -175,8 +175,12 @@ public class FrStockApiController {
 		autoGrnGvnStock.setRegCurrentStock(regCurrentStock);
 		autoGrnGvnStock.setSpCurrentStock(spCurrentStock);
 		
-		autoGrnGvnStock.setPurchaseQty(totalPurchaseOfDate.getReg());
-		autoGrnGvnStock.setPushQty(totalPurchaseOfDate.getSp());
+		// autoGrnGvnStock.setPurchaseQty(totalPurchaseOfDate.getReg());
+		// autoGrnGvnStock.setPushQty(totalPurchaseOfDate.getSp());
+		
+		autoGrnGvnStock.setPurchaseQty(0);
+		autoGrnGvnStock.setPushQty(0);
+		
 		
 		autoGrnGvnStock.setRegSellQty(totalSellBetweenDate.getReg());
 		autoGrnGvnStock.setSpSellQty(totalSellBetweenDate.getSp());
@@ -184,8 +188,8 @@ public class FrStockApiController {
 		autoGrnGvnStock.setGrnGvnQty(grnGvnBetweenDate);
 		
 		stockDetailsList.add(autoGrnGvnStock);
-		
-		
+		System.out.println("********");
+		System.out.println("Stock Detail List :::"+stockDetailsList.toString());
 	    
 		}
 		return stockDetailsList; 
@@ -411,7 +415,6 @@ public class FrStockApiController {
 
 			info.setError(false);
 			info.setMessage("post Fr Stock header inserted  Successfully");
-
 		}
 
 		else {

@@ -24,6 +24,16 @@ public class BillingController {
 	@Autowired
 	ExpressBillService expressBillService;
 	
+	
+	@RequestMapping(value = { "/deleteExBillHeader" }, method = RequestMethod.POST)
+	public @ResponseBody int deleteExPBillHeader(@RequestParam("sellBillNo") int sellBillNo) {
+
+		int response=expressBillService.deleteSellBillHeader(sellBillNo);
+		    
+		return response;
+	  }
+	
+	
 	 
 	@RequestMapping(value = { "/showNotDayClosedRecord" }, method = RequestMethod.POST)
 	public @ResponseBody SellBillDataCommon showNotDayClosedRecord(@RequestParam("frId") int frId) {
