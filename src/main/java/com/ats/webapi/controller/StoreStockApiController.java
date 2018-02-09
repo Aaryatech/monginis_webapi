@@ -70,8 +70,21 @@ public class StoreStockApiController {
 	
 	@RequestMapping(value = { "/getCurrentStoreStockHeader" }, method = RequestMethod.POST)
 	public @ResponseBody StoreStockHeader getCurrentStoreStockHeader(@RequestParam("status")int status) {
+		
+		StoreStockHeader storeStockHeader = new StoreStockHeader();
+		try
+		{
+			storeStockHeader=storeStockService.getCurrentStockHeader(status);
+			if(storeStockHeader==null)
+			{
+				storeStockHeader = new StoreStockHeader();
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	
-		StoreStockHeader storeStockHeader=storeStockService.getCurrentStockHeader(status);
+		 
 		
 		return storeStockHeader;
 	}
