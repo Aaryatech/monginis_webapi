@@ -89,8 +89,32 @@ public class MaterialReceiptNote implements Serializable{
 	@Column(name="item_cess_rs")
 	private float itemCessRs;
 	
+	@Column(name="extra_disc_amt_on_item")
+	private float extraDiscountAmtOnItem;
+	
+	@Column(name="extra_disc_amt_on_bill")
+	private float extraDiscountAmtOnBill;
+	
+	@Column(name="extra_charges_on_item")
+	private float extraChargesOnItem;
+	
+	@Column(name="extra_charges_on_bill")
+	private float extraChargesOnBill;
+	
 	@Column(name="amount")
 	private float itemTotalamount;
+	
+	@Column(name="total_extra_disc_amt_on_item")
+	private float totalExtraDiscountAmtOnItem;
+	
+	@Column(name="total_extra_disc_amt_on_bill")
+	private float totalExtraDiscountAmtOnBill;
+	
+	@Column(name="total_extra_charges_on_item")
+	private float totalExtraChargesOnItem;
+	
+	@Column(name="total_extra_charges_on_bill")
+	private float totalExtraChargesOnBill;
 	
 	@Column(name="cgst")
 	private float cgst;
@@ -125,6 +149,7 @@ public class MaterialReceiptNote implements Serializable{
 	@Column(name="bill_amount")
 	private float billAmount;
 
+	
 	@Column(name="is_tally_sync")
 	private int isTallySync;
 
@@ -423,6 +448,70 @@ public class MaterialReceiptNote implements Serializable{
 	public void setIsTallySync(int isTallySync) {
 		this.isTallySync = isTallySync;
 	}
+    
+	public float getExtraDiscountAmtOnItem() {
+		return extraDiscountAmtOnItem;
+	}
+
+	public void setExtraDiscountAmtOnItem(float extraDiscountAmtOnItem) {
+		this.extraDiscountAmtOnItem = extraDiscountAmtOnItem;
+	}
+
+	public float getExtraDiscountAmtOnBill() {
+		return extraDiscountAmtOnBill;
+	}
+
+	public void setExtraDiscountAmtOnBill(float extraDiscountAmtOnBill) {
+		this.extraDiscountAmtOnBill = extraDiscountAmtOnBill;
+	}
+
+	public float getExtraChargesOnItem() {
+		return extraChargesOnItem;
+	}
+
+	public void setExtraChargesOnItem(float extraChargesOnItem) {
+		this.extraChargesOnItem = extraChargesOnItem;
+	}
+
+	public float getExtraChargesOnBill() {
+		return extraChargesOnBill;
+	}
+
+	public void setExtraChargesOnBill(float extraChargesOnBill) {
+		this.extraChargesOnBill = extraChargesOnBill;
+	}
+
+	public float getTotalExtraDiscountAmtOnItem() {
+		return totalExtraDiscountAmtOnItem;
+	}
+
+	public void setTotalExtraDiscountAmtOnItem(float totalExtraDiscountAmtOnItem) {
+		this.totalExtraDiscountAmtOnItem = totalExtraDiscountAmtOnItem;
+	}
+
+	public float getTotalExtraDiscountAmtOnBill() {
+		return totalExtraDiscountAmtOnBill;
+	}
+
+	public void setTotalExtraDiscountAmtOnBill(float totalExtraDiscountAmtOnBill) {
+		this.totalExtraDiscountAmtOnBill = totalExtraDiscountAmtOnBill;
+	}
+
+	public float getTotalExtraChargesOnItem() {
+		return totalExtraChargesOnItem;
+	}
+
+	public void setTotalExtraChargesOnItem(float totalExtraChargesOnItem) {
+		this.totalExtraChargesOnItem = totalExtraChargesOnItem;
+	}
+
+	public float getTotalExtraChargesOnBill() {
+		return totalExtraChargesOnBill;
+	}
+
+	public void setTotalExtraChargesOnBill(float totalExtraChargesOnBill) {
+		this.totalExtraChargesOnBill = totalExtraChargesOnBill;
+	}
 
 	@Override
 	public String toString() {
@@ -433,11 +522,17 @@ public class MaterialReceiptNote implements Serializable{
 				+ ", recdQty=" + recdQty + ", poRate=" + poRate + ", value=" + value + ", gstPer=" + gstPer
 				+ ", itemCgstPer=" + itemCgstPer + ", itemCgstRs=" + itemCgstRs + ", itemSgstPer=" + itemSgstPer
 				+ ", itemSgstRs=" + itemSgstRs + ", itemIgstPer=" + itemIgstPer + ", itemIgstRs=" + itemIgstRs
-				+ ", itemCessPer=" + itemCessPer + ", itemCessRs=" + itemCessRs + ", itemTotalamount=" + itemTotalamount
-				+ ", cgst=" + cgst + ", sgst=" + sgst + ", igst=" + igst + ", cess=" + cess + ", discPer=" + discPer
-				+ ", discAmt=" + discAmt + ", discAmt2=" + discAmt2 + ", freightAmt=" + freightAmt + ", insurance_amt="
-				+ insurance_amt + ", roundOff=" + roundOff + ", billAmount=" + billAmount + ", isTallySync="
-				+ isTallySync + "]";
+				+ ", itemCessPer=" + itemCessPer + ", itemCessRs=" + itemCessRs + ", extraDiscountAmtOnItem="
+				+ extraDiscountAmtOnItem + ", extraDiscountAmtOnBill=" + extraDiscountAmtOnBill
+				+ ", extraChargesOnItem=" + extraChargesOnItem + ", extraChargesOnBill=" + extraChargesOnBill
+				+ ", itemTotalamount=" + itemTotalamount + ", totalExtraDiscountAmtOnItem="
+				+ totalExtraDiscountAmtOnItem + ", totalExtraDiscountAmtOnBill=" + totalExtraDiscountAmtOnBill
+				+ ", totalExtraChargesOnItem=" + totalExtraChargesOnItem + ", totalExtraChargesOnBill="
+				+ totalExtraChargesOnBill + ", cgst=" + cgst + ", sgst=" + sgst + ", igst=" + igst + ", cess=" + cess
+				+ ", discPer=" + discPer + ", discAmt=" + discAmt + ", discAmt2=" + discAmt2 + ", freightAmt="
+				+ freightAmt + ", insurance_amt=" + insurance_amt + ", roundOff=" + roundOff + ", billAmount="
+				+ billAmount + ", isTallySync=" + isTallySync + "]";
 	}
-    
+
+	
 }
