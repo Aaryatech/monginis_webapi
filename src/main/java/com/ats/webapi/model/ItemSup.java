@@ -53,7 +53,18 @@ public class ItemSup implements Serializable{
 	
 	private int delStatus;
 
+	@Column(name="is_tally_sync")
+	private int isTallySync;
 	
+	
+	public int getIsTallySync() {
+		return isTallySync;
+	}
+
+	public void setIsTallySync(int isTallySync) {
+		this.isTallySync = isTallySync;
+	}
+
 	public int getTrayType() {
 		return trayType;
 	}
@@ -184,10 +195,12 @@ public class ItemSup implements Serializable{
 
 	@Override
 	public String toString() {
-		return "ItemSup [id=" + id + ", itemId=" + itemId + ", itemHsncd=" + itemHsncd + ", itemUom=" + itemUom
-				+ ", actualWeight=" + actualWeight + ", baseWeight=" + baseWeight + ", inputPerQty=" + inputPerQty
-				+ ", isGateSale=" + isGateSale + ", isGateSaleDisc=" + isGateSaleDisc + ", isAllowBday=" + isAllowBday
-				+ ", delStatus=" + delStatus + "]";
+		return "ItemSup [error=" + error + ", message=" + message + ", id=" + id + ", itemId=" + itemId + ", itemHsncd="
+				+ itemHsncd + ", itemUom=" + itemUom + ", uomId=" + uomId + ", trayType=" + trayType
+				+ ", noOfItemPerTray=" + noOfItemPerTray + ", actualWeight=" + actualWeight + ", baseWeight="
+				+ baseWeight + ", inputPerQty=" + inputPerQty + ", isGateSale=" + isGateSale + ", isGateSaleDisc="
+				+ isGateSaleDisc + ", isAllowBday=" + isAllowBday + ", delStatus=" + delStatus + ", isTallySync="
+				+ isTallySync + "]";
 	}
 
 }

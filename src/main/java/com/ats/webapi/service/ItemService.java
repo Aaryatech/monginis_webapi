@@ -29,5 +29,6 @@ public interface ItemService {
 	public List<TrayType> getTrayTypes();
 	public ItemsList getAllItemsBySorting();
 	public List<Item> getItemsByIsAllowBday();
+	public List<Item> getItemsByCatIdForSup(String itemGrp1);
 
 }

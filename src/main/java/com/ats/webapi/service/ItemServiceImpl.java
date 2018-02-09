@@ -237,6 +237,22 @@ public class ItemServiceImpl implements ItemService{
 		return itemList;
 	}
 
+	@Override
+	public List<Item> getItemsByCatIdForSup(String itemGrp1) {
+
+		List<Item> itemList=null;
+		try
+		{
+
+			itemList=itemRepository.findByItemGrp1(itemGrp1);
+		}catch(Exception e)
+		{
+			itemList=new ArrayList<>();
+			e.printStackTrace();
+		}
+		return itemList;
+	}
+
 	
 
 }
