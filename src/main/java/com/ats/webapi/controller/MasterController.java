@@ -347,5 +347,12 @@ public class MasterController {
 					return trayTypes;
 				}
 	          //------------------------------------------------------------------------
-				
+				// Get Items
+				@RequestMapping(value = "/getItemsByCatIdForSup", method = RequestMethod.POST)
+				public @ResponseBody List<Item> getItemsByCatIdForSup(@RequestParam String itemGrp1) {
+
+					List<Item> items = itemService.getItemsByCatIdForSup(itemGrp1);
+					return items;
+
+				}		
 }

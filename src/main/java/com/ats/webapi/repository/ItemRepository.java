@@ -33,4 +33,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query(value="select * from m_item where m_item.id IN (Select m_item_sup.item_id from m_item_sup where m_item_sup.is_allow_bday=:isAllowBday) AND m_item.del_status=:delStatus",nativeQuery=true)
 	public List<Item> findByIsAllowBirthayAndDelStatus(@Param("isAllowBday")int isAllowBday,@Param("delStatus") int delStatus);
 
+	@Query(value="select m_item.* from m_item where m_item.del_status=0 And m_item.item_grp1=:itemGrp1 And m_item.id not in(select m_item_sup.item_id from m_item_sup where m_item_sup.del_status=0) order by m_item.item_name ",nativeQuery=true)
+	public List<Item> findByItemGrp1(@Param("itemGrp1")String itemGrp1);
+
 } 
