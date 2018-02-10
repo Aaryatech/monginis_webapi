@@ -153,14 +153,16 @@ h1.bms_status=1
 //changed on 5 Feb 
 	@RequestMapping(value = { "/getCurentBmsStockRM" }, method = RequestMethod.POST)
 	public @ResponseBody GetBmsCurrentStockList getCurrentBmsStockListRM(@RequestParam("prodDeptId") int prodDeptId,
-			@RequestParam("mixDeptId") int mixDeptId, @RequestParam("bmsDeptId") int bmsDeptId) {
+			@RequestParam("mixDeptId") int mixDeptId, @RequestParam("bmsDeptId") int bmsDeptId, @RequestParam("stockDate") String stockDate) {
 		
 		System.out.println("Inside Get bms current stock get web Service");
 	
 		Info info = new Info();
 
-		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime()); 
+		//java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime()); 
 		
+		
+		java.sql.Date cDate=Common.convertToSqlDate(stockDate);
 		System.out.println("Input received for BMS Current Stock for RM ");
 		System.out.println("Current Date"+cDate + "prod Dept Id"+prodDeptId+"mixDept Id"+mixDeptId+ "bmsDeptId Id "+bmsDeptId);
 
@@ -245,14 +247,13 @@ h1.bms_status=1
 	
 	
 	@RequestMapping(value = { "/getCurentBmsStockSF" }, method = RequestMethod.POST)
-	public @ResponseBody GetCurrentBmsSFStockList getCurrentBmsStockListSF(@RequestParam("prodDeptId") int prodDeptId) {
+	public @ResponseBody GetCurrentBmsSFStockList getCurrentBmsStockListSF(@RequestParam("prodDeptId") int prodDeptId,@RequestParam("stockDate") String stockDate) {
 		
-		System.out.println("Inside Get bms current stock get web Service");
+		System.out.println("Inside Get bms current stock SF  get web Service");
 	
 		Info info = new Info();
 
-		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime()); 
-		
+		java.sql.Date cDate = Common.convertToSqlDate(stockDate);
 		System.out.println("Input received for BMS Current Stock for SF ");
 		System.out.println("Current Date"+cDate + "prod Dept Id"+prodDeptId);
 
