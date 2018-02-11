@@ -363,6 +363,30 @@ public class SalesReportController {
 		return salesReportRoyaltyList;
 	}
 	
+	
+	//report no 10 all fr and multiple category
+
+	@RequestMapping(value = { "/getSaleReportRoyConsoByCatAllFr" }, method = RequestMethod.POST)
+	public @ResponseBody List<SalesReportRoyalty> getSaleReportRoyConsoByCatAllFr(@RequestParam("catIdList") List<String> catIdList,@RequestParam("fromDate")
+	String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<SalesReportRoyalty> salesReportRoyaltyList = null;
+		try {
+			fromDate = Common.convertToYMD(fromDate);
+			toDate = Common.convertToYMD(toDate);
+			System.out.println("Input received for report 10 roy by category "+fromDate+""+toDate+""+"cat="+catIdList);
+			salesReportRoyaltyList = salesReportRoyaltyRepo.getSaleReportRoyConsoByCatAllFr(catIdList, fromDate, toDate);
+			System.out.println("getSaleReportBillwise"+salesReportRoyaltyList.toString());
+
+		} catch (Exception e) {
+			System.out.println(" Exce in sales Report Royalty  By Category " + e.getMessage());
+			e.printStackTrace();
+		}
+		return salesReportRoyaltyList;
+	}
+	
+	
 	//report 10 AS OF REPORT 5 for Graph
 		@RequestMapping(value = { "/getSaleReportRoyConsoByCatForGraph" }, method = RequestMethod.POST)
 		public @ResponseBody List<SalesReportRoyalty> getSaleReportRoyConsoByCatForGraph(@RequestParam("frIdList") List<String> frIdList,@RequestParam("catIdList") List<String> catIdList,@RequestParam("fromDate")
