@@ -36,7 +36,7 @@ public interface GetGrnGvnDetailsRepository extends JpaRepository<GetGrnGvnDetai
 			"t_grn_gvn.is_tally_sync,t_grn_gvn.base_rate,t_grn_gvn.sgst_per,t_grn_gvn.cgst_per,t_grn_gvn.igst_per,t_grn_gvn.taxable_amt,\n" + 
 			"t_grn_gvn.total_tax,t_grn_gvn.round_up_amt,t_grn_gvn.final_amt,t_grn_gvn.is_credit_note,t_grn_gvn.menu_id,t_grn_gvn.cat_id,\n" + 
 			"t_grn_gvn.invoice_no,t_grn_gvn.ref_invoice_date, CAST(t_grn_gvn.approved_datetime_gate AS CHAR) as approved_datetime_gate,\n" + 
-			"CAST(t_grn_gvn.approved_datetime_store AS CHAR) as approved_datetime_store,CAST(t_grn_gvn.approved_datetime_acc AS CHAR) as approved_datetime_acc,\n" + 
+			"CAST(t_grn_gvn.approved_datetime_store AS CHAR) as approved_datetime_store,CAST(t_grn_gvn.approved_datetime_acc AS CHAR) as approved_datetime_acc\n" + 
 			",m_item.item_name,m_franchisee.fr_name FROM m_franchisee,"
 			+ "m_item,t_grn_gvn WHERE t_grn_gvn.fr_id=m_franchisee.fr_id AND "
 			+ "t_grn_gvn.item_id=m_item.id AND t_grn_gvn.grn_gvn_date BETWEEN :fromDate AND  :toDate AND"
