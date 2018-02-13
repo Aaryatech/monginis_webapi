@@ -18,7 +18,7 @@ public interface SpCakeSupRepository extends JpaRepository<SpCakeSupplement, Int
 
 	@Modifying
 	@Transactional
-	@Query("Update SpCakeSupplement  SET del_status=1 WHERE id=:id")
+	@Query("Update SpCakeSupplement  SET del_status=1 WHERE sp_id=:id")
 	int deleteSpCakeSup(@Param("id") int id);
 
 
