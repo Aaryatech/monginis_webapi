@@ -11,6 +11,7 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Message;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.MessageRepository;
+import com.ats.webapi.repository.UserRepository;
 import com.ats.webapi.util.JsonUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -23,7 +24,8 @@ public class MessageServiceImpl implements MessageService {
 
 	@Autowired
 	FranchiseSupRepository franchiseSupRepository;
-	
+	@Autowired
+	UserRepository userRepository;
 	@Override
 	public String save(Message message) {
 		Message messageRes;
@@ -37,7 +39,8 @@ public class MessageServiceImpl implements MessageService {
 				 ObjectMapper om = new ObjectMapper();
 			     String jsonStr = om.writeValueAsString(messageRes);
 				List<String> frTokens=franchiseSupRepository.findTokens();
-				
+				List<String> usrTokens=userRepository.findTokens();
+				frTokens.addAll(usrTokens);
 				 try {
 			    	 for(String token:frTokens)
 			    	 {

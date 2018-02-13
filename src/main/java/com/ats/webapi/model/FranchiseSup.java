@@ -59,10 +59,20 @@ public class FranchiseSup implements Serializable{
 	
 	private int delStatus;
 	
+	private int noInRoute;;
+	
 	@Column(name="is_tally_sync")
 	private int isTallySync;
 
 	
+	public int getNoInRoute() {
+		return noInRoute;
+	}
+
+	public void setNoInRoute(int noInRoute) {
+		this.noInRoute = noInRoute;
+	}
+
 	public int getFrequency() {
 		return frequency;
 	}
@@ -205,7 +215,7 @@ public class FranchiseSup implements Serializable{
 				+ frPanNo + ", frState=" + frState + ", frCountry=" + frCountry + ", pass1=" + pass1 + ", pass2="
 				+ pass2 + ", pass3=" + pass3 + ", pass4=" + pass4 + ", pass5=" + pass5 + ", frequency=" + frequency
 				+ ", pestControlDate=" + pestControlDate + ", remainderDate=" + remainderDate + ", delStatus="
-				+ delStatus + ", isTallySync=" + isTallySync + "]";
+				+ delStatus + ", noInRoute=" + noInRoute + ", isTallySync=" + isTallySync + "]";
 	}
     
 }

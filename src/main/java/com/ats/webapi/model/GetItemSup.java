@@ -56,7 +56,17 @@ public class GetItemSup implements Serializable{
 	
 	private int noOfItemPerTray;
 	
+	private int cutSection;
 	
+	
+	public int getCutSection() {
+		return cutSection;
+	}
+
+	public void setCutSection(int cutSection) {
+		this.cutSection = cutSection;
+	}
+
 	public int getTrayType() {
 		return trayType;
 	}
@@ -199,8 +209,9 @@ public class GetItemSup implements Serializable{
 				+ ", itemName=" + itemName + ", itemHsncd=" + itemHsncd + ", uomId=" + uomId + ", itemUom=" + itemUom
 				+ ", actualWeight=" + actualWeight + ", baseWeight=" + baseWeight + ", inputPerQty=" + inputPerQty
 				+ ", isGateSale=" + isGateSale + ", isGateSaleDisc=" + isGateSaleDisc + ", isAllowBday=" + isAllowBday
-				+ ", delStatus=" + delStatus + ", trayType=" + trayType + ", noOfItemPerTray=" + noOfItemPerTray + "]";
+				+ ", delStatus=" + delStatus + ", trayType=" + trayType + ", noOfItemPerTray=" + noOfItemPerTray
+				+ ", cutSection=" + cutSection + "]";
 	}
-    
 
+    
 }

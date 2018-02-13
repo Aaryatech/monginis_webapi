@@ -1,18 +1,23 @@
 package com.ats.webapi.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
+import com.ats.webapi.model.GetSpCkSupplement;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.OrderSpecialCake;
 import com.ats.webapi.model.SearchSpCakeResponse;
+import com.ats.webapi.model.SpCakeSupplement;
 import com.ats.webapi.model.SpecialCake;
 import com.ats.webapi.model.SpecialCakeList;
 import com.ats.webapi.repository.ConfiSpCodeRepository;
+import com.ats.webapi.repository.GetSpCakeSupRepository;
 import com.ats.webapi.repository.OrderSpCakeRepository;
+import com.ats.webapi.repository.SpCakeSupRepository;
 import com.ats.webapi.repository.SpecialCakeRepository;
 import com.ats.webapi.util.JsonUtil;
 
@@ -28,6 +33,11 @@ public class SpecialCakeServiceImpl implements SpecialCakeService{
 	OrderSpCakeRepository orderSpCakeRepository;
 	@Autowired
 	ConfiSpCodeRepository confiSpCodeRepository;
+	
+	@Autowired
+	SpCakeSupRepository spCakeSupRepository;
+	@Autowired
+	GetSpCakeSupRepository getSpCakeSupRepository;
 	@Override
 	public String save(SpecialCake specialcake) {
 		
@@ -106,6 +116,52 @@ public class SpecialCakeServiceImpl implements SpecialCakeService{
 	    List<String> spCodeList=confiSpCodeRepository.findSpCode(items,frId,menuId);
 
 		return spCodeList;
+	}
+
+	@Override
+	public SpCakeSupplement saveSpCakeSup(SpCakeSupplement spCakeSupplement) {
+
+		SpCakeSupplement spCakeSupplementRes=spCakeSupRepository.saveAndFlush(spCakeSupplement);
+		return spCakeSupplementRes;
+	}
+
+	@Override
+	public Info deleteSpCakeSup(int id) {
+
+		int isDel=spCakeSupRepository.deleteSpCakeSup(id);
+		Info info=new Info();
+		if(isDel==1)
+		{
+			info.setError(false);
+			info.setMessage("SpCakeSupplement Deleted Successfully.");
+		}
+		else
+		{
+			info.setError(true);
+			info.setMessage("SpCakeSupplement Deletion Failed.");
+		}
+		return info;
+	}
+
+	@Override
+	public GetSpCkSupplement getSpCakeSupp(int id) {
+
+		GetSpCkSupplement spCakeSupplement=getSpCakeSupRepository.findById(id);
+		return spCakeSupplement;
+	}
+
+	@Override
+	public List<GetSpCkSupplement> getSpCakeSupList() {
+		List<GetSpCkSupplement> spSuppList;
+     try {
+    	 spSuppList=getSpCakeSupRepository.findByDelStatus(0);
+    	 
+     }
+     catch (Exception e) {
+    	 spSuppList=new ArrayList<GetSpCkSupplement>();
+    	 e.printStackTrace();
+	}
+     return spSuppList;
 	}
 	
 

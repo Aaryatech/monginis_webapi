@@ -21,8 +21,8 @@ public interface TallySalesVoucherRepository extends JpaRepository<SalesVoucher,
 			"			f.fr_gst_no,\n" + 
 			"			CASE WHEN d.cat_id = 5 \n" + 
 			"THEN (select s.sp_name from m_sp_cake s where s.sp_id=d.item_id) ELSE (select i.item_name  from m_item i where i.id=d.item_id) END AS item_name, \n" + 
-			"			CASE WHEN d.cat_id = 5 THEN (select spsup.sp_hsncd from  m_spcake_sup spsup where spsup.sp_id=d.item_id) ELSE  (select itemsup.item_hsncd from  m_item_sup itemsup where itemsup.item_id=d.item_id)  END AS hsn_code,\n" + 
-			"			CASE WHEN d.cat_id = 5 THEN (select spsup.sp_uom from m_spcake_sup spsup where spsup.sp_id=d.item_id) ELSE (select itemsup.item_uom from m_item_sup itemsup where itemsup.item_id=d.item_id) END AS uom,\n" + 
+			"			CASE WHEN d.cat_id = 5 THEN (select spsup.sp_hsncd from  m_spcake_sup spsup where spsup.sp_id=d.item_id ) ELSE  (select itemsup.item_hsncd from  m_item_sup itemsup where itemsup.item_id=d.item_id )  END AS hsn_code,\n" + 
+			"			CASE WHEN d.cat_id = 5 THEN (select spsup.sp_uom from m_spcake_sup spsup where spsup.sp_id=d.item_id ) ELSE (select itemsup.item_uom from m_item_sup itemsup where itemsup.item_id=d.item_id ) END AS uom,\n" + 
 			"			frsup.fr_state,\n" + 
 			"			d.bill_qty,\n" + 
 			"			d.base_rate,\n" + 

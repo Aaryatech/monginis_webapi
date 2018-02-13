@@ -82,7 +82,7 @@ public class TallySyncController {
 
 		    responseHeaders.setContentLength(output.length);
 
-		    responseHeaders.set("Content-disposition", "attachment; filename=allFranchisee.txt");
+		    responseHeaders.set("Content-disposition", "attachment; filename=allFranchisee.json");
 
 
 
@@ -106,7 +106,7 @@ public class TallySyncController {
 
 		    responseHeaders.setContentLength(output.length);
 
-		    responseHeaders.set("Content-disposition", "attachment; filename=allItems.txt");
+		    responseHeaders.set("Content-disposition", "attachment; filename=allItems.json");
 
 		    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 		    
@@ -127,7 +127,7 @@ public class TallySyncController {
 
 	    responseHeaders.setContentLength(output.length);
 
-	    responseHeaders.set("Content-disposition", "attachment; filename=allSpecialCakes.txt");
+	    responseHeaders.set("Content-disposition", "attachment; filename=allSpecialCakes.json");
 
 	    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 	    
@@ -149,7 +149,7 @@ public class TallySyncController {
 
 	    responseHeaders.setContentLength(output.length);
 
-	    responseHeaders.set("Content-disposition", "attachment; filename=updateFranchisees.txt");
+	    responseHeaders.set("Content-disposition", "attachment; filename=updateFranchisees.json");
 
 	    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 	  }
@@ -170,7 +170,7 @@ public class TallySyncController {
 
 		    responseHeaders.setContentLength(output.length);
 
-		    responseHeaders.set("Content-disposition", "attachment; filename=updateItems.txt");
+		    responseHeaders.set("Content-disposition", "attachment; filename=updateItems.json");
 
 		    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 	  }
@@ -191,7 +191,7 @@ public class TallySyncController {
 
 		    responseHeaders.setContentLength(output.length);
 
-		    responseHeaders.set("Content-disposition", "attachment; filename=updateSpecialCakes.txt");
+		    responseHeaders.set("Content-disposition", "attachment; filename=updateSpecialCakes.json");
 
 		    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 		  }
@@ -212,7 +212,7 @@ public class TallySyncController {
 
 			    responseHeaders.setContentLength(output.length);
 
-			    responseHeaders.set("Content-disposition", "attachment; filename=allSalesVouchers.txt");
+			    responseHeaders.set("Content-disposition", "attachment; filename=allSalesVouchers.json");
 
 			    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 		  }
@@ -232,7 +232,7 @@ public class TallySyncController {
 
 			    responseHeaders.setContentLength(output.length);
 
-			    responseHeaders.set("Content-disposition", "attachment; filename=updateSalesVouchers.txt");
+			    responseHeaders.set("Content-disposition", "attachment; filename=updateSalesVouchers.json");
 
 			    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 			  }
@@ -252,7 +252,7 @@ public class TallySyncController {
 
 			    responseHeaders.setContentLength(output.length);
 
-			    responseHeaders.set("Content-disposition", "attachment; filename=allCreditNotes.txt");
+			    responseHeaders.set("Content-disposition", "attachment; filename=allCreditNotes.json");
 
 			    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 			    
@@ -273,7 +273,7 @@ public class TallySyncController {
 
 			    responseHeaders.setContentLength(output.length);
 
-			    responseHeaders.set("Content-disposition", "attachment; filename=updateCreditNotes.txt");
+			    responseHeaders.set("Content-disposition", "attachment; filename=updateCreditNotes.json");
 
 			    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 			  }
@@ -293,7 +293,7 @@ public class TallySyncController {
 
 				    responseHeaders.setContentLength(output.length);
 
-				    responseHeaders.set("Content-disposition", "attachment; filename=allSuppliers.txt");
+				    responseHeaders.set("Content-disposition", "attachment; filename=allSuppliers.json");
 
 				    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 				
@@ -315,7 +315,7 @@ public class TallySyncController {
 
 				    responseHeaders.setContentLength(output.length);
 
-				    responseHeaders.set("Content-disposition", "attachment; filename=allRawMaterial.txt");
+				    responseHeaders.set("Content-disposition", "attachment; filename=allRawMaterial.json");
 
 				    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 				
@@ -337,7 +337,7 @@ public class TallySyncController {
 
 				    responseHeaders.setContentLength(output.length);
 
-				    responseHeaders.set("Content-disposition", "attachment; filename=updateSupplier.txt");
+				    responseHeaders.set("Content-disposition", "attachment; filename=updateSupplier.json");
 
 				    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 				  }
@@ -358,7 +358,7 @@ public class TallySyncController {
 
 					    responseHeaders.setContentLength(output.length);
 
-					    responseHeaders.set("Content-disposition", "attachment; filename=updateRawMaterial.txt");
+					    responseHeaders.set("Content-disposition", "attachment; filename=updateRawMaterial.json");
 
 					    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 					  }	
@@ -377,7 +377,7 @@ public class TallySyncController {
 
 						    responseHeaders.setContentLength(output.length);
 
-						    responseHeaders.set("Content-disposition", "attachment; filename=allInwards.txt");
+						    responseHeaders.set("Content-disposition", "attachment; filename=allInwards.json");
 
 						    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 					}
@@ -399,7 +399,7 @@ public class TallySyncController {
 
 						    responseHeaders.setContentLength(output.length);
 
-						    responseHeaders.set("Content-disposition", "attachment; filename=updateInward.txt");
+						    responseHeaders.set("Content-disposition", "attachment; filename=updateInward.json");
 
 						    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 						  }	

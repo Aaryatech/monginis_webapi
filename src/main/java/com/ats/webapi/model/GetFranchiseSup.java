@@ -49,7 +49,18 @@ public class GetFranchiseSup implements Serializable{
 	
 	private int isTallySync;
 	
+	private int noInRoute;;
+
 	
+	
+	public int getNoInRoute() {
+		return noInRoute;
+	}
+
+	public void setNoInRoute(int noInRoute) {
+		this.noInRoute = noInRoute;
+	}
+
 	public int getFrequency() {
 		return frequency;
 	}

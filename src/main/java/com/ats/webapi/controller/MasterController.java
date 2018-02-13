@@ -1,5 +1,6 @@
 package com.ats.webapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +18,23 @@ import com.ats.webapi.model.FrTotalSale;
 import com.ats.webapi.model.FranchiseSup;
 import com.ats.webapi.model.FranchiseSupList;
 import com.ats.webapi.model.GetItemSup;
+import com.ats.webapi.model.GetSpCkSupplement;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
+import com.ats.webapi.model.SpCake;
+import com.ats.webapi.model.SpCakeSupplement;
 import com.ats.webapi.model.tray.TrayType;
 import com.ats.webapi.repository.FrListForSuppRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
+import com.ats.webapi.repository.SpCakeListRepository;
 import com.ats.webapi.repository.SpCkDeleteOrderRepository;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.OrderService;
 import com.ats.webapi.service.RegularSpCkOrderService;
+import com.ats.webapi.service.SpecialCakeService;
   
 @RestController
 public class MasterController {
@@ -46,8 +52,15 @@ public class MasterController {
 	
 	@Autowired
 	SpCkDeleteOrderRepository spCkDeleteOrderRepository;
+	
+	@Autowired
+	SpecialCakeService spCakeService;
+	
 	@Autowired
 	FrListForSuppRepository frListForSuppRepository;
+	
+	@Autowired
+	SpCakeListRepository spCakeListRepository;
 	
 	// ----------------------------SAVE Item Sup---------------------------
 		@RequestMapping(value = { "/saveItemSup" }, method = RequestMethod.POST)
@@ -80,6 +93,45 @@ public class MasterController {
 
 		}
       //---------------------------------------------------------------------------
+		// ----------------------------SAVE SpCake Sup---------------------------
+				@RequestMapping(value = { "/saveSpCakeSup" }, method = RequestMethod.POST)
+				public @ResponseBody Info saveSpCakeSup(@RequestBody SpCakeSupplement spCakeSupplement) {
+
+					SpCakeSupplement spCakeSupplementRes = null;
+					Info info = new Info();
+					try {
+
+						spCakeSupplementRes = spCakeService.saveSpCakeSup(spCakeSupplement);
+
+						if (spCakeSupplementRes != null) {
+							info.setError(false);
+							info.setMessage("SpCakeSupplement Saved Successfully.");
+						} else {
+							info.setError(true);
+							info.setMessage("SpCakeSupplement Not Saved .");
+						}
+
+					} catch (Exception e) {
+
+						info.setError(true);
+						info.setMessage("SpCakeSupplement Not Saved .");
+
+						e.printStackTrace();
+						System.out.println("Exception In MasterController /saveSpCakeSup" + e.getMessage());
+
+					}
+					return info;
+
+				}
+		      //---------------------------------------------------------------------------
+		// ------------------------Delete SpCake Sup------------------------------------
+		@RequestMapping(value = { "/deleteSpCakeSup" }, method = RequestMethod.POST)
+		public @ResponseBody Info deleteSpCakeSup(@RequestParam("id") int id) {
+
+			Info info = spCakeService.deleteSpCakeSup(id);
+			return info;
+		}
+        //------------------------------------------------------------------------
 		// ------------------------Delete ItemSup------------------------------------
 		@RequestMapping(value = { "/deleteItemSup" }, method = RequestMethod.POST)
 		public @ResponseBody Info deleteItemSup(@RequestParam("id") int itemId) {
@@ -98,6 +150,33 @@ public class MasterController {
 
 		}
 		//------------------------------------------------------------------------
+		// ---------------------------Getting SpCakeSup List-----------------------
+		@RequestMapping(value = { "/getSpCakeSuppList" }, method = RequestMethod.GET)
+		public @ResponseBody List<GetSpCkSupplement> getSpCakeSupList() {
+
+			List<GetSpCkSupplement> spCakeSupplementList = spCakeService.getSpCakeSupList();
+
+			return spCakeSupplementList;
+
+		}
+		//------------------------------------------------------------------------
+		// ---------------------------Getting SpCakeList List-----------------------
+				@RequestMapping(value = { "/getSpCakeList" }, method = RequestMethod.GET)
+				public @ResponseBody List<SpCake> getSpCakeList() {
+
+					List<SpCake> spCakeList;
+					try {
+					 spCakeList = spCakeListRepository.getSpCakeList();
+					}
+					catch(Exception e)
+					{
+						spCakeList=new ArrayList<>();
+						e.printStackTrace();
+					}
+					return spCakeList;
+
+				}
+				//------------------------------------------------------------------------
 		// ------------------------Getting One ItemSup by Id-----------------------
 		@RequestMapping(value = { "/getItemSup" }, method = RequestMethod.POST)
 		public @ResponseBody GetItemSup getItemSup(@RequestParam("id") int id) {
@@ -124,6 +203,32 @@ public class MasterController {
 			return getItemSupRes;
 
 		}
+		// ------------------------Getting One SpCakeSup by Id-----------------------
+				@RequestMapping(value = { "/getSpCakeSupp" }, method = RequestMethod.POST)
+				public @ResponseBody GetSpCkSupplement getSpCakeSupp(@RequestParam("id") int id) {
+
+					GetSpCkSupplement getSpCkSupRes = null;
+					try {
+						getSpCkSupRes = spCakeService.getSpCakeSupp(id);
+
+						if (getSpCkSupRes != null) {
+							getSpCkSupRes.setError(false);
+							getSpCkSupRes.setMessage("GetSpCkSupplement Found Successfully");
+						} else {
+							getSpCkSupRes = new GetSpCkSupplement();
+							getSpCkSupRes.setError(true);
+							getSpCkSupRes.setMessage("GetSpCkSupplement Not Found");
+						}
+					} catch (Exception e) {
+						getSpCkSupRes = new GetSpCkSupplement();
+						getSpCkSupRes.setError(true);
+						getSpCkSupRes.setMessage("GetSpCkSupplement Not Found");
+						System.out.println("Exception In getSpCakeSupp:" + e.getMessage());
+					}
+
+					return getSpCkSupRes;
+
+				}
 
 	// ----------------------------SAVE FranchiseSup---------------------------
 		@RequestMapping(value = { "/saveFranchiseSup" }, method = RequestMethod.POST)

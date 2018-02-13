@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 public class GetNotification implements Serializable{
 	
@@ -88,7 +90,7 @@ public class GetNotification implements Serializable{
 	public void setPhoto(String photo) {
 		this.photo = photo;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getDate() {
 		return date;
 	}

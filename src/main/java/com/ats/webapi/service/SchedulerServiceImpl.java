@@ -14,6 +14,7 @@ import com.ats.webapi.model.Scheduler;
 import com.ats.webapi.model.SchedulerList;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.SchedulerRepository;
+import com.ats.webapi.repository.UserRepository;
 import com.ats.webapi.util.JsonUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,6 +30,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 	@Autowired
 	FranchiseSupRepository franchiseSupRepository;
 	
+	@Autowired
+	UserRepository userRepository;
+	
 	@Override
 	public String save(Scheduler scheduler) {
 		SchedulerList schedulerList=new SchedulerList();
@@ -41,7 +45,9 @@ public class SchedulerServiceImpl implements SchedulerService {
 					 ObjectMapper om = new ObjectMapper();
 				     String jsonStr = om.writeValueAsString(schedularRes);
 					List<String> frTokens=franchiseSupRepository.findTokens();
-					
+					List<String> usrTokens=userRepository.findTokens();
+					frTokens.addAll(usrTokens);
+
 					 try {
 				    	 for(String token:frTokens)
 				    	 {

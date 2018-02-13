@@ -51,7 +51,19 @@ public class ItemSup implements Serializable{
 	
 	private int isAllowBday;
 	
+	private int cutSection;//(0-NA,1-Single Cut,2-Double Cut)
+	
 	private int delStatus;
+
+	
+	
+	public int getCutSection() {
+		return cutSection;
+	}
+
+	public void setCutSection(int cutSection) {
+		this.cutSection = cutSection;
+	}
 
 	@Column(name="is_tally_sync")
 	private int isTallySync;
@@ -199,8 +211,9 @@ public class ItemSup implements Serializable{
 				+ itemHsncd + ", itemUom=" + itemUom + ", uomId=" + uomId + ", trayType=" + trayType
 				+ ", noOfItemPerTray=" + noOfItemPerTray + ", actualWeight=" + actualWeight + ", baseWeight="
 				+ baseWeight + ", inputPerQty=" + inputPerQty + ", isGateSale=" + isGateSale + ", isGateSaleDisc="
-				+ isGateSaleDisc + ", isAllowBday=" + isAllowBday + ", delStatus=" + delStatus + ", isTallySync="
-				+ isTallySync + "]";
+				+ isGateSaleDisc + ", isAllowBday=" + isAllowBday + ", cutSection=" + cutSection + ", delStatus="
+				+ delStatus + ", isTallySync=" + isTallySync + "]";
 	}
 
+    
 }
