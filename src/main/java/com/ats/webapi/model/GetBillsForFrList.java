@@ -23,6 +23,11 @@ public class GetBillsForFrList {
 	public void setInfo(Info info) {
 		this.info = info;
 	}
+
+	@Override
+	public String toString() {
+		return "GetBillsForFrList [getBillsForFr=" + getBillsForFr + ", info=" + info + "]";
+	}
 	
 		
 

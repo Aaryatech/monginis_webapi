@@ -21,7 +21,7 @@ public class GetBillsForFrServiceImpl implements GetBillsForFrService  {
 	public GetBillsForFrList getBillForFr(int frId,Date back15Days,Date curDate) {
 		
 		GetBillsForFrList billsForFrList=new GetBillsForFrList();
-		
+		try {
 		List<GetBillsForFr> getBillForFr=getBillsForFrRepository.getBillForSelectedFr(frId, back15Days, curDate);
 		
 		Info info=new Info();
@@ -43,7 +43,11 @@ public class GetBillsForFrServiceImpl implements GetBillsForFrService  {
 		}
 		
 		billsForFrList.setInfo(info);
-		
+		}catch (Exception e) {
+			System.out.println("Ex in Getting bIll for Fr Id "+e.getMessage());
+			
+			e.printStackTrace();
+		}
 		return billsForFrList;
 	}
 

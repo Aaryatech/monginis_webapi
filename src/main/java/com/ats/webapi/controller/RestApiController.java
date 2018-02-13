@@ -561,12 +561,14 @@ public class RestApiController {
 		java.sql.Date cDate=Common.convertToSqlDate(curDate);
 		java.sql.Date back15Date=Common.convertToSqlDate(back15Days);
 		
-		System.out.println("curDate "+curDate);
+		System.out.println("curDate for Sql  ::: "+cDate);
 		
-		System.out.println("15 Days Back Date "+back15Days);
+		System.out.println("15 Days Back Date  For SQl ::: "+back15Date);
+		
+		System.out.println("Fr Id ::: "+frId);
 		
 		GetBillsForFrList billsForFrLisr = getBillsForFrService.getBillForFr(frId,back15Date,cDate);
-
+System.out.println("GEt BillS for Fr "+billsForFrLisr.toString());
 		return billsForFrLisr;
 
 	}
