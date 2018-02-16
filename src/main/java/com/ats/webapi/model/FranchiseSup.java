@@ -59,7 +59,7 @@ public class FranchiseSup implements Serializable{
 	
 	private int delStatus;
 	
-	private int noInRoute;;
+	private int noInRoute;
 	
 	@Column(name="is_tally_sync")
 	private int isTallySync;

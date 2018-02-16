@@ -30,6 +30,7 @@ import com.ats.webapi.model.gatesale.OtherItemList;
 import com.ats.webapi.model.gatesale.OtherItemRes;
 import com.ats.webapi.model.gatesale.OtherSupplier;
 import com.ats.webapi.model.gatesale.OtherSupplierList;
+import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 import com.ats.webapi.repository.gatesale.GateEmployeeRepository;
 import com.ats.webapi.repository.gatesale.GateOtherItemRepository;
 import com.ats.webapi.repository.gatesale.GateOtherItemResRepository;
@@ -80,7 +81,8 @@ public class GateSaleServiceImpl implements GateSaleService{
 	
 	@Autowired
 	GateOtherItemResRepository gateOtherItemResRepository;
-	
+	@Autowired
+	UpdateSeetingForPBRepo updateSeetingForPBRepo;
 	@Override
 	public ErrorMessage saveGateSaleUser(GateSaleUser gateSaleUser) {
 
@@ -441,7 +443,8 @@ try {
 		 }
 		 errorMessage.setError(false);
 		 errorMessage.setMessage("GateSaleBill Inserted Successfully.");
-		
+         int isUpdated=updateSeetingForPBRepo.updateSettingValue();
+
 		 List<String> userTokens=gateSaleBillHeaderRepository.findUserTokensByBillId();
 		
 		 if(initiatorUserType==1)
@@ -836,7 +839,17 @@ try {
 		
 		return gateSaleBillHeaderRes;
 	}
-
+	@Override
+	public List<GateSaleBillHeaderRes> gateBillDetailAmtPending(int isApproved,int amtIsCollected) {
+		List<GateSaleBillHeaderRes> gateSaleBillHeaderRes=gateSaleBillHeaderResRepository.findByIsApprovedAndAmtIsCollectedAndDelStatus(isApproved,amtIsCollected,0);
+		for(int i=0;i<gateSaleBillHeaderRes.size();i++)
+		{
+		List<GateSaleBillDetailRes> gateSaleBillDetailList=gateSaleBillDetailsRepository.findGateSaleBillDetailByBillId(gateSaleBillHeaderRes.get(i).getBillId());
+		gateSaleBillHeaderRes.get(i).setGateSaleBillDetailList(gateSaleBillDetailList);
+		}
+		
+		return gateSaleBillHeaderRes;
+	}
 	@Override
 	public List<GateSaleDiscount> getGateSaleDiscByUsrType(int userType) {
 		
@@ -856,6 +869,28 @@ try {
 		}
 		
 		return gateSaleDiscRes;
+	}
+
+	@Override
+	public ErrorMessage collectGetSaleAmtOfBill(String collectedDate, int collectedUserId, int amtIsCollected,
+			List<Integer> billIds) {
+		 ErrorMessage errorMessage=new ErrorMessage();
+			
+			int isUpdated=gateSaleBillHeaderRepository.updateCollectGetSaleAmtOfBill(collectedDate,collectedUserId,amtIsCollected,billIds);
+		
+			if(isUpdated>0) {
+			
+			errorMessage.setError(false);
+			errorMessage.setMessage("GetSaleBill updated Successfully");
+			}
+			else
+			{
+				errorMessage.setError(false);
+				errorMessage.setMessage("GetSaleBill updation Failed");
+				
+			}
+			return errorMessage;
+		
 	}
 
 }

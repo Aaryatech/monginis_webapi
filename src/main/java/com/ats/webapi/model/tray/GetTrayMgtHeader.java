@@ -8,11 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 @Entity
-@Table(name="t_tray_mgt_header")
-public class TrayMgtHeader implements Serializable{
+public class GetTrayMgtHeader implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,7 +18,7 @@ public class TrayMgtHeader implements Serializable{
 	private int tranId;
 	
 	@Column(name="tran_date")
-	private Date tranDate;
+	private String tranDate;
 	
 	@Column(name="veh_id")
 	private int vehId;
@@ -28,8 +26,14 @@ public class TrayMgtHeader implements Serializable{
 	@Column(name="drv_id")
 	private int drvId;
 	
+	@Column(name="driver_name")
+	private String driverName;
+	
 	@Column(name="route_id")
 	private int routeId;
+	
+	@Column(name="route_name")
+	private String routeName;
 	
 	@Column(name="veh_no")
 	private String vehNo;
@@ -66,32 +70,6 @@ public class TrayMgtHeader implements Serializable{
 
 	@Column(name="veh_is_regular")
 	private int vehIsRegular;
-	
-	
-
-	public int getExtraTrayOut() {
-		return extraTrayOut;
-	}
-
-	public void setExtraTrayOut(int extraTrayOut) {
-		this.extraTrayOut = extraTrayOut;
-	}
-
-	public int getExtraTrayIn() {
-		return extraTrayIn;
-	}
-
-	public void setExtraTrayIn(int extraTrayIn) {
-		this.extraTrayIn = extraTrayIn;
-	}
-
-	public int getVehIsRegular() {
-		return vehIsRegular;
-	}
-
-	public void setVehIsRegular(int vehIsRegular) {
-		this.vehIsRegular = vehIsRegular;
-	}
 
 	public int getTranId() {
 		return tranId;
@@ -101,11 +79,11 @@ public class TrayMgtHeader implements Serializable{
 		this.tranId = tranId;
 	}
 
-	public Date getTranDate() {
+	public String getTranDate() {
 		return tranDate;
 	}
 
-	public void setTranDate(Date tranDate) {
+	public void setTranDate(String tranDate) {
 		this.tranDate = tranDate;
 	}
 
@@ -125,12 +103,28 @@ public class TrayMgtHeader implements Serializable{
 		this.drvId = drvId;
 	}
 
+	public String getDriverName() {
+		return driverName;
+	}
+
+	public void setDriverName(String driverName) {
+		this.driverName = driverName;
+	}
+
 	public int getRouteId() {
 		return routeId;
 	}
 
 	public void setRouteId(int routeId) {
 		this.routeId = routeId;
+	}
+
+	public String getRouteName() {
+		return routeName;
+	}
+
+	public void setRouteName(String routeName) {
+		this.routeName = routeName;
 	}
 
 	public String getVehNo() {
@@ -205,13 +199,39 @@ public class TrayMgtHeader implements Serializable{
 		this.delStatus = delStatus;
 	}
 
+	public int getExtraTrayOut() {
+		return extraTrayOut;
+	}
+
+	public void setExtraTrayOut(int extraTrayOut) {
+		this.extraTrayOut = extraTrayOut;
+	}
+
+	public int getExtraTrayIn() {
+		return extraTrayIn;
+	}
+
+	public void setExtraTrayIn(int extraTrayIn) {
+		this.extraTrayIn = extraTrayIn;
+	}
+
+	public int getVehIsRegular() {
+		return vehIsRegular;
+	}
+
+	public void setVehIsRegular(int vehIsRegular) {
+		this.vehIsRegular = vehIsRegular;
+	}
+
 	@Override
 	public String toString() {
-		return "TrayMgtHeader [tranId=" + tranId + ", tranDate=" + tranDate + ", vehId=" + vehId + ", drvId=" + drvId
-				+ ", routeId=" + routeId + ", vehNo=" + vehNo + ", vehOuttime=" + vehOuttime + ", vehIntime="
-				+ vehIntime + ", vehOutkm=" + vehOutkm + ", vehInkm=" + vehInkm + ", vehRunningKm=" + vehRunningKm
-				+ ", diesel=" + diesel + ", vehStatus=" + vehStatus + ", delStatus=" + delStatus + ", extraTrayOut="
-				+ extraTrayOut + ", extraTrayIn=" + extraTrayIn + ", vehIsRegular=" + vehIsRegular + "]";
+		return "GetTrayMgtHeader [tranId=" + tranId + ", tranDate=" + tranDate + ", vehId=" + vehId + ", drvId=" + drvId
+				+ ", driverName=" + driverName + ", routeId=" + routeId + ", routeName=" + routeName + ", vehNo="
+				+ vehNo + ", vehOuttime=" + vehOuttime + ", vehIntime=" + vehIntime + ", vehOutkm=" + vehOutkm
+				+ ", vehInkm=" + vehInkm + ", vehRunningKm=" + vehRunningKm + ", diesel=" + diesel + ", vehStatus="
+				+ vehStatus + ", delStatus=" + delStatus + ", extraTrayOut=" + extraTrayOut + ", extraTrayIn="
+				+ extraTrayIn + ", vehIsRegular=" + vehIsRegular + "]";
 	}
-    
+	
+	
 }

@@ -26,6 +26,9 @@ public class GateSaleBillHeaderRes implements Serializable{
 	@Column(name="bill_date")
 	private Date billDate;
 	
+	@Column(name="invoice_no")
+	private String invoiceNo;
+	
 	@Column(name="category")
 	private int category;
 	
@@ -74,6 +77,7 @@ public class GateSaleBillHeaderRes implements Serializable{
 	@Column(name="is_bill_print")
 	private int isBillPrint;
 	
+	
 	@Column(name="initiator_user_id")
 	private int initiatorUserId;
 	
@@ -83,6 +87,15 @@ public class GateSaleBillHeaderRes implements Serializable{
 	@Transient
 	List<GateSaleBillDetailRes> gateSaleBillDetailList;
 	
+	
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
+
 	public List<GateSaleBillDetailRes> getGateSaleBillDetailList() {
 		return gateSaleBillDetailList;
 	}
@@ -252,14 +265,15 @@ public class GateSaleBillHeaderRes implements Serializable{
 
 	@Override
 	public String toString() {
-		return "GateSaleBillHeader [billId=" + billId + ", billDate=" + billDate + ", category=" + category
-				+ ", isOther=" + isOther + ", custName=" + custName + ", empId=" + empId + ", discountPer="
-				+ discountPer + ", billAmt=" + billAmt + ", discountAmt=" + discountAmt + ", roundOff=" + roundOff
-				+ ", billGrantAmt=" + billGrantAmt + ", isApproved=" + isApproved + ", approvedDate=" + approvedDate
-				+ ", approvedUserId=" + approvedUserId + ", amtIsCollected=" + amtIsCollected + ", collectedDate="
-				+ collectedDate + ", collectedUserId=" + collectedUserId + ", isBillPrint=" + isBillPrint
-				+ ", initiatorUserId=" + initiatorUserId + ", delStatus=" + delStatus + ", gateSaleBillDetailList="
-				+ gateSaleBillDetailList + "]";
+		return "GateSaleBillHeaderRes [billId=" + billId + ", billDate=" + billDate + ", invoiceNo=" + invoiceNo
+				+ ", category=" + category + ", isOther=" + isOther + ", custName=" + custName + ", empId=" + empId
+				+ ", discountPer=" + discountPer + ", billAmt=" + billAmt + ", discountAmt=" + discountAmt
+				+ ", roundOff=" + roundOff + ", billGrantAmt=" + billGrantAmt + ", isApproved=" + isApproved
+				+ ", approvedDate=" + approvedDate + ", approvedUserId=" + approvedUserId + ", amtIsCollected="
+				+ amtIsCollected + ", collectedDate=" + collectedDate + ", collectedUserId=" + collectedUserId
+				+ ", isBillPrint=" + isBillPrint + ", initiatorUserId=" + initiatorUserId + ", delStatus=" + delStatus
+				+ ", gateSaleBillDetailList=" + gateSaleBillDetailList + "]";
 	}
 
+    
 }

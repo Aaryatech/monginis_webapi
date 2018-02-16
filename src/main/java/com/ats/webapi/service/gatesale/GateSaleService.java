@@ -78,4 +78,8 @@ public interface GateSaleService {
 
 	List<GateSaleDiscount> getGateSaleDiscByUsrType(int userType);
 
+	ErrorMessage collectGetSaleAmtOfBill(String collectedDate, int collectedUserId, int amtIsCollected, List<Integer> billIds);
+
+	List<GateSaleBillHeaderRes> gateBillDetailAmtPending(int isApproved, int amtIsCollected);
+
 }

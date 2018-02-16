@@ -34,4 +34,11 @@ public interface GateSaleBillHeaderRepository extends JpaRepository<GateSaleBill
 	    @Query(value="select user_type from m_gatesale_user where user_id=:initiatorUserId",nativeQuery=true)
 		int findUserTypeById(@Param("initiatorUserId")int initiatorUserId);
 
+	    @Transactional
+		@Modifying
+		@Query("UPDATE GateSaleBillHeader  SET amt_is_collected=:amtIsCollected,collected_date=:collectedDate,collected_user_id=:collectedUserId where is_approved=2 And bill_id In (:billIds)")
+		int updateCollectGetSaleAmtOfBill(@Param("collectedDate")String collectedDate,@Param("collectedUserId") int collectedUserId,@Param("amtIsCollected") int amtIsCollected,
+				@Param("billIds")List<Integer> billIds);
+
+	    
 }

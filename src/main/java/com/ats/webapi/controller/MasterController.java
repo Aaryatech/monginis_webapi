@@ -269,6 +269,7 @@ public class MasterController {
 					return info;
 				}
 	 //------------------------------------------------------------------------
+				
 	// ---------------------------Getting FranchiseSup List-----------------------
 				@RequestMapping(value = { "/getFranchiseSupList" }, method = RequestMethod.GET)
 				public @ResponseBody FranchiseSupList getFranchiseSupList() {

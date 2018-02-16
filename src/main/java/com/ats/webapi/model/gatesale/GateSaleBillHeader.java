@@ -32,6 +32,9 @@ public class GateSaleBillHeader implements Serializable{
 	@Column(name="is_other")
 	private int isOther;
 	
+	@Column(name="invoice_no")
+	private String invoiceNo;
+	
 	@Column(name="cust_name")
 	private String custName;
 	
@@ -89,6 +92,14 @@ public class GateSaleBillHeader implements Serializable{
 
 	public void setGateSaleBillDetailList(List<GateSaleBillDetail> gateSaleBillDetailList) {
 		this.gateSaleBillDetailList = gateSaleBillDetailList;
+	}
+    
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
 	}
 
 	public int getBillId() {
@@ -253,13 +264,15 @@ public class GateSaleBillHeader implements Serializable{
 	@Override
 	public String toString() {
 		return "GateSaleBillHeader [billId=" + billId + ", billDate=" + billDate + ", category=" + category
-				+ ", isOther=" + isOther + ", custName=" + custName + ", empId=" + empId + ", discountPer="
-				+ discountPer + ", billAmt=" + billAmt + ", discountAmt=" + discountAmt + ", roundOff=" + roundOff
-				+ ", billGrantAmt=" + billGrantAmt + ", isApproved=" + isApproved + ", approvedDate=" + approvedDate
-				+ ", approvedUserId=" + approvedUserId + ", amtIsCollected=" + amtIsCollected + ", collectedDate="
-				+ collectedDate + ", collectedUserId=" + collectedUserId + ", isBillPrint=" + isBillPrint
-				+ ", initiatorUserId=" + initiatorUserId + ", delStatus=" + delStatus + ", gateSaleBillDetailList="
-				+ gateSaleBillDetailList + "]";
+				+ ", isOther=" + isOther + ", invoiceNo=" + invoiceNo + ", custName=" + custName + ", empId=" + empId
+				+ ", discountPer=" + discountPer + ", billAmt=" + billAmt + ", discountAmt=" + discountAmt
+				+ ", roundOff=" + roundOff + ", billGrantAmt=" + billGrantAmt + ", isApproved=" + isApproved
+				+ ", approvedDate=" + approvedDate + ", approvedUserId=" + approvedUserId + ", amtIsCollected="
+				+ amtIsCollected + ", collectedDate=" + collectedDate + ", collectedUserId=" + collectedUserId
+				+ ", isBillPrint=" + isBillPrint + ", initiatorUserId=" + initiatorUserId + ", delStatus=" + delStatus
+				+ ", gateSaleBillDetailList=" + gateSaleBillDetailList + "]";
 	}
+
+	
 
 }

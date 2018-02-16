@@ -2,6 +2,7 @@ package com.ats.webapi.controller;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.ErrorMessage;
+import com.ats.webapi.model.FrItemStockConfigureList;
 import com.ats.webapi.model.gatesale.GateEmployee;
 import com.ats.webapi.model.gatesale.GateSaleBillHeader;
 import com.ats.webapi.model.gatesale.GateSaleBillHeaderRes;
@@ -27,6 +29,7 @@ import com.ats.webapi.model.gatesale.OtherItem;
 import com.ats.webapi.model.gatesale.OtherItemList;
 import com.ats.webapi.model.gatesale.OtherSupplier;
 import com.ats.webapi.model.gatesale.OtherSupplierList;
+import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.gatesale.GateSaleService;
 
 @RestController
@@ -35,7 +38,8 @@ public class GateSaleController {
 
 	@Autowired
 	GateSaleService gateSaleService;
-	
+	@Autowired
+	FrItemStockConfigureService frItemStockConfigureService;
 	//----------------------Save Gate Sale User------------------------------------
 	@RequestMapping(value = { "/saveGateSaleUser" }, method = RequestMethod.POST)
 	public @ResponseBody ErrorMessage saveGateSaleUser(@RequestBody GateSaleUser gateSaleUser)
@@ -200,9 +204,48 @@ public class GateSaleController {
 		@RequestMapping(value = { "/saveGateSaleBill" }, method = RequestMethod.POST)
 		public @ResponseBody ErrorMessage saveGateSaleBill(@RequestBody GateSaleBillHeader gateSaleBillHeader)
 		{
+			ErrorMessage errorMessage=new ErrorMessage();
+			try {
+			
 			Date date = new Date();
 			gateSaleBillHeader.setBillDate(date);
-			ErrorMessage errorMessage=gateSaleService.saveGateSaleBill(gateSaleBillHeader);
+			List<String> key=new ArrayList<String>();
+			key.add("gate_sale_invoice");
+			key.add("gate_sale_alphabet");
+			FrItemStockConfigureList settingList = frItemStockConfigureService.findBySettingKeyList(key);
+			int invoiceNumber = 0;
+			int asciiValAlpha =65;
+            for(int i=0;i<settingList.getFrItemStockConfigure().size();i++)
+            {
+            	if(settingList.getFrItemStockConfigure().get(i).getSettingKey().equals("gate_sale_invoice"))
+            	{
+            		invoiceNumber=settingList.getFrItemStockConfigure().get(i).getSettingValue();
+            	}
+            	if(settingList.getFrItemStockConfigure().get(i).getSettingKey().equals("gate_sale_alphabet"))
+            	{
+            		asciiValAlpha=settingList.getFrItemStockConfigure().get(i).getSettingValue();
+            	} 
+            }
+            
+         
+			int invLenth=String.valueOf(invoiceNumber).length();
+			invLenth=4-invLenth;
+			StringBuilder invoiceNo=new StringBuilder(""+(char)asciiValAlpha);
+			
+			for(int i=0;i<invLenth;i++)
+			{ 
+				String j="0";
+				invoiceNo.append(j);
+			}
+			invoiceNo.append(String.valueOf(invoiceNumber));
+			System.out.println("invoiceNo"+invoiceNo);
+			gateSaleBillHeader.setInvoiceNo(""+invoiceNo);
+			 errorMessage=gateSaleService.saveGateSaleBill(gateSaleBillHeader);
+			}
+			catch(Exception e)
+			{
+				e.printStackTrace();
+			}
 			
 			return errorMessage;
 		}
@@ -219,11 +262,21 @@ public class GateSaleController {
 
 				}
 			    //------------------------------------------------------------------------------------
-				// ---------------------------Getting GateBillHeaderAndDetails By userId-------------------------
+				// ---------------------------Getting GateBillHeaderAndDetails-------------------------
 				@RequestMapping(value = { "/gateBillDetailsAmtPending" }, method = RequestMethod.GET)
 				public @ResponseBody List<GateSaleBillHeaderRes> gateBillDetailsAmtPending() {
 
 					List<GateSaleBillHeaderRes> gateBillHeadersRes = gateSaleService.gateBillDetailsAmtPending();
+		            
+					return gateBillHeadersRes;
+
+				}
+			    //------------------------------------------------------------------------------------
+				// ---------------------------Getting GateBillHeaderAndDetails-------------------------
+				@RequestMapping(value = { "/gateBillDetailAmtPending" }, method = RequestMethod.POST)
+				public @ResponseBody List<GateSaleBillHeaderRes> gateBillDetailAmtPending(@RequestParam("isApproved")int isApproved,@RequestParam("amtIsCollected")int amtIsCollected) {
+
+					List<GateSaleBillHeaderRes> gateBillHeadersRes = gateSaleService.gateBillDetailAmtPending(isApproved,amtIsCollected);
 		            
 					return gateBillHeadersRes;
 
@@ -240,6 +293,7 @@ public class GateSaleController {
 					return errorMessage;
 				}
 				//--------------------------END--------------------------------------------------	
+				
 				//----------------------collectGetSaleAmt------------------------------------
 				@RequestMapping(value = { "/collectGetSaleAmt" }, method = RequestMethod.POST)
 				public @ResponseBody ErrorMessage collectGetSaleAmt(@RequestParam("collectedUserId")int collectedUserId)
@@ -247,6 +301,17 @@ public class GateSaleController {
 					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 					LocalDate localDate = LocalDate.now();
 					ErrorMessage errorMessage=gateSaleService.collectGetSaleAmt(dtf.format(localDate),collectedUserId);
+					
+					return errorMessage;
+				}
+				//--------------------------END--------------------------------------------------	
+				//----------------------collectGetSaleAmtOfBill------------------------------------
+				@RequestMapping(value = { "/collectGetSaleAmtOfBill" }, method = RequestMethod.POST)
+				public @ResponseBody ErrorMessage collectGetSaleAmtOfBill(@RequestParam("collectedUserId")int collectedUserId,@RequestParam("amtIsCollected")int amtIsCollected,@RequestParam("billIds")List<Integer> billIds)
+				{
+					DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+					LocalDate localDate = LocalDate.now();
+					ErrorMessage errorMessage=gateSaleService.collectGetSaleAmtOfBill(dtf.format(localDate),collectedUserId,amtIsCollected,billIds);
 					
 					return errorMessage;
 				}
