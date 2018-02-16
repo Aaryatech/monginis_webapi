@@ -64,6 +64,18 @@ public class VehicalMaster {
 
 	@Column(name = "del_status")
 	private int delStatus;
+	
+	@Column(name = "freq_km")
+	private int freqKIm;
+	
+	@Column(name = "wheel_change_freq")
+	private int wheelChangeFreq;
+	
+	@Column(name = "battary_change_freq")
+	private int battaryChangeFreq;
+	
+	@Column(name = "ac_change_freq")
+	private int acChangeFreq;
 
 	public int getVehId() {
 		return vehId;
@@ -192,6 +204,40 @@ public class VehicalMaster {
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
 	}
+	
+	
+
+	public int getFreqKIm() {
+		return freqKIm;
+	}
+
+	public void setFreqKIm(int freqKIm) {
+		this.freqKIm = freqKIm;
+	}
+
+	public int getWheelChangeFreq() {
+		return wheelChangeFreq;
+	}
+
+	public void setWheelChangeFreq(int wheelChangeFreq) {
+		this.wheelChangeFreq = wheelChangeFreq;
+	}
+
+	public int getBattaryChangeFreq() {
+		return battaryChangeFreq;
+	}
+
+	public void setBattaryChangeFreq(int battaryChangeFreq) {
+		this.battaryChangeFreq = battaryChangeFreq;
+	}
+
+	public int getAcChangeFreq() {
+		return acChangeFreq;
+	}
+
+	public void setAcChangeFreq(int acChangeFreq) {
+		this.acChangeFreq = acChangeFreq;
+	}
 
 	@Override
 	public String toString() {
@@ -199,7 +245,9 @@ public class VehicalMaster {
 				+ ", vehChesiNo=" + vehChesiNo + ", vehColor=" + vehColor + ", purchaseDate=" + purchaseDate
 				+ ", regDate=" + regDate + ", dealerId=" + dealerId + ", fuelType=" + fuelType + ", vehTypeId="
 				+ vehTypeId + ", variantId=" + variantId + ", vehCompAvg=" + vehCompAvg + ", vehStandAvg=" + vehStandAvg
-				+ ", vehMiniAvg=" + vehMiniAvg + ", delStatus=" + delStatus + "]";
+				+ ", vehMiniAvg=" + vehMiniAvg + ", delStatus=" + delStatus + ", freqKIm=" + freqKIm
+				+ ", wheelChangeFreq=" + wheelChangeFreq + ", battaryChangeFreq=" + battaryChangeFreq
+				+ ", acChangeFreq=" + acChangeFreq + "]";
 	}
 
 	

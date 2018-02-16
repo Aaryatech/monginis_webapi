@@ -86,4 +86,19 @@ public class SprGroupServiceImpl implements SprGroupService{
 		return getSprGroupById;
 	}
 
+	@Override
+	public List<SprGroup> getSprGroupListByTypeId(int typeId) {
+		List<SprGroup> getSprGroupListByTypeId = new ArrayList<SprGroup>();
+		try {
+			  
+			getSprGroupListByTypeId = sprGroupRepository.findAllByTypeIdAndDelStatus(typeId,0);
+			 
+			System.out.println(getSprGroupListByTypeId.toString());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return getSprGroupListByTypeId;
+	}
+
 }

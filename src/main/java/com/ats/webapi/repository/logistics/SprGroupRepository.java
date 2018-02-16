@@ -21,6 +21,9 @@ public interface SprGroupRepository extends JpaRepository<SprGroup, Integer>{
 	int deleteSprGroup(@Param("groupId")int groupId);
 
 
-	SprGroup findByGroupId(int groupId); 
+	SprGroup findByGroupId(int groupId);
+
+
+	List<SprGroup> findAllByTypeIdAndDelStatus(int typeId, int delStatus); 
 
 }

@@ -733,6 +733,24 @@ public class LogisticsApiController {
 
 	}
 	
+	@RequestMapping(value = { "/getSprGroupListByTypeId" }, method = RequestMethod.POST)
+	public @ResponseBody List<SprGroup> getSprGroupListByTypeId(@RequestParam ("typeId") int typeId)
+	{ 
+		System.out.println("typeId"+typeId);
+		List<SprGroup> getSprGroupListByTypeId = new ArrayList<SprGroup>();
+		try {
+			  
+			getSprGroupListByTypeId = sprGroupService.getSprGroupListByTypeId(typeId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return getSprGroupListByTypeId;
+
+	}
+	
 	//--------------------------------------------SparePart-------------------------------
 	
 	@RequestMapping(value = { "/postSparePart" }, method = RequestMethod.POST)

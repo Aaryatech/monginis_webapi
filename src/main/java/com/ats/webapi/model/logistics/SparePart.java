@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-@Table(name = "m_logis_group")
+@Table(name = "m_logis_sprpart")
 public class SparePart {
 	
 	@Id
@@ -64,6 +64,21 @@ public class SparePart {
 	
 	@Column(name = "spr_type")
 	private int sprType;
+	
+	@Column(name = "cgst")
+	private float cgst;
+	
+	@Column(name = "sgst")
+	private float sgst;
+	
+	@Column(name = "igst")
+	private float igst;
+	
+	@Column(name = "disc")
+	private int disc;
+	
+	@Column(name = "extra_charges")
+	private int extraCharges;
 
 	public int getSprId() {
 		return sprId;
@@ -192,6 +207,47 @@ public class SparePart {
 	public void setSprType(int sprType) {
 		this.sprType = sprType;
 	}
+	
+
+	public float getCgst() {
+		return cgst;
+	}
+
+	public void setCgst(float cgst) {
+		this.cgst = cgst;
+	}
+
+	public float getSgst() {
+		return sgst;
+	}
+
+	public void setSgst(float sgst) {
+		this.sgst = sgst;
+	}
+
+	public float getIgst() {
+		return igst;
+	}
+
+	public void setIgst(float igst) {
+		this.igst = igst;
+	}
+
+	public int getDisc() {
+		return disc;
+	}
+
+	public void setDisc(int disc) {
+		this.disc = disc;
+	}
+
+	public int getExtraCharges() {
+		return extraCharges;
+	}
+
+	public void setExtraCharges(int extraCharges) {
+		this.extraCharges = extraCharges;
+	}
 
 	@Override
 	public String toString() {
@@ -199,7 +255,8 @@ public class SparePart {
 				+ ", sprUom=" + sprUom + ", sprDate1=" + sprDate1 + ", sprRate1=" + sprRate1 + ", sprDate2=" + sprDate2
 				+ ", sprRate2=" + sprRate2 + ", sprDate3=" + sprDate3 + ", sprRate3=" + sprRate3 + ", sprIscritical="
 				+ sprIscritical + ", delStatus=" + delStatus + ", sprWarrantyPeriod=" + sprWarrantyPeriod + ", makeId="
-				+ makeId + ", sprType=" + sprType + "]";
+				+ makeId + ", sprType=" + sprType + ", cgst=" + cgst + ", sgst=" + sgst + ", igst=" + igst + ", disc="
+				+ disc + ", extraCharges=" + extraCharges + "]";
 	}
 	
 	

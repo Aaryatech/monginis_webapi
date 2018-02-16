@@ -21,6 +21,9 @@ public class SprGroup {
 
 	@Column(name = "del_status")
 	private int delStatus;
+	
+	//@Column(name = "type_id")
+	private int typeId;
 
 	public int getGroupId() {
 		return groupId;
@@ -45,10 +48,20 @@ public class SprGroup {
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
 	}
+	
+
+	public int getTypeId() {
+		return typeId;
+	}
+
+	public void setTypeId(int typeId) {
+		this.typeId = typeId;
+	}
 
 	@Override
 	public String toString() {
-		return "Group [groupId=" + groupId + ", groupName=" + groupName + ", delStatus=" + delStatus + "]";
+		return "SprGroup [groupId=" + groupId + ", groupName=" + groupName + ", delStatus=" + delStatus + ", typeId="
+				+ typeId + "]";
 	}
  
 	

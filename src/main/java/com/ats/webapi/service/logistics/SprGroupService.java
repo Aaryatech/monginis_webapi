@@ -18,4 +18,6 @@ public interface SprGroupService {
 
 	SprGroup getSprGroupById(int groupId);
 
+	List<SprGroup> getSprGroupListByTypeId(int typeId); 
+
 }
