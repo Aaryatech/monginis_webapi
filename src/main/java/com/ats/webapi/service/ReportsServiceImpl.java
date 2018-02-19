@@ -1,5 +1,6 @@
 package com.ats.webapi.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +17,10 @@ import com.ats.webapi.model.ItemWiseReport;
 import com.ats.webapi.model.ItemWiseReportList;
 import com.ats.webapi.model.MonthWiseReport;
 import com.ats.webapi.model.MonthWiseReportList;
+import com.ats.webapi.model.report.DispatchReport;
 import com.ats.webapi.repository.BillWisePurchaseRepository;
 import com.ats.webapi.repository.BillWiseTaxReportRepository;
+import com.ats.webapi.repository.DispatchReportRepository;
 import com.ats.webapi.repository.ItemWiseDetailRepository;
 import com.ats.webapi.repository.ItemWiseReportRepository;
 import com.ats.webapi.repository.MonthWiseReportRepository;
@@ -38,6 +41,9 @@ public class ReportsServiceImpl implements ReportsService {
 	
 	@Autowired
 	BillWiseTaxReportRepository billWiseTaxReportRepository;
+	
+	@Autowired
+	DispatchReportRepository dispatchReportRepository;
 	
 	@Override
 	public BillWisePurchaseList getBillWisePurchaseReport(int frId, String fromDate, String toDate) {
@@ -213,6 +219,21 @@ public class ReportsServiceImpl implements ReportsService {
 		}
 		
    	} return itemWiseReportList;
+	}
+
+	@Override
+	public List<DispatchReport> getDispatchItemReport(String billDateYMD, List<String> frId, List<String> categories) {
+
+		List<DispatchReport> dispatchReportList;
+		try {
+		dispatchReportList=dispatchReportRepository.findDispatchReportList(billDateYMD,frId,categories);
+		
+		}
+		catch (Exception e) {
+			dispatchReportList=new ArrayList<>();
+            e.printStackTrace();
+		}
+		return dispatchReportList;
 	}
 
 }

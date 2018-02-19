@@ -1109,7 +1109,7 @@ try {
 
 	}
 
-	@RequestMapping(value = "/getAllFrItemConfPost", method = RequestMethod.POST)
+/*	@RequestMapping(value = "/getAllFrItemConfPost", method = RequestMethod.POST)
 	public @ResponseBody List<FrStockResponse> getAllFrItemConfPost(@RequestParam List<String> itemId) {
 
 		FrItemStockConfigurePostList configurePostList = new FrItemStockConfigurePostList();
@@ -1175,9 +1175,82 @@ try {
 
 		return frStockResponseList;
 
-	}
+	}*/
 
-	
+	@RequestMapping(value = "/getAllFrItemConfPost", method = RequestMethod.POST)
+	public @ResponseBody List<FrStockResponse> getAllFrItemConfPost(@RequestParam List<String> itemId) {
+
+		FrItemStockConfigurePostList configurePostList = new FrItemStockConfigurePostList();
+
+		List<GetFrItemStockConfiguration> frItemStockConfigurePosts = getFrItemStockConfigurationService
+				.getAllFrItemConfPost(itemId);
+
+		configurePostList.setFrItemStockConfigurePosts(frItemStockConfigurePosts);
+		
+		//System.out.println("Quety object " + frItemStockConfigurePosts.toString());
+
+		
+
+		List<FrStockResponse> frStockResponseList = new ArrayList<FrStockResponse>();
+
+		for (int i = 0; i < frItemStockConfigurePosts.size(); i++) {
+
+			GetFrItemStockConfiguration frItemStockConfigurePostParent = frItemStockConfigurePosts.get(i);
+
+			boolean isUnique = true;
+			for (int m = 0; m < frStockResponseList.size(); m++) {
+
+				//System.out.println("respList object " + frStockResponseList.toString() +" query Obj "+frItemStockConfigurePostParent.toString());
+
+				if (frStockResponseList.get(m).getItemId() == frItemStockConfigurePostParent.getItemId()) {
+					isUnique = false;
+				}
+
+			}
+
+			if (isUnique) {
+
+				FrStockResponse frStockResponse = new FrStockResponse();
+				frStockResponse.setItemId(frItemStockConfigurePostParent.getItemId());
+				frStockResponse.setItemName(frItemStockConfigurePostParent.getItemName());
+
+				List<StockDetails> stockDetailsList = new ArrayList<StockDetails>();
+
+				for (int j = 0; j < frItemStockConfigurePosts.size(); j++) {
+
+					GetFrItemStockConfiguration frItemStockConfigurePostChild = frItemStockConfigurePosts.get(j);
+					//System.out.println("inner for respList object " + frItemStockConfigurePostChild.getItemId() +" query Obj "+frItemStockConfigurePostParent.getItemId());
+
+					if (frItemStockConfigurePostChild.getItemId().equals(frItemStockConfigurePostParent.getItemId())) {
+
+						StockDetails stockDetails = new StockDetails();
+					//	System.out.println("child object " + frItemStockConfigurePostChild.toString());
+ 
+						stockDetails.setFrStockId(frItemStockConfigurePostChild.getFrStockId());
+						stockDetails.setType(frItemStockConfigurePostChild.getType());
+						stockDetails.setMinQty(frItemStockConfigurePostChild.getMinQty());
+						stockDetails.setMaxQty(frItemStockConfigurePostChild.getMaxQty());
+						stockDetails.setReorderQty(frItemStockConfigurePostChild.getReorderQty());
+						stockDetailsList.add(stockDetails);
+
+					}
+				}
+				frStockResponse.setStockDetails(stockDetailsList);
+				frStockResponseList.add(frStockResponse);
+
+			} // end of unique if
+		}
+        System.out.println("frStockResponseList"+frStockResponseList.toString());
+		Info info = new Info();
+
+		info.setError(false);
+		info.setMessage("All Fr Item Stock Config displayed. Total Items: " + frItemStockConfigurePosts.size());
+
+		configurePostList.setInfo(info);
+
+		return frStockResponseList;
+
+	}
 
 	@RequestMapping(value = "/getfrItemConfSetting", method = RequestMethod.GET)
 	public @ResponseBody FrItemStockConfigureList getfrItemConfSetting() {

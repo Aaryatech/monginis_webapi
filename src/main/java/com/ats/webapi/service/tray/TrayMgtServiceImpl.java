@@ -11,10 +11,12 @@ import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FranchiseInRoute;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
 import com.ats.webapi.model.tray.TrayMgtDetail;
+import com.ats.webapi.model.tray.TrayMgtDetailBean;
 import com.ats.webapi.model.tray.TrayMgtHeader;
 import com.ats.webapi.repository.tray.FrOutTrayRepository;
 import com.ats.webapi.repository.tray.FranchiseInRouteRepository;
 import com.ats.webapi.repository.tray.GetTrayMgtHeaderRepository;
+import com.ats.webapi.repository.tray.TrayMgtDetailBeanRepository;
 import com.ats.webapi.repository.tray.TrayMgtDetailRepository;
 import com.ats.webapi.repository.tray.TrayMgtHeaderRepository;
 
@@ -34,6 +36,9 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 	GetTrayMgtHeaderRepository getTrayMgtHeaderRepository;
 	
 	@Autowired
+	TrayMgtDetailBeanRepository trayMgtDetailBeanRepository;
+	
+	@Autowired
 	FranchiseInRouteRepository franchiseInRouteRepository;
 	@Override
 	public TrayMgtHeader saveTrayMgtHeader(TrayMgtHeader trayMgtHeader) {
@@ -44,9 +49,9 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 	}
 
 	@Override
-	public TrayMgtDetail saveTrayMgtDetail(TrayMgtDetail trayMgtDetail) {
+	public TrayMgtDetailBean saveTrayMgtDetail(TrayMgtDetailBean trayMgtDetail) {
 
-		TrayMgtDetail trayMgtDetailsRes=trayMgtDetailRepository.saveAndFlush(trayMgtDetail);
+		TrayMgtDetailBean trayMgtDetailsRes=trayMgtDetailBeanRepository.saveAndFlush(trayMgtDetail);
 		
 		return trayMgtDetailsRes;
 	}
@@ -222,14 +227,14 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 		}
 
 	@Override
-	public TrayMgtDetail getTrayDetailByDetailId(int tranStatus3) {
-		TrayMgtDetail trayMgtDetailRes;
+	public TrayMgtDetailBean getTrayDetailByDetailId(int tranStatus3) {
+		TrayMgtDetailBean trayMgtDetailRes;
 		try {
 		
-			trayMgtDetailRes=trayMgtDetailRepository.findByTranDetailId(tranStatus3);
+			trayMgtDetailRes=trayMgtDetailBeanRepository.findByTranDetailId(tranStatus3);
 		}
 		catch (Exception e) {
-			trayMgtDetailRes=new TrayMgtDetail();
+			trayMgtDetailRes=new TrayMgtDetailBean();
 			e.printStackTrace();
 		}
 		return trayMgtDetailRes;	
@@ -238,7 +243,7 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 	@Override
 	public int updateTrayStatus(int tranStatus1,int status) {
 
-		int isUpdated=trayMgtDetailRepository.updateTrayStatus(tranStatus1,status);
+		int isUpdated=trayMgtDetailBeanRepository.updateTrayStatus(tranStatus1,status);
 		
 		return isUpdated;
 	}
@@ -249,6 +254,34 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 		TrayMgtHeader trayMgtHeaderRes=trayMgtHeaderRepository.findByTranId(tranId);
 		
 		return trayMgtHeaderRes;
+	}
+
+	@Override
+	public List<TrayMgtDetail> getTrayMgtDetailByTranId(int tranId) {
+		List<TrayMgtDetail> trayMgtDetailRes;
+		try {
+		
+			trayMgtDetailRes=trayMgtDetailRepository.findByTranId(tranId);
+		}
+		catch (Exception e) {
+			trayMgtDetailRes=new ArrayList<>();
+			e.printStackTrace();
+		}
+		return trayMgtDetailRes;	
+	}
+
+	@Override
+	public List<TrayMgtDetail> getTrayDetailForTrayIn(int frId, int isSameDay) {
+		List<TrayMgtDetail> trayMgtDetailRes;
+		try {
+		
+			trayMgtDetailRes=trayMgtDetailRepository.findByFrIdAndIsSameDayAndDelStatusAndTrayStatusIn(frId,isSameDay,0);
+		}
+		catch (Exception e) {
+			trayMgtDetailRes=new ArrayList<>();
+			e.printStackTrace();
+		}
+		return trayMgtDetailRes;	
 	}
 
 }

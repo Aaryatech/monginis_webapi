@@ -15,6 +15,7 @@ import com.ats.webapi.model.BillWiseTaxReportList;
 import com.ats.webapi.model.ItemWiseDetailList;
 import com.ats.webapi.model.ItemWiseReportList;
 import com.ats.webapi.model.MonthWiseReportList;
+import com.ats.webapi.model.report.DispatchReport;
 import com.ats.webapi.model.report.GetCustBillTax;
 import com.ats.webapi.model.report.GetCustomerBill;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
@@ -95,7 +96,17 @@ public class ReportsController {
 		return repFrDatewiseSellList;
 		
 	}
-	
+	//---------------------------------Dispatch Item Report-----------------------------------------
+	@RequestMapping(value = "/getDispatchItemReport", method = RequestMethod.POST)
+	public @ResponseBody List<DispatchReport> getDispatchItemReport(@RequestParam("billDate") String billDate,
+			 @RequestParam("frId") List<String> frId,@RequestParam("categories") List<String> categories) {
+		
+		String billDateYMD = Common.convertToYMD(billDate);
+		List<DispatchReport> dispatchReportList=reportsService.getDispatchItemReport(billDateYMD, frId, categories);
+		return dispatchReportList;
+		
+	}
+	//------------------------------------------------------------------------------------------------
 	@RequestMapping(value = "/getRepMonthwiseSell", method = RequestMethod.POST)
 	public @ResponseBody List<GetRepMonthwiseSell> getRepMonthwiseSell(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("frId") List<String> frId) {

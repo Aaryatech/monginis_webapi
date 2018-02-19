@@ -9,6 +9,7 @@ import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FranchiseInRoute;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
 import com.ats.webapi.model.tray.TrayMgtDetail;
+import com.ats.webapi.model.tray.TrayMgtDetailBean;
 import com.ats.webapi.model.tray.TrayMgtHeader;
 
 @Service
@@ -16,7 +17,7 @@ public interface TrayMgtService {
 
 	TrayMgtHeader saveTrayMgtHeader(TrayMgtHeader trayMgtHeader);
 
-	TrayMgtDetail saveTrayMgtDetail(TrayMgtDetail trayMgtDetails);
+	TrayMgtDetailBean saveTrayMgtDetail(TrayMgtDetailBean trayMgtDetails);
 
 
 	List<FrOutTrays> getOutTraysForFr(int frId, String billDate);
@@ -42,10 +43,14 @@ public interface TrayMgtService {
 
 	TrayMgtDetail getTrayDetailByStatus(int frId, int trayStatus, int isSameDay);
 
-	TrayMgtDetail getTrayDetailByDetailId(int tranStatus3);
+	TrayMgtDetailBean getTrayDetailByDetailId(int tranStatus3);
 
 	int updateTrayStatus(int tranStatus1,int status);
 
 	TrayMgtHeader getTrayMgtHeaderByTranId(int tranId);
+
+	List<TrayMgtDetail> getTrayMgtDetailByTranId(int tranId);
+
+	List<TrayMgtDetail> getTrayDetailForTrayIn(int frId, int isSameDay);
 
 }

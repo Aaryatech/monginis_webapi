@@ -1,5 +1,7 @@
 package com.ats.webapi.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FranchiseInRoute;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
 import com.ats.webapi.model.tray.TrayMgtDetail;
+import com.ats.webapi.model.tray.TrayMgtDetailBean;
 import com.ats.webapi.model.tray.TrayMgtHeader;
 import com.ats.webapi.service.tray.TrayMgtService;
 
@@ -29,43 +32,44 @@ public class TrayManagementController {
 	
 	     // ----------------------------SAVE Tray Management Header---------------------------
 			@RequestMapping(value = { "/saveTrayMgtHeader" }, method = RequestMethod.POST)
-			public @ResponseBody Info saveTrayMgtHeader(@RequestBody TrayMgtHeader trayMgtHeader) {
+			public @ResponseBody TrayMgtHeader saveTrayMgtHeader(@RequestBody TrayMgtHeader trayMgtHeader) {
 
 				TrayMgtHeader trayMgtHeaderRes = null;
-				Info info = new Info();
 				try {
+					trayMgtHeader.setTranDate(new Date());
 
 					trayMgtHeaderRes = trayMgtService.saveTrayMgtHeader(trayMgtHeader);
 
 					if (trayMgtHeaderRes != null) {
-						info.setError(false);
-						info.setMessage("TrayMgtHeader Saved Successfully.");
+						trayMgtHeaderRes.setError(false);
+						trayMgtHeaderRes.setMessage("TrayMgtHeader Saved Successfully.");
 					} else {
-						info.setError(true);
-						info.setMessage("TrayMgtHeader Not Saved .");
+						trayMgtHeaderRes.setError(true);
+						trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .");
 					}
 
 				} catch (Exception e) {
 
-					info.setError(true);
-					info.setMessage("TrayMgtHeader Not Saved .");
+					trayMgtHeaderRes.setError(true);
+					trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .Exc");
 
 					e.printStackTrace();
 					System.out.println("Exception In TrayManagementController /saveTrayMgtHeader" + e.getMessage());
 
 				}
-				return info;
+				return trayMgtHeaderRes;
 
 			}
 	      //---------------------------------------------------------------------------
 			 // ----------------------------SAVE Tray Management Detail---------------------------
 			@RequestMapping(value = { "/saveTrayMgtDetail" }, method = RequestMethod.POST)
-			public @ResponseBody Info saveTrayMgtDetail(@RequestBody TrayMgtDetail trayMgtDetail) {
+			public @ResponseBody Info saveTrayMgtDetail(@RequestBody TrayMgtDetailBean trayMgtDetail) {
 
-				TrayMgtDetail trayMgtDetailRes = null;
+				TrayMgtDetailBean trayMgtDetailRes = null;
 				Info info = new Info();
 				try {
 
+					trayMgtDetail.setOuttrayDate(new Date());
 					trayMgtDetailRes = trayMgtService.saveTrayMgtDetail(trayMgtDetail);
 
 					if (trayMgtDetailRes!=null) {
@@ -99,11 +103,31 @@ public class TrayManagementController {
 
 			}
 		    //------------------------------------------------------------------------------------
+			// ---------------------------Getting TrayMgtDetail By TranId-------------------------
+						@RequestMapping(value = { "/getTrayMgtDetailByTranId" }, method = RequestMethod.POST)
+						public @ResponseBody List<TrayMgtDetail> getTrayMgtDetailByTranId(@RequestParam("tranId")int tranId) {
+
+							List<TrayMgtDetail> trayMgtDetailRes= trayMgtService.getTrayMgtDetailByTranId(tranId);
+				            
+							return trayMgtDetailRes;
+
+						}
+					    //------------------------------------------------------------------------------------
 			// ---------------------------Getting TrayMgtDetail By FrId And status-------------------------
 						@RequestMapping(value = { "/getTrayDetailByStatus" }, method = RequestMethod.POST)
 						public @ResponseBody TrayMgtDetail getTrayDetailByStatus(@RequestParam("frId")int frId,@RequestParam("trayStatus")int trayStatus,@RequestParam("isSameDay")int isSameDay) {
 
 							TrayMgtDetail trayMgtDetailRes= trayMgtService.getTrayDetailByStatus(frId,trayStatus,isSameDay);
+				            
+							return trayMgtDetailRes;
+
+						}
+		 //------------------------------------------------------------------------------------
+						// ---------------------------Getting TrayMgtDetail-------------------------
+						@RequestMapping(value = { "/getTrayDetailForTrayIn" }, method = RequestMethod.POST)
+						public @ResponseBody List<TrayMgtDetail> getTrayDetailForTrayIn(@RequestParam("frId")int frId,@RequestParam("isSameDay")int isSameDay) {
+
+							List<TrayMgtDetail> trayMgtDetailRes= trayMgtService.getTrayDetailForTrayIn(frId,isSameDay);
 				            
 							return trayMgtDetailRes;
 
@@ -214,11 +238,11 @@ public class TrayManagementController {
 			public @ResponseBody Info insertTrayInAndBalance(@RequestParam("tranStatus1")int tranStatus1,@RequestParam("tranStatus2")int tranStatus2,@RequestParam("intrayBig")int intrayBig,@RequestParam("intraySmall")int intraySmall
 					,@RequestParam("intrayLead")int intrayLead,@RequestParam("intrayExtra")int intrayExtra,@RequestParam("tranStatus3")int tranStatus3,@RequestParam("intrayBig1")int intrayBig1,@RequestParam("intraySmall1")int intraySmall1
 					,@RequestParam("intrayLead1")int intrayLead1,@RequestParam("intrayExtra1")int intrayExtra1) {
-				
+				Info info=new Info();
 				try {
 			if(tranStatus3!=0)
 			{
-				TrayMgtDetail trayMgtDetailRes= trayMgtService.getTrayDetailByDetailId(tranStatus3);
+				TrayMgtDetailBean trayMgtDetailRes= trayMgtService.getTrayDetailByDetailId(tranStatus3);
 				
 			   int balanceBig=trayMgtDetailRes.getOuttrayBig()-(trayMgtDetailRes.getIntrayBig()+intrayBig1);
 			   int balanceSmall=trayMgtDetailRes.getOuttraySmall()-(trayMgtDetailRes.getIntraySmall()+intraySmall1);
@@ -234,6 +258,8 @@ public class TrayManagementController {
 			   trayMgtDetailRes.setIntraySmall1(intraySmall1);
 			   trayMgtDetailRes.setIntrayExtra1(intrayExtra1);
 			   trayMgtDetailRes.setIntrayLead1(intrayLead1);
+			 
+			   trayMgtDetailRes.setIntrayDate1(new Date());
 			   int trayStatus;
 			   if(balanceBig>0||balanceSmall>0||balanceLead>0||balanceExtra>0)
 			   {
@@ -244,13 +270,13 @@ public class TrayManagementController {
 				   trayStatus=5;
 			   }
 			   trayMgtDetailRes.setTrayStatus(trayStatus);
-			   TrayMgtDetail  trayMgtDetailUpdated = trayMgtService.saveTrayMgtDetail(trayMgtDetailRes);
+			   TrayMgtDetailBean  trayMgtDetailUpdated = trayMgtService.saveTrayMgtDetail(trayMgtDetailRes);
 			  // int isUpdated=trayMgtService.updateTrayStatus(tranStatus3,status);
 
 			}
 			if(tranStatus2!=0)
 			{
-				TrayMgtDetail trayMgtDetailRes= trayMgtService.getTrayDetailByDetailId(tranStatus2);
+				TrayMgtDetailBean trayMgtDetailRes= trayMgtService.getTrayDetailByDetailId(tranStatus2);
 				
 				  int balanceBig=trayMgtDetailRes.getOuttrayBig()-(intrayBig);
 				   int balanceSmall=trayMgtDetailRes.getOuttraySmall()-(intraySmall);
@@ -266,6 +292,7 @@ public class TrayManagementController {
 				   trayMgtDetailRes.setIntraySmall(intraySmall);
 				   trayMgtDetailRes.setIntrayExtra(intrayExtra);
 				   trayMgtDetailRes.setIntrayLead(intrayLead);
+				   trayMgtDetailRes.setIntrayDate(new Date());
 				   int trayStatus;
 				   if(balanceBig>0||balanceSmall>0||balanceLead>0||balanceExtra>0)
 				   {
@@ -276,20 +303,25 @@ public class TrayManagementController {
 					   trayStatus=5;
 				   }
 				   trayMgtDetailRes.setTrayStatus(trayStatus);
-				   TrayMgtDetail  trayMgtDetailUpdated = trayMgtService.saveTrayMgtDetail(trayMgtDetailRes);
+				   TrayMgtDetailBean  trayMgtDetailUpdated = trayMgtService.saveTrayMgtDetail(trayMgtDetailRes);
 				//   int isUpdated=trayMgtService.updateTrayStatus(tranStatus2,status);
 
 			}
 			if(tranStatus1!=0)
 			{
 			   int isUpdated=trayMgtService.updateTrayStatus(tranStatus1,2);
+			   info.setError(false);
+			   info.setMessage("Records Inserted");
+			   
 			}
 				
 				
 				}
 				catch (Exception e) {
+					 info.setError(true);
+					 info.setMessage("Records Insertion Failed");
                  e.printStackTrace();
 				}
-				return new Info();
+				return info;
 			}
 }

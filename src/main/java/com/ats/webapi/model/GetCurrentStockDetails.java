@@ -60,6 +60,9 @@ public class GetCurrentStockDetails {
 	private int currentSpStock;
 	
 	@Transient
+	private int reOrderQty;
+	
+	@Transient
 	private int id;
 	
 	
@@ -252,6 +255,16 @@ public class GetCurrentStockDetails {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+
+	public int getReOrderQty() {
+		return reOrderQty;
+	}
+
+
+	public void setReOrderQty(int reOrderQty) {
+		this.reOrderQty = reOrderQty;
+	}
 
 
 	@Override
@@ -261,10 +274,7 @@ public class GetCurrentStockDetails {
 				+ ", regTotalPurchase=" + regTotalPurchase + ", spTotalPurchase=" + spTotalPurchase
 				+ ", regTotalGrnGvn=" + regTotalGrnGvn + ", regTotalSell=" + regTotalSell + ", spTotalSell="
 				+ spTotalSell + ", stockHeaderId=" + stockHeaderId + ", currentRegStock=" + currentRegStock
-				+ ", currentSpStock=" + currentSpStock + ", id=" + id + "]";
+				+ ", currentSpStock=" + currentSpStock + ", reOrderQty=" + reOrderQty + ", id=" + id + "]";
 	}
-
-
-	
 
 }

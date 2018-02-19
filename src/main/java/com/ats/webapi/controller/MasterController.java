@@ -28,6 +28,7 @@ import com.ats.webapi.model.SpCakeSupplement;
 import com.ats.webapi.model.tray.TrayType;
 import com.ats.webapi.repository.FrListForSuppRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
+import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.SpCakeListRepository;
 import com.ats.webapi.repository.SpCkDeleteOrderRepository;
 import com.ats.webapi.service.FranchiseeService;
@@ -62,6 +63,8 @@ public class MasterController {
 	@Autowired
 	SpCakeListRepository spCakeListRepository;
 	
+	@Autowired
+	ItemRepository itemRepository;
 	// ----------------------------SAVE Item Sup---------------------------
 		@RequestMapping(value = { "/saveItemSup" }, method = RequestMethod.POST)
 		public @ResponseBody Info saveItemSup(@RequestBody ItemSup itemSup) {
@@ -461,4 +464,21 @@ public class MasterController {
 					return items;
 
 				}		
+				// Get Items By Category order by sub cat and sort id
+				@RequestMapping(value = "/getItemsByCatIdForDisp", method = RequestMethod.POST)
+				public @ResponseBody List<Item> getItemsByCatIdForDisp(@RequestParam List<String> catIdList) {
+		           
+					List<Item> items=null;
+					try {
+					 items = itemRepository.findByItemGrp1InAndDelStatusOrderByItemGrp2AscItemSortIdAsc(catIdList,0);
+					}
+					catch(Exception e)
+					{
+						items=new ArrayList<>();
+						e.printStackTrace();
+						
+					}
+					return items;
+
+				}
 }

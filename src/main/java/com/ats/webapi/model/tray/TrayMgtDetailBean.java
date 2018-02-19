@@ -10,11 +10,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-
 @Entity
 @Table(name="t_tray_mgt_detail")
-public class TrayMgtDetail implements Serializable{
+public class TrayMgtDetailBean implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -26,9 +24,6 @@ public class TrayMgtDetail implements Serializable{
 	
 	@Column(name="fr_id")
 	private int frId;
-	
-	@Column(name="fr_name")
-	private String frName;
 	
 	@Column(name="outtray_big")
 	private int outtrayBig;
@@ -154,87 +149,6 @@ public class TrayMgtDetail implements Serializable{
 	@Column(name="del_status")
 	private int delStatus;
 
-	
-	public String getFrName() {
-		return frName;
-	}
-
-	public void setFrName(String frName) {
-		this.frName = frName;
-	}
-
-	public int getQtyBig() {
-		return qtyBig;
-	}
-
-	public void setQtyBig(int qtyBig) {
-		this.qtyBig = qtyBig;
-	}
-
-	public int getQtySmall() {
-		return qtySmall;
-	}
-
-	public void setQtySmall(int qtySmall) {
-		this.qtySmall = qtySmall;
-	}
-
-	public int getQtyLead() {
-		return qtyLead;
-	}
-
-	public void setQtyLead(int qtyLead) {
-		this.qtyLead = qtyLead;
-	}
-
-	public int getQtyExtra() {
-		return qtyExtra;
-	}
-
-	public void setQtyExtra(int qtyExtra) {
-		this.qtyExtra = qtyExtra;
-	}
-
-	public float getGstPer() {
-		return gstPer;
-	}
-
-	public void setGstPer(float gstPer) {
-		this.gstPer = gstPer;
-	}
-
-	public float getGstRs() {
-		return gstRs;
-	}
-
-	public void setGstRs(float gstRs) {
-		this.gstRs = gstRs;
-	}
-
-	public float getTaxableAmt() {
-		return taxableAmt;
-	}
-
-	public void setTaxableAmt(float taxableAmt) {
-		this.taxableAmt = taxableAmt;
-	}
-
-	public float getTaxAmt() {
-		return taxAmt;
-	}
-
-	public void setTaxAmt(float taxAmt) {
-		this.taxAmt = taxAmt;
-	}
-
-	public int getIsSameDay() {
-		return isSameDay;
-	}
-
-	public void setIsSameDay(int isSameDay) {
-		this.isSameDay = isSameDay;
-	}
-
 	public int getTranDetailId() {
 		return tranDetailId;
 	}
@@ -291,6 +205,14 @@ public class TrayMgtDetail implements Serializable{
 		this.outtrayExtra = outtrayExtra;
 	}
 
+	public Date getOuttrayDate() {
+		return outtrayDate;
+	}
+
+	public void setOuttrayDate(Date outtrayDate) {
+		this.outtrayDate = outtrayDate;
+	}
+
 	public int getIntrayBig() {
 		return intrayBig;
 	}
@@ -321,6 +243,14 @@ public class TrayMgtDetail implements Serializable{
 
 	public void setIntrayExtra(int intrayExtra) {
 		this.intrayExtra = intrayExtra;
+	}
+
+	public Date getIntrayDate() {
+		return intrayDate;
+	}
+
+	public void setIntrayDate(Date intrayDate) {
+		this.intrayDate = intrayDate;
 	}
 
 	public int getIntrayBig1() {
@@ -355,6 +285,14 @@ public class TrayMgtDetail implements Serializable{
 		this.intrayExtra1 = intrayExtra1;
 	}
 
+	public Date getIntrayDate1() {
+		return intrayDate1;
+	}
+
+	public void setIntrayDate1(Date intrayDate1) {
+		this.intrayDate1 = intrayDate1;
+	}
+
 	public int getIntrayBig2() {
 		return intrayBig2;
 	}
@@ -385,6 +323,14 @@ public class TrayMgtDetail implements Serializable{
 
 	public void setIntrayExtra2(int intrayExtra2) {
 		this.intrayExtra2 = intrayExtra2;
+	}
+
+	public Date getIntrayDate2() {
+		return intrayDate2;
+	}
+
+	public void setIntrayDate2(Date intrayDate2) {
+		this.intrayDate2 = intrayDate2;
 	}
 
 	public int getBalanceBig() {
@@ -451,6 +397,70 @@ public class TrayMgtDetail implements Serializable{
 		this.priceExtra = priceExtra;
 	}
 
+	public int getQtyBig() {
+		return qtyBig;
+	}
+
+	public void setQtyBig(int qtyBig) {
+		this.qtyBig = qtyBig;
+	}
+
+	public int getQtySmall() {
+		return qtySmall;
+	}
+
+	public void setQtySmall(int qtySmall) {
+		this.qtySmall = qtySmall;
+	}
+
+	public int getQtyLead() {
+		return qtyLead;
+	}
+
+	public void setQtyLead(int qtyLead) {
+		this.qtyLead = qtyLead;
+	}
+
+	public int getQtyExtra() {
+		return qtyExtra;
+	}
+
+	public void setQtyExtra(int qtyExtra) {
+		this.qtyExtra = qtyExtra;
+	}
+
+	public float getGstPer() {
+		return gstPer;
+	}
+
+	public void setGstPer(float gstPer) {
+		this.gstPer = gstPer;
+	}
+
+	public float getGstRs() {
+		return gstRs;
+	}
+
+	public void setGstRs(float gstRs) {
+		this.gstRs = gstRs;
+	}
+
+	public float getTaxableAmt() {
+		return taxableAmt;
+	}
+
+	public void setTaxableAmt(float taxableAmt) {
+		this.taxableAmt = taxableAmt;
+	}
+
+	public float getTaxAmt() {
+		return taxAmt;
+	}
+
+	public void setTaxAmt(float taxAmt) {
+		this.taxAmt = taxAmt;
+	}
+
 	public float getGrandTotal() {
 		return grandTotal;
 	}
@@ -475,6 +485,14 @@ public class TrayMgtDetail implements Serializable{
 		this.depositIsUsed = depositIsUsed;
 	}
 
+	public int getIsSameDay() {
+		return isSameDay;
+	}
+
+	public void setIsSameDay(int isSameDay) {
+		this.isSameDay = isSameDay;
+	}
+
 	public int getDelStatus() {
 		return delStatus;
 	}
@@ -482,56 +500,24 @@ public class TrayMgtDetail implements Serializable{
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
 	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getOuttrayDate() {
-		return outtrayDate;
-	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public void setOuttrayDate(Date outtrayDate) {
-		this.outtrayDate = outtrayDate;
-	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getIntrayDate() {
-		return intrayDate;
-	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public void setIntrayDate(Date intrayDate) {
-		this.intrayDate = intrayDate;
-	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getIntrayDate1() {
-		return intrayDate1;
-	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public void setIntrayDate1(Date intrayDate1) {
-		this.intrayDate1 = intrayDate1;
-	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getIntrayDate2() {
-		return intrayDate2;
-	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public void setIntrayDate2(Date intrayDate2) {
-		this.intrayDate2 = intrayDate2;
-	}
 
 	@Override
 	public String toString() {
-		return "TrayMgtDetail [tranDetailId=" + tranDetailId + ", tranId=" + tranId + ", frId=" + frId + ", outtrayBig="
-				+ outtrayBig + ", outtraySmall=" + outtraySmall + ", outtrayLead=" + outtrayLead + ", outtrayExtra="
-				+ outtrayExtra + ", outtrayDate=" + outtrayDate + ", intrayBig=" + intrayBig + ", intraySmall="
-				+ intraySmall + ", intrayLead=" + intrayLead + ", intrayExtra=" + intrayExtra + ", intrayDate="
-				+ intrayDate + ", intrayBig1=" + intrayBig1 + ", intraySmall1=" + intraySmall1 + ", intrayLead1="
-				+ intrayLead1 + ", intrayExtra1=" + intrayExtra1 + ", intrayDate1=" + intrayDate1 + ", intrayBig2="
-				+ intrayBig2 + ", intraySmall2=" + intraySmall2 + ", intrayLead2=" + intrayLead2 + ", intrayExtra2="
-				+ intrayExtra2 + ", intrayDate2=" + intrayDate2 + ", balanceBig=" + balanceBig + ", balanceSmall="
-				+ balanceSmall + ", balanceLead=" + balanceLead + ", balanceExtra=" + balanceExtra + ", priceBig="
-				+ priceBig + ", priceSmall=" + priceSmall + ", priceLead=" + priceLead + ", priceExtra=" + priceExtra
-				+ ", qtyBig=" + qtyBig + ", qtySmall=" + qtySmall + ", qtyLead=" + qtyLead + ", qtyExtra=" + qtyExtra
-				+ ", gstPer=" + gstPer + ", gstRs=" + gstRs + ", taxableAmt=" + taxableAmt + ", taxAmt=" + taxAmt
-				+ ", grandTotal=" + grandTotal + ", trayStatus=" + trayStatus + ", depositIsUsed=" + depositIsUsed
-				+ ", isSameDay=" + isSameDay + ", delStatus=" + delStatus + "]";
+		return "TrayMgtDetailBean [tranDetailId=" + tranDetailId + ", tranId=" + tranId + ", frId=" + frId
+				+ ", outtrayBig=" + outtrayBig + ", outtraySmall=" + outtraySmall + ", outtrayLead=" + outtrayLead
+				+ ", outtrayExtra=" + outtrayExtra + ", outtrayDate=" + outtrayDate + ", intrayBig=" + intrayBig
+				+ ", intraySmall=" + intraySmall + ", intrayLead=" + intrayLead + ", intrayExtra=" + intrayExtra
+				+ ", intrayDate=" + intrayDate + ", intrayBig1=" + intrayBig1 + ", intraySmall1=" + intraySmall1
+				+ ", intrayLead1=" + intrayLead1 + ", intrayExtra1=" + intrayExtra1 + ", intrayDate1=" + intrayDate1
+				+ ", intrayBig2=" + intrayBig2 + ", intraySmall2=" + intraySmall2 + ", intrayLead2=" + intrayLead2
+				+ ", intrayExtra2=" + intrayExtra2 + ", intrayDate2=" + intrayDate2 + ", balanceBig=" + balanceBig
+				+ ", balanceSmall=" + balanceSmall + ", balanceLead=" + balanceLead + ", balanceExtra=" + balanceExtra
+				+ ", priceBig=" + priceBig + ", priceSmall=" + priceSmall + ", priceLead=" + priceLead + ", priceExtra="
+				+ priceExtra + ", qtyBig=" + qtyBig + ", qtySmall=" + qtySmall + ", qtyLead=" + qtyLead + ", qtyExtra="
+				+ qtyExtra + ", gstPer=" + gstPer + ", gstRs=" + gstRs + ", taxableAmt=" + taxableAmt + ", taxAmt="
+				+ taxAmt + ", grandTotal=" + grandTotal + ", trayStatus=" + trayStatus + ", depositIsUsed="
+				+ depositIsUsed + ", isSameDay=" + isSameDay + ", delStatus=" + delStatus + "]";
 	}
-    
-    
+
+	
 }

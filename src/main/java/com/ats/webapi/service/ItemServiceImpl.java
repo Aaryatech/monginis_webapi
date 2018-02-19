@@ -253,6 +253,12 @@ public class ItemServiceImpl implements ItemService{
 		return itemList;
 	}
 
+	@Override
+	public List<Item> findAllItemsByItemId(List<Integer> itemList) {
+		List<Item> items=itemRepository.findAllItems(itemList);	
+		return items;
+	}
+
 	
 
 }

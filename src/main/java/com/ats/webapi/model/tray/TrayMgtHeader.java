@@ -9,11 +9,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="t_tray_mgt_header")
 public class TrayMgtHeader implements Serializable{
 
+	@Transient
+	private boolean error;
+	
+	@Transient
+	private String message;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="tran_id")
@@ -68,6 +75,22 @@ public class TrayMgtHeader implements Serializable{
 	private int vehIsRegular;
 	
 	
+
+	public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 	public int getExtraTrayOut() {
 		return extraTrayOut;
