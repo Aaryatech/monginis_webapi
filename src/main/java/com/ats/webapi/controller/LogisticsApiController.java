@@ -905,4 +905,58 @@ public class LogisticsApiController {
 
 	}
 	
+	@RequestMapping(value = { "/getServicingListPendingAndCurrentDate" }, method = RequestMethod.GET)
+	public @ResponseBody List<ServHeader> showServicingListPendingAndCurrentDate()
+	{  
+		
+		List<ServHeader> showServicingListPendingAndCurrentDate = new ArrayList<ServHeader>();
+		try {
+			  
+			showServicingListPendingAndCurrentDate = servHeaderService.showServicingListPendingAndCurrentDate(); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return showServicingListPendingAndCurrentDate;
+
+	}
+	
+	@RequestMapping(value = { "/getServicingListBetweenDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<ServHeader> showServicingListBetweenDate(@RequestParam ("fromDate") String fromDate,@RequestParam ("toDate") String toDate)
+	{  
+		
+		List<ServHeader> showServicingListBetweenDate = new ArrayList<ServHeader>();
+		try {
+			  
+			showServicingListBetweenDate = servHeaderService.showServicingListBetweenDate(fromDate,toDate); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return showServicingListBetweenDate;
+
+	}
+	
+	@RequestMapping(value = { "/approvedServiceHeader" }, method = RequestMethod.POST)
+	public @ResponseBody Info approvedServiceHeader(@RequestParam ("servId") int servId)
+	{  
+		
+		Info info = new Info();
+		try {
+			  
+			info = servHeaderService.approvedServiceHeader(servId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return info;
+
+	}
+	
 }

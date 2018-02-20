@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.model.Info;
 import com.ats.webapi.model.logistics.ServHeader;
 
 @Service
@@ -14,5 +15,11 @@ public interface ServHeaderService {
 	List<ServHeader> getAllServHeader();
 
 	ServHeader getServHeaderAndDetailById(int servId);
+
+	List<ServHeader> showServicingListPendingAndCurrentDate();
+
+	List<ServHeader> showServicingListBetweenDate(String fromDate, String toDate);
+
+	Info approvedServiceHeader(int servId); 
 
 }

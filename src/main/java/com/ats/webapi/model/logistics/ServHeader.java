@@ -57,7 +57,7 @@ public class ServHeader {
 	private String servDoneRem;
 
 	@Column(name = "spr_tot")
-	private int sprTot;
+	private float sprTot;
 
 	@Column(name = "lab_chrge")
 	private float labChrge;
@@ -197,11 +197,11 @@ public class ServHeader {
 		this.servDoneRem = servDoneRem;
 	}
 
-	public int getSprTot() {
+	public float getSprTot() {
 		return sprTot;
 	}
 
-	public void setSprTot(int sprTot) {
+	public void setSprTot(float sprTot) {
 		this.sprTot = sprTot;
 	}
 

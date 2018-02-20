@@ -1,11 +1,15 @@
 package com.ats.webapi.service.logistics;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.model.Info;
 import com.ats.webapi.model.logistics.ServDetail;
 import com.ats.webapi.model.logistics.ServHeader; 
 import com.ats.webapi.repository.logistics.ServDetailRepository;
@@ -69,7 +73,7 @@ public class ServHeaderServiceImpl implements ServHeaderService{
 			
 			List<ServDetail> servDetailList = new ArrayList<ServDetail>();
 			
-			servDetailList = servDetailRepository.findByServDetailId(servId);
+			servDetailList = servDetailRepository.findByServId(servId);
 			
 			getServHeaderAndDetailById.setServDetail(servDetailList); 
 			System.out.println(getServHeaderAndDetailById.toString());
@@ -78,6 +82,69 @@ public class ServHeaderServiceImpl implements ServHeaderService{
 			e.printStackTrace();
 		}
 		return getServHeaderAndDetailById;
+	}
+
+	@Override
+	public List<ServHeader> showServicingListPendingAndCurrentDate() {
+		List<ServHeader> showServicingListPendingAndCurrentDate = new ArrayList<ServHeader>();
+		try {
+			  
+			Date date = new Date();
+
+
+			Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+			String today = formatter.format(date); 
+
+			System.out.println("today"+today);
+			showServicingListPendingAndCurrentDate = servHeaderRepository.showServicingListPendingAndCurrentDate(today);
+			 
+			System.out.println(showServicingListPendingAndCurrentDate.toString());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return showServicingListPendingAndCurrentDate;
+	}
+
+	@Override
+	public List<ServHeader> showServicingListBetweenDate(String fromDate, String toDate) {
+		List<ServHeader> showServicingListBetweenDate = new ArrayList<ServHeader>();
+		try {
+			  
+			  
+			showServicingListBetweenDate = servHeaderRepository.showServicingListPendingAndCurrentDate(fromDate,toDate);
+			 
+			System.out.println(showServicingListBetweenDate.toString());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return showServicingListBetweenDate;
+	}
+
+	@Override
+	public Info approvedServiceHeader(int servId) {
+		Info info = new Info();
+		
+		try
+		{
+			int approved=1;
+			int update = servHeaderRepository.approvedServiceHeader(servId,approved);
+			if(update==0)
+			{
+				info.setError(false);
+				info.setMessage("updated Successfully ");
+			}
+			else
+			{
+				info.setError(true);
+				info.setMessage("failed to Update ");
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return info;
 	}
 
 }
