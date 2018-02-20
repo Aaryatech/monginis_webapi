@@ -16,6 +16,8 @@ public interface SparePartService {
 
 	List<SparePart> getAllSparePart();
 
-	SparePart getSparePartById(int sprId); 
+	SparePart getSparePartById(int sprId);
+
+	List<SparePart> sparePartByGroupId(int groupId); 
 
 }

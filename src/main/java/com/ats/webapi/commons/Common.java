@@ -15,8 +15,8 @@ public class Common {
 		
 		String convertedDate=null;
 		try {
-			SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-mm-dd");
-			SimpleDateFormat dmySDF = new SimpleDateFormat("dd-mm-yyyy");
+			SimpleDateFormat ymdSDF = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat dmySDF = new SimpleDateFormat("dd-MM-yyyy");
 			Date dmyDate = dmySDF.parse(date);
 			
 			convertedDate=ymdSDF.format(dmyDate);

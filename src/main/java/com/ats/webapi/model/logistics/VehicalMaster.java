@@ -66,7 +66,7 @@ public class VehicalMaster {
 	private int delStatus;
 	
 	@Column(name = "freq_km")
-	private int freqKIm;
+	private int freqKm;
 	
 	@Column(name = "wheel_change_freq")
 	private int wheelChangeFreq;
@@ -76,6 +76,18 @@ public class VehicalMaster {
 	
 	@Column(name = "ac_change_freq")
 	private int acChangeFreq;
+	
+	@Column(name = "current_running_km")
+	private int currentRunningKm;
+	
+	@Column(name = "last_servicing_km")
+	private int lastServicingKm;
+	
+	@Column(name = "next_servicing_km")
+	private int nextServicingKm;
+	
+	@Column(name = "alert_next_servicing_km")
+	private int alertNextServicingKm;
 
 	public int getVehId() {
 		return vehId;
@@ -207,12 +219,14 @@ public class VehicalMaster {
 	
 	
 
-	public int getFreqKIm() {
-		return freqKIm;
+	 
+
+	public int getFreqKm() {
+		return freqKm;
 	}
 
-	public void setFreqKIm(int freqKIm) {
-		this.freqKIm = freqKIm;
+	public void setFreqKm(int freqKm) {
+		this.freqKm = freqKm;
 	}
 
 	public int getWheelChangeFreq() {
@@ -238,6 +252,40 @@ public class VehicalMaster {
 	public void setAcChangeFreq(int acChangeFreq) {
 		this.acChangeFreq = acChangeFreq;
 	}
+	
+	
+
+	public int getCurrentRunningKm() {
+		return currentRunningKm;
+	}
+
+	public void setCurrentRunningKm(int currentRunningKm) {
+		this.currentRunningKm = currentRunningKm;
+	}
+
+	public int getLastServicingKm() {
+		return lastServicingKm;
+	}
+
+	public void setLastServicingKm(int lastServicingKm) {
+		this.lastServicingKm = lastServicingKm;
+	}
+
+	public int getNextServicingKm() {
+		return nextServicingKm;
+	}
+
+	public void setNextServicingKm(int nextServicingKm) {
+		this.nextServicingKm = nextServicingKm;
+	}
+
+	public int getAlertNextServicingKm() {
+		return alertNextServicingKm;
+	}
+
+	public void setAlertNextServicingKm(int alertNextServicingKm) {
+		this.alertNextServicingKm = alertNextServicingKm;
+	}
 
 	@Override
 	public String toString() {
@@ -245,9 +293,11 @@ public class VehicalMaster {
 				+ ", vehChesiNo=" + vehChesiNo + ", vehColor=" + vehColor + ", purchaseDate=" + purchaseDate
 				+ ", regDate=" + regDate + ", dealerId=" + dealerId + ", fuelType=" + fuelType + ", vehTypeId="
 				+ vehTypeId + ", variantId=" + variantId + ", vehCompAvg=" + vehCompAvg + ", vehStandAvg=" + vehStandAvg
-				+ ", vehMiniAvg=" + vehMiniAvg + ", delStatus=" + delStatus + ", freqKIm=" + freqKIm
+				+ ", vehMiniAvg=" + vehMiniAvg + ", delStatus=" + delStatus + ", freqKm=" + freqKm
 				+ ", wheelChangeFreq=" + wheelChangeFreq + ", battaryChangeFreq=" + battaryChangeFreq
-				+ ", acChangeFreq=" + acChangeFreq + "]";
+				+ ", acChangeFreq=" + acChangeFreq + ", currentRunningKm=" + currentRunningKm + ", lastServicingKm="
+				+ lastServicingKm + ", nextServicingKm=" + nextServicingKm + ", alertNextServicingKm="
+				+ alertNextServicingKm + "]";
 	}
 
 	

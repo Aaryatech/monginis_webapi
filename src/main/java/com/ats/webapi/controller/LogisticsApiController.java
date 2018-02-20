@@ -15,6 +15,7 @@ import com.ats.webapi.model.logistics.Dealer;
 import com.ats.webapi.model.logistics.Document;
 import com.ats.webapi.model.logistics.DriverMaster;
 import com.ats.webapi.model.logistics.Make;
+import com.ats.webapi.model.logistics.ServHeader;
 import com.ats.webapi.model.logistics.SparePart;
 import com.ats.webapi.model.logistics.SprGroup;
 import com.ats.webapi.model.logistics.Variant;
@@ -25,6 +26,7 @@ import com.ats.webapi.service.logistics.DocumentService;
 import com.ats.webapi.service.logistics.DriverMasterService;
 import com.ats.webapi.service.logistics.VehicalMasterService;
 import com.ats.webapi.service.logistics.MakeService;
+import com.ats.webapi.service.logistics.ServHeaderService;
 import com.ats.webapi.service.logistics.SparePartService;
 import com.ats.webapi.service.logistics.SprGroupService;
 import com.ats.webapi.service.logistics.VariantService;
@@ -59,6 +61,10 @@ public class LogisticsApiController {
 	
 	@Autowired
 	SparePartService sparePartService;
+	
+	@Autowired
+	ServHeaderService servHeaderService;
+	
 	
 	@RequestMapping(value = { "/postDriverMaster" }, method = RequestMethod.POST)
 	public @ResponseBody DriverMaster postDriverMaster(@RequestBody DriverMaster driverMaster)
@@ -822,6 +828,80 @@ public class LogisticsApiController {
         
 		
 		return getSparePartById;
+
+	}
+	
+	@RequestMapping(value = { "/sparePartByGroupId" }, method = RequestMethod.POST)
+	public @ResponseBody List<SparePart> sparePartByGroupId(@RequestParam ("groupId") int groupId)
+	{ 
+		
+		List<SparePart> sparePartByGroupId = new ArrayList<SparePart>();
+		try {
+			  
+			sparePartByGroupId = sparePartService.sparePartByGroupId(groupId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return sparePartByGroupId;
+
+	}
+	
+	//---------------------------------------------------servicing-------------------------
+	
+	@RequestMapping(value = { "/postServHeader" }, method = RequestMethod.POST)
+	public @ResponseBody ServHeader postServHeader(@RequestBody ServHeader servHeader)
+	{
+		System.out.println("servHeader :"+servHeader.toString()); 
+		ServHeader response = new ServHeader();
+		try {
+			  
+			response = servHeaderService.postServHeader(servHeader); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return response;
+
+	}
+	
+	@RequestMapping(value = { "/getAllServHeader" }, method = RequestMethod.GET)
+	public @ResponseBody List<ServHeader> getAllServHeader()
+	{ 
+		
+		List<ServHeader> getAllServHeader = new ArrayList<ServHeader>();
+		try {
+			  
+			getAllServHeader = servHeaderService.getAllServHeader(); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return getAllServHeader;
+
+	}
+	
+	@RequestMapping(value = { "/getServHeaderAndDetailById" }, method = RequestMethod.POST)
+	public @ResponseBody ServHeader getServHeaderAndDetailById(@RequestParam ("servId") int servId)
+	{ 
+		System.out.println("servId"+servId);
+		ServHeader getServHeaderAndDetailById = new ServHeader();
+		try {
+			  
+			getServHeaderAndDetailById = servHeaderService.getServHeaderAndDetailById(servId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return getServHeaderAndDetailById;
 
 	}
 	

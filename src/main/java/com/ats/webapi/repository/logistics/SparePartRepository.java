@@ -20,6 +20,8 @@ public interface SparePartRepository extends JpaRepository<SparePart, Integer>{
 
 	List<SparePart> findAllByDelStatus(int delStatus);
 
-	SparePart findBySprId(int sprId); 
+	SparePart findBySprId(int sprId);
+
+	List<SparePart> findAllByGroupIdAndDelStatus(int groupId, int delStatus); 
 
 }

@@ -85,4 +85,19 @@ public class SparePartServiceImpl implements SparePartService{
 		return getSparePartById;
 	}
 
+	@Override
+	public List<SparePart> sparePartByGroupId(int groupId) {
+		List<SparePart> sparePartByGroupId = new ArrayList<SparePart>();
+		try {
+			  
+			sparePartByGroupId = sparePartRepository.findAllByGroupIdAndDelStatus(groupId,0);
+			 
+			System.out.println(sparePartByGroupId.toString());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return sparePartByGroupId;
+	}
+
 }
