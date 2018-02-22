@@ -98,6 +98,9 @@ public class ServHeader {
 	@Column(name = "del_status")
 	private int delStatus;
 	
+	@Column(name = "bill_file")
+	private String billFile;
+	
 	@Transient
 	List<ServDetail> servDetail;
 
@@ -241,7 +244,7 @@ public class ServHeader {
 		return extraOnBill;
 	}
 
-	public void setExtraOnBill(int extraOnBill) {
+	public void setExtraOnBill(float extraOnBill) {
 		this.extraOnBill = extraOnBill;
 	}
 
@@ -316,6 +319,17 @@ public class ServHeader {
 	public void setServDetail(List<ServDetail> servDetail) {
 		this.servDetail = servDetail;
 	}
+	
+
+	public String getBillFile() {
+		return billFile;
+	}
+
+	public void setBillFile(String billFile) {
+		this.billFile = billFile;
+	}
+
+	 
 
 	@Override
 	public String toString() {
@@ -326,7 +340,8 @@ public class ServHeader {
 				+ ", totalDisc=" + totalDisc + ", totalExtra=" + totalExtra + ", discOnBill=" + discOnBill
 				+ ", extraOnBill=" + extraOnBill + ", taxAmt=" + taxAmt + ", taxableAmt=" + taxableAmt + ", roundOff="
 				+ roundOff + ", total=" + total + ", servDoneKm=" + servDoneKm + ", nextDueKm=" + nextDueKm
-				+ ", isApproved=" + isApproved + ", delStatus=" + delStatus + ", servDetail=" + servDetail + "]";
+				+ ", isApproved=" + isApproved + ", delStatus=" + delStatus + ", billFile=" + billFile + ", servDetail="
+				+ servDetail + "]";
 	}
 	
 	

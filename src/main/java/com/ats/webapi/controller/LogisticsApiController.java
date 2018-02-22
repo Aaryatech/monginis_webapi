@@ -21,10 +21,12 @@ import com.ats.webapi.model.logistics.SprGroup;
 import com.ats.webapi.model.logistics.Variant;
 import com.ats.webapi.model.logistics.VehicalMaster;
 import com.ats.webapi.model.logistics.VehicalType;
+import com.ats.webapi.model.logistics.VehicleDcoument;
 import com.ats.webapi.service.logistics.DealerService;
 import com.ats.webapi.service.logistics.DocumentService;
 import com.ats.webapi.service.logistics.DriverMasterService;
 import com.ats.webapi.service.logistics.VehicalMasterService;
+import com.ats.webapi.service.logistics.VehicleDcoumentService;
 import com.ats.webapi.service.logistics.MakeService;
 import com.ats.webapi.service.logistics.ServHeaderService;
 import com.ats.webapi.service.logistics.SparePartService;
@@ -64,6 +66,9 @@ public class LogisticsApiController {
 	
 	@Autowired
 	ServHeaderService servHeaderService;
+	
+	@Autowired
+	VehicleDcoumentService vehicleDcoumentService;
 	
 	
 	@RequestMapping(value = { "/postDriverMaster" }, method = RequestMethod.POST)
@@ -956,6 +961,81 @@ public class LogisticsApiController {
         
 		
 		return info;
+
+	}
+	
+	
+	//----------------------------------------------vehDocument-----------------------------------
+	
+	@RequestMapping(value = { "/postVehicleDocument" }, method = RequestMethod.POST)
+	public @ResponseBody VehicleDcoument postVehicleDocument(@RequestBody VehicleDcoument vehicleDcoument)
+	{
+		System.out.println("vehicleDcoument :"+vehicleDcoument.toString()); 
+		VehicleDcoument response = new VehicleDcoument();
+		try {
+			  
+			response = vehicleDcoumentService.postVehicleDocument(vehicleDcoument); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return response;
+
+	}
+	
+	@RequestMapping(value = { "/deleteVehicleDcoument" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteVehicleDcoument(@RequestParam ("vehDocId") int vehDocId)
+	{
+		System.out.println("vehDocId "+vehDocId); 
+		Info info = new Info();
+		try {
+			  
+			info = vehicleDcoumentService.deleteVehicleDcoument(vehDocId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return info;
+
+	}
+	
+	@RequestMapping(value = { "/getAllVehicleDcoument" }, method = RequestMethod.GET)
+	public @ResponseBody List<VehicleDcoument> getAllVehicleDcoument()
+	{ 
+		
+		List<VehicleDcoument> getAllVehicleDcoument = new ArrayList<VehicleDcoument>();
+		try {
+			  
+			getAllVehicleDcoument = vehicleDcoumentService.getAllVehicleDcoument(); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return getAllVehicleDcoument;
+
+	}
+	
+	@RequestMapping(value = { "/getVehicleDcoumentById" }, method = RequestMethod.POST)
+	public @ResponseBody VehicleDcoument getVehicleDcoumentById(@RequestParam ("vehDocId") int vehDocId)
+	{ 
+		System.out.println("vehDocId"+vehDocId);
+		VehicleDcoument getVehicleDcoumentById = new VehicleDcoument();
+		try {
+			  
+			getVehicleDcoumentById = vehicleDcoumentService.getVehicleDcoumentById(vehDocId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return getVehicleDcoumentById;
 
 	}
 	
