@@ -1,23 +1,24 @@
 package com.ats.webapi.model.report;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
- 
 public class GetRepItemwiseSell {
 
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="sell_bill_detail_no")
-		private int sellBillNo;
+	private int sellBillNo;
 	
 	@Column(name="fr_id")
 	private int frId;
@@ -116,7 +117,7 @@ public class GetRepItemwiseSell {
 	public void setAmount(float amount) {
 		this.amount = amount;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getBillDate() {
 		return billDate;
 	}

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.model.CategoryList;
 import com.ats.webapi.model.FrListForSupp;
 import com.ats.webapi.model.FrTarget;
 import com.ats.webapi.model.FrTargetList;
@@ -25,12 +26,14 @@ import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
 import com.ats.webapi.model.SpCake;
 import com.ats.webapi.model.SpCakeSupplement;
+import com.ats.webapi.model.SubCategory;
 import com.ats.webapi.model.tray.TrayType;
 import com.ats.webapi.repository.FrListForSuppRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
 import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.SpCakeListRepository;
 import com.ats.webapi.repository.SpCkDeleteOrderRepository;
+import com.ats.webapi.repository.SubCategoryRepository;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.OrderService;
@@ -65,6 +68,9 @@ public class MasterController {
 	
 	@Autowired
 	ItemRepository itemRepository;
+	
+	@Autowired
+	private SubCategoryRepository subCategoryRepository;
 	// ----------------------------SAVE Item Sup---------------------------
 		@RequestMapping(value = { "/saveItemSup" }, method = RequestMethod.POST)
 		public @ResponseBody Info saveItemSup(@RequestBody ItemSup itemSup) {
@@ -479,6 +485,38 @@ public class MasterController {
 						
 					}
 					return items;
+
+				}
+				// Get SubCategories
+				@RequestMapping(value = "/getSubCatList")
+				public @ResponseBody List<SubCategory> getAllSubCategories(@RequestParam List<String> catId) {
+
+					List<SubCategory> subCategoryList;
+					try {
+					 subCategoryList = subCategoryRepository.findByCatIdInAndDelStatus(catId);
+					}
+					catch (Exception e) {
+						subCategoryList=new ArrayList<>();
+						e.printStackTrace();
+
+					}
+					return subCategoryList;
+
+				}
+				// Get SubCategories
+				@RequestMapping(value = "/getAllSubCatList", method = RequestMethod.GET)
+				public @ResponseBody List<SubCategory> getAllSubCatList() {
+
+					List<SubCategory> subCategoryList;
+					try {
+					 subCategoryList = subCategoryRepository.findAllSubCategories();
+					}
+					catch (Exception e) {
+						subCategoryList=new ArrayList<>();
+						e.printStackTrace();
+
+					}
+					return subCategoryList;
 
 				}
 }

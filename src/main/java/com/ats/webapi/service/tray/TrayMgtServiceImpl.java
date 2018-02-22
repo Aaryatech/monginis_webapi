@@ -284,4 +284,18 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 		return trayMgtDetailRes;	
 	}
 
+	@Override
+	public List<GetTrayMgtHeader> getAllVehicles(String date) {
+		List<GetTrayMgtHeader> trayMgtHeaders;
+		try {
+		
+			trayMgtHeaders=getTrayMgtHeaderRepository.getAllVehicles(date);
+		}
+		catch (Exception e) {
+			trayMgtHeaders=new ArrayList<GetTrayMgtHeader>();
+			e.printStackTrace();
+		}
+		return trayMgtHeaders;
+	}
+
 }

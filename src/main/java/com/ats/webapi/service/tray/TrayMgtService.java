@@ -53,4 +53,6 @@ public interface TrayMgtService {
 
 	List<TrayMgtDetail> getTrayDetailForTrayIn(int frId, int isSameDay);
 
+	List<GetTrayMgtHeader> getAllVehicles(String date);
+
 }

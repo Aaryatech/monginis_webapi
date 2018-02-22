@@ -178,6 +178,15 @@ public class TrayManagementController {
 				return getTrayMgtHeaders;
 			}
 		//--------------------------------------------------------------------------------------------------------------------------
+			//--------------------------------Getting Tray Management Headers---------------------------
+			@RequestMapping(value = { "/getAllVehicles" }, method = RequestMethod.POST)
+			public @ResponseBody List<GetTrayMgtHeader> getAllVehicles(@RequestParam("date")String date) {
+				
+				List<GetTrayMgtHeader> getTrayMgtHeaders=trayMgtService.getAllVehicles(date);
+				
+				return getTrayMgtHeaders;
+			}
+		//--------------------------------------------------------------------------------------------------------------------------
 			//--------------------------------Getting Tray Management Header---------------------------
 			@RequestMapping(value = { "/getTrayMgtHeader" }, method = RequestMethod.POST)
 			public @ResponseBody GetTrayMgtHeader getTrayMgtHeader(@RequestParam("tranId")int tranId) {
@@ -198,14 +207,17 @@ public class TrayManagementController {
 		//----------------------------------------------------------------------------------------------------------	
 			//--------------------------Update Vehicle Status to (2) and In km,running km & time------------------------------------------------------
 			@RequestMapping(value = { "/updateInVehicleData" }, method = RequestMethod.POST)
-			public @ResponseBody Info updateInVehicleData(@RequestParam("tranId")int tranId,@RequestParam("vehIntime")String vehIntime,@RequestParam("vehInkm")float vehInkm) {
+			public @ResponseBody Info updateInVehicleData(@RequestParam("tranId")int tranId,@RequestParam("vehIntime")String vehIntime,@RequestParam("vehInkm")float vehInkm,@RequestParam("extraTrayIn")int extraTrayIn,@RequestParam("diesel")float diesel) {
 				
 				Info info = null;
 				try {
 				TrayMgtHeader getTrayMgtHeaderRes=trayMgtService.getTrayMgtHeaderByTranId(tranId);
 				getTrayMgtHeaderRes.setVehIntime(vehIntime);
 				getTrayMgtHeaderRes.setVehInkm(vehInkm);
-				getTrayMgtHeaderRes.setVehOutkm(vehInkm-getTrayMgtHeaderRes.getVehOutkm());
+				getTrayMgtHeaderRes.setDiesel(diesel);
+				getTrayMgtHeaderRes.setExtraTrayIn(extraTrayIn);
+				getTrayMgtHeaderRes.setVehStatus(2);
+				getTrayMgtHeaderRes.setVehRunningKm(vehInkm-getTrayMgtHeaderRes.getVehOutkm());
 				
 				TrayMgtHeader trayMgtHeader = trayMgtService.saveTrayMgtHeader(getTrayMgtHeaderRes);
 				if(trayMgtHeader!=null)

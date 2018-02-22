@@ -1,12 +1,15 @@
 package com.ats.webapi.model;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class ItemWiseDetail implements Serializable{
@@ -30,7 +33,7 @@ public class ItemWiseDetail implements Serializable{
 	private float total;
 	
 	@Column(name="bill_date")
-	private String billDate;
+	private Date billDate;
 	
 	@Column(name="item_name")
 	private String itemName;
@@ -39,12 +42,12 @@ public class ItemWiseDetail implements Serializable{
 	private int grnType;
 
 	
-	
-	public String getBillDate() {
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getBillDate() {
 		return billDate;
 	}
 
-	public void setBillDate(String billDate) {
+	public void setBillDate(Date billDate) {
 		this.billDate = billDate;
 	}
 

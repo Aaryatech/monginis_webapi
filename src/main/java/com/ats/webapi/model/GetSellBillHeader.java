@@ -1,12 +1,15 @@
 package com.ats.webapi.model;
 
-import java.sql.Date;
+
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class GetSellBillHeader {
@@ -18,7 +21,7 @@ public class GetSellBillHeader {
 	private int sellBillNo;
 	
 	@Column(name="invoice_no")
-	private int invoiceNo;
+	private String invoiceNo;
 	
 	@Column(name="bill_date")
 	private Date billDate;
@@ -61,14 +64,14 @@ public class GetSellBillHeader {
 		this.sellBillNo = sellBillNo;
 	}
 
-	public int getInvoiceNo() {
+	public String getInvoiceNo() {
 		return invoiceNo;
 	}
 
-	public void setInvoiceNo(int invoiceNo) {
+	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getBillDate() {
 		return billDate;
 	}

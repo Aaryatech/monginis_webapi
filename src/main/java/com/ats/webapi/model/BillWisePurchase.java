@@ -19,6 +19,9 @@ public class BillWisePurchase implements Serializable{
 	@Column(name="bill_no")
 	private int billNo;
 	
+	@Column(name="invoice_no")
+	private String invoiceNo;
+	
 	@Column(name="bill_date")
 	private Date billDate;
 	
@@ -41,6 +44,14 @@ public class BillWisePurchase implements Serializable{
 	
 	@Transient
 	private float roundOff;
+
+	public String getInvoiceNo() {
+		return invoiceNo;
+	}
+
+	public void setInvoiceNo(String invoiceNo) {
+		this.invoiceNo = invoiceNo;
+	}
 
 	public int getBillNo() {
 		return billNo;

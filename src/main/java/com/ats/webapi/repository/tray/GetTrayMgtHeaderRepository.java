@@ -35,4 +35,7 @@ public interface GetTrayMgtHeaderRepository extends JpaRepository<GetTrayMgtHead
 			"  h.extra_tray_in,\n" + 
 			"  h.veh_is_regular from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id And h.tran_id=:tranId",nativeQuery=true)
 	GetTrayMgtHeader getTrayMgtHeader(@Param("tranId")int tranId);
+
+	@Query(value="select h.tran_id, h.tran_date,h.veh_id,h.drv_id,d.driver_name,h.route_id,r.route_name,h.veh_no,h.veh_outtime,h.veh_intime,h.veh_outkm,h.veh_inkm,h.veh_running_km,h.diesel,h.veh_status,h.del_status,h.extra_tray_out, h.extra_tray_in, h.veh_is_regular from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id And h.tran_date=:date",nativeQuery=true)
+	List<GetTrayMgtHeader> getAllVehicles(@Param("date")String date);
 }

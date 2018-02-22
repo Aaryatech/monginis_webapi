@@ -19,5 +19,8 @@ public interface AllFrIdNameRepository extends JpaRepository<AllFrIdName, Intege
 					,nativeQuery=true)
 	public List<AllFrIdName> findNonOrders(@Param("orderDate") String orderDate, @Param("menuId") int menuId);
 
+		@Query(value=" SELECT fr_id,fr_name from m_franchisee where fr_id=:frId",nativeQuery=true)
+		AllFrIdName findByFrId(@Param("frId")int frId);
+
 }
 

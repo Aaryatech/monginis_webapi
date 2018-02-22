@@ -1,7 +1,7 @@
 package com.ats.webapi.model.report;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 @Table(name ="t_sell_bill_header")
@@ -25,6 +27,7 @@ public class GetRepFrDatewiseSell  implements Serializable{
 	@Column(name="fr_id")
 	private int frId;
 	
+	private String day;
 	
 	private float cash;
 	private float card;
@@ -33,6 +36,15 @@ public class GetRepFrDatewiseSell  implements Serializable{
 	@Column(name="fr_name")
 	private String frName;
 
+	
+	public String getDay() {
+		return day;
+	}
+
+	public void setDay(String day) {
+		this.day = day;
+	}
+
 	public int getSellBillNo() {
 		return sellBillNo;
 	}
@@ -40,7 +52,7 @@ public class GetRepFrDatewiseSell  implements Serializable{
 	public void setSellBillNo(int sellBillNo) {
 		this.sellBillNo = sellBillNo;
 	}
-
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getBillDate() {
 		return billDate;
 	}
