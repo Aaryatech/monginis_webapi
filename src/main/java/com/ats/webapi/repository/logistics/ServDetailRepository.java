@@ -8,6 +8,6 @@ import com.ats.webapi.model.logistics.ServDetail;
 
 public interface ServDetailRepository extends JpaRepository<ServDetail, Integer>{
 
-	List<ServDetail> findByServId(int servId);
+	List<ServDetail> findByServIdAndDelStatus(int servId,int delStatus);
 
 }

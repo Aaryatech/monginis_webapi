@@ -73,7 +73,7 @@ public class ServHeaderServiceImpl implements ServHeaderService{
 			
 			List<ServDetail> servDetailList = new ArrayList<ServDetail>();
 			
-			servDetailList = servDetailRepository.findByServId(servId);
+			servDetailList = servDetailRepository.findByServIdAndDelStatus(servId,0);
 			
 			getServHeaderAndDetailById.setServDetail(servDetailList); 
 			System.out.println(getServHeaderAndDetailById.toString());
