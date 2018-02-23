@@ -10,4 +10,6 @@ public interface GetBillsForFrService {
 	
 	GetBillsForFrList getBillForFr(int frId,Date back15Days,Date curDate);
 	
+	GetBillsForFrList getBillForFrByDate(int frId,Date billDate);
+	
 }

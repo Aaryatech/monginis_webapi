@@ -13,7 +13,7 @@ public interface GetOrderDataForPushOrderRepo extends JpaRepository<GetOrderData
 	
 	
 	@Query(value=" SELECT t_order.item_id,t_order.order_id,t_order.order_qty,t_order.fr_id"
-			+ " FROM t_order WHERE t_order.order_date=:cDate AND t_order.is_edit=0 AND t_order.grn_type=:grnType AND t_order.fr_id IN (:frIdList)"  
+			+ " FROM t_order WHERE t_order.order_date=:cDate AND t_order.grn_type=:grnType AND t_order.fr_id IN (:frIdList)"  
 			,nativeQuery=true)
 	
 	List<GetOrderDataForPushOrder> getOrderData(@Param("cDate") Date cDate, @Param("grnType") int grnType

@@ -160,7 +160,10 @@ public class GetGrnGvnDetails {
 	private Date  refInvoiceDate;
 	
 	
-
+	@Column(name = "grn_gvn_header_id")
+	private int  grnGvnHeaderId;
+	
+	
 	
 	
 	
@@ -524,6 +527,14 @@ public class GetGrnGvnDetails {
 		this.finalAmt = finalAmt;
 	}
 
+	public int getGrnGvnHeaderId() {
+		return grnGvnHeaderId;
+	}
+
+	public void setGrnGvnHeaderId(int grnGvnHeaderId) {
+		this.grnGvnHeaderId = grnGvnHeaderId;
+	}
+
 	@Override
 	public String toString() {
 		return "GetGrnGvnDetails [grnGvnId=" + grnGvnId + ", grnGvnDate=" + grnGvnDate + ", billNo=" + billNo
@@ -541,9 +552,10 @@ public class GetGrnGvnDetails {
 				+ sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", taxableAmt=" + taxableAmt
 				+ ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt + ", isCreditNote="
 				+ isCreditNote + ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo=" + invoiceNo
-				+ ", refInvoiceDate=" + refInvoiceDate + "]";
+				+ ", refInvoiceDate=" + refInvoiceDate + ", grnGvnHeaderId=" + grnGvnHeaderId + "]";
 	}
 
+	
 	
 
 	

@@ -90,14 +90,14 @@ public class GetGrnGvnDetailServiceImpl implements GetGrnGvnDetailService {
 		return grnGvnDetailsList;
 
 	}
-
+//changed on 16 feb for grnGvnHeaderId
 	@Override
-	public GetGrnGvnDetailsList getFrGrnDetails(String fromDate, String toDate, List<String> frId) {
+	public GetGrnGvnDetailsList getFrGrnDetails(int grnGvnHeaderId) {
 		
 		GetGrnGvnDetailsList grnGvnDetailsList = new GetGrnGvnDetailsList();
 		try {
 
-		List<GetGrnGvnDetails> grnGvnDetails = getGrnGvnDetailsRepository.getFrGrnDetails(fromDate, toDate, frId);
+		List<GetGrnGvnDetails> grnGvnDetails = getGrnGvnDetailsRepository.getFrGrnDetails(grnGvnHeaderId);
 
 		Info info = new Info();
 
@@ -127,13 +127,13 @@ public class GetGrnGvnDetailServiceImpl implements GetGrnGvnDetailService {
 	}
 
 	@Override
-	public GetGrnGvnDetailsList getFrGvnDetails(String fromDate, String toDate, List<String> frId) {
+	public GetGrnGvnDetailsList getFrGvnDetails(int grnGvnHeaderId) {
 
 		GetGrnGvnDetailsList grnGvnDetailsList = new GetGrnGvnDetailsList();
 		
 		try {
 
-		List<GetGrnGvnDetails> grnGvnDetails = getGrnGvnDetailsRepository.getFrGvnDetails(fromDate, toDate, frId);
+		List<GetGrnGvnDetails> grnGvnDetails = getGrnGvnDetailsRepository.getFrGvnDetails(grnGvnHeaderId);
 
 		Info info = new Info();
 

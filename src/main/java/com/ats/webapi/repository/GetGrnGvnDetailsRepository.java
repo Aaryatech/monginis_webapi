@@ -11,7 +11,7 @@ import com.ats.webapi.model.GetGrnGvnDetails;
 public interface GetGrnGvnDetailsRepository extends JpaRepository<GetGrnGvnDetails, Integer> {
 	
 	
-	@Query(value = "SELECT t_grn_gvn.grn_gvn_id,t_grn_gvn.grn_gvn_entry_datetime,t_grn_gvn.grn_gvn_date,t_grn_gvn.bill_no,t_grn_gvn.fr_id,t_grn_gvn.item_id,t_grn_gvn.item_rate,\n" + 
+	@Query(value = "SELECT t_grn_gvn.grn_gvn_id,t_grn_gvn.grn_gvn_header_id,t_grn_gvn.grn_gvn_entry_datetime,t_grn_gvn.grn_gvn_date,t_grn_gvn.bill_no,t_grn_gvn.fr_id,t_grn_gvn.item_id,t_grn_gvn.item_rate,\n" + 
 			"t_grn_gvn.item_mrp,t_grn_gvn.grn_gvn_qty,t_grn_gvn.grn_gvn_amt,t_grn_gvn.grn_type,t_grn_gvn.is_grn,t_grn_gvn.is_grn_edit,\n" + 
 			"t_grn_gvn.fr_grn_gvn_remark,t_grn_gvn.gvn_photo_upload1,t_grn_gvn.gvn_photo_upload2,t_grn_gvn.grn_gvn_status,\n" + 
 			"t_grn_gvn.approved_login_gate,t_grn_gvn.approved_remark_gate,t_grn_gvn.approved_login_store,t_grn_gvn.approved_remark_store,\n" + 
@@ -45,7 +45,7 @@ public interface GetGrnGvnDetailsRepository extends JpaRepository<GetGrnGvnDetai
 	
 	List<GetGrnGvnDetails> getAllGvnDetails(@Param("fromDate") String fromDate ,@Param("toDate") String toDate);
 	
-	@Query(value =  "SELECT t_grn_gvn.grn_gvn_id,t_grn_gvn.grn_gvn_entry_datetime,t_grn_gvn.grn_gvn_date,t_grn_gvn.bill_no,t_grn_gvn.fr_id,t_grn_gvn.item_id,t_grn_gvn.item_rate,\n" + 
+	@Query(value =  "SELECT t_grn_gvn.grn_gvn_id,t_grn_gvn.grn_gvn_header_id,t_grn_gvn.grn_gvn_entry_datetime,t_grn_gvn.grn_gvn_date,t_grn_gvn.bill_no,t_grn_gvn.fr_id,t_grn_gvn.item_id,t_grn_gvn.item_rate,\n" + 
 			"t_grn_gvn.item_mrp,t_grn_gvn.grn_gvn_qty,t_grn_gvn.grn_gvn_amt,t_grn_gvn.grn_type,t_grn_gvn.is_grn,t_grn_gvn.is_grn_edit,\n" + 
 			"t_grn_gvn.fr_grn_gvn_remark,t_grn_gvn.gvn_photo_upload1,t_grn_gvn.gvn_photo_upload2,t_grn_gvn.grn_gvn_status,\n" + 
 			"t_grn_gvn.approved_login_gate,t_grn_gvn.approved_remark_gate,t_grn_gvn.approved_login_store,t_grn_gvn.approved_remark_store,\n" + 
@@ -55,14 +55,13 @@ public interface GetGrnGvnDetailsRepository extends JpaRepository<GetGrnGvnDetai
 			"t_grn_gvn.invoice_no,t_grn_gvn.ref_invoice_date, CAST(t_grn_gvn.approved_datetime_gate AS CHAR) as approved_datetime_gate,\n" + 
 			"CAST(t_grn_gvn.approved_datetime_store AS CHAR) as approved_datetime_store,CAST(t_grn_gvn.approved_datetime_acc AS CHAR) as approved_datetime_acc,\n" + 
 			"m_item.item_name,m_franchisee.fr_name FROM m_franchisee," 
-			+"m_item,t_grn_gvn WHERE t_grn_gvn.fr_id IN(:frId) AND t_grn_gvn.is_grn=0 AND"
-			+ " t_grn_gvn.item_id=m_item.id AND t_grn_gvn.fr_id=m_franchisee.fr_id"
-			+ " AND t_grn_gvn.grn_gvn_date BETWEEN :fromDate AND :toDate"
+			+"m_item,t_grn_gvn WHERE  t_grn_gvn.is_grn=0 AND"
+			+ " t_grn_gvn.item_id=m_item.id AND t_grn_gvn.fr_id=m_franchisee.fr_id AND t_grn_gvn.grn_gvn_header_id=:grnGvnHeaderId"
 			+ "" + "", nativeQuery = true)
 	
-	List<GetGrnGvnDetails> getFrGvnDetails(@Param("fromDate") String fromDate ,@Param("toDate") String toDate ,@Param("frId") List<String> frId);
-
-	@Query(value = "SELECT t_grn_gvn.grn_gvn_id,t_grn_gvn.grn_gvn_entry_datetime,t_grn_gvn.grn_gvn_date,t_grn_gvn.bill_no,t_grn_gvn.fr_id,t_grn_gvn.item_id,t_grn_gvn.item_rate,\n" + 
+	List<GetGrnGvnDetails> getFrGvnDetails(@Param("grnGvnHeaderId") int grnGvnHeaderId);
+//changed on 16 feb for grnGvnHeaderId
+	@Query(value = "SELECT t_grn_gvn.grn_gvn_id,t_grn_gvn.grn_gvn_header_id,t_grn_gvn.grn_gvn_entry_datetime,t_grn_gvn.grn_gvn_date,t_grn_gvn.bill_no,t_grn_gvn.fr_id,t_grn_gvn.item_id,t_grn_gvn.item_rate,\n" + 
 			"t_grn_gvn.item_mrp,t_grn_gvn.grn_gvn_qty,t_grn_gvn.grn_gvn_amt,t_grn_gvn.grn_type,t_grn_gvn.is_grn,t_grn_gvn.is_grn_edit,\n" + 
 			"t_grn_gvn.fr_grn_gvn_remark,t_grn_gvn.gvn_photo_upload1,t_grn_gvn.gvn_photo_upload2,t_grn_gvn.grn_gvn_status,\n" + 
 			"t_grn_gvn.approved_login_gate,t_grn_gvn.approved_remark_gate,t_grn_gvn.approved_login_store,t_grn_gvn.approved_remark_store,\n" + 
@@ -72,12 +71,12 @@ public interface GetGrnGvnDetailsRepository extends JpaRepository<GetGrnGvnDetai
 			"t_grn_gvn.invoice_no,t_grn_gvn.ref_invoice_date, CAST(t_grn_gvn.approved_datetime_gate AS CHAR) as approved_datetime_gate,\n" + 
 			"CAST(t_grn_gvn.approved_datetime_store AS CHAR) as approved_datetime_store,CAST(t_grn_gvn.approved_datetime_acc AS CHAR) as approved_datetime_acc,\n" + 
 			"m_item.item_name,m_franchisee.fr_name FROM m_franchisee," 
-			+"m_item,t_grn_gvn WHERE t_grn_gvn.fr_id IN(:frId) AND t_grn_gvn.is_grn=1 AND"
+			+"m_item,t_grn_gvn WHERE  t_grn_gvn.is_grn=1 AND"
 			+ " t_grn_gvn.item_id=m_item.id AND t_grn_gvn.fr_id=m_franchisee.fr_id"
-			+ " AND t_grn_gvn.grn_gvn_date BETWEEN :fromDate AND :toDate"
+			+ " AND t_grn_gvn.grn_gvn_header_id=:grnGvnHeaderId "
 			+ "", nativeQuery = true)
 	
-	List<GetGrnGvnDetails> getFrGrnDetails(@Param("fromDate") String fromDate ,@Param("toDate") String toDate ,@Param("frId") List<String> frId);
+	List<GetGrnGvnDetails> getFrGrnDetails(@Param("grnGvnHeaderId") int grnGvnHeaderId);
 	
 	
 }

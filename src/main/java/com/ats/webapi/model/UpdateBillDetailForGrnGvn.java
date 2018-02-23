@@ -17,8 +17,8 @@ public class UpdateBillDetailForGrnGvn implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="bill_no")
-	 private int billNo;
+	@Column(name="bill_detail_no")
+	 private int billDetailNo;
 
 	@Column(name="is_grngvn_applied")
 	 private int isGrngvnApplied;
@@ -33,14 +33,12 @@ public class UpdateBillDetailForGrnGvn implements Serializable {
 		this.isGrngvnApplied = isGrngvnApplied;
 	}
 
-	public int getBillNo() {
-		return billNo;
+	public int getBillDetailNo() {
+		return billDetailNo;
 	}
 
-	public void setBillNo(int billNo) {
-		this.billNo = billNo;
+	public void setBillDetailNo(int billDetailNo) {
+		this.billDetailNo = billDetailNo;
 	}
-	 
-	 
-	 
+
 }

@@ -13,8 +13,8 @@ public interface UpdateBillDetailForGrnGvnRepository extends JpaRepository<Updat
 	@Transactional
 	@Modifying
 	@Query(" UPDATE UpdateBillDetailForGrnGvn  SET isGrngvnApplied=:isGrngvnApplied "
-			+ " WHERE billNo=:billNo ")
-		int updateBillDetailForGrnGvnInsert(@Param("billNo") int billNo,@Param("isGrngvnApplied") 
+			+ " WHERE billDetailNo=:billDetailNo ")
+		int updateBillDetailForGrnGvnInsert(@Param("billDetailNo") int billDetailNo,@Param("isGrngvnApplied") 
 		int isGrngvnApplied);
 	
 }

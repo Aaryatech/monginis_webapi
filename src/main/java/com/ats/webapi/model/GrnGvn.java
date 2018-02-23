@@ -160,7 +160,16 @@ public class GrnGvn  {
 	@Column(name = "ref_invoice_date")
 	private Date refInvoiceDate;
 	
+	@Column(name = "bill_detail_no")
+	private int billDetailNo;
 	
+	
+	@Column(name = "grn_gvn_header_id")
+	private int grnGvnHeaderId;
+	
+	
+	
+		
 	
 	
 	/*@Column(name = "int1")
@@ -535,11 +544,45 @@ public class GrnGvn  {
 		this.refInvoiceDate = refInvoiceDate;
 		
 	}
+
+	public int getBillDetailNo() {
+		return billDetailNo;
+	}
+
+	public void setBillDetailNo(int billDetailNo) {
+		this.billDetailNo = billDetailNo;
+	}
+
+	public int getGrnGvnHeaderId() {
+		return grnGvnHeaderId;
+	}
+
+	public void setGrnGvnHeaderId(int grnGvnHeaderId) {
+		this.grnGvnHeaderId = grnGvnHeaderId;
+	}
+
+	@Override
+	public String toString() {
+		return "GrnGvn [grnGvnId=" + grnGvnId + ", grnGvnDate=" + grnGvnDate + ", billNo=" + billNo + ", frId=" + frId
+				+ ", itemId=" + itemId + ", itemRate=" + itemRate + ", itemMrp=" + itemMrp + ", grnGvnQty=" + grnGvnQty
+				+ ", grnGvnAmt=" + grnGvnAmt + ", grnType=" + grnType + ", isGrn=" + isGrn + ", isGrnEdit=" + isGrnEdit
+				+ ", grnGvnEntryDateTime=" + grnGvnEntryDateTime + ", frGrnGvnRemark=" + frGrnGvnRemark
+				+ ", gvnPhotoUpload1=" + gvnPhotoUpload1 + ", gvnPhotoUpload2=" + gvnPhotoUpload2 + ", grnGvnStatus="
+				+ grnGvnStatus + ", approvedLoginGate=" + approvedLoginGate + ", approveimedDateTimeGate="
+				+ approveimedDateTimeGate + ", approvedRemarkGate=" + approvedRemarkGate + ", approvedLoginStore="
+				+ approvedLoginStore + ", approvedDateTimeStore=" + approvedDateTimeStore + ", approvedRemarkStore="
+				+ approvedRemarkStore + ", approvedLoginAcc=" + approvedLoginAcc + ", grnApprovedDateTimeAcc="
+				+ grnApprovedDateTimeAcc + ", approvedRemarkAcc=" + approvedRemarkAcc + ", delStatus=" + delStatus
+				+ ", grnGvnQtyAuto=" + grnGvnQtyAuto + ", isTallySync=" + isTallySync + ", baseRate=" + baseRate
+				+ ", sgstPer=" + sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", taxableAmt="
+				+ taxableAmt + ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt
+				+ ", isCreditNote=" + isCreditNote + ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo="
+				+ invoiceNo + ", refInvoiceDate=" + refInvoiceDate + ", billDetailNo=" + billDetailNo
+				+ ", grnGvnHeaderId=" + grnGvnHeaderId + "]";
+	}
+
 	
-	
-	
-	
-	
+
 	
 
 	/*public int getInt1() {
@@ -615,7 +658,6 @@ public class GrnGvn  {
 	}
 
 	*/
-	
 	
 	
 	
