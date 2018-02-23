@@ -14,6 +14,8 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.logistics.Dealer;
 import com.ats.webapi.model.logistics.Document;
 import com.ats.webapi.model.logistics.DriverMaster;
+import com.ats.webapi.model.logistics.LogisAmc;
+import com.ats.webapi.model.logistics.MachineMaster;
 import com.ats.webapi.model.logistics.Make;
 import com.ats.webapi.model.logistics.ServHeader;
 import com.ats.webapi.model.logistics.SparePart;
@@ -22,9 +24,11 @@ import com.ats.webapi.model.logistics.Variant;
 import com.ats.webapi.model.logistics.VehicalMaster;
 import com.ats.webapi.model.logistics.VehicalType;
 import com.ats.webapi.model.logistics.VehicleDcoument;
+import com.ats.webapi.repository.logistics.LogisAmcRepository;
 import com.ats.webapi.service.logistics.DealerService;
 import com.ats.webapi.service.logistics.DocumentService;
 import com.ats.webapi.service.logistics.DriverMasterService;
+import com.ats.webapi.service.logistics.MachineMasterService;
 import com.ats.webapi.service.logistics.VehicalMasterService;
 import com.ats.webapi.service.logistics.VehicleDcoumentService;
 import com.ats.webapi.service.logistics.MakeService;
@@ -69,6 +73,12 @@ public class LogisticsApiController {
 	
 	@Autowired
 	VehicleDcoumentService vehicleDcoumentService;
+	
+	@Autowired
+	MachineMasterService machineMasterService;
+	
+	@Autowired
+	LogisAmcRepository logisAmcRepository;
 	
 	
 	@RequestMapping(value = { "/postDriverMaster" }, method = RequestMethod.POST)
@@ -1039,4 +1049,174 @@ public class LogisticsApiController {
 
 	}
 	
+	//-------------------------------------Machine Master------------------------------------------------------
+	
+	@RequestMapping(value = { "/postMachineMaster" }, method = RequestMethod.POST)
+	public @ResponseBody MachineMaster postMachineMaster(@RequestBody MachineMaster machineMaster)
+	{
+		System.out.println("machineMaster :"+machineMaster.toString()); 
+		MachineMaster response = new MachineMaster();
+		try {
+			  
+			response = machineMasterService.postMachineMaster(machineMaster); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return response;
+
+	}
+	
+	@RequestMapping(value = { "/deleteMachineMaster" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteMachineMaster(@RequestParam ("machineId") int machineId)
+	{
+		System.out.println("machineId "+machineId); 
+		Info info = new Info();
+		try {
+			  
+			info = machineMasterService.deleteMachineMaster(machineId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return info;
+
+	}
+	
+	@RequestMapping(value = { "/getAllMachineMaster" }, method = RequestMethod.GET)
+	public @ResponseBody List<MachineMaster> getAllMachineMaster()
+	{ 
+		
+		List<MachineMaster> getAllMachineMaster = new ArrayList<MachineMaster>();
+		try {
+			  
+			getAllMachineMaster = machineMasterService.getAllMachineMaster(); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getAllMachineMaster; 
+	}
+	
+	@RequestMapping(value = { "/getMachineMasterById" }, method = RequestMethod.POST)
+	public @ResponseBody MachineMaster getMachineMasterById(@RequestParam ("machineId") int machineId)
+	{ 
+		System.out.println("machineId"+machineId);
+		MachineMaster getMachineMasterById = new MachineMaster();
+		try {
+			  
+			getMachineMasterById = machineMasterService.getMachineMasterById(machineId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return getMachineMasterById;
+
+	}
+	
+	//-------------------------------------Logis Amc--------------------------------
+	
+	@RequestMapping(value = { "/postLogisAmc" }, method = RequestMethod.POST)
+	public @ResponseBody LogisAmc postLogisAmc(@RequestBody LogisAmc logisAmc)
+	{
+		System.out.println("logisAmc :"+logisAmc.toString()); 
+		LogisAmc response = new LogisAmc();
+		try {
+			  
+			response = logisAmcRepository.save(logisAmc); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return response;
+
+	}
+	
+	@RequestMapping(value = { "/deleteLogisAmc" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteLogisAmc(@RequestParam ("amcId") int amcId)
+	{
+		System.out.println("amcId "+amcId); 
+		Info info = new Info();
+		try {
+			  
+			int delete = logisAmcRepository.deleteLogisAmc(amcId); 
+			if(delete==1)
+			{
+				info.setError(false);
+				info.setMessage("deleted successfully");
+			}
+			else
+			{
+				info.setError(true);
+				info.setMessage("failed to delete");
+			}
+			System.out.println(info.toString());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return info;
+
+	}
+	
+	@RequestMapping(value = { "/getLogisAmcById" }, method = RequestMethod.POST)
+	public @ResponseBody LogisAmc getLogisAmcById(@RequestParam ("amcId") int amcId)
+	{ 
+		System.out.println("amcId"+amcId);
+		LogisAmc getLogisAmcById = new LogisAmc();
+		try {
+			  
+			getLogisAmcById = logisAmcRepository.findByAmcId(amcId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return getLogisAmcById;
+
+	}
+	
+	@RequestMapping(value = { "/getLogisAmcListByTypeId" }, method = RequestMethod.POST)
+	public @ResponseBody List<LogisAmc> getLogisAmcListByTypeId(@RequestParam ("typeId") int typeId)
+	{ 
+		
+		List<LogisAmc> getLogisAmcListByTypeId = new ArrayList<LogisAmc>();
+		try {
+			  
+			getLogisAmcListByTypeId = logisAmcRepository.findAllByTypeId(typeId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getLogisAmcListByTypeId; 
+	}
+	
+	@RequestMapping(value = { "/getLogisAmcListByTypeIdAndMechId" }, method = RequestMethod.POST)
+	public @ResponseBody List<LogisAmc> getLogisAmcListByTypeIdAndMechId(@RequestParam ("typeId") int typeId,@RequestParam ("mechId") int mechId)
+	{ 
+		
+		List<LogisAmc> getLogisAmcListByTypeIdAndMechId = new ArrayList<LogisAmc>();
+		try {
+			  
+			getLogisAmcListByTypeIdAndMechId = logisAmcRepository.findAllByTypeIdAndMechId(typeId,mechId); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getLogisAmcListByTypeIdAndMechId; 
+	}
 }

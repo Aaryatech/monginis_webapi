@@ -1,6 +1,5 @@
 package com.ats.webapi.repository.logistics;
-
-import java.util.Date;
+ 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
