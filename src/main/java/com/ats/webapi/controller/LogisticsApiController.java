@@ -16,6 +16,7 @@ import com.ats.webapi.model.logistics.Document;
 import com.ats.webapi.model.logistics.DriverMaster;
 import com.ats.webapi.model.logistics.LogisAmc;
 import com.ats.webapi.model.logistics.MachineMaster;
+import com.ats.webapi.model.logistics.MachineServicing;
 import com.ats.webapi.model.logistics.Make;
 import com.ats.webapi.model.logistics.MechType;
 import com.ats.webapi.model.logistics.ServHeader;
@@ -26,6 +27,7 @@ import com.ats.webapi.model.logistics.VehicalMaster;
 import com.ats.webapi.model.logistics.VehicalType;
 import com.ats.webapi.model.logistics.VehicleDcoument;
 import com.ats.webapi.repository.logistics.LogisAmcRepository;
+import com.ats.webapi.repository.logistics.MachineServicingRepository;
 import com.ats.webapi.repository.logistics.MechTypeRepository;
 import com.ats.webapi.service.logistics.DealerService;
 import com.ats.webapi.service.logistics.DocumentService;
@@ -84,6 +86,9 @@ public class LogisticsApiController {
 	
 	@Autowired
 	MechTypeRepository mechTypeRepository;
+	
+	@Autowired
+	MachineServicingRepository machineServicingRepository;
 	
 	
 	@RequestMapping(value = { "/postDriverMaster" }, method = RequestMethod.POST)
@@ -1265,5 +1270,71 @@ public class LogisticsApiController {
 		} 
 		
 		return getTypeListByType; 
+	}
+	
+	//---------------------------------------MachineServincing----------------------------------------
+	@RequestMapping(value = { "/postMachineServicing" }, method = RequestMethod.POST)
+	public @ResponseBody MachineServicing postMachineServicing(@RequestBody MachineServicing machineServicing)
+	{
+		System.out.println("machineServicing :"+machineServicing.toString()); 
+		MachineServicing response = new MachineServicing();
+		try {
+			  
+			response = machineServicingRepository.save(machineServicing); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return response;
+
+	}
+	
+	@RequestMapping(value = { "/approveMachineServicing" }, method = RequestMethod.POST)
+	public @ResponseBody Info approveMachineServicing(@RequestBody List<MachineServicing> machineServicingList)
+	{
+		System.out.println("machineServicingList :"+machineServicingList.toString()); 
+		List<MachineServicing> response = new ArrayList<MachineServicing>();
+		Info info = new Info();
+		try {
+			  
+			response = machineServicingRepository.save(machineServicingList); 
+			if(response!=null)
+			{
+				info.setError(false);
+				info.setMessage("approved");
+			}
+			else
+			{
+				info.setError(true);
+				info.setMessage("failed");
+			}
+				 
+				
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return info;
+
+	}
+	
+	@RequestMapping(value = { "/getAllMachineServicing" }, method = RequestMethod.GET)
+	public @ResponseBody List<MachineServicing> getAllMachineServicing()
+	{ 
+		
+		List<MachineServicing> getAllMachineServicing = new ArrayList<MachineServicing>();
+		try {
+			  
+			getAllMachineServicing = machineServicingRepository.findAllByIsApprovedAndDelStatus(0,0); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getAllMachineServicing; 
 	}
 }
