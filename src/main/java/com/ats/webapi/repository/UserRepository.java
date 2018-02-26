@@ -14,7 +14,7 @@ import com.ats.webapi.model.SubCategory;
 import com.ats.webapi.model.User;
 
 @Repository("userRepository")
-public interface UserRepository extends JpaRepository<User, Long> {
+public interface UserRepository extends JpaRepository<User, Integer> {
  
 	User findByUsername(String username);
 	User save(User user);
@@ -38,5 +38,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	
 	@Query(value="select token from m_user where usr_id not in (:usrId) AND del_status=0",nativeQuery=true)
 	List<String> findTokensNotIn(@Param("usrId")int frId);
+	
+	@Query(value="select * from m_user where usr_id=:id",nativeQuery=true)
+	User findById(@Param("id")int userId);
 	
 }

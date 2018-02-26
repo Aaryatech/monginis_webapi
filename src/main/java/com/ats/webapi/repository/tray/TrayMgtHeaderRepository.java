@@ -1,5 +1,6 @@
 package com.ats.webapi.repository.tray;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -46,7 +47,13 @@ public interface TrayMgtHeaderRepository extends JpaRepository<TrayMgtHeader, In
 
 	TrayMgtHeader findByTranId(int tranId);
 
-	
-	
+
+	@Modifying
+	@Transactional
+	@Query("Update TrayMgtHeader  SET del_status=1 WHERE tran_id =:tranId")
+	int updateHeaderStatus(@Param("tranId")int tranId);
+
+	TrayMgtHeader findByTranDateAndVehIdAndDelStatus(String string, int vehId, int delStatus);
+
 
 }

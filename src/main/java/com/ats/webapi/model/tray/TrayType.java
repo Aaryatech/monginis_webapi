@@ -21,7 +21,20 @@ public class TrayType implements Serializable{
 	@Column(name="type_name")
 	private String typeName;
 	
+	@Column(name="tray_price")
+	private float trayPrice;
+	
 	private int delStatus;
+
+	
+	
+	public float getTrayPrice() {
+		return trayPrice;
+	}
+
+	public void setTrayPrice(float trayPrice) {
+		this.trayPrice = trayPrice;
+	}
 
 	public int getTypeId() {
 		return typeId;

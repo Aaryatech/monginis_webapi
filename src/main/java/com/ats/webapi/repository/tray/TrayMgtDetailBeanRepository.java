@@ -20,4 +20,10 @@ public interface TrayMgtDetailBeanRepository extends JpaRepository<TrayMgtDetail
 	@Transactional
 	@Query("Update TrayMgtDetailBean  SET tray_status=:status WHERE tranDetailId =:tranStatus1")
 	int updateTrayStatus(@Param("tranStatus1")int tranStatus1,@Param("status")int status);
+
+
+	@Modifying
+	@Transactional
+	@Query("Update TrayMgtDetailBean  SET del_status=1 WHERE tranId =:tranId")
+	int updateDelStatus(@Param("tranId")int tranId);
 }

@@ -71,6 +71,18 @@ public class GetTrayMgtHeader implements Serializable{
 	@Column(name="veh_is_regular")
 	private int vehIsRegular;
 
+	@Column(name="is_same_day")
+	private int isSameDay;
+	
+	
+	public int getIsSameDay() {
+		return isSameDay;
+	}
+
+	public void setIsSameDay(int isSameDay) {
+		this.isSameDay = isSameDay;
+	}
+
 	public int getTranId() {
 		return tranId;
 	}

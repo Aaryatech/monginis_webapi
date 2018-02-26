@@ -31,4 +31,19 @@ public interface TrayMgtDetailRepository extends JpaRepository<TrayMgtDetail, In
     @Query(value="select t.*,f.fr_name from t_tray_mgt_detail t,m_franchisee f where t.fr_id=f.fr_id and t.fr_id=:frId And t.is_same_day=:isSameDay And t.del_status=:delStatus And t.tray_status In(1,2,3)",nativeQuery=true)
 	List<TrayMgtDetail> findByFrIdAndIsSameDayAndDelStatusAndTrayStatusIn(@Param("frId")int frId,@Param("isSameDay") int isSameDay,@Param("delStatus") int delStatus);
 
+    @Query(value="select t.*,f.fr_name from t_tray_mgt_detail t,m_franchisee f where t.fr_id=f.fr_id And t.tray_status=4 And t.del_status=0",nativeQuery=true)
+	List<TrayMgtDetail> getTrayMgtDetailsForBill();
+
+    @Query(value="select t.*,f.fr_name from t_tray_mgt_detail t,m_franchisee f where t.fr_id=f.fr_id And t.tray_status=5 And t.del_status=0 And t.deposit_is_used=1 And t.outtray_date between :fromDate And :toDate",nativeQuery=true)
+	List<TrayMgtDetail> findTrayMgtBillDetailsByDate(@Param("fromDate")String fromDate,@Param("toDate") String toDate);
+
+    @Query(value="select t.*,f.fr_name from t_tray_mgt_detail t,m_franchisee f where t.fr_id=f.fr_id And t.tray_status=5 And t.del_status=0 And t.deposit_is_used=1 And t.fr_id In(:frIds) And t.outtray_date between :fromDate And :toDate",nativeQuery=true)
+	List<TrayMgtDetail> findTrayMgtBillDetailsByDateAndFr(@Param("fromDate")String fromDate,@Param("toDate") String toDate,@Param("frIds")  List<String> frIds);
+
+    @Query(value="select t.*,f.fr_name from t_tray_mgt_detail t,m_franchisee f where t.fr_id=f.fr_id  And t.del_status=0 And t.deposit_is_used=:isDepositUsed And t.fr_id In(:frId) And t.outtray_date between :fromDate And :toDate",nativeQuery=true)
+	List<TrayMgtDetail> findAllTrayMgtBillDetails(@Param("fromDate")String fromDate,@Param("toDate") String toDate,@Param("frId") int frId,@Param("isDepositUsed") int isDepositUsed);
+
+    @Query(value="select t.*,f.fr_name from t_tray_mgt_detail t,m_franchisee f where t.fr_id=f.fr_id  And t.del_status=0  And t.fr_id In(:frId) And t.outtray_date between :fromDate And :toDate",nativeQuery=true)
+	List<TrayMgtDetail> findTrayMgtBillDetails(@Param("fromDate")String fromDate,@Param("toDate") String toDate,@Param("frId") int frId);
+
 }

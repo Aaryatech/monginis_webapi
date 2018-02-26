@@ -92,6 +92,60 @@ public class Firebase {
 		conn.setRequestMethod("POST");
 		conn.setRequestProperty("Authorization", "key=" + AUTH_KEY_FCM);
 		conn.setRequestProperty("Content-Type", "application/json");
+System.out.println("deviceToken"+deviceToken.toString());
+		JSONObject json = new JSONObject();
+		JSONObject info = new JSONObject();
+		try {
+
+			json.put("to", deviceToken.trim());
+			info.put("title", title.trim());
+			info.put("tag",tag);
+			info.put("body", body.trim()); // Notification
+			info.put("sound", "default");
+			info.put("vibrate", "true");
+			json.put("data", info);
+
+		} catch (JSONException e1) {
+			e1.printStackTrace();
+		}
+
+		try {
+			OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+			wr.write(json.toString());
+			wr.flush();
+
+			BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
+
+			String output;
+			// System.out.println("Output from Server .... \n");
+			while ((output = br.readLine()) != null) {
+				// System.out.println(output);
+			}
+			result = "success";
+		} catch (Exception e) {
+			e.printStackTrace();
+			result = "failure";
+		}
+		System.out.println("------------------------------------------------------------------------");
+		System.out.println("FCM Notification is sent successfully");
+
+		return result;
+	}
+	public static String sendPushNotifForCommunicationWithFr(String deviceToken, String title, String body,String tag,String frName) throws IOException {
+
+		// System.out.println("Parameters : " + deviceToken + "\nTitle : " +
+		// title + "\nDesc : " + body);
+		String result = "";
+		URL url = new URL(API_URL_FCM);
+		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+		conn.setUseCaches(false);
+		conn.setDoInput(true);
+		conn.setDoOutput(true);
+
+		conn.setRequestMethod("POST");
+		conn.setRequestProperty("Authorization", "key=" + AUTH_KEY_FCM);
+		conn.setRequestProperty("Content-Type", "application/json");
 
 		JSONObject json = new JSONObject();
 		JSONObject info = new JSONObject();
@@ -100,6 +154,7 @@ public class Firebase {
 			json.put("to", deviceToken.trim());
 			info.put("title", title.trim());
 			info.put("tag",tag);
+			info.put("frName",frName);
 			info.put("body", body.trim()); // Notification
 			info.put("sound", "default");
 			info.put("vibrate", "true");

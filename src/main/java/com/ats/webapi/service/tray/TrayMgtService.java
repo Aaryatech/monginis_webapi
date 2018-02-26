@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FranchiseInRoute;
@@ -29,7 +30,6 @@ public interface TrayMgtService {
 
 	Info updateInVehicleData(int tranId, String vehIntime, float vehInkm, float vehRunningkm);
 
-	List<FranchiseInRoute> getFranchiseInRoute(int routeId);
 
 	TrayMgtDetail getTrayMgtDetailByFrId(int frId, int tranId);
 
@@ -54,5 +54,19 @@ public interface TrayMgtService {
 	List<TrayMgtDetail> getTrayDetailForTrayIn(int frId, int isSameDay);
 
 	List<GetTrayMgtHeader> getAllVehicles(String date);
+
+	List<FranchiseInRoute> getFranchiseInRoute(int routeId, int tranId);
+
+	List<TrayMgtDetail> getTrayMgtDetailsForBill();
+
+	List<TrayMgtDetailBean> saveTrayMgtDetailForBill(List<TrayMgtDetailBean> trayMgtDetails);
+
+	List<TrayMgtDetail> getTrayMgtBillDetails(String fromDate, String toDate, List<String> frIds);
+
+	ErrorMessage deleteTrayMgtHeader(int tranId);
+
+	List<GetTrayMgtHeader> getLoadedVehiclesByStatus(int vehStatus);
+
+	List<TrayMgtDetail> getTrayMgtDetailList(String fromDate, String toDate, int frId, int isDepositUsed);
 
 }

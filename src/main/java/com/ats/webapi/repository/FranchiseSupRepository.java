@@ -36,6 +36,9 @@ public interface FranchiseSupRepository extends JpaRepository<FranchiseSup, Inte
 
 	@Query(value="select token from m_franchise_sup where del_status=0",nativeQuery=true)
 	List<String> findTokens();
+	
+	@Query(value="select token from m_franchise_sup where fr_id=:frId",nativeQuery=true)
+	String findTokenByFrId(@Param("frId")int frId);
 
 
 }

@@ -8,7 +8,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.PostLoad;
 import javax.persistence.Transient;
+import javax.validation.constraints.Digits;
 
 @Entity
 public class GetCustomerBill {
@@ -61,10 +63,17 @@ public class GetCustomerBill {
 	@Column(name="igst_per")
 	private float igstPer;
 	
+	@Column(name="discount_per")
+	private float discountPer;
+	
+	@Column(name="discount_amt" )
+	private float discountAmt;
+	
 	@Column(name="user_gst_no")
 	private String gstn;
 	
-	@Column(name="grand_total")
+	
+	@Column(name="grand_total" )
 	private float bill_amount;
 	
 	@Column(name="mrp")
@@ -82,6 +91,21 @@ public class GetCustomerBill {
 	@Column(name="sgst_rs")
 	private float sgstRs;
 
+	@Transient
+	private int intBillAmt;
+
+	@Transient
+	private int intDiscAmt;
+
+
+	@PostLoad
+	private void onLoad() {
+	    this.intBillAmt = Math.round(bill_amount);
+	    this.intDiscAmt = Math.round(discountAmt);
+	
+	}
+
+	
 	public int getSellBillDetailNo() {
 		return sellBillDetailNo;
 	}
@@ -258,17 +282,58 @@ public class GetCustomerBill {
 		this.sgstRs = sgstRs;
 	}
 
+
+	public float getDiscountPer() {
+		return discountPer;
+	}
+
+
+	public void setDiscountPer(float discountPer) {
+		this.discountPer = discountPer;
+	}
+
+
+	public float getDiscountAmt() {
+		return discountAmt;
+	}
+
+
+	public void setDiscountAmt(float discountAmt) {
+		this.discountAmt = discountAmt;
+	}
+
+
+	public int getIntBillAmt() {
+		return intBillAmt;
+	}
+
+
+	public void setIntBillAmt(int intBillAmt) {
+		this.intBillAmt = intBillAmt;
+	}
+
+
+	public int getIntDiscAmt() {
+		return intDiscAmt;
+	}
+
+
+	public void setIntDiscAmt(int intDiscAmt) {
+		this.intDiscAmt = intDiscAmt;
+	}
+
+
 	@Override
 	public String toString() {
 		return "GetCustomerBill [sellBillDetailNo=" + sellBillDetailNo + ", sellBillNo=" + sellBillNo + ", invoiceNo="
 				+ invoiceNo + ", billDate=" + billDate + ", frId=" + frId + ", frName=" + frName + ", frMob=" + frMob
 				+ ", frAddress=" + frAddress + ", custName=" + custName + ", itemId=" + itemId + ", itemName="
 				+ itemName + ", taxableAmt=" + taxableAmt + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer
-				+ ", igstPer=" + igstPer + ", gstn=" + gstn + ", bill_amount=" + bill_amount + ", mrp=" + mrp + ", qty="
-				+ qty + ", igstRs=" + igstRs + ", cgstRs=" + cgstRs + ", sgstRs=" + sgstRs + "]";
+				+ ", igstPer=" + igstPer + ", discountPer=" + discountPer + ", discountAmt=" + discountAmt + ", gstn="
+				+ gstn + ", bill_amount=" + bill_amount + ", mrp=" + mrp + ", qty=" + qty + ", igstRs=" + igstRs
+				+ ", cgstRs=" + cgstRs + ", sgstRs=" + sgstRs + ", intBillAmt=" + intBillAmt + ", intDiscAmt="
+				+ intDiscAmt + "]";
 	}
 
-	 
-	
-	  
+		  
 }

@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.commons.Firebase;
+import com.ats.webapi.model.AllFrIdName;
 import com.ats.webapi.model.ErrorMessage;
+import com.ats.webapi.model.User;
 import com.ats.webapi.model.communication.Complaint;
 import com.ats.webapi.model.communication.ComplaintDetail;
 import com.ats.webapi.model.communication.Feedback;
@@ -22,6 +24,7 @@ import com.ats.webapi.model.communication.GetSuggestionDetail;
 import com.ats.webapi.model.communication.Notification;
 import com.ats.webapi.model.communication.Suggestion;
 import com.ats.webapi.model.communication.SuggestionDetail;
+import com.ats.webapi.repository.AllFrIdNameRepository;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.UserRepository;
 import com.ats.webapi.repository.communication.ComplaintDetailRepository;
@@ -92,6 +95,8 @@ public class CommunicationServiceImpl implements CommunicationService{
     @Autowired
     GetNotificationRepository getNotificationRepository;
     
+    @Autowired
+	AllFrIdNameRepository allFrIdNameRepository;
 	@Override
 	public ErrorMessage saveNotification(Notification notification) {
 
@@ -112,6 +117,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 			errorMessage.setError(false);
 			errorMessage.setMessage("Notification Saved Successfully.");
 			
+			User userRes=userRepository.findById(notificationRes.getUserId());
 			List<String> usrTokens=userRepository.findTokensNotIn(notificationRes.getUserId());
 
 			List<String> frTokens=franchiseSupRepository.findTokens();
@@ -121,7 +127,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 		    	 for(String token:frTokens)
 		    	 {
 		    	
-		          Firebase.sendPushNotifForCommunication(token,notificationRes.getSubject(),jsonStr,"nf");
+		          Firebase.sendPushNotifForCommunication(token,notificationRes.getSubject()+"#"+userRes.getUsername(),jsonStr,"nf");
 		    	 }
 		         }
 		         catch(Exception e)
@@ -178,14 +184,14 @@ public class CommunicationServiceImpl implements CommunicationService{
 		{
 			errorMessage.setError(false);
 			errorMessage.setMessage("Suggestion Saved Successfully.");
-			
+			AllFrIdName allFrIdName=allFrIdNameRepository.findByFrId(suggestionRes.getFrId());
 			List<String> usrTokens=userRepository.findTokens();
 			
 			 try {
 		    	 for(String token:usrTokens)
 		    	 {
 		    	
-		          Firebase.sendPushNotifForCommunication(token,suggestionRes.getTitle(),jsonStr,"s");
+		          Firebase.sendPushNotifForCommunication(token,suggestionRes.getTitle()+"#"+allFrIdName.getFrName(),jsonStr,"s");
 		    	 }
 		         }
 		         catch(Exception e)
@@ -241,14 +247,15 @@ public class CommunicationServiceImpl implements CommunicationService{
 		{
 			errorMessage.setError(false);
 			errorMessage.setMessage("Complaint Saved Successfully.");
-			
+			AllFrIdName allFrIdName=allFrIdNameRepository.findByFrId(complaintRes.getFrId());
+
 			List<String> usrTokens=userRepository.findTokens();
 			
 			 try {
 		    	 for(String token:usrTokens)
 		    	 {
 		    	
-		          Firebase.sendPushNotifForCommunication(token,complaintRes.getTitle(),jsonStr,"c");
+		          Firebase.sendPushNotifForCommunication(token,complaintRes.getTitle()+"#"+allFrIdName.getFrName(),jsonStr,"c");
 		    	 }
 		         }
 		         catch(Exception e)
@@ -306,7 +313,14 @@ public class CommunicationServiceImpl implements CommunicationService{
 			errorMessage.setMessage("Feedback Saved Successfully.");
 			
 			List<String> usrTokens=userRepository.findTokensNotIn(feedbackRes.getUserId());
-
+			User userRes=new User();
+			try {
+			 userRes=userRepository.findById(feedbackRes.getUserId());
+			 System.out.println("UserRes:"+userRes.toString());
+			}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 			List<String> frTokens=franchiseSupRepository.findTokens();
 			frTokens.addAll(usrTokens);
 			
@@ -314,7 +328,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 		    	 for(String token:frTokens)
 		    	 {
 		    	
-		          Firebase.sendPushNotifForCommunication(token,feedbackRes.getTitle(),jsonStr,"f");
+		          Firebase.sendPushNotifForCommunication(token,feedbackRes.getTitle()+"#"+userRes.getUsername(),jsonStr,"f");
 		    	 }
 		         }
 		         catch(Exception e)
@@ -375,12 +389,19 @@ public class CommunicationServiceImpl implements CommunicationService{
 			{
 			   //if sender is fr,then Send Notification to All Admin
 				List<String> usrTokens=userRepository.findTokens();
-				
+				AllFrIdName allFrIdName=new AllFrIdName();
+				try {
+				 allFrIdName=allFrIdNameRepository.findByFrId(suggestionDetail.getFrId());
+               System.out.println("allFrIdName"+allFrIdName.getFrName());
+				}
+				catch (Exception e) {
+					e.printStackTrace();
+				}
 				 try {
 			    	 for(String token:usrTokens)
 			    	 {
 			    	
-			          Firebase.sendPushNotifForCommunication(token,"Suggestion",jsonStr,"sd");
+			          Firebase.sendPushNotifForCommunication(token,"Suggestion"+"#"+allFrIdName.getFrName(),jsonStr,"sd");
 			    	 }
 			         }
 			         catch(Exception e)
@@ -393,6 +414,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 			else if(suggestionDetailRes.getIsAdmin()==1)
 			{
 				   List<String> usrTokens=userRepository.findTokensNotIn(suggestionDetailRes.getFrId());
+					User userRes=userRepository.findById(suggestionDetailRes.getFrId());
 
 				   String frToken=suggestionDetailRepository.findFrTokenBySuggestionId(suggestionDetailRes.getSuggestionId());
 				
@@ -402,7 +424,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 				    	 for(String token:usrTokens)
 				    	 {
 				    	
-				          Firebase.sendPushNotifForCommunication(token,"Suggestion",jsonStr,"sd");
+				          Firebase.sendPushNotifForCommunication(token,"Suggestion"+"#"+userRes.getUsername(),jsonStr,"sd");
 				    	 }
 				         }
 				         catch(Exception e)
@@ -445,12 +467,13 @@ public class CommunicationServiceImpl implements CommunicationService{
 			{
 			   //if sender is fr,then Send Notification to All Admin
 				List<String> usrTokens=userRepository.findTokens();
-				
+				AllFrIdName allFrIdName=allFrIdNameRepository.findByFrId(complaintDetail.getFrId());
+
 				 try {
 			    	 for(String token:usrTokens)
 			    	 {
 			    	
-			          Firebase.sendPushNotifForCommunication(token,complaintDetailRes.getMessage(),jsonStr,"cd");
+			          Firebase.sendPushNotifForCommunication(token,complaintDetailRes.getMessage()+"#"+allFrIdName.getFrName(),jsonStr,"cd");
 			    	 }
 			         }
 			         catch(Exception e)
@@ -463,6 +486,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 			else if(complaintDetailRes.getIsAdmin()==1)
 			{
 				   List<String> usrTokens=userRepository.findTokensNotIn(complaintDetailRes.getFrId());
+					User userRes=userRepository.findById(complaintDetailRes.getFrId());
 
 				   String frToken=complaintDetailRepository.findFrTokenByComplaintId(complaintDetailRes.getComplaintId());
 				
@@ -472,7 +496,7 @@ public class CommunicationServiceImpl implements CommunicationService{
 				    	 for(String token:usrTokens)
 				    	 {
 				    	
-				          Firebase.sendPushNotifForCommunication(token,complaintDetailRes.getMessage(),jsonStr,"cd");
+				          Firebase.sendPushNotifForCommunication(token,complaintDetailRes.getMessage()+"#"+userRes.getUsername(),jsonStr,"cd");
 				    	 }
 				         }
 				         catch(Exception e)
@@ -514,12 +538,13 @@ public class CommunicationServiceImpl implements CommunicationService{
 			{
 			   //if sender is fr,then Send Notification to All Admin
 				List<String> usrTokens=userRepository.findTokens();
-				
+				AllFrIdName allFrIdName=allFrIdNameRepository.findByFrId(feedbackDetail.getFrId());
+
 				 try {
 			    	 for(String token:usrTokens)
 			    	 {
 			    	
-			          Firebase.sendPushNotifForCommunication(token,feedbackDetailRes.getMessage(),jsonStr,"fd");
+			          Firebase.sendPushNotifForCommunication(token,feedbackDetailRes.getMessage()+"#"+allFrIdName.getFrName(),jsonStr,"fd");
 			    	 }
 			         }
 			         catch(Exception e)
@@ -533,13 +558,14 @@ public class CommunicationServiceImpl implements CommunicationService{
 			{
 				   List<String> usrTokens=userRepository.findTokensNotIn(feedbackDetailRes.getFrId());
 					List<String> frTokens=franchiseSupRepository.findTokens();
-
+					User userRes=userRepository.findById(feedbackDetailRes.getFrId());
+                    System.out.println("userRes"+userRes.toString());
 					usrTokens.addAll(frTokens);
 				      try {
 				    	 for(String token:usrTokens)
 				    	 {
 				    	
-				          Firebase.sendPushNotifForCommunication(token,feedbackDetailRes.getMessage(),jsonStr,"fd");
+				          Firebase.sendPushNotifForCommunication(token,feedbackDetailRes.getMessage()+"#"+userRes.getUsername(),jsonStr,"fd");
 				    	 }
 				         }
 				         catch(Exception e)

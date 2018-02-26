@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FranchiseInRoute;
@@ -142,11 +143,11 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 	}
 
 	@Override
-	public List<FranchiseInRoute> getFranchiseInRoute(int routeId) {
+	public List<FranchiseInRoute> getFranchiseInRoute(int routeId,int tranId) {
 
 		List<FranchiseInRoute> frInRoute = null;
 		try {
-		 frInRoute=franchiseInRouteRepository.findFrInRoute(routeId);
+		 frInRoute=franchiseInRouteRepository.findFrInRoute(routeId,tranId);
 		}
 		catch(Exception e)
 		{
@@ -296,6 +297,116 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 			e.printStackTrace();
 		}
 		return trayMgtHeaders;
+	}
+
+	@Override
+	public List<TrayMgtDetail> getTrayMgtDetailsForBill() {
+		List<TrayMgtDetail> trayMgtDetailRes;
+		try {
+		
+			trayMgtDetailRes=trayMgtDetailRepository.getTrayMgtDetailsForBill();
+		}
+		catch (Exception e) {
+			trayMgtDetailRes=new ArrayList<>();
+			e.printStackTrace();
+		}
+		return trayMgtDetailRes;	
+	}
+
+	@Override
+	public List<TrayMgtDetailBean> saveTrayMgtDetailForBill(List<TrayMgtDetailBean> trayMgtDetails) {
+		List<TrayMgtDetailBean> trayMgtDetailRes;
+		try {
+		
+			trayMgtDetailRes=trayMgtDetailBeanRepository.save(trayMgtDetails);
+		}
+		catch (Exception e) {
+			trayMgtDetailRes=new ArrayList<>();
+			e.printStackTrace();
+		}
+		return trayMgtDetailRes;	
+	}
+
+	@Override
+	public List<TrayMgtDetail> getTrayMgtBillDetails(String fromDate, String toDate, List<String> frIds) {
+		List<TrayMgtDetail> trayMgtDetailRes;
+		try {
+		    if(frIds.contains("-1"))
+		    {
+		    	trayMgtDetailRes=trayMgtDetailRepository.findTrayMgtBillDetailsByDate(fromDate,toDate);
+
+		    }else {
+			
+		    	trayMgtDetailRes=trayMgtDetailRepository.findTrayMgtBillDetailsByDateAndFr(fromDate,toDate,frIds);
+		    }
+		}
+		catch (Exception e) {
+			trayMgtDetailRes=new ArrayList<>();
+			e.printStackTrace();
+		}
+		return trayMgtDetailRes;	
+	}
+
+	@Override
+	public ErrorMessage deleteTrayMgtHeader(int tranId) {
+		
+		ErrorMessage errorMessage=new ErrorMessage();
+	try {
+          int updateStatus=trayMgtHeaderRepository.updateHeaderStatus(tranId);
+      
+          int updateDetailStatus=trayMgtDetailBeanRepository.updateDelStatus(tranId);
+          
+          if(updateStatus>0||updateDetailStatus>0)
+          {
+        	  errorMessage=new ErrorMessage();
+        	  errorMessage.setError(false);
+        	  errorMessage.setMessage("Header with Details Deleted Successfully.");
+          }
+	  }
+	catch(Exception e)
+	{
+		 errorMessage=new ErrorMessage();
+    	 errorMessage.setError(false);
+   	     errorMessage.setMessage("Header with Details Deletion Successfully.");
+		e.printStackTrace();
+		
+	}
+		return errorMessage;
+	}
+
+	@Override
+	public List<GetTrayMgtHeader> getLoadedVehiclesByStatus(int vehStatus) {
+
+		List<GetTrayMgtHeader> trayMgtHeaders;
+		try {
+		
+			trayMgtHeaders=getTrayMgtHeaderRepository.getLoadedVehiclesByStatus(vehStatus);
+		}
+		catch (Exception e) {
+			trayMgtHeaders=new ArrayList<GetTrayMgtHeader>();
+			e.printStackTrace();
+		}
+		return trayMgtHeaders;
+	}
+
+	@Override
+	public List<TrayMgtDetail> getTrayMgtDetailList(String fromDate, String toDate, int frId, int isDepositUsed) {
+		List<TrayMgtDetail> trayMgtDetailRes;
+		try {
+		    if(isDepositUsed<=1)
+		    {
+		    	trayMgtDetailRes=trayMgtDetailRepository.findAllTrayMgtBillDetails(fromDate,toDate,frId,isDepositUsed);
+
+		    }else {
+			
+		    	trayMgtDetailRes=trayMgtDetailRepository.findTrayMgtBillDetails(fromDate,toDate,frId);
+		    }
+		}
+		catch (Exception e) {
+			trayMgtDetailRes=new ArrayList<>();
+			e.printStackTrace();
+		}
+		return trayMgtDetailRes;	
 	}
 
 }

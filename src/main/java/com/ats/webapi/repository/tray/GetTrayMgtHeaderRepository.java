@@ -2,7 +2,10 @@ package com.ats.webapi.repository.tray;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -13,7 +16,7 @@ import com.ats.webapi.model.tray.GetTrayMgtHeader;
 public interface GetTrayMgtHeaderRepository extends JpaRepository<GetTrayMgtHeader, Integer>{
 
 
-	@Query(value="select h.tran_id, h.tran_date,h.veh_id,h.drv_id,d.driver_name,h.route_id,r.route_name,h.veh_no,h.veh_outtime,h.veh_intime,h.veh_outkm,h.veh_inkm,h.veh_running_km,h.diesel,h.veh_status,h.del_status,h.extra_tray_out, h.extra_tray_in, h.veh_is_regular from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id And h.tran_date=:date And h.veh_status=:vehStatus",nativeQuery=true)
+	@Query(value="select h.tran_id, h.tran_date,h.veh_id,h.drv_id,d.driver_name,h.is_same_day,h.route_id,r.route_name,h.veh_no,h.veh_outtime,h.veh_intime,h.veh_outkm,h.veh_inkm,h.veh_running_km,h.diesel,h.veh_status,h.del_status,h.extra_tray_out, h.extra_tray_in, h.veh_is_regular from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id And h.tran_date=:date And h.veh_status=:vehStatus",nativeQuery=true)
 	List<GetTrayMgtHeader> getLoadedVehicles(@Param("date")String date,@Param("vehStatus")int vehStatus);
 	
 	@Query(value="select\n" + 
@@ -33,9 +36,16 @@ public interface GetTrayMgtHeaderRepository extends JpaRepository<GetTrayMgtHead
 			"  h.del_status,\n" + 
 			"  h.extra_tray_out,\n" + 
 			"  h.extra_tray_in,\n" + 
-			"  h.veh_is_regular from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id And h.tran_id=:tranId",nativeQuery=true)
+			"  h.veh_is_regular"
+			+ "h.is_same_day from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id And h.tran_id=:tranId",nativeQuery=true)
 	GetTrayMgtHeader getTrayMgtHeader(@Param("tranId")int tranId);
 
-	@Query(value="select h.tran_id, h.tran_date,h.veh_id,h.drv_id,d.driver_name,h.route_id,r.route_name,h.veh_no,h.veh_outtime,h.veh_intime,h.veh_outkm,h.veh_inkm,h.veh_running_km,h.diesel,h.veh_status,h.del_status,h.extra_tray_out, h.extra_tray_in, h.veh_is_regular from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id And h.tran_date=:date",nativeQuery=true)
+	@Query(value="select h.tran_id, h.tran_date,h.veh_id,h.is_same_day,h.drv_id,d.driver_name,h.route_id,r.route_name,h.veh_no,h.veh_outtime,h.veh_intime,h.veh_outkm,h.veh_inkm,h.veh_running_km,h.diesel,h.veh_status,h.del_status,h.extra_tray_out, h.extra_tray_in, h.veh_is_regular from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id And h.tran_date=:date order by h.tran_id DESC",nativeQuery=true)
 	List<GetTrayMgtHeader> getAllVehicles(@Param("date")String date);
+
+	@Query(value="select h.tran_id, h.tran_date,h.veh_id,h.drv_id,h.is_same_day,d.driver_name,h.route_id,r.route_name,h.veh_no,h.veh_outtime,h.veh_intime,h.veh_outkm,h.veh_inkm,h.veh_running_km,h.diesel,h.veh_status,h.del_status,h.extra_tray_out, h.extra_tray_in, h.veh_is_regular from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id  And h.veh_status=:vehStatus order by h.tran_id DESC",nativeQuery=true)
+	List<GetTrayMgtHeader> getLoadedVehiclesByStatus(@Param("vehStatus")int vehStatus);
+
+
+	
 }

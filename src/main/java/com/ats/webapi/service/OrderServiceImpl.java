@@ -7,10 +7,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.commons.Firebase;
+import com.ats.webapi.model.AllFrIdName;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.ItemOrderHis;
 import com.ats.webapi.model.ItemOrderList;
 import com.ats.webapi.model.Orders;
+import com.ats.webapi.repository.AllFrIdNameRepository;
+import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.ItemOrderHisRepository;
 import com.ats.webapi.repository.OrderRepository;
 import com.ats.webapi.repository.OrdersRepository;
@@ -26,9 +30,16 @@ public class OrderServiceImpl implements OrderService {
 	@Autowired
 	ItemOrderHisRepository itemOrderHisRepository;
 
+	@Autowired
+	AllFrIdNameRepository allFrIdNameRepository;
+	 
+	@Autowired
+	FranchiseSupRepository franchiseSupRepository;
+	
 	@Override
 	public List<Orders> placeOrder(List<Orders> list) {
 		List<Orders> returnList = new ArrayList();
+		boolean flag=false;
 		for (Orders o : list) {
 
 			Orders prevOrder = orderRepository.findPreviousOrder(o.getItemId(), o.getFrId(), o.getProductionDate(),
@@ -55,8 +66,34 @@ public class OrderServiceImpl implements OrderService {
 					} else {
 						prevOrder.setOrderQty(o.getOrderQty());
 						updatedOrder = orderRepository.save(prevOrder);
-					}
+						//-----------------------For Notification-----------------
+						AllFrIdName allFrIdName = null;
+						String frToken="";
+						if(flag==false) {
+							System.out.println("hii");
+						try {
+							
+							 frToken=franchiseSupRepository.findTokenByFrId(o.getFrId());
+							 allFrIdName=allFrIdNameRepository.findByFrId(o.getFrId());
 
+							flag=true;
+						}
+						catch (Exception e) {
+							e.printStackTrace();
+							
+						}
+						 try {
+					          Firebase.sendPushNotification(frToken+"#"+allFrIdName.getFrName(),"Order Placed","Your Order has been saved. Total Items Ordered were--. Thank You..Team Monginis",1);
+					    	
+					         }
+					         catch(Exception e)
+					         {
+						       e.printStackTrace();
+					         }
+						}
+						//---------------------------------------------------------------
+					}
+					
 					returnList.add(updatedOrder);
 				}
 
@@ -68,6 +105,33 @@ public class OrderServiceImpl implements OrderService {
 					System.out.println("Saving new order");
 
 					Orders newOrder = orderRepository.save(o);
+				//-----------------------For Notification-----------------
+					AllFrIdName allFrIdName = null;
+					String frToken="";
+					
+					if(flag==false) {
+						System.out.println("hii");
+					try {
+						
+						 frToken=franchiseSupRepository.findTokenByFrId(o.getFrId());
+						 allFrIdName=allFrIdNameRepository.findByFrId(o.getFrId());
+
+						flag=true;
+					}
+					catch (Exception e1) {
+						e.printStackTrace();
+						
+					}
+					 try {
+				          Firebase.sendPushNotification(frToken+"#"+allFrIdName.getFrName(),"Order Placed","Your Order has been saved. Total Items Ordered were--. Thank You..Team Monginis",1);
+				    	
+				         }
+				         catch(Exception e2)
+				         {
+					       e.printStackTrace();
+				         }
+					}
+					//-----------------------------------------------------
 					returnList.add(newOrder);
 				}
 			}

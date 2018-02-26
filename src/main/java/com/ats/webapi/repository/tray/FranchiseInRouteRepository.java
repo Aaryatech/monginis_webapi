@@ -11,7 +11,12 @@ import com.ats.webapi.model.tray.FranchiseInRoute;
 @Repository
 public interface FranchiseInRouteRepository extends JpaRepository<FranchiseInRoute, Integer>{
 
-	@Query(value="select f.fr_id,f.fr_name,f.fr_code from m_franchisee f,m_franchise_sup s where f.del_status=0 and f.fr_route_id=:routeId and f.fr_id=s.fr_id order by s.no_in_route Desc",nativeQuery=true)
-	List<FranchiseInRoute> findFrInRoute(@Param("routeId")int routeId);
+	@Query(value="select f.fr_id,f.fr_name,f.fr_code from m_franchisee f,m_franchise_sup s where f.del_status=0 and f.fr_route_id=:routeId and\n" + 
+			"f.fr_id NOT IN(select fr_id from t_tray_mgt_detail where tran_id=:tranId)\n" + 
+			"and\n" + 
+			"f.fr_id=s.fr_id order by s.no_in_route Desc ",nativeQuery=true)
+	List<FranchiseInRoute> findFrInRoute(@Param("routeId")int routeId,@Param("tranId")int tranId);
 
+
+	//select f.fr_id,f.fr_name,f.fr_code from m_franchisee f,m_franchise_sup s where f.del_status=0 and f.fr_route_id=:routeId and f.fr_id=s.fr_id order by s.no_in_route Desc
 }
