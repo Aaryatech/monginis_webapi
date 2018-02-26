@@ -5,6 +5,6 @@ import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
 public interface GetGrnGvnForCreditNoteService {
 	
 	
-	GetGrnGvnForCreditNoteList getGrnGvnForCreditNote();
+	GetGrnGvnForCreditNoteList getGrnGvnForCreditNote(int isGrn);
 
 }

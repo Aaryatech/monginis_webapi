@@ -102,6 +102,14 @@ public class PostCreditNoteDetails implements Serializable {
 		private String  refInvoiceNo;
 		
 		
+		//new column 23 FEB
+		@Column(name = "grngvn_srno")
+		private String grngvnSrno;
+		
+		//new column 23 FEB
+		@Column(name = "grn_gvn_header_id")
+		private int grnGvnHeaderId;
+		
 
 	public int getBillNo() {
 		return billNo;
@@ -303,6 +311,22 @@ public class PostCreditNoteDetails implements Serializable {
 		this.refInvoiceNo = refInvoiceNo;
 	}
 
+	public String getGrngvnSrno() {
+		return grngvnSrno;
+	}
+
+	public void setGrngvnSrno(String grngvnSrno) {
+		this.grngvnSrno = grngvnSrno;
+	}
+
+	public int getGrnGvnHeaderId() {
+		return grnGvnHeaderId;
+	}
+
+	public void setGrnGvnHeaderId(int grnGvnHeaderId) {
+		this.grnGvnHeaderId = grnGvnHeaderId;
+	}
+
 	@Override
 	public String toString() {
 		return "PostCreditNoteDetails [crndId=" + crndId + ", crnId=" + crnId + ", itemId=" + itemId + ", grnGvnId="
@@ -311,11 +335,9 @@ public class PostCreditNoteDetails implements Serializable {
 				+ ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cgstRs=" + cgstRs
 				+ ", sgstRs=" + sgstRs + ", igstRs=" + igstRs + ", cessRs=" + cessRs + ", delStatus=" + delStatus
 				+ ", billNo=" + billNo + ", billDate=" + billDate + ", catId=" + catId + ", baseRate=" + baseRate
-				+ ", cessPer=" + cessPer + ", refInvoiceNo=" + refInvoiceNo + "]";
+				+ ", cessPer=" + cessPer + ", refInvoiceNo=" + refInvoiceNo + ", grngvnSrno=" + grngvnSrno
+				+ ", grnGvnHeaderId=" + grnGvnHeaderId + "]";
 	}
 
-	
-	
-	
 	
 }

@@ -47,7 +47,50 @@ public class UpdateGrnGvn  {
 
 	@Column(name = "approved_remark_acc")
 	private String approvedRemarkAcc;
+	
 
+	
+	
+	
+	//23 FEB new Fields to handle qty variation between entry(insert) and dispatch
+		@Column(name = "apr_qty_gate")
+		int aprQtyGate;
+		
+		@Column(name = "apr_qty_store")
+		int aprQtyStore;
+		
+		@Column(name = "apr_qty_acc")
+		int aprQtyAcc;
+		
+		@Column(name = "apr_taxable_amt")
+		float aprTaxableAmt;
+		
+		@Column(name = "apr_total_tax")
+		float aprTotalTax;
+		
+		@Column(name = "apr_sgst_rs")
+		float aprSgstRs;
+		
+		@Column(name = "apr_cgst_rs")
+		float aprCgstRs;
+		
+		@Column(name = "apr_igst_rs")
+		float aprIgstRs;
+		
+		@Column(name = "apr_grand_total")
+		float aprGrandTotal;
+		
+		@Column(name = "apr_r_off")
+		float aprROff;
+
+		@Column(name = "is_same_state")
+		int isSameState;
+		//23 FEB new Fields to handle qty variation between entry(insert) and dispatch
+		
+
+	
+	
+	
 	public int getGrnGvnId() {
 		return grnGvnId;
 	}

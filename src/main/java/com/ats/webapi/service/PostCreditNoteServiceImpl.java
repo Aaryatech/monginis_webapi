@@ -11,6 +11,7 @@ import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
 import com.ats.webapi.repository.PostCreditNoteDetailsRepository;
 import com.ats.webapi.repository.PostCreditNoteHeaderRepository;
 import com.ats.webapi.repository.UpdateGrnGvnForCreditNoteRepository;
+import com.ats.webapi.repository.grngvnheader.UpdateGrnGvnHeaderForCNRepo;
 
 @Service
 public class PostCreditNoteServiceImpl implements PostCreditNoteService {
@@ -23,7 +24,11 @@ public class PostCreditNoteServiceImpl implements PostCreditNoteService {
 	
 	@Autowired
 	UpdateGrnGvnForCreditNoteRepository updateGrnGvnForCreditNoteRepository;
-
+	
+	
+	@Autowired
+	UpdateGrnGvnHeaderForCNRepo updateGrnGvnHeaderForCNRepo;
+	
 	@Override
 	public List<PostCreditNoteHeader> savePostCreditNote(List<PostCreditNoteHeader> postCreditNoteHeader) {
 
@@ -37,6 +42,9 @@ public class PostCreditNoteServiceImpl implements PostCreditNoteService {
 			creditNoteHeader = postCreditNoteHeaderRepository.save(postCreditNoteHeader.get(i));
 
 			postCreditNoteHeaderList.add(creditNoteHeader);
+			
+			int res=0;
+			
 
 			int crnId = postCreditNoteHeader.get(i).getCrnId();
 
@@ -48,11 +56,13 @@ public class PostCreditNoteServiceImpl implements PostCreditNoteService {
 				PostCreditNoteDetails postCreditNoteDetails = postCreditNoteDetailsList.get(j);
 
 				postCreditNoteDetails.setCrnId(crnId);
-
+				
 				postCreditNoteDetailsRepository.save(postCreditNoteDetails);
 				
 				int result= updateGrnGvnForCreditNoteRepository.updateGrnGvnForCreditNoteInsert(
 						postCreditNoteDetails.getGrnGvnId(), 1);
+				
+				res=updateGrnGvnHeaderForCNRepo.updateGrnGvnHeaderForCN(postCreditNoteDetails.getCrnId(), 1, postCreditNoteDetails.getGrnGvnHeaderId());
 
 			}
 		}

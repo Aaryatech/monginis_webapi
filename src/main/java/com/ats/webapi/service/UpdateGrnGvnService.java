@@ -4,16 +4,17 @@ import java.util.List;
 
 public interface UpdateGrnGvnService {
 	
-	public int updateGrnForGate( int approvedLoginGate,String approveimedDateTimeGate,
-			String approvedRemarkGate,int grnGvnStatus,List<Integer> grnGvnId);
+	public int updateGrnForGate( int approvedLoginGate, int aprQtyGate,String approveimedDateTimeGate,
+			String approvedRemarkGate,int grnGvnStatus,int grnGvnId);
 
 
-	public int updateGrnForAcc( int approvedLoginAcc,String approvedDateTimeAcc,
-			String approvedRemarkAcc,int grnGvnStatus,List<Integer> grnGvnId);
+	public int updateGrnForAcc( int approvedLoginAcc,int aprQtyAcc,String approvedDateTimeAcc,
+			String approvedRemarkAcc,int grnGvnStatus,float aprTaxableAmt,float aprTotalTax,float aprSgstRs,float aprCgstRs,float aprIgstRs,
+			float aprGrandTotal,float aprROff,int grnGvnId);
 
 	
-	public int updateGrnGvnForStore( int approvedLoginStore,String approvedDateTimeStore,
-			String approvedRemarkStore,int grnGvnStatus,List<Integer> grnGvnId);
+	public int updateGrnGvnForStore( int approvedLoginStore,int aprQtyStore,String approvedDateTimeStore,
+			String approvedRemarkStore,int grnGvnStatus,int grnGvnId);
 
 	
 	

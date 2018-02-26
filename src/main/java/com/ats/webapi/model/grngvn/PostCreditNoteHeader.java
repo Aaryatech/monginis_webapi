@@ -20,8 +20,8 @@ public class PostCreditNoteHeader implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "crn_id")
 	private int crnId;
-	
-	//newly added
+
+	// newly added
 	@Column(name = "crn_no")
 	private String crnNo;
 
@@ -57,8 +57,14 @@ public class PostCreditNoteHeader implements Serializable {
 
 	@Transient
 	List<PostCreditNoteDetails> postCreditNoteDetails;
-	
-	
+
+	// new field 23 FEB
+	@Column(name = "grn_gvn_sr_no_list")
+	String grnGvnSrNoList;// comma seperated unique;
+
+	// new field 23 FEB
+	@Column(name = "is_deposited")
+	int isDeposited; // default 0 when actually deposited in bank set value
 
 	public int getCrnId() {
 		return crnId;
@@ -116,8 +122,6 @@ public class PostCreditNoteHeader implements Serializable {
 		this.crnFinalAmt = crnFinalAmt;
 	}
 
-	
-
 	public float getRoundOff() {
 		return roundOff;
 	}
@@ -166,16 +170,30 @@ public class PostCreditNoteHeader implements Serializable {
 		this.crnNo = crnNo;
 	}
 
+	public String getGrnGvnSrNoList() {
+		return grnGvnSrNoList;
+	}
+
+	public void setGrnGvnSrNoList(String grnGvnSrNoList) {
+		this.grnGvnSrNoList = grnGvnSrNoList;
+	}
+
+	public int getIsDeposited() {
+		return isDeposited;
+	}
+
+	public void setIsDeposited(int isDeposited) {
+		this.isDeposited = isDeposited;
+	}
+
 	@Override
 	public String toString() {
 		return "PostCreditNoteHeader [crnId=" + crnId + ", crnNo=" + crnNo + ", crnDate=" + crnDate + ", frId=" + frId
 				+ ", crnTaxableAmt=" + crnTaxableAmt + ", crnTotalTax=" + crnTotalTax + ", crnGrandTotal="
 				+ crnGrandTotal + ", crnFinalAmt=" + crnFinalAmt + ", roundOff=" + roundOff + ", userId=" + userId
 				+ ", createdDateTime=" + createdDateTime + ", isTallySync=" + isTallySync + ", postCreditNoteDetails="
-				+ postCreditNoteDetails + "]";
+				+ postCreditNoteDetails + ", grnGvnSrNoList=" + grnGvnSrNoList + ", isDeposited=" + isDeposited + "]";
 	}
 
-	
-	
 
 }

@@ -168,7 +168,42 @@ public class GrnGvn  {
 	private int grnGvnHeaderId;
 	
 	
+	//23 FEB new Fields to handle qty variation between entry(insert) and dispatch
+	@Column(name = "apr_qty_gate")
+	int aprQtyGate;
 	
+	@Column(name = "apr_qty_store")
+	int aprQtyStore;
+	
+	@Column(name = "apr_qty_acc")
+	int aprQtyAcc;
+	
+	@Column(name = "apr_taxable_amt")
+	float aprTaxableAmt;
+	
+	@Column(name = "apr_total_tax")
+	float aprTotalTax;
+	
+	@Column(name = "apr_sgst_rs")
+	float aprSgstRs;
+	
+	@Column(name = "apr_cgst_rs")
+	float aprCgstRs;
+	
+	@Column(name = "apr_igst_rs")
+	float aprIgstRs;
+	
+	@Column(name = "apr_grand_total")
+	float aprGrandTotal;
+	
+	@Column(name = "apr_r_off")
+	float aprROff;
+
+	@Column(name = "is_same_state")
+	int isSameState;
+	//23 FEB new Fields to handle qty variation between entry(insert) and dispatch
+	
+
 		
 	
 	
@@ -561,6 +596,96 @@ public class GrnGvn  {
 		this.grnGvnHeaderId = grnGvnHeaderId;
 	}
 
+	public int getAprQtyGate() {
+		return aprQtyGate;
+	}
+
+	public void setAprQtyGate(int aprQtyGate) {
+		this.aprQtyGate = aprQtyGate;
+	}
+
+	public int getAprQtyStore() {
+		return aprQtyStore;
+	}
+
+	public void setAprQtyStore(int aprQtyStore) {
+		this.aprQtyStore = aprQtyStore;
+	}
+
+	public int getAprQtyAcc() {
+		return aprQtyAcc;
+	}
+
+	public void setAprQtyAcc(int aprQtyAcc) {
+		this.aprQtyAcc = aprQtyAcc;
+	}
+
+	public float getAprTaxableAmt() {
+		return aprTaxableAmt;
+	}
+
+	public void setAprTaxableAmt(float aprTaxableAmt) {
+		this.aprTaxableAmt = aprTaxableAmt;
+	}
+
+	public float getAprTotalTax() {
+		return aprTotalTax;
+	}
+
+	public void setAprTotalTax(float aprTotalTax) {
+		this.aprTotalTax = aprTotalTax;
+	}
+
+	public float getAprSgstRs() {
+		return aprSgstRs;
+	}
+
+	public void setAprSgstRs(float aprSgstRs) {
+		this.aprSgstRs = aprSgstRs;
+	}
+
+	public float getAprCgstRs() {
+		return aprCgstRs;
+	}
+
+	public void setAprCgstRs(float aprCgstRs) {
+		this.aprCgstRs = aprCgstRs;
+	}
+
+	public float getAprIgstRs() {
+		return aprIgstRs;
+	}
+
+	public void setAprIgstRs(float aprIgstRs) {
+		this.aprIgstRs = aprIgstRs;
+	}
+
+	public float getAprGrandTotal() {
+		return aprGrandTotal;
+	}
+
+	public void setAprGrandTotal(float aprGrandTotal) {
+		this.aprGrandTotal = aprGrandTotal;
+	}
+
+	public float getAprROff() {
+		return aprROff;
+	}
+
+	public void setAprROff(float aprROff) {
+		this.aprROff = aprROff;
+	}
+
+	
+
+	public int getIsSameState() {
+		return isSameState;
+	}
+
+	public void setIsSameState(int isSameState) {
+		this.isSameState = isSameState;
+	}
+
 	@Override
 	public String toString() {
 		return "GrnGvn [grnGvnId=" + grnGvnId + ", grnGvnDate=" + grnGvnDate + ", billNo=" + billNo + ", frId=" + frId
@@ -578,10 +703,11 @@ public class GrnGvn  {
 				+ taxableAmt + ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt=" + finalAmt
 				+ ", isCreditNote=" + isCreditNote + ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo="
 				+ invoiceNo + ", refInvoiceDate=" + refInvoiceDate + ", billDetailNo=" + billDetailNo
-				+ ", grnGvnHeaderId=" + grnGvnHeaderId + "]";
+				+ ", grnGvnHeaderId=" + grnGvnHeaderId + ", aprQtyGate=" + aprQtyGate + ", aprQtyStore=" + aprQtyStore
+				+ ", aprQtyAcc=" + aprQtyAcc + ", aprTaxableAmt=" + aprTaxableAmt + ", aprTotalTax=" + aprTotalTax
+				+ ", aprSgstRs=" + aprSgstRs + ", aprCgstRs=" + aprCgstRs + ", aprIgstRs=" + aprIgstRs
+				+ ", aprGrandTotal=" + aprGrandTotal + ", aprROff=" + aprROff + ", isSameState=" + isSameState + "]";
 	}
-
-	
 
 	
 

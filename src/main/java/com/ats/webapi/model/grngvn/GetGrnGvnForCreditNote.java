@@ -170,6 +170,15 @@ public class GetGrnGvnForCreditNote implements Serializable {
 	@Column(name = "ref_invoice_date")
 	private Date refInvoiceDate;
 	
+	
+	//new column 23 FEB
+	@Column(name = "grngvn_srno")
+	private String grngvnSrno;
+	
+	//new column 23 FEB
+	@Column(name = "grn_gvn_header_id")
+	private int grnGvnHeaderId;
+	
 	 
 	
 	
@@ -618,6 +627,26 @@ public class GetGrnGvnForCreditNote implements Serializable {
 	}
 
 
+	public String getGrngvnSrno() {
+		return grngvnSrno;
+	}
+
+
+	public void setGrngvnSrno(String grngvnSrno) {
+		this.grngvnSrno = grngvnSrno;
+	}
+
+
+	public int getGrnGvnHeaderId() {
+		return grnGvnHeaderId;
+	}
+
+
+	public void setGrnGvnHeaderId(int grnGvnHeaderId) {
+		this.grnGvnHeaderId = grnGvnHeaderId;
+	}
+
+
 	@Override
 	public String toString() {
 		return "GetGrnGvnForCreditNote [grnGvnId=" + grnGvnId + ", grnGvnDate=" + grnGvnDate + ", billNo=" + billNo
@@ -635,9 +664,8 @@ public class GetGrnGvnForCreditNote implements Serializable {
 				+ ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", roundUpAmt=" + roundUpAmt + ", finalAmt="
 				+ finalAmt + ", itemName=" + itemName + ", frName=" + frName + ", isCreditNote=" + isCreditNote
 				+ ", menuId=" + menuId + ", catId=" + catId + ", invoiceNo=" + invoiceNo + ", refInvoiceDate="
-				+ refInvoiceDate + "]";
+				+ refInvoiceDate + ", grngvnSrno=" + grngvnSrno + ", grnGvnHeaderId=" + grnGvnHeaderId + "]";
 	}
 
 
-	
 }

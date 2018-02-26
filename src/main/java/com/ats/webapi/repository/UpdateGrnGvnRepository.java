@@ -15,36 +15,40 @@ public interface UpdateGrnGvnRepository extends JpaRepository<UpdateGrnGvn, Inte
 	
 	@Transactional
 	@Modifying
-	@Query(" UPDATE UpdateGrnGvn  SET approvedLoginGate =:approvedLoginGate,"
+	@Query(" UPDATE UpdateGrnGvn  SET approvedLoginGate =:approvedLoginGate,aprQtyGate=:aprQtyGate ,"
 			+ "approveimedDateTimeGate=:approveimedDateTimeGate,approvedRemarkGate=:approvedRemarkGate ,"
-			+ "grnGvnStatus=:grnGvnStatus WHERE grnGvnId IN (:grnGvnId) ")
-		int updateGateGrn(@Param("approvedLoginGate") int approvedLoginGate,@Param("approveimedDateTimeGate") 
+			+ "grnGvnStatus=:grnGvnStatus WHERE grnGvnId =:grnGvnId ")
+	
+		int updateGateGrn(@Param("approvedLoginGate") int approvedLoginGate,@Param("aprQtyGate") int aprQtyGate,@Param("approveimedDateTimeGate") 
 		String approveimedDateTimeGate,@Param("approvedRemarkGate") String approvedRemarkGate,@Param("grnGvnStatus") 
-		int grnGvnStatus,@Param("grnGvnId") List<Integer> grnGvnId);
+		int grnGvnStatus,@Param("grnGvnId") int grnGvnId);
 	
 	
 	@Transactional
 	@Modifying
-	@Query(" UPDATE UpdateGrnGvn  SET approvedLoginAcc =:approvedLoginAcc,"
+	@Query(" UPDATE UpdateGrnGvn  SET approvedLoginAcc =:approvedLoginAcc,aprQtyAcc=:aprQtyAcc ,"
 			+ "approvedDateTimeAcc=:approvedDateTimeAcc,approvedRemarkAcc=:approvedRemarkAcc ,"
-			+ "grnGvnStatus=:grnGvnStatus WHERE grnGvnId IN (:grnGvnId) ")
-		int updateAccGrn(@Param("approvedLoginAcc") int approvedLoginAcc,@Param("approvedDateTimeAcc") 
+			+ "grnGvnStatus=:grnGvnStatus,"
+			+ "aprTaxableAmt =:aprTaxableAmt,aprTotalTax =:aprTotalTax,aprSgstRs =:aprSgstRs,aprCgstRs =:aprCgstRs,aprIgstRs=:aprIgstRs, "
+			+ "aprGrandTotal =:aprGrandTotal,aprROff=:aprROff"
+			+ " WHERE grnGvnId =:grnGvnId ")
+	
+		int updateAccGrn(@Param("approvedLoginAcc") int approvedLoginAcc,@Param("aprQtyAcc") int aprQtyAcc,@Param("approvedDateTimeAcc") 
 		String approvedDateTimeAcc,@Param("approvedRemarkAcc") String approvedRemarkAcc,@Param("grnGvnStatus") 
-		int grnGvnStatus,@Param("grnGvnId") List<Integer> grnGvnId);
-	
-	
+		int grnGvnStatus,@Param("aprTaxableAmt") float aprTaxableAmt,@Param("aprTotalTax") float aprTotalTax,@Param("aprSgstRs") float aprSgstRs,
+		@Param("aprCgstRs") float aprCgstRs,@Param("aprIgstRs") float aprIgstRs,@Param("aprGrandTotal")float aprGrandTotal,
+		@Param("aprROff") float aprROff,@Param("grnGvnId") int grnGvnId);
 	
 	
 	@Transactional
 	@Modifying
-	@Query(" UPDATE UpdateGrnGvn  SET approvedLoginStore =:approvedLoginStore,"
+	@Query(" UPDATE UpdateGrnGvn  SET approvedLoginStore =:approvedLoginStore,aprQtyStore=:aprQtyStore ,"
 			+ "approvedDateTimeStore=:approvedDateTimeStore,approvedRemarkStore=:approvedRemarkStore ,"
-			+ "grnGvnStatus=:grnGvnStatus WHERE grnGvnId IN (:grnGvnId) ")
-		int updateStoreGvn(@Param("approvedLoginStore") int approvedLoginStore,@Param("approvedDateTimeStore") 
+			+ "grnGvnStatus=:grnGvnStatus WHERE grnGvnId =:grnGvnId ")
+	
+		int updateStoreGvn(@Param("approvedLoginStore") int approvedLoginStore,@Param("aprQtyStore") int aprQtyStore,@Param("approvedDateTimeStore") 
 		String approvedDateTimeStore,@Param("approvedRemarkStore") String approvedRemarkStore,@Param("grnGvnStatus") 
-		int grnGvnStatus,@Param("grnGvnId") List<Integer> grnGvnId);
-	
-	
+		int grnGvnStatus,@Param("grnGvnId") int grnGvnId);
 	
 
 }

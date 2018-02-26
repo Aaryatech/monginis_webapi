@@ -27,6 +27,7 @@ import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
 import com.ats.webapi.model.grngvn.GrnGvnHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeaderList;
+import com.ats.webapi.model.grngvn.TempGrnGvnBeanUp;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
 import com.ats.webapi.repository.GetBillDetailsRepository;
 import com.ats.webapi.repository.GetReorderByStockTypeRepository;
@@ -416,28 +417,39 @@ public class RestApiController {
 	@Autowired // credit note sachin 07/11/2017
 	GetGrnGvnForCreditNoteService getGrnGvnForCreditNoteService;
 
-	@RequestMapping(value = "/grnGvnDetailForCreditNote", method = RequestMethod.GET)
-	public @ResponseBody GetGrnGvnForCreditNoteList grnGvnDetailForCreditNote() {
+	@RequestMapping(value = "/grnGvnDetailForCreditNote", method = RequestMethod.POST)
+	public @ResponseBody GetGrnGvnForCreditNoteList grnGvnDetailForCreditNote(@RequestParam("isGrn") int isGrn) {
 		System.out.println("inside rest");
 
-		GetGrnGvnForCreditNoteList getGrnGvnForCreditNoteList = getGrnGvnForCreditNoteService.getGrnGvnForCreditNote();
+		System.out.println("Rest : is Grn Received /grnGvnDetailForCreditNote "+isGrn);
+		
+		GetGrnGvnForCreditNoteList getGrnGvnForCreditNoteList = getGrnGvnForCreditNoteService.getGrnGvnForCreditNote(isGrn);
 
 		return getGrnGvnForCreditNoteList;
 
 	}
 
+	//comment 24 FEb
 	@RequestMapping(value = "/updateStoreGvn", method = RequestMethod.POST)
-	public @ResponseBody Info updateStoreGvn(@RequestParam("approvedLoginStore") int approvedLoginStore,
-			@RequestParam("approvedDateTimeStore") String approvedDateTimeStore,
-			@RequestParam("approvedRemarkStore") String approvedRemarkStore,
-			@RequestParam("grnGvnStatus") int grnGvnStatus, @RequestParam("grnGvnId") List<Integer> grnGvnId) {
+	public @ResponseBody Info updateStoreGvn(@RequestBody List<TempGrnGvnBeanUp> dataList) {
 
 		Info info=new Info();
 		System.out.println("inside rest");
 
-		int x = updateGrnGvnService.updateGrnGvnForStore(approvedLoginStore, approvedDateTimeStore, approvedRemarkStore,
-				grnGvnStatus, grnGvnId);
-
+		TempGrnGvnBeanUp data;
+		
+		int x=0;
+		
+		for(int i=0;i<dataList.size();i++) {
+			data=new TempGrnGvnBeanUp();
+			 data=dataList.get(i);
+			
+			x = updateGrnGvnService.updateGrnGvnForStore(data.getApprovedLoginStore(), data.getAprQtyStore(), data.getApprovedDateTimeStore(), 
+					data.getApprovedRemarkStore(),
+					data.getGrnGvnStatus(), data.getGrnGvnId());
+			
+		}
+		
 		if (x > 0) {
 
 			info.setError(false);
@@ -453,20 +465,24 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/updateGateGrn", method = RequestMethod.POST)
-	public @ResponseBody Info updateGateGrn(@RequestParam("approvedLoginGate") int approvedLoginGate,
-			@RequestParam("approveimedDateTimeGate") String approveimedDateTimeGate,
-			@RequestParam("approvedRemarkGate") String approvedRemarkGate,
-			@RequestParam("grnGvnStatus") int grnGvnStatus, @RequestParam("grnGvnId") List<Integer> grnGvnId) {
+	public @ResponseBody Info updateGateGrn(@RequestBody List<TempGrnGvnBeanUp> dataList) {
 
 		Info info = new Info();
 		try {
-			System.out.println("inside rest");
-			System.out.println("/RestApi -PARAM grnGvnId List /updateGateGrn" + grnGvnId);
-			// grnGvnId.remove(grnGvnId.size());
-			System.out.println("/RestApi -PARAM grnGvnId List /updateGateGrn" + grnGvnId);
-
-			int x = updateGrnGvnService.updateGrnForGate(approvedLoginGate, approveimedDateTimeGate, approvedRemarkGate,
-					grnGvnStatus, grnGvnId);
+			System.out.println("inside rest /updateGateGrn : input para = dataList "+dataList.toString());
+			
+			int x=0;
+			TempGrnGvnBeanUp data;
+			
+			for(int i=0;i<dataList.size();i++) {
+				data=new TempGrnGvnBeanUp();
+				 data=dataList.get(i);
+				
+				x = updateGrnGvnService.updateGrnForGate(data.getApprovedLoginGate(), data.getAprQtyGate(), data.getApproveimedDateTimeGate(), 
+						data.getApprovedRemarkGate(),
+						data.getGrnGvnStatus(), data.getGrnGvnId());
+			
+			}
 
 			if (x > 0) {
 
@@ -487,36 +503,47 @@ public class RestApiController {
 		return info;
 
 	}
-
+//comment 24 FEb
 	@RequestMapping(value = "/updateAccGrn", method = RequestMethod.POST)
-	public @ResponseBody Info updateAccGrn(@RequestParam("approvedLoginAcc") int approvedLoginAcc,
-			@RequestParam("approvedDateTimeAcc") String approvedDateTimeAcc,
-			@RequestParam("approvedRemarkAcc") String approvedRemarkAcc, @RequestParam("grnGvnStatus") int grnGvnStatus,
-			@RequestParam("grnGvnId") List<Integer> grnGvnId) {
+	public @ResponseBody Info updateAccGrn(@RequestBody List<TempGrnGvnBeanUp> dataList) {
 
 		Info info = new Info();
 		try {
-			System.out.println("inside rest");
-			System.out.println("/RestApi -PARAM grnGvnId List /updateAccGrn " + grnGvnId);
+			System.out.println("inside rest /updateAccGrn : Param "+ dataList.toString());
+		
+			int x=0;
+			TempGrnGvnBeanUp data;
+			for(int i=0;i<dataList.size();i++) {
+				data=new TempGrnGvnBeanUp();
+				 data=dataList.get(i);
 
-			int x = updateGrnGvnService.updateGrnForAcc(approvedLoginAcc, approvedDateTimeAcc, approvedRemarkAcc,
-					grnGvnStatus, grnGvnId);
+					 x = updateGrnGvnService.updateGrnForAcc(data.getApprovedLoginAcc(), data.getAprQtyAcc(), data.getApprovedDateTimeAcc(), data.getApprovedRemarkAcc(),
+							data.getGrnGvnStatus(), data.getAprTaxableAmt(),data.getAprTotalTax(),data.getAprSgstRs(),data.getAprCgstRs(),
+							data.getAprIgstRs(),data.getAprGrandTotal(),data.getAprROff(),
+							data.getGrnGvnId());
+			
+			}
 
 			if (x > 0) {
 
 				info.setError(false);
 				info.setMessage("Success");
+				
 			} else {
 
 				info.setError(true);
 				info.setMessage("Failed");
+				
 
 			}
 
 		} catch (Exception e) {
+			
 			System.out.println("/Rest Api Exce in Updating Gate Grn Gvn Record /updateAccGrn" + e.getMessage());
 			e.printStackTrace();
+			
 		}
+		
 		return info;
 
 	}

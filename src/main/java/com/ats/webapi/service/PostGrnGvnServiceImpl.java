@@ -11,6 +11,7 @@ import com.ats.webapi.model.grngvn.GrnGvnHeader;
 import com.ats.webapi.repository.PostGrnGvnRepository;
 import com.ats.webapi.repository.UpdateBillDetailForGrnGvnRepository;
 import com.ats.webapi.repository.grngvnheader.GrnGvnHeaderRepo;
+import com.ats.webapi.repository.grngvnheader.UpdateGrnGvnHeaderForCNRepo;
 
 @Service
 public class PostGrnGvnServiceImpl implements PostGrnGvnService {
@@ -25,7 +26,9 @@ public class PostGrnGvnServiceImpl implements PostGrnGvnService {
 	
 	@Autowired
 	GrnGvnHeaderRepo grnGvnHeaderRepo;
-	
+
+	@Autowired
+	UpdateGrnGvnHeaderForCNRepo updateGrnGvnHeaderForCNRepo;
 	
 //Prev Grn Save method commented on 15 FEB
 	/*@Override
