@@ -27,6 +27,9 @@ public interface ServHeaderRepository extends JpaRepository<ServHeader, Integer>
 	@Transactional
 	@Modifying
 	@Query(" UPDATE ServHeader SET is_approved=:approved WHERE serv_id=:servId") 
-	int approvedServiceHeader(@Param("servId")int servId,@Param("approved")int approved); 
+	int approvedServiceHeader(@Param("servId")int servId,@Param("approved")int approved);
+
+	@Query(value="select * from m_logis_serv where (bill_date between :fromDate and :toDate) and serv_type2=:type",nativeQuery=true)
+	List<ServHeader> showServicingListBetweenDateAndFilter(@Param("fromDate")String fromDate, @Param("toDate")String toDate,@Param("type") int type); 
 
 }

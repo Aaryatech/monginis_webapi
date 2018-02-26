@@ -17,6 +17,7 @@ import com.ats.webapi.model.logistics.DriverMaster;
 import com.ats.webapi.model.logistics.LogisAmc;
 import com.ats.webapi.model.logistics.MachineMaster;
 import com.ats.webapi.model.logistics.Make;
+import com.ats.webapi.model.logistics.MechType;
 import com.ats.webapi.model.logistics.ServHeader;
 import com.ats.webapi.model.logistics.SparePart;
 import com.ats.webapi.model.logistics.SprGroup;
@@ -25,6 +26,7 @@ import com.ats.webapi.model.logistics.VehicalMaster;
 import com.ats.webapi.model.logistics.VehicalType;
 import com.ats.webapi.model.logistics.VehicleDcoument;
 import com.ats.webapi.repository.logistics.LogisAmcRepository;
+import com.ats.webapi.repository.logistics.MechTypeRepository;
 import com.ats.webapi.service.logistics.DealerService;
 import com.ats.webapi.service.logistics.DocumentService;
 import com.ats.webapi.service.logistics.DriverMasterService;
@@ -79,6 +81,9 @@ public class LogisticsApiController {
 	
 	@Autowired
 	LogisAmcRepository logisAmcRepository;
+	
+	@Autowired
+	MechTypeRepository mechTypeRepository;
 	
 	
 	@RequestMapping(value = { "/postDriverMaster" }, method = RequestMethod.POST)
@@ -939,13 +944,21 @@ public class LogisticsApiController {
 	}
 	
 	@RequestMapping(value = { "/getServicingListBetweenDate" }, method = RequestMethod.POST)
-	public @ResponseBody List<ServHeader> showServicingListBetweenDate(@RequestParam ("fromDate") String fromDate,@RequestParam ("toDate") String toDate)
+	public @ResponseBody List<ServHeader> showServicingListBetweenDate(@RequestParam ("fromDate") String fromDate,@RequestParam ("toDate") String toDate,
+			@RequestParam ("type") int type)
 	{  
 		
 		List<ServHeader> showServicingListBetweenDate = new ArrayList<ServHeader>();
 		try {
-			  
-			showServicingListBetweenDate = servHeaderService.showServicingListBetweenDate(fromDate,toDate); 
+			  if(type==0)
+			  {
+				  showServicingListBetweenDate = servHeaderService.showServicingListBetweenDate(fromDate,toDate); 
+			  }
+			  else
+			  {
+				  showServicingListBetweenDate = servHeaderService.showServicingListBetweenDateAndFilter(fromDate,toDate,type); 
+			  }
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -1218,5 +1231,39 @@ public class LogisticsApiController {
 		} 
 		
 		return getLogisAmcListByTypeIdAndMechId; 
+	}
+	
+	//-------------------------------------------mechType------------------------------------
+	
+	@RequestMapping(value = { "/getTypeList" }, method = RequestMethod.GET)
+	public @ResponseBody List<MechType> getTypeList()
+	{ 
+		
+		List<MechType> getTypeList = new ArrayList<MechType>();
+		try {
+			  
+			getTypeList = mechTypeRepository.findAllByDelStatus(0); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getTypeList; 
+	}
+	
+	@RequestMapping(value = { "/getTypeListByType" }, method = RequestMethod.POST)
+	public @ResponseBody List<MechType> getTypeListByType(@RequestParam ("type") int type)
+	{ 
+		
+		List<MechType> getTypeListByType = new ArrayList<MechType>();
+		try {
+			  
+			getTypeListByType = mechTypeRepository.findAllByTypeAndDelStatus(type,0); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getTypeListByType; 
 	}
 }

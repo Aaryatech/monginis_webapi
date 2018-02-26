@@ -20,6 +20,8 @@ public interface ServHeaderService {
 
 	List<ServHeader> showServicingListBetweenDate(String fromDate, String toDate);
 
-	Info approvedServiceHeader(int servId); 
+	Info approvedServiceHeader(int servId);
+
+	List<ServHeader> showServicingListBetweenDateAndFilter(String fromDate, String toDate, int type); 
 
 }
