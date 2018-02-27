@@ -18,4 +18,6 @@ public interface DriverMasterService {
 
 	DriverMaster getDriverById(int driverId);
 
+	List<DriverMaster> getAlertDriverRecord(String today);
+
 }

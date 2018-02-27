@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-import org.springframework.transaction.annotation.Transactional; 
+import org.springframework.transaction.annotation.Transactional;
+
+import com.ats.webapi.model.logistics.AlertAmcRecord;
 import com.ats.webapi.model.logistics.DriverMaster;
 
 public interface DriverMasterRepository extends JpaRepository<DriverMaster, Integer>{
@@ -20,6 +22,10 @@ public interface DriverMasterRepository extends JpaRepository<DriverMaster, Inte
 	List<DriverMaster> findAllByDelStatus(int delStatus);
 
 
-	DriverMaster findByDriverIdAndDelStatus(int driverId, int delStatus); 
+	DriverMaster findByDriverIdAndDelStatus(int driverId, int delStatus);
+
+	
+	@Query(value="select * from m_logis_driver where lic_expire_date < :today and del_status=0",nativeQuery=true) 
+	List<DriverMaster> getAlertDriverRecord(@Param("today")String today); 
 
 }

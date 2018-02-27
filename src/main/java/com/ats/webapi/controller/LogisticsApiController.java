@@ -1,4 +1,5 @@
 package com.ats.webapi.controller; 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.logistics.AlertAmcRecord;
 import com.ats.webapi.model.logistics.Dealer;
 import com.ats.webapi.model.logistics.Document;
 import com.ats.webapi.model.logistics.DriverMaster;
@@ -27,6 +29,7 @@ import com.ats.webapi.model.logistics.Variant;
 import com.ats.webapi.model.logistics.VehicalMaster;
 import com.ats.webapi.model.logistics.VehicalType;
 import com.ats.webapi.model.logistics.VehicleDcoument;
+import com.ats.webapi.repository.logistics.AlertAmcRecordRepository;
 import com.ats.webapi.repository.logistics.LogisAmcRepository;
 import com.ats.webapi.repository.logistics.MachineServicingRepository;
 import com.ats.webapi.repository.logistics.MechTypeRepository;
@@ -90,6 +93,9 @@ public class LogisticsApiController {
 	
 	@Autowired
 	MachineServicingRepository machineServicingRepository;
+	
+	@Autowired
+	AlertAmcRecordRepository alertAmcRecordRepository;
 	
 	
 	@RequestMapping(value = { "/postDriverMaster" }, method = RequestMethod.POST)
@@ -1386,5 +1392,66 @@ public class LogisticsApiController {
 		
 		return getAllMachineServicing;
 
+	}
+	
+	//-----------------------------------------------ForDashboard---------------------------------------------------
+	
+	@RequestMapping(value = { "/getAlertAmcRecord" }, method = RequestMethod.GET)
+	public @ResponseBody List<AlertAmcRecord> getAlertAmcRecord()
+	{ 
+		
+		List<AlertAmcRecord> getAllMachineServicing = new ArrayList<AlertAmcRecord>();
+		try {
+			 Date date = new Date();
+			 SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd");
+			 String today = formate.format(date);
+			 System.out.println("todays " + today);
+			getAllMachineServicing = alertAmcRecordRepository.getAlertAmcRecord(today); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getAllMachineServicing; 
+	}
+	
+	@RequestMapping(value = { "/getAlertDriverRecord" }, method = RequestMethod.GET)
+	public @ResponseBody List<DriverMaster> getAlertDriverRecord()
+	{ 
+		
+		List<DriverMaster> getAlertDriverRecord = new ArrayList<DriverMaster>();
+		try {
+			 Date date = new Date();
+			 SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd");
+			 String today = formate.format(date);
+			 System.out.println("todays " + today);
+			 getAlertDriverRecord = driverMasterService.getAlertDriverRecord(today); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getAlertDriverRecord; 
+	}
+	
+	@RequestMapping(value = { "/getAlertDocumentRecord" }, method = RequestMethod.GET)
+	public @ResponseBody List<VehicleDcoument> getAlertDocumentRecord()
+	{ 
+		
+		List<VehicleDcoument> getAlertDocumentRecord = new ArrayList<VehicleDcoument>();
+		try {
+			
+			Date date = new Date();
+			 SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd");
+			 String today = formate.format(date);
+			 System.out.println("todays " + today);  
+			getAlertDocumentRecord = vehicleDcoumentService.getAlertDocumentRecord(today); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return getAlertDocumentRecord;
 	}
 }

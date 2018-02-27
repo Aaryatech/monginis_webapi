@@ -89,6 +89,22 @@ public class DriverMasterServiceImpl implements DriverMasterService{
 			}
 			return getDriverById;
 	}
+
+
+	@Override
+	public List<DriverMaster> getAlertDriverRecord(String today) {
+		 List<DriverMaster> getAlertDriverRecord = new ArrayList<DriverMaster>();
+			try {
+				  
+				getAlertDriverRecord = driverMasterRepository.getAlertDriverRecord(today);
+				 
+				System.out.println(getAlertDriverRecord.toString());
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
+			return getAlertDriverRecord;
+	}
 	
 	
 

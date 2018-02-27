@@ -47,6 +47,9 @@ public class VehicleDcoument {
 	@Column(name = "del_status")
 	private int delStatus;
 	
+	@Column(name = "remaining_day")
+	private int remainingDay;
+	
 
 	public int getVehDocId() {
 		return vehDocId;
@@ -128,12 +131,20 @@ public class VehicleDcoument {
 		this.delStatus = delStatus;
 	}
 
+	public int getRemainingDay() {
+		return remainingDay;
+	}
+
+	public void setRemainingDay(int remainingDay) {
+		this.remainingDay = remainingDay;
+	}
+
 	@Override
 	public String toString() {
 		return "VehicleDcoument [vehDocId=" + vehDocId + ", vehId=" + vehId + ", docId=" + docId + ", entryDate="
 				+ entryDate + ", docDate=" + docDate + ", docExpireDate=" + docExpireDate + ", docExpNotificationDate="
 				+ docExpNotificationDate + ", docPath=" + docPath + ", currentKm=" + currentKm + ", delStatus="
-				+ delStatus + "]";
+				+ delStatus + ", remainingDay=" + remainingDay + "]";
 	}
 	
 	
