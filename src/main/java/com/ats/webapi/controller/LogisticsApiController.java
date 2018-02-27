@@ -1,5 +1,6 @@
 package com.ats.webapi.controller; 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -974,6 +975,27 @@ public class LogisticsApiController {
 
 	}
 	
+	@RequestMapping(value = { "/getServicingListBetweenDateByTypeId" }, method = RequestMethod.POST)
+	public @ResponseBody List<ServHeader> getServicingListBetweenDateByTypeId(@RequestParam ("fromDate") String fromDate,@RequestParam ("toDate") String toDate,
+			@RequestParam ("typeId") int typeId)
+	{  
+		
+		List<ServHeader> showServicingListBetweenDate = new ArrayList<ServHeader>();
+		try {
+			  
+				  showServicingListBetweenDate = servHeaderService.getServicingListBetweenDateByTypeId(fromDate,toDate,typeId); 
+			  
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return showServicingListBetweenDate;
+
+	}
+	
 	@RequestMapping(value = { "/approvedServiceHeader" }, method = RequestMethod.POST)
 	public @ResponseBody Info approvedServiceHeader(@RequestParam ("servId") int servId)
 	{  
@@ -1328,7 +1350,7 @@ public class LogisticsApiController {
 		
 		List<MachineServicing> getAllMachineServicing = new ArrayList<MachineServicing>();
 		try {
-			  
+			 
 			getAllMachineServicing = machineServicingRepository.findAllByIsApprovedAndDelStatus(0,0); 
 		} catch (Exception e) {
 
@@ -1336,5 +1358,33 @@ public class LogisticsApiController {
 		} 
 		
 		return getAllMachineServicing; 
+	}
+	
+	@RequestMapping(value = { "/getMachineServicingWithDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<MachineServicing> getMachineServicingWithDate(@RequestParam ("machineId") int machineId,@RequestParam ("fromDate") String fromDate
+			,@RequestParam ("toDate") String toDate)
+	{
+		 
+		List<MachineServicing> getAllMachineServicing = new ArrayList<MachineServicing>();
+		try {
+			  if(machineId==0)
+			  {
+				  getAllMachineServicing = machineServicingRepository.findByBetweenDate(fromDate,toDate); 
+					System.out.println("getAllMachineServicing " + getAllMachineServicing);
+			  }
+			  else
+			  {
+				  getAllMachineServicing = machineServicingRepository.findByBetweenDateByMachineId(fromDate,toDate,machineId); 
+					System.out.println("getAllMachineServicing " + getAllMachineServicing);
+			  }
+			
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return getAllMachineServicing;
+
 	}
 }

@@ -163,4 +163,20 @@ public class ServHeaderServiceImpl implements ServHeaderService{
 		return showServicingListBetweenDateAndFilter;
 	}
 
+	@Override
+	public List<ServHeader> getServicingListBetweenDateByTypeId(String fromDate, String toDate, int typeId) {
+		List<ServHeader> getServicingListBetweenDateByTypeId = new ArrayList<ServHeader>();
+		try {
+			  
+			  
+			getServicingListBetweenDateByTypeId = servHeaderRepository.getServicingListBetweenDateByTypeId(fromDate,toDate,typeId);
+			 
+			System.out.println(getServicingListBetweenDateByTypeId.toString());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return getServicingListBetweenDateByTypeId;
+	}
+
 }

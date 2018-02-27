@@ -22,6 +22,8 @@ public interface ServHeaderService {
 
 	Info approvedServiceHeader(int servId);
 
-	List<ServHeader> showServicingListBetweenDateAndFilter(String fromDate, String toDate, int type); 
+	List<ServHeader> showServicingListBetweenDateAndFilter(String fromDate, String toDate, int type);
+
+	List<ServHeader> getServicingListBetweenDateByTypeId(String fromDate, String toDate, int typeId); 
 
 }
