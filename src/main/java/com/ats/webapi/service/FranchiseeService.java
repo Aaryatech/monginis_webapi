@@ -2,6 +2,7 @@ package com.ats.webapi.service;
 
 import java.util.List;
 
+import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.FrTarget;
 import com.ats.webapi.model.FrTargetList;
 import com.ats.webapi.model.FrTotalSale;
@@ -13,7 +14,7 @@ import com.ats.webapi.model.Info;
 public interface FranchiseeService {
 
 
-	public String saveFranchisee(Franchisee franchisee);
+	public ErrorMessage saveFranchisee(Franchisee franchisee);
 
 	public List<Franchisee> findAllFranchisee();
 

@@ -1,5 +1,6 @@
 package com.ats.webapi.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -40,5 +41,8 @@ public interface FranchiseSupRepository extends JpaRepository<FranchiseSup, Inte
 	@Query(value="select token from m_franchise_sup where fr_id=:frId",nativeQuery=true)
 	String findTokenByFrId(@Param("frId")int frId);
 
-
+	@Query(value="select m_franchise_sup.token from m_franchisee,m_franchise_sup where m_franchisee.fr_id=m_franchise_sup.fr_id And DATE_FORMAT(owner_birth_date,'%m-%d')=DATE_FORMAT(:date,'%m-%d')",nativeQuery=true)
+	List<String> findTokensByBirthdate(@Param("date")Date date);
+	
+	
 }

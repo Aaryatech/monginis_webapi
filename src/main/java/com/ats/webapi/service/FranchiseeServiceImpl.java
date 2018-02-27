@@ -50,7 +50,7 @@ public class FranchiseeServiceImpl implements FranchiseeService {
     FrTotalSaleRepository frTotalSaleRepository;
     
 	@Override
-	public String saveFranchisee(Franchisee franchisee) {
+	public ErrorMessage saveFranchisee(Franchisee franchisee) {
 		
 		Franchisee dbFranchisee= franchiseeRepository.save(franchisee);
 		ErrorMessage errorMessage=new ErrorMessage();
@@ -67,7 +67,7 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 			errorMessage.setMessage("Franchisee insertion Failed");
 			
 		}
-		return JsonUtil.javaToJson(errorMessage);
+		return errorMessage;
 
 	}
 

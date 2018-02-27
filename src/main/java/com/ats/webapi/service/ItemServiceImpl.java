@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.commons.Firebase;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.GetItemSup;
 import com.ats.webapi.model.Info;
@@ -13,6 +14,7 @@ import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
 import com.ats.webapi.model.tray.TrayType;
+import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.GetItemSupRepository;
 import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.ItemSupRepository;
@@ -32,7 +34,8 @@ public class ItemServiceImpl implements ItemService{
 	
 	@Autowired
 	TrayTypeRepository trayTypeRepository;
-	
+	@Autowired
+	FranchiseSupRepository franchiseSupRepository;
 	String jsonUser = "{}";
 
 	public Item findItems(int id) {
@@ -49,7 +52,18 @@ public class ItemServiceImpl implements ItemService{
 					item= itemRepository.save(item);
 					errorMessage.setError(false);
 					errorMessage.setMessage("Item Inserted/Updated Successfully");
-		
+
+					 try {
+						    List<String> frTokens=franchiseSupRepository.findTokens();
+
+						 for(String token:frTokens) {
+				          Firebase.sendPushNotifForCommunication(token,"Item Details Updated","Changes have been made in OPS at item level, SP level, in the rates. Kindly refer the OPS for exact changes made.","updateList");
+						 }
+				         }
+				         catch(Exception e2)
+				         {
+					       e2.printStackTrace();
+				         }
 		
 		} catch (Exception e) {
 			errorMessage.setError(true);
@@ -114,6 +128,17 @@ public class ItemServiceImpl implements ItemService{
 
 		ItemSup itemSupRes=itemSupRepository.saveAndFlush(itemSup);
 		
+		 try {
+			    List<String> frTokens=franchiseSupRepository.findTokens();
+
+			 for(String token:frTokens) {
+	          Firebase.sendPushNotifForCommunication(token,"Item Details Updated","Changes have been made in OPS at item level, SP level, in the rates. Kindly refer the OPS for exact changes made.","updateList");
+			 }
+	         }
+	         catch(Exception e2)
+	         {
+		       e2.printStackTrace();
+	         }
 		return itemSupRes;
 	}
 

@@ -7,6 +7,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.commons.Firebase;
+import com.ats.webapi.model.AllFrIdName;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.SpCakeOrderRes;
 import com.ats.webapi.model.ErrorMessage;
@@ -14,6 +16,7 @@ import com.ats.webapi.model.SpCakeOrders;
 import com.ats.webapi.model.SpCakeOrdersList;
 import com.ats.webapi.model.SpCkOrderHis;
 import com.ats.webapi.model.SpCkOrderHisList;
+import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.SpCakeOrderHisRepository;
 import com.ats.webapi.repository.SpCakeOrdersRepository;
 
@@ -27,11 +30,15 @@ public class SpCakeOrdersServiceImpl implements SpCakeOrdersService {
 	@Autowired
 	SpCakeOrderHisRepository spCakeOrderHisRepository;
 	
+	@Autowired
+	FranchiseSupRepository franchiseSupRepository;
+	
 	SpCakeOrderRes spCakeOrderRes=new SpCakeOrderRes();
 	
 	ErrorMessage errorMessage=new ErrorMessage();
 	@Override
 	public SpCakeOrderRes placeSpCakeOrder(SpCakeOrders spCakeOrders) {
+		boolean flag=false;
 		try {
 		SpCakeOrders spCakeOrder=spCakeOrdersRepository.save(spCakeOrders);
 		if(spCakeOrder!=null) {
@@ -40,6 +47,32 @@ public class SpCakeOrdersServiceImpl implements SpCakeOrdersService {
 			errorMessage.setMessage("Order Saved Successfully");
 			spCakeOrderRes.setErrorMessage(errorMessage);
 			spCakeOrderRes.setSpCakeOrder(spCakeOrder);
+			
+			//-----------------------For Notification-----------------
+			String frToken="";
+			
+			if(flag==false) {
+				
+			try {
+				
+				 frToken=franchiseSupRepository.findTokenByFrId(spCakeOrders.getFrId());
+
+				flag=true;
+			}
+			catch (Exception e1) {
+				e1.printStackTrace();
+				
+			}
+			 try {
+		          Firebase.sendPushNotifForCommunication(frToken,"Order Placed Sucessfully","Your SP Order has been saved. Order Saved is--SP Code-Sp name--Weight--Flavour-Message--Total Amount. Thank You.Team Monginis","sporder");
+		    	
+		         }
+		         catch(Exception e2)
+		         {
+			       e2.printStackTrace();
+		         }
+			}
+			//-----------------------------------------------------
 		}
 	} catch (Exception e) {
 		

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.commons.Firebase;
 import com.ats.webapi.model.CategoryList;
 import com.ats.webapi.model.FrListForSupp;
 import com.ats.webapi.model.FrTarget;
@@ -29,6 +30,7 @@ import com.ats.webapi.model.SpCakeSupplement;
 import com.ats.webapi.model.SubCategory;
 import com.ats.webapi.model.tray.TrayType;
 import com.ats.webapi.repository.FrListForSuppRepository;
+import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
 import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.SpCakeListRepository;
@@ -70,7 +72,19 @@ public class MasterController {
 	ItemRepository itemRepository;
 	
 	@Autowired
+	FranchiseSupRepository franchiseSupRepository;
+	@Autowired
 	private SubCategoryRepository subCategoryRepository;
+	
+	// ----------------------------GET FrToken--------------------------------
+	@RequestMapping(value = { "/getFrToken" }, method = RequestMethod.POST)
+	public @ResponseBody String getFrToken(@RequestParam("frId") int frId) {
+		
+	  String frToken=franchiseSupRepository.findTokenByFrId(frId);
+
+	  return frToken;
+	}
+	//-------------------------------------------------------------------------
 	// ----------------------------SAVE Item Sup---------------------------
 		@RequestMapping(value = { "/saveItemSup" }, method = RequestMethod.POST)
 		public @ResponseBody Info saveItemSup(@RequestBody ItemSup itemSup) {
@@ -115,6 +129,18 @@ public class MasterController {
 						if (spCakeSupplementRes != null) {
 							info.setError(false);
 							info.setMessage("SpCakeSupplement Saved Successfully.");
+							
+							try {
+							    List<String> frTokens=franchiseSupRepository.findTokens();
+
+							 for(String token:frTokens) {
+					          Firebase.sendPushNotifForCommunication(token,"Special Cake Details Updated","Changes have been made in OPS at item level, SP level, in the rates. Kindly refer the OPS for exact changes made.","updateList");
+							 }
+					         }
+					         catch(Exception e2)
+					         {
+						       e2.printStackTrace();
+					         }
 						} else {
 							info.setError(true);
 							info.setMessage("SpCakeSupplement Not Saved .");

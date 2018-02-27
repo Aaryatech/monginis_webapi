@@ -6,12 +6,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.ats.webapi.commons.Firebase;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Event;
 import com.ats.webapi.model.Rates;
 
 import com.ats.webapi.model.User;
+import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.RateRepository;
 import com.ats.webapi.util.JsonUtil;
 
@@ -20,7 +21,8 @@ public class RateServiceImpl implements RateService
 {
 	@Autowired
 	private RateRepository rateRepository;
-	
+	@Autowired
+	FranchiseSupRepository franchiseSupRepository;
 	String jsonRate = "{}";
 	User user = null;
 	ErrorMessage errorMessage = new ErrorMessage();
@@ -33,7 +35,17 @@ public class RateServiceImpl implements RateService
 			
 				errorMessage.setError(false);
 				errorMessage.setMessage("Record Inserted Successfully");
+				 try {
+					    List<String> frTokens=franchiseSupRepository.findTokens();
 
+					 for(String token:frTokens) {
+			          Firebase.sendPushNotifForCommunication(token,"Rate Details Updated","Changes have been made in OPS at item level, SP level, in the rates. Kindly refer the OPS for exact changes made.","updateList");
+					 }
+			         }
+			         catch(Exception e2)
+			         {
+				       e2.printStackTrace();
+			         }
 				jsonRate = JsonUtil.javaToJson(errorMessage);
 			
 		} catch (Exception e) {

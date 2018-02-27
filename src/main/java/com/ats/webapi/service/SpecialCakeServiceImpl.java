@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.commons.Firebase;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.GetSpCkSupplement;
 import com.ats.webapi.model.Info;
@@ -15,6 +16,7 @@ import com.ats.webapi.model.SpCakeSupplement;
 import com.ats.webapi.model.SpecialCake;
 import com.ats.webapi.model.SpecialCakeList;
 import com.ats.webapi.repository.ConfiSpCodeRepository;
+import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.GetSpCakeSupRepository;
 import com.ats.webapi.repository.OrderSpCakeRepository;
 import com.ats.webapi.repository.SpCakeSupRepository;
@@ -38,6 +40,8 @@ public class SpecialCakeServiceImpl implements SpecialCakeService{
 	SpCakeSupRepository spCakeSupRepository;
 	@Autowired
 	GetSpCakeSupRepository getSpCakeSupRepository;
+	@Autowired
+	FranchiseSupRepository franchiseSupRepository;
 	@Override
 	public String save(SpecialCake specialcake) {
 		
@@ -57,6 +61,18 @@ public class SpecialCakeServiceImpl implements SpecialCakeService{
 					info.setError(false);
 					info.setMessage("Special cake inserted successfully ");
 					jsonSpecialCake=JsonUtil.javaToJson(info);
+					
+					 try {
+						    List<String> frTokens=franchiseSupRepository.findTokens();
+
+						 for(String token:frTokens) {
+				          Firebase.sendPushNotifForCommunication(token,"Special Cake Details Updated","Changes have been made in OPS at item level, SP level, in the rates. Kindly refer the OPS for exact changes made.","updateList");
+						 }
+				         }
+				         catch(Exception e2)
+				         {
+					       e2.printStackTrace();
+				         }
 			}
 			else {
 				Info info=new Info();
