@@ -1673,7 +1673,7 @@ public class RestApiController {
 	// Save Franchisee
 	@RequestMapping(value = { "/saveFranchisee" }, method = RequestMethod.POST)
 	@ResponseBody
-	public String saveFranchisee(@RequestParam("frName") String frName, @RequestParam("frCode") String frCode,
+	public ErrorMessage saveFranchisee(@RequestParam("frName") String frName, @RequestParam("frCode") String frCode,
 			@RequestParam("frOpeningDate") String frOpeningDate, @RequestParam("frRate") int frRate,
 			@RequestParam("frImage") String frImage, @RequestParam("frRouteId") int frRouteId,
 			@RequestParam("frCity") String frCity, @RequestParam("frKg1") int frKg1, @RequestParam("frKg2") int frKg2,
@@ -1730,7 +1730,7 @@ public class RestApiController {
 		franchisee.setIsSameState(isSameState);
 
 		System.out.println("" + franchisee.toString());
-		String jsonResult = franchiseeService.saveFranchisee(franchisee);
+		ErrorMessage jsonResult = franchiseeService.saveFranchisee(franchisee);
 
 		return jsonResult;
 	}
@@ -2294,11 +2294,11 @@ public class RestApiController {
 		try {
 			Franchisee franchisee = franchiseeService.findFranchisee(frId);
 			franchisee.setDelStatus(1);
-			String jsonResult = franchiseeService.saveFranchisee(franchisee);
-			if (jsonResult == "") {
+			ErrorMessage jsonResult = franchiseeService.saveFranchisee(franchisee);
+			if (jsonResult.isError()) {
 				info.setError(true);
 				info.setMessage("Franchisee deletion failed");
-			} else if (jsonResult != "") {
+			} else if (!jsonResult.isError()){
 				info.setError(false);
 				info.setMessage("Franchisee deletion Successful");
 			}
@@ -3030,7 +3030,7 @@ public class RestApiController {
 	// 29 aug updateFranchisee web service
 	@RequestMapping(value = { "/updateFranchisee" }, method = RequestMethod.POST)
 	@ResponseBody
-	public String updateFranchisee(@RequestParam("frId") int frId, @RequestParam("frName") String frName,
+	public ErrorMessage updateFranchisee(@RequestParam("frId") int frId, @RequestParam("frName") String frName,
 			@RequestParam("frCode") String frCode, @RequestParam("frOpeningDate") String frOpeningDate,
 			@RequestParam("frRate") int frRate, @RequestParam("frImage") String frImage,
 			@RequestParam("frRouteId") int frRouteId, @RequestParam("frCity") String frCity,
@@ -3045,7 +3045,7 @@ public class RestApiController {
 			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
 			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget,
 			@RequestParam("isSameState") int isSameState) {
-		String jsonResult = "";
+		ErrorMessage jsonResult = new ErrorMessage();
 		try {
 
 			System.out.println("inside update fr rest controller:1721 line");
