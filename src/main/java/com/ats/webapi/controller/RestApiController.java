@@ -432,6 +432,8 @@ public class RestApiController {
 	//comment 24 FEb
 	@RequestMapping(value = "/updateStoreGvn", method = RequestMethod.POST)
 	public @ResponseBody Info updateStoreGvn(@RequestBody List<TempGrnGvnBeanUp> dataList) {
+		
+		System.out.println("inside rest /updateStoreGvn : input para = dataList "+dataList.toString());
 
 		Info info=new Info();
 		System.out.println("inside rest");
