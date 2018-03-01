@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.logistics.AlertAmcRecord;
+import com.ats.webapi.model.logistics.AlertMachineServicingRecord;
+import com.ats.webapi.model.logistics.AlertVeihcleServicing;
 import com.ats.webapi.model.logistics.Dealer;
 import com.ats.webapi.model.logistics.Document;
 import com.ats.webapi.model.logistics.DriverMaster;
@@ -30,6 +32,8 @@ import com.ats.webapi.model.logistics.VehicalMaster;
 import com.ats.webapi.model.logistics.VehicalType;
 import com.ats.webapi.model.logistics.VehicleDcoument;
 import com.ats.webapi.repository.logistics.AlertAmcRecordRepository;
+import com.ats.webapi.repository.logistics.AlertMachineServicingRepository;
+import com.ats.webapi.repository.logistics.AlertVeihcleServicingRepository;
 import com.ats.webapi.repository.logistics.LogisAmcRepository;
 import com.ats.webapi.repository.logistics.MachineServicingRepository;
 import com.ats.webapi.repository.logistics.MechTypeRepository;
@@ -96,6 +100,12 @@ public class LogisticsApiController {
 	
 	@Autowired
 	AlertAmcRecordRepository alertAmcRecordRepository;
+	
+	@Autowired
+	AlertMachineServicingRepository alertMachineServicingRepository;
+	
+	@Autowired
+	AlertVeihcleServicingRepository alertVeihcleServicingRepository;
 	
 	
 	@RequestMapping(value = { "/postDriverMaster" }, method = RequestMethod.POST)
@@ -957,19 +967,21 @@ public class LogisticsApiController {
 	
 	@RequestMapping(value = { "/getServicingListBetweenDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<ServHeader> showServicingListBetweenDate(@RequestParam ("fromDate") String fromDate,@RequestParam ("toDate") String toDate,
-			@RequestParam ("type") int type)
+			@RequestParam ("type") int type, @RequestParam ("vehId") int vehId)
 	{  
 		
 		List<ServHeader> showServicingListBetweenDate = new ArrayList<ServHeader>();
 		try {
-			  if(type==0)
+			  if(vehId==0)
 			  {
-				  showServicingListBetweenDate = servHeaderService.showServicingListBetweenDate(fromDate,toDate); 
+				  showServicingListBetweenDate = servHeaderService.showServicingListBetweenDate(fromDate,toDate,type);
 			  }
 			  else
 			  {
-				  showServicingListBetweenDate = servHeaderService.showServicingListBetweenDateAndFilter(fromDate,toDate,type); 
+				  showServicingListBetweenDate = servHeaderService.showServicingListBetweenDateAndFilter(fromDate,toDate,type,vehId);
 			  }
+				   
+			  
 			
 		} catch (Exception e) {
 
@@ -1396,23 +1408,43 @@ public class LogisticsApiController {
 	
 	//-----------------------------------------------ForDashboard---------------------------------------------------
 	
-	@RequestMapping(value = { "/getAlertAmcRecord" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/getAlertMachineAmcRecord" }, method = RequestMethod.GET)
 	public @ResponseBody List<AlertAmcRecord> getAlertAmcRecord()
 	{ 
 		
-		List<AlertAmcRecord> getAllMachineServicing = new ArrayList<AlertAmcRecord>();
+		List<AlertAmcRecord> getAlertMachineAmcRecord = new ArrayList<AlertAmcRecord>();
 		try {
 			 Date date = new Date();
 			 SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd");
 			 String today = formate.format(date);
 			 System.out.println("todays " + today);
-			getAllMachineServicing = alertAmcRecordRepository.getAlertAmcRecord(today); 
+			 getAlertMachineAmcRecord = alertAmcRecordRepository.getAlertAmcRecord(today); 
 		} catch (Exception e) {
 
 			e.printStackTrace();
 		} 
 		
-		return getAllMachineServicing; 
+		return getAlertMachineAmcRecord; 
+	}
+	
+	@RequestMapping(value = { "/getAlertvehicleAmcRecord" }, method = RequestMethod.GET)
+	public @ResponseBody List<AlertAmcRecord> getAlertvehicleAmcRecord()
+	{ 
+		
+		List<AlertAmcRecord> getAlertvehicleAmcRecord = new ArrayList<AlertAmcRecord>();
+		try {
+			 Date date = new Date();
+			 SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd");
+			 String today = formate.format(date);
+			 System.out.println("todays " + today);
+			 getAlertvehicleAmcRecord = alertAmcRecordRepository.getAlertvehicleAmcRecord(today); 
+			 System.out.println("getAlertvehicleAmcRecord "+ getAlertvehicleAmcRecord);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getAlertvehicleAmcRecord; 
 	}
 	
 	@RequestMapping(value = { "/getAlertDriverRecord" }, method = RequestMethod.GET)
@@ -1426,6 +1458,7 @@ public class LogisticsApiController {
 			 String today = formate.format(date);
 			 System.out.println("todays " + today);
 			 getAlertDriverRecord = driverMasterService.getAlertDriverRecord(today); 
+			 System.out.println("getAlertDriverRecord "+ getAlertDriverRecord);
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -1446,6 +1479,7 @@ public class LogisticsApiController {
 			 String today = formate.format(date);
 			 System.out.println("todays " + today);  
 			getAlertDocumentRecord = vehicleDcoumentService.getAlertDocumentRecord(today); 
+			 System.out.println("getAlertDocumentRecord "+ getAlertDocumentRecord);
 		} catch (Exception e) {
 
 			e.printStackTrace();
@@ -1453,5 +1487,84 @@ public class LogisticsApiController {
         
 		
 		return getAlertDocumentRecord;
+	}
+	
+	@RequestMapping(value = { "/getAlertMachineServicingRecord" }, method = RequestMethod.GET)
+	public @ResponseBody List<AlertMachineServicingRecord> getAlertMachineServicingRecord()
+	{ 
+		
+		List<AlertMachineServicingRecord> getAlertMachineServicingRecord = new ArrayList<AlertMachineServicingRecord>();
+		try {
+			 Date date = new Date();
+			 SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd");
+			 String today = formate.format(date);
+			 System.out.println("todays " + today);
+			 getAlertMachineServicingRecord = alertMachineServicingRepository.getAlertMachineServicingRecord(today);
+			 System.out.println("getAlertMachineServicingRecord "+ getAlertMachineServicingRecord);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getAlertMachineServicingRecord; 
+	}
+	
+	@RequestMapping(value = { "/getAlertVeihcleServicingRecord" }, method = RequestMethod.GET)
+	public @ResponseBody List<AlertVeihcleServicing> getAlertVeihcleServicingRecord()
+	{ 
+		
+		List<AlertVeihcleServicing> getAlertVeihcleServicingRecord = new ArrayList<AlertVeihcleServicing>();
+		try {
+			  
+			 getAlertVeihcleServicingRecord = alertVeihcleServicingRepository.getAlertVeihcleServicingRecord(); 
+			 System.out.println("getAlertVeihcleServicingRecord "+ getAlertVeihcleServicingRecord);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getAlertVeihcleServicingRecord; 
+	}
+	
+	//-----------------------------------------alertVehicle-----------------------------------------
+	
+	@RequestMapping(value = { "/postAlertVeihcleServicing" }, method = RequestMethod.POST)
+	public @ResponseBody AlertVeihcleServicing postAlertVeihcleServicing(@RequestBody AlertVeihcleServicing alertVeihcleServicing)
+	{
+		System.out.println("alertVeihcleServicing :"+alertVeihcleServicing.toString()); 
+		AlertVeihcleServicing response = new AlertVeihcleServicing();
+		try {
+			  
+			response = alertVeihcleServicingRepository.save(alertVeihcleServicing); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+         
+		return response; 
+	}
+	
+	@RequestMapping(value = { "/getAlertVeihcleServicingByVehIdAndType" }, method = RequestMethod.POST)
+	public @ResponseBody AlertVeihcleServicing getAlertVeihcleServicingByVehIdAndType(@RequestParam ("vehId") int vehId,@RequestParam ("typeId") int typeId)
+	{ 
+		System.out.println("vehId "+vehId);
+		System.out.println("typeId "+typeId);
+		AlertVeihcleServicing getVehicleAlert = null;
+		try {
+			  
+			getVehicleAlert = alertVeihcleServicingRepository.findByVehIdAndTypeId(vehId,typeId);
+			//System.out.println(getVehicleAlert.toString());
+			if(getVehicleAlert==null)
+			{
+				 getVehicleAlert = new AlertVeihcleServicing();
+			}
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return getVehicleAlert;
+
 	}
 }

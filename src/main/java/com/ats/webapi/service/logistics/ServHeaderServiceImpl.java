@@ -107,12 +107,12 @@ public class ServHeaderServiceImpl implements ServHeaderService{
 	}
 
 	@Override
-	public List<ServHeader> showServicingListBetweenDate(String fromDate, String toDate) {
+	public List<ServHeader> showServicingListBetweenDate(String fromDate, String toDate, int type) {
 		List<ServHeader> showServicingListBetweenDate = new ArrayList<ServHeader>();
 		try {
 			  
 			  
-			showServicingListBetweenDate = servHeaderRepository.showServicingListPendingAndCurrentDate(fromDate,toDate);
+			showServicingListBetweenDate = servHeaderRepository.showServicingListBetweenDate(fromDate,toDate,type);
 			 
 			System.out.println(showServicingListBetweenDate.toString());
 		} catch (Exception e) {
@@ -148,12 +148,12 @@ public class ServHeaderServiceImpl implements ServHeaderService{
 	}
 
 	@Override
-	public List<ServHeader> showServicingListBetweenDateAndFilter(String fromDate, String toDate, int type) {
+	public List<ServHeader> showServicingListBetweenDateAndFilter(String fromDate, String toDate, int type, int vehId) {
 		List<ServHeader> showServicingListBetweenDateAndFilter = new ArrayList<ServHeader>();
 		try {
 			  
 			  
-			showServicingListBetweenDateAndFilter = servHeaderRepository.showServicingListBetweenDateAndFilter(fromDate,toDate,type);
+			showServicingListBetweenDateAndFilter = servHeaderRepository.showServicingListBetweenDateAndFilter(fromDate,toDate,type,vehId);
 			 
 			System.out.println(showServicingListBetweenDateAndFilter.toString());
 		} catch (Exception e) {

@@ -67,6 +67,15 @@ public class MachineMaster {
 
 	@Column(name = "del_status")
 	private int delStatus;
+	
+	@Column(name = "last_amc_date")
+	private Date lastAmcDate;
+	
+	@Column(name = "next_amc_date")
+	private Date nextAmcDate;
+	
+	@Column(name = "alert_amc_date")
+	private Date alertAmcDate;
 
 	public int getMachineId() {
 		return machineId;
@@ -202,6 +211,30 @@ public class MachineMaster {
 
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getLastAmcDate() {
+		return lastAmcDate;
+	}
+
+	public void setLastAmcDate(Date lastAmcDate) {
+		this.lastAmcDate = lastAmcDate;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getNextAmcDate() {
+		return nextAmcDate;
+	}
+
+	public void setNextAmcDate(Date nextAmcDate) {
+		this.nextAmcDate = nextAmcDate;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getAlertAmcDate() {
+		return alertAmcDate;
+	}
+
+	public void setAlertAmcDate(Date alertAmcDate) {
+		this.alertAmcDate = alertAmcDate;
 	}
 	
 	

@@ -88,6 +88,15 @@ public class VehicalMaster {
 	
 	@Column(name = "alert_next_servicing_km")
 	private int alertNextServicingKm;
+	
+	@Column(name = "last_amc_date")
+	private Date lastAmcDate;
+	
+	@Column(name = "next_amc_date")
+	private Date nextAmcDate;
+	
+	@Column(name = "alert_amc_date")
+	private Date alertAmcDate;
 
 	public int getVehId() {
 		return vehId;
@@ -286,6 +295,32 @@ public class VehicalMaster {
 	public void setAlertNextServicingKm(int alertNextServicingKm) {
 		this.alertNextServicingKm = alertNextServicingKm;
 	}
+	
+	
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getLastAmcDate() {
+		return lastAmcDate;
+	}
+
+	public void setLastAmcDate(Date lastAmcDate) {
+		this.lastAmcDate = lastAmcDate;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getNextAmcDate() {
+		return nextAmcDate;
+	}
+
+	public void setNextAmcDate(Date nextAmcDate) {
+		this.nextAmcDate = nextAmcDate;
+	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getAlertAmcDate() {
+		return alertAmcDate;
+	}
+
+	public void setAlertAmcDate(Date alertAmcDate) {
+		this.alertAmcDate = alertAmcDate;
+	}
 
 	@Override
 	public String toString() {
@@ -297,7 +332,8 @@ public class VehicalMaster {
 				+ ", wheelChangeFreq=" + wheelChangeFreq + ", battaryChangeFreq=" + battaryChangeFreq
 				+ ", acChangeFreq=" + acChangeFreq + ", currentRunningKm=" + currentRunningKm + ", lastServicingKm="
 				+ lastServicingKm + ", nextServicingKm=" + nextServicingKm + ", alertNextServicingKm="
-				+ alertNextServicingKm + "]";
+				+ alertNextServicingKm + ", lastAmcDate=" + lastAmcDate + ", nextAmcDate=" + nextAmcDate
+				+ ", alertAmcDate=" + alertAmcDate + "]";
 	}
 
 	

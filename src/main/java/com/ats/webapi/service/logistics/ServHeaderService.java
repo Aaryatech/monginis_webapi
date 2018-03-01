@@ -18,11 +18,11 @@ public interface ServHeaderService {
 
 	List<ServHeader> showServicingListPendingAndCurrentDate();
 
-	List<ServHeader> showServicingListBetweenDate(String fromDate, String toDate);
+	List<ServHeader> showServicingListBetweenDate(String fromDate, String toDate,int type);
 
 	Info approvedServiceHeader(int servId);
 
-	List<ServHeader> showServicingListBetweenDateAndFilter(String fromDate, String toDate, int type);
+	List<ServHeader> showServicingListBetweenDateAndFilter(String fromDate, String toDate, int type,int vehId);
 
 	List<ServHeader> getServicingListBetweenDateByTypeId(String fromDate, String toDate, int typeId); 
 

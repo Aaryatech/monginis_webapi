@@ -20,6 +20,10 @@ public interface VehicalMasterRepository  extends JpaRepository<VehicalMaster, I
 
 	List<VehicalMaster> findByDelStatus(int delStatus);
 
-	VehicalMaster findByVehId(int vehicalId); 
+	VehicalMaster findByVehId(int vehicalId);
+
+	/*@Query(value="select amc_id,mech_name,mech_id,dealer_name,dealer_id,type_id,amc_from_date,amc_to_date,amc_alert_date,DATEDIFF(amc_to_date,:today) AS remaining_day "
+			+ "from m_logis_amc where (amc_to_date >= :today and amc_alert_date <= :today) or amc_to_date < :today",nativeQuery=true)
+	List<VehicalMaster> getAlertVehicleRecord(); */
 
 }

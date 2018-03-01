@@ -15,58 +15,44 @@ public class AlertAmcRecord {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="amc_id")
-	private int amcId;
-	
-	@Column(name="mech_id")
-	private int mechId;
-	
-	@Column(name="mech_name")
-	private String mechName;
+	@Column(name="id")
+	private int id;
+	  
+	@Column(name="name")
+	private String name;
 	
 	@Column(name="dealer_id")
 	private int dealerId;
 	
 	@Column(name="dealer_name")
 	private String dealerName;
+	  
+	@Column(name="last_amc_date")
+	private Date lastAmcDate;
 	
-	@Column(name="type_id")
-	private int typeId;
+	@Column(name="next_amc_date")
+	private Date nextAmcDate;
 	
-	@Column(name="amc_from_date")
-	private Date amcFromDate;
-	
-	@Column(name="amc_to_date")
-	private Date amcToDate;
-	
-	@Column(name="amc_alert_date")
-	private Date amcAlertDate;
+	@Column(name="alert_amc_date")
+	private Date alertAmcDate;
 	
 	@Column(name="remaining_day")
 	private int remainingDay;
 
-	public int getAmcId() {
-		return amcId;
+	public int getId() {
+		return id;
 	}
 
-	public void setAmcId(int amcId) {
-		this.amcId = amcId;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public int getMechId() {
-		return mechId;
+	public String getName() {
+		return name;
 	}
 
-	public void setMechId(int mechId) {
-		this.mechId = mechId;
-	}
-
-	public String getMechName() {
-		return mechName;
-	}
-
-	public void setMechName(String mechName) {
-		this.mechName = mechName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public int getDealerId() {
@@ -84,37 +70,29 @@ public class AlertAmcRecord {
 	public void setDealerName(String dealerName) {
 		this.dealerName = dealerName;
 	}
-
-	public int getTypeId() {
-		return typeId;
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+	public Date getLastAmcDate() {
+		return lastAmcDate;
 	}
 
-	public void setTypeId(int typeId) {
-		this.typeId = typeId;
+	public void setLastAmcDate(Date lastAmcDate) {
+		this.lastAmcDate = lastAmcDate;
 	}
 	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getAmcFromDate() {
-		return amcFromDate;
+	public Date getNextAmcDate() {
+		return nextAmcDate;
 	}
 
-	public void setAmcFromDate(Date amcFromDate) {
-		this.amcFromDate = amcFromDate;
+	public void setNextAmcDate(Date nextAmcDate) {
+		this.nextAmcDate = nextAmcDate;
 	}
 	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getAmcToDate() {
-		return amcToDate;
+	public Date getAlertAmcDate() {
+		return alertAmcDate;
 	}
 
-	public void setAmcToDate(Date amcToDate) {
-		this.amcToDate = amcToDate;
-	}
-	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
-	public Date getAmcAlertDate() {
-		return amcAlertDate;
-	}
-
-	public void setAmcAlertDate(Date amcAlertDate) {
-		this.amcAlertDate = amcAlertDate;
+	public void setAlertAmcDate(Date alertAmcDate) {
+		this.alertAmcDate = alertAmcDate;
 	}
 
 	public int getRemainingDay() {
@@ -127,12 +105,12 @@ public class AlertAmcRecord {
 
 	@Override
 	public String toString() {
-		return "AlertAmcRecord [amcId=" + amcId + ", mechId=" + mechId + ", mechName=" + mechName + ", dealerId="
-				+ dealerId + ", dealerName=" + dealerName + ", typeId=" + typeId + ", amcFromDate=" + amcFromDate
-				+ ", amcToDate=" + amcToDate + ", amcAlertDate=" + amcAlertDate + ", remainingDay=" + remainingDay
-				+ "]";
+		return "AlertAmcRecord [id=" + id + ", name=" + name + ", dealerId=" + dealerId + ", dealerName=" + dealerName
+				+ ", lastAmcDate=" + lastAmcDate + ", nextAmcDate=" + nextAmcDate + ", alertAmcDate=" + alertAmcDate
+				+ ", remainingDay=" + remainingDay + "]";
 	}
+
 	
-	
+	 
 
 }

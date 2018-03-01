@@ -85,4 +85,19 @@ public class VehicalMasterServiceImpl implements VehicalMasterService{
 		return getVehicalById;
 	}
 
+	/*@Override
+	public List<VehicalMaster> getAlertVehicleRecord() {
+		List<VehicalMaster> getAlertVehicleRecord = new ArrayList<VehicalMaster>();
+		try {
+			  
+			getAlertVehicleRecord = vehicalMasterRepository.getAlertVehicleRecord();
+			 
+			System.out.println(getAlertVehicleRecord.toString());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return getAlertVehicleRecord;
+	}*/
+
 }

@@ -18,4 +18,6 @@ public interface VehicalMasterService {
 
 	VehicalMaster getVehicalById(int vehicalId);
 
+	/*List<VehicalMaster> getAlertVehicleRecord();*/
+
 }

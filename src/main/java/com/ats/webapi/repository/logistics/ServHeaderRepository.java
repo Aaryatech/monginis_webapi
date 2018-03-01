@@ -20,8 +20,8 @@ public interface ServHeaderRepository extends JpaRepository<ServHeader, Integer>
 	@Query(value="select * from m_logis_serv where is_approved=0 or bill_date=:today",nativeQuery=true)
 	List<ServHeader> showServicingListPendingAndCurrentDate(@Param("today")String today);
 
-	@Query(value="select * from m_logis_serv where bill_date between :fromDate and :toDate",nativeQuery=true)
-	List<ServHeader> showServicingListPendingAndCurrentDate(@Param("fromDate")String fromDate, @Param("toDate")String toDate);
+	@Query(value="select * from m_logis_serv where (bill_date between :fromDate and :toDate) and serv_type2=:type",nativeQuery=true)
+	List<ServHeader> showServicingListBetweenDate(@Param("fromDate")String fromDate, @Param("toDate")String toDate,@Param("type")int type);
 
 	
 	@Transactional
@@ -29,8 +29,8 @@ public interface ServHeaderRepository extends JpaRepository<ServHeader, Integer>
 	@Query(" UPDATE ServHeader SET is_approved=:approved WHERE serv_id=:servId") 
 	int approvedServiceHeader(@Param("servId")int servId,@Param("approved")int approved);
 
-	@Query(value="select * from m_logis_serv where (bill_date between :fromDate and :toDate) and serv_type2=:type",nativeQuery=true)
-	List<ServHeader> showServicingListBetweenDateAndFilter(@Param("fromDate")String fromDate, @Param("toDate")String toDate,@Param("type") int type);
+	@Query(value="select * from m_logis_serv where (bill_date between :fromDate and :toDate) and serv_type2=:type and veh_id=:vehId",nativeQuery=true)
+	List<ServHeader> showServicingListBetweenDateAndFilter(@Param("fromDate")String fromDate, @Param("toDate")String toDate,@Param("type") int type,@Param("vehId") int vehId);
 
 	@Query(value="select * from m_logis_serv where (bill_date between :fromDate and :toDate) and type_id=:typeId",nativeQuery=true)
 	List<ServHeader> getServicingListBetweenDateByTypeId(@Param("fromDate")String fromDate, @Param("toDate")String toDate,@Param("typeId")int typeId); 
