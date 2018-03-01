@@ -15,7 +15,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
 public class CreditNote implements Serializable{
-
+ 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name="crnd_id")
@@ -44,7 +44,7 @@ public class CreditNote implements Serializable{
 
 	@Column(name="item_name")
 	private String itemName;
-	
+	  
 	@Column(name="hsn_code")
 	private String hsnCode;
 	
@@ -106,6 +106,15 @@ public class CreditNote implements Serializable{
 	
 	@Column(name="ref_invoice_date")
 	private Date refBillDate;
+	
+	@Column(name="grn_gvn_header_id")
+	private int grnGvnHeaderId;
+	
+	@Column(name="is_deposited")
+	private int isDeposited;
+	
+	@Column(name="grngvn_srno")
+	private String grngvnSrno;
 	
 	@Column(name="grn_gvn_id")
 	private String crDbNo;
@@ -384,18 +393,44 @@ public class CreditNote implements Serializable{
 		this.remark = remark;
 	}*/
 
+	public int getGrnGvnHeaderId() {
+		return grnGvnHeaderId;
+	}
+
+	public void setGrnGvnHeaderId(int grnGvnHeaderId) {
+		this.grnGvnHeaderId = grnGvnHeaderId;
+	}
+
+	public int getIsDeposited() {
+		return isDeposited;
+	}
+
+	public void setIsDeposited(int isDeposited) {
+		this.isDeposited = isDeposited;
+	}
+
+	public String getGrngvnSrno() {
+		return grngvnSrno;
+	}
+
+	public void setGrngvnSrno(String grngvnSrno) {
+		this.grngvnSrno = grngvnSrno;
+	}
+
 	@Override
 	public String toString() {
-		return "CreditNote [crndId=" + crndId + ", vNo=" + vNo + ", date=" + date + ", vType=" + vType + ", partyName="
-				+ partyName + ", gstin=" + gstin + ", state=" + state + ", itemName=" + itemName + ", hsnCode="
-				+ hsnCode + ", uom=" + uom + ", qty=" + qty + ", rate=" + rate + ", amount=" + amount + ", cgstPer="
-				+ cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cessPer=" + cessPer + ", cgstRs="
-				+ cgstRs + ", sgstRs=" + sgstRs + ", igstRs=" + igstRs + ", cessRs=" + cessRs + ", itemDiscPer="
-				+ itemDiscPer + ", totalDisc=" + totalDisc + ", roundOff=" + roundOff + ", totalAmt=" + totalAmt
-				+ ", billTotal=" + billTotal + ", refBillNo=" + refBillNo + ", refBillDate=" + refBillDate + ", crDbNo="
-				+ crDbNo + ", crDbDate=" + crDbDate +  "]";
+		return "CreditNote [crndId=" + crndId + ", crnNo=" + crnNo + ", vNo=" + vNo + ", date=" + date + ", vType="
+				+ vType + ", partyName=" + partyName + ", gstin=" + gstin + ", state=" + state + ", itemName="
+				+ itemName + ", hsnCode=" + hsnCode + ", uom=" + uom + ", qty=" + qty + ", rate=" + rate + ", amount="
+				+ amount + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cessPer="
+				+ cessPer + ", cgstRs=" + cgstRs + ", sgstRs=" + sgstRs + ", igstRs=" + igstRs + ", cessRs=" + cessRs
+				+ ", itemDiscPer=" + itemDiscPer + ", totalDisc=" + totalDisc + ", roundOff=" + roundOff + ", totalAmt="
+				+ totalAmt + ", billTotal=" + billTotal + ", refBillNo=" + refBillNo + ", refBillDate=" + refBillDate
+				+ ", grnGvnHeaderId=" + grnGvnHeaderId + ", isDeposited=" + isDeposited + ", grngvnSrno=" + grngvnSrno
+				+ ", crDbNo=" + crDbNo + ", crDbDate=" + crDbDate + "]";
 	}
-	
+ 
+  
 	
 	
 }

@@ -15,6 +15,7 @@ public interface TallyCreditNoteRepository extends JpaRepository<CreditNote, Int
 			"h.crn_date,\n" + 
 			" d.crnd_id,\n" + 
 			"h.crn_no,\n" + 
+			
 			"f.fr_name,\n" + 
 			"f.fr_gst_no,\n" + 
 			"sup.fr_state,\n" + 
@@ -38,6 +39,9 @@ public interface TallyCreditNoteRepository extends JpaRepository<CreditNote, Int
 			"d.ref_invoice_no,\n" + 
 			"d.ref_invoice_date,\n" + 
 			"d.grn_gvn_id,\n" + 
+			"d.grngvn_srno,\n" + 
+			"d.grn_gvn_header_id,\n" + 
+			"h.is_deposited,\n" + 
 			"d.grn_gvn_date from t_credit_note_header h,t_credit_note_details d,m_franchisee f,m_franchise_sup sup WHERE  h.is_tally_sync=0 AND h.crn_id=d.crn_id AND h.fr_id=f.fr_id AND h.fr_id=sup.fr_id",nativeQuery=true)
 	List<CreditNote> findByIsTallySync();
 
