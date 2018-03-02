@@ -19,6 +19,7 @@ import com.ats.webapi.model.FrItemStockConfigureList;
 import com.ats.webapi.model.gatesale.GateEmployee;
 import com.ats.webapi.model.gatesale.GateSaleBillHeader;
 import com.ats.webapi.model.gatesale.GateSaleBillHeaderRes;
+import com.ats.webapi.model.gatesale.GateSaleBillHeaderResp;
 import com.ats.webapi.model.gatesale.GateSaleDiscList;
 import com.ats.webapi.model.gatesale.GateSaleDiscount;
 import com.ats.webapi.model.gatesale.GateSaleUser;
@@ -252,11 +253,11 @@ public class GateSaleController {
 		//--------------------------END--------------------------------------------------
 		     // ---------------------------Getting GateBillHeaderAndDetails By userId-------------------------
 				@RequestMapping(value = { "/gateBillHeaderAndDetails" }, method = RequestMethod.POST)
-				public @ResponseBody List<GateSaleBillHeaderRes> gateBillHeaderAndDetails(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
+				public @ResponseBody List<GateSaleBillHeaderResp> gateBillHeaderAndDetails(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
 						@RequestParam("isApproved")int isApproved,@RequestParam("approvedUserId")int approvedUserId,@RequestParam("amtIsCollected")int amtIsCollected,
 						@RequestParam("collectedUserId")int collectorUserId) {
 
-					List<GateSaleBillHeaderRes> gateBillHeadersRes = gateSaleService.gateBillHeaderAndDetails(fromDate,toDate,isApproved,approvedUserId,amtIsCollected,collectorUserId);
+					List<GateSaleBillHeaderResp> gateBillHeadersRes = gateSaleService.gateBillHeaderAndDetails(fromDate,toDate,isApproved,approvedUserId,amtIsCollected,collectorUserId);
 		            
 					return gateBillHeadersRes;
 

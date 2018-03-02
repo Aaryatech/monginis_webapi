@@ -1,5 +1,6 @@
 package com.ats.webapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import com.ats.webapi.model.SellBillDetailList;
 import com.ats.webapi.model.SellBillHeader;
 import com.ats.webapi.model.bill.ExpressBillService;
 import com.ats.webapi.model.bill.GetItemHsnCode;
+import com.ats.webapi.model.bill.SlabwiseBill;
+import com.ats.webapi.model.bill.SlabwiseBillList;
+import com.ats.webapi.repository.SlabwiseDetailsRepository;
 
 @RestController
 public class BillingController {
@@ -24,6 +28,8 @@ public class BillingController {
 	@Autowired
 	ExpressBillService expressBillService;
 	
+	@Autowired
+	SlabwiseDetailsRepository slabwiseDetailsRepository; 
 	
 	@RequestMapping(value = { "/deleteExBillHeader" }, method = RequestMethod.POST)
 	public @ResponseBody int deleteExPBillHeader(@RequestParam("sellBillNo") int sellBillNo) {
@@ -115,4 +121,25 @@ public class BillingController {
 		
 		return getItemHsnCode;
 	}
+	@RequestMapping(value = { "/getSlabwiseBillData" }, method = RequestMethod.POST)
+	public @ResponseBody List<SlabwiseBillList> getSlabwiseBillData(@RequestParam("billNoList") List<String> billNos) {
+	
+		List<SlabwiseBillList> slabwiseBillList=new ArrayList<SlabwiseBillList>();
+		for(int i=0;i<billNos.size();i++)
+		{
+			System.out.println("billNo"+billNos.get(i));
+			
+		  SlabwiseBillList slabwiseBill=new SlabwiseBillList();
+		  
+		  List<SlabwiseBill> slabwiseBills=slabwiseDetailsRepository.getSlabwiseBillData(Integer.parseInt(billNos.get(i)));
+		  System.out.println("slabwiseBills"+slabwiseBills.toString());
+		  slabwiseBill.setBillNo(Integer.parseInt(billNos.get(i)));
+		  slabwiseBill.setSlabwiseBill(slabwiseBills);
+		  slabwiseBillList.add(slabwiseBill);
+		  System.out.println("slabwiseBillList"+slabwiseBillList.toString());
+
+		}
+		return slabwiseBillList;
+	}
+	
 }

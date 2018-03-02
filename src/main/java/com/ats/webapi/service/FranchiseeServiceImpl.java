@@ -312,7 +312,7 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 
 	@Override
 	public FrTotalSale getFrTargetList(int frId, int month, int year) {
-		
+		int frIdval=frId;
 		FrTotalSale frTotalSale=new FrTotalSale();
 		try {
 		Date lastDate = getLastDateOfMonth(year,month);
@@ -325,11 +325,14 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 		
 		
 		 frTotalSale=frTotalSaleRepository.findFrTotalSale(frId,firstDate,sm.format(lastDate));
+		 float monthTarget=frTotalSaleRepository.findMonthSale(frId,month,year);
+		 frTotalSale.setTargetAmt(monthTarget);
+		 
 		}
 		catch(Exception e)
 		{
 			frTotalSale.setFrId(frId);
-			frTotalSale.setFrId(month);
+			frTotalSale.setMonth(month);
 			frTotalSale.setTotalSale(0);
 			System.out.println("Exc In getFrTargetList"+e.getMessage());
 		}

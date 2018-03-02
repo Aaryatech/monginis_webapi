@@ -15,8 +15,8 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-//@Table(name="t_gatesale_bill_header")
-public class GateSaleBillHeaderRes implements Serializable{
+@Table(name="t_gatesale_bill_header")
+public class GateSaleBillHeaderResp implements Serializable{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -80,9 +80,6 @@ public class GateSaleBillHeaderRes implements Serializable{
 	
 	@Column(name="initiator_user_id")
 	private int initiatorUserId;
-	
-	@Column(name="user_name")
-	private String userName;
 	
 	@Column(name="del_status")
 	private int delStatus;
@@ -266,13 +263,7 @@ public class GateSaleBillHeaderRes implements Serializable{
 		this.delStatus = delStatus;
 	}
 
-	public String getUserName() {
-		return userName;
-	}
 
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 
 	@Override
 	public String toString() {

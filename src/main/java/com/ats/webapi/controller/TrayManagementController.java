@@ -358,7 +358,7 @@ public class TrayManagementController {
 			getTrayMgtHeaderRes.setDiesel(diesel);
 			getTrayMgtHeaderRes.setExtraTrayIn(extraTrayIn);
 			getTrayMgtHeaderRes.setVehStatus(2);
-			getTrayMgtHeaderRes.setVehRunningKm(vehInkm - getTrayMgtHeaderRes.getVehOutkm());
+			getTrayMgtHeaderRes.setVehRunningKm(vehInkm - getTrayMgtHeaderRes.getVehOutkm());//update current km in vehical against vehId
 
 			TrayMgtHeader trayMgtHeader = trayMgtService.saveTrayMgtHeader(getTrayMgtHeaderRes);
 			if (trayMgtHeader != null) {

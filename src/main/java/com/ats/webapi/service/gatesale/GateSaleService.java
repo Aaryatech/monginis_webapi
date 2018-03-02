@@ -6,6 +6,7 @@ import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.gatesale.GateEmployee;
 import com.ats.webapi.model.gatesale.GateSaleBillHeader;
 import com.ats.webapi.model.gatesale.GateSaleBillHeaderRes;
+import com.ats.webapi.model.gatesale.GateSaleBillHeaderResp;
 import com.ats.webapi.model.gatesale.GateSaleDiscList;
 import com.ats.webapi.model.gatesale.GateSaleDiscount;
 import com.ats.webapi.model.gatesale.GateSaleUser;
@@ -49,7 +50,7 @@ public interface GateSaleService {
 
 	ErrorMessage saveGateSaleBill(GateSaleBillHeader gateSaleBillHeader);
 
-	List<GateSaleBillHeaderRes> gateBillHeaderAndDetails(String fromDate, String toDate, int isApproved,
+	List<GateSaleBillHeaderResp> gateBillHeaderAndDetails(String fromDate, String toDate, int isApproved,
 			int approvedUserId, int amtIsCollected, int collectorUserId);
 
 	ErrorMessage approveGetSaleBill(int billId, int isApproved, String approvedDate, int approvedUserId);

@@ -18,6 +18,7 @@ import com.ats.webapi.model.gatesale.GateSaleBillDetail;
 import com.ats.webapi.model.gatesale.GateSaleBillDetailRes;
 import com.ats.webapi.model.gatesale.GateSaleBillHeader;
 import com.ats.webapi.model.gatesale.GateSaleBillHeaderRes;
+import com.ats.webapi.model.gatesale.GateSaleBillHeaderResp;
 import com.ats.webapi.model.gatesale.GateSaleDiscList;
 import com.ats.webapi.model.gatesale.GateSaleDiscount;
 import com.ats.webapi.model.gatesale.GateSaleUser;
@@ -39,6 +40,7 @@ import com.ats.webapi.repository.gatesale.GateSaleBillDetailRepository;
 import com.ats.webapi.repository.gatesale.GateSaleBillDetailResRepository;
 import com.ats.webapi.repository.gatesale.GateSaleBillHeaderRepository;
 import com.ats.webapi.repository.gatesale.GateSaleBillHeaderResRepository;
+import com.ats.webapi.repository.gatesale.GateSaleBillHeaderRespRepo;
 import com.ats.webapi.repository.gatesale.GateSaleDiscountRepository;
 import com.ats.webapi.repository.gatesale.GateSaleRepository;
 import com.ats.webapi.repository.gatesale.GateSaleUserListRepository;
@@ -83,6 +85,10 @@ public class GateSaleServiceImpl implements GateSaleService{
 	GateOtherItemResRepository gateOtherItemResRepository;
 	@Autowired
 	UpdateSeetingForPBRepo updateSeetingForPBRepo;
+	
+	@Autowired
+	GateSaleBillHeaderRespRepo gateSaleBillHeaderRespRepo;
+	
 	@Override
 	public ErrorMessage saveGateSaleUser(GateSaleUser gateSaleUser) {
 
@@ -478,9 +484,9 @@ try {
 }
 
 	@Override
-	public List<GateSaleBillHeaderRes> gateBillHeaderAndDetails(String fromDate, String toDate, int isApproved,
+	public List<GateSaleBillHeaderResp> gateBillHeaderAndDetails(String fromDate, String toDate, int isApproved,
 			int approvedUserId, int amtIsCollected, int collectorUserId) {
-		List<GateSaleBillHeaderRes> gateSaleBillHeaderRes=new ArrayList<GateSaleBillHeaderRes>();
+		List<GateSaleBillHeaderResp> gateSaleBillHeaderRes=new ArrayList<GateSaleBillHeaderResp>();
 		
 		if(isApproved==2&&approvedUserId!=0&amtIsCollected==2&collectorUserId==0)
 			{
@@ -830,7 +836,7 @@ try {
 
 	@Override
 	public List<GateSaleBillHeaderRes> gateBillDetailsAmtPending() {
-		List<GateSaleBillHeaderRes> gateSaleBillHeaderRes=gateSaleBillHeaderResRepository.findByIsApprovedAndAmtIsCollectedAndDelStatus(2,1,0);
+		List<GateSaleBillHeaderRes> gateSaleBillHeaderRes=gateSaleBillHeaderRespRepo.findByIsApprovedAndAmtIsCollectedAndDelStatus(2,1,0);
 		for(int i=0;i<gateSaleBillHeaderRes.size();i++)
 		{
 		List<GateSaleBillDetailRes> gateSaleBillDetailList=gateSaleBillDetailsRepository.findGateSaleBillDetailByBillId(gateSaleBillHeaderRes.get(i).getBillId());
@@ -841,7 +847,7 @@ try {
 	}
 	@Override
 	public List<GateSaleBillHeaderRes> gateBillDetailAmtPending(int isApproved,int amtIsCollected) {
-		List<GateSaleBillHeaderRes> gateSaleBillHeaderRes=gateSaleBillHeaderResRepository.findByIsApprovedAndAmtIsCollectedAndDelStatus(isApproved,amtIsCollected,0);
+		List<GateSaleBillHeaderRes> gateSaleBillHeaderRes=gateSaleBillHeaderRespRepo.findByIsApprovedAndAmtIsCollectedAndDelStatus(isApproved,amtIsCollected,0);
 		for(int i=0;i<gateSaleBillHeaderRes.size();i++)
 		{
 		List<GateSaleBillDetailRes> gateSaleBillDetailList=gateSaleBillDetailsRepository.findGateSaleBillDetailByBillId(gateSaleBillHeaderRes.get(i).getBillId());
