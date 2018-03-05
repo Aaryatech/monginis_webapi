@@ -158,4 +158,24 @@ public class GrnGvnApiController {
 		
 	}
 	
+	
+	@RequestMapping(value = { "/getHeaderByHeaderId" }, method = RequestMethod.POST)
+	public @ResponseBody GrnGvnHeader getHeaderByHeaderId(@RequestParam("headerId")
+	int headerId) {
+		
+		GrnGvnHeader responseHeader=new GrnGvnHeader();
+		try {
+			
+			responseHeader = grnGvnHeaderRepo.findByGrnGvnHeaderId(headerId);
+			
+		} catch (Exception e) {
+
+			System.out.println("Exce in Getting getHeaderByHeaderId /GrnGvnApiController " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return responseHeader;
+		
+	}
+	
 }

@@ -60,8 +60,8 @@ public interface FinishedGoodStockDetailRepo  extends JpaRepository<FinishedGood
 		
 			"",nativeQuery=true)
 	
-		List<FinishedGoodStockDetail> findByStockDateBetweenTwoDates(@Param("fromDate")Date fromDate, 
-			@Param("toDate")Date toDate);
+		List<FinishedGoodStockDetail> findByStockDateBetweenTwoDates(@Param("fromDate")java.sql.Date fromDate, 
+			@Param("toDate")java.sql.Date toDate);
 	
 	@Query(value="SELECT m_item.id as item_id,m_item.item_name,m_item.item_grp1 AS cat_id,m_item.del_status,COALESCE(s1.stock_date,2018-01-01) AS stock_date," + 
 			"COALESCE(s1.fin_stock_detail_id,0) AS fin_stock_detail_id, COALESCE(s1.fin_stock_id,0) AS fin_stock_id," + 
@@ -92,8 +92,8 @@ public interface FinishedGoodStockDetailRepo  extends JpaRepository<FinishedGood
 		
 			"",nativeQuery=true)
 	
-		List<FinishedGoodStockDetail> findByStockDateBetweenTwoDateByCat(@Param("fromDate")Date fromDate, 
-			@Param("toDate")Date toDate,@Param("catId") int catId);
+		List<FinishedGoodStockDetail> findByStockDateBetweenTwoDateByCat(@Param("fromDate")java.sql.Date fromDate, 
+			@Param("toDate")java.sql.Date toDate,@Param("catId") int catId);
 	
 	
 }

@@ -563,14 +563,14 @@ h1.bms_status=1
 	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockBetTwoDate(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 
-		List<FinishedGoodStockDetail> finishedGoodStockDetail=null;
+		List<FinishedGoodStockDetail> finishedGoodStockDetail=new ArrayList<FinishedGoodStockDetail>();
 		try {
 			
 			System.out.println("date received for Stock Detail bet date = "+fromDate);
 			
-			Date stkFrDate= Common.convertToSqlDate(fromDate);
+		java.sql.Date stkFrDate= Common.convertToSqlDate(fromDate);
 			
-			Date stkToDate= Common.convertToSqlDate(toDate);
+			java.sql.Date stkToDate= Common.convertToSqlDate(toDate);
 			
 			System.out.println("date After convert for Stock Detail bet date stkFrDate= "+stkFrDate);
 			
@@ -580,7 +580,7 @@ h1.bms_status=1
 			finishedGoodStockDetail=finishedGoodStockDetailRepo.findByStockDateBetweenTwoDates(stkFrDate, stkToDate);
 		} catch (Exception e) {
 			
-			System.out.println("Exce in getting Finished Good Stock Detail Between two Date Final Query " + e.getMessage());
+			System.out.println("Exce in getting Finished Good Stock Detail Between two Date  " + e.getMessage());
 			e.printStackTrace();
 
 		}
@@ -597,14 +597,15 @@ h1.bms_status=1
 		public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockBetTwoDateByCat(@RequestParam("fromDate") String fromDate,
 				@RequestParam("toDate") String toDate,@RequestParam("catId") int catId) {
 
-			List<FinishedGoodStockDetail> finishedGoodStockDetail=null;
+			List<FinishedGoodStockDetail> finishedGoodStockDetail=new ArrayList<FinishedGoodStockDetail>();
+			
 			try {
 				
-				System.out.println("date received for Stock Detail bet date = "+fromDate);
+				System.out.println("date received for Stock Detail bet date = "+fromDate+ "to Date "+toDate);
 				
-				Date stkFrDate= Common.convertToSqlDate(fromDate);
+				java.sql.Date stkFrDate= Common.convertToSqlDate(fromDate);
 				
-				Date stkToDate= Common.convertToSqlDate(toDate);
+				java.sql.Date stkToDate= Common.convertToSqlDate(toDate);
 				
 				System.out.println("date After convert for Stock Detail bet date stkFrDate= "+stkFrDate);
 				
@@ -629,7 +630,7 @@ h1.bms_status=1
 	
 	
 	//get Finished Good Stock Bet Date
-
+//dont
 	@RequestMapping(value = { "/getFinGoodStockBetDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<FinishedGoodStockDetail> getFinGoodStockBetDate(@RequestParam("stockFromDate") String stockFromDate,
 			@RequestParam("stockToDate") String stockToDate,@RequestParam("stockStatus")int stockStatus) {
