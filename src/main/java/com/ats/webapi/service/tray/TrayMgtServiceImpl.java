@@ -110,8 +110,10 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 	public Info updateVehicleOutData(int tranId, String vehOuttime, float vehOutKm) {
 
 		int isUpdated=trayMgtHeaderRepository.updateVehicleOutData(tranId,vehOuttime,vehOutKm);
+		int updateStatus=trayMgtDetailBeanRepository.updateTrayStatusByTranId(tranId,1);
+		
 		Info info=new Info();
-		if(isUpdated>=1)
+		if(isUpdated>=1&&updateStatus>=1)
 		{
 			info.setError(false);
 			info.setMessage("TrayMgtHeader Updated Successfully.");

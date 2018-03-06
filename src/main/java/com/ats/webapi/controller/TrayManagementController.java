@@ -36,37 +36,45 @@ public class TrayManagementController {
 	TrayMgtService trayMgtService;
 
 	// ----------------------------SAVE Tray Management Header---------------------------
-	@RequestMapping(value = { "/saveTrayMgtHeader" }, method = RequestMethod.POST)
-	public @ResponseBody TrayMgtHeader saveTrayMgtHeader(@RequestBody TrayMgtHeader trayMgtHeader) {
+		@RequestMapping(value = { "/saveTrayMgtHeader" }, method = RequestMethod.POST)
+		public @ResponseBody TrayMgtHeader saveTrayMgtHeader(@RequestBody TrayMgtHeader trayMgtHeader) {
 
-		TrayMgtHeader trayMgtHeaderRes = null;
-		try {
-			TrayMgtHeader isHeaderAvail = trayMgtHeaderRepository.findByTranDateAndVehIdAndDelStatus("" + trayMgtHeader.getTranDate(), trayMgtHeader.getVehId(), 0);
-			if (isHeaderAvail == null) {
-				trayMgtHeaderRes = trayMgtService.saveTrayMgtHeader(trayMgtHeader);
+			TrayMgtHeader trayMgtHeaderRes = null;
+			try {
+				TrayMgtHeader isHeaderAvail=null;
+				try {
+					System.out.println("----------------------"+trayMgtHeader.getTranDate());
+	              isHeaderAvail = trayMgtHeaderRepository.findByTranDateAndVehIdAndDelStatus(new SimpleDateFormat("yyyy-MM-dd").format(trayMgtHeader.getTranDate()), trayMgtHeader.getVehId(), 0);
 
-				trayMgtHeaderRes.setError(false);
-				trayMgtHeaderRes.setMessage("TrayMgtHeader Saved Successfully.");
-			} else {
-				trayMgtHeaderRes = new TrayMgtHeader();
+				}
+				catch (Exception e) {
+					 isHeaderAvail=null;
+					e.printStackTrace();
+				}
+	              if (isHeaderAvail!=null) {
+
+	  				trayMgtHeaderRes = new TrayMgtHeader();
+	  				trayMgtHeaderRes.setError(true);
+	  				trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .");
+				} else {
+					trayMgtHeaderRes = trayMgtService.saveTrayMgtHeader(trayMgtHeader);
+
+					trayMgtHeaderRes.setError(false);
+					trayMgtHeaderRes.setMessage("TrayMgtHeader Saved Successfully.");
+				}
+
+			} catch (Exception e) {
+
 				trayMgtHeaderRes.setError(true);
-				trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .");
+				trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .Exc");
+
+				e.printStackTrace();
+				System.out.println("Exception In TrayManagementController /saveTrayMgtHeader" + e.getMessage());
+
 			}
-
-		} catch (Exception e) {
-
-			trayMgtHeaderRes.setError(true);
-			trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .Exc");
-
-			e.printStackTrace();
-			System.out.println("Exception In TrayManagementController /saveTrayMgtHeader" + e.getMessage());
+			return trayMgtHeaderRes;
 
 		}
-		return trayMgtHeaderRes;
-
-	}
-
-	// ---------------------------------------------------------------------------
 	// ----------------------------SAVE Tray Management Detail---------------------------
 	@RequestMapping(value = { "/saveTrayMgtDetail" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveTrayMgtDetail(@RequestBody TrayMgtDetailBean trayMgtDetail) {
