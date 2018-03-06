@@ -33,7 +33,6 @@ public interface PostFrOpStockHeaderRepository extends JpaRepository<PostFrItemS
 	PostFrItemStockHeader getRunningMonth(@Param("frId") int frId);
 
 	
-
-	
+//	PostFrItemStockHeader findByFrIdAndisMonthClosed(int frId,int stockStatus);
 	
 }

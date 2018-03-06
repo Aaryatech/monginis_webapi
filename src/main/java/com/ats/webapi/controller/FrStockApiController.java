@@ -94,6 +94,7 @@ public class FrStockApiController {
 			@RequestParam("toDateTime") String toDateTime, @RequestParam("currentMonth") int currentMonth,
 			@RequestParam("year") int year, @RequestParam("itemIdList") List<Integer> itemIdList,
 			@RequestParam("catId") int catId) {
+		System.out.println(" I/p : itemIdList: " + itemIdList);
 
 		System.out.println("inside rest getStockForAutoGrnGvn : I/p : frId: " + frId);
 		System.out.println(" I/p : fromDate: " + fromDate);
