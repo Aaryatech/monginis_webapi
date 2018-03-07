@@ -115,6 +115,7 @@ public class OtherBillApiController {
 		return getAllFrSupplierListByFrId;
            
 	}
+	 
 	
 	@RequestMapping(value = { "/postOtherBillHeaderAndDetail" }, method = RequestMethod.POST)
 	public @ResponseBody OtherBillHeader postOtherBillHeaderAndDetail(@RequestBody OtherBillHeader otherBillHeader)

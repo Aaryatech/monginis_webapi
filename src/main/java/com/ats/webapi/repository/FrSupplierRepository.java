@@ -21,6 +21,8 @@ public interface FrSupplierRepository extends JpaRepository<FrSupplier, Integer>
 	int deleteFrSupplier(@Param("suppId")int suppId);
 
 
-	FrSupplier findBySuppId(int suppId); 
+	FrSupplier findBySuppId(int suppId);
+
+ 
 
 }
