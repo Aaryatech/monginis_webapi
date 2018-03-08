@@ -185,13 +185,20 @@ public class OtherBillApiController {
 	
 	@RequestMapping(value = { "/getOtherBillHeaderBetweenDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<OtherBillHeader> getOtherBillHeaderAndDetailBetweenDate(@RequestParam("fromDate")String fromDate,
-			@RequestParam("toDate")String toDate, @RequestParam("frId")String frId)
+			@RequestParam("toDate")String toDate, @RequestParam("frId")String frId, @RequestParam("suppId")int suppId)
 	{ 
 		
 		List<OtherBillHeader> getOtherBillHeaderList = new ArrayList<OtherBillHeader>();
 		try {
-			 
-			getOtherBillHeaderList = otherBillHeaderRepository.getOtherBillHeaderList(fromDate,toDate,frId);  
+			 if(suppId==0)
+			 {
+				 getOtherBillHeaderList = otherBillHeaderRepository.getOtherBillHeaderList(fromDate,toDate,frId);
+			 }
+			 else
+			 {
+				 getOtherBillHeaderList = otherBillHeaderRepository.getOtherBillHeaderList(fromDate,toDate,frId,suppId);
+			 }
+			  
 			 
 		} catch (Exception e) {
 

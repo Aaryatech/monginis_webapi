@@ -16,6 +16,10 @@ public interface OtherBillHeaderRepository extends JpaRepository<OtherBillHeader
 
 	@Query(value=" select * from t_other_bill_header where (bill_date between :fromDate and :toDate) and fr_id=:frId and del_status=0 ",nativeQuery=true) 
 	List<OtherBillHeader> getOtherBillHeaderList( @Param("fromDate")String fromDate, @Param("toDate") String toDate, @Param("frId") String frId);
+
+	@Query(value=" select * from t_other_bill_header where (bill_date between :fromDate and :toDate) and fr_id=:frId and supp_id=:suppId and del_status=0 ",nativeQuery=true) 
+	List<OtherBillHeader> getOtherBillHeaderList( @Param("fromDate")String fromDate, @Param("toDate") String toDate, @Param("frId") String frId,
+			@Param("suppId") int suppId);
  
 	
 
