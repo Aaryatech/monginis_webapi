@@ -119,7 +119,7 @@ public class GrnGvnApiController {
 			Date fDate=Common.convertToSqlDate(fromDate);
 			Date tDate=Common.convertToSqlDate(toDate);
 					System.out.println("Para ReCEived "+fDate+""+tDate +""+isGrn+""+ statusList);
-			grnGvnHeaderList = grnGvnHeaderRepo.findGrnGvnHeaderOnLoad(fDate, tDate, isGrn, statusList);
+			grnGvnHeaderList = grnGvnHeaderRepo.findGrnGvnHeaderOnLoad(isGrn, statusList);
 			
 			headerList.setGrnGvnHeader(grnGvnHeaderList);
 			

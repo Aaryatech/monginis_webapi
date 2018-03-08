@@ -30,7 +30,7 @@ public interface GrnGvnHeaderRepo extends JpaRepository<GrnGvnHeader, Integer> {
 			@Param("initTime") String initTime,@Param("curTime") String curTime	);
 	
 	*/
-	@Query(value=" SELECT" + 
+	/*@Query(value=" SELECT" + 
 			"        * " + 
 			"    FROM" + 
 			"        t_grn_gvn_header " + 
@@ -40,6 +40,14 @@ public interface GrnGvnHeaderRepo extends JpaRepository<GrnGvnHeader, Integer> {
 		
 			"        ) OR (t_grn_gvn_header.grngvn_status IN (:statusList) AND grngvn_date!=:fromDate))",nativeQuery=true)
 	List<GrnGvnHeader> findGrnGvnHeaderOnLoad(@Param("fromDate")Date fromDate,@Param("toDate") Date toDate,@Param("isGrn")int isGrn,@Param("statusList") List<String> statusList);
+	*/
+	
+	
+
+	@Query(value="  SELECT * FROM t_grn_gvn_header WHERE is_grn=:isGrn AND is_credit_note=0 AND t_grn_gvn_header.grngvn_status "
+			+ "IN (:statusList) ",nativeQuery=true)
+	List<GrnGvnHeader> findGrnGvnHeaderOnLoad(@Param("isGrn")int isGrn,@Param("statusList") List<String> statusList);
+	
 	
 	
 	
