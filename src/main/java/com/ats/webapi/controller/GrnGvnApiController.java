@@ -48,7 +48,7 @@ public class GrnGvnApiController {
 	@RequestMapping(value = { "/getGrnGvnHeader" }, method = RequestMethod.POST)
 	public @ResponseBody GrnGvnHeaderList getGrnGvnHeader(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate, @RequestParam("frIdList")
 	List<String> frIdList,
-			@RequestParam("isGrn")int isGrn) {
+			@RequestParam("isGrn")List<String> isGrn) {
 		
 		GrnGvnHeaderList headerList=new GrnGvnHeaderList();
 
@@ -79,7 +79,8 @@ public class GrnGvnApiController {
 	
 	
 	@RequestMapping(value = { "/getGrnGvnHeaderAllFr" }, method = RequestMethod.POST)
-	public @ResponseBody GrnGvnHeaderList getGrnGvnHeaderAllFr(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,@RequestParam("isGrn")int isGrn) {
+	public @ResponseBody GrnGvnHeaderList getGrnGvnHeaderAllFr(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
+			@RequestParam("isGrn")List<String> isGrn) {
 
 		List<GrnGvnHeader> grnGvnHeaderList = new ArrayList<GrnGvnHeader>();
 		
@@ -108,7 +109,8 @@ public class GrnGvnApiController {
 	
 	
 	@RequestMapping(value = { "/findGrnGvnHeaderOnLoad" }, method = RequestMethod.POST)
-	public @ResponseBody GrnGvnHeaderList findGrnGvnHeaderGateOnLoad(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,@RequestParam("isGrn") int isGrn,
+	public @ResponseBody GrnGvnHeaderList findGrnGvnHeaderGateOnLoad(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
+			@RequestParam("isGrn") List<String> isGrn,
 			@RequestParam("statusList") List<String> statusList) {
 		GrnGvnHeaderList headerList=new GrnGvnHeaderList();
 
