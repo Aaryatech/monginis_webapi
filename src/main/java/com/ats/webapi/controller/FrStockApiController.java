@@ -44,6 +44,7 @@ import com.ats.webapi.model.RegularSpecialStockCal;
 import com.ats.webapi.model.StockForAutoGrnGvn;
 import com.ats.webapi.repository.GetFrItemStockConfigurationRepository;
 import com.ats.webapi.repository.PostFrOpStockDetailRepository;
+import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
 import com.ats.webapi.service.FrItemStockConfigurePostService;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.GetItemStockService;
@@ -73,6 +74,9 @@ public class FrStockApiController {
 
 	@Autowired
 	GetFrItemStockConfigurationRepository getFrItemStockConfigurationRepository;
+	
+	@Autowired
+	PostFrOpStockHeaderRepository postFrOpStockHeaderRepository;
 
 	@RequestMapping(value = "/getMonthwiseStock", method = RequestMethod.POST)
 	public @ResponseBody List<GetCurrentStockDetails> getStockBetweenMonth(@RequestParam("frId") int frId,
@@ -721,5 +725,16 @@ public class FrStockApiController {
 		int diff = (d2.get(Calendar.YEAR) - d1.get(Calendar.YEAR)) * 12 + d2.get(Calendar.MONTH)
 				- d1.get(Calendar.MONTH);
 		return diff;
+	}
+	
+ 
+
+	@RequestMapping(value = "/getCurrentMonthOfCatId", method = RequestMethod.POST)
+	public @ResponseBody List<PostFrItemStockHeader> getCurrentMonthOfCatId(@RequestParam("frId") int frId) {
+ 
+		List<PostFrItemStockHeader> getCurrentMonthOfCatId = postFrOpStockHeaderRepository.findByFrIdAndIsMonthClosed(frId,0);
+
+		return getCurrentMonthOfCatId;
+
 	}
 }

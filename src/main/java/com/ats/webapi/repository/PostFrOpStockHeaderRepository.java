@@ -1,5 +1,7 @@
 package com.ats.webapi.repository;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -31,6 +33,8 @@ public interface PostFrOpStockHeaderRepository extends JpaRepository<PostFrItemS
 	
 	@Query(value = "SELECT m_fr_opening_stock_header.* FROM m_fr_opening_stock_header WHERE fr_id=:frId AND is_month_closed=0 LIMIT 1", nativeQuery = true)
 	PostFrItemStockHeader getRunningMonth(@Param("frId") int frId);
+
+	List<PostFrItemStockHeader> findByFrIdAndIsMonthClosed(int frId, int isMonthClosed);
 
 	
 //	PostFrItemStockHeader findByFrIdAndisMonthClosed(int frId,int stockStatus);
