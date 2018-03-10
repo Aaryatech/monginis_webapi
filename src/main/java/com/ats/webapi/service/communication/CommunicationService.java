@@ -84,4 +84,6 @@ public interface CommunicationService {
 
 	List<GetFeedbackDetail> getAllFeedbackDetailsByFrId(int frId, int feedbackDetailId);
 
+	ErrorMessage sendNotificationToFr(List<Integer> frIds, String title, String message);
+
 }

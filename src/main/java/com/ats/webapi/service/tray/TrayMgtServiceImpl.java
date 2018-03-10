@@ -1,6 +1,8 @@
 package com.ats.webapi.service.tray;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.TrayMgtDetailList;
 import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FranchiseInRoute;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
@@ -409,6 +412,37 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 			e.printStackTrace();
 		}
 		return trayMgtDetailRes;	
+	}
+
+	@Override
+	public List<TrayMgtDetailList> getTrayMgtDetailsByTranId(int tranId) {
+		List<TrayMgtDetail> trayMgtDetailRes;
+		List<TrayMgtDetailList> trayMgtDetailList=new ArrayList<TrayMgtDetailList>();
+		try {
+		
+			trayMgtDetailRes=trayMgtDetailRepository.findByTranId(tranId);
+			for(int i=0;i<trayMgtDetailRes.size();i++)
+			{
+				TrayMgtDetailList trayMgtDetail=new TrayMgtDetailList();
+				
+				List<TrayMgtDetail> trayDetailList=new ArrayList<TrayMgtDetail>();
+				trayDetailList.add(trayMgtDetailRes.get(i));
+				
+				List<TrayMgtDetail> trayMgtDetails=trayMgtDetailRepository.findByIntrayDate(trayMgtDetailRes.get(i).getFrId(),new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+				trayDetailList.addAll(trayMgtDetails);
+				
+				trayMgtDetail.setFrId(trayMgtDetailRes.get(i).getFrId());
+				trayMgtDetail.setTrayMgtDetailsList(trayDetailList);
+				
+				trayMgtDetailList.add(trayMgtDetail);
+				System.out.println(trayMgtDetails.toString());
+			}
+		}
+		catch (Exception e) {
+			trayMgtDetailList=new ArrayList<TrayMgtDetailList>();
+			e.printStackTrace();
+		}
+		return trayMgtDetailList;	
 	}
 
 }

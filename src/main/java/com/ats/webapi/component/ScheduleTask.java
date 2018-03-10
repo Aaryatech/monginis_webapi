@@ -44,7 +44,7 @@ public class ScheduleTask {
 	
 		 try {
 			 for(String token:frTokens) {
-	          Firebase.sendPushNotifForCommunication(token,"HAPPY BIRTHDAY","Team Monginis wishes you a very happy birthday and many many happy returns of the day.","bday");
+	          Firebase.sendPushNotifForCommunication(token,"HAPPY BIRTHDAY","Team Monginis wishes you a very happy birthday and many many happy returns of the day.","inbox");
 			 }
 	         }
 	         catch(Exception e2)
@@ -58,7 +58,7 @@ public class ScheduleTask {
 			
 			 try {
 				 for(ShopAnivData token:frOPTokens) {
-		          Firebase.sendPushNotifForCommunication(token.getToken(),"Shop Anniversary","Congratulations on successful completion of "+token.getNoOfYears()+"years with Monginis. Thank you for being part of our family. Team Monginis","anniversary");
+		          Firebase.sendPushNotifForCommunication(token.getToken(),"Shop Anniversary","Congratulations on successful completion of "+token.getNoOfYears()+"years with Monginis. Thank you for being part of our family. Team Monginis","inbox");
 				 }
 		         }
 		         catch(Exception e2)
@@ -80,7 +80,7 @@ public class ScheduleTask {
 	    	
 			 try {
 				 for(String token:frTokens) {
-		          Firebase.sendPushNotifForCommunication(token,"Close Your Month","Since today is first day of the month, please close the last month in your software.","month");
+		          Firebase.sendPushNotifForCommunication(token,"Close Your Month","Since today is first day of the month, please close the last month in your software.","inbox");
 				 }
 		         }
 		         catch(Exception e2)

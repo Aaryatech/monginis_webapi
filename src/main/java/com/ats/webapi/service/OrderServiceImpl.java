@@ -39,7 +39,7 @@ public class OrderServiceImpl implements OrderService {
 	@Override
 	public List<Orders> placeOrder(List<Orders> list) {
 		List<Orders> returnList = new ArrayList();
-		boolean flag=false;
+		
 		for (Orders o : list) {
 
 			Orders prevOrder = orderRepository.findPreviousOrder(o.getItemId(), o.getFrId(), o.getProductionDate(),
@@ -66,30 +66,7 @@ public class OrderServiceImpl implements OrderService {
 					} else {
 						prevOrder.setOrderQty(o.getOrderQty());
 						updatedOrder = orderRepository.save(prevOrder);
-						//-----------------------For Notification-----------------
-					
-						String frToken="";
-						if(flag==false) {
-						try {
-							
-							 frToken=franchiseSupRepository.findTokenByFrId(o.getFrId());
 						
-							flag=true;
-						}
-						catch (Exception e) {
-							e.printStackTrace();
-							
-						}
-						 try {
-					          Firebase.sendPushNotifForCommunication(frToken,"Order Placed Successfully","Your Order has been saved. Total Items Ordered were--. Thank You..Team Monginis","order");
-					    	
-					         }
-					         catch(Exception e)
-					         {
-						       e.printStackTrace();
-					         }
-						}
-						//---------------------------------------------------------------
 					}
 					
 					returnList.add(updatedOrder);
@@ -103,28 +80,7 @@ public class OrderServiceImpl implements OrderService {
 					System.out.println("Saving new order");
 
 					Orders newOrder = orderRepository.save(o);
-				//-----------------------For Notification-----------------
-					String frToken="";
-					
-					if(flag==false) {
-					
-					try {
-						 frToken=franchiseSupRepository.findTokenByFrId(o.getFrId());
-						 flag=true;
-					}
-					catch (Exception e1) {
-						e1.printStackTrace();
-					}
-					 try {
-				          Firebase.sendPushNotifForCommunication(frToken,"Order Placed Successfully","Your Order has been saved. Total Items Ordered were--. Thank You..Team Monginis","order");
-				    	
-				         }
-				         catch(Exception e2)
-				         {
-					       e2.printStackTrace();
-				         }
-					}
-					//-----------------------------------------------------
+			
 					returnList.add(newOrder);
 				}
 			}
@@ -132,7 +88,7 @@ public class OrderServiceImpl implements OrderService {
 			// Orders order=orderRepository.save(o);
 			// returnList.add(prevOrder);
 		}
-
+		
 		return returnList;
 	}
 
@@ -204,7 +160,7 @@ public class OrderServiceImpl implements OrderService {
 						 try {
 							 
 							  String frToken=franchiseSupRepository.findTokenByFrId(o.getFrId());
-					          Firebase.sendPushNotifForCommunication(frToken,"Order Pushed","Your savories/ cakes and pastries order not recived. A standing order has been put, against which no GVN-GRN will be given.","push");
+					          Firebase.sendPushNotifForCommunication(frToken,"Order Pushed","Your savories/ cakes and pastries order not recived. A standing order has been put, against which no GVN-GRN will be given.","inbox");
 							
 					         }
 					         catch(Exception e2)

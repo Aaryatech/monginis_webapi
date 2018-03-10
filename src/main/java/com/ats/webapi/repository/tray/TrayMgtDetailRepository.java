@@ -1,5 +1,6 @@
 package com.ats.webapi.repository.tray;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -45,5 +46,8 @@ public interface TrayMgtDetailRepository extends JpaRepository<TrayMgtDetail, In
 
     @Query(value="select t.*,f.fr_name from t_tray_mgt_detail t,m_franchisee f where t.fr_id=f.fr_id  And t.del_status=0  And t.fr_id In(:frId) And t.outtray_date between :fromDate And :toDate",nativeQuery=true)
 	List<TrayMgtDetail> findTrayMgtBillDetails(@Param("fromDate")String fromDate,@Param("toDate") String toDate,@Param("frId") int frId);
+   
+    @Query(value="select t.*,f.fr_name from t_tray_mgt_detail t,m_franchisee f where t.fr_id=f.fr_id  And t.del_status=0  And t.fr_id In(:frId) And (t.intray_date=:traydate OR t.intray_date1=:traydate)",nativeQuery=true)
+	List<TrayMgtDetail> findByIntrayDate(@Param("frId")int frId,@Param("traydate")String date);
 
 }

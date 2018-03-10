@@ -2,7 +2,7 @@ package com.ats.webapi.model;
 
 public class FrLoginResponse {
 	LoginInfo loginInfo;
-	Franchisee franchisee;
+	Franchise franchisee;
     
 	public LoginInfo getLoginInfo() {
 		return loginInfo;
@@ -10,12 +10,13 @@ public class FrLoginResponse {
 	public void setLoginInfo(LoginInfo loginInfo) {
 		this.loginInfo = loginInfo;
 	}
-	public Franchisee getFranchisee() {
+	public Franchise getFranchisee() {
 		return franchisee;
 	}
-	public void setFranchisee(Franchisee franchisee) {
+	public void setFranchisee(Franchise franchisee) {
 		this.franchisee = franchisee;
 	}
+    
 	
 
 }

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.TrayMgtDetailList;
 import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FranchiseInRoute;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
@@ -68,5 +69,7 @@ public interface TrayMgtService {
 	List<GetTrayMgtHeader> getLoadedVehiclesByStatus(int vehStatus);
 
 	List<TrayMgtDetail> getTrayMgtDetailList(String fromDate, String toDate, int frId, int isDepositUsed);
+
+	List<TrayMgtDetailList> getTrayMgtDetailsByTranId(int tranId);
 
 }

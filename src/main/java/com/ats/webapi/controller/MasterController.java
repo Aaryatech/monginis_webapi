@@ -392,9 +392,9 @@ public class MasterController {
 	        //------------------------------------------------------------------------			
 				// ------------------------Update FranchiseSup Passwords------------------------------------
 				@RequestMapping(value = { "/updateFranchiseSupUsrPwd" }, method = RequestMethod.POST)
-				public @ResponseBody Info updateFranchiseUsrPwd(@RequestParam int frId,@RequestParam String pass1,@RequestParam String pass2,@RequestParam String pass3) {
+				public @ResponseBody Info updateFranchiseUsrPwd(@RequestParam int frId,@RequestParam String pass2,@RequestParam String pass3) {
 
-					Info info = franchiseeService.updateFranchiseSupUsrPwd(frId,pass1,pass2,pass3);
+					Info info = franchiseeService.updateFranchiseSupUsrPwd(frId,pass2,pass3);
 					return info;
 				}
 	 //------------------------------------------------------------------------				

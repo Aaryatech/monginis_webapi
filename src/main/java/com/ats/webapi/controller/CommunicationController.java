@@ -428,5 +428,15 @@ public class CommunicationController {
 
 			}
 			//------------------------------------------------------------------------------------
+			// ---------------------------Send Notification To Franchise's-------------------------
+			@RequestMapping(value = { "/sendNotificationToFr" }, method = RequestMethod.POST)
+			public @ResponseBody ErrorMessage sendNotificationToFr(@RequestParam("frIds")List<Integer> frIds,@RequestParam("title")String title,@RequestParam("message")String message) {
+
+				ErrorMessage errorMessage = communicationService.sendNotificationToFr(frIds,title,message);
+						            
+				return errorMessage;
+
+			}
+			//------------------------------------------------------------------------------------
 		
 }

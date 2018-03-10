@@ -48,31 +48,7 @@ public class SpCakeOrdersServiceImpl implements SpCakeOrdersService {
 			spCakeOrderRes.setErrorMessage(errorMessage);
 			spCakeOrderRes.setSpCakeOrder(spCakeOrder);
 			
-			//-----------------------For Notification-----------------
-			String frToken="";
-			
-			if(flag==false) {
-				
-			try {
-				
-				 frToken=franchiseSupRepository.findTokenByFrId(spCakeOrders.getFrId());
-
-				flag=true;
-			}
-			catch (Exception e1) {
-				e1.printStackTrace();
-				
-			}
-			 try {
-		          Firebase.sendPushNotifForCommunication(frToken,"Order Placed Sucessfully","Your SP Order has been saved. Order Saved is--SP Code-Sp name--Weight--Flavour-Message--Total Amount. Thank You.Team Monginis","sporder");
-		    	
-		         }
-		         catch(Exception e2)
-		         {
-			       e2.printStackTrace();
-		         }
-			}
-			//-----------------------------------------------------
+		
 		}
 	} catch (Exception e) {
 		

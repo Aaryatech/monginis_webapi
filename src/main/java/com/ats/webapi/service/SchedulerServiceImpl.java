@@ -44,6 +44,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 				   schedularRes = schedulerRepository.save(scheduler);
 					 ObjectMapper om = new ObjectMapper();
 				     String jsonStr = om.writeValueAsString(schedularRes);
+				     if(scheduler.getSchId()==0) {
 					List<String> frTokens=franchiseSupRepository.findTokens();
 					List<String> usrTokens=userRepository.findTokens();
 					frTokens.addAll(usrTokens);
@@ -59,6 +60,7 @@ public class SchedulerServiceImpl implements SchedulerService {
 				         {
 					       e.printStackTrace();
 				         }
+				     }
 					info.setError(false);
 					info.setMessage("Scheduler inserted Successfully");
 					jsonScheduler = JsonUtil.javaToJson(info);

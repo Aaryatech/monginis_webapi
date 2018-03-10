@@ -952,5 +952,35 @@ public class CommunicationServiceImpl implements CommunicationService{
 		
 	}
 
+	@Override
+	public ErrorMessage sendNotificationToFr(List<Integer> frIds, String title, String message) {
+		ErrorMessage eMessage=new ErrorMessage();
+
+		try {
+		List<String> frToken=franchiseSupRepository.findFrTokenByFrId(frIds);
+			
+		   if(!frToken.isEmpty()) {
+		      try {
+		    	 for(String token:frToken)
+		    	 {
+		    	
+		          Firebase.sendPushNotifForCommunication(token,title,message,"inbox");
+		    	 }
+		         }
+		         catch(Exception e)
+		         {
+			       e.printStackTrace();
+		         }
+		      eMessage.setError(false);
+		      eMessage.setMessage("Notification Send Successfully");
+		   }
+		}catch (Exception e) {
+			e.printStackTrace();
+			  eMessage.setError(true);
+		      eMessage.setMessage("Notification Failed to Send");
+		}
+		      return eMessage;
+	}
+
 
 }

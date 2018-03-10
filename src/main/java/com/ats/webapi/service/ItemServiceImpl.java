@@ -57,7 +57,7 @@ public class ItemServiceImpl implements ItemService{
 						    List<String> frTokens=franchiseSupRepository.findTokens();
 
 						 for(String token:frTokens) {
-				          Firebase.sendPushNotifForCommunication(token,"Item Details Updated","Changes have been made in OPS at item level, SP level, in the rates. Kindly refer the OPS for exact changes made.","updateList");
+				          Firebase.sendPushNotifForCommunication(token,"Item Details Updated","Changes have been made in OPS at item level, SP level, in the rates. Kindly refer the OPS for exact changes made.","inbox");
 						 }
 				         }
 				         catch(Exception e2)

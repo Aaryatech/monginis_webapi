@@ -27,8 +27,8 @@ public interface FranchiseSupRepository extends JpaRepository<FranchiseSup, Inte
 
 	@Modifying
 	@Transactional
-	@Query("Update FranchiseSup  SET pass1=:pass1,pass2=:pass2,pass3=:pass3 WHERE fr_id=:frId")
-	public int updateFranchiseSupUserPwd(@Param("frId")int frId,@Param("pass1") String pass1,@Param("pass2") String pass2,@Param("pass3") String pass3);
+	@Query("Update FranchiseSup  SET pass2=:pass2,pass3=:pass3 WHERE fr_id=:frId")
+	public int updateFranchiseSupUserPwd(@Param("frId")int frId,@Param("pass2") String pass2,@Param("pass3") String pass3);
 
 	@Modifying
 	@Transactional
@@ -43,6 +43,14 @@ public interface FranchiseSupRepository extends JpaRepository<FranchiseSup, Inte
 
 	@Query(value="select m_franchise_sup.token from m_franchisee,m_franchise_sup where m_franchisee.fr_id=m_franchise_sup.fr_id And DATE_FORMAT(owner_birth_date,'%m-%d')=DATE_FORMAT(:date,'%m-%d')",nativeQuery=true)
 	List<String> findTokensByBirthdate(@Param("date")Date date);
+
+	@Query(value="select token from m_franchise_sup where fr_id In(:frIds)",nativeQuery=true)
+	List<String> findFrTokenByFrId(@Param("frIds")List<Integer> frIds);
 	
+	@Modifying
+	@Transactional
+	@Query(value="Update m_franchise_sup SET pass1=:adminPwd WHERE fr_id=:frId and del_status=0",nativeQuery=true)
+	public Integer updateFrPwd(@Param("frId")int frId,@Param("adminPwd")String adminPwd);
+
 	
 }

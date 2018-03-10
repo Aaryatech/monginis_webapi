@@ -6,6 +6,7 @@ import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.FrTarget;
 import com.ats.webapi.model.FrTargetList;
 import com.ats.webapi.model.FrTotalSale;
+import com.ats.webapi.model.Franchise;
 import com.ats.webapi.model.FranchiseSup;
 import com.ats.webapi.model.FranchiseSupList;
 import com.ats.webapi.model.Franchisee;
@@ -38,7 +39,7 @@ public interface FranchiseeService {
 
 	public Info updateAdminPwd(int frId, String adminPwd);
 
-	public Info updateFranchiseSupUsrPwd(int frId, String pass1, String pass2, String pass3);
+	public Info updateFranchiseSupUsrPwd(int frId, String pass2, String pass3);
 
 	public FranchiseSup getFrSupByFrId(int frId);
 	

@@ -69,7 +69,7 @@ public class GetCustomerBill {
 	@Column(name="discount_amt" )
 	private float discountAmt;
 	
-	@Column(name="user_gst_no")
+	@Column(name="fr_gst_no")
 	private String gstn;
 	
 	

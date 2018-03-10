@@ -18,6 +18,7 @@ import com.ats.webapi.model.FrLoginResponse;
 import com.ats.webapi.model.FrTarget;
 import com.ats.webapi.model.FrTargetList;
 import com.ats.webapi.model.FrTotalSale;
+import com.ats.webapi.model.Franchise;
 import com.ats.webapi.model.FranchiseSup;
 import com.ats.webapi.model.FranchiseSupList;
 import com.ats.webapi.model.Franchisee;
@@ -26,6 +27,7 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.LoginInfo;
 import com.ats.webapi.repository.FrTargetRepository;
 import com.ats.webapi.repository.FrTotalSaleRepository;
+import com.ats.webapi.repository.FranchiseRepository;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
 import com.ats.webapi.repository.GetFranchiseSupRepository;
@@ -36,7 +38,8 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 
     @Autowired
     private FranchiseeRepository franchiseeRepository;
-
+    @Autowired
+    FranchiseRepository franchiseRepository;
     @Autowired
     FranchiseSupRepository franchiseSupRepository;
     
@@ -92,13 +95,13 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 		String dbFrCode = null;
 		String dbPassword = null;
 		String jsonFr = "{}";
-        Franchisee dbFranchisee=new Franchisee();
+        Franchise dbFranchisee=new Franchise();
 
 			
 			FrLoginResponse frLoginResponse = new FrLoginResponse();
 			LoginInfo loginInfo=new LoginInfo();
 			try {
-				dbFranchisee = franchiseeRepository.findByFrCodeAndDelStatus(frCode,0);
+				dbFranchisee = franchiseRepository.findByFrCodeAndDelStatus(frCode,0);
 				System.out.println(" details "+dbFranchisee.toString());
 				
 				dbFrCode = dbFranchisee.getFrCode();
@@ -323,8 +326,12 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 		System.out.println("firstDate:"+firstDate);
 		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
 		
-		
+		try {
 		 frTotalSale=frTotalSaleRepository.findFrTotalSale(frId,firstDate,sm.format(lastDate));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 		 float monthTarget=frTotalSaleRepository.findMonthSale(frId,month,year);
 		 frTotalSale.setTargetAmt(monthTarget);
 		 
@@ -350,8 +357,9 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 	public Info updateAdminPwd(int frId, String adminPwd) {
 
 		int updateStatus=franchiseeRepository.updateAdminPwd(frId,adminPwd);
+		int updateFrPass=franchiseSupRepository.updateFrPwd(frId,adminPwd);
 		Info info=new Info();
-		if(updateStatus==1)
+		if(updateStatus>=1&&updateFrPass>=1)
 		{
 			info.setError(false);
 			info.setMessage("Admin Pwd Updated Successfully");
@@ -365,9 +373,9 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 	}
 
 	@Override
-	public Info updateFranchiseSupUsrPwd(int frId, String pass1, String pass2, String pass3) {
+	public Info updateFranchiseSupUsrPwd(int frId, String pass2, String pass3) {
 		
-		int updateStatus=franchiseSupRepository.updateFranchiseSupUserPwd(frId,pass1,pass2,pass3);
+		int updateStatus=franchiseSupRepository.updateFranchiseSupUserPwd(frId,pass2,pass3);
 		
 		Info info=new Info();
 		if(updateStatus==1)

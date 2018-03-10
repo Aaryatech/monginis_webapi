@@ -1,7 +1,6 @@
 package com.ats.webapi.model;
 
 import javax.persistence.Entity;
-import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -14,8 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-@Table(name = "m_franchisee")
-public class Franchisee implements Serializable{
+public class Franchise implements Serializable{
 	 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,6 +37,9 @@ public class Franchisee implements Serializable{
 	
 	@Column(name="fr_route_id")
 	private int frRouteId;
+	
+	@Column(name="route_name")
+	private String routeName;
 	
 	@Column(name="fr_city")
 	private String frCity;
@@ -160,7 +161,15 @@ public class Franchisee implements Serializable{
 	public void setFrOpeningDate(Date frOpeningDate) {
 		this.frOpeningDate = frOpeningDate;
 	}
-   
+    
+	public String getRouteName() {
+		return routeName;
+	}
+
+	public void setRouteName(String routeName) {
+		this.routeName = routeName;
+	}
+
 	public float getFrRate() {
 		return frRate;
 	}
@@ -414,3 +423,4 @@ public class Franchisee implements Serializable{
 
 	
 }
+

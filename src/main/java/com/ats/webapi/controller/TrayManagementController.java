@@ -2,6 +2,7 @@ package com.ats.webapi.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
-
+import com.ats.webapi.model.TrayMgtDetailList;
 import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FranchiseInRoute;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
@@ -43,8 +44,8 @@ public class TrayManagementController {
 			try {
 				TrayMgtHeader isHeaderAvail=null;
 				try {
-					System.out.println("----------------------"+trayMgtHeader.getTranDate());
-	              isHeaderAvail = trayMgtHeaderRepository.findByTranDateAndVehIdAndDelStatus(new SimpleDateFormat("yyyy-MM-dd").format(trayMgtHeader.getTranDate()), trayMgtHeader.getVehId(), 0);
+					System.out.println("----------------------"+trayMgtHeader.getTranDate()+"--"+new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+	              isHeaderAvail = trayMgtHeaderRepository.findByTranDateAndVehIdAndDelStatus(new SimpleDateFormat("yyyy-MM-dd").format(new Date()), trayMgtHeader.getVehId(), 0);
 
 				}
 				catch (Exception e) {
@@ -57,6 +58,7 @@ public class TrayManagementController {
 	  				trayMgtHeaderRes.setError(true);
 	  				trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .");
 				} else {
+					trayMgtHeader.setTranDate(new Date());
 					trayMgtHeaderRes = trayMgtService.saveTrayMgtHeader(trayMgtHeader);
 
 					trayMgtHeaderRes.setError(false);
@@ -173,6 +175,17 @@ public class TrayManagementController {
 	}
 
 	// ------------------------------------------------------------------------------------
+	// ---------------------------Getting TrayMgtDetails By TranId-------------------------
+		@RequestMapping(value = { "/getTrayMgtDetailsByTranId" }, method = RequestMethod.POST)
+		public @ResponseBody List<TrayMgtDetailList> getTrayMgtDetailsByTranId(@RequestParam("tranId") int tranId) {
+
+			List<TrayMgtDetailList> trayMgtDetailRes = trayMgtService.getTrayMgtDetailsByTranId(tranId);
+
+			return trayMgtDetailRes;
+
+		}
+
+		// ------------------------------------------------------------------------------------
 	// ---------------------------Getting TrayMgtDetail By Status For Bill-------------------------
 	@RequestMapping(value = { "/getTrayMgtDetailsForBill" }, method = RequestMethod.GET)
 	public @ResponseBody List<TrayMgtDetail> getTrayMgtDetailsForBill() {
@@ -343,10 +356,12 @@ public class TrayManagementController {
 	// --------------------------------------------------------------------------------------------------------------------------
 	// --------------------------Update Vehicle Status to (1) and out km&time------------------------------------------------------
 	@RequestMapping(value = { "/updateOutVehicleData" }, method = RequestMethod.POST)
-	public @ResponseBody Info updateVehicleOutData(@RequestParam("tranId") int tranId,
-			@RequestParam("vehOuttime") String vehOuttime, @RequestParam("vehOutkm") float vehOutKm) {
-
-		Info info = trayMgtService.updateVehicleOutData(tranId, vehOuttime, vehOutKm);
+	public @ResponseBody Info updateVehicleOutData(@RequestParam("tranId") int tranId, @RequestParam("vehOutkm") float vehOutKm) {
+		
+		DateFormat df = new SimpleDateFormat("HH:mm:ss");
+		Calendar calobj = Calendar.getInstance();
+		
+		Info info = trayMgtService.updateVehicleOutData(tranId, df.format(calobj.getTime()), vehOutKm);
 
 		return info;
 	}
@@ -354,16 +369,16 @@ public class TrayManagementController {
 	// ----------------------------------------------------------------------------------------------------------
 	// --------------------------Update Vehicle Status to (2) and In km,running km & time------------------------------------------------------
 	@RequestMapping(value = { "/updateInVehicleData" }, method = RequestMethod.POST)
-	public @ResponseBody Info updateInVehicleData(@RequestParam("tranId") int tranId,
-			@RequestParam("vehIntime") String vehIntime, @RequestParam("vehInkm") float vehInkm,
-			@RequestParam("extraTrayIn") int extraTrayIn, @RequestParam("diesel") float diesel) {
+	public @ResponseBody Info updateInVehicleData(@RequestParam("tranId") int tranId,@RequestParam("vehInkm") float vehInkm,
+			@RequestParam("extraTrayIn") int extraTrayIn) {
 
 		Info info = null;
 		try {
 			TrayMgtHeader getTrayMgtHeaderRes = trayMgtService.getTrayMgtHeaderByTranId(tranId);
-			getTrayMgtHeaderRes.setVehIntime(vehIntime);
+			DateFormat df = new SimpleDateFormat("HH:mm:ss");
+			Calendar calobj = Calendar.getInstance();
+			getTrayMgtHeaderRes.setVehIntime(df.format(calobj.getTime()));
 			getTrayMgtHeaderRes.setVehInkm(vehInkm);
-			getTrayMgtHeaderRes.setDiesel(diesel);
 			getTrayMgtHeaderRes.setExtraTrayIn(extraTrayIn);
 			getTrayMgtHeaderRes.setVehStatus(2);
 			getTrayMgtHeaderRes.setVehRunningKm(vehInkm - getTrayMgtHeaderRes.getVehOutkm());//update current km in vehical against vehId

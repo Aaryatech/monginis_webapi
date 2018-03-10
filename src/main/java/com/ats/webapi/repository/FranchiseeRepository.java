@@ -23,8 +23,7 @@ public interface FranchiseeRepository extends JpaRepository<Franchisee, Integer>
 		//public Franchisee findByFrCode(String frCode);
 
 		//public List<Franchisee> findAllByDelStatus(int i);
-
-		public Franchisee findByFrCodeAndDelStatus(String frCode, int i);
+		
 
 		@Modifying
 		@Transactional
@@ -36,6 +35,5 @@ public interface FranchiseeRepository extends JpaRepository<Franchisee, Integer>
 
 		public List<Franchisee> findAllByDelStatusOrderByFrNameAsc(int i);
 
-		
 		
 	}

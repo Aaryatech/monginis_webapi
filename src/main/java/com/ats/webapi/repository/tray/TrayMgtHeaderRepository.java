@@ -53,7 +53,7 @@ public interface TrayMgtHeaderRepository extends JpaRepository<TrayMgtHeader, In
 	@Query("Update TrayMgtHeader  SET del_status=1 WHERE tran_id =:tranId")
 	int updateHeaderStatus(@Param("tranId")int tranId);
 
-	TrayMgtHeader findByTranDateAndVehIdAndDelStatus(String string, int vehId, int delStatus);
-
+	@Query(value="select * from t_tray_mgt_header where tran_date=:date And veh_id=:vehId And del_status=:delStatus ",nativeQuery=true)
+	TrayMgtHeader findByTranDateAndVehIdAndDelStatus(@Param("date")String date,@Param("vehId") int vehId,@Param("delStatus") int delStatus);
 
 }
