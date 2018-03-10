@@ -31,6 +31,7 @@ import com.ats.webapi.model.PostProductionPlanDetail;
 import com.ats.webapi.model.UpdateBillStatus;
 import com.ats.webapi.model.Variance;
 import com.ats.webapi.model.VarianceList;
+import com.ats.webapi.model.prod.ProdItemBarcode;
 import com.ats.webapi.model.prod.UpdateOrderStatus;
 import com.ats.webapi.model.rawmaterial.ItemDetail;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
@@ -40,6 +41,7 @@ import com.ats.webapi.model.report.GetRepTaxSell;
 import com.ats.webapi.repository.PostProdPlanDetailRepository;
 import com.ats.webapi.repository.PostProdPlanHeaderRepository;
 import com.ats.webapi.repository.VarianceRepository;
+import com.ats.webapi.repository.prod.GetItemForBarcodeRepo;
 import com.ats.webapi.service.GetBillHeaderService;
 import com.ats.webapi.service.GetOrderItemQtyService;
 import com.ats.webapi.service.OrderService;
@@ -71,6 +73,10 @@ public class PorductionApiController {
 	
 	@Autowired
 	OrderService orderService;
+	
+	@Autowired
+	GetItemForBarcodeRepo  getItemForBarcodeRepo;
+	
 
 	/*@RequestMapping(value = { "/getOrderItemQty" }, method = RequestMethod.POST)
 	@ResponseBody
@@ -119,6 +125,25 @@ e.printStackTrace();
 		return getRegSpCakeOreder;
 
 	}*/
+	
+	
+	@RequestMapping(value = { "/getItemForBarcode" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<ProdItemBarcode> getItemForBarcode(@RequestParam String date, @RequestParam int catId) {
+		
+		List<ProdItemBarcode> itemList=new ArrayList<>();
+		try {
+			
+			itemList=getItemForBarcodeRepo.getItemForBarcode(date, catId);
+			
+		} catch (Exception e) {
+				e.printStackTrace();
+			System.out.println("exception in order list rest controller" + e.getMessage());
+		}
+		return itemList;
+
+	}
+	
 	
 	@RequestMapping(value = { "/getOrderQtyRegSpCakeAllItems" }, method = RequestMethod.POST)
 	@ResponseBody
