@@ -17,11 +17,13 @@ public interface GetCreditNoteDetailRepo extends JpaRepository<GetCrnDetails, In
 	
 	@Query(value="SELECT detail.*,"
 			+ "CASE WHEN detail.cat_id=5 THEN (SELECT m_sp_cake.sp_name from  m_sp_cake WHERE detail.item_id=m_sp_cake.sp_id)"
-			+ "ELSE (SELECT m_item.item_name from m_item where m_item.id=detail.item_id) END AS item_name "
+			+ "ELSE (SELECT m_item.item_name from m_item where m_item.id=detail.item_id) END AS item_name,"
+			+ "CASE WHEN detail.cat_id=5 THEN (SELECT m_spcake_sup.sp_hsncd from  m_spcake_sup WHERE detail.item_id=m_spcake_sup.sp_id)" + 
+		"ELSE (SELECT m_item_sup.item_hsncd from m_item_sup where m_item_sup.item_id=detail.item_id) END AS item_hsncd "
 			+ " FROM "
 			+ "t_credit_note_details detail "
-			+ "WHERE   detail.crn_id= :crnId ",nativeQuery=true)
+			+ "WHERE   detail.crn_id IN (:crnId) ",nativeQuery=true)
 	
-	List<GetCrnDetails> getCrnDetailsById(@Param("crnId")int crnId);
+	List<GetCrnDetails> getCrnDetailsById(@Param("crnId")List<String> crnId);
 
 }

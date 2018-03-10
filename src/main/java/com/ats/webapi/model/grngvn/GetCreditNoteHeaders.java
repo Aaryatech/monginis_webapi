@@ -53,6 +53,9 @@ public class GetCreditNoteHeaders {
 	@Column(name = "fr_name")
 	private String frName;
 
+	@Column(name = "fr_address")
+	private String frAddress;
+
 
 	public int getCrnId() {
 		return crnId;
@@ -173,12 +176,24 @@ public class GetCreditNoteHeaders {
 		this.isDeposited = isDeposited;
 	}
 
+
+	public String getFrAddress() {
+		return frAddress;
+	}
+
+
+	public void setFrAddress(String frAddress) {
+		this.frAddress = frAddress;
+	}
+
+
 	@Override
 	public String toString() {
 		return "GetCreditNoteHeaders [crnId=" + crnId + ", crnNo=" + crnNo + ", crnDate=" + crnDate + ", frId=" + frId
 				+ ", crnTaxableAmt=" + crnTaxableAmt + ", crnTotalTax=" + crnTotalTax + ", crnGrandTotal="
 				+ crnGrandTotal + ", roundOff=" + roundOff + ", createdDateTime=" + createdDateTime + ", isTallySync="
-				+ isTallySync + ", isDeposited=" + isDeposited + ", frName=" + frName + "]";
+				+ isTallySync + ", isDeposited=" + isDeposited + ", frName=" + frName + ", frAddress=" + frAddress
+				+ "]";
 	}
 
 
