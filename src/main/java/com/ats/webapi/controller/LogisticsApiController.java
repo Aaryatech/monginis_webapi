@@ -27,6 +27,7 @@ import com.ats.webapi.model.logistics.MechType;
 import com.ats.webapi.model.logistics.ServHeader;
 import com.ats.webapi.model.logistics.SparePart;
 import com.ats.webapi.model.logistics.SprGroup;
+import com.ats.webapi.model.logistics.TrayManagementReport;
 import com.ats.webapi.model.logistics.Variant;
 import com.ats.webapi.model.logistics.VehicalMaster;
 import com.ats.webapi.model.logistics.VehicalType;
@@ -37,6 +38,7 @@ import com.ats.webapi.repository.logistics.AlertVeihcleServicingRepository;
 import com.ats.webapi.repository.logistics.LogisAmcRepository;
 import com.ats.webapi.repository.logistics.MachineServicingRepository;
 import com.ats.webapi.repository.logistics.MechTypeRepository;
+import com.ats.webapi.repository.logistics.TrayManagementReportRepository;
 import com.ats.webapi.service.logistics.DealerService;
 import com.ats.webapi.service.logistics.DocumentService;
 import com.ats.webapi.service.logistics.DriverMasterService;
@@ -106,6 +108,9 @@ public class LogisticsApiController {
 	
 	@Autowired
 	AlertVeihcleServicingRepository alertVeihcleServicingRepository;
+	
+	@Autowired
+	TrayManagementReportRepository trayManagementReportRepository;
 	
 	
 	@RequestMapping(value = { "/postDriverMaster" }, method = RequestMethod.POST)
@@ -1566,5 +1571,34 @@ public class LogisticsApiController {
 		
 		return getVehicleAlert;
 
+	}
+	
+	@RequestMapping(value = { "/getTrayManagementReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<TrayManagementReport> getTrayManagementReport(@RequestParam ("fromDate") String fromDate,@RequestParam ("toDate") String toDate,
+			@RequestParam ("routeId") int routeId,@RequestParam ("vehId") int vehId)
+	{ 
+		System.out.println("fromDate " + fromDate);
+		System.out.println("toDate " + toDate);
+		System.out.println("routeId " + routeId);
+		System.out.println("vehId " + vehId);
+		List<TrayManagementReport> getTrayManagementReport = new ArrayList<TrayManagementReport>();
+		try {
+			  if(routeId!=0 && vehId==0)
+				  getTrayManagementReport = trayManagementReportRepository.getTrayManagementReportRouteWise(fromDate,toDate,routeId); 
+			  else if(routeId==0 && vehId!=0)
+				  getTrayManagementReport = trayManagementReportRepository.getTrayManagementReportVehId(fromDate,toDate,vehId);
+			  else if(routeId!=0 && vehId!=0)
+				  getTrayManagementReport = trayManagementReportRepository.getTrayManagementReportRouteWiseAndVehId(fromDate,toDate,routeId,vehId);
+			  else
+				  getTrayManagementReport = trayManagementReportRepository.getTrayManagementReport(fromDate,toDate); 
+			  
+			  
+			  System.out.println("getTrayManagementReport " +getTrayManagementReport);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+		
+		return getTrayManagementReport; 
 	}
 }
