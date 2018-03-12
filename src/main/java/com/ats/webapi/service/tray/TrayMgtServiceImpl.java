@@ -415,11 +415,11 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 	}
 
 	@Override
-	public List<TrayMgtDetailList> getTrayMgtDetailsByTranId(int tranId) {
+	public List<TrayMgtDetailList> getTrayMgtDetailsByTranIdAndDate(int tranId,String date) {
 		List<TrayMgtDetail> trayMgtDetailRes;
 		List<TrayMgtDetailList> trayMgtDetailList=new ArrayList<TrayMgtDetailList>();
 		try {
-		
+		        // String date=(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 			trayMgtDetailRes=trayMgtDetailRepository.findByTranId(tranId);
 			for(int i=0;i<trayMgtDetailRes.size();i++)
 			{
@@ -428,14 +428,15 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 				List<TrayMgtDetail> trayDetailList=new ArrayList<TrayMgtDetail>();
 				trayDetailList.add(trayMgtDetailRes.get(i));
 				
-				List<TrayMgtDetail> trayMgtDetails=trayMgtDetailRepository.findByIntrayDate(trayMgtDetailRes.get(i).getFrId(),new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+				List<TrayMgtDetail> trayMgtDetails = trayMgtDetailRepository
+						.findByIntrayDate(trayMgtDetailRes.get(i).getFrId(), date);
 				trayDetailList.addAll(trayMgtDetails);
 				
 				trayMgtDetail.setFrId(trayMgtDetailRes.get(i).getFrId());
 				trayMgtDetail.setTrayMgtDetailsList(trayDetailList);
 				
 				trayMgtDetailList.add(trayMgtDetail);
-				System.out.println(trayMgtDetails.toString());
+				System.out.println(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 			}
 		}
 		catch (Exception e) {

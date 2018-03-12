@@ -70,6 +70,8 @@ public interface TrayMgtService {
 
 	List<TrayMgtDetail> getTrayMgtDetailList(String fromDate, String toDate, int frId, int isDepositUsed);
 
-	List<TrayMgtDetailList> getTrayMgtDetailsByTranId(int tranId);
+//	List<TrayMgtDetailList> getTrayMgtDetailsByTranId(int tranId);
+
+	List<TrayMgtDetailList> getTrayMgtDetailsByTranIdAndDate(int tranId, String date);
 
 }

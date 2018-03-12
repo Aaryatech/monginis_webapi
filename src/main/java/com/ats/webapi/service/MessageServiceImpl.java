@@ -38,7 +38,7 @@ public class MessageServiceImpl implements MessageService {
 				 messageRes = messageRepository.save(message);
 				 ObjectMapper om = new ObjectMapper();
 			     String jsonStr = om.writeValueAsString(messageRes);
-			     if(message.getMsgId()==0) {
+			    // if(message.getMsgId()==0) {
 				List<String> frTokens=franchiseSupRepository.findTokens();
 				List<String> usrTokens=userRepository.findTokens();
 				frTokens.addAll(usrTokens);
@@ -53,7 +53,7 @@ public class MessageServiceImpl implements MessageService {
 			         {
 				       e.printStackTrace();
 			         }
-			     }
+			   //  }
 				Info info= new Info();
 				info.setError(false);
 				info.setMessage("Message inserted Successfully");

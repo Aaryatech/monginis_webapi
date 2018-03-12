@@ -176,14 +176,15 @@ public class TrayManagementController {
 
 	// ------------------------------------------------------------------------------------
 	// ---------------------------Getting TrayMgtDetails By TranId-------------------------
-		@RequestMapping(value = { "/getTrayMgtDetailsByTranId" }, method = RequestMethod.POST)
-		public @ResponseBody List<TrayMgtDetailList> getTrayMgtDetailsByTranId(@RequestParam("tranId") int tranId) {
+	@RequestMapping(value = { "/getTrayMgtDetailsByTranIdAndDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<TrayMgtDetailList> getTrayMgtDetailsByTranIdAndDate(@RequestParam("tranId") int tranId,
+			@RequestParam("date") String date) {
 
-			List<TrayMgtDetailList> trayMgtDetailRes = trayMgtService.getTrayMgtDetailsByTranId(tranId);
+		List<TrayMgtDetailList> trayMgtDetailRes = trayMgtService.getTrayMgtDetailsByTranIdAndDate(tranId, date);
 
-			return trayMgtDetailRes;
+		return trayMgtDetailRes;
 
-		}
+	}
 
 		// ------------------------------------------------------------------------------------
 	// ---------------------------Getting TrayMgtDetail By Status For Bill-------------------------
