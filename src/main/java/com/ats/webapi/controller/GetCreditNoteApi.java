@@ -83,4 +83,24 @@ public class GetCreditNoteApi {
 
 		return returnList;
 	}
+
+	@RequestMapping(value = { "/getCreditNoteHeadersByCrnIds" }, method = RequestMethod.POST)
+	public @ResponseBody GetCreditNoteHeadersList getCreditNoteHeadersByCrnIds(
+			@RequestParam("crnIdList") List<String> crnIdList)
+
+	{
+		GetCreditNoteHeadersList headerResponse = new GetCreditNoteHeadersList();
+		List<GetCreditNoteHeaders> headerList = new ArrayList<>();
+
+		try {
+
+			headerList = getCreditNoteHeaderRepo.getCreditHeadersByHeaderIds(crnIdList);
+			headerResponse.setCreditNoteHeaders(headerList);
+		} catch (Exception e) {
+			System.out.println("Exce In getting cn Headers " + e.getMessage());
+
+			e.printStackTrace();
+		}
+		return headerResponse;
+	}
 }

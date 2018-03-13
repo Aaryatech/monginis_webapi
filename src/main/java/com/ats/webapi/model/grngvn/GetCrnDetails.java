@@ -117,6 +117,12 @@ public class GetCrnDetails {
 		@Column(name="item_hsncd")
 		private String itemHsncd;
 		
+		@Column(name="item_uom")
+		private String itemUom;
+		
+		
+		
+		
 		
 
 		public int getCrndId() {
@@ -409,6 +415,17 @@ public class GetCrnDetails {
 			this.itemHsncd = itemHsncd;
 		}
 
+
+		public String getItemUom() {
+			return itemUom;
+		}
+
+
+		public void setItemUom(String itemUom) {
+			this.itemUom = itemUom;
+		}
+
+
 		@Override
 		public String toString() {
 			return "GetCrnDetails [crndId=" + crndId + ", crnId=" + crnId + ", itemId=" + itemId + ", grnGvnId="
@@ -419,7 +436,7 @@ public class GetCrnDetails {
 					+ cessRs + ", delStatus=" + delStatus + ", billNo=" + billNo + ", billDate=" + billDate + ", catId="
 					+ catId + ", baseRate=" + baseRate + ", cessPer=" + cessPer + ", refInvoiceNo=" + refInvoiceNo
 					+ ", grngvnSrno=" + grngvnSrno + ", grnGvnHeaderId=" + grnGvnHeaderId + ", itemName=" + itemName
-					+ ", itemHsncd=" + itemHsncd + "]";
+					+ ", itemHsncd=" + itemHsncd + ", itemUom=" + itemUom + "]";
 		}
 
 }
