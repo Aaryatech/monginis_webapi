@@ -1,8 +1,7 @@
 package com.ats.webapi.model.tally;
 
 import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import java.util.Date; 
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,29 +24,38 @@ public class MaterialReceiptNote implements Serializable{
 	@Column(name="mrn_no")
 	private String mrnNo;
 	
-	@Column(name="supplier_id")
-	private int supplierId;
-	
-	@Column(name="supp_name")
-	private String supplierName;
-	
-	@Column(name="inv_book_date")
-	private Date invoiceBookDate;
-	
 	@Column(name="invoice_number")
 	private String invoiceNumber;
+	
+	@Column(name="inv_book_date")
+	private Date invoiceBookDate; 
 	
 	@Column(name="inv_date")
 	private Date invoiceDate;
 	
-	@Column(name="basic_value")
-	private float basicValue;
+	@Column(name="mrn_type")
+	private int mrnType;
 	
+	@Column(name="supplier_id")
+	private int supplierId;
+	
+	@Column(name="supp_name")
+	private String supplierName; 
+	
+	@Column(name="supp_gstin")
+	private String suppGstin; 
+	
+	@Column(name="supp_state")
+	private String suppState; 
+	  
 	@Column(name="rm_id")
 	private int rmId;
 	
 	@Column(name="rm_name")
 	private String rmName;
+	
+	@Column(name="hsn_code")
+	private String hsnCode;
 	
 	@Column(name="rm_uom")
 	private String rmUom;
@@ -55,103 +63,59 @@ public class MaterialReceiptNote implements Serializable{
 	@Column(name="recd_qty")
 	private int recdQty;
 	
-	@Column(name="po_rate")
-	private float poRate;
+	@Column(name="varified_rate")
+	private float varifiedRate;
 	
 	@Column(name="value")
 	private float value;
 	
-	@Column(name="gst_per")
-	private float gstPer;
-	
-	
-	@Column(name="item_cgst_per")
-	private float itemCgstPer;
-	
-	@Column(name="item_cgst_rs")
-	private float itemCgstRs;
-
-	@Column(name="item_sgst_per")
-	private float itemSgstPer;
-	
-	@Column(name="item_sgst_rs")
-	private float itemSgstRs;
-	
-	@Column(name="item_igst_per")
-	private float itemIgstPer;
-	
-	@Column(name="item_igst_rs")
-	private float itemIgstRs;
-	
-	@Column(name="item_cess_per")
-	private float itemCessPer;
-	
-	@Column(name="item_cess_rs")
-	private float itemCessRs;
-	
-	@Column(name="extra_disc_amt_on_item")
-	private float extraDiscountAmtOnItem;
-	
-	@Column(name="extra_disc_amt_on_bill")
-	private float extraDiscountAmtOnBill;
-	
-	@Column(name="extra_charges_on_item")
-	private float extraChargesOnItem;
-	
-	@Column(name="extra_charges_on_bill")
-	private float extraChargesOnBill;
-	
-	@Column(name="amount")
-	private float itemTotalamount;
-	
-	@Column(name="total_extra_disc_amt_on_item")
-	private float totalExtraDiscountAmtOnItem;
-	
-	@Column(name="total_extra_disc_amt_on_bill")
-	private float totalExtraDiscountAmtOnBill;
-	
-	@Column(name="total_extra_charges_on_item")
-	private float totalExtraChargesOnItem;
-	
-	@Column(name="total_extra_charges_on_bill")
-	private float totalExtraChargesOnBill;
-	
-	@Column(name="cgst")
-	private float cgst;
-	
-	@Column(name="sgst")
-	private float sgst;
-	
-	@Column(name="igst")
-	private float igst;
-	
-	@Column(name="cess")
-	private float cess;
-	
 	@Column(name="disc_per")
 	private float discPer;
-	
+	 
 	@Column(name="disc_amt")
 	private float discAmt;
 	
-	@Column(name="disc_amt2")
-	private float discAmt2;
+	@Column(name="amount")
+	private float amount;
+
+	@Column(name="cgst_per")
+	private float cgstPer;
+	
+	@Column(name="sgst_per")
+	private float sgstPer;
+	
+	@Column(name="igst_per")
+	private float igstPer;
+	
+	@Column(name="cgst_rs")
+	private float cgstRs;
+	
+	@Column(name="sgst_rs")
+	private float sgstRs;
+	
+	@Column(name="igst_rs")
+	private float igstRs;
+	
+	@Column(name="cess_rs")
+	private float cessRs;
 	
 	@Column(name="freight_amt")
 	private float freightAmt;
-
-	@Column(name="insurance_amt")
-	private float insurance_amt;
 	
-	@Column(name="round_off")
-	private float roundOff;
+	@Column(name="insurance_amt")
+	private float insuranceAmt;
+	
+	@Column(name="disc_rs_onbill")
+	private float discRsOnbill;
+	
+	@Column(name="other3")
+	private float other3;
+	
+	@Column(name="other4")
+	private float other4;
 	
 	@Column(name="bill_amount")
 	private float billAmount;
-
-	
-	@Column(name="is_tally_sync")
-	private int isTallySync;
 
 	public int getMrnDetailId() {
 		return mrnDetailId;
@@ -177,6 +141,38 @@ public class MaterialReceiptNote implements Serializable{
 		this.mrnNo = mrnNo;
 	}
 
+	public String getInvoiceNumber() {
+		return invoiceNumber;
+	}
+
+	public void setInvoiceNumber(String invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
+	}
+
+	public Date getInvoiceBookDate() {
+		return invoiceBookDate;
+	}
+
+	public void setInvoiceBookDate(Date invoiceBookDate) {
+		this.invoiceBookDate = invoiceBookDate;
+	}
+
+	public Date getInvoiceDate() {
+		return invoiceDate;
+	}
+
+	public void setInvoiceDate(Date invoiceDate) {
+		this.invoiceDate = invoiceDate;
+	}
+
+	public int getMrnType() {
+		return mrnType;
+	}
+
+	public void setMrnType(int mrnType) {
+		this.mrnType = mrnType;
+	}
+
 	public int getSupplierId() {
 		return supplierId;
 	}
@@ -192,37 +188,21 @@ public class MaterialReceiptNote implements Serializable{
 	public void setSupplierName(String supplierName) {
 		this.supplierName = supplierName;
 	}
-
-	public Date getInvoiceBookDate() {
-		return invoiceBookDate;
+ 
+	public String getSuppGstin() {
+		return suppGstin;
 	}
 
-	public void setInvoiceBookDate(Date invoiceBookDate) {
-		this.invoiceBookDate = invoiceBookDate;
+	public void setSuppGstin(String suppGstin) {
+		this.suppGstin = suppGstin;
 	}
 
-	public String getInvoiceNumber() {
-		return invoiceNumber;
+	public String getSuppState() {
+		return suppState;
 	}
 
-	public void setInvoiceNumber(String invoiceNumber) {
-		this.invoiceNumber = invoiceNumber;
-	}
-
-	public Date getInvoiceDate() {
-		return invoiceDate;
-	}
-
-	public void setInvoiceDate(Date invoiceDate) {
-		this.invoiceDate = invoiceDate;
-	}
-
-	public float getBasicValue() {
-		return basicValue;
-	}
-
-	public void setBasicValue(float basicValue) {
-		this.basicValue = basicValue;
+	public void setSuppState(String suppState) {
+		this.suppState = suppState;
 	}
 
 	public int getRmId() {
@@ -241,6 +221,14 @@ public class MaterialReceiptNote implements Serializable{
 		this.rmName = rmName;
 	}
 
+	public String getHsnCode() {
+		return hsnCode;
+	}
+
+	public void setHsnCode(String hsnCode) {
+		this.hsnCode = hsnCode;
+	}
+
 	public String getRmUom() {
 		return rmUom;
 	}
@@ -257,12 +245,12 @@ public class MaterialReceiptNote implements Serializable{
 		this.recdQty = recdQty;
 	}
 
-	public float getPoRate() {
-		return poRate;
+	public float getVarifiedRate() {
+		return varifiedRate;
 	}
 
-	public void setPoRate(float poRate) {
-		this.poRate = poRate;
+	public void setVarifiedRate(float varifiedRate) {
+		this.varifiedRate = varifiedRate;
 	}
 
 	public float getValue() {
@@ -289,20 +277,68 @@ public class MaterialReceiptNote implements Serializable{
 		this.discAmt = discAmt;
 	}
 
-	public float getDiscAmt2() {
-		return discAmt2;
+	public float getAmount() {
+		return amount;
 	}
 
-	public void setDiscAmt2(float discAmt2) {
-		this.discAmt2 = discAmt2;
+	public void setAmount(float amount) {
+		this.amount = amount;
 	}
 
-	public float getGstPer() {
-		return gstPer;
+	public float getCgstPer() {
+		return cgstPer;
 	}
 
-	public void setGstPer(float gstPer) {
-		this.gstPer = gstPer;
+	public void setCgstPer(float cgstPer) {
+		this.cgstPer = cgstPer;
+	}
+
+	public float getSgstPer() {
+		return sgstPer;
+	}
+
+	public void setSgstPer(float sgstPer) {
+		this.sgstPer = sgstPer;
+	}
+
+	public float getIgstPer() {
+		return igstPer;
+	}
+
+	public void setIgstPer(float igstPer) {
+		this.igstPer = igstPer;
+	}
+
+	public float getCgstRs() {
+		return cgstRs;
+	}
+
+	public void setCgstRs(float cgstRs) {
+		this.cgstRs = cgstRs;
+	}
+
+	public float getSgstRs() {
+		return sgstRs;
+	}
+
+	public void setSgstRs(float sgstRs) {
+		this.sgstRs = sgstRs;
+	}
+
+	public float getIgstRs() {
+		return igstRs;
+	}
+
+	public void setIgstRs(float igstRs) {
+		this.igstRs = igstRs;
+	}
+
+	public float getCessRs() {
+		return cessRs;
+	}
+
+	public void setCessRs(float cessRs) {
+		this.cessRs = cessRs;
 	}
 
 	public float getFreightAmt() {
@@ -313,124 +349,36 @@ public class MaterialReceiptNote implements Serializable{
 		this.freightAmt = freightAmt;
 	}
 
-	public float getInsurance_amt() {
-		return insurance_amt;
+	public float getInsuranceAmt() {
+		return insuranceAmt;
 	}
 
-	public void setInsurance_amt(float insurance_amt) {
-		this.insurance_amt = insurance_amt;
+	public void setInsuranceAmt(float insuranceAmt) {
+		this.insuranceAmt = insuranceAmt;
 	}
 
-	public float getItemCgstPer() {
-		return itemCgstPer;
+	public float getDiscRsOnbill() {
+		return discRsOnbill;
 	}
 
-	public void setItemCgstPer(float itemCgstPer) {
-		this.itemCgstPer = itemCgstPer;
+	public void setDiscRsOnbill(float discRsOnbill) {
+		this.discRsOnbill = discRsOnbill;
 	}
 
-	public float getItemCgstRs() {
-		return itemCgstRs;
+	public float getOther3() {
+		return other3;
 	}
 
-	public void setItemCgstRs(float itemCgstRs) {
-		this.itemCgstRs = itemCgstRs;
+	public void setOther3(float other3) {
+		this.other3 = other3;
 	}
 
-	public float getItemSgstPer() {
-		return itemSgstPer;
+	public float getOther4() {
+		return other4;
 	}
 
-	public void setItemSgstPer(float itemSgstPer) {
-		this.itemSgstPer = itemSgstPer;
-	}
-
-	public float getItemSgstRs() {
-		return itemSgstRs;
-	}
-
-	public void setItemSgstRs(float itemSgstRs) {
-		this.itemSgstRs = itemSgstRs;
-	}
-
-	public float getItemIgstPer() {
-		return itemIgstPer;
-	}
-
-	public void setItemIgstPer(float itemIgstPer) {
-		this.itemIgstPer = itemIgstPer;
-	}
-
-	public float getItemIgstRs() {
-		return itemIgstRs;
-	}
-
-	public void setItemIgstRs(float itemIgstRs) {
-		this.itemIgstRs = itemIgstRs;
-	}
-
-	public float getItemCessPer() {
-		return itemCessPer;
-	}
-
-	public void setItemCessPer(float itemCessPer) {
-		this.itemCessPer = itemCessPer;
-	}
-
-	public float getItemCessRs() {
-		return itemCessRs;
-	}
-
-	public void setItemCessRs(float itemCessRs) {
-		this.itemCessRs = itemCessRs;
-	}
-
-	public float getItemTotalamount() {
-		return itemTotalamount;
-	}
-
-	public void setItemTotalamount(float itemTotalamount) {
-		this.itemTotalamount = itemTotalamount;
-	}
-
-	public float getCgst() {
-		return cgst;
-	}
-
-	public void setCgst(float cgst) {
-		this.cgst = cgst;
-	}
-
-	public float getSgst() {
-		return sgst;
-	}
-
-	public void setSgst(float sgst) {
-		this.sgst = sgst;
-	}
-
-	public float getIgst() {
-		return igst;
-	}
-
-	public void setIgst(float igst) {
-		this.igst = igst;
-	}
-
-	public float getCess() {
-		return cess;
-	}
-
-	public void setCess(float cess) {
-		this.cess = cess;
-	}
-
-	public float getRoundOff() {
-		return roundOff;
-	}
-
-	public void setRoundOff(float roundOff) {
-		this.roundOff = roundOff;
+	public void setOther4(float other4) {
+		this.other4 = other4;
 	}
 
 	public float getBillAmount() {
@@ -441,98 +389,22 @@ public class MaterialReceiptNote implements Serializable{
 		this.billAmount = billAmount;
 	}
 
-	public int getIsTallySync() {
-		return isTallySync;
-	}
-
-	public void setIsTallySync(int isTallySync) {
-		this.isTallySync = isTallySync;
-	}
-    
-	public float getExtraDiscountAmtOnItem() {
-		return extraDiscountAmtOnItem;
-	}
-
-	public void setExtraDiscountAmtOnItem(float extraDiscountAmtOnItem) {
-		this.extraDiscountAmtOnItem = extraDiscountAmtOnItem;
-	}
-
-	public float getExtraDiscountAmtOnBill() {
-		return extraDiscountAmtOnBill;
-	}
-
-	public void setExtraDiscountAmtOnBill(float extraDiscountAmtOnBill) {
-		this.extraDiscountAmtOnBill = extraDiscountAmtOnBill;
-	}
-
-	public float getExtraChargesOnItem() {
-		return extraChargesOnItem;
-	}
-
-	public void setExtraChargesOnItem(float extraChargesOnItem) {
-		this.extraChargesOnItem = extraChargesOnItem;
-	}
-
-	public float getExtraChargesOnBill() {
-		return extraChargesOnBill;
-	}
-
-	public void setExtraChargesOnBill(float extraChargesOnBill) {
-		this.extraChargesOnBill = extraChargesOnBill;
-	}
-
-	public float getTotalExtraDiscountAmtOnItem() {
-		return totalExtraDiscountAmtOnItem;
-	}
-
-	public void setTotalExtraDiscountAmtOnItem(float totalExtraDiscountAmtOnItem) {
-		this.totalExtraDiscountAmtOnItem = totalExtraDiscountAmtOnItem;
-	}
-
-	public float getTotalExtraDiscountAmtOnBill() {
-		return totalExtraDiscountAmtOnBill;
-	}
-
-	public void setTotalExtraDiscountAmtOnBill(float totalExtraDiscountAmtOnBill) {
-		this.totalExtraDiscountAmtOnBill = totalExtraDiscountAmtOnBill;
-	}
-
-	public float getTotalExtraChargesOnItem() {
-		return totalExtraChargesOnItem;
-	}
-
-	public void setTotalExtraChargesOnItem(float totalExtraChargesOnItem) {
-		this.totalExtraChargesOnItem = totalExtraChargesOnItem;
-	}
-
-	public float getTotalExtraChargesOnBill() {
-		return totalExtraChargesOnBill;
-	}
-
-	public void setTotalExtraChargesOnBill(float totalExtraChargesOnBill) {
-		this.totalExtraChargesOnBill = totalExtraChargesOnBill;
-	}
-
 	@Override
 	public String toString() {
 		return "MaterialReceiptNote [mrnDetailId=" + mrnDetailId + ", mrnId=" + mrnId + ", mrnNo=" + mrnNo
-				+ ", supplierId=" + supplierId + ", supplierName=" + supplierName + ", invoiceBookDate="
-				+ invoiceBookDate + ", invoiceNumber=" + invoiceNumber + ", invoiceDate=" + invoiceDate
-				+ ", basicValue=" + basicValue + ", rmId=" + rmId + ", rmName=" + rmName + ", rmUom=" + rmUom
-				+ ", recdQty=" + recdQty + ", poRate=" + poRate + ", value=" + value + ", gstPer=" + gstPer
-				+ ", itemCgstPer=" + itemCgstPer + ", itemCgstRs=" + itemCgstRs + ", itemSgstPer=" + itemSgstPer
-				+ ", itemSgstRs=" + itemSgstRs + ", itemIgstPer=" + itemIgstPer + ", itemIgstRs=" + itemIgstRs
-				+ ", itemCessPer=" + itemCessPer + ", itemCessRs=" + itemCessRs + ", extraDiscountAmtOnItem="
-				+ extraDiscountAmtOnItem + ", extraDiscountAmtOnBill=" + extraDiscountAmtOnBill
-				+ ", extraChargesOnItem=" + extraChargesOnItem + ", extraChargesOnBill=" + extraChargesOnBill
-				+ ", itemTotalamount=" + itemTotalamount + ", totalExtraDiscountAmtOnItem="
-				+ totalExtraDiscountAmtOnItem + ", totalExtraDiscountAmtOnBill=" + totalExtraDiscountAmtOnBill
-				+ ", totalExtraChargesOnItem=" + totalExtraChargesOnItem + ", totalExtraChargesOnBill="
-				+ totalExtraChargesOnBill + ", cgst=" + cgst + ", sgst=" + sgst + ", igst=" + igst + ", cess=" + cess
-				+ ", discPer=" + discPer + ", discAmt=" + discAmt + ", discAmt2=" + discAmt2 + ", freightAmt="
-				+ freightAmt + ", insurance_amt=" + insurance_amt + ", roundOff=" + roundOff + ", billAmount="
-				+ billAmount + ", isTallySync=" + isTallySync + "]";
+				+ ", invoiceNumber=" + invoiceNumber + ", invoiceBookDate=" + invoiceBookDate + ", invoiceDate="
+				+ invoiceDate + ", mrnType=" + mrnType + ", supplierId=" + supplierId + ", supplierName=" + supplierName
+				+ ", suppGstin=" + suppGstin + ", suppState=" + suppState + ", rmId=" + rmId + ", rmName=" + rmName
+				+ ", hsnCode=" + hsnCode + ", rmUom=" + rmUom + ", recdQty=" + recdQty + ", varifiedRate="
+				+ varifiedRate + ", value=" + value + ", discPer=" + discPer + ", discAmt=" + discAmt + ", amount="
+				+ amount + ", cgstPer=" + cgstPer + ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cgstRs="
+				+ cgstRs + ", sgstRs=" + sgstRs + ", igstRs=" + igstRs + ", cessRs=" + cessRs + ", freightAmt="
+				+ freightAmt + ", insuranceAmt=" + insuranceAmt + ", discRsOnbill=" + discRsOnbill + ", other3="
+				+ other3 + ", other4=" + other4 + ", billAmount=" + billAmount + "]";
 	}
 
+	 
+	
+	 
 	
 }
