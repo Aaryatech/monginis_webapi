@@ -55,8 +55,20 @@ public class GetCreditNoteHeaders {
 
 	@Column(name = "fr_address")
 	private String frAddress;
+	
+	
+	
+	@Column(name = "fr_gst_no")
+	private String frGstNo;
+	
+	@Column(name = "is_same_state")
+	private int isSameState;
 
+	@Column(name = "is_grn")
+	private int isGrn;
 
+	
+	
 	public int getCrnId() {
 		return crnId;
 	}
@@ -187,14 +199,43 @@ public class GetCreditNoteHeaders {
 	}
 
 
+	public String getFrGstNo() {
+		return frGstNo;
+	}
+
+
+	public void setFrGstNo(String frGstNo) {
+		this.frGstNo = frGstNo;
+	}
+
+
+	public int getIsSameState() {
+		return isSameState;
+	}
+
+
+	public void setIsSameState(int isSameState) {
+		this.isSameState = isSameState;
+	}
+
+
+	public int getIsGrn() {
+		return isGrn;
+	}
+
+
+	public void setIsGrn(int isGrn) {
+		this.isGrn = isGrn;
+	}
+
+
 	@Override
 	public String toString() {
 		return "GetCreditNoteHeaders [crnId=" + crnId + ", crnNo=" + crnNo + ", crnDate=" + crnDate + ", frId=" + frId
 				+ ", crnTaxableAmt=" + crnTaxableAmt + ", crnTotalTax=" + crnTotalTax + ", crnGrandTotal="
 				+ crnGrandTotal + ", roundOff=" + roundOff + ", createdDateTime=" + createdDateTime + ", isTallySync="
 				+ isTallySync + ", isDeposited=" + isDeposited + ", frName=" + frName + ", frAddress=" + frAddress
-				+ "]";
+				+ ", frGstNo=" + frGstNo + ", isSameState=" + isSameState + ", isGrn=" + isGrn + "]";
 	}
-
-
+	
 }

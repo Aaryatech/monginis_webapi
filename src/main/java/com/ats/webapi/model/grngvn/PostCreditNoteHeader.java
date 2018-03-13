@@ -54,6 +54,10 @@ public class PostCreditNoteHeader implements Serializable {
 
 	@Column(name = "is_tally_sync")
 	private int isTallySync;
+	
+	@Column(name = "is_grn")
+	private int isGrn;
+
 
 	@Transient
 	List<PostCreditNoteDetails> postCreditNoteDetails;
@@ -186,14 +190,22 @@ public class PostCreditNoteHeader implements Serializable {
 		this.isDeposited = isDeposited;
 	}
 
+	public int getIsGrn() {
+		return isGrn;
+	}
+
+	public void setIsGrn(int isGrn) {
+		this.isGrn = isGrn;
+	}
+
 	@Override
 	public String toString() {
 		return "PostCreditNoteHeader [crnId=" + crnId + ", crnNo=" + crnNo + ", crnDate=" + crnDate + ", frId=" + frId
 				+ ", crnTaxableAmt=" + crnTaxableAmt + ", crnTotalTax=" + crnTotalTax + ", crnGrandTotal="
 				+ crnGrandTotal + ", crnFinalAmt=" + crnFinalAmt + ", roundOff=" + roundOff + ", userId=" + userId
-				+ ", createdDateTime=" + createdDateTime + ", isTallySync=" + isTallySync + ", postCreditNoteDetails="
-				+ postCreditNoteDetails + ", grnGvnSrNoList=" + grnGvnSrNoList + ", isDeposited=" + isDeposited + "]";
+				+ ", createdDateTime=" + createdDateTime + ", isTallySync=" + isTallySync + ", isGrn=" + isGrn
+				+ ", postCreditNoteDetails=" + postCreditNoteDetails + ", grnGvnSrNoList=" + grnGvnSrNoList
+				+ ", isDeposited=" + isDeposited + "]";
 	}
-
 
 }
