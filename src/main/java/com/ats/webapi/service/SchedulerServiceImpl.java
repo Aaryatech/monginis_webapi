@@ -1,10 +1,8 @@
 package com.ats.webapi.service;
 
-import static org.mockito.Matchers.isNull;
 
 import java.util.Date;
 import java.util.List;
-import org.hamcrest.core.IsAnything;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -44,23 +42,26 @@ public class SchedulerServiceImpl implements SchedulerService {
 				   schedularRes = schedulerRepository.save(scheduler);
 					 ObjectMapper om = new ObjectMapper();
 				     String jsonStr = om.writeValueAsString(schedularRes);
-				   //  if(scheduler.getSchId()==0) {
+ //if(scheduler.getSchId()==0) {
 					List<String> frTokens=franchiseSupRepository.findTokens();
 					List<String> usrTokens=userRepository.findTokens();
 					frTokens.addAll(usrTokens);
+					System.out.println("usrTokens"+usrTokens.toString());
 
 					 try {
 				    	 for(String token:frTokens)
 				    	 {
-				    	
-				          Firebase.sendPushNotifForCommunication(token,scheduler.getSchOccasionname(),jsonStr,"news");
-				    	 }
+				    		 if(token!=null)
+			   		    	  { 
+				               Firebase.sendPushNotifForCommunication(token,scheduler.getSchOccasionname(),jsonStr,"news");
+					    	  }
+					    	}
 				         }
 				         catch(Exception e)
 				         {
 					       e.printStackTrace();
 				         }
-				     //}
+				     // }
 					info.setError(false);
 					info.setMessage("Scheduler inserted Successfully");
 					jsonScheduler = JsonUtil.javaToJson(info);

@@ -38,22 +38,34 @@ public class MessageServiceImpl implements MessageService {
 				 messageRes = messageRepository.save(message);
 				 ObjectMapper om = new ObjectMapper();
 			     String jsonStr = om.writeValueAsString(messageRes);
-			    // if(message.getMsgId()==0) {
+			   //  if(message.getMsgId()==0) {
 				List<String> frTokens=franchiseSupRepository.findTokens();
 				List<String> usrTokens=userRepository.findTokens();
-				frTokens.addAll(usrTokens);
+				System.out.println("usrTokens"+usrTokens.toString());
+				//frTokens.addAll(usrTokens);
 				 try {
 			    	 for(String token:frTokens)
 			    	 {
-			    	
+			    		 if(token!=null && token!="0")
+				    	  {
 			          Firebase.sendPushNotifForCommunication(token,message.getMsgHeader(),jsonStr,"notice");
-			    	 }
+				    	  }
+				    }
+			    	 
+			    	 for(String token:usrTokens)
+			    	 {
+			    		 if(token!=null && token!="0")
+				    	  {
+			          Firebase.sendPushNotifForCommunication(token,message.getMsgHeader(),jsonStr,"notice");
+				    	  }
+				    	}
 			         }
+				 
 			         catch(Exception e)
 			         {
 				       e.printStackTrace();
 			         }
-			   //  }
+			   // }
 				Info info= new Info();
 				info.setError(false);
 				info.setMessage("Message inserted Successfully");
