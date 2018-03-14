@@ -17,6 +17,8 @@ public interface GetRegSpCakeOrdersRepository extends JpaRepository<GetRegSpCake
 	
 	List<GetRegSpCakeOrders> getRegSpOrders(@Param("orderNo")List<String> orderNo);
 
+
+
 	
 	
 }

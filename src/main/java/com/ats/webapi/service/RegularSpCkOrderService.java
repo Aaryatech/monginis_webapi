@@ -24,4 +24,6 @@ public interface RegularSpCkOrderService {
 
 	Info deleteRegularSpOrder(int rspId);
 
+	List<RegularSpCkOrders> getRegSpCakeOrderHistory(String spDeliveryDt, int frId);
+
 }

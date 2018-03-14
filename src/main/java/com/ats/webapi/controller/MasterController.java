@@ -20,11 +20,13 @@ import com.ats.webapi.model.FrTotalSale;
 import com.ats.webapi.model.FranchiseSup;
 import com.ats.webapi.model.FranchiseSupList;
 import com.ats.webapi.model.GetItemSup;
+import com.ats.webapi.model.GetRegSpCakeOrders;
 import com.ats.webapi.model.GetSpCkSupplement;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
+import com.ats.webapi.model.RegularSpCkOrders;
 import com.ats.webapi.model.SpCake;
 import com.ats.webapi.model.SpCakeSupplement;
 import com.ats.webapi.model.SubCategory;
@@ -544,5 +546,12 @@ public class MasterController {
 					}
 					return subCategoryList;
 
+				}
+				@RequestMapping(value = { "/getRegSpCakeOrderHistory" }, method = RequestMethod.POST)
+				@ResponseBody
+				public List<RegularSpCkOrders> getRegSpCakeOrderHistory(
+						@RequestParam String spDeliveryDt, int  frId) {
+					List<RegularSpCkOrders> regSpCakeOrder = regularSpCkOrderService.getRegSpCakeOrderHistory(spDeliveryDt, frId);
+					return regSpCakeOrder;
 				}
 }

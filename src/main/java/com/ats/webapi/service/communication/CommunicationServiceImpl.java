@@ -126,8 +126,10 @@ public class CommunicationServiceImpl implements CommunicationService{
 			 try {
 		    	 for(String token:frTokens)
 		    	 {
-		    	
+		    	  if(token!=null)
+		    	  {
 		          Firebase.sendPushNotifForCommunication(token,notificationRes.getSubject()+"#"+userRes.getUsername(),jsonStr,"nf");
+		    	  }
 		    	 }
 		         }
 		         catch(Exception e)

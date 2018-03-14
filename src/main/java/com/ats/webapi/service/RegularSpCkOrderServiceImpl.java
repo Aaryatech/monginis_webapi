@@ -157,4 +157,20 @@ public class RegularSpCkOrderServiceImpl implements RegularSpCkOrderService{
 		return info;
 	}
 
+
+	@Override
+	public List<RegularSpCkOrders> getRegSpCakeOrderHistory(String spDeliveryDt, int frId) {
+
+		List<RegularSpCkOrders> regularSpCkOrdersList=null;
+		try {
+			regularSpCkOrdersList=regularSpCkOrderAdminRepo.findRegularCakeOrderHistory(spDeliveryDt,frId);
+		
+		}catch (Exception e) {
+			regularSpCkOrdersList=new ArrayList<RegularSpCkOrders>();
+			e.printStackTrace();
+		}
+		
+		return regularSpCkOrdersList;
+	}
+
 }

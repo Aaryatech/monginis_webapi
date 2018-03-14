@@ -152,7 +152,7 @@ public class FranchiseeServiceImpl implements FranchiseeService {
                     	{
                     		frLoginResponse.setFranchisee(dbFranchisee);
         					loginInfo.setError(false);
-        					loginInfo.setAccessRight(2);
+        					loginInfo.setAccessRight(1);
         					loginInfo.setMessage("Franchisee displayed Successfully");
         					frLoginResponse.setLoginInfo(loginInfo);
         					jsonFr = JsonUtil.javaToJson(frLoginResponse);
@@ -162,7 +162,7 @@ public class FranchiseeServiceImpl implements FranchiseeService {
                     		{
                     			frLoginResponse.setFranchisee(dbFranchisee);
             					loginInfo.setError(false);
-            					loginInfo.setAccessRight(3);
+            					loginInfo.setAccessRight(2);
             					loginInfo.setMessage("Franchisee displayed Successfully");
             					frLoginResponse.setLoginInfo(loginInfo);
             					jsonFr = JsonUtil.javaToJson(frLoginResponse);
@@ -172,7 +172,7 @@ public class FranchiseeServiceImpl implements FranchiseeService {
                         		{
                         			frLoginResponse.setFranchisee(dbFranchisee);
                 					loginInfo.setError(false);
-                					loginInfo.setAccessRight(4);
+                					loginInfo.setAccessRight(3);
                 					loginInfo.setMessage("Franchisee displayed Successfully");
                 					frLoginResponse.setLoginInfo(loginInfo);
                 					jsonFr = JsonUtil.javaToJson(frLoginResponse);
