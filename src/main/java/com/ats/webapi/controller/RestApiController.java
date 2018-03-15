@@ -1509,12 +1509,12 @@ public class RestApiController {
 	// Place SpCake Order
 	@RequestMapping(value = { "/insertRegularSpCake" }, method = RequestMethod.POST)
 
-	public @ResponseBody ErrorMessage saveRegularSpCake(@RequestBody RegularSpCake regularSpCake)
+	public @ResponseBody RegularSpCake saveRegularSpCake(@RequestBody RegularSpCake regularSpCake)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
 
 		System.out.println("Inside Place Order " + regularSpCake.toString());
 
-		ErrorMessage errorMessage = regularSpCkOrderService.placeRegularSpCakeOrder(regularSpCake);
+		RegularSpCake errorMessage = regularSpCkOrderService.placeRegularSpCakeOrder(regularSpCake);
 
 		return errorMessage;
 

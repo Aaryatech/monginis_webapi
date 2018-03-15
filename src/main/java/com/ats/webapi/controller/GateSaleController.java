@@ -250,7 +250,7 @@ public class GateSaleController {
 			
 			return errorMessage;
 		}
-		//--------------------------END--------------------------------------------------
+		     //--------------------------END--------------------------------------------------
 		     // ---------------------------Getting GateBillHeaderAndDetails By userId-------------------------
 				@RequestMapping(value = { "/gateBillHeaderAndDetails" }, method = RequestMethod.POST)
 				public @ResponseBody List<GateSaleBillHeaderResp> gateBillHeaderAndDetails(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
@@ -258,6 +258,17 @@ public class GateSaleController {
 						@RequestParam("collectedUserId")int collectorUserId) {
 
 					List<GateSaleBillHeaderResp> gateBillHeadersRes = gateSaleService.gateBillHeaderAndDetails(fromDate,toDate,isApproved,approvedUserId,amtIsCollected,collectorUserId);
+		            
+					return gateBillHeadersRes;
+
+				}
+			    //------------------------------------------------------------------------------------
+				   // ---------------------------Getting GateBillHeaderAndDetails(initiator)-------------------------
+				@RequestMapping(value = { "/gateBillHeaderAndDetailsByInitiator" }, method = RequestMethod.POST)
+				public @ResponseBody List<GateSaleBillHeaderResp> gateBillHeaderAndDetailsByInitiator(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
+						@RequestParam("isApproved")int isApproved,@RequestParam("initiatorUserId")int initiatorUserId) {
+
+					List<GateSaleBillHeaderResp> gateBillHeadersRes = gateSaleService.gateBillHeaderAndDetailsByInitiator(fromDate,toDate,isApproved,initiatorUserId);
 		            
 					return gateBillHeadersRes;
 

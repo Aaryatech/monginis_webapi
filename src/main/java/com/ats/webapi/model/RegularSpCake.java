@@ -112,6 +112,7 @@ public class RegularSpCake {
 	public Date getOrderDate() {
 		return orderDate;
 	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setOrderDate(Date orderDate) {
 		this.orderDate = orderDate;
 	}
@@ -123,9 +124,11 @@ public class RegularSpCake {
 	public void setRspProduDate(Date rspProduDate) {
 		this.rspProduDate = rspProduDate;
 	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getRspDeliveryDt() {
 		return rspDeliveryDt;
 	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public void setRspDeliveryDt(Date rspDeliveryDt) {
 		this.rspDeliveryDt = rspDeliveryDt;
 	}

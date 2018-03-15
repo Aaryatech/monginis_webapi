@@ -42,5 +42,11 @@ public interface GateSaleBillHeaderResRepository extends JpaRepository<GateSaleB
     		"  is_approved=:isApproved order by bill_id DESC",nativeQuery=true)
 	List<GateSaleBillHeaderResp> findByIsApprovedAndBillDateBetween(@Param("isApproved")int isApproved,@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 
+    @Query(value="select bill_id,bill_date,invoice_no,category,is_other,cust_name,emp_id,discount_per,bill_amt,discount_amt,round_off,bill_grant_amt,is_approved,approved_date,approved_user_id,amt_is_collected,collected_date,collected_user_id,is_bill_print,initiator_user_id,del_status from  t_gatesale_bill_header where del_status=0  And is_approved=:isApproved And initiator_user_id=:initiatorUserId order by bill_id DESC",nativeQuery=true)
+	List<GateSaleBillHeaderResp> findHeaderByInitiatorId(@Param("isApproved")int isApproved,@Param("initiatorUserId") int initiatorUserId);
+  
+    @Query(value="select bill_id,bill_date,invoice_no,category,is_other,cust_name,emp_id,discount_per,bill_amt,discount_amt,round_off,bill_grant_amt,is_approved,approved_date,approved_user_id,amt_is_collected,collected_date,collected_user_id,is_bill_print,initiator_user_id,del_status from  t_gatesale_bill_header where del_status=0  And is_approved=:isApproved And bill_date Between :fromDate And :toDate And initiator_user_id=:initiatorUserId order by bill_id DESC",nativeQuery=true)
+	List<GateSaleBillHeaderResp> findHeaderByInitiatorIdAndDate(@Param("isApproved")int isApproved,@Param("initiatorUserId") int initiatorUserId, @Param("fromDate") String fromDate,@Param("toDate") String toDate);
+
    
 }

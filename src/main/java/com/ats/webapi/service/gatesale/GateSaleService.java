@@ -83,4 +83,7 @@ public interface GateSaleService {
 
 	List<GateSaleBillHeaderRes> gateBillDetailAmtPending(int isApproved, int amtIsCollected);
 
+	List<GateSaleBillHeaderResp> gateBillHeaderAndDetailsByInitiator(String fromDate, String toDate, int isApproved,
+			int initiatorUserId);
+
 }

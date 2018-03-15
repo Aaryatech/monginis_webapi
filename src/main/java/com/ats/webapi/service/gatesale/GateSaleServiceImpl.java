@@ -899,4 +899,31 @@ try {
 		
 	}
 
+	@Override
+	public List<GateSaleBillHeaderResp> gateBillHeaderAndDetailsByInitiator(String fromDate, String toDate,
+			int isApproved, int initiatorUserId) {
+		
+	List<GateSaleBillHeaderResp> gateSaleBillHeaderRes=new ArrayList<GateSaleBillHeaderResp>();
+		
+		if(isApproved==1&&initiatorUserId!=0)
+			{
+				gateSaleBillHeaderRes=gateSaleBillHeaderResRepository.findHeaderByInitiatorId(isApproved,initiatorUserId);
+				for(int i=0;i<gateSaleBillHeaderRes.size();i++)
+				{
+				List<GateSaleBillDetailRes> gateSaleBillDetailList=gateSaleBillDetailsRepository.findGateSaleBillDetailByBillId(gateSaleBillHeaderRes.get(i).getBillId());
+				gateSaleBillHeaderRes.get(i).setGateSaleBillDetailList(gateSaleBillDetailList);
+				}
+			}
+		else {
+				gateSaleBillHeaderRes=gateSaleBillHeaderResRepository.findHeaderByInitiatorIdAndDate(isApproved,initiatorUserId,fromDate,toDate);
+				for(int i=0;i<gateSaleBillHeaderRes.size();i++)
+				{
+				List<GateSaleBillDetailRes> gateSaleBillDetailList=gateSaleBillDetailsRepository.findGateSaleBillDetailByBillId(gateSaleBillHeaderRes.get(i).getBillId());
+				gateSaleBillHeaderRes.get(i).setGateSaleBillDetailList(gateSaleBillDetailList);
+				}
+		}
+		
+		return gateSaleBillHeaderRes;
+	}
+
 }

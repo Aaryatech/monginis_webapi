@@ -37,7 +37,7 @@ public class RegularSpCkOrderServiceImpl implements RegularSpCkOrderService{
 	RegularCkOrderDelRepository regularCkOrderDelRepository;
 	
 	@Override
-	public ErrorMessage placeRegularSpCakeOrder(RegularSpCake regularSpCake) {
+	public RegularSpCake placeRegularSpCakeOrder(RegularSpCake regularSpCake) {
 	  
 		ErrorMessage errorMessage=new ErrorMessage();
 		
@@ -55,7 +55,7 @@ public class RegularSpCkOrderServiceImpl implements RegularSpCkOrderService{
 			
 		}
 		
-		return errorMessage;
+		return regularSpCakeOrder;
 	}
 
 
@@ -159,14 +159,14 @@ public class RegularSpCkOrderServiceImpl implements RegularSpCkOrderService{
 
 
 	@Override
-	public List<RegularSpCkOrders> getRegSpCakeOrderHistory(String spDeliveryDt, int frId) {
+	public List<GetRegSpCakeOrders> getRegSpCakeOrderHistory(String spDeliveryDt, int frId) {
 
-		List<RegularSpCkOrders> regularSpCkOrdersList=null;
+		List<GetRegSpCakeOrders> regularSpCkOrdersList=null;
 		try {
-			regularSpCkOrdersList=regularSpCkOrderAdminRepo.findRegularCakeOrderHistory(spDeliveryDt,frId);
+			regularSpCkOrdersList=getRegSpCakeOrdersRepository.findRegularCakeOrderHistory(spDeliveryDt,frId);
 		
 		}catch (Exception e) {
-			regularSpCkOrdersList=new ArrayList<RegularSpCkOrders>();
+			regularSpCkOrdersList=new ArrayList<GetRegSpCakeOrders>();
 			e.printStackTrace();
 		}
 		

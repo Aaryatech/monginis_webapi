@@ -25,7 +25,7 @@ public class GetCustomerBill {
 	private int sellBillNo;
 	
 	@Column(name="invoice_no")
-	private int invoiceNo;
+	private String invoiceNo;
 	
 	@Column(name="bill_date")
 	private Date billDate;
@@ -122,11 +122,11 @@ public class GetCustomerBill {
 		this.sellBillNo = sellBillNo;
 	}
 
-	public int getInvoiceNo() {
+	public String getInvoiceNo() {
 		return invoiceNo;
 	}
 
-	public void setInvoiceNo(int invoiceNo) {
+	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
 

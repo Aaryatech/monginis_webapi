@@ -14,7 +14,7 @@ import com.ats.webapi.model.RegularSpCkOrders;
 @Service
 public interface RegularSpCkOrderService {
 
-	ErrorMessage placeRegularSpCakeOrder(RegularSpCake regularSpCake);
+	RegularSpCake placeRegularSpCakeOrder(RegularSpCake regularSpCake);
 
 	RegSpCkOrderResponse findRegularSpCkOrder(List<Integer> frId, String strDate);
 
@@ -24,6 +24,6 @@ public interface RegularSpCkOrderService {
 
 	Info deleteRegularSpOrder(int rspId);
 
-	List<RegularSpCkOrders> getRegSpCakeOrderHistory(String spDeliveryDt, int frId);
+	List<GetRegSpCakeOrders> getRegSpCakeOrderHistory(String spDeliveryDt, int frId);
 
 }
