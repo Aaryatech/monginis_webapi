@@ -23,7 +23,7 @@ public interface ExpressBillService {
 	
 	SellBillHeader getSellBillHeaderBysellBillNo(int sellBillNo);
 	
-	int deleteBillDetail(int delStatus,int sellBillDetailNo);
+	int deleteBillDetail(int sellBillDetailNo);
 
 	GetItemHsnCode getItemHsnCode(int itemId);
 	

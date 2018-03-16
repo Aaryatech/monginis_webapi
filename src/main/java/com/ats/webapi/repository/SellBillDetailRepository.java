@@ -18,8 +18,10 @@ public interface SellBillDetailRepository extends JpaRepository<SellBillDetail, 
 	
 	@Transactional
 	@Modifying
-	@Query(" UPDATE SellBillDetail SET delStatus=:delStatus WHERE sellBillDetailNo=:sellBillDetailNo ")
+	@Query(" DELETE FROM SellBillDetail WHERE  sellBillDetailNo=:sellBillDetailNo")
 	
-	int  deleteSellBillDetail(@Param("delStatus") int delStatus,@Param("sellBillDetailNo") int sellBillDetailNo);
+	int  deleteSellBillDetail(@Param("sellBillDetailNo") int sellBillDetailNo);
+	
+	
 	
 }

@@ -93,10 +93,10 @@ public class BillingController {
 	
 	
 	@RequestMapping(value = { "/deleteSellBillDetail" }, method = RequestMethod.POST)
-	public @ResponseBody Info deleteSellBillDetail(@RequestParam("delStatus") int delStatus,
+	public @ResponseBody Info deleteSellBillDetail(
 			@RequestParam("sellBillDetailNo") int sellBillDetailNo) {
 
-		int result= expressBillService.deleteBillDetail(delStatus, sellBillDetailNo);
+		int result= expressBillService.deleteBillDetail(sellBillDetailNo);
 		
 		Info info=new Info();
 		

@@ -110,9 +110,11 @@ public class ExpressBillServiceImpl implements ExpressBillService{
 	}
 
 	@Override
-	public int deleteBillDetail(int delStatus,int sellBillDetailNo) {
+	public int deleteBillDetail(int sellBillDetailNo) {
 		
-		int result=sellBillDetailRepository.deleteSellBillDetail(delStatus, sellBillDetailNo);
+		int result=sellBillDetailRepository.deleteSellBillDetail(sellBillDetailNo);
+	
+		
 		
 		return result;
 	}
