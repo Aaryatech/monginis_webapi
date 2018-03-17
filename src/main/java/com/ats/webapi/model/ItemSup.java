@@ -55,7 +55,7 @@ public class ItemSup implements Serializable{
 	
 	private int delStatus;
 
-	
+	private String shortName;
 	
 	public int getCutSection() {
 		return cutSection;
@@ -205,6 +205,14 @@ public class ItemSup implements Serializable{
 		this.delStatus = delStatus;
 	}
 
+	public String getShortName() {
+		return shortName;
+	}
+
+	public void setShortName(String shortName) {
+		this.shortName = shortName;
+	}
+
 	@Override
 	public String toString() {
 		return "ItemSup [error=" + error + ", message=" + message + ", id=" + id + ", itemId=" + itemId + ", itemHsncd="
@@ -212,8 +220,7 @@ public class ItemSup implements Serializable{
 				+ ", noOfItemPerTray=" + noOfItemPerTray + ", actualWeight=" + actualWeight + ", baseWeight="
 				+ baseWeight + ", inputPerQty=" + inputPerQty + ", isGateSale=" + isGateSale + ", isGateSaleDisc="
 				+ isGateSaleDisc + ", isAllowBday=" + isAllowBday + ", cutSection=" + cutSection + ", delStatus="
-				+ delStatus + ", isTallySync=" + isTallySync + "]";
+				+ delStatus + ", shortName=" + shortName + ", isTallySync=" + isTallySync + "]";
 	}
 
-    
 }

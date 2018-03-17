@@ -9,6 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="m_afe_question")
 
@@ -80,10 +82,12 @@ public class AfeQuestion {
 	public void setQuePoint(int quePoint) {
 		this.quePoint = quePoint;
 	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 
 	public Date getQueDate() {
 		return queDate;
 	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 
 	public void setQueDate(Date queDate) {
 		this.queDate = queDate;

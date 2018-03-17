@@ -16,9 +16,11 @@ import com.ats.webapi.model.afe.AfeQuestion;
 import com.ats.webapi.model.afe.AfeQuestionList;
 import com.ats.webapi.model.afe.AfeScoreDetail;
 import com.ats.webapi.model.afe.AfeScoreHeader;
+import com.ats.webapi.model.afe.GetAfeScoreHeader;
 import com.ats.webapi.repository.afe.AfeQueRepository;
 import com.ats.webapi.repository.afe.AfeScoreDetailRepo;
 import com.ats.webapi.repository.afe.AfeScoreHeaderRepo;
+import com.ats.webapi.repository.afe.GetAfeScoreHeaderRepo;
 
 @RestController
 public class AfeQueScoreController {
@@ -31,7 +33,10 @@ public class AfeQueScoreController {
 	
 	@Autowired
 	AfeQueRepository afeQueRepo;
-
+	
+	@Autowired
+	GetAfeScoreHeaderRepo getAfeScoreHeader;
+	
 	@RequestMapping(value = { "/postAfeScore" }, method = RequestMethod.POST)
 	public @ResponseBody AfeScoreHeader postAfeScore(@RequestBody AfeScoreHeader header) {
 		
@@ -90,7 +95,7 @@ System.out.println("postAfeScore ->response " +response.toString());
 	}
 	
 	
-	@RequestMapping(value = { "/getAfeQuestionList" }, method = RequestMethod.POST)
+	@RequestMapping(value = {"/getAfeQuestionList"}, method = RequestMethod.POST)
 	public @ResponseBody AfeQuestionList getAfeQuestionList(@RequestParam("delStatus") int delStatus) {
 		
 		AfeQuestionList responseList=new AfeQuestionList();
@@ -124,5 +129,52 @@ System.out.println("postAfeScore ->response " +response.toString());
 
 		return responseList;
 	}
+	
+	
+	//get Header between two date:
+		@RequestMapping(value = {"/getAfeScoreHeaderList"}, method = RequestMethod.POST)
+		public @ResponseBody List<GetAfeScoreHeader> getAfeScoreHeaders(@RequestParam("fromDate") String fromDate,
+				@RequestParam("toDate") String toDate) {
+			
+			List<GetAfeScoreHeader> headerList=new ArrayList<>();
+			
+			try {
+				
+				headerList = getAfeScoreHeader.getAfeScoreHeaders(fromDate, toDate);
+				
+			} catch (Exception e) {
+				
+				System.err.println("AfeQueScoreController -- Exce in /getAfeScoreHeaderList" + e.getMessage());
+				e.printStackTrace();
+			}
+			
+			System.out.println("getAfeScoreHeaderList ->response " +headerList.toString());
+
+			return headerList;
+		}
+		
+		//get Detail of selected header
+		@RequestMapping(value = {"/getAfeScoreDetail"}, method = RequestMethod.POST)
+		public @ResponseBody List<AfeScoreDetail> getAfeScoreDetail(@RequestParam("scoreHeaderId") int scoreHeaderId,
+				@RequestParam("delStatus") int delStatus) {
+			
+			List<AfeScoreDetail> detailScoreList=new ArrayList<>();
+			
+			try {
+				
+				detailScoreList = afeDetailRepo.findByafeScoreHeaderIdAndDelStatus(scoreHeaderId,delStatus);
+				
+			} catch (Exception e) {
+				
+				System.err.println("AfeQueScoreController -- Exce in /getAfeScoreDetail" + e.getMessage());
+				e.printStackTrace();
+			}
+			
+			System.out.println("getAfeScoreDetail ->response " +detailScoreList.toString());
+
+			return detailScoreList;
+		}
+
+	
 
 }
