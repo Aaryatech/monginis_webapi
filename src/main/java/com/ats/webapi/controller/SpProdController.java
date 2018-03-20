@@ -22,6 +22,8 @@ import com.ats.webapi.model.spprod.GetAllocStationCkList;
 import com.ats.webapi.model.spprod.GetEmployeeList;
 import com.ats.webapi.model.spprod.GetInstVerifHeader;
 import com.ats.webapi.model.spprod.GetInstrVerifHeader;
+import com.ats.webapi.model.spprod.GetSpAdvanceReport;
+import com.ats.webapi.model.spprod.GetSpAdvanceReportList;
 import com.ats.webapi.model.spprod.GetSpStation;
 import com.ats.webapi.model.spprod.InstAllocToStation;
 import com.ats.webapi.model.spprod.InstAllocToStationList;
@@ -41,6 +43,7 @@ import com.ats.webapi.model.spprod.StationAllocation;
 import com.ats.webapi.model.spprod.StationSpCakeList;
 import com.ats.webapi.model.spprod.StationWiseCkCount;
 import com.ats.webapi.model.spprod.TypeList;
+import com.ats.webapi.repository.GetSpAdvanceRepo;
 import com.ats.webapi.repository.InstVerificationDetailRepository;
 import com.ats.webapi.service.spprod.SpProdService;
 
@@ -52,6 +55,46 @@ public class SpProdController {
 	private SpProdService spProdService;
 	@Autowired
 	InstVerificationDetailRepository instVerificationDetailRepository;
+	
+	
+	@Autowired
+	GetSpAdvanceRepo getSpAdvanceRepo;
+	
+	@RequestMapping(value = { "/getSpAdvanceReport" }, method = RequestMethod.POST)
+	@ResponseBody
+	public GetSpAdvanceReportList getSpAdvanceReport(@RequestParam String fromDate,
+			@RequestParam String toDate,@RequestParam int frId) {
+		System.out.println("Inmethod ");
+		GetSpAdvanceReportList reportList=new GetSpAdvanceReportList();
+		
+		Info info=new Info();
+		
+		try {
+			List<GetSpAdvanceReport> adList=new ArrayList<>();
+			adList=getSpAdvanceRepo.getSpAdvance(fromDate, toDate, frId);
+
+			if(!adList.isEmpty()) {
+				
+				info.setError(false);
+				info.setMessage("success sp adv report");
+				
+				reportList.setSpAdvanceReport(adList);
+			}
+			else {
+				info.setError(true);
+				info.setMessage("failed sp adv report");
+			}
+			reportList.setInfo(info);
+		}catch (Exception e) {
+			System.err.println("Exce in SpProdController /getSpAdvanceReport" + e.getMessage() );
+			e.printStackTrace();
+		}
+		return reportList;
+		
+	}
+
+	
+	
 
 	// ----------------------------SAVE SPStation---------------------------
 	@RequestMapping(value = { "/saveStation" }, method = RequestMethod.POST)

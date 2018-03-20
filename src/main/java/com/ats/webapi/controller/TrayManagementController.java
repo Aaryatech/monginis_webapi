@@ -21,9 +21,11 @@ import com.ats.webapi.model.TrayMgtDetailList;
 import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FranchiseInRoute;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
+import com.ats.webapi.model.tray.GetVehDriverMobNo;
 import com.ats.webapi.model.tray.TrayMgtDetail;
 import com.ats.webapi.model.tray.TrayMgtDetailBean;
 import com.ats.webapi.model.tray.TrayMgtHeader;
+import com.ats.webapi.repository.tray.GetVehDriverMobNoRepo;
 import com.ats.webapi.repository.tray.TrayMgtHeaderRepository;
 import com.ats.webapi.service.tray.TrayMgtService;
 
@@ -35,6 +37,20 @@ public class TrayManagementController {
 
 	@Autowired
 	TrayMgtService trayMgtService;
+	
+	@Autowired
+	GetVehDriverMobNoRepo vehMobNoRepo;//Sachin 20 MArch
+	
+	@RequestMapping(value = { "/getVehMobNo" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetVehDriverMobNo> getVehMobNo(@RequestParam("routeId") int routeId,@RequestParam("curDate")String curDate) {
+
+		List<GetVehDriverMobNo> driverList = vehMobNoRepo.getVehicleAndMobNo(routeId, curDate);
+
+		return driverList;
+
+	}
+
+	
 
 	// ----------------------------SAVE Tray Management Header---------------------------
 		@RequestMapping(value = { "/saveTrayMgtHeader" }, method = RequestMethod.POST)

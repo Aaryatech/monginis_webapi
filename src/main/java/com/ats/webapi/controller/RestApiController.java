@@ -34,6 +34,7 @@ import com.ats.webapi.repository.GetReorderByStockTypeRepository;
 import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
+import com.ats.webapi.repository.UserRepository;
 import com.ats.webapi.service.AllFrIdNameService;
 import com.ats.webapi.service.BillDetailUpdateService;
 import com.ats.webapi.service.CategoryService;
@@ -312,6 +313,31 @@ public class RestApiController {
 
 	@Autowired
 	ItemRepository itemRepository;
+	@Autowired
+	UserRepository userRepo;//20 March
+	@RequestMapping(value = { "/changeAdminUserPass" }, method = RequestMethod.POST)
+	public @ResponseBody Info changeAdminUserPass(@RequestBody User user) {
+
+		Info info = new Info();
+
+		User result = userRepo.save(user);
+
+		if (result !=null) {
+
+			info.setError(false);
+			info.setMessage("Password changed successfully");
+		}
+
+		else {
+
+			info.setError(true);
+			info.setMessage("password not changed Error Occured ");
+		}
+
+		return info;
+
+	}
+	
 
 	// This web api Not used Anywhere
 	@RequestMapping(value = { "/updatePBTime" }, method = RequestMethod.POST)
