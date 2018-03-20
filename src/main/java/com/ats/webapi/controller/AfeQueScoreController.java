@@ -158,6 +158,29 @@ System.out.println("postAfeScore ->response " +response.toString());
 			return headerList;
 		}
 		
+		
+		
+		//get Header between two date:
+				@RequestMapping(value = {"/getAfeScoreHeaderByFrId"}, method = RequestMethod.POST)
+				public @ResponseBody List<GetAfeScoreHeader> getAfeScoreHeaderByFrId(@RequestParam("frId") int frId) {
+					
+					List<GetAfeScoreHeader> headerList=new ArrayList<>();
+					
+					try {
+						
+						headerList = getAfeScoreHeader.getAfeScoreHeaderByFrId(frId);
+						
+					} catch (Exception e) {
+						
+						System.err.println("AfeQueScoreController -- Exce in /getAfeScoreHeaderByFrId" + e.getMessage());
+						e.printStackTrace();
+					}
+					
+					System.out.println("getAfeScoreHeaderByFrId ->response " +headerList.toString());
+
+					return headerList;
+				}
+		
 		//get Detail of selected header
 		@RequestMapping(value = {"/getAfeScoreDetail"}, method = RequestMethod.POST)
 		public @ResponseBody List<GetAfeScoreDetail> getAfeScoreDetail(@RequestParam("scoreHeaderId") int scoreHeaderId,
