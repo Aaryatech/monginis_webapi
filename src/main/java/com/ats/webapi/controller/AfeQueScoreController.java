@@ -16,10 +16,12 @@ import com.ats.webapi.model.afe.AfeQuestion;
 import com.ats.webapi.model.afe.AfeQuestionList;
 import com.ats.webapi.model.afe.AfeScoreDetail;
 import com.ats.webapi.model.afe.AfeScoreHeader;
+import com.ats.webapi.model.afe.GetAfeScoreDetail;
 import com.ats.webapi.model.afe.GetAfeScoreHeader;
 import com.ats.webapi.repository.afe.AfeQueRepository;
 import com.ats.webapi.repository.afe.AfeScoreDetailRepo;
 import com.ats.webapi.repository.afe.AfeScoreHeaderRepo;
+import com.ats.webapi.repository.afe.GetAfeScoreDetailRepo;
 import com.ats.webapi.repository.afe.GetAfeScoreHeaderRepo;
 
 @RestController
@@ -36,6 +38,9 @@ public class AfeQueScoreController {
 	
 	@Autowired
 	GetAfeScoreHeaderRepo getAfeScoreHeader;
+	
+	@Autowired
+	GetAfeScoreDetailRepo getAfeScoreDetailRepo;
 	
 	@RequestMapping(value = { "/postAfeScore" }, method = RequestMethod.POST)
 	public @ResponseBody AfeScoreHeader postAfeScore(@RequestBody AfeScoreHeader header) {
@@ -155,14 +160,14 @@ System.out.println("postAfeScore ->response " +response.toString());
 		
 		//get Detail of selected header
 		@RequestMapping(value = {"/getAfeScoreDetail"}, method = RequestMethod.POST)
-		public @ResponseBody List<AfeScoreDetail> getAfeScoreDetail(@RequestParam("scoreHeaderId") int scoreHeaderId,
+		public @ResponseBody List<GetAfeScoreDetail> getAfeScoreDetail(@RequestParam("scoreHeaderId") int scoreHeaderId,
 				@RequestParam("delStatus") int delStatus) {
 			
-			List<AfeScoreDetail> detailScoreList=new ArrayList<>();
+			List<GetAfeScoreDetail> detailScoreList=new ArrayList<>();
 			
 			try {
 				
-				detailScoreList = afeDetailRepo.findByafeScoreHeaderIdAndDelStatus(scoreHeaderId,delStatus);
+				detailScoreList = getAfeScoreDetailRepo.getAfeScoreDetail(scoreHeaderId, delStatus);
 				
 			} catch (Exception e) {
 				
