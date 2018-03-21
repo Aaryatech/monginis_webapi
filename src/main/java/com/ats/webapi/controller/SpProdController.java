@@ -12,9 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.ErrorMessage;
-import com.ats.webapi.model.GetMixingList;
 import com.ats.webapi.model.Info;
-import com.ats.webapi.model.MixingHeader;
 import com.ats.webapi.model.spprod.Employee;
 import com.ats.webapi.model.spprod.EmployeeList;
 import com.ats.webapi.model.spprod.GetAllocStationCk;
@@ -22,12 +20,12 @@ import com.ats.webapi.model.spprod.GetAllocStationCkList;
 import com.ats.webapi.model.spprod.GetEmployeeList;
 import com.ats.webapi.model.spprod.GetInstVerifHeader;
 import com.ats.webapi.model.spprod.GetInstrVerifHeader;
+import com.ats.webapi.model.spprod.GetSpAdvTaxReport;
+import com.ats.webapi.model.spprod.GetSpAdvTaxReportList;
 import com.ats.webapi.model.spprod.GetSpAdvanceReport;
 import com.ats.webapi.model.spprod.GetSpAdvanceReportList;
-import com.ats.webapi.model.spprod.GetSpStation;
 import com.ats.webapi.model.spprod.InstAllocToStation;
 import com.ats.webapi.model.spprod.InstAllocToStationList;
-import com.ats.webapi.model.spprod.InstVerificationDetail;
 import com.ats.webapi.model.spprod.InstVerificationHeader;
 import com.ats.webapi.model.spprod.Instrument;
 import com.ats.webapi.model.spprod.InstrumentList;
@@ -43,6 +41,7 @@ import com.ats.webapi.model.spprod.StationAllocation;
 import com.ats.webapi.model.spprod.StationSpCakeList;
 import com.ats.webapi.model.spprod.StationWiseCkCount;
 import com.ats.webapi.model.spprod.TypeList;
+import com.ats.webapi.repository.GetSpAdvTaxReporRepo;
 import com.ats.webapi.repository.GetSpAdvanceRepo;
 import com.ats.webapi.repository.InstVerificationDetailRepository;
 import com.ats.webapi.service.spprod.SpProdService;
@@ -59,6 +58,43 @@ public class SpProdController {
 	
 	@Autowired
 	GetSpAdvanceRepo getSpAdvanceRepo;
+	
+	@Autowired
+	GetSpAdvTaxReporRepo getSpAdvTaxReporRepo;
+	
+	
+	@RequestMapping(value = { "/getSpAdvTaxRepor" }, method = RequestMethod.POST)
+	@ResponseBody
+	public GetSpAdvTaxReportList getSpAdvTaxRepor(@RequestParam String fromDate,
+			@RequestParam String toDate,@RequestParam int frId) {
+		System.out.println("Inmethod ");
+		GetSpAdvTaxReportList reportList=new GetSpAdvTaxReportList();
+		
+		Info info=new Info();
+		
+		try {
+			List<GetSpAdvTaxReport> adList=new ArrayList<>();
+			adList=getSpAdvTaxReporRepo.getSpAdTaxReport(fromDate, toDate, frId);
+			if(!adList.isEmpty()) {
+				
+				info.setError(false);
+				info.setMessage("success sp adv report");
+				
+				reportList.setSpAdvTaxReport(adList);
+			}
+			else {
+				info.setError(true);
+				info.setMessage("failed sp adv report");
+			}
+			reportList.setInfo(info);
+		}catch (Exception e) {
+			System.err.println("Exce in SpProdController /getSpAdvanceReport" + e.getMessage() );
+			e.printStackTrace();
+		}
+		return reportList;
+		
+	}
+
 	
 	@RequestMapping(value = { "/getSpAdvanceReport" }, method = RequestMethod.POST)
 	@ResponseBody

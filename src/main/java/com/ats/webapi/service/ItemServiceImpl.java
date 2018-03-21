@@ -77,7 +77,7 @@ public class ItemServiceImpl implements ItemService{
 		 List<Item> items=new ArrayList<Item>();
 		 ItemsList itemsList=new ItemsList();
 		ErrorMessage errorMessage=new ErrorMessage();
-		items=itemRepository.findByDelStatusOrderByItemNameAsc(0);
+		items=itemRepository.findByDelStatusOrderByItemIdAsc(0);
 		if(items!=null)
 		{
 			
@@ -110,7 +110,7 @@ public class ItemServiceImpl implements ItemService{
 
 	@Override
 	public List<Item> getAllItems() {
-		 List<Item> items=itemRepository.findByDelStatusOrderByItemNameAsc(0);
+		 List<Item> items=itemRepository.findByDelStatusOrderByItemIdAsc(0);
 
 		return items;
 	}

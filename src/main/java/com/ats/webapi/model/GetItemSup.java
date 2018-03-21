@@ -59,6 +59,8 @@ public class GetItemSup implements Serializable{
 	private int cutSection;
 	private String shortName;
 	
+	private String itemCode;
+	
 	public int getCutSection() {
 		return cutSection;
 	}
@@ -211,6 +213,14 @@ public class GetItemSup implements Serializable{
 		this.shortName = shortName;
 	}
 
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+
 	@Override
 	public String toString() {
 		return "GetItemSup [error=" + error + ", message=" + message + ", id=" + id + ", itemId=" + itemId
@@ -218,7 +228,8 @@ public class GetItemSup implements Serializable{
 				+ ", actualWeight=" + actualWeight + ", baseWeight=" + baseWeight + ", inputPerQty=" + inputPerQty
 				+ ", isGateSale=" + isGateSale + ", isGateSaleDisc=" + isGateSaleDisc + ", isAllowBday=" + isAllowBday
 				+ ", delStatus=" + delStatus + ", trayType=" + trayType + ", noOfItemPerTray=" + noOfItemPerTray
-				+ ", cutSection=" + cutSection + ", shortName=" + shortName + "]";
+				+ ", cutSection=" + cutSection + ", shortName=" + shortName + ", itemCode=" + itemCode + "]";
 	}
-    
+
+
 }

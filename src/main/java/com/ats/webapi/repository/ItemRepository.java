@@ -21,7 +21,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query(value="select * from m_item where m_item.id IN (:itemList) AND m_item.del_status=0",nativeQuery=true)
 	public List<Item> findByDelStatusAndItemIdIn(@Param("itemList")List<Integer> itemList);
 
-	public List<Item> findByDelStatusOrderByItemNameAsc(int i);
+	public List<Item> findByDelStatusOrderByItemIdAsc(int i);
 
 	@Query(value="select MAX(item_id)+1 from m_item",nativeQuery=true)
 	public int findMaxId();

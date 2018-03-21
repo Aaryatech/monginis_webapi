@@ -827,6 +827,28 @@ public class RestApiController {
 		return grnItemConfigList;
 
 	}
+//21 march Front End Manual GRN
+	@RequestMapping(value = "/getItemsForManGrn", method = RequestMethod.POST)
+	public @ResponseBody GetGrnItemConfigList getItemsForManGrn(@RequestParam("frId") int frId,@RequestParam("billDetailNoList") List<String>
+			billDetailNoList) {
+		System.out.println("inside rest /getItemsForManGrn");
+		GetGrnItemConfigList grnItemConfigList = null;
+
+		try {
+			
+			grnItemConfigList = getGrnItemConfigService.getItemForManualGrn(billDetailNoList, frId);
+
+			System.out.println("grn Item getItemForManualGrn  Rest: " + grnItemConfigList.toString());
+
+		} catch (Exception e) {
+
+			System.out.println("restApi Exce for Getting Man GRN Item Conf /getItemsForManGrn" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return grnItemConfigList;
+
+	}
 
 	@RequestMapping(value = "/deleteBill", method = RequestMethod.POST)
 	public @ResponseBody Info deleteBill(@RequestParam("delStatus") int delStatus, @RequestParam("billNo") int billNo) {

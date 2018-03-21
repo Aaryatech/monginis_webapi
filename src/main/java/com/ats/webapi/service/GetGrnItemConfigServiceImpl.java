@@ -91,6 +91,44 @@ public class GetGrnItemConfigServiceImpl implements GetGrnItemConfigService {
 	return getGvnItemConfigList;
 	
 	}
+
+	@Override
+	public GetGrnItemConfigList getItemForManualGrn(List<String> billDetailNoList, int frId) {
+	
+GetGrnItemConfigList getGrnItemConfigList=new GetGrnItemConfigList();
+		
+		Info info=new Info();
+		try {
+		
+		List<GetGrnItemConfig> getGrnItemConfigs=grnItemConfigRepository.getItemForManGrn(billDetailNoList, frId);
+		
+		if(!getGrnItemConfigs.isEmpty()) {
+			
+			getGrnItemConfigList.setGetGrnItemConfigs(getGrnItemConfigs);
+			
+			info.setError(false);
+			info.setMessage("success grn confi get");
+			
+			
+		}
+		else {
+			
+			info.setError(true);
+			info.setMessage("error grn confi get");
+		
+			
+		}
+		
+		getGrnItemConfigList.setInfo(info);
+		}
+		catch (Exception e) {
+			System.out.println("exce in service Impl get Grn Item Conf");
+		}
+		
+	return getGrnItemConfigList;
+		
+		
+	}
 	
 
 }
