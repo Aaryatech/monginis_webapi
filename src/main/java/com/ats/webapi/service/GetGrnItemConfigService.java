@@ -13,6 +13,6 @@ public interface GetGrnItemConfigService {
 	GetGrnItemConfigList getGvnItemConfig(int billNo);
 	
 	//21 March Front end Manual GRN
-	GetGrnItemConfigList getItemForManualGrn(List<String> billDetailNoList,int frId);
+	GetGrnItemConfigList getItemForManualGrn(int billNo,int frId);
 
 }

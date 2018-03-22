@@ -93,14 +93,14 @@ public class GetGrnItemConfigServiceImpl implements GetGrnItemConfigService {
 	}
 
 	@Override
-	public GetGrnItemConfigList getItemForManualGrn(List<String> billDetailNoList, int frId) {
+	public GetGrnItemConfigList getItemForManualGrn(int billNo, int frId) {
 	
 GetGrnItemConfigList getGrnItemConfigList=new GetGrnItemConfigList();
 		
 		Info info=new Info();
 		try {
 		
-		List<GetGrnItemConfig> getGrnItemConfigs=grnItemConfigRepository.getItemForManGrn(billDetailNoList, frId);
+		List<GetGrnItemConfig> getGrnItemConfigs=grnItemConfigRepository.getItemForManGrn(billNo, frId);
 		
 		if(!getGrnItemConfigs.isEmpty()) {
 			

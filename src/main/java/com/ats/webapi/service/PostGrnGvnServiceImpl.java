@@ -86,7 +86,7 @@ public class PostGrnGvnServiceImpl implements PostGrnGvnService {
 				
 				if(header.getIsGrn()==1) {
 				int result=updateBillDetailForGrnGvnRepository.updateBillDetailForGrnGvnInsert(
-						grnGvnReturnList.getBillNo(), 1);
+						grnGvnReturnList.getBillDetailNo(), 1);
 				
 				System.out.println("Bill Detail Updated For Gvn response "+result);
 				}

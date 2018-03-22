@@ -829,14 +829,13 @@ public class RestApiController {
 	}
 //21 march Front End Manual GRN
 	@RequestMapping(value = "/getItemsForManGrn", method = RequestMethod.POST)
-	public @ResponseBody GetGrnItemConfigList getItemsForManGrn(@RequestParam("frId") int frId,@RequestParam("billDetailNoList") List<String>
-			billDetailNoList) {
+	public @ResponseBody GetGrnItemConfigList getItemsForManGrn(@RequestParam("frId") int frId,@RequestParam("billNo") int billNo) {
 		System.out.println("inside rest /getItemsForManGrn");
 		GetGrnItemConfigList grnItemConfigList = null;
 
 		try {
 			
-			grnItemConfigList = getGrnItemConfigService.getItemForManualGrn(billDetailNoList, frId);
+			grnItemConfigList = getGrnItemConfigService.getItemForManualGrn(billNo, frId);
 
 			System.out.println("grn Item getItemForManualGrn  Rest: " + grnItemConfigList.toString());
 
