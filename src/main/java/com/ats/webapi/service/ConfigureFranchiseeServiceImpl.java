@@ -69,4 +69,29 @@ ConfigureFranchisee configureFranchisee=configureFrRepository.findOne(setting_id
 		return configuredMenuIdList;
 	}
 
+	@Override
+	public int updateFrConfForSelectedFr(List<Integer> frIdList, int menuId,String fromTime,String toTime) {
+		int response = 0;
+		try {
+			response=configureFrRepository.updateFrConfSelFr(frIdList, menuId, fromTime, toTime);
+			
+		}catch (Exception e) {
+			System.err.println("Ex in Conf Fr Service Impl Selected Fr "+e.getMessage());
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	@Override
+	public int updateFrConfForAllFr(int menuId,String fromTime,String toTime) {
+		int response = 0;
+		try {
+			response=configureFrRepository.updateFrConfAllFr(menuId, toTime, toTime);
+		}catch (Exception e) {
+			System.err.println("Ex in Conf Fr Service Impl All fr"+e.getMessage());
+			e.printStackTrace();
+		}
+		return response;
+	}
+
 }

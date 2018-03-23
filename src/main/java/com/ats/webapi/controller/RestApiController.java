@@ -1535,7 +1535,36 @@ public class RestApiController {
 
 		return jsonResult;
 	}
+//23 March updateUser
+	@Autowired
+	UserRepository updateUserRepo;
+	
+	@RequestMapping(value = { "/updateUser" }, method = RequestMethod.POST)
+	@ResponseBody
+	public Info updateUser(@RequestBody User user) {
 
+		Info info=new Info();
+		int result;
+		
+		try {
+			result=updateUserRepo.updateUser(user.getId(), user.getPassword(), user.getUsertype(), user.getDeptId());
+			
+			if(result>0) {
+				info.setError(false);
+				info.setMessage("success Update User");
+			}else {
+				info.setError(true);
+				info.setMessage("Failed Updating User");
+			}
+		}
+		catch (Exception e) {
+			System.out.println("Exc in updating user" +e.getMessage());
+			e.printStackTrace();
+		}
+		return info;
+	}
+	
+	
 	// Save Rate
 	@RequestMapping(value = { "/insertRate" }, method = RequestMethod.POST)
 	@ResponseBody
@@ -1692,6 +1721,39 @@ public class RestApiController {
 		return jsonResult;
 	}
 
+	@RequestMapping(value = "/updateFrConfMenuTime")
+	public @ResponseBody Info updateFrConf(@RequestParam ("frIdList") List<Integer> frIdList,@RequestParam("menuId")int menuId,
+			@RequestParam("fromTime")String fromTime,@RequestParam("toTime")String toTime) {
+		Info info=new Info();
+		int result=0;
+		
+		System.err.println("Fr id List " +frIdList.toString());
+		try {
+		if(frIdList.contains(0)) {
+			System.err.println("fr id is zero");
+			result=connfigureService.updateFrConfForAllFr(menuId, fromTime, toTime);
+		}
+		else {
+			System.err.println("fr Id is not zero");
+			result=connfigureService.updateFrConfForSelectedFr(frIdList, menuId,fromTime,toTime);
+		}
+		
+		if(result>0) {
+			info.setError(false);
+			info.setMessage("update Conf fr Successs");
+		}else {
+			info.setError(true);
+			info.setMessage("update Conf fr Failed");
+		}
+		}catch (Exception e) {
+			System.err.println("Exc in rest /updateFrConfMenuTime"+ e.getMessage());
+			e.printStackTrace();
+		}
+		return info;
+		
+	}
+	
+	
 	// Get Configured MenuId
 	@RequestMapping(value = "/getConfiguredMenuId")
 	public @ResponseBody List<Integer> getConfiguredMenuId(@RequestParam int frId) {

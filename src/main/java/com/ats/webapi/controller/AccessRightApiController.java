@@ -15,8 +15,11 @@ import com.ats.webapi.model.AccessRightModuleList;
 import com.ats.webapi.model.AssignRoleDetailList;
 import com.ats.webapi.model.CreatedRoleList;
 import com.ats.webapi.model.ErrorMessage;
+import com.ats.webapi.model.GetUserDetail;
+import com.ats.webapi.model.GetUserDetailList;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.User;
+import com.ats.webapi.repository.GetUserDetailRepo;
 import com.ats.webapi.service.AccessRightService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -25,6 +28,35 @@ public class AccessRightApiController {
 
 	@Autowired
 	AccessRightService accessRightService;
+	
+	@Autowired
+	GetUserDetailRepo userDetail;//22 MArch
+	
+	@RequestMapping(value = { "/getUserDetail" }, method = RequestMethod.GET)
+	public @ResponseBody GetUserDetailList getUserDetail() {
+		
+		GetUserDetailList userList=new GetUserDetailList();
+		
+		List<GetUserDetail> details=userDetail.getUserDetail();
+		
+		Info info=new Info();
+		if(details!=null && !details.isEmpty())
+		{
+			userList.setUserDetail(details);
+			info.setError(false);
+			info.setMessage("Success");
+		}
+		else
+		{
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		userList.setInfo(info);
+		
+		System.err.println("User detail response /AccessRightApiController /getUserDetail" +userList.toString());
+		return userList;
+	}
+	
 	
 	 
 	@RequestMapping(value = { "/getAllModuleAndSubModule" }, method = RequestMethod.GET)
