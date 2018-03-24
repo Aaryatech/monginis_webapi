@@ -1560,18 +1560,22 @@ public class RestApiController {
 		int result;
 		
 		try {
-			result=updateUserRepo.updateUser(user.getId(), user.getPassword(), user.getUsertype(), user.getDeptId());
 			
+			if(user.getDelStatus()==0) {
+			result=updateUserRepo.updateUser(user.getId(), user.getPassword(), user.getUsertype(), user.getDeptId());
+			}else {
+				result=updateUserRepo.delteUser(user.getId(), user.getDelStatus());
+			}
 			if(result>0) {
 				info.setError(false);
-				info.setMessage("success Update User");
+				info.setMessage("success Update/delete User");
 			}else {
 				info.setError(true);
-				info.setMessage("Failed Updating User");
+				info.setMessage("Failed Updating/deleting User");
 			}
 		}
 		catch (Exception e) {
-			System.out.println("Exc in updating user" +e.getMessage());
+			System.out.println("Exc in updating user/deleting user" +e.getMessage());
 			e.printStackTrace();
 		}
 		return info;
