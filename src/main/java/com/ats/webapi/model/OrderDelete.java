@@ -48,7 +48,7 @@ public class OrderDelete {
 	public void setOrderId(int orderId) {
 		this.orderId = orderId;
 	}
-
+ 
 	public String getTimestamp() {
 		return timestamp;
 	}

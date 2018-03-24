@@ -70,7 +70,7 @@ public class OrderServiceImpl implements OrderService {
 						delete.setFrId(o.getFrId());
 						delete.setOrderId(prevOrder.getOrderId());
 						
-						deleteRepository.save(delete);
+						deleteRepository.save(delete); 
 						
 
 						Long result = orderRepository.deleteByOrderDateAndFrIdAndMenuIdAndItemId(o.getOrderDate(),o.getFrId(),
