@@ -22,7 +22,7 @@ public interface OrderRepository extends JpaRepository<Orders, Long> {
 	// Orders save(Orders order);
 
 	@Transactional
-	Long deleteByOrderDateAndMenuIdAndItemId(Date orderDate, int menuId, String itemId);
+	Long deleteByOrderDateAndFrIdAndMenuIdAndItemId(Date orderDate, int frId, int menuId, String itemId);
 
 	@Transactional
 	@Modifying

@@ -32,6 +32,7 @@ import com.ats.webapi.model.remarks.GetAllRemarksList;
 import com.ats.webapi.repository.GetBillDetailsRepository;
 import com.ats.webapi.repository.GetReorderByStockTypeRepository;
 import com.ats.webapi.repository.ItemRepository;
+import com.ats.webapi.repository.OrderLogRespository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 import com.ats.webapi.repository.UserRepository;
@@ -315,6 +316,11 @@ public class RestApiController {
 	ItemRepository itemRepository;
 	@Autowired
 	UserRepository userRepo;//20 March
+	
+	@Autowired
+	OrderLogRespository  logRespository;
+	
+	
 	@RequestMapping(value = { "/changeAdminUserPass" }, method = RequestMethod.POST)
 	public @ResponseBody Info changeAdminUserPass(@RequestBody User user) {
 
@@ -1434,6 +1440,13 @@ public class RestApiController {
 
 		List<Orders> participantJsonList;
 		List<Orders> jsonResult;
+		
+		
+		OrderLog log=new OrderLog();
+		log.setFrId(orderJson.get(0).getFrId());
+		log.setJson(orderJson.toString());
+		
+		logRespository.save(log);
 
 		System.out.println("Inside Place Order " + orderJson.toString());
 

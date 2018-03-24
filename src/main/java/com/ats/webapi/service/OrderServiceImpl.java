@@ -12,10 +12,12 @@ import com.ats.webapi.model.AllFrIdName;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.ItemOrderHis;
 import com.ats.webapi.model.ItemOrderList;
+import com.ats.webapi.model.OrderDelete;
 import com.ats.webapi.model.Orders;
 import com.ats.webapi.repository.AllFrIdNameRepository;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.ItemOrderHisRepository;
+import com.ats.webapi.repository.OrderDeleteRepository;
 import com.ats.webapi.repository.OrderRepository;
 import com.ats.webapi.repository.OrdersRepository;
 
@@ -35,6 +37,10 @@ public class OrderServiceImpl implements OrderService {
 	 
 	@Autowired
 	FranchiseSupRepository franchiseSupRepository;
+	
+	@Autowired
+	OrderDeleteRepository deleteRepository;
+	
 	
 	@Override
 	public List<Orders> placeOrder(List<Orders> list) {
@@ -58,8 +64,16 @@ public class OrderServiceImpl implements OrderService {
 					if (o.getOrderQty() == 0) {
 
 						System.out.println("Deleteing order");
+						
+						OrderDelete delete=new OrderDelete();
+						
+						delete.setFrId(o.getFrId());
+						delete.setOrderId(prevOrder.getOrderId());
+						
+						deleteRepository.save(delete);
+						
 
-						Long result = orderRepository.deleteByOrderDateAndMenuIdAndItemId(o.getOrderDate(),
+						Long result = orderRepository.deleteByOrderDateAndFrIdAndMenuIdAndItemId(o.getOrderDate(),o.getFrId(),
 								o.getMenuId(), o.getItemId());
 
 						System.out.println("Order Deleted ? = " + result);
