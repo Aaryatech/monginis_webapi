@@ -78,6 +78,54 @@ public class FrStockApiController {
 	@Autowired
 	PostFrOpStockHeaderRepository postFrOpStockHeaderRepository;
 
+	
+	
+	@RequestMapping(value = "/getCurrentOpStock", method = RequestMethod.POST)
+	public @ResponseBody List<PostFrItemStockDetail> getCurrentOpStock(@RequestParam("frId") int frId,@RequestParam("itemIdList") List<Integer> itemIdList , @RequestParam("catId") int catId) {
+
+		System.out.println("inside rest getCurrentOpStock : I/p : itemIdList: " + itemIdList.toString());
+
+		 List<PostFrItemStockDetail> postFrItemStockDetailList= new ArrayList<PostFrItemStockDetail>();
+		
+		PostFrItemStockDetail postFrItemStockDetail = new PostFrItemStockDetail();
+		
+		List<Item> itemsList = itemService.findAllItemsByItemId(itemIdList);
+
+		for (int i = 0; i < itemsList.size(); i++) {
+
+			int itemId = itemsList.get(i).getId();
+			String itemName=itemsList.get(i).getItemName();
+			String itemCode=itemsList.get(i).getItemId();
+		
+
+			postFrItemStockDetail = getItemStockService.getCurrentOpeningStock(frId, itemId, catId);
+		
+			if(postFrItemStockDetail == null) {
+			
+				postFrItemStockDetail =new PostFrItemStockDetail();
+				postFrItemStockDetail.setOpeningStockHeaderId(0);
+				postFrItemStockDetail.setOpeningStockDetailId(0);
+				postFrItemStockDetail.setRegOpeningStock(0);
+			}
+			
+			postFrItemStockDetail.setItemId(itemId);
+			postFrItemStockDetail.setItemName(itemName);
+			postFrItemStockDetail.setItemCode(itemCode);
+
+			postFrItemStockDetailList.add(postFrItemStockDetail);
+
+		}
+		System.out.println("stock list: " + postFrItemStockDetailList.toString());
+		return postFrItemStockDetailList;
+
+	}
+
+	
+	
+	
+	
+	
+	
 	@RequestMapping(value = "/getMonthwiseStock", method = RequestMethod.POST)
 	public @ResponseBody List<GetCurrentStockDetails> getStockBetweenMonth(@RequestParam("frId") int frId,
 			@RequestParam("fromMonth") int fromMonth, @RequestParam("toMonth") int toMonth,

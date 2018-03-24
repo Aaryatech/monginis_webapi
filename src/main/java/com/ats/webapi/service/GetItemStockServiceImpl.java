@@ -133,6 +133,21 @@ public class GetItemStockServiceImpl implements GetItemStockService{
 		return totalSellBetweenDate;
 	}
 
+	@Override
+	public PostFrItemStockDetail getCurrentOpeningStock(int frId, int itemId, int catId) {
+		
+		PostFrItemStockDetail stockDetail=new PostFrItemStockDetail();
+		try {
+			stockDetail = stockDetailRepository.getCurrentOpeningStock(frId,itemId , catId);
+		}catch (Exception e) {
+			
+			System.out.println("Get Current Opening Stock ServiceImpl Exception "+e.getMessage());
+		e.printStackTrace();
+			
+		}
+		 return stockDetail;
+	}
+
 	
 	
 

@@ -21,7 +21,8 @@ public interface GetItemStockService {
 	PostFrItemStockDetail getOpeningStock( @Param("frId") int frId, @Param("currentMonth") int currentMonth, @Param("year") int year,@Param("itemId") int itemId , @Param("catId") int catId);
 
 	
-	
+	PostFrItemStockDetail getCurrentOpeningStock(@Param("frId") int frId,@Param("itemId") int itemId ,@Param("catId") int catId);
+
 
 	
 	// auto grn /gvn

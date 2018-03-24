@@ -60,6 +60,9 @@ public class PostFrItemStockDetail {
 	@Transient
 	@Column(name="item_name")
 	private String itemName;
+	@Transient
+	@Column(name="item_code")
+	private String itemCode;
 	
 	
 	public int getOpeningStockDetailId() {
@@ -176,6 +179,14 @@ public class PostFrItemStockDetail {
 		this.spTotalSell = spTotalSell;
 	}
 
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+
 	@Override
 	public String toString() {
 		return "PostFrItemStockDetail [openingStockDetailId=" + openingStockDetailId + ", openingStockHeaderId="
@@ -183,9 +194,10 @@ public class PostFrItemStockDetail {
 				+ ", spOpeningStock=" + spOpeningStock + ", physicalStock=" + physicalStock + ", stockDifference="
 				+ stockDifference + ", regTotalPurchase=" + regTotalPurchase + ", spTotalPurchase=" + spTotalPurchase
 				+ ", regTotalGrnGvn=" + regTotalGrnGvn + ", regTotalSell=" + regTotalSell + ", spTotalSell="
-				+ spTotalSell + ", remark=" + remark + ", itemName=" + itemName + "]";
+				+ spTotalSell + ", remark=" + remark + ", itemName=" + itemName + ", itemCode=" + itemCode + "]";
 	}
 
+	
 	
 	
 }
