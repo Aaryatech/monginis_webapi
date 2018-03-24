@@ -36,6 +36,11 @@ public class GetUserDetail {
 	
 	@Column(name="role_name")
     private String roleName;
+	
+	
+	@Column(name="type_name")
+    private String typeName;
+
 
 
 	public Long getId() {
@@ -128,12 +133,21 @@ public class GetUserDetail {
 	}
 
 
+	public String getTypeName() {
+		return typeName;
+	}
+
+
+	public void setTypeName(String typeName) {
+		this.typeName = typeName;
+	}
+
+
 	@Override
 	public String toString() {
 		return "GetUserDetail [id=" + id + ", username=" + username + ", password=" + password + ", usertype="
 				+ usertype + ", delStatus=" + delStatus + ", deptId=" + deptId + ", roleId=" + roleId + ", deptName="
-				+ deptName + ", roleName=" + roleName + "]";
+				+ deptName + ", roleName=" + roleName + ", typeName=" + typeName + "]";
 	}
-	
-	
+
 }
