@@ -50,6 +50,9 @@ public class GetSpCkSupplement implements Serializable{
 	@Column(name="uom_id")
 	private int uomId;
 	
+	@Column(name="sp_code")
+	private String spCode;
+	
 	
 	public int getUomId() {
 		return uomId;
@@ -147,12 +150,21 @@ public class GetSpCkSupplement implements Serializable{
 		this.delStatus = delStatus;
 	}
 
+	public String getSpCode() {
+		return spCode;
+	}
+
+	public void setSpCode(String spCode) {
+		this.spCode = spCode;
+	}
+
 	@Override
 	public String toString() {
 		return "GetSpCkSupplement [error=" + error + ", message=" + message + ", id=" + id + ", spId=" + spId
 				+ ", spName=" + spName + ", spHsncd=" + spHsncd + ", spUom=" + spUom + ", spCess=" + spCess
 				+ ", cutSection=" + cutSection + ", isTallySync=" + isTallySync + ", delStatus=" + delStatus
-				+ ", uomId=" + uomId + "]";
+				+ ", uomId=" + uomId + ", spCode=" + spCode + "]";
 	}
-    
+
+	
 }

@@ -13,7 +13,7 @@ import com.ats.webapi.model.GetSpCkSupplement;
 public interface GetSpCakeSupRepository extends JpaRepository<GetSpCkSupplement, Integer>{
 
 	@Query(value="select\n" + 
-			"  s.id,\n" + 
+			"  s.id,sp.sp_code,\n" + 
 			"  s.sp_id,\n" + 
 			"  sp.sp_name,\n" + 
 			"  s.sp_hsncd,\n" + 
@@ -24,7 +24,7 @@ public interface GetSpCakeSupRepository extends JpaRepository<GetSpCkSupplement,
 	List<GetSpCkSupplement> findByDelStatus(@Param("delStatus")int delStatus);
 
 	@Query(value="select\n" + 
-			"  s.id,\n" + 
+			"  s.id,sp.sp_code,\n" + 
 			"  s.sp_id,\n" + 
 			"  sp.sp_name,\n" + 
 			"  s.sp_hsncd,\n" + 

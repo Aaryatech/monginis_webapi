@@ -10,7 +10,7 @@ import com.ats.webapi.model.GetSellBillHeader;
 
 public interface GetSellBillHeaderRepository extends JpaRepository<GetSellBillHeader,Integer>{
 
-	@Query(value =  "SELECT t_sell_bill_header.sell_bill_no, t_sell_bill_header.invoice_no,"
+	@Query(value =  "SELECT t_sell_bill_header.sell_bill_no,t_sell_bill_header.bill_type, t_sell_bill_header.invoice_no,"
 			+" t_sell_bill_header.bill_date, t_sell_bill_header.taxable_amt, t_sell_bill_header.total_tax,"
 			+" t_sell_bill_header.grand_total, t_sell_bill_header.paid_amt, t_sell_bill_header.remaining_amt,"
 			+" t_sell_bill_header.payment_mode, t_sell_bill_header.discount_per, t_sell_bill_header.payable_amt, m_franchisee.fr_name"
