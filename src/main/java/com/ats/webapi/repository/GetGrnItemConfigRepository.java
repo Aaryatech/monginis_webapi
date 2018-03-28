@@ -35,7 +35,7 @@ public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConf
 			"			WHERE t_bill_header.fr_id=:frId AND t_bill_detail.bill_no=t_bill_header.bill_no AND t_bill_header.status=2 " + 
 			" AND m_item.item_grp2 IN(15,16) " + 
 			" AND t_bill_detail.item_id=m_item.id AND t_bill_detail.grn_type !=3 AND " + 
-			" t_bill_detail.bill_no=:billNo AND t_bill_detail.is_grngvn_applied=0", nativeQuery = true)
+			" t_bill_detail.bill_no=:billNo ", nativeQuery = true)
 	
 	public List<GetGrnItemConfig> getItemForManGrn(@Param("billNo")int billNo,@Param("frId") int frId);
 
