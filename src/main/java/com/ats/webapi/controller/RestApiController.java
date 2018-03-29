@@ -1743,7 +1743,7 @@ public class RestApiController {
 			@RequestParam("fromTime")String fromTime,@RequestParam("toTime")String toTime) {
 		Info info=new Info();
 		int result=0;
-		
+		System.err.println("from time received " +fromTime + "to time  " +toTime);
 		System.err.println("Fr id List " +frIdList.toString());
 		try {
 		if(frIdList.contains(0)) {

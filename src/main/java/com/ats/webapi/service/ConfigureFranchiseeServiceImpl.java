@@ -86,7 +86,7 @@ ConfigureFranchisee configureFranchisee=configureFrRepository.findOne(setting_id
 	public int updateFrConfForAllFr(int menuId,String fromTime,String toTime) {
 		int response = 0;
 		try {
-			response=configureFrRepository.updateFrConfAllFr(menuId, toTime, toTime);
+			response=configureFrRepository.updateFrConfAllFr(menuId, fromTime, toTime);
 		}catch (Exception e) {
 			System.err.println("Ex in Conf Fr Service Impl All fr"+e.getMessage());
 			e.printStackTrace();

@@ -30,7 +30,7 @@ public interface ConfigureFrRepository extends JpaRepository<ConfigureFranchisee
 
 	@Transactional
 	@Modifying
-	@Query(" UPDATE ConfigureFranchisee  SET fromTime=:fromTime, toTime=:toTime " + " WHERE  menuId =:menuId")
+	@Query(" UPDATE ConfigureFranchisee  SET fromTime=:fromTime, toTime=:toTime WHERE  menuId =:menuId")
 	int updateFrConfAllFr(@Param("menuId") int menuId, @Param("fromTime") String fromTime,
 			@Param("toTime") String toTime);
 
