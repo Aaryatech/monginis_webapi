@@ -66,6 +66,28 @@ public class TallySyncController {
 	@Autowired
 	MaterialRecNoteService materialRecNoteService;
 	
+	@RequestMapping(value = { "/getAllExcelFranchise" }, method = RequestMethod.GET)
+	public @ResponseBody FranchiseeList getAllExcelFranchise()
+	  {
+
+		    FranchiseeList franchiseeList=franchiseeService.getAllFranchisee();
+		    
+		    return franchiseeList;
+	  }
+	@RequestMapping(value = { "/getAllExcelItems" }, method = RequestMethod.GET)
+	public @ResponseBody ItemList getAllExcelItems()
+	  {
+
+		    ItemList itemList=itemService.getAllItems();
+		    return itemList;
+		    
+	  }
+	@RequestMapping(value = { "/getAllExcelSpCake" }, method = RequestMethod.GET)
+	public @ResponseBody SpCakeList getAllExcelSpCake()
+	  {
+		SpCakeList spCakeList=specialCakeService.getAllSpCake();
+		return spCakeList;
+	  }
 	@RequestMapping(value = { "/getAllFranchisee" }, method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<byte[]> showAllFranchisee()
 	  {
