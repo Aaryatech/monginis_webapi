@@ -24,7 +24,8 @@ public class GetBillHeader implements Serializable {
 	@Column(name="fr_name")
 	private String frName;
 	
-	
+	@Column(name="time")
+	private String time;
 
 	@Column(name="tax_applicable")
 	private int taxApplicable;
@@ -167,6 +168,22 @@ public class GetBillHeader implements Serializable {
 
 	public void setTaxApplicable(int taxApplicable) {
 		this.taxApplicable = taxApplicable;
+	}
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
+	}
+
+	@Override
+	public String toString() {
+		return "GetBillHeader [billNo=" + billNo + ", frName=" + frName + ", time=" + time + ", taxApplicable="
+				+ taxApplicable + ", invoiceNo=" + invoiceNo + ", billDate=" + billDate + ", frId=" + frId + ", frCode="
+				+ frCode + ", grandTotal=" + grandTotal + ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax
+				+ ", status=" + status + ", DelStatus=" + DelStatus + ", remark=" + remark + "]";
 	}
 	
 
