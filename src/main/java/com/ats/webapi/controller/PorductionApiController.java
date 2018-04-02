@@ -303,9 +303,10 @@ e.printStackTrace();
 
 		
         System.out.println("postProductionHeaderBean:"+postProdPlanHeader.toString());
-        PostProdPlanHeader jsonBillHeader;
-
+        PostProdPlanHeader jsonBillHeader = null;
+if(!postProdPlanHeader.getPostProductionPlanDetail().isEmpty()) {
 		jsonBillHeader = productionService.saveProductionPlanHeader(postProdPlanHeader);
+}
 
 		Info info = new Info();
 

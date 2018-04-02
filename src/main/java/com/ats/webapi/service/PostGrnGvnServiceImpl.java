@@ -77,10 +77,12 @@ public class PostGrnGvnServiceImpl implements PostGrnGvnService {
 			
 			for(int i=0;i<header.getGrnGvn().size();i++) {
 				
-				
+			if(header.getGrnGvn().get(i).getGrnGvnQty()>0) {
 				header.getGrnGvn().get(i).setGrnGvnHeaderId(headerId);
 				grnGvnReturnList=new GrnGvn();
 				grnGvnReturnList=grnGvnRepository.save(header.getGrnGvn().get(i));
+				
+			}
 				
 				//14 FEb to be used on 15 feb when billdetil no inserted in grn table
 				

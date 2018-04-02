@@ -101,7 +101,7 @@ GetGrnItemConfigList getGrnItemConfigList=new GetGrnItemConfigList();
 		try {
 		
 		List<GetGrnItemConfig> getGrnItemConfigs=grnItemConfigRepository.getItemForManGrn(billNo, frId);
-		
+		System.err.println("Response front end man grn iTems" +getGrnItemConfigs.toString());
 		if(!getGrnItemConfigs.isEmpty()) {
 			
 			getGrnItemConfigList.setGetGrnItemConfigs(getGrnItemConfigs);
