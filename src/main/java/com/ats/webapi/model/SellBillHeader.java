@@ -116,6 +116,7 @@ public class SellBillHeader implements Serializable{
 	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 
 	public Date getBillDate() {
 		return billDate;
