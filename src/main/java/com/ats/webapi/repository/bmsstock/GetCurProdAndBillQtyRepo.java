@@ -22,7 +22,7 @@ public interface GetCurProdAndBillQtyRepo extends JpaRepository<GetCurProdAndBil
 			+ " m_item.id=t_production_plan_detail.item_id),0) AS rejected_qty,\n" + 
 			"\n" + 
 			"coalesce((Select SUM( t_bill_detail.bill_qty) FROM t_bill_header,t_bill_detail"
-			+ " WHERE t_bill_header.bill_date_time BETWEEN :timestamp AND :curTimeStamp AND t_bill_header.bill_no=t_bill_detail.bill_no "
+			+ " WHERE t_bill_header.remark BETWEEN :timestamp AND :curTimeStamp  AND t_bill_header.bill_no=t_bill_detail.bill_no "
 			+ "AND m_item.id=t_bill_detail.item_id),0) AS bill_qty,"
 			
 			+ "coalesce((Select SUM( t_gatesale_bill_detail.item_qty) "
@@ -51,7 +51,7 @@ public interface GetCurProdAndBillQtyRepo extends JpaRepository<GetCurProdAndBil
 			+ " m_item.id=t_production_plan_detail.item_id),0) AS rejected_qty,\n" + 
 			"\n" + 
 			"coalesce((Select SUM( t_bill_detail.bill_qty) FROM t_bill_header,t_bill_detail"
-			+ " WHERE t_bill_header.bill_date_time BETWEEN :timestamp AND :curTimeStamp AND t_bill_header.bill_no=t_bill_detail.bill_no "
+			+ " WHERE t_bill_header.remark BETWEEN :timestamp AND :curTimeStamp  AND t_bill_header.bill_no=t_bill_detail.bill_no "
 			+ "AND m_item.id=t_bill_detail.item_id),0) AS bill_qty,"
 			
 			+ "coalesce((Select SUM( t_gatesale_bill_detail.item_qty) "
@@ -62,7 +62,7 @@ public interface GetCurProdAndBillQtyRepo extends JpaRepository<GetCurProdAndBil
 			+ "FROM m_item where m_item.del_status=:delStatus "
 				+ "",nativeQuery=true)
 	List<GetCurProdAndBillQty> getCurProdAndBillQtyAllCat(@Param("prodDate") String prodDate,@Param("delStatus") int delStatus,
-			@Param("timestamp") String timestamp,@Param("curTimeStamp") String curTimeStamp);
+		@Param("timestamp") String timestamp,@Param("curTimeStamp") String curTimeStamp);
 
 	
 }
