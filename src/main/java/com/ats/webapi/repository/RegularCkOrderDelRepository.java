@@ -15,6 +15,6 @@ public interface RegularCkOrderDelRepository extends JpaRepository<RegSpCkOrder,
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE RegSpCkOrder t SET t.delStatus =1 WHERE t.rspId=:rspId")
+	@Query(" DELETE FROM RegSpCkOrder WHERE  rspId=:rspId")
 	int deleteRegularSpOrder(@Param("rspId")int rspId);
 }

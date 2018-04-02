@@ -21,6 +21,6 @@ public interface UpdateOrdersRepository extends JpaRepository<UpdateOrder, Integ
 	
 	@Transactional
 	@Modifying
-	@Query("UPDATE UpdateOrder t SET t.isEdit=1  WHERE t.orderId=:orderId")
+	@Query(" DELETE FROM UpdateOrder WHERE  orderId=:orderId")
 	int deleteOrder(@Param("orderId") int orderId);
 }
