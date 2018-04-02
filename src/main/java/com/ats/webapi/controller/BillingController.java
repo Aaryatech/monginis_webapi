@@ -21,6 +21,7 @@ import com.ats.webapi.model.bill.GetItemHsnCode;
 import com.ats.webapi.model.bill.SlabwiseBill;
 import com.ats.webapi.model.bill.SlabwiseBillList;
 import com.ats.webapi.repository.SlabwiseDetailsRepository;
+import com.ats.webapi.repository.UpdateSellBillTimeStampRepo;
 
 @RestController
 public class BillingController {
@@ -30,6 +31,28 @@ public class BillingController {
 	
 	@Autowired
 	SlabwiseDetailsRepository slabwiseDetailsRepository; 
+	
+	@Autowired
+	UpdateSellBillTimeStampRepo  updateSellBillTimeStampRepo;
+	
+	
+	@RequestMapping(value = { "/updateSellBillTimeStamp" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateSellBillTimeStamp(@RequestParam("sellBillNo") int sellBillNo,
+			@RequestParam("timeStamp") String timeStamp) {
+		
+		Info info=new Info();
+
+		int response=updateSellBillTimeStampRepo.updateTimeForSellBill(sellBillNo, timeStamp);
+		
+		if(response>0) {
+			info.setError(false);
+			info.setMessage("successfully Updated Time Stamp /updateSellBillTimeStamp");
+		}
+		System.err.println("BillingController -/updateSellBillTimeStamp ->response " +response);
+		    
+		return info;
+	  }
+	
 	
 	@RequestMapping(value = { "/deleteExBillHeader" }, method = RequestMethod.POST)
 	public @ResponseBody int deleteExPBillHeader(@RequestParam("sellBillNo") int sellBillNo) {

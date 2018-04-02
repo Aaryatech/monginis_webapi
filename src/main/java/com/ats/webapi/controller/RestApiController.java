@@ -718,6 +718,7 @@ public class RestApiController {
 			header = postGrnGvnService.saveGrnGvnHeader(postGrnGvnList.getGrnGvnHeader());
 
 			if (header != null) {
+				System.err.println("Header is not null");
 
 				info.setError(false);
 				info.setMessage("Grn Gvn inserted  Successfully");
@@ -725,7 +726,7 @@ public class RestApiController {
 			}
 
 			else {
-
+				System.err.println("Header is  null");
 				info.setError(true);
 				info.setMessage("Error in Grn Gvn insertion : RestApi");
 
