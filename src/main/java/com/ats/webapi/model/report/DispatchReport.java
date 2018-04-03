@@ -15,6 +15,8 @@ public class DispatchReport implements Serializable{
 	
 	private int catId;
 	
+	private int subCatId;
+	
 	private String catName;
 	
 	private int frId;
@@ -30,6 +32,14 @@ public class DispatchReport implements Serializable{
 	private int billQty;
 
 	
+	public int getSubCatId() {
+		return subCatId;
+	}
+
+	public void setSubCatId(int subCatId) {
+		this.subCatId = subCatId;
+	}
+
 	public String getItemName() {
 		return itemName;
 	}
