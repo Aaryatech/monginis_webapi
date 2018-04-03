@@ -1,19 +1,23 @@
 package com.ats.webapi.service;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.model.FrItemStockConfigureList;
 import com.ats.webapi.model.PostBillDetail;
 import com.ats.webapi.model.PostBillHeader;
+import com.ats.webapi.repository.FrItemStockConfigureRepository;
 import com.ats.webapi.repository.OrderRepository;
 import com.ats.webapi.repository.PostBillDetailRepository;
 import com.ats.webapi.repository.PostBillHeaderRepository;
 import com.ats.webapi.repository.RegularSpCkOrderRepository;
 import com.ats.webapi.repository.SpCakeOrdersRepository;
 import com.ats.webapi.repository.UpdateBillDetailForGrnGvnRepository;
+import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 
 @Service
 public class PostBillDataServiceImpl implements PostBillDataService {
@@ -37,7 +41,12 @@ public class PostBillDataServiceImpl implements PostBillDataService {
 	@Autowired
 	UpdateBillDetailForGrnGvnRepository updateBillDetailForGrnGvnRepository;
 	
+	@Autowired//added here on 3 march
+	UpdateSeetingForPBRepo updateSeetingForPBRepo;
 	
+	@Autowired// added here 3 march
+	FrItemStockConfigureRepository frItemStockConfRepo;
+
 	
 	
 	/*
@@ -61,8 +70,51 @@ public class PostBillDataServiceImpl implements PostBillDataService {
 		
 		PostBillHeader postBillHeaders = new PostBillHeader();
 		for (int i = 0; i < postBillHeader.size(); i++) {
+			
+			
+			int settingValue=frItemStockConfRepo.findBySettingKey("PB");
+			
+			System.out.println("Setting Value Received " + settingValue);
+			int year = Year.now().getValue();
+			String strYear = String.valueOf(year);
+			strYear = strYear.substring(2);
+
+			int length = String.valueOf(settingValue).length();
+
+			String invoiceNo = null;
+
+			if (length == 1)
+
+				invoiceNo = strYear + "-" + "0000" + settingValue;
+			if (length == 2)
+
+				invoiceNo = strYear + "-" + "000" + settingValue;
+
+			if (length == 3)
+
+				invoiceNo = strYear + "-" + "00" + settingValue;
+
+			if (length == 4)
+
+				invoiceNo = strYear + "-" + "0" + settingValue;
+
+			System.out.println("*** settingValue= " + settingValue);
+			
+			
+			postBillHeader.get(i).setInvoiceNo(invoiceNo);
+			
 
 			postBillHeaders = postBillHeaderRepository.save(postBillHeader.get(i));
+			
+			if(postBillHeaders!=null && postBillHeaders.getBillNo()>0 ) {
+				
+				settingValue=settingValue+1;
+				
+				int result = updateSeetingForPBRepo.updateSeetingForPurBill(settingValue, "PB");
+				
+				System.err.println("PB setting value updated "+ result);
+				
+			}
 
 			int billNo = postBillHeader.get(i).getBillNo();
 

@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.prod.GetProdDetailBySubCat;
+import com.ats.webapi.model.prod.GetProdDetailBySubCatList;
 import com.ats.webapi.model.prod.GetProdPlanDetail;
 import com.ats.webapi.model.prod.GetProdPlanDetailList;
 import com.ats.webapi.model.prod.GetProdPlanHeader;
@@ -29,6 +31,7 @@ import com.ats.webapi.model.prod.mixing.GetTempMixItemDetail;
 import com.ats.webapi.model.prod.mixing.GetTempMixItemDetailList;
 import com.ats.webapi.model.prod.mixing.TempMixing;
 import com.ats.webapi.model.prod.mixing.TempMixingList;
+import com.ats.webapi.repository.getproddetailbysubcat.GetProdDetailBySubCatRepo;
 import com.ats.webapi.repository.prod.GetProdHeaderRepo;
 import com.ats.webapi.repository.prod.GetProdPlanDetailRepo;
 import com.ats.webapi.repository.prod.GetSFMixingForBomRepo;
@@ -50,6 +53,8 @@ public class TempProdApi {
 	@Autowired
 	ProdMixingReqP1Repo prodMixReqP1;
 	
+	@Autowired
+	GetProdDetailBySubCatRepo getProdDetailBySubCatRepo;
 	
 	/*@Autowired
 	GetItemwiseProdPlanRepo getItemwiseProdPlanRepo;
@@ -507,5 +512,42 @@ public class TempProdApi {
 
 			return sfDataForMixList;
 	  }*/
+	
+	
+	
+	@RequestMapping(value = { "/getProdDetailBySubCat" }, method = RequestMethod.POST)
+	public @ResponseBody GetProdDetailBySubCatList getProdDetailBySubCat(@RequestParam("prodHeaderId")int prodHeaderId) {
+
+		GetProdDetailBySubCatList prodDetailBySubcatList = new GetProdDetailBySubCatList();
+		
+		Info info=new Info();
+
+		try {
+		
+			//List<GetSFPlanDetailForMixing> sfPlanDetailForMixing=getSFPlanDetailForMixingRepo.getSFAndPlanDetailForMixing(headerId);
+			
+			List<GetProdDetailBySubCat> prodDetailBySubCat=getProdDetailBySubCatRepo.getProdDetailBySubCat(prodHeaderId);
+		
+			
+		if(!prodDetailBySubCat.isEmpty()) {
+			
+			info.setError(false);
+			info.setMessage("success");
+			prodDetailBySubcatList.setProdDetailBySubCat(prodDetailBySubCat);
+		}
+		else {
+			
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		prodDetailBySubcatList.setInfo(info);
+		System.out.println("getProdDetailBySubCat o/p "+ prodDetailBySubcatList.toString() );			
+		}catch (Exception e) {
+			System.out.println("Error getting sf and Plan Detail For Mixing  Phase 1");
+			e.printStackTrace();
+			
+		}
+			return prodDetailBySubcatList;
+	  }
 	
 }
