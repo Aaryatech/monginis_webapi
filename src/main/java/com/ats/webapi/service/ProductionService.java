@@ -39,6 +39,8 @@ public interface ProductionService {
 	public int updateProductionStatus(int productionId, int prodStatus);
 
 	public Info updateBillStatus(UpdateOrderStatus updateOrderStatus);
+
+	public List<GetProductionItemQty> getOrderuItemQty(String strDate, int catId);
 	
 	
 	

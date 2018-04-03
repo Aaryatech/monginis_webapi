@@ -269,6 +269,13 @@ public class ProductionServiceImpl implements ProductionService{
 		}
 		return update;
 	}
+
+
+	@Override
+	public List<GetProductionItemQty> getOrderuItemQty(String strDate, int catId) {
+		List<GetProductionItemQty> prodItemQty=getProductionItemQtyRepository.getOrderuItemQty(strDate,catId);
+		return prodItemQty;
+	}
 	
 
 }

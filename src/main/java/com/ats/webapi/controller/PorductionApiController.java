@@ -229,6 +229,32 @@ e.printStackTrace();
 
 		
 			getProdItemQtyList = productionService.getProdQty(strDate, catId);
+			System.out.println("getProdItemQtyList prod " + getProdItemQtyList);
+
+		} catch (Exception e) {
+			
+              e.printStackTrace();
+			  System.out.println("Exception in Prod Qty list Rest controller" + e.getMessage());
+		}
+		return getProdItemQtyList;
+
+	}
+	
+	@RequestMapping(value = { "/getOrderuItemQty" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<GetProductionItemQty> getOrderuItemQty(@RequestParam int catId,@RequestParam String productionDate) {
+		
+		List<GetProductionItemQty> getProdItemQtyList=new ArrayList<GetProductionItemQty>();
+		try {
+			
+			System.out.println("date str :" + productionDate);
+			System.out.println("catId " + catId);
+			String strDate = Common.convertToYMD(productionDate);
+			System.out.println("Converted date " + strDate);
+
+		
+			getProdItemQtyList = productionService.getOrderuItemQty(strDate, catId);
+			System.out.println("getProdItemQtyList order " + getProdItemQtyList);
 
 
 		} catch (Exception e) {
