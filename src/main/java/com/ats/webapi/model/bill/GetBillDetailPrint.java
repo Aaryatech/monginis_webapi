@@ -110,6 +110,11 @@ public class GetBillDetailPrint {
 	
 	@Column(name="item_uom")
 	private String itemUom;
+	
+	
+	@Column(name="sub_cat_id")
+	private int  subCatId;
+	
 
 	public int getBillDetailNo() {
 		return billDetailNo;
@@ -359,6 +364,14 @@ public class GetBillDetailPrint {
 		this.itemUom = itemUom;
 	}
 
+	public int getSubCatId() {
+		return subCatId;
+	}
+
+	public void setSubCatId(int subCatId) {
+		this.subCatId = subCatId;
+	}
+
 	@Override
 	public String toString() {
 		return "GetBillDetailPrint [billDetailNo=" + billDetailNo + ", billNo=" + billNo + ", menuId=" + menuId
@@ -369,8 +382,9 @@ public class GetBillDetailPrint {
 				+ ", taxableAmt=" + taxableAmt + ", remark=" + remark + ", delStatus=" + delStatus + ", itemName="
 				+ itemName + ", catName=" + catName + ", totalTax=" + totalTax + ", baseRate=" + baseRate + ", grnType="
 				+ grnType + ", expiryDate=" + expiryDate + ", isGrngvnApplied=" + isGrngvnApplied + ", itemHsncd="
-				+ itemHsncd + ", itemUom=" + itemUom + "]";
+				+ itemHsncd + ", itemUom=" + itemUom + ", subCatId=" + subCatId + "]";
 	}
+
 	
 
 }
