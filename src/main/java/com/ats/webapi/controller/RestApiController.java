@@ -3893,6 +3893,15 @@ public class RestApiController {
 		System.out.println("Res  :" + spCakeOrder.toString());
 		return spCakeOrder;
 	}
+	@RequestMapping(value = { "/getSpCKOrderBySpOrderNo" }, method = RequestMethod.POST)
+	@ResponseBody
+	public GetSpCkOrder getSpCKOrderBySpOrderNo(@RequestParam("spOrderNo") int spOrderNo) {
+		System.out.println("spOrderNo  :" + spOrderNo);
+
+		GetSpCkOrder spCakeOrder = spCkOrdersService.getSpCkOrder(spOrderNo);
+
+		return spCakeOrder;
+	}
 
 	@RequestMapping(value = { "/getRegSpCakeOrderBySpOrderNo" }, method = RequestMethod.POST)
 	@ResponseBody

@@ -8,8 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.GetSpCakeOrders;
+import com.ats.webapi.model.GetSpCkOrder;
 import com.ats.webapi.model.SpCakeOrders;
 import com.ats.webapi.model.SpCakeOrdersBean;
+import com.ats.webapi.repository.GetSpCakeOrderRepository;
 import com.ats.webapi.repository.GetSpCakeOrdersRepository;
 import com.ats.webapi.repository.SpCakeOrdersRepoAdmin;
 import com.ats.webapi.repository.SpCakeOrdersRepository;
@@ -26,7 +28,9 @@ public class SpCkOrdersServiceImpl implements SpCkOrdersService {
 	@Autowired
 	GetSpCakeOrdersRepository getSpCakeOrdersRepository;
 	
-
+    @Autowired
+    GetSpCakeOrderRepository getSpCakeOrderRepository;
+    
 	@Override
 	public List<SpCakeOrdersBean> findSpCakeOrder(List<Integer> frId, String prodDate) {
 		List<SpCakeOrdersBean> spCakeOrders=null;
@@ -61,11 +65,15 @@ public class SpCkOrdersServiceImpl implements SpCkOrdersService {
 	@Override
 	public List<GetSpCakeOrders> getSpCakeOrder(List<String> spOrderNo) {
 		 
-	
-	
-	
 	return getSpCakeOrdersRepository.getSpCakeOrders(spOrderNo);
 		
+	}
+
+
+	@Override
+	public GetSpCkOrder getSpCkOrder(int spOrderNo) {
+		
+		return getSpCakeOrderRepository.getSpCakeOrder(spOrderNo);
 	}
 	}
 

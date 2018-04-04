@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.ats.webapi.model.GetSpCakeOrders;
+import com.ats.webapi.model.GetSpCkOrder;
 
 public interface GetSpCakeOrdersRepository extends JpaRepository<GetSpCakeOrders, Integer>{
 
@@ -17,6 +18,5 @@ public interface GetSpCakeOrdersRepository extends JpaRepository<GetSpCakeOrders
 			,nativeQuery=true)
 	List<GetSpCakeOrders> getSpCakeOrders(@Param("spOrderNo")List<String> spOrderNo);
 
-	
 	
 }
