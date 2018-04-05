@@ -71,7 +71,7 @@ public class SpCkOrdersServiceImpl implements SpCkOrdersService {
 
 
 	@Override
-	public GetSpCkOrder getSpCkOrder(int spOrderNo) {
+	public List<GetSpCkOrder> getSpCkOrder(List<String> spOrderNo) {
 		
 		return getSpCakeOrderRepository.getSpCakeOrder(spOrderNo);
 	}

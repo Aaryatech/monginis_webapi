@@ -15,7 +15,7 @@ public interface SpCkOrdersService {
 
 	public List<GetSpCakeOrders> getSpCakeOrder(List<String> spOrderNo);
 
-	public GetSpCkOrder getSpCkOrder(int spOrderNo);
+	public List<GetSpCkOrder> getSpCkOrder(List<String> spOrderNo);
 	
 
 }

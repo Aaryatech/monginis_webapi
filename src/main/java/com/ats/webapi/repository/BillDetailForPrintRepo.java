@@ -13,7 +13,7 @@ public interface BillDetailForPrintRepo extends JpaRepository<GetBillDetailPrint
 
 	@Query(value="SELECT t_bill_detail.* , \n" + 
 			"			    CASE  \n" + 
-			"			 WHEN t_bill_detail.cat_id=5 THEN (SELECT m_sp_cake.sp_name  FROM  m_sp_cake\n" + 
+			"			 WHEN t_bill_detail.cat_id=5 THEN (SELECT CONCAT(m_sp_cake.sp_name, '-' ,m_sp_cake.sp_code)  FROM  m_sp_cake\n" + 
 			"			WHERE m_sp_cake.sp_id= t_bill_detail.item_id) \n" + 
 			"			            ELSE (SELECT  m_item.item_name FROM m_item WHERE t_bill_detail.item_id=m_item.id)\n" + 
 			"			      END AS item_name,\n" + 
