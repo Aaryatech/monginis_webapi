@@ -20,8 +20,11 @@ public class SalesVoucher implements Serializable{
 	@Column(name="bill_detail_no")
 	private int billDetailNo;
 	
+	@Column(name="bill_no")
+	private int billNo;
+	
 	@Column(name="invoice_no")
-	private int vNo;
+	private String vNo;
 	
 	@Column(name="bill_date")
 	private Date date;
@@ -112,14 +115,16 @@ public class SalesVoucher implements Serializable{
 		this.billDetailNo = billDetailNo;
 	}
 
-	public int getvNo() {
+ 
+    public String getvNo() {
 		return vNo;
 	}
 
-	public void setvNo(int vNo) {
+	public void setvNo(String vNo) {
 		this.vNo = vNo;
 	}
-    @JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
+
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getDate() {
 		return date;
 	}
@@ -320,15 +325,23 @@ public class SalesVoucher implements Serializable{
 		this.remark = remark;
 	}
 
+	public int getBillNo() {
+		return billNo;
+	}
+
+	public void setBillNo(int billNo) {
+		this.billNo = billNo;
+	}
+
 	@Override
 	public String toString() {
-		return "SalesVoucher [billDetailNo=" + billDetailNo + ", vNo=" + vNo + ", date=" + date + ", vType=" + vType
-				+ ", partyName=" + partyName + ", gstin=" + gstin + ", state=" + state + ", itemName=" + itemName
-				+ ", hsnCode=" + hsnCode + ", qty=" + qty + ", uom=" + uom + ", rate=" + rate + ", amount=" + amount
-				+ ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer + ", cgstRs=" + cgstRs
-				+ ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", cessPer=" + cessPer + ", cessRs=" + cessRs
-				+ ", itemDiscPer=" + itemDiscPer + ", totalDisc=" + totalDisc + ", roundOff=" + roundOff + ", totalAmt="
-				+ totalAmt + ", billTotal=" + billTotal + ", remark=" + remark + "]";
+		return "SalesVoucher [billDetailNo=" + billDetailNo + ", billNo=" + billNo + ", vNo=" + vNo + ", date=" + date
+				+ ", vType=" + vType + ", partyName=" + partyName + ", gstin=" + gstin + ", state=" + state
+				+ ", itemName=" + itemName + ", hsnCode=" + hsnCode + ", qty=" + qty + ", uom=" + uom + ", rate=" + rate
+				+ ", amount=" + amount + ", sgstPer=" + sgstPer + ", sgstRs=" + sgstRs + ", cgstPer=" + cgstPer
+				+ ", cgstRs=" + cgstRs + ", igstPer=" + igstPer + ", igstRs=" + igstRs + ", cessPer=" + cessPer
+				+ ", cessRs=" + cessRs + ", itemDiscPer=" + itemDiscPer + ", totalDisc=" + totalDisc + ", roundOff="
+				+ roundOff + ", totalAmt=" + totalAmt + ", billTotal=" + billTotal + ", remark=" + remark + "]";
 	}
 	
 	

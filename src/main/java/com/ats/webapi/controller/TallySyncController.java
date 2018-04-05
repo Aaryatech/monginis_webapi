@@ -25,9 +25,11 @@ import com.ats.webapi.model.tally.ItemList;
 import com.ats.webapi.model.tally.MaterialRecNoteList;
 import com.ats.webapi.model.tally.MaterialReceiptNote;
 import com.ats.webapi.model.tally.RawMaterialResList;
+import com.ats.webapi.model.tally.SalesVoucher;
 import com.ats.webapi.model.tally.SalesVoucherList;
 import com.ats.webapi.model.tally.SpCakeList;
 import com.ats.webapi.model.tally.SuppliersList;
+import com.ats.webapi.repository.tally.TallySalesVoucherRepository;
 import com.ats.webapi.service.SuppilerMasterService;
 import com.ats.webapi.service.MaterialRcNote.MaterialRecNoteService;
 import com.ats.webapi.service.rawmaterial.RawMaterialService;
@@ -66,6 +68,9 @@ public class TallySyncController {
 	@Autowired
 	MaterialRecNoteService materialRecNoteService;
 	
+	@Autowired
+	TallySalesVoucherRepository tallySalesVoucherRepository;
+	
 	@RequestMapping(value = { "/getAllExcelFranchise" }, method = RequestMethod.GET)
 	public @ResponseBody FranchiseeList getAllExcelFranchise()
 	  {
@@ -87,6 +92,40 @@ public class TallySyncController {
 	  {
 		SpCakeList spCakeList=specialCakeService.getAllSpCake();
 		return spCakeList;
+	  }
+	@RequestMapping(value = { "/getSalesVouchersByBillNo" }, method = RequestMethod.POST)
+	public @ResponseBody SalesVoucherList getSalesVouchersByBillNo(@RequestParam("billNo")List<Integer> billNo)
+	  {
+		SalesVoucherList salesVoucherList = new SalesVoucherList();
+
+		try {
+		List<SalesVoucher> salesVoucher=tallySalesVoucherRepository.getSalesVouchersByBillNo(billNo);
+		
+		 
+			ErrorMessage errorMessage=new ErrorMessage();
+			
+			if(salesVoucher==null)
+			{
+			
+				errorMessage.setError(true);
+				errorMessage.setMessage("Sales Voucher Not Found");
+				
+				salesVoucherList.setErrorMessage(errorMessage);
+			}
+			else
+			{
+				errorMessage.setError(false);
+				errorMessage.setMessage("Sales Voucher Found Successfully");
+				
+				salesVoucherList.setSalesVoucherList(salesVoucher);
+				salesVoucherList.setErrorMessage(errorMessage);
+					
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		    return salesVoucherList;
 	  }
 	@RequestMapping(value = { "/getAllFranchisee" }, method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<byte[]> showAllFranchisee()
@@ -238,6 +277,8 @@ public class TallySyncController {
 
 			    return new ResponseEntity<byte[]>(output, responseHeaders, HttpStatus.OK);
 		  }
+		
+		 
 	     @RequestMapping(value = { "/updateSalesVoucher" }, method = RequestMethod.GET)
 			public @ResponseBody ResponseEntity<byte[]> updateSalesVouchers(@RequestParam("VNo")int billNo,@RequestParam("isTallySync")int isTallySync)
 			  {
