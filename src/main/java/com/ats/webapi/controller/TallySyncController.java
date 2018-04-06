@@ -19,6 +19,7 @@ import com.ats.webapi.model.MaterialRecNote;
 import com.ats.webapi.model.SupplierMaster.SupplierDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetails;
 import com.ats.webapi.model.rawmaterial.RawMaterialDetailsList;
+import com.ats.webapi.model.tally.CreditNote;
 import com.ats.webapi.model.tally.CreditNoteList;
 import com.ats.webapi.model.tally.FranchiseeList;
 import com.ats.webapi.model.tally.ItemList;
@@ -29,6 +30,7 @@ import com.ats.webapi.model.tally.SalesVoucher;
 import com.ats.webapi.model.tally.SalesVoucherList;
 import com.ats.webapi.model.tally.SpCakeList;
 import com.ats.webapi.model.tally.SuppliersList;
+import com.ats.webapi.repository.tally.TallyCreditNoteRepository;
 import com.ats.webapi.repository.tally.TallySalesVoucherRepository;
 import com.ats.webapi.service.SuppilerMasterService;
 import com.ats.webapi.service.MaterialRcNote.MaterialRecNoteService;
@@ -70,6 +72,9 @@ public class TallySyncController {
 	
 	@Autowired
 	TallySalesVoucherRepository tallySalesVoucherRepository;
+	
+	@Autowired
+	TallyCreditNoteRepository tallyCreditNoteRepository;
 	
 	@RequestMapping(value = { "/getAllExcelFranchise" }, method = RequestMethod.GET)
 	public @ResponseBody FranchiseeList getAllExcelFranchise()
@@ -127,6 +132,43 @@ public class TallySyncController {
 		}
 		    return salesVoucherList;
 	  }
+	
+	 @RequestMapping(value = { "/getCreditNotesByCrnId" }, method = RequestMethod.POST)
+		public @ResponseBody CreditNoteList getCreditNotesByCrnId(@RequestParam("crnId")List<Integer> crnId)
+		  {
+
+			CreditNoteList creditNoteList=new CreditNoteList();
+			try
+			{
+				 List<CreditNote> creditNotes=tallyCreditNoteRepository.getCreditNotesByCrnId(crnId);
+					
+					ErrorMessage errorMessage=new ErrorMessage();
+					
+					if(creditNotes==null)
+					{
+					
+						errorMessage.setError(true);
+						errorMessage.setMessage("Credit Note Not Found");
+						
+						creditNoteList.setErrorMessage(errorMessage);
+					}
+					else
+					{
+						errorMessage.setError(false);
+						errorMessage.setMessage("Credit Note Found Successfully");
+						
+						creditNoteList.setCreditNoteList(creditNotes);
+						creditNoteList.setErrorMessage(errorMessage);
+						
+					}
+			}catch(Exception e)
+			{
+				e.printStackTrace();
+			}
+
+		    
+				return creditNoteList; 
+		  }
 	@RequestMapping(value = { "/getAllFranchisee" }, method = RequestMethod.GET)
 	public @ResponseBody ResponseEntity<byte[]> showAllFranchisee()
 	  {
