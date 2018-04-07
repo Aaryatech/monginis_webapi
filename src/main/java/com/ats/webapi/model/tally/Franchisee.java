@@ -31,6 +31,9 @@ public class Franchisee implements Serializable{
 	
 	@Column(name="fr_city")
 	private String city;
+	
+	@Column(name="fr_rate_cat")
+	private int frRateCat;
 
 	@Column(name="fr_state")
  	private String state;
@@ -150,6 +153,14 @@ public class Franchisee implements Serializable{
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	public int getFrRateCat() {
+		return frRateCat;
+	}
+
+	public void setFrRateCat(int frRateCat) {
+		this.frRateCat = frRateCat;
 	}
 
 	

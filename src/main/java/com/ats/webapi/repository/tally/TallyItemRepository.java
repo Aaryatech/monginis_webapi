@@ -11,7 +11,32 @@ import com.ats.webapi.model.tally.TallyItem;
 @Repository
 public interface TallyItemRepository extends JpaRepository<TallyItem, Long>{
 
-	@Query(value="SELECT i.id,i.item_name,i.del_status,c.cat_name AS item_group,s.sub_cat_name AS sub_group ,i.item_grp3,i.item_tax1,i.item_tax2,i.item_tax3,sup.item_hsncd,sup.item_cess,sup.item_uom from m_item i,m_category c ,m_cat_sub s ,m_item_sup sup where i.id=sup.item_id AND i.item_grp1=c.cat_id AND i.item_grp2=s.sub_cat_id AND sup.is_tally_sync=0 AND i.del_status=0" + 
-			"",nativeQuery=true)
+	@Query(value="SELECT\n" + 
+			"        i.id,\n" + 
+			"        i.item_name,\n" + 
+			"        i.del_status,\n" + 
+			"        c.cat_name AS item_group,\n" + 
+			"        s.sub_cat_name AS sub_group ,\n" + 
+			"        i.item_grp3,\n" + 
+			"        i.item_tax1,\n" + 
+			"        i.item_tax2,\n" + 
+			"        i.item_tax3,\n" + 
+			"        i.item_rate1,\n" + 
+			"        i.item_rate2,\n" + 
+			"        i.item_rate3, \n" + 
+			"        sup.item_hsncd,\n" + 
+			"        sup.item_cess,\n" + 
+			"        sup.item_uom \n" + 
+			"    from\n" + 
+			"        m_item i,\n" + 
+			"        m_category c ,\n" + 
+			"        m_cat_sub s ,\n" + 
+			"        m_item_sup sup \n" + 
+			"    where\n" + 
+			"        i.id=sup.item_id \n" + 
+			"        AND i.item_grp1=c.cat_id \n" + 
+			"        AND i.item_grp2=s.sub_cat_id \n" + 
+			"        AND sup.is_tally_sync=0 \n" + 
+			"        AND i.del_status=0",nativeQuery=true)
 	List<TallyItem> findByIsTallySync();
 }

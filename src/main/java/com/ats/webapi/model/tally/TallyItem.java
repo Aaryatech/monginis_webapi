@@ -54,6 +54,15 @@ public class TallyItem implements Serializable{
 	@Column(name="del_status")
 	private int delStatus;
 	
+	@Column(name="item_rate1")
+	private float itemRate1;
+
+	@Column(name="item_rate2")
+	private float itemRate2;
+	
+	@Column(name="item_rate3")
+	private float itemRate3;
+	
 	@PostLoad
 	public void onLoad() {
 		if(this.subSubGroup.equalsIgnoreCase("1"))
@@ -177,12 +186,42 @@ public class TallyItem implements Serializable{
 	}
 
 
+	public float getItemRate1() {
+		return itemRate1;
+	}
+
+
+	public void setItemRate1(float itemRate1) {
+		this.itemRate1 = itemRate1;
+	}
+
+
+	public float getItemRate2() {
+		return itemRate2;
+	}
+
+
+	public void setItemRate2(float itemRate2) {
+		this.itemRate2 = itemRate2;
+	}
+
+
+	public float getItemRate3() {
+		return itemRate3;
+	}
+
+
+	public void setItemRate3(float itemRate3) {
+		this.itemRate3 = itemRate3;
+	}
+
+
 	@Override
 	public String toString() {
-		return "Item [id=" + id + ", itemName=" + itemName + ", itemGroup=" + itemGroup + ", subGroup=" + subGroup
+		return "TallyItem [id=" + id + ", itemName=" + itemName + ", itemGroup=" + itemGroup + ", subGroup=" + subGroup
 				+ ", subSubGroup=" + subSubGroup + ", hsnCode=" + hsnCode + ", uom=" + uom + ", sgstPer=" + sgstPer
 				+ ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", cessPer=" + cessPer + ", delStatus=" + delStatus
-				+ "]";
+				+ ", itemRate1=" + itemRate1 + ", itemRate2=" + itemRate2 + ", itemRate3=" + itemRate3 + "]";
 	}
 
 }
