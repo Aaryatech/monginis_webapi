@@ -25,7 +25,7 @@ public class CreditNote implements Serializable{
 	private String crnNo;
 
 	@Column(name="crn_id")
-	private String vNo;
+	private int vNo;
 	
 	@Column(name="crn_date")
 	private Date date;
@@ -122,6 +122,29 @@ public class CreditNote implements Serializable{
 	@Column(name="grn_gvn_date")
 	private String crDbDate;
 	
+	@Column(name="fr_id")
+	private int frId;
+	
+	@Column(name="fr_code")
+	private String frCode;
+	
+	@Column(name="item_id")
+	private int itemId;
+	
+	@Column(name="cat_id")
+	private int catId;
+	
+	@Column(name="crn_taxable_amt")
+	private float crnTaxableAmt;
+	
+	@Column(name="crn_total_tax")
+	private float crnTotalTax;
+	
+	@Column(name="crn_grand_total")
+	private float crnGrandTotal;
+	
+	 
+	
 	/*@Column(name="remark")
 	private String remark;*/
 	
@@ -140,17 +163,16 @@ public class CreditNote implements Serializable{
 
 	public void setCrndId(int crndId) {
 		this.crndId = crndId;
-	}
-
-	public String getvNo() {
+	} 
+	
+	public int getvNo() {
 		return vNo;
 	}
 
-	public void setvNo(String vNo) {
+	public void setvNo(int vNo) {
 		this.vNo = vNo;
 	}
 
-	
 	public String getCrnNo() {
 		return crnNo;
 	}
@@ -417,6 +439,63 @@ public class CreditNote implements Serializable{
 		this.grngvnSrno = grngvnSrno;
 	}
 
+	public int getFrId() {
+		return frId;
+	}
+
+	public void setFrId(int frId) {
+		this.frId = frId;
+	}
+
+	public String getFrCode() {
+		return frCode;
+	}
+
+	public void setFrCode(String frCode) {
+		this.frCode = frCode;
+	}
+
+	public int getItemId() {
+		return itemId;
+	}
+
+	public void setItemId(int itemId) {
+		this.itemId = itemId;
+	}
+
+	public int getCatId() {
+		return catId;
+	}
+
+	public void setCatId(int catId) {
+		this.catId = catId;
+	}
+
+	public float getCrnTaxableAmt() {
+		return crnTaxableAmt;
+	}
+
+	public void setCrnTaxableAmt(float crnTaxableAmt) {
+		this.crnTaxableAmt = crnTaxableAmt;
+	}
+
+	public float getCrnTotalTax() {
+		return crnTotalTax;
+	}
+
+	public void setCrnTotalTax(float crnTotalTax) {
+		this.crnTotalTax = crnTotalTax;
+	}
+
+	public float getCrnGrandTotal() {
+		return crnGrandTotal;
+	}
+
+	public void setCrnGrandTotal(float crnGrandTotal) {
+		this.crnGrandTotal = crnGrandTotal;
+	}
+ 
+
 	@Override
 	public String toString() {
 		return "CreditNote [crndId=" + crndId + ", crnNo=" + crnNo + ", vNo=" + vNo + ", date=" + date + ", vType="
@@ -427,7 +506,9 @@ public class CreditNote implements Serializable{
 				+ ", itemDiscPer=" + itemDiscPer + ", totalDisc=" + totalDisc + ", roundOff=" + roundOff + ", totalAmt="
 				+ totalAmt + ", billTotal=" + billTotal + ", refBillNo=" + refBillNo + ", refBillDate=" + refBillDate
 				+ ", grnGvnHeaderId=" + grnGvnHeaderId + ", isDeposited=" + isDeposited + ", grngvnSrno=" + grngvnSrno
-				+ ", crDbNo=" + crDbNo + ", crDbDate=" + crDbDate + "]";
+				+ ", crDbNo=" + crDbNo + ", crDbDate=" + crDbDate + ", frId=" + frId + ", frCode=" + frCode
+				+ ", itemId=" + itemId + ", catId=" + catId + ", crnTaxableAmt=" + crnTaxableAmt + ", crnTotalTax="
+				+ crnTotalTax + ", crnGrandTotal=" + crnGrandTotal + "]";
 	}
  
   
