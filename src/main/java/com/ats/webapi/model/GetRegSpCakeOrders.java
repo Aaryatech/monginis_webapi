@@ -54,10 +54,10 @@ public class GetRegSpCakeOrders {
 	@Column(name="rsp_delivery_dt")
 	private Date rspDeliveryDt;
 	
-/*	
 	
-	@Column(name="rsp_delivery_place") 
-	private String rspDeliveryPlace;*/
+	
+	@Column(name="rsp_place") 
+	private String rspPlace;
 	
 
 	
@@ -68,6 +68,18 @@ public class GetRegSpCakeOrders {
 	
 	@Column(name="rsp_cust_mobile_no") 
 	private String rspCustMobileNo;
+
+
+
+	public String getRspPlace() {
+		return rspPlace;
+	}
+
+
+
+	public void setRspPlace(String rspPlace) {
+		this.rspPlace = rspPlace;
+	}
 
 
 

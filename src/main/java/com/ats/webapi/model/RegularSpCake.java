@@ -70,8 +70,15 @@ public class RegularSpCake {
     @Column(name="is_bill_generated")
     private int isBillGenerated;
     
+    private String rspPlace;
     
     
+	public String getRspPlace() {
+		return rspPlace;
+	}
+	public void setRspPlace(String rspPlace) {
+		this.rspPlace = rspPlace;
+	}
 	public int getRspId() {
 		return rspId;
 	}
