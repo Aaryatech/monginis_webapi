@@ -49,6 +49,27 @@ public class SpecialCake implements Serializable {
 
 	@Column(name="sp_cess")
 	private float cessPer;
+	
+	@Column(name="sp_code")
+	private String spCode;
+	
+	@Column(name="sp_rate1")
+	private float spRate1;
+	
+	@Column(name="sp_rate2")
+	private float spRate2;
+	
+	@Column(name="sp_rate3")
+	private float spRate3;
+	
+	@Column(name="mrp_rate1")
+	private float mrpRate1;
+	
+	@Column(name="mrp_rate2")
+	private float mrpRate2;
+	
+	@Column(name="mrp_rate3")
+	private float mrpRate3;
 
 	@PostLoad
 	public void onLoad() {
@@ -147,11 +168,69 @@ public class SpecialCake implements Serializable {
 		this.cessPer = cessPer;
 	}
 
+	public String getSpCode() {
+		return spCode;
+	}
+
+	public void setSpCode(String spCode) {
+		this.spCode = spCode;
+	}
+
+	public float getSpRate1() {
+		return spRate1;
+	}
+
+	public void setSpRate1(float spRate1) {
+		this.spRate1 = spRate1;
+	}
+
+	public float getSpRate2() {
+		return spRate2;
+	}
+
+	public void setSpRate2(float spRate2) {
+		this.spRate2 = spRate2;
+	}
+
+	public float getSpRate3() {
+		return spRate3;
+	}
+
+	public void setSpRate3(float spRate3) {
+		this.spRate3 = spRate3;
+	}
+
+	public float getMrpRate1() {
+		return mrpRate1;
+	}
+
+	public void setMrpRate1(float mrpRate1) {
+		this.mrpRate1 = mrpRate1;
+	}
+
+	public float getMrpRate2() {
+		return mrpRate2;
+	}
+
+	public void setMrpRate2(float mrpRate2) {
+		this.mrpRate2 = mrpRate2;
+	}
+
+	public float getMrpRate3() {
+		return mrpRate3;
+	}
+
+	public void setMrpRate3(float mrpRate3) {
+		this.mrpRate3 = mrpRate3;
+	}
+
 	@Override
 	public String toString() {
 		return "SpecialCake [id=" + id + ", ItemName=" + ItemName + ", itemGroup=" + itemGroup + ", subGroup="
 				+ subGroup + ", subSubGroup=" + subSubGroup + ", hsnCode=" + hsnCode + ", uom=" + uom + ", sgstPer="
-				+ sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", cessPer=" + cessPer + "]";
+				+ sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", cessPer=" + cessPer + ", spCode="
+				+ spCode + ", spRate1=" + spRate1 + ", spRate2=" + spRate2 + ", spRate3=" + spRate3 + ", mrpRate1="
+				+ mrpRate1 + ", mrpRate2=" + mrpRate2 + ", mrpRate3=" + mrpRate3 + "]";
 	}
 
 	

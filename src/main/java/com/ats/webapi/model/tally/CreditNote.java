@@ -143,7 +143,11 @@ public class CreditNote implements Serializable{
 	@Column(name="crn_grand_total")
 	private float crnGrandTotal;
 	
-	 
+	@Column(name="item_code")
+	private String itemcode;
+	
+	@Column(name="is_grn")
+	private int isGrn;
 	
 	/*@Column(name="remark")
 	private String remark;*/
@@ -496,6 +500,22 @@ public class CreditNote implements Serializable{
 	}
  
 
+	public String getItemcode() {
+		return itemcode;
+	}
+
+	public void setItemcode(String itemcode) {
+		this.itemcode = itemcode;
+	}
+
+	public int getIsGrn() {
+		return isGrn;
+	}
+
+	public void setIsGrn(int isGrn) {
+		this.isGrn = isGrn;
+	}
+
 	@Override
 	public String toString() {
 		return "CreditNote [crndId=" + crndId + ", crnNo=" + crnNo + ", vNo=" + vNo + ", date=" + date + ", vType="
@@ -508,7 +528,8 @@ public class CreditNote implements Serializable{
 				+ ", grnGvnHeaderId=" + grnGvnHeaderId + ", isDeposited=" + isDeposited + ", grngvnSrno=" + grngvnSrno
 				+ ", crDbNo=" + crDbNo + ", crDbDate=" + crDbDate + ", frId=" + frId + ", frCode=" + frCode
 				+ ", itemId=" + itemId + ", catId=" + catId + ", crnTaxableAmt=" + crnTaxableAmt + ", crnTotalTax="
-				+ crnTotalTax + ", crnGrandTotal=" + crnGrandTotal + "]";
+				+ crnTotalTax + ", crnGrandTotal=" + crnGrandTotal + ", itemcode=" + itemcode + ", isGrn=" + isGrn
+				+ "]";
 	}
  
   

@@ -13,7 +13,29 @@ import com.ats.webapi.model.tally.SpecialCake;
 public interface TallySpCakeRepository extends JpaRepository<SpecialCake, Long>{
 
 	
-	@Query(value="SELECT s.sp_id,s.sp_name,s.sp_tax1,s.sp_tax2,s.sp_tax3,sup.sp_hsncd,sup.sp_cess,sup.sp_uom from m_sp_cake s,m_spcake_sup sup where s.sp_id=sup.sp_id AND sup.is_tally_sync=0 AND s.del_status=0",nativeQuery=true)
+	@Query(value="SELECT\n" + 
+			"        s.sp_id,\n" + 
+			"        s.sp_name,\n" + 
+			"        s.sp_tax1,\n" + 
+			"        s.sp_tax2,\n" + 
+			"        s.sp_tax3,\n" + 
+			"        sup.sp_hsncd,\n" + 
+			"        sup.sp_cess,\n" + 
+			"        sup.sp_uom,\n" + 
+			"        s.sp_code,\n" + 
+			"        s.sp_rate1,\n" + 
+			"        s.sp_rate2,\n" + 
+			"        s.sp_rate3,\n" + 
+			"        s.mrp_rate1,\n" + 
+			"        s.mrp_rate2,\n" + 
+			"        s.mrp_rate3 \n" + 
+			"    from\n" + 
+			"        m_sp_cake s,\n" + 
+			"        m_spcake_sup sup \n" + 
+			"    where\n" + 
+			"        s.sp_id=sup.sp_id \n" + 
+			"        AND sup.is_tally_sync=0 \n" + 
+			"        AND s.del_status=0",nativeQuery=true)
 	List<SpecialCake> findByIsTallySync();
 	
 

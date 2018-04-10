@@ -115,12 +115,18 @@ public class SalesVoucher implements Serializable{
 	
 	@Column(name="fr_id")
 	private int frId;
-	
+	 
 	@Column(name="item_id")
 	private int itemId;
 	
 	@Column(name="cat_id")
 	private int catId;
+	
+	@Column(name="item_code")
+	private String itemCode;
+	
+	@Column(name="fr_code")
+	private String frCode;
 	
 	@Column(name="remark")
 	private String remark;
@@ -423,6 +429,23 @@ public class SalesVoucher implements Serializable{
 		this.catId = catId;
 	}
 
+	
+	public String getItemCode() {
+		return itemCode;
+	}
+
+	public void setItemCode(String itemCode) {
+		this.itemCode = itemCode;
+	}
+
+	public String getFrCode() {
+		return frCode;
+	}
+
+	public void setFrCode(String frCode) {
+		this.frCode = frCode;
+	}
+
 	@Override
 	public String toString() {
 		return "SalesVoucher [billDetailNo=" + billDetailNo + ", billNo=" + billNo + ", vNo=" + vNo + ", date=" + date
@@ -433,8 +456,8 @@ public class SalesVoucher implements Serializable{
 				+ ", cessRs=" + cessRs + ", itemDiscPer=" + itemDiscPer + ", totalDisc=" + totalDisc + ", roundOff="
 				+ roundOff + ", totalAmt=" + totalAmt + ", billTotal=" + billTotal + ", totalTaxableAmt="
 				+ totalTaxableAmt + ", sgstSum=" + sgstSum + ", cgstSum=" + cgstSum + ", igstSum=" + igstSum
-				+ ", totalTax=" + totalTax + ", frId=" + frId + ", itemId=" + itemId + ", catId=" + catId + ", remark="
-				+ remark + "]";
+				+ ", totalTax=" + totalTax + ", frId=" + frId + ", itemId=" + itemId + ", catId=" + catId
+				+ ", itemCode=" + itemCode + ", frCode=" + frCode + ", remark=" + remark + "]";
 	}
 	
 	

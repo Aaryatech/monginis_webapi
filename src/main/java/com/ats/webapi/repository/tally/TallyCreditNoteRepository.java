@@ -33,7 +33,21 @@ public interface TallyCreditNoteRepository extends JpaRepository<CreditNote, Int
 			"                m_item i \n" + 
 			"            where\n" + 
 			"                i.id=d.item_id) \n" + 
-			"        END AS item_name,\n" + 
+			"        END AS item_name,"
+			+ "CASE                                        \n" + 
+			"            WHEN d.cat_id = 5  THEN (select\n" + 
+			"                s.sp_code                                        \n" + 
+			"            from\n" + 
+			"                m_sp_cake s                                        \n" + 
+			"            where\n" + 
+			"                s.sp_id=d.item_id)                                        \n" + 
+			"            ELSE (select\n" + 
+			"                i.item_id                                         \n" + 
+			"            from\n" + 
+			"                m_item i                                        \n" + 
+			"            where\n" + 
+			"                i.id=d.item_id)                            \n" + 
+			"        END AS item_code,\n" + 
 			"        CASE \n" + 
 			"            WHEN d.cat_id = 5 THEN (select\n" + 
 			"                spsup.sp_hsncd \n" + 
@@ -89,19 +103,18 @@ public interface TallyCreditNoteRepository extends JpaRepository<CreditNote, Int
 			"        d.cat_id,\n" + 
 			"        h.crn_taxable_amt,\n" + 
 			"        h.crn_total_tax,\n" + 
-			"        h.crn_grand_total from\n" + 
+			"        h.crn_grand_total, d.is_grn from\n" + 
 			"        t_credit_note_header h,\n" + 
 			"        t_credit_note_details d,\n" + 
 			"        m_franchisee f,\n" + 
-			"        m_franchise_sup sup \n" + 
-			"    WHERE\n" + 
+			"        m_franchise_sup sup WHERE\n" + 
 			"        h.is_tally_sync=0 \n" + 
 			"        AND h.crn_id=d.crn_id \n" + 
-			"        AND h.fr_id=f.fr_id \n" + 
+			"        AND h.fr_id=f.fr_id  \n" + 
 			"        AND h.fr_id=sup.fr_id",nativeQuery=true)
 	List<CreditNote> findByIsTallySync();
 
-	@Query(value="  select\n" + 
+	@Query(value=" select\n" + 
 			"        h.crn_id,\n" + 
 			"        h.crn_date,\n" + 
 			"        d.crnd_id,\n" + 
@@ -109,47 +122,60 @@ public interface TallyCreditNoteRepository extends JpaRepository<CreditNote, Int
 			"        f.fr_name,\n" + 
 			"        f.fr_gst_no,\n" + 
 			"        sup.fr_state,\n" + 
-			"        CASE              \n" + 
+			"        CASE                           \n" + 
 			"            WHEN d.cat_id = 5  THEN (select\n" + 
-			"                s.sp_name              \n" + 
+			"                s.sp_name                           \n" + 
 			"            from\n" + 
-			"                m_sp_cake s              \n" + 
+			"                m_sp_cake s                           \n" + 
 			"            where\n" + 
-			"                s.sp_id=d.item_id)              \n" + 
+			"                s.sp_id=d.item_id)                           \n" + 
 			"            ELSE (select\n" + 
-			"                i.item_name               \n" + 
+			"                i.item_name                            \n" + 
 			"            from\n" + 
-			"                m_item i              \n" + 
+			"                m_item i                           \n" + 
 			"            where\n" + 
-			"                i.id=d.item_id)          \n" + 
+			"                i.id=d.item_id)                   \n" + 
 			"        END AS item_name,\n" + 
-			"        CASE              \n" + 
+			"        CASE                           \n" + 
 			"            WHEN d.cat_id = 5 THEN (select\n" + 
-			"                spsup.sp_hsncd              \n" + 
+			"                spsup.sp_hsncd                           \n" + 
 			"            from\n" + 
-			"                m_spcake_sup spsup              \n" + 
+			"                m_spcake_sup spsup                           \n" + 
 			"            where\n" + 
-			"                spsup.sp_id=d.item_id)              \n" + 
+			"                spsup.sp_id=d.item_id)                           \n" + 
 			"            ELSE  (select\n" + 
-			"                itemsup.item_hsncd              \n" + 
+			"                itemsup.item_hsncd                           \n" + 
 			"            from\n" + 
-			"                m_item_sup itemsup              \n" + 
+			"                m_item_sup itemsup                           \n" + 
 			"            where\n" + 
-			"                itemsup.item_id=d.item_id)           \n" + 
-			"        END AS hsn_code,\n" + 
-			"        CASE              \n" + 
-			"            WHEN d.cat_id = 5 THEN (select\n" + 
-			"                spsup.sp_uom              \n" + 
+			"                itemsup.item_id=d.item_id)                    \n" + 
+			"        END AS hsn_code,\n "
+			+ "CASE WHEN d.cat_id = 5  THEN (select\n" + 
+			"                s.sp_code                                        \n" + 
 			"            from\n" + 
-			"                m_spcake_sup spsup              \n" + 
+			"                m_sp_cake s                                        \n" + 
 			"            where\n" + 
-			"                spsup.sp_id=d.item_id)              \n" + 
+			"                s.sp_id=d.item_id)                                        \n" + 
 			"            ELSE (select\n" + 
-			"                itemsup.item_uom              \n" + 
+			"                i.item_id                                         \n" + 
 			"            from\n" + 
-			"                m_item_sup itemsup              \n" + 
+			"                m_item i                                        \n" + 
 			"            where\n" + 
-			"                itemsup.item_id=d.item_id)          \n" + 
+			"                i.id=d.item_id)                            \n" + 
+			"        END AS item_code," + 
+			"        CASE                           \n" + 
+			"            WHEN d.cat_id = 5 THEN (select\n" + 
+			"                spsup.sp_uom                           \n" + 
+			"            from\n" + 
+			"                m_spcake_sup spsup                           \n" + 
+			"            where\n" + 
+			"                spsup.sp_id=d.item_id)                           \n" + 
+			"            ELSE (select\n" + 
+			"                itemsup.item_uom                           \n" + 
+			"            from\n" + 
+			"                m_item_sup itemsup                           \n" + 
+			"            where\n" + 
+			"                itemsup.item_id=d.item_id)                   \n" + 
 			"        END AS uom,\n" + 
 			"        d.grn_gvn_qty,\n" + 
 			"        d.base_rate,\n" + 
@@ -171,23 +197,24 @@ public interface TallyCreditNoteRepository extends JpaRepository<CreditNote, Int
 			"        d.grn_gvn_header_id,\n" + 
 			"        h.is_deposited,\n" + 
 			"        d.grn_gvn_date,\n" + 
-			"        \n" + 
 			"        h.fr_id,\n" + 
 			"        f.fr_code,\n" + 
 			"        d.item_id,\n" + 
 			"        d.cat_id,\n" + 
 			"        h.crn_taxable_amt,\n" + 
 			"        h.crn_total_tax,\n" + 
-			"        h.crn_grand_total from\n" + 
+			"        h.crn_grand_total, "
+			+ "d.is_grn\n" + 
+			"    from\n" + 
 			"        t_credit_note_header h,\n" + 
 			"        t_credit_note_details d,\n" + 
 			"        m_franchisee f,\n" + 
-			"        m_franchise_sup sup      \n" + 
-			"    WHERE\n" + 
-			"        h.crn_id=d.crn_id          \n" + 
-			"        AND h.fr_id=f.fr_id          \n" + 
-			"        AND h.fr_id=sup.fr_id         \n" + 
-			"        and h.crn_id in (:crnId)",nativeQuery=true)
+			"        m_franchise_sup sup "
+			+ "WHERE\n" + 
+			"        h.crn_id=d.crn_id                   \n" + 
+			"        AND h.fr_id=f.fr_id                   \n" + 
+			"        AND h.fr_id=sup.fr_id "
+			+ "and h.crn_id in (:crnId )",nativeQuery=true)
 	List<CreditNote> getCreditNotesByCrnId(@Param("crnId")List<Integer> crnId);
 
 
