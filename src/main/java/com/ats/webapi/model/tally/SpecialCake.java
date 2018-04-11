@@ -70,6 +70,9 @@ public class SpecialCake implements Serializable {
 	
 	@Column(name="mrp_rate3")
 	private float mrpRate3;
+	
+	@Column(name="erp_link_code")
+	private String erpLinkCode;
 
 	@PostLoad
 	public void onLoad() {
@@ -224,13 +227,21 @@ public class SpecialCake implements Serializable {
 		this.mrpRate3 = mrpRate3;
 	}
 
+	public String getErpLinkCode() {
+		return erpLinkCode;
+	}
+
+	public void setErpLinkCode(String erpLinkCode) {
+		this.erpLinkCode = erpLinkCode;
+	}
+
 	@Override
 	public String toString() {
 		return "SpecialCake [id=" + id + ", ItemName=" + ItemName + ", itemGroup=" + itemGroup + ", subGroup="
 				+ subGroup + ", subSubGroup=" + subSubGroup + ", hsnCode=" + hsnCode + ", uom=" + uom + ", sgstPer="
 				+ sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", cessPer=" + cessPer + ", spCode="
 				+ spCode + ", spRate1=" + spRate1 + ", spRate2=" + spRate2 + ", spRate3=" + spRate3 + ", mrpRate1="
-				+ mrpRate1 + ", mrpRate2=" + mrpRate2 + ", mrpRate3=" + mrpRate3 + "]";
+				+ mrpRate1 + ", mrpRate2=" + mrpRate2 + ", mrpRate3=" + mrpRate3 + ", erpLinkCode=" + erpLinkCode + "]";
 	}
 
 	

@@ -28,7 +28,7 @@ public interface TallySpCakeRepository extends JpaRepository<SpecialCake, Long>{
 			"        s.sp_rate3,\n" + 
 			"        s.mrp_rate1,\n" + 
 			"        s.mrp_rate2,\n" + 
-			"        s.mrp_rate3 \n" + 
+			"        s.mrp_rate3,s.erp_link_code \n" + 
 			"    from\n" + 
 			"        m_sp_cake s,\n" + 
 			"        m_spcake_sup sup \n" + 

@@ -1,6 +1,7 @@
 package com.ats.webapi.controller;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -99,12 +100,21 @@ public class TallySyncController {
 		return spCakeList;
 	  }
 	@RequestMapping(value = { "/getSalesVouchersByBillNo" }, method = RequestMethod.POST)
-	public @ResponseBody SalesVoucherList getSalesVouchersByBillNo(@RequestParam("billNo")List<Integer> billNo)
+	public @ResponseBody SalesVoucherList getSalesVouchersByBillNo(@RequestParam("billNo")List<Integer> billNo,@RequestParam("all")int all,
+			@RequestParam("fromDate")String fromDate, @RequestParam("toDate")String toDate)
 	  {
 		SalesVoucherList salesVoucherList = new SalesVoucherList();
-
+		List<SalesVoucher> salesVoucher = new ArrayList<SalesVoucher>();
 		try {
-		List<SalesVoucher> salesVoucher=tallySalesVoucherRepository.getSalesVouchersByBillNo(billNo);
+			if(all==1)
+			{
+				 salesVoucher=tallySalesVoucherRepository.getSalesVouchersAll(fromDate,toDate);
+			}
+			else
+			{
+				 salesVoucher=tallySalesVoucherRepository.getSalesVouchersByBillNo(billNo);
+			}
+		
 		
 		 
 			ErrorMessage errorMessage=new ErrorMessage();
