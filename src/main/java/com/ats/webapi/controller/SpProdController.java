@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.regcakeasspreport.RegCakeAsSpDispatchReport;
+import com.ats.webapi.model.regcakeasspreport.RegCakeAsSpDispatchReportList;
 import com.ats.webapi.model.spprod.Employee;
 import com.ats.webapi.model.spprod.EmployeeList;
 import com.ats.webapi.model.spprod.GetAllocStationCk;
@@ -41,6 +43,7 @@ import com.ats.webapi.model.spprod.StationAllocation;
 import com.ats.webapi.model.spprod.StationSpCakeList;
 import com.ats.webapi.model.spprod.StationWiseCkCount;
 import com.ats.webapi.model.spprod.TypeList;
+import com.ats.webapi.repository.GetRegCakeAsSpRepo;
 import com.ats.webapi.repository.GetSpAdvTaxReporRepo;
 import com.ats.webapi.repository.GetSpAdvanceRepo;
 import com.ats.webapi.repository.InstVerificationDetailRepository;
@@ -61,6 +64,53 @@ public class SpProdController {
 	
 	@Autowired
 	GetSpAdvTaxReporRepo getSpAdvTaxReporRepo;
+	
+	@Autowired//12-04-2018 web service to download PDF for reg cake order at dispatch time
+	GetRegCakeAsSpRepo getRegCakeAsSpRepo;
+	
+	@RequestMapping(value = { "/getRegCakeAsSpRepo" }, method = RequestMethod.POST)
+	@ResponseBody
+	public RegCakeAsSpDispatchReportList getRegCakeAsSpRepo(@RequestParam String fromDate,
+			@RequestParam String toDate,@RequestParam("frIdList") List<String>frIdList) {
+		System.out.println("getRegCakeAsSpRepo /SpProdController ");
+		RegCakeAsSpDispatchReportList reportList=new RegCakeAsSpDispatchReportList();
+		
+		Info info=new Info();
+		
+		try {
+			List<RegCakeAsSpDispatchReport> regCakeAsSp=new ArrayList<>();
+			if(!frIdList.contains("0")){
+				System.err.println("fr Id List is not zero");
+			regCakeAsSp=getRegCakeAsSpRepo.getRegcakeAsSpForDispatch(frIdList, fromDate, toDate);
+			}
+			else {
+				
+				System.err.println("fr Id List is  zero means all Fr");
+
+				regCakeAsSp=getRegCakeAsSpRepo.getRegcakeAsSpForDispatchAllFr(fromDate, toDate);
+
+			}
+			if(!regCakeAsSp.isEmpty()) {
+				
+				info.setError(false);
+				info.setMessage("success /getRegCakeAsSpRepo");
+				
+				reportList.setRegCakeAsSp(regCakeAsSp);
+			}
+			else {
+				info.setError(true);
+				info.setMessage("failed getRegCakeAsSpRepo report");
+			}
+			reportList.setInfo(info);
+		}catch (Exception e) {
+			System.err.println("Exce in SpProdController /getRegCakeAsSpRepo" + e.getMessage() );
+			e.printStackTrace();
+		}
+		return reportList;
+		
+	}
+
+	
 	
 	
 	@RequestMapping(value = { "/getSpAdvTaxRepor" }, method = RequestMethod.POST)
