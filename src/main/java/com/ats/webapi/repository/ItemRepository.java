@@ -40,4 +40,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	public List<Item> findAllItems(@Param("itemList")List<Integer> itemList);
 
 	public List<Item> findByItemGrp1InAndDelStatusOrderByItemGrp2AscItemSortIdAsc(List<String> catIdList, int i);
+	
+	public List<Item>  findByItemGrp2(String subCatId);
+	
 } 
