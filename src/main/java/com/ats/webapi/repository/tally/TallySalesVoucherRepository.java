@@ -104,7 +104,15 @@ public interface TallySalesVoucherRepository extends JpaRepository<SalesVoucher,
 			"        h.total_tax,\n" + 
 			"        f.fr_id,\n" + 
 			"        d.item_id,\n" + 
-			"        d.cat_id, d.remark           \n" + 
+			"        d.cat_id, d.remark,CASE                                        \n" + 
+			"            WHEN d.cat_id = 5  THEN (select\n" + 
+			"                s.erp_link_code                                        \n" + 
+			"            from\n" + 
+			"                m_sp_cake s                                        \n" + 
+			"            where\n" + 
+			"                s.sp_id=d.item_id)                                        \n" + 
+			"            ELSE (0)                            \n" + 
+			"        END AS erp_link           \n" + 
 			"    from\n" + 
 			"        t_bill_header h,\n" + 
 			"        t_bill_detail d,\n" + 

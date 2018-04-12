@@ -130,6 +130,9 @@ public class SalesVoucher implements Serializable{
 	
 	@Column(name="remark")
 	private String remark;
+	
+	@Column(name="erp_link")
+	private String erpLink;
 
 	@PostLoad
 	public void onLoad() {
@@ -446,6 +449,14 @@ public class SalesVoucher implements Serializable{
 		this.frCode = frCode;
 	}
 
+	public String getErpLink() {
+		return erpLink;
+	}
+
+	public void setErpLink(String erpLink) {
+		this.erpLink = erpLink;
+	}
+
 	@Override
 	public String toString() {
 		return "SalesVoucher [billDetailNo=" + billDetailNo + ", billNo=" + billNo + ", vNo=" + vNo + ", date=" + date
@@ -457,7 +468,7 @@ public class SalesVoucher implements Serializable{
 				+ roundOff + ", totalAmt=" + totalAmt + ", billTotal=" + billTotal + ", totalTaxableAmt="
 				+ totalTaxableAmt + ", sgstSum=" + sgstSum + ", cgstSum=" + cgstSum + ", igstSum=" + igstSum
 				+ ", totalTax=" + totalTax + ", frId=" + frId + ", itemId=" + itemId + ", catId=" + catId
-				+ ", itemCode=" + itemCode + ", frCode=" + frCode + ", remark=" + remark + "]";
+				+ ", itemCode=" + itemCode + ", frCode=" + frCode + ", remark=" + remark + ", erpLink=" + erpLink + "]";
 	}
 	
 	

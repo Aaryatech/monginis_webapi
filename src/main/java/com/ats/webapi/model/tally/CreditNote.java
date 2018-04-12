@@ -149,8 +149,8 @@ public class CreditNote implements Serializable{
 	@Column(name="is_grn")
 	private int isGrn;
 	
-	/*@Column(name="remark")
-	private String remark;*/
+	@Column(name="erp_link")
+	private String erpLink;
 	
 	@PostLoad
 	public void onLoad() {
@@ -516,6 +516,14 @@ public class CreditNote implements Serializable{
 		this.isGrn = isGrn;
 	}
 
+	public String getErpLink() {
+		return erpLink;
+	}
+
+	public void setErpLink(String erpLink) {
+		this.erpLink = erpLink;
+	}
+
 	@Override
 	public String toString() {
 		return "CreditNote [crndId=" + crndId + ", crnNo=" + crnNo + ", vNo=" + vNo + ", date=" + date + ", vType="
@@ -529,7 +537,7 @@ public class CreditNote implements Serializable{
 				+ ", crDbNo=" + crDbNo + ", crDbDate=" + crDbDate + ", frId=" + frId + ", frCode=" + frCode
 				+ ", itemId=" + itemId + ", catId=" + catId + ", crnTaxableAmt=" + crnTaxableAmt + ", crnTotalTax="
 				+ crnTotalTax + ", crnGrandTotal=" + crnGrandTotal + ", itemcode=" + itemcode + ", isGrn=" + isGrn
-				+ "]";
+				+ ", erpLink=" + erpLink + "]";
 	}
  
   

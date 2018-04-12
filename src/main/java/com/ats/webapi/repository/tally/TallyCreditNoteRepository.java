@@ -204,7 +204,16 @@ public interface TallyCreditNoteRepository extends JpaRepository<CreditNote, Int
 			"        h.crn_taxable_amt,\n" + 
 			"        h.crn_total_tax,\n" + 
 			"        h.crn_grand_total, "
-			+ "d.is_grn\n" + 
+			+ "d.is_grn,"
+			+ "CASE                                        \n" + 
+			"            WHEN d.cat_id = 5  THEN (select\n" + 
+			"                s.erp_link_code                                        \n" + 
+			"            from\n" + 
+			"                m_sp_cake s                                        \n" + 
+			"            where\n" + 
+			"                s.sp_id=d.item_id)                                        \n" + 
+			"            ELSE (0)                            \n" + 
+			"        END AS erp_link\n" + 
 			"    from\n" + 
 			"        t_credit_note_header h,\n" + 
 			"        t_credit_note_details d,\n" + 
