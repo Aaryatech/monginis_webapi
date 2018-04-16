@@ -6,9 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import com.ats.webapi.model.grngvnreport.GGReportByDateAndFr;
+import com.ats.webapi.model.grngvnreport.GGReportByDate;
 
-public interface GGReportByDateRepo extends JpaRepository<GGReportByDateAndFr, Integer>{
+public interface GGReportByDateRepo extends JpaRepository<GGReportByDate, Integer>{
 
 	
 	//r1 group by date
@@ -23,22 +23,30 @@ public interface GGReportByDateRepo extends JpaRepository<GGReportByDateAndFr, I
 			+ " AND t_grn_gvn_header.grn_gvn_header_id=t_grn_gvn.grn_gvn_header_id "
 			+ " GROUP BY t_grn_gvn_header.grn_gvn_header_id order by t_grn_gvn_header.grngvn_date ",nativeQuery=true)
 	
-		List<GGReportByDateAndFr> getGrnGvnReportByDateSelFr(@Param("fromDate") 
+		List<GGReportByDate> getGrnGvnReportByDateSelFr(@Param("fromDate") 
 		String fromDate,@Param("toDate") 
 		String toDate,@Param("frIdList") List<String> frIdList,@Param("isGrn") int isGrn);
 	
 	
-	@Query(value=" SELECT t_grn_gvn_header.grn_gvn_header_id,t_grn_gvn_header.grngvn_srno,"
+	@Query(value=" SELECT t_grn_gvn_header.grn_gvn_header_id, from t_grn_gvn_header "
+			+ " WHERE t_grn_gvn_header.is_grn= 1 AND t_grn_gvn_header.fr_id=17  "
+			+ " group by t_grn_gvn_header.grn_gvn_header_id ",nativeQuery=true)
+	
+		List<GGReportByDate> hardcode();
+	
+	
+	
+	/*@Query(value=" SELECT t_grn_gvn_header.grn_gvn_header_id,t_grn_gvn_header.grngvn_srno,"
 			+ " t_grn_gvn_header.grngvn_date,t_grn_gvn_header.is_grn,t_grn_gvn_header.fr_id,"
 			+ " t_grn_gvn_header.apr_grand_total, t_grn_gvn_header.total_amt , "
 			+ " sum(t_grn_gvn.grn_gvn_qty) as req_qty, sum(t_grn_gvn.apr_qty_acc) as apr_qty, "
 			+ " m_franchisee.fr_name from t_grn_gvn_header,t_grn_gvn, m_franchisee "
 			+ " WHERE m_franchisee.fr_id=t_grn_gvn_header.fr_id and t_grn_gvn_header.fr_id =17 "
 			+ "  AND t_grn_gvn_header.is_grn= 1 "
-			+ " AND t_grn_gvn_header.grn_gvn_header_id=t_grn_gvn.grn_gvn_header_id ",nativeQuery=true)
+			+ " AND t_grn_gvn_header.grn_gvn_header_id=t_grn_gvn.grn_gvn_header_id group by t_grn_gvn_header.grn_gvn_header_id ",nativeQuery=true)
 	
-		List<GGReportByDateAndFr> hardcode();
-	
+		List<GGReportByDate> hardcode();
+	*/
 	
 	
 //r1
@@ -52,7 +60,7 @@ public interface GGReportByDateRepo extends JpaRepository<GGReportByDateAndFr, I
 			+ " AND t_grn_gvn_header.grn_gvn_header_id=t_grn_gvn.grn_gvn_header_id "
 			+ " GROUP BY t_grn_gvn_header.grn_gvn_header_id order by t_grn_gvn_header.grngvn_date  ",nativeQuery=true)
 	
-		List<GGReportByDateAndFr> getGrnGvnReportByDateAllFr(@Param("fromDate") 
+		List<GGReportByDate> getGrnGvnReportByDateAllFr(@Param("fromDate") 
 		String fromDate,@Param("toDate") 
 		String toDate,@Param("isGrn") int isGrn);
 	
@@ -68,7 +76,7 @@ public interface GGReportByDateRepo extends JpaRepository<GGReportByDateAndFr, I
 			+ " AND t_grn_gvn_header.grn_gvn_header_id=t_grn_gvn.grn_gvn_header_id "
 			+ "GROUP BY t_grn_gvn_header.grn_gvn_header_id order by t_grn_gvn_header.grngvn_date  ",nativeQuery=true)
 	
-		List<GGReportByDateAndFr> getGrnGvnReportByDateSelFrAllGG(@Param("fromDate") 
+		List<GGReportByDate> getGrnGvnReportByDateSelFrAllGG(@Param("fromDate") 
 		String fromDate,@Param("toDate") 
 		String toDate,@Param("frIdList") List<String> frIdList);
 	
@@ -83,7 +91,7 @@ public interface GGReportByDateRepo extends JpaRepository<GGReportByDateAndFr, I
 			+ " AND t_grn_gvn_header.grn_gvn_header_id=t_grn_gvn.grn_gvn_header_id "
 			+ "GROUP BY t_grn_gvn_header.grn_gvn_header_id order by t_grn_gvn_header.grngvn_date  ",nativeQuery=true)
 	
-		List<GGReportByDateAndFr> getGrnGvnReportByDateAllFrAllGG(@Param("fromDate") 
+		List<GGReportByDate> getGrnGvnReportByDateAllFrAllGG(@Param("fromDate") 
 		String fromDate,@Param("toDate") 
 		String toDate);
 	

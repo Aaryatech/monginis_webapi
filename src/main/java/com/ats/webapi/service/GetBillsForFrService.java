@@ -12,4 +12,6 @@ public interface GetBillsForFrService {
 	
 	GetBillsForFrList getBillForFrByDate(int frId,Date billDate);
 	
+	GetBillsForFrList	getAllBillForManGrnBackEnd(int frId);
+	
 }

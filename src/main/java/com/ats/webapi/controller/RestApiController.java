@@ -662,6 +662,18 @@ public class RestApiController {
 		return billsForFrLisr;
 
 	}
+	
+	
+	@RequestMapping(value = "/getBillsForManGrnBackEndFr", method = RequestMethod.POST)
+	public @ResponseBody GetBillsForFrList getBillsForManGrnBackEndFr(@RequestParam("frId") int frId
+			) {
+		
+
+		GetBillsForFrList billsForFrLisr = getBillsForFrService.getAllBillForManGrnBackEnd(frId);
+		System.out.println("GEt BillS for Fr " + billsForFrLisr.toString());
+		return billsForFrLisr;
+
+	}
 
 	// 20 FEB SAch
 	@RequestMapping(value = "/getBillsForFrByBillDate", method = RequestMethod.POST)

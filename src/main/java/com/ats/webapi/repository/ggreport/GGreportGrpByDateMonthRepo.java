@@ -14,7 +14,7 @@ public interface GGreportGrpByDateMonthRepo  extends JpaRepository<GGReportGrpBy
 	
 		//r3 sumit sir query
 		
-		@Query(value=" SELECT t_grn_gvn.grn_gvn_date,t_grn_gvn.grn_gvn_date as month, t_grn_gvn.is_grn," + 
+		@Query(value=" SELECT t_grn_gvn.grn_gvn_date,monthname(t_grn_gvn.grn_gvn_date) as month, t_grn_gvn.is_grn," + 
 				"			sum(t_grn_gvn.apr_grand_total) as apr_grand_total , sum(t_grn_gvn.grn_gvn_amt)as total_amt ," + 
 				"			sum(t_grn_gvn.grn_gvn_qty) as req_qty, sum(t_grn_gvn.apr_qty_acc) as apr_qty " + 
 				"			from t_grn_gvn " + 
@@ -26,7 +26,7 @@ public interface GGreportGrpByDateMonthRepo  extends JpaRepository<GGReportGrpBy
 			String fromDate,@Param("toDate") String toDate, @Param("isGrn") int isGrn, @Param("frIdList") List<String> frIdList);
 		
 	//r3
-		@Query(value="SELECT t_grn_gvn.grn_gvn_date,t_grn_gvn.grn_gvn_date as month, t_grn_gvn.is_grn," + 
+		@Query(value="SELECT t_grn_gvn.grn_gvn_date,monthname(t_grn_gvn.grn_gvn_date) as month, t_grn_gvn.is_grn," + 
 				"							sum(t_grn_gvn.apr_grand_total) as apr_grand_total , sum(t_grn_gvn.grn_gvn_amt)as total_amt, " + 
 				"							sum(t_grn_gvn.grn_gvn_qty) as req_qty, sum(t_grn_gvn.apr_qty_acc) as apr_qty " + 
 				"							from t_grn_gvn " + 

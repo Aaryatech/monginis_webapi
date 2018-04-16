@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ats.webapi.model.grngvnreport.GGReportByDateAndFr;
+import com.ats.webapi.model.grngvnreport.GGReportByDate;
 import com.ats.webapi.model.grngvnreport.GGReportGrpByFrId;
 import com.ats.webapi.model.grngvnreport.GGReportGrpByMonthDate;
 import com.ats.webapi.repository.ggreport.GGReportByDateRepo;
@@ -25,29 +25,31 @@ public class GrnGvnReportController {
 	@Autowired
 	GGReportGrpByFrIdRepo gGReportGrpByFrIdRepo;//r2
 	
+	
+	@Autowired
 	GGReportByDateRepo gGReportByDateRepo;//r1
 	
 	//r1
 	//report 1
 	@RequestMapping(value = { "/getgGReportByDate" }, method = RequestMethod.POST)
-	public @ResponseBody List<GGReportByDateAndFr> getgGReportByDate(@RequestParam("fromDate") String fromDate,
+	public @ResponseBody List<GGReportByDate> getgGReportByDate(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("isGrn") int isGrn,
 			@RequestParam("frIdList") List<String> frIdList) {
 		
 		
 		System.err.println("Parameter received fromDate:  " +fromDate+ "toDate : " +toDate + "frIdList  : "+frIdList + "isGrn : "+ isGrn);
 
-		List<GGReportByDateAndFr> grpByDateList = new ArrayList<GGReportByDateAndFr>();
+		List<GGReportByDate> grpByDateList = new ArrayList<GGReportByDate>();
 		try {
 			
 			if (!frIdList.contains("0")) {
 				System.err.println(" frIdList: It is Not zero ");
-				grpByDateList = gGReportByDateRepo.hardcode();
+				grpByDateList = gGReportByDateRepo.getGrnGvnReportByDateSelFr(fromDate, toDate, frIdList, isGrn);
 						
 			} else {
 				System.err.println(" frIdList: It is  zero ");
 
-				grpByDateList = gGReportByDateRepo.getGrnGvnReportByDateAllFr(fromDate, toDate, isGrn);
+			grpByDateList = gGReportByDateRepo.getGrnGvnReportByDateAllFr(fromDate, toDate, isGrn);
 
 			}
 		} catch (Exception e) {

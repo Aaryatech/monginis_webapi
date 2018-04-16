@@ -84,5 +84,39 @@ public class GetBillsForFrServiceImpl implements GetBillsForFrService  {
 		return billsForFrList;
 	}
 
+	@Override
+	public GetBillsForFrList getAllBillForManGrnBackEnd(int frId) {
+		GetBillsForFrList billsForFrList=new GetBillsForFrList();
+		try {
+			
+		List<GetBillsForFr> getBillForFr=getBillsForFrRepository.getAllBillForManGrn(frId);
+		
+		Info info=new Info();
+		
+		if(getBillForFr!=null) {
+		
+			billsForFrList.setGetBillsForFr(getBillForFr);
+			
+			info.setError(false);
+			info.setMessage("bills for Fr received successfully");
+		
+		}
+		
+		else {
+			
+			info.setError(true);
+			info.setMessage("Error !: bills for Fr not received ");
+			
+		}
+		
+		billsForFrList.setInfo(info);
+		}catch (Exception e) {
+			System.out.println("Ex in Getting bIll for Fr Id "+e.getMessage());
+			
+			e.printStackTrace();
+		}
+		return billsForFrList;
+	}
+
 
 }
