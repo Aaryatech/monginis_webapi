@@ -19,13 +19,13 @@ public interface GGReportByDateRepo extends JpaRepository<GGReportByDate, Intege
 			+ " sum(t_grn_gvn.grn_gvn_qty) as req_qty, sum(t_grn_gvn.apr_qty_acc) as apr_qty, "
 			+ " m_franchisee.fr_name from t_grn_gvn_header,t_grn_gvn, m_franchisee "
 			+ " WHERE m_franchisee.fr_id=t_grn_gvn_header.fr_id and t_grn_gvn_header.fr_id IN ( :frIdList) "
-			+ " AND t_grn_gvn_header.grngvn_date BETWEEN :fromDate and :toDate AND t_grn_gvn_header.is_grn= :isGrn "
+			+ " AND t_grn_gvn_header.grngvn_date BETWEEN :fromDate and :toDate AND t_grn_gvn_header.is_grn IN ( :isGrn) "
 			+ " AND t_grn_gvn_header.grn_gvn_header_id=t_grn_gvn.grn_gvn_header_id "
 			+ " GROUP BY t_grn_gvn_header.grn_gvn_header_id order by t_grn_gvn_header.grngvn_date ",nativeQuery=true)
 	
 		List<GGReportByDate> getGrnGvnReportByDateSelFr(@Param("fromDate") 
 		String fromDate,@Param("toDate") 
-		String toDate,@Param("frIdList") List<String> frIdList,@Param("isGrn") int isGrn);
+		String toDate,@Param("frIdList") List<String> frIdList,@Param("isGrn") List<String> isGrn);
 	
 	
 	@Query(value=" SELECT t_grn_gvn_header.grn_gvn_header_id, from t_grn_gvn_header "
@@ -56,13 +56,13 @@ public interface GGReportByDateRepo extends JpaRepository<GGReportByDate, Intege
 			+ " sum(t_grn_gvn.grn_gvn_qty) as req_qty, sum(t_grn_gvn.apr_qty_acc) as apr_qty, "
 			+ " m_franchisee.fr_name  from t_grn_gvn_header,t_grn_gvn, m_franchisee "
 			+ " WHERE m_franchisee.fr_id=t_grn_gvn_header.fr_id  "
-			+ " AND t_grn_gvn_header.grngvn_date BETWEEN :fromDate and :toDate AND t_grn_gvn_header.is_grn=:isGrn "
+			+ " AND t_grn_gvn_header.grngvn_date BETWEEN :fromDate and :toDate AND t_grn_gvn_header.is_grn IN (:isGrn) "
 			+ " AND t_grn_gvn_header.grn_gvn_header_id=t_grn_gvn.grn_gvn_header_id "
 			+ " GROUP BY t_grn_gvn_header.grn_gvn_header_id order by t_grn_gvn_header.grngvn_date  ",nativeQuery=true)
 	
 		List<GGReportByDate> getGrnGvnReportByDateAllFr(@Param("fromDate") 
 		String fromDate,@Param("toDate") 
-		String toDate,@Param("isGrn") int isGrn);
+		String toDate,@Param("isGrn") List<String> isGrn);
 	
 	//r1
 	

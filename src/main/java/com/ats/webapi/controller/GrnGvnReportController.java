@@ -33,7 +33,7 @@ public class GrnGvnReportController {
 	//report 1
 	@RequestMapping(value = { "/getgGReportByDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GGReportByDate> getgGReportByDate(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("isGrn") int isGrn,
+			@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<String> isGrn,
 			@RequestParam("frIdList") List<String> frIdList) {
 		
 		
@@ -68,8 +68,10 @@ public class GrnGvnReportController {
 	// sumit sir query Report 2
 		@RequestMapping(value = { "/gGReportGrpByFrId" }, method = RequestMethod.POST)
 		public @ResponseBody List<GGReportGrpByFrId> gGReportGrpByFrId(@RequestParam("fromDate") String fromDate,
-				@RequestParam("toDate") String toDate, @RequestParam("isGrn") int isGrn,
+				@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<String> isGrn,
 				@RequestParam("frIdList") List<String> frIdList) {
+
+			System.err.println("Parameter received fromDate:  " +fromDate+ "toDate : " +toDate + "frIdList  : "+frIdList + "isGrn : "+ isGrn);
 
 			List<GGReportGrpByFrId> grpByFrIdList = null;
 
@@ -94,8 +96,10 @@ public class GrnGvnReportController {
 	// report 3
 	@RequestMapping(value = { "/getGGReportGrpByDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GGReportGrpByMonthDate> getGGReportGrpByDate(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("isGrn") int isGrn,
+			@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<String> isGrn,
 			@RequestParam("frIdList") List<String> frIdList) {
+
+		System.err.println("Parameter received fromDate:  " +fromDate+ "toDate : " +toDate + "frIdList  : "+frIdList + "isGrn : "+ isGrn);
 
 		List<GGReportGrpByMonthDate> grpByDateList = null;
 		try {
@@ -119,8 +123,9 @@ public class GrnGvnReportController {
 	// report 4
 	@RequestMapping(value = { "/getGGReportGrpByMonth" }, method = RequestMethod.POST)
 	public @ResponseBody List<GGReportGrpByMonthDate> getGGReportGrpByMonth(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("isGrn") int isGrn,
+			@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<String> isGrn,
 			@RequestParam("frIdList") List<String> frIdList) {
+		System.err.println("Parameter received fromDate:  " +fromDate+ "toDate : " +toDate + "frIdList  : "+frIdList + "isGrn : "+ isGrn);
 
 		List<GGReportGrpByMonthDate> grpByDateList = null;
 		try {
