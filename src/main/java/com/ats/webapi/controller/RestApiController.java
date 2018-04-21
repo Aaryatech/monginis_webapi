@@ -29,6 +29,7 @@ import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeaderList;
 import com.ats.webapi.model.grngvn.TempGrnGvnBeanUp;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
+import com.ats.webapi.repository.BillLogRepo;
 import com.ats.webapi.repository.GetBillDetailsRepository;
 import com.ats.webapi.repository.GetReorderByStockTypeRepository;
 import com.ats.webapi.repository.ItemRepository;
@@ -1062,6 +1063,9 @@ public class RestApiController {
 	 * }
 	 */
 
+//	@Autowired
+	//BillLogRepo saveBillLogRepo;
+	
 	@RequestMapping(value = { "/insertBillData" }, method = RequestMethod.POST)
 
 	public @ResponseBody Info postBillData(@RequestBody PostBillDataCommon postBillDataCommon)
@@ -1071,6 +1075,14 @@ public class RestApiController {
 
 		List<PostBillHeader> jsonBillHeader = null;
 		List<PostBillDetail> jsonBillDetail;
+		
+		
+		/*BillLog log=new BillLog();
+		
+		log.setBillData(postBillDataCommon.toString());
+		log.setUserId(0);
+		
+		BillLog billLogResponse=saveBillLogRepo.save(log);*/
 
 		Info info = new Info();
 		try {
@@ -2547,7 +2559,7 @@ public class RestApiController {
 
 			List<Item> items = null;
 			try {
-				items = itemRepository.findByItemGrp2(subCatId);
+				items = itemRepository.findByItemGrp2OrderByItemGrp2(subCatId);
 			} catch (Exception e) {
 				items = new ArrayList<>();
 				e.printStackTrace();

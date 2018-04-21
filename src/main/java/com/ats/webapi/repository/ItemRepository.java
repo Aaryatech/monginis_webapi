@@ -21,7 +21,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query(value="select * from m_item where m_item.id IN (:itemList) AND m_item.del_status=0",nativeQuery=true)
 	public List<Item> findByDelStatusAndItemIdIn(@Param("itemList")List<Integer> itemList);
 
-	public List<Item> findByDelStatusOrderByItemIdAsc(int i);
+	public List<Item> findByDelStatusOrderByItemGrp2(int i);//changed to order by subcatId 21/Apr
 
 	@Query(value="select MAX(item_id)+1 from m_item",nativeQuery=true)
 	public int findMaxId();
@@ -41,6 +41,6 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	public List<Item> findByItemGrp1InAndDelStatusOrderByItemGrp2AscItemSortIdAsc(List<String> catIdList, int i);
 	
-	public List<Item>  findByItemGrp2(String subCatId);
+	public List<Item>  findByItemGrp2OrderByItemGrp2(String subCatId);
 	
 } 

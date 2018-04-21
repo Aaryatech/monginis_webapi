@@ -284,16 +284,17 @@ public class SalesReportController {
 		String fromDate,
 				@RequestParam("toDate") String toDate) {
 
+			System.err.println("in method getSalesReportRoyaltyFrAllFr salesReportController");
 			List<SalesReportRoyaltyFr> salesReportRoyaltyFrList = null;
 			try {
 				fromDate = Common.convertToYMD(fromDate);
 				toDate = Common.convertToYMD(toDate);
 				System.out.println("Input received "+fromDate+""+toDate);
 				salesReportRoyaltyFrList = salesReportRoyaltyFrRepo.getSaleReportRoyaltyFrAllFrSel(fromDate, toDate);
-				System.out.println("sale sReportRoyalty Fr List"+salesReportRoyaltyFrList.toString());
+				System.out.println("sale getSalesReportRoyaltyFrAllFr Fr List"+salesReportRoyaltyFrList.toString());
 
 			} catch (Exception e) {
-				System.out.println(" Exce in sales Report Royalty Fr all fr sel " + e.getMessage());
+				System.out.println(" Exce in sales Report Royalty Fr all fr sel /getSalesReportRoyaltyFrAllFr " + e.getMessage());
 				e.printStackTrace();
 			}
 			return salesReportRoyaltyFrList;
@@ -352,7 +353,27 @@ public class SalesReportController {
 		try {
 			fromDate = Common.convertToYMD(fromDate);
 			toDate = Common.convertToYMD(toDate);
-			System.out.println("Input received for report 10 roy by category "+fromDate+""+toDate+""+frIdList+"cat="+catIdList);
+			
+			System.out.println("Input received for report 10 roy by category few fr Selected "+fromDate+""+toDate+""+frIdList+"cat="+catIdList);
+			
+if(catIdList.contains("0")) {
+				
+				System.err.println("Cat ID List contains zero ");
+				catIdList.clear();
+				
+				//String s="1"+","+"2"+","+"3"+","+ "4";
+				for(int i=1;i<=4;i++) {
+					String s=new String();
+					
+					s=i+",";
+					
+					catIdList.add(s);
+
+					
+				}
+				
+				System.err.println("New cat ID List" +catIdList );
+}
 			salesReportRoyaltyList = salesReportRoyaltyRepo.getSaleReportRoyConsoByCat(frIdList, catIdList, fromDate, toDate);
 			System.out.println("getSaleReportBillwise"+salesReportRoyaltyList.toString());
 
@@ -375,7 +396,28 @@ public class SalesReportController {
 		try {
 			fromDate = Common.convertToYMD(fromDate);
 			toDate = Common.convertToYMD(toDate);
-			System.out.println("Input received for report 10 roy by category "+fromDate+""+toDate+""+"cat="+catIdList);
+			System.out.println("Input received for report 10 roy by category all fr Selected "+fromDate+""+toDate+""+"cat="+catIdList);
+			
+if(catIdList.contains("0")) {
+				
+				System.err.println("Cat ID List contains zero ");
+				catIdList.clear();
+				
+				//String s="1"+","+"2"+","+"3"+","+ "4";
+				for(int i=1;i<=4;i++) {
+					String s=new String();
+					
+					s=i+",";
+					
+					catIdList.add(s);
+
+					
+				}
+				
+				System.err.println("New cat ID List" +catIdList );
+				
+			}
+
 			salesReportRoyaltyList = salesReportRoyaltyRepo.getSaleReportRoyConsoByCatAllFr(catIdList, fromDate, toDate);
 			System.out.println("getSaleReportBillwise"+salesReportRoyaltyList.toString());
 

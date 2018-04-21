@@ -182,9 +182,7 @@ public class SalesReportBillwiseAllFr implements Serializable {
 				+ ", taxableAmtSum=" + taxableAmtSum + ", sgstRsSum=" + sgstRsSum + ", cgstRsSum=" + cgstRsSum
 				+ ", igstRsSum=" + igstRsSum + "]";
 	}
-	 
-	 
-	 
-	 
+	
+	
 	 
 }
