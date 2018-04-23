@@ -16,7 +16,7 @@ public interface DispatchReportRepository extends JpaRepository<DispatchReport, 
 			"from t_bill_detail,t_bill_header,m_category,m_franchisee,m_item,m_cat_sub\n" + 
 			"where t_bill_detail.bill_no In(select bill_no from t_bill_header\n" + 
 			"where bill_date=:billDateYMD and fr_id in(:frId)) And t_bill_detail.cat_id In(:categories) \n" + 
-			"And t_bill_detail.cat_id=m_category.cat_id And t_bill_header.fr_id=m_franchisee.fr_id \n" + 
+			"And t_bill_detail.cat_id=m_category.cat_id And t_bill_header.fr_id=m_franchisee.fr_id and t_bill_header.del_status=0 \n" + 
 			"And m_item.id=t_bill_detail.item_id And m_cat_sub.sub_cat_id=m_item.item_grp2 And t_bill_header.bill_no=t_bill_detail.bill_no \n" + 
 			"group by t_bill_detail.item_id,t_bill_header.fr_id order by t_bill_header.fr_id\n" + 
 			"",nativeQuery=true)
