@@ -132,6 +132,15 @@ public class TallySyncController {
 				errorMessage.setError(false);
 				errorMessage.setMessage("Sales Voucher Found Successfully");
 				
+				
+				for(int i=0;i<salesVoucher.size();i++) {
+					
+					if(salesVoucher.get(i).getErpLink().equalsIgnoreCase("0")) {
+						salesVoucher.get(i).setErpLink("A");
+						
+					}
+				}
+				
 				salesVoucherList.setSalesVoucherList(salesVoucher);
 				salesVoucherList.setErrorMessage(errorMessage);
 					
@@ -166,6 +175,15 @@ public class TallySyncController {
 					{
 						errorMessage.setError(false);
 						errorMessage.setMessage("Credit Note Found Successfully");
+						
+						for(int i=0;i<creditNotes.size();i++) {
+							
+							if(creditNotes.get(i).getErpLink().equalsIgnoreCase("0")) {
+								
+								creditNotes.get(i).setErpLink("A");
+								
+							}
+						}
 						
 						creditNoteList.setCreditNoteList(creditNotes);
 						creditNoteList.setErrorMessage(errorMessage);
