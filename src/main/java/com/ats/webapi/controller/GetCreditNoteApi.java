@@ -14,11 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.grngvn.GetCreditNoteHeaders;
 import com.ats.webapi.model.grngvn.GetCreditNoteHeadersList;
+import com.ats.webapi.model.grngvn.GetCreditNoteReport;
+import com.ats.webapi.model.grngvn.GetCreditNoteReportList;
 import com.ats.webapi.model.grngvn.GetCrnDetails;
 import com.ats.webapi.model.grngvn.GetCrnDetailsList;
 import com.ats.webapi.model.grngvn.PostCreditNoteDetails;
 import com.ats.webapi.repository.getcreditnote.GetCreditNoteDetailRepo;
 import com.ats.webapi.repository.getcreditnote.GetCreditNoteHeaderRepo;
+import com.ats.webapi.repository.getcreditnote.GetCreditNoteReportRepo;
 
 @RestController // 2 March
 public class GetCreditNoteApi {
@@ -28,6 +31,46 @@ public class GetCreditNoteApi {
 
 	@Autowired
 	GetCreditNoteDetailRepo creditNoteDetailRepo;
+	
+	@Autowired
+	GetCreditNoteReportRepo getCreditNoteReportRepo;
+	
+	//27/04
+	
+	
+	@RequestMapping(value = { "/getCreditNoteReport" }, method = RequestMethod.POST)
+	public @ResponseBody GetCreditNoteReportList getCreditNoteReport( @RequestParam("crnIdList") List<String> crnIdList)
+
+	{
+		GetCreditNoteReportList crnReportListResponse = new GetCreditNoteReportList();
+		List<GetCreditNoteReport>  headerList = new ArrayList<>();
+
+		try {
+
+			/*Date fDate = Common.convertToSqlDate(fromDate);
+			Date tDate = Common.convertToSqlDate(toDate);
+
+			if (frIdList.get(0).equalsIgnoreCase("0")) {
+				System.out.println("In zero case ");
+				headerList = getCreditNoteReportRepo.getCredNoteReportAllFr(fDate, tDate);
+			} else {
+				System.out.println("In other case ");
+*/
+				headerList = getCreditNoteReportRepo.getCredNoteReportSelFr(crnIdList);
+			
+			crnReportListResponse.setCreditNoteReport(headerList);
+			System.err.println("Headers " + headerList);
+		} catch (Exception e) {
+			System.out.println("Exce In /GetCreditNoteApi getting cn /getCreditNoteReport " + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return crnReportListResponse;
+	}
+	
+	
+	
 
 	@RequestMapping(value = { "/getCreditNoteHeaders" }, method = RequestMethod.POST)
 	public @ResponseBody GetCreditNoteHeadersList getCreditNoteHeaders(@RequestParam("fromDate") String fromDate,
