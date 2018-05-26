@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +29,11 @@ import com.ats.webapi.model.grngvn.GrnGvnHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeaderList;
 import com.ats.webapi.model.grngvn.TempGrnGvnBeanUp;
+import com.ats.webapi.model.phpwebservice.Admin;
+import com.ats.webapi.model.phpwebservice.Flavor;
+import com.ats.webapi.model.phpwebservice.GetLogin;
+import com.ats.webapi.model.phpwebservice.SpecialCakeBean;
+import com.ats.webapi.model.phpwebservice.SpecialCakeBeanList;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
 import com.ats.webapi.repository.BillLogRepo;
 import com.ats.webapi.repository.GetBillDetailsRepository;
@@ -316,12 +322,11 @@ public class RestApiController {
 	@Autowired
 	ItemRepository itemRepository;
 	@Autowired
-	UserRepository userRepo;//20 March
-	
+	UserRepository userRepo;// 20 March
+
 	@Autowired
-	OrderLogRespository  logRespository;
-	
-	
+	OrderLogRespository logRespository;
+
 	@RequestMapping(value = { "/changeAdminUserPass" }, method = RequestMethod.POST)
 	public @ResponseBody Info changeAdminUserPass(@RequestBody User user) {
 
@@ -329,7 +334,7 @@ public class RestApiController {
 
 		User result = userRepo.save(user);
 
-		if (result !=null) {
+		if (result != null) {
 
 			info.setError(false);
 			info.setMessage("Password changed successfully");
@@ -344,7 +349,6 @@ public class RestApiController {
 		return info;
 
 	}
-	
 
 	// This web api Not used Anywhere
 	@RequestMapping(value = { "/updatePBTime" }, method = RequestMethod.POST)
@@ -454,37 +458,38 @@ public class RestApiController {
 	public @ResponseBody GetGrnGvnForCreditNoteList grnGvnDetailForCreditNote(@RequestParam("isGrn") int isGrn) {
 		System.out.println("inside rest");
 
-		System.out.println("Rest : is Grn Received /grnGvnDetailForCreditNote "+isGrn);
-		
-		GetGrnGvnForCreditNoteList getGrnGvnForCreditNoteList = getGrnGvnForCreditNoteService.getGrnGvnForCreditNote(isGrn);
+		System.out.println("Rest : is Grn Received /grnGvnDetailForCreditNote " + isGrn);
+
+		GetGrnGvnForCreditNoteList getGrnGvnForCreditNoteList = getGrnGvnForCreditNoteService
+				.getGrnGvnForCreditNote(isGrn);
 
 		return getGrnGvnForCreditNoteList;
 
 	}
 
-	//comment 24 FEb
+	// comment 24 FEb
 	@RequestMapping(value = "/updateStoreGvn", method = RequestMethod.POST)
 	public @ResponseBody Info updateStoreGvn(@RequestBody List<TempGrnGvnBeanUp> dataList) {
-		
-		System.out.println("inside rest /updateStoreGvn : input para = dataList "+dataList.toString());
 
-		Info info=new Info();
+		System.out.println("inside rest /updateStoreGvn : input para = dataList " + dataList.toString());
+
+		Info info = new Info();
 		System.out.println("inside rest");
 
 		TempGrnGvnBeanUp data;
-		
-		int x=0;
-		
-		for(int i=0;i<dataList.size();i++) {
-			data=new TempGrnGvnBeanUp();
-			 data=dataList.get(i);
-			
-			x = updateGrnGvnService.updateGrnGvnForStore(data.getApprovedLoginStore(), data.getAprQtyStore(), data.getApprovedDateTimeStore(), 
-					data.getApprovedRemarkStore(),
-					data.getGrnGvnStatus(), data.getGrnGvnId());
-			
+
+		int x = 0;
+
+		for (int i = 0; i < dataList.size(); i++) {
+			data = new TempGrnGvnBeanUp();
+			data = dataList.get(i);
+
+			x = updateGrnGvnService.updateGrnGvnForStore(data.getApprovedLoginStore(), data.getAprQtyStore(),
+					data.getApprovedDateTimeStore(), data.getApprovedRemarkStore(), data.getGrnGvnStatus(),
+					data.getGrnGvnId());
+
 		}
-		
+
 		if (x > 0) {
 
 			info.setError(false);
@@ -504,19 +509,19 @@ public class RestApiController {
 
 		Info info = new Info();
 		try {
-			System.out.println("inside rest /updateGateGrn : input para = dataList "+dataList.toString());
-			
-			int x=0;
+			System.out.println("inside rest /updateGateGrn : input para = dataList " + dataList.toString());
+
+			int x = 0;
 			TempGrnGvnBeanUp data;
-			
-			for(int i=0;i<dataList.size();i++) {
-				data=new TempGrnGvnBeanUp();
-				 data=dataList.get(i);
-				
-				x = updateGrnGvnService.updateGrnForGate(data.getApprovedLoginGate(), data.getAprQtyGate(), data.getApproveimedDateTimeGate(), 
-						data.getApprovedRemarkGate(),
-						data.getGrnGvnStatus(), data.getGrnGvnId());
-			
+
+			for (int i = 0; i < dataList.size(); i++) {
+				data = new TempGrnGvnBeanUp();
+				data = dataList.get(i);
+
+				x = updateGrnGvnService.updateGrnForGate(data.getApprovedLoginGate(), data.getAprQtyGate(),
+						data.getApproveimedDateTimeGate(), data.getApprovedRemarkGate(), data.getGrnGvnStatus(),
+						data.getGrnGvnId());
+
 			}
 
 			if (x > 0) {
@@ -538,47 +543,47 @@ public class RestApiController {
 		return info;
 
 	}
-//comment 24 FEb
+
+	// comment 24 FEb
 	@RequestMapping(value = "/updateAccGrn", method = RequestMethod.POST)
 	public @ResponseBody Info updateAccGrn(@RequestBody List<TempGrnGvnBeanUp> dataList) {
 
 		Info info = new Info();
 		try {
-			System.out.println("inside rest /updateAccGrn : Param "+ dataList.toString());
-		
-			int x=0;
-			TempGrnGvnBeanUp data;
-			for(int i=0;i<dataList.size();i++) {
-				data=new TempGrnGvnBeanUp();
-				 data=dataList.get(i);
+			System.out.println("inside rest /updateAccGrn : Param " + dataList.toString());
 
-					 x = updateGrnGvnService.updateGrnForAcc(data.getApprovedLoginAcc(), data.getAprQtyAcc(), data.getApprovedDateTimeAcc(), data.getApprovedRemarkAcc(),
-							data.getGrnGvnStatus(), data.getAprTaxableAmt(),data.getAprTotalTax(),data.getAprSgstRs(),data.getAprCgstRs(),
-							data.getAprIgstRs(),data.getAprGrandTotal(),data.getAprROff(),
-							data.getGrnGvnId());
-			
+			int x = 0;
+			TempGrnGvnBeanUp data;
+			for (int i = 0; i < dataList.size(); i++) {
+				data = new TempGrnGvnBeanUp();
+				data = dataList.get(i);
+
+				x = updateGrnGvnService.updateGrnForAcc(data.getApprovedLoginAcc(), data.getAprQtyAcc(),
+						data.getApprovedDateTimeAcc(), data.getApprovedRemarkAcc(), data.getGrnGvnStatus(),
+						data.getAprTaxableAmt(), data.getAprTotalTax(), data.getAprSgstRs(), data.getAprCgstRs(),
+						data.getAprIgstRs(), data.getAprGrandTotal(), data.getAprROff(), data.getGrnGvnId());
+
 			}
 
 			if (x > 0) {
 
 				info.setError(false);
 				info.setMessage("Success");
-				
+
 			} else {
 
 				info.setError(true);
 				info.setMessage("Failed");
-				
 
 			}
 
 		} catch (Exception e) {
-			
+
 			System.out.println("/Rest Api Exce in Updating Gate Grn Gvn Record /updateAccGrn" + e.getMessage());
 			e.printStackTrace();
-			
+
 		}
-		
+
 		return info;
 
 	}
@@ -663,12 +668,9 @@ public class RestApiController {
 		return billsForFrLisr;
 
 	}
-	
-	
+
 	@RequestMapping(value = "/getBillsForManGrnBackEndFr", method = RequestMethod.POST)
-	public @ResponseBody GetBillsForFrList getBillsForManGrnBackEndFr(@RequestParam("frId") int frId
-			) {
-		
+	public @ResponseBody GetBillsForFrList getBillsForManGrnBackEndFr(@RequestParam("frId") int frId) {
 
 		GetBillsForFrList billsForFrLisr = getBillsForFrService.getAllBillForManGrnBackEnd(frId);
 		System.out.println("GEt BillS for Fr " + billsForFrLisr.toString());
@@ -847,14 +849,16 @@ public class RestApiController {
 		return grnItemConfigList;
 
 	}
-//21 march Front End Manual GRN
+
+	// 21 march Front End Manual GRN
 	@RequestMapping(value = "/getItemsForManGrn", method = RequestMethod.POST)
-	public @ResponseBody GetGrnItemConfigList getItemsForManGrn(@RequestParam("frId") int frId,@RequestParam("billNo") int billNo) {
+	public @ResponseBody GetGrnItemConfigList getItemsForManGrn(@RequestParam("frId") int frId,
+			@RequestParam("billNo") int billNo) {
 		System.out.println("inside rest /getItemsForManGrn");
 		GetGrnItemConfigList grnItemConfigList = null;
 
 		try {
-			
+
 			grnItemConfigList = getGrnItemConfigService.getItemForManualGrn(billNo, frId);
 
 			System.out.println("grn Item getItemForManualGrn  Rest: " + grnItemConfigList.toString());
@@ -1063,9 +1067,9 @@ public class RestApiController {
 	 * }
 	 */
 
-//	@Autowired
-	//BillLogRepo saveBillLogRepo;
-	
+	// @Autowired
+	// BillLogRepo saveBillLogRepo;
+
 	@RequestMapping(value = { "/insertBillData" }, method = RequestMethod.POST)
 
 	public @ResponseBody Info postBillData(@RequestBody PostBillDataCommon postBillDataCommon)
@@ -1075,14 +1079,14 @@ public class RestApiController {
 
 		List<PostBillHeader> jsonBillHeader = null;
 		List<PostBillDetail> jsonBillDetail;
-		
-		
-		/*BillLog log=new BillLog();
-		
-		log.setBillData(postBillDataCommon.toString());
-		log.setUserId(0);
-		
-		BillLog billLogResponse=saveBillLogRepo.save(log);*/
+
+		/*
+		 * BillLog log=new BillLog();
+		 * 
+		 * log.setBillData(postBillDataCommon.toString()); log.setUserId(0);
+		 * 
+		 * BillLog billLogResponse=saveBillLogRepo.save(log);
+		 */
 
 		Info info = new Info();
 		try {
@@ -1398,7 +1402,61 @@ public class RestApiController {
 		return jsonFr;
 
 	}
+//php web service anmol android 
+	
+	
+	@RequestMapping(value = { "/getLogin" }, method = RequestMethod.POST)
+	@ResponseBody
+	public GetLogin getLogin(@RequestParam("fr_code") String fr_code, @RequestParam("fr_password") String fr_password) {
 
+		FrLoginResponse frLogRes = franchiseeService.getLogin(fr_code, fr_password);
+		
+		List<Event> eventsList = eventService.findAllEvent();
+		
+		GetLogin loginRes=new GetLogin();
+		
+		if(frLogRes.getLoginInfo().isError()==false) {
+			
+			System.err.println("LOgin Success" );
+			
+			loginRes.setStatus("success");
+			
+			Admin admin=new Admin();
+			
+			admin.setError(false);
+			admin.setFr_id(""+frLogRes.getFranchisee().getFrId());
+			admin.setFr_name(frLogRes.getFranchisee().getFrName());
+			admin.setFr_email(frLogRes.getFranchisee().getFrEmail());
+			admin.setFr_image(frLogRes.getFranchisee().getFrImage());
+			admin.setType(""+frLogRes.getFranchisee().getFrRateCat());
+			
+			loginRes.setAdmin(admin);
+			
+		}
+		else {
+			
+			loginRes.setStatus("failed");
+		}
+		List<Flavor> flavor = new ArrayList<Flavor>();
+		
+		for(Event event:eventsList) {
+			
+			Flavor flvr=new Flavor();
+			
+			flvr.setDel_status(""+event.getDelStatus());
+			flvr.setSpe_id(""+event.getSpeId());
+			flvr.setSpe_name(event.getSpeName());
+			
+			flavor.add(flvr);
+		}
+		loginRes.setFlavor(flavor);
+		
+		System.out.println("frLogRes" + frLogRes);
+		
+		return loginRes;
+
+	}
+	
 	// Configure Sp Day Cake
 	@RequestMapping(value = { "/configureSpDayCk" }, method = RequestMethod.POST)
 
@@ -1465,12 +1523,11 @@ public class RestApiController {
 
 		List<Orders> participantJsonList;
 		List<Orders> jsonResult;
-		
-		
-		OrderLog log=new OrderLog();
+
+		OrderLog log = new OrderLog();
 		log.setFrId(orderJson.get(0).getFrId());
 		log.setJson(orderJson.toString());
-		
+
 		logRespository.save(log);
 
 		System.out.println("Inside Place Order " + orderJson.toString());
@@ -1573,40 +1630,40 @@ public class RestApiController {
 
 		return jsonResult;
 	}
-//23 March updateUser
+
+	// 23 March updateUser
 	@Autowired
 	UserRepository updateUserRepo;
-	
+
 	@RequestMapping(value = { "/updateUser" }, method = RequestMethod.POST)
 	@ResponseBody
 	public Info updateUser(@RequestBody User user) {
 
-		Info info=new Info();
+		Info info = new Info();
 		int result;
-		
+
 		try {
-			
-			if(user.getDelStatus()==0) {
-			result=updateUserRepo.updateUser(user.getId(), user.getPassword(), user.getUsertype(), user.getDeptId());
-			}else {
-				result=updateUserRepo.delteUser(user.getId(), user.getDelStatus());
+
+			if (user.getDelStatus() == 0) {
+				result = updateUserRepo.updateUser(user.getId(), user.getPassword(), user.getUsertype(),
+						user.getDeptId());
+			} else {
+				result = updateUserRepo.delteUser(user.getId(), user.getDelStatus());
 			}
-			if(result>0) {
+			if (result > 0) {
 				info.setError(false);
 				info.setMessage("success Update/delete User");
-			}else {
+			} else {
 				info.setError(true);
 				info.setMessage("Failed Updating/deleting User");
 			}
-		}
-		catch (Exception e) {
-			System.out.println("Exc in updating user/deleting user" +e.getMessage());
+		} catch (Exception e) {
+			System.out.println("Exc in updating user/deleting user" + e.getMessage());
 			e.printStackTrace();
 		}
 		return info;
 	}
-	
-	
+
 	// Save Rate
 	@RequestMapping(value = { "/insertRate" }, method = RequestMethod.POST)
 	@ResponseBody
@@ -1764,38 +1821,37 @@ public class RestApiController {
 	}
 
 	@RequestMapping(value = "/updateFrConfMenuTime")
-	public @ResponseBody Info updateFrConf(@RequestParam ("frIdList") List<Integer> frIdList,@RequestParam("menuId")int menuId,
-			@RequestParam("fromTime")String fromTime,@RequestParam("toTime")String toTime) {
-		Info info=new Info();
-		int result=0;
-		System.err.println("from time received " +fromTime + "to time  " +toTime);
-		System.err.println("Fr id List " +frIdList.toString());
+	public @ResponseBody Info updateFrConf(@RequestParam("frIdList") List<Integer> frIdList,
+			@RequestParam("menuId") int menuId, @RequestParam("fromTime") String fromTime,
+			@RequestParam("toTime") String toTime) {
+		Info info = new Info();
+		int result = 0;
+		System.err.println("from time received " + fromTime + "to time  " + toTime);
+		System.err.println("Fr id List " + frIdList.toString());
 		try {
-		if(frIdList.contains(0)) {
-			System.err.println("fr id is zero");
-			result=connfigureService.updateFrConfForAllFr(menuId, fromTime, toTime);
-		}
-		else {
-			System.err.println("fr Id is not zero");
-			result=connfigureService.updateFrConfForSelectedFr(frIdList, menuId,fromTime,toTime);
-		}
-		
-		if(result>0) {
-			info.setError(false);
-			info.setMessage("update Conf fr Successs");
-		}else {
-			info.setError(true);
-			info.setMessage("update Conf fr Failed");
-		}
-		}catch (Exception e) {
-			System.err.println("Exc in rest /updateFrConfMenuTime"+ e.getMessage());
+			if (frIdList.contains(0)) {
+				System.err.println("fr id is zero");
+				result = connfigureService.updateFrConfForAllFr(menuId, fromTime, toTime);
+			} else {
+				System.err.println("fr Id is not zero");
+				result = connfigureService.updateFrConfForSelectedFr(frIdList, menuId, fromTime, toTime);
+			}
+
+			if (result > 0) {
+				info.setError(false);
+				info.setMessage("update Conf fr Successs");
+			} else {
+				info.setError(true);
+				info.setMessage("update Conf fr Failed");
+			}
+		} catch (Exception e) {
+			System.err.println("Exc in rest /updateFrConfMenuTime" + e.getMessage());
 			e.printStackTrace();
 		}
 		return info;
-		
+
 	}
-	
-	
+
 	// Get Configured MenuId
 	@RequestMapping(value = "/getConfiguredMenuId")
 	public @ResponseBody List<Integer> getConfiguredMenuId(@RequestParam int frId) {
@@ -2115,6 +2171,123 @@ public class RestApiController {
 		info.setMessage("SpecialCake list displayed Successfully");
 		specialCakeList.setInfo(info);
 		return specialCakeList;
+
+	}
+
+	
+	// php web service anmol 25-26-05-2018
+	@RequestMapping(value = { "/getAllSpCakes" }, method = RequestMethod.GET)
+	@ResponseBody
+	public SpecialCakeBeanList getAllSpCakes() {
+		SpecialCakeBeanList spBeanList = new SpecialCakeBeanList();
+
+		try {
+
+			List<SpecialCake> jsonSpecialCakeList = specialcakeService.showAllSpecialCake();
+			System.err.println("Sp cake Size " + jsonSpecialCakeList.size());
+
+			List<Event> eventsList = eventService.findAllEvent();
+			List<SpecialCakeBean> spList = new ArrayList<SpecialCakeBean>();
+			
+			if (jsonSpecialCakeList.isEmpty() == false) {
+				 
+				  spBeanList.setStatus("success");
+				  
+				 }
+			
+				List<Integer> eIds;
+				for (SpecialCake spCake : jsonSpecialCakeList) {
+
+					SpecialCakeBean bean = new SpecialCakeBean();
+
+					bean.setDel_status(""+spCake.getDelStatus());
+					bean.setErp_link_code(""+spCake.getErpLinkcode());
+					bean.setIs_used(""+spCake.getIsUsed());
+					bean.setSp_book_b4(""+spCake.getSpBookb4());
+					bean.setSp_code(""+spCake.getSpCode());
+					bean.setSp_id(""+spCake.getSpId());
+					bean.setSp_image(""+spCake.getSpImage());
+					bean.setSp_max_wt(""+spCake.getSpMaxwt());
+					bean.setSp_min_wt(""+spCake.getSpMinwt());
+					bean.setSp_name(""+spCake.getSpName());
+					bean.setSp_pho_upload(""+spCake.getSpPhoupload());
+					bean.setSp_tax1(""+spCake.getSpTax1());
+					bean.setSp_tax2(""+spCake.getSpTax2());
+					bean.setSp_tax3(""+spCake.getSpTax3());
+					bean.setSp_type(""+spCake.getSpType());
+					bean.setSpr_add_on_rate(""+spCake.getSpRate3());
+					bean.setSpr_id(""+spCake.getSprId());
+					bean.setSpr_name(""+spCake.getSpRate1());
+					bean.setSpr_rate(""+spCake.getSpRate2());
+
+					eIds = new ArrayList<Integer>();
+
+				String events=spCake.getSpeIdlist();
+					
+
+					// Remove whitespace and split by comma
+					List<String> result = Arrays.asList(events.split("\\s*,\\s*"));
+					//System.err.println("Sp Name " + spCake.getSpName());
+					//System.err.println("EVENT ARRAYList " + result.toString());
+
+					String eventNameList = "";
+					for (int j = 0; j < result.size(); j++) {
+
+						String strEventId = result.get(j);
+						int eventId = Integer.parseInt(strEventId);
+
+						for (Event event : eventsList) {
+
+							if (event.getSpeId() == eventId) {
+
+								eventNameList = eventNameList + event.getSpeName() + ",";
+							}
+						}
+
+					}
+					bean.setSpe_id_list(eventNameList);
+					spList.add(bean);
+
+					// List<Event> eventsList = eventService.getAllEventsBySpeIdIn(intEvId);
+					//System.err.println("eList " + eventsList.toString());
+				
+			}
+			spBeanList.setSp_cake(spList);
+
+			/*
+			 * if (jsonSpecialCakeList.isEmpty() == false) {
+			 * 
+			 * spBeanList.setStatus("success");
+			 * 
+			 * }
+			 * 
+			 * List<SpecialCakeBean> spList = new ArrayList<SpecialCakeBean>(); for
+			 * (SpecialCake spCake : jsonSpecialCakeList) {
+			 * 
+			 * SpecialCakeBean bean = new SpecialCakeBean();
+			 * 
+			 * bean.setDel_status("" + spCake.getDelStatus()); bean.setErp_link_code("" +
+			 * spCake.getErpLinkcode()); bean.setIs_used("" + spCake.getIsUsed());
+			 * bean.setSp_book_b4("" + spCake.getSpBookb4()); bean.setSp_code("" +
+			 * spCake.getSpCode()); bean.setSp_id("" + spCake.getSpId());
+			 * bean.setSp_image("" + spCake.getSpImage()); bean.setSp_max_wt("" +
+			 * spCake.getSpMaxwt()); bean.setSp_min_wt("" + spCake.getSpMinwt());
+			 * bean.setSp_name("" + spCake.getSpName()); bean.setSp_pho_upload("" +
+			 * spCake.getSpPhoupload()); bean.setSp_tax1("" + spCake.getSpTax1());
+			 * bean.setSp_tax2("" + spCake.getSpTax2()); bean.setSp_tax3("" +
+			 * spCake.getSpTax3()); bean.setSp_type("" + spCake.getSpType());
+			 * bean.setSpe_id_list("" + spCake.getSpeIdlist()); bean.setSpr_add_on_rate("" +
+			 * spCake.getSpRate3()); bean.setSpr_id("" + spCake.getSprId());
+			 * bean.setSpr_name("" + spCake.getSpRate1()); bean.setSpr_rate("" +
+			 * spCake.getSpRate2()); spList.add(bean); } spBeanList.setSp_cake(spList);
+			 */
+		} catch (Exception e) {
+			
+			System.err.println("Exception in getting sp cake List for Php web service @Rest /getAllSpCakes"+e.getMessage());
+			e.printStackTrace();
+			
+		}
+		return spBeanList;
 
 	}
 
@@ -2451,7 +2624,7 @@ public class RestApiController {
 			if (jsonResult.isError()) {
 				info.setError(true);
 				info.setMessage("Franchisee deletion failed");
-			} else if (!jsonResult.isError()){
+			} else if (!jsonResult.isError()) {
 				info.setError(false);
 				info.setMessage("Franchisee deletion Successful");
 			}
@@ -2551,26 +2724,23 @@ public class RestApiController {
 
 	}
 
-	
-	//12 April Sachin
+	// 12 April Sachin
 	// Get Items By Category order by sub cat and sort id
-		@RequestMapping(value = "/getItemsBySubCatId", method = RequestMethod.POST)
-		public @ResponseBody List<Item> getItemsBySubCatId(@RequestParam("subCatId") String subCatId) {
+	@RequestMapping(value = "/getItemsBySubCatId", method = RequestMethod.POST)
+	public @ResponseBody List<Item> getItemsBySubCatId(@RequestParam("subCatId") String subCatId) {
 
-			List<Item> items = null;
-			try {
-				items = itemRepository.findByItemGrp2OrderByItemGrp2(subCatId);
-			} catch (Exception e) {
-				items = new ArrayList<>();
-				e.printStackTrace();
-
-			}
-			return items;
+		List<Item> items = null;
+		try {
+			items = itemRepository.findByItemGrp2OrderByItemGrp2(subCatId);
+		} catch (Exception e) {
+			items = new ArrayList<>();
+			e.printStackTrace();
 
 		}
+		return items;
 
-	
-	
+	}
+
 	// Get Items By Item Id and Delete Status 0
 	@RequestMapping(value = "/getItemsByItemId", method = RequestMethod.POST)
 	public @ResponseBody List<Item> getItems(@RequestParam List<Integer> itemList) {
@@ -3727,7 +3897,7 @@ public class RestApiController {
 	@RequestMapping(value = "/getFrGvnDetails", method = RequestMethod.POST)
 	public @ResponseBody GetGrnGvnDetailsList getFrGvnDetails(@RequestParam("grnGvnHeaderId") int grnGvnHeaderId) {
 		System.out.println("inside rest /getFrGvnDetails");
-		
+
 		GetGrnGvnDetailsList gvnDetailList = getGrnGvnDetailService.getFrGvnDetails(grnGvnHeaderId);
 
 		return gvnDetailList;
@@ -3938,6 +4108,7 @@ public class RestApiController {
 		System.out.println("Res  :" + spCakeOrder.toString());
 		return spCakeOrder;
 	}
+
 	@RequestMapping(value = { "/getSpCKOrderBySpOrderNo" }, method = RequestMethod.POST)
 	@ResponseBody
 	public List<GetSpCkOrder> getSpCKOrderBySpOrderNo(@RequestParam("spOrderNo") List<String> spOrderNo) {

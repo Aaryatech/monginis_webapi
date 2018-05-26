@@ -12,4 +12,6 @@ public interface EventService {
 	public Event updateEvent( int id);
 	public Event findEventById(int speId);
 	
+	public List<Event> getAllEventsBySpeIdIn(List<Integer> p);
+	
 }

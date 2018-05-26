@@ -19,4 +19,7 @@ public interface SpecialCakeService {
 	public Info deleteSpCakeSup(int id);
 	public GetSpCkSupplement getSpCakeSupp(int id);
 	public List<GetSpCkSupplement> getSpCakeSupList();
+	
+	
+	
 }

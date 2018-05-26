@@ -71,4 +71,13 @@ public class EventServiceImpl implements EventService {
 		return event;
 	}
 
+	@Override
+	public List<Event> getAllEventsBySpeIdIn(List<Integer> eventId) {
+		
+		List<Event> eveList=eventRepository.findBySpeIdIn(eventId);
+		
+		return eveList;
+	}
+
+	
 }

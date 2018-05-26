@@ -14,4 +14,6 @@ public interface SpecialCakeRepository extends JpaRepository<SpecialCake, Intege
 	public List<SpecialCake> findByDelStatus(int i);
 	public List<SpecialCake> findByDelStatusOrderBySpNameAsc(int i);
 
+	
+	
 }

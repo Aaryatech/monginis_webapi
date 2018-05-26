@@ -12,86 +12,123 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.model.grngvnreport.GGReportByDate;
 import com.ats.webapi.model.grngvnreport.GGReportGrpByFrId;
 import com.ats.webapi.model.grngvnreport.GGReportGrpByMonthDate;
+import com.ats.webapi.model.grngvnreport.GrnGvnReportByGrnType;
 import com.ats.webapi.repository.ggreport.GGReportByDateRepo;
 import com.ats.webapi.repository.ggreport.GGReportGrpByFrIdRepo;
 import com.ats.webapi.repository.ggreport.GGreportGrpByDateMonthRepo;
+import com.ats.webapi.repository.ggreport.GrnGvnReportByGrnTypeRepo;
 
 @RestController
 public class GrnGvnReportController {
 
 	@Autowired
-	GGreportGrpByDateMonthRepo gGreportGrpByDateMonthRepo;//r3,r4
+	GGreportGrpByDateMonthRepo gGreportGrpByDateMonthRepo;// r3,r4
 
 	@Autowired
-	GGReportGrpByFrIdRepo gGReportGrpByFrIdRepo;//r2
-	
-	
-	@Autowired
-	GGReportByDateRepo gGReportByDateRepo;//r1
-	
-	//r1
-	//report 1
-	@RequestMapping(value = { "/getgGReportByDate" }, method = RequestMethod.POST)
-	public @ResponseBody List<GGReportByDate> getgGReportByDate(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<String> isGrn,
-			@RequestParam("frIdList") List<String> frIdList) {
-		
-		
-		System.err.println("Parameter received fromDate:  " +fromDate+ "toDate : " +toDate + "frIdList  : "+frIdList + "isGrn : "+ isGrn);
+	GGReportGrpByFrIdRepo gGReportGrpByFrIdRepo;// r2
 
-		List<GGReportByDate> grpByDateList = new ArrayList<GGReportByDate>();
+	@Autowired
+	GGReportByDateRepo gGReportByDateRepo;// r1
+
+	@Autowired
+	GrnGvnReportByGrnTypeRepo getGrnGvnReportByGrnTypeRepo; // 25-05-2018
+
+	@RequestMapping(value = { "/getGrnGvnReportByGrnType" }, method = RequestMethod.POST)
+	public @ResponseBody List<GrnGvnReportByGrnType> getGrnGvnReportByGrnType(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("frIdList") List<String> frIdList) {
+
+		System.err.println(
+				"Parameter received fromDate:  " + fromDate + "toDate : " + toDate + "frIdList  : " + frIdList);
+
+		List<GrnGvnReportByGrnType> gGvnReportByGrnTypeList = new ArrayList<GrnGvnReportByGrnType>();
 		try {
-			
+
 			if (!frIdList.contains("0")) {
 				System.err.println(" frIdList: It is Not zero ");
-				grpByDateList = gGReportByDateRepo.getGrnGvnReportByDateSelFr(fromDate, toDate, frIdList, isGrn);
-						
+				gGvnReportByGrnTypeList = getGrnGvnReportByGrnTypeRepo.getGrnGvnReportByGrnType(fromDate, toDate,
+						frIdList);
+
 			} else {
 				System.err.println(" frIdList: It is  zero ");
 
-			grpByDateList = gGReportByDateRepo.getGrnGvnReportByDateAllFr(fromDate, toDate, isGrn);
+				gGvnReportByGrnTypeList = getGrnGvnReportByGrnTypeRepo.getGrnGvnReportByGrnTypeAllFr(fromDate, toDate);
 
 			}
 		} catch (Exception e) {
 
-			System.err.println("Exce in /GrnGvnReportController : /getgGReportByDate msg-" + e.getMessage()+ " trace-" +e.getStackTrace().toString());
+			System.err.println("Exce in /GrnGvnReportController : /getGrnGvnReportByGrnType msg-" + e.getMessage()
+					+ " trace-" + e.getStackTrace().toString());
+			e.printStackTrace();
+			e.getCause();
+		}
+
+		return gGvnReportByGrnTypeList;
+	}
+
+	// r1
+	// report 1
+	@RequestMapping(value = { "/getgGReportByDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GGReportByDate> getgGReportByDate(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<String> isGrn,
+			@RequestParam("frIdList") List<String> frIdList) {
+
+		System.err.println("Parameter received fromDate:  " + fromDate + "toDate : " + toDate + "frIdList  : "
+				+ frIdList + "isGrn : " + isGrn);
+
+		List<GGReportByDate> grpByDateList = new ArrayList<GGReportByDate>();
+		try {
+
+			if (!frIdList.contains("0")) {
+				System.err.println(" frIdList: It is Not zero ");
+				grpByDateList = gGReportByDateRepo.getGrnGvnReportByDateSelFr(fromDate, toDate, frIdList, isGrn);
+
+			} else {
+				System.err.println(" frIdList: It is  zero ");
+
+				grpByDateList = gGReportByDateRepo.getGrnGvnReportByDateAllFr(fromDate, toDate, isGrn);
+
+			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in /GrnGvnReportController : /getgGReportByDate msg-" + e.getMessage() + " trace-"
+					+ e.getStackTrace().toString());
 			e.printStackTrace();
 			e.getCause();
 		}
 
 		return grpByDateList;
 	}
-	
-	//r1
-	
-	
+
+	// r1
+
 	// sumit sir query Report 2
-		@RequestMapping(value = { "/gGReportGrpByFrId" }, method = RequestMethod.POST)
-		public @ResponseBody List<GGReportGrpByFrId> gGReportGrpByFrId(@RequestParam("fromDate") String fromDate,
-				@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<String> isGrn,
-				@RequestParam("frIdList") List<String> frIdList) {
+	@RequestMapping(value = { "/gGReportGrpByFrId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GGReportGrpByFrId> gGReportGrpByFrId(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<String> isGrn,
+			@RequestParam("frIdList") List<String> frIdList) {
 
-			System.err.println("Parameter received fromDate:  " +fromDate+ "toDate : " +toDate + "frIdList  : "+frIdList + "isGrn : "+ isGrn);
+		System.err.println("Parameter received fromDate:  " + fromDate + "toDate : " + toDate + "frIdList  : "
+				+ frIdList + "isGrn : " + isGrn);
 
-			List<GGReportGrpByFrId> grpByFrIdList = null;
+		List<GGReportGrpByFrId> grpByFrIdList = null;
 
-			try {
-				if (!frIdList.contains("0")) {
-					System.out.println("fr Id List doesn't contain zero ");
-					grpByFrIdList = gGReportGrpByFrIdRepo.getGGReportGrpByFrIdSelFr(fromDate, toDate, isGrn, frIdList);
-				} else {
-					System.out.println("fr id list is zero : get For All Fr");
-					grpByFrIdList = gGReportGrpByFrIdRepo.getGGReportGrpByFrIdSelFrAllFr(fromDate, toDate, isGrn);
-				}
-
-			} catch (Exception e) {
-
-				System.err.println("Exce in /GrnGvnReportController : /gGReportGrpByFrId" + e.getMessage());
-				e.printStackTrace();
+		try {
+			if (!frIdList.contains("0")) {
+				System.out.println("fr Id List doesn't contain zero ");
+				grpByFrIdList = gGReportGrpByFrIdRepo.getGGReportGrpByFrIdSelFr(fromDate, toDate, isGrn, frIdList);
+			} else {
+				System.out.println("fr id list is zero : get For All Fr");
+				grpByFrIdList = gGReportGrpByFrIdRepo.getGGReportGrpByFrIdSelFrAllFr(fromDate, toDate, isGrn);
 			}
 
-			return grpByFrIdList;
+		} catch (Exception e) {
+
+			System.err.println("Exce in /GrnGvnReportController : /gGReportGrpByFrId" + e.getMessage());
+			e.printStackTrace();
 		}
+
+		return grpByFrIdList;
+	}
 
 	// report 3
 	@RequestMapping(value = { "/getGGReportGrpByDate" }, method = RequestMethod.POST)
@@ -99,7 +136,8 @@ public class GrnGvnReportController {
 			@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<String> isGrn,
 			@RequestParam("frIdList") List<String> frIdList) {
 
-		System.err.println("Parameter received fromDate:  " +fromDate+ "toDate : " +toDate + "frIdList  : "+frIdList + "isGrn : "+ isGrn);
+		System.err.println("Parameter received fromDate:  " + fromDate + "toDate : " + toDate + "frIdList  : "
+				+ frIdList + "isGrn : " + isGrn);
 
 		List<GGReportGrpByMonthDate> grpByDateList = null;
 		try {
@@ -108,7 +146,8 @@ public class GrnGvnReportController {
 						isGrn, frIdList);
 			} else {
 
-				grpByDateList = gGreportGrpByDateMonthRepo.getGrnGvnReportByDateAllFrAllGGGroupByDate(fromDate, toDate,isGrn);
+				grpByDateList = gGreportGrpByDateMonthRepo.getGrnGvnReportByDateAllFrAllGGGroupByDate(fromDate, toDate,
+						isGrn);
 
 			}
 		} catch (Exception e) {
@@ -125,7 +164,8 @@ public class GrnGvnReportController {
 	public @ResponseBody List<GGReportGrpByMonthDate> getGGReportGrpByMonth(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<String> isGrn,
 			@RequestParam("frIdList") List<String> frIdList) {
-		System.err.println("Parameter received fromDate:  " +fromDate+ "toDate : " +toDate + "frIdList  : "+frIdList + "isGrn : "+ isGrn);
+		System.err.println("Parameter received fromDate:  " + fromDate + "toDate : " + toDate + "frIdList  : "
+				+ frIdList + "isGrn : " + isGrn);
 
 		List<GGReportGrpByMonthDate> grpByDateList = null;
 		try {
@@ -146,7 +186,5 @@ public class GrnGvnReportController {
 
 		return grpByDateList;
 	}
-
-	
 
 }
