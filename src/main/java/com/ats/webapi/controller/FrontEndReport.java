@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.GrnGvnReport;
 import com.ats.webapi.model.TSellReport;
+import com.ats.webapi.model.regcakeasspreport.RegCakeAsSpOrderReport;
 import com.ats.webapi.repository.GrnGvnReportRepository;
-import com.ats.webapi.repository.TSellReportRepository; 
+import com.ats.webapi.repository.TSellReportRepository;
+import com.ats.webapi.repository.frpurchasereport.RegCakeAsSpOrderReportRepo; 
 
 @RestController
 public class FrontEndReport {
@@ -23,6 +25,27 @@ public class FrontEndReport {
 	
 	@Autowired
 	GrnGvnReportRepository grnGvnReportRepository;
+	
+	@Autowired
+	RegCakeAsSpOrderReportRepo getRegCakeAsSpOrderReportRepo;
+	
+	@RequestMapping(value = { "/getRegCakeAsSpOrderReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<RegCakeAsSpOrderReport> getRegCakeAsSpOrderReport(@RequestParam("fromDate")String fromDate,
+			@RequestParam("toDate")String toDate,@RequestParam("frId") int frId)
+	{
+		List<RegCakeAsSpOrderReport> getRegCakeAsSpReport = new ArrayList<RegCakeAsSpOrderReport>();
+		try
+		{
+			System.out.println("fromDate : "+fromDate);
+			System.out.println("toDate : "+toDate);
+			getRegCakeAsSpReport = getRegCakeAsSpOrderReportRepo.getRegCakeAsSpOrderReport(fromDate, toDate,frId);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		  return getRegCakeAsSpReport ;
+
+	}
 	
 	@RequestMapping(value = { "/tSellReport" }, method = RequestMethod.POST)
 	public @ResponseBody List<TSellReport> tSellReport(@RequestParam("frId")int frId,@RequestParam("fromDate")String fromDate,
