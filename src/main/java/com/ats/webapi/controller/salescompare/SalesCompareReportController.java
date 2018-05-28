@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.model.report.salecompare.SalesComparison;
 import com.ats.webapi.model.report.salecompare.SalesComparisonReport;
+import com.ats.webapi.model.report.salecompare.SalesGrn;
+import com.ats.webapi.repository.salecomparereport.SalesCompareGrnRepository;
 import com.ats.webapi.repository.salecomparereport.SalesComparisonReportRepo;
 
 @RestController
@@ -18,15 +20,18 @@ public class SalesCompareReportController {
 	@Autowired
 	SalesComparisonReportRepo salesComparisonReportRepo;
 	
+	@Autowired
+	SalesCompareGrnRepository salesCompareGrnRepository;
+	
 	@RequestMapping(value = { "/getSalesReportComparion" }, method = RequestMethod.POST)
-	public @ResponseBody SalesComparison getSalesReportComparion(@RequestParam("monthNumber") int monthNumber) {
+	public @ResponseBody SalesComparison getSalesReportComparion(@RequestParam("monthNumber") int monthNumber,@RequestParam("year") int year) {
 		SalesComparison saleCompare=new SalesComparison();
 		
 		try {
 			
-		List<SalesComparisonReport> billTotalList =salesComparisonReportRepo.getSalesReportComparisonBillTotal(monthNumber);
+		List<SalesComparisonReport> billTotalList =salesComparisonReportRepo.getSalesReportComparisonBillTotal(monthNumber,year);
 		
-		List<SalesComparisonReport> grnGvnTotalList =salesComparisonReportRepo.getSalesReportComparisonGrnGvnTotal(monthNumber);
+		List<SalesGrn> grnGvnTotalList =salesCompareGrnRepository.getSalesReportComparisonGrnGvnTotal(monthNumber,year);
 		
 		saleCompare.setBillTotalList(billTotalList);
 		saleCompare.setGrnGvnTotalList(grnGvnTotalList);

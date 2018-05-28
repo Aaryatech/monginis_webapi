@@ -23,6 +23,7 @@ import com.ats.webapi.model.FranchiseSupList;
 import com.ats.webapi.model.GetItemSup;
 import com.ats.webapi.model.GetRegSpCakeOrders;
 import com.ats.webapi.model.GetSpCkSupplement;
+import com.ats.webapi.model.GetSubCategory;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemSup;
@@ -36,6 +37,7 @@ import com.ats.webapi.model.tray.TrayType;
 import com.ats.webapi.repository.FrListForSuppRepository;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
+import com.ats.webapi.repository.GetSubCategoryRepository;
 import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.SpCakeListRepository;
 import com.ats.webapi.repository.SpCkDeleteOrderRepository;
@@ -79,6 +81,9 @@ public class MasterController {
 	FranchiseSupRepository franchiseSupRepository;
 	@Autowired
 	private SubCategoryRepository subCategoryRepository;
+	
+	@Autowired
+	GetSubCategoryRepository getSubCategoryRepository;
 	
 	// ----------------------------GET FrToken--------------------------------
 	@RequestMapping(value = { "/getFrToken" }, method = RequestMethod.POST)
@@ -557,4 +562,21 @@ public class MasterController {
 					return regSpCakeOrder;
 				}
 				
+				
+				@RequestMapping(value = { "/getSubCatListByCatId" }, method = RequestMethod.POST)
+				@ResponseBody
+				public List<GetSubCategory> getSubCatListByCatId(@RequestParam("catId")int  catId) {
+					
+					List<GetSubCategory> subCategoryList;
+					try {
+						subCategoryList = getSubCategoryRepository.findByCatIdAndDelStatus(catId,0);
+					}
+					catch (Exception e) {
+						subCategoryList=new ArrayList<>();
+						e.printStackTrace();
+
+					}
+					return subCategoryList;
+
+				}
 }

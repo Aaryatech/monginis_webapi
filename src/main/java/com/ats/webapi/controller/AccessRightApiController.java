@@ -20,6 +20,7 @@ import com.ats.webapi.model.GetUserDetailList;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.User;
 import com.ats.webapi.repository.GetUserDetailRepo;
+import com.ats.webapi.repository.AccessRight.AssignRoleDetailListRepository;
 import com.ats.webapi.service.AccessRightService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -32,6 +33,26 @@ public class AccessRightApiController {
 	@Autowired
 	GetUserDetailRepo userDetail;//22 MArch
 	
+	@Autowired
+	AssignRoleDetailListRepository assignRoleDetailListRepository;
+	
+	@RequestMapping(value = { "/deleteRole" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteRole(@RequestParam int roleId) {
+
+		int isDeleted =assignRoleDetailListRepository.deleteRole(roleId);
+		Info info=new Info();
+		if(isDeleted==1)
+		{
+			info.setError(false);
+			info.setMessage("Role  Deleted");
+		}
+		else
+		{
+			info.setError(true);
+			info.setMessage("Role Deletion Failed");
+		}
+		return info;
+	}
 	@RequestMapping(value = { "/getUserDetail" }, method = RequestMethod.GET)
 	public @ResponseBody GetUserDetailList getUserDetail() {
 		
