@@ -79,48 +79,50 @@ public class FrStockApiController {
 
 	@Autowired
 	GetFrItemStockConfigurationRepository getFrItemStockConfigurationRepository;
-	
+
 	@Autowired
 	PostFrOpStockHeaderRepository postFrOpStockHeaderRepository;
-	
+
 	@Autowired
 	StockCalculationRepository calculationRepository;
-	
+
 	@Autowired
 	StockSellRepository stockSellRepository;
-	
+
 	@Autowired
 	StockPurchaseRepository stockPurchaseRepository;
-	
-	
+
+	@Autowired
+	PostFrOpStockHeaderRepository frOpStockHeaderRepository;
+
 	@RequestMapping(value = "/getCurrentOpStock", method = RequestMethod.POST)
-	public @ResponseBody List<PostFrItemStockDetail> getCurrentOpStock(@RequestParam("frId") int frId,@RequestParam("itemIdList") List<Integer> itemIdList , @RequestParam("catId") int catId) {
+	public @ResponseBody List<PostFrItemStockDetail> getCurrentOpStock(@RequestParam("frId") int frId,
+			@RequestParam("itemIdList") List<Integer> itemIdList, @RequestParam("catId") int catId) {
 
 		System.out.println("inside rest getCurrentOpStock : I/p : itemIdList: " + itemIdList.toString());
 
-		 List<PostFrItemStockDetail> postFrItemStockDetailList= new ArrayList<PostFrItemStockDetail>();
-		
+		List<PostFrItemStockDetail> postFrItemStockDetailList = new ArrayList<PostFrItemStockDetail>();
+
 		PostFrItemStockDetail postFrItemStockDetail = new PostFrItemStockDetail();
-		
+
 		List<Item> itemsList = itemService.findAllItemsByItemId(itemIdList);
 
 		for (int i = 0; i < itemsList.size(); i++) {
 
 			int itemId = itemsList.get(i).getId();
-			String itemName=itemsList.get(i).getItemName();
-			String itemCode=itemsList.get(i).getItemId();
-		
+			String itemName = itemsList.get(i).getItemName();
+			String itemCode = itemsList.get(i).getItemId();
 
 			postFrItemStockDetail = getItemStockService.getCurrentOpeningStock(frId, itemId, catId);
-		
-			if(postFrItemStockDetail == null) {
-			
-				postFrItemStockDetail =new PostFrItemStockDetail();
+
+			if (postFrItemStockDetail == null) {
+
+				postFrItemStockDetail = new PostFrItemStockDetail();
 				postFrItemStockDetail.setOpeningStockHeaderId(0);
 				postFrItemStockDetail.setOpeningStockDetailId(0);
 				postFrItemStockDetail.setRegOpeningStock(0);
 			}
-			
+
 			postFrItemStockDetail.setItemId(itemId);
 			postFrItemStockDetail.setItemName(itemName);
 			postFrItemStockDetail.setItemCode(itemCode);
@@ -132,9 +134,7 @@ public class FrStockApiController {
 		return postFrItemStockDetailList;
 
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/getMonthwiseStock", method = RequestMethod.POST)
 	public @ResponseBody List<GetCurrentStockDetails> getStockBetweenMonth(@RequestParam("frId") int frId,
 			@RequestParam("fromMonth") int fromMonth, @RequestParam("toMonth") int toMonth,
@@ -271,11 +271,9 @@ public class FrStockApiController {
 
 			Date toDate = f.parse(strToDate);
 			int n = differenceInMonths(fromDate, toDate);
-			
-			
+
 			System.out.println("Month Diff Is " + n);
 
-			
 			PostFrItemStockDetail postFrItemStockDetail = new PostFrItemStockDetail();
 
 			Calendar cal = Calendar.getInstance();
@@ -301,8 +299,8 @@ public class FrStockApiController {
 			int year = calendar.get(Calendar.YEAR);
 			// Add one to month {0 - 11}
 			int month = calendar.get(Calendar.MONTH) + 1;
-			
-			System.out.println("year "+year+" month "+month);
+
+			System.out.println("year " + year + " month " + month);
 
 			calendar.setTime(toDate);
 			int toYear = calendar.get(Calendar.YEAR);
@@ -340,13 +338,12 @@ public class FrStockApiController {
 					System.out.println("for ItemId " + itemId);
 					postFrItemStockDetail = new PostFrItemStockDetail();
 					postFrItemStockDetail = getItemStockService.getOpeningStock(frId, month, year, itemId, catId);
-					
-					if (postFrItemStockDetail != null) { 
+
+					if (postFrItemStockDetail != null) {
 						System.out.println("fr stock response " + postFrItemStockDetail.toString());
 						int regOp = postFrItemStockDetail.getRegOpeningStock();
 						int spOp = postFrItemStockDetail.getSpOpeningStock();
-						
-					
+
 						regOpFromDate = (regOp + totalRegPurchase.getReg()) - (totalRegGrnGvn + totalRegSell.getReg());
 						spOpFromDate = (spOp + totalRegPurchase.getSp()) - (totalRegSell.getSp());
 
@@ -392,8 +389,7 @@ public class FrStockApiController {
 						stockDetailsList.add(getCurrentStockDetails);
 
 					} else { // Different Month
-						
-						
+
 						RegularSpecialStockCal totalLastRegPurchase = getItemStockService.getRegTotalPurchase(frId,
 								strFromDate, strToDate, itemId);
 
@@ -426,44 +422,40 @@ public class FrStockApiController {
 								(spOpFromDate + totalLastRegPurchase.getSp()) - (totalLastRegSell.getSp()));
 
 						stockDetailsList.add(getCurrentStockDetails);
-		 
-						 
-						 
-						
-//						String strCalFromDate=strFromDate;
-//						String strCalToDate=strToDate;
-//						
-//						for(int d=1;d<=n;d++) {
-//														
-//							if(d==n) {
-//								
-//								getTransactionBetweenDates(strCalFromDate,strCalToDate,itemsList.get(i),frId, catId);
-//								
-//							}else {
-//								
-//								DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-//
-//								LocalDate localDate = LocalDate.parse(strCalFromDate,formatter);
-//								LocalDate lastDayOfMonth = localDate.with(TemporalAdjusters.lastDayOfMonth());
-//
-//								 strCalToDate = lastDayOfMonth.format(formatter);
-//								 								 
-//								getTransactionBetweenDates(strCalFromDate,strCalToDate,itemsList.get(i),frId, catId);
-//														
-//								Date lastDay = f.parse(strCalToDate);
-//								
-//								cal.setTime(lastDay);
-//								cal.add(Calendar.DATE, 1);
-//								Date incrDate = cal.getTime();
-//								strCalFromDate= f.format(incrDate);
-//								
-//							}
-							
-							
-							
-						}
-						
-					
+
+						// String strCalFromDate=strFromDate;
+						// String strCalToDate=strToDate;
+						//
+						// for(int d=1;d<=n;d++) {
+						//
+						// if(d==n) {
+						//
+						// getTransactionBetweenDates(strCalFromDate,strCalToDate,itemsList.get(i),frId,
+						// catId);
+						//
+						// }else {
+						//
+						// DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+						//
+						// LocalDate localDate = LocalDate.parse(strCalFromDate,formatter);
+						// LocalDate lastDayOfMonth =
+						// localDate.with(TemporalAdjusters.lastDayOfMonth());
+						//
+						// strCalToDate = lastDayOfMonth.format(formatter);
+						//
+						// getTransactionBetweenDates(strCalFromDate,strCalToDate,itemsList.get(i),frId,
+						// catId);
+						//
+						// Date lastDay = f.parse(strCalToDate);
+						//
+						// cal.setTime(lastDay);
+						// cal.add(Calendar.DATE, 1);
+						// Date incrDate = cal.getTime();
+						// strCalFromDate= f.format(incrDate);
+						//
+						// }
+
+					}
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -480,50 +472,43 @@ public class FrStockApiController {
 
 	}
 
-	private void getTransactionBetweenDates(String strFromDate, String strToDate, Item item, int frId,  int catId) throws ParseException {
-		
+	private void getTransactionBetweenDates(String strFromDate, String strToDate, Item item, int frId, int catId)
+			throws ParseException {
+
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-		
+
 		Calendar calendar = new GregorianCalendar();
 		calendar.setTime(f.parse(strFromDate));
 		int year = calendar.get(Calendar.YEAR);
-		
+
 		int month = calendar.get(Calendar.MONTH) + 1;
-		
-		System.out.println("year "+year+" month "+month);
-		
-		
+
+		System.out.println("year " + year + " month " + month);
+
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-		LocalDate localDate = LocalDate.parse(strFromDate,formatter);
+		LocalDate localDate = LocalDate.parse(strFromDate, formatter);
 		LocalDate lastDayOfMonth = localDate.with(TemporalAdjusters.lastDayOfMonth());
 		LocalDate firstDayOfMonth = localDate.with(TemporalAdjusters.firstDayOfMonth());
 
 		String strLastDate = lastDayOfMonth.format(formatter);
 		String strFirstDate = firstDayOfMonth.format(formatter);
 
-		if(strFromDate.equalsIgnoreCase(strFirstDate) && strToDate.equalsIgnoreCase(strLastDate)) {
-			
-			
+		if (strFromDate.equalsIgnoreCase(strFirstDate) && strToDate.equalsIgnoreCase(strLastDate)) {
+
 		}
-		
-		
+
 		PostFrItemStockDetail postFrItemStockDetail = new PostFrItemStockDetail();
-		postFrItemStockDetail = getItemStockService.getOpeningStock(frId, month, year, item.getId(),
-				catId);
+		postFrItemStockDetail = getItemStockService.getOpeningStock(frId, month, year, item.getId(), catId);
 
-		RegularSpecialStockCal totalLastRegPurchase = getItemStockService.getRegTotalPurchase(frId,
-				strFromDate, strToDate, item.getId());
+		RegularSpecialStockCal totalLastRegPurchase = getItemStockService.getRegTotalPurchase(frId, strFromDate,
+				strToDate, item.getId());
 
-		int totalLastRegGrnGvn = getItemStockService.getRegTotalGrnGvn(frId, strFromDate,
-				strToDate,  item.getId());
+		int totalLastRegGrnGvn = getItemStockService.getRegTotalGrnGvn(frId, strFromDate, strToDate, item.getId());
 
-		RegularSpecialStockCal totalLastRegSell = getItemStockService.getRegTotalSell(frId,
-				strFromDate, strToDate, item.getId());
+		RegularSpecialStockCal totalLastRegSell = getItemStockService.getRegTotalSell(frId, strFromDate, strToDate,
+				item.getId());
 
-
-		
-		
 	}
 
 	public static Date getFirstDateOfMonth(Date date) {
@@ -584,21 +569,19 @@ public class FrStockApiController {
 
 		List<Item> itemsList = itemService.findAllItemsByItemId(itemIdList);
 
-
 		StockRegSpSell totalRegSell = new StockRegSpSell();
 
-		StockRegSpPurchase regSpPurchase= new StockRegSpPurchase();
-		
+		StockRegSpPurchase regSpPurchase = new StockRegSpPurchase();
+
 		for (int i = 0; i < itemsList.size(); i++) {
 
 			int itemId = itemsList.get(i).getId();
 
-			
-		//	 totalRegSell = new StockRegSpSell();
-			 
-		//	 regSpPurchase= new StockRegSpPurchase();
-			
-			 regSpPurchase  = stockPurchaseRepository.getTotalPurchase(frId, fromDate, toDate, itemId);
+			// totalRegSell = new StockRegSpSell();
+
+			// regSpPurchase= new StockRegSpPurchase();
+
+			regSpPurchase = stockPurchaseRepository.getTotalPurchase(frId, fromDate, toDate, itemId);
 
 			int totalRegGrnGvn = calculationRepository.getRegTotalGrnGvn(frId, fromDate, toDate, itemId);
 
@@ -732,6 +715,46 @@ public class FrStockApiController {
 
 	}
 
+	@RequestMapping(value = "/checkIsMonthClosed", method = RequestMethod.POST)
+	public @ResponseBody Info checkIsMonthClosed(@RequestParam("frId") int frId) {
+
+		System.out.println("inside rest checkIsMonthClosed");
+
+		Info info = new Info();
+
+		info.setError(true);
+		info.setMessage("month end process is pending");
+		DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+		Date date = new Date();
+		System.out.println(dateFormat1.format(date));
+
+		Calendar cal1 = Calendar.getInstance();
+		cal1.setTime(date);
+
+		Integer dayOfMonth = cal1.get(Calendar.DATE);
+
+		int calCurrentMonth = cal1.get(Calendar.MONTH) + 1;
+		System.out.println("Current Cal Month " + calCurrentMonth);
+
+		// frOpStockHeaderRepository
+		List<PostFrItemStockHeader> frItemStockHeaderList = new ArrayList<>();
+
+		frItemStockHeaderList = frOpStockHeaderRepository.findByFrIdAndMonth(frId, calCurrentMonth);
+		try {
+			if (frItemStockHeaderList.size() > 0) {
+				info.setError(false);
+				info.setMessage("month ended");
+
+			}
+
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+
+		return info;
+
+	}
+
 	@RequestMapping(value = { "/postFrOpStock" }, method = RequestMethod.POST)
 	public @ResponseBody Info postFrOpStock(@RequestBody PostFrItemStockHeader postFrItemStockHeader)
 			throws ParseException, JsonParseException, JsonMappingException, IOException {
@@ -789,13 +812,12 @@ public class FrStockApiController {
 				- d1.get(Calendar.MONTH);
 		return diff;
 	}
-	
- 
 
 	@RequestMapping(value = "/getCurrentMonthOfCatId", method = RequestMethod.POST)
 	public @ResponseBody List<PostFrItemStockHeader> getCurrentMonthOfCatId(@RequestParam("frId") int frId) {
- 
-		List<PostFrItemStockHeader> getCurrentMonthOfCatId = postFrOpStockHeaderRepository.findByFrIdAndIsMonthClosed(frId,0);
+
+		List<PostFrItemStockHeader> getCurrentMonthOfCatId = postFrOpStockHeaderRepository
+				.findByFrIdAndIsMonthClosed(frId, 0);
 
 		return getCurrentMonthOfCatId;
 
