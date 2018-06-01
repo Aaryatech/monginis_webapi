@@ -2215,10 +2215,10 @@ public class RestApiController {
 					bean.setSp_tax2(""+spCake.getSpTax2());
 					bean.setSp_tax3(""+spCake.getSpTax3());
 					bean.setSp_type(""+spCake.getSpType());
-					bean.setSpr_add_on_rate(""+spCake.getSpRate3());
+					bean.setSpr_add_on_rate(""+spCake.getMrpRate3());
 					bean.setSpr_id(""+spCake.getSprId());
-					bean.setSpr_name(""+spCake.getSpRate1());
-					bean.setSpr_rate(""+spCake.getSpRate2());
+					bean.setSpr_name(""+spCake.getMrpRate1());
+					bean.setSpr_rate(""+spCake.getMrpRate2());
 
 					eIds = new ArrayList<Integer>();
 

@@ -18,14 +18,18 @@ import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.TrayMgtDetailList;
+import com.ats.webapi.model.logistics.VehicalMaster;
 import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FranchiseInRoute;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
 import com.ats.webapi.model.tray.GetVehDriverMobNo;
+import com.ats.webapi.model.tray.GetVehicleAvg;
 import com.ats.webapi.model.tray.TrayMgtDetail;
 import com.ats.webapi.model.tray.TrayMgtDetailBean;
 import com.ats.webapi.model.tray.TrayMgtHeader;
+import com.ats.webapi.repository.logistics.VehicalMasterRepository;
 import com.ats.webapi.repository.tray.GetVehDriverMobNoRepo;
+import com.ats.webapi.repository.tray.GetVehicleAvgRepository;
 import com.ats.webapi.repository.tray.TrayMgtHeaderRepository;
 import com.ats.webapi.service.tray.TrayMgtService;
 
@@ -40,6 +44,12 @@ public class TrayManagementController {
 	
 	@Autowired
 	GetVehDriverMobNoRepo vehMobNoRepo;//Sachin 20 MArch
+	
+	@Autowired
+	VehicalMasterRepository vehicleMasterRepository;
+	
+	@Autowired
+	GetVehicleAvgRepository getVehicleAvgRepository;
 	
 	@RequestMapping(value = { "/getVehMobNo" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetVehDriverMobNo> getVehMobNo(@RequestParam("routeId") int routeId,@RequestParam("curDate")String curDate) {
@@ -405,6 +415,10 @@ public class TrayManagementController {
 				info = new Info();
 				info.setError(false);
 				info.setMessage("In Vehicle Data Updated");
+				
+				VehicalMaster vehicleMasterRes=vehicleMasterRepository.findByVehId(trayMgtHeader.getVehId());
+				vehicleMasterRes.setCurrentRunningKm((int)vehInkm);
+				vehicleMasterRepository.saveAndFlush(vehicleMasterRes);
 			}
 		} catch (Exception e) {
 			info = new Info();
@@ -511,4 +525,18 @@ public class TrayManagementController {
 		}
 		return info;
 	}
+	
+	@RequestMapping(value = { "/getAllTrayHeadersByDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetVehicleAvg> getAllTrayHeadersByDate(@RequestParam("date") String date) {
+
+		List<GetVehicleAvg> getTrayMgtHeaders=null;
+		try {
+		 getTrayMgtHeaders = getVehicleAvgRepository.getAllTrayHeadersByDate(date);
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return getTrayMgtHeaders;
+	}
+
 }
