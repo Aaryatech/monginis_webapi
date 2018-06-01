@@ -815,9 +815,33 @@ public class FrStockApiController {
 
 	@RequestMapping(value = "/getCurrentMonthOfCatId", method = RequestMethod.POST)
 	public @ResponseBody List<PostFrItemStockHeader> getCurrentMonthOfCatId(@RequestParam("frId") int frId) {
-
-		List<PostFrItemStockHeader> getCurrentMonthOfCatId = postFrOpStockHeaderRepository
+		List<PostFrItemStockHeader> getCurrentMonthOfCatId = new ArrayList<PostFrItemStockHeader>();
+		try {
+		 getCurrentMonthOfCatId = postFrOpStockHeaderRepository
 				.findByFrIdAndIsMonthClosed(frId, 0);
+		}catch (Exception e) {
+			System.err.println("Exce in getCurrentMonthOfCatId " +e.getMessage());
+			e.printStackTrace();
+		}
+
+		return getCurrentMonthOfCatId;
+
+	}
+	
+	//getCurrentMonthByCatIdFrId
+	@RequestMapping(value = "/getCurrentMonthByCatIdFrId", method = RequestMethod.POST)
+	public @ResponseBody PostFrItemStockHeader getCurrentMonthByCatIdFrId(@RequestParam("frId") int frId,
+			@RequestParam("catId") int catId) {
+		PostFrItemStockHeader getCurrentMonthOfCatId = new  PostFrItemStockHeader();
+		try {
+		 getCurrentMonthOfCatId = postFrOpStockHeaderRepository
+				.findByCatIdAndFrIdAndIsMonthClosed(catId, frId,0);
+		 
+		 System.err.println("getCurrentMonthByCatIdFrId " +getCurrentMonthOfCatId.toString());
+		}catch (Exception e) {
+			System.err.println("Exce in getCurrentMonthByCatIdFrId " +e.getMessage());
+			e.printStackTrace();
+		}
 
 		return getCurrentMonthOfCatId;
 
