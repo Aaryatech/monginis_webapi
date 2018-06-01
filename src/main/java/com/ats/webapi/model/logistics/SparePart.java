@@ -36,19 +36,19 @@ public class SparePart {
 	private Date sprDate1;
 	
 	@Column(name = "spr_rate1")
-	private int sprRate1;
+	private float sprRate1;
 	
 	@Column(name = "spr_date2")
 	private Date sprDate2;
 	
 	@Column(name = "spr_rate2")
-	private int sprRate2;
+	private float sprRate2;
 	
 	@Column(name = "spr_date3")
 	private Date sprDate3;
 	
 	@Column(name = "spr_rate3")
-	private int sprRate3;
+	private float sprRate3;
 	
 	@Column(name = "spr_iscritical")
 	private int sprIscritical;
@@ -128,11 +128,11 @@ public class SparePart {
 		this.sprDate1 = sprDate1;
 	}
 
-	public int getSprRate1() {
+	public float getSprRate1() {
 		return sprRate1;
 	}
 
-	public void setSprRate1(int sprRate1) {
+	public void setSprRate1(float sprRate1) {
 		this.sprRate1 = sprRate1;
 	}
 	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
@@ -144,11 +144,11 @@ public class SparePart {
 		this.sprDate2 = sprDate2;
 	}
 
-	public int getSprRate2() {
+	public float getSprRate2() {
 		return sprRate2;
 	}
 
-	public void setSprRate2(int sprRate2) {
+	public void setSprRate2(float sprRate2) {
 		this.sprRate2 = sprRate2;
 	}
 	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
@@ -160,11 +160,11 @@ public class SparePart {
 		this.sprDate3 = sprDate3;
 	}
 
-	public int getSprRate3() {
+	public float getSprRate3() {
 		return sprRate3;
 	}
 
-	public void setSprRate3(int sprRate3) {
+	public void setSprRate3(float sprRate3) {
 		this.sprRate3 = sprRate3;
 	}
 
