@@ -38,6 +38,7 @@ import com.ats.webapi.repository.logistics.AlertVeihcleServicingRepository;
 import com.ats.webapi.repository.logistics.LogisAmcRepository;
 import com.ats.webapi.repository.logistics.MachineServicingRepository;
 import com.ats.webapi.repository.logistics.MechTypeRepository;
+import com.ats.webapi.repository.logistics.SparePartRepository;
 import com.ats.webapi.repository.logistics.TrayManagementReportRepository;
 import com.ats.webapi.service.logistics.DealerService;
 import com.ats.webapi.service.logistics.DocumentService;
@@ -111,6 +112,9 @@ public class LogisticsApiController {
 	
 	@Autowired
 	TrayManagementReportRepository trayManagementReportRepository;
+	
+	@Autowired
+	SparePartRepository sparePartRepository;
 	
 	
 	@RequestMapping(value = { "/postDriverMaster" }, method = RequestMethod.POST)
@@ -850,6 +854,23 @@ public class LogisticsApiController {
 		try {
 			  
 			getAllSparePart = sparePartService.getAllSparePart(); 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return getAllSparePart;
+
+	}
+	@RequestMapping(value = { "/getLast50SparePart" }, method = RequestMethod.GET)
+	public @ResponseBody List<SparePart> getLast50SparePart()
+	{ 
+		
+		List<SparePart> getAllSparePart = new ArrayList<SparePart>();
+		try {
+			  
+			getAllSparePart = sparePartRepository.getLast50SparePart(); 
 		} catch (Exception e) {
 
 			e.printStackTrace();

@@ -22,6 +22,9 @@ public interface SparePartRepository extends JpaRepository<SparePart, Integer>{
 
 	SparePart findBySprId(int sprId);
 
-	List<SparePart> findAllByGroupIdAndDelStatus(int groupId, int delStatus); 
+	List<SparePart> findAllByGroupIdAndDelStatus(int groupId, int delStatus);
+
+	@Query(value="select * from m_logis_sprpart  p where p.del_status=0  order by spr_id DESC Limit 50",nativeQuery=true)
+	List<SparePart> getLast50SparePart(); 
 
 }

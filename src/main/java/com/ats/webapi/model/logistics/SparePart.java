@@ -57,7 +57,7 @@ public class SparePart {
 	private int delStatus;
 	
 	@Column(name = "spr_warranty_period")
-	private int sprWarrantyPeriod;
+	private float sprWarrantyPeriod;
 	
 	@Column(name = "make_id")
 	private int makeId;
@@ -75,10 +75,10 @@ public class SparePart {
 	private float igst;
 	
 	@Column(name = "disc")
-	private int disc;
+	private float disc;
 	
 	@Column(name = "extra_charges")
-	private int extraCharges;
+	private float extraCharges;
 
 	public int getSprId() {
 		return sprId;
@@ -184,11 +184,11 @@ public class SparePart {
 		this.delStatus = delStatus;
 	}
 
-	public int getSprWarrantyPeriod() {
+	public float getSprWarrantyPeriod() {
 		return sprWarrantyPeriod;
 	}
 
-	public void setSprWarrantyPeriod(int sprWarrantyPeriod) {
+	public void setSprWarrantyPeriod(float sprWarrantyPeriod) {
 		this.sprWarrantyPeriod = sprWarrantyPeriod;
 	}
 
@@ -233,19 +233,19 @@ public class SparePart {
 		this.igst = igst;
 	}
 
-	public int getDisc() {
+	public float getDisc() {
 		return disc;
 	}
 
-	public void setDisc(int disc) {
+	public void setDisc(float disc) {
 		this.disc = disc;
 	}
 
-	public int getExtraCharges() {
+	public float getExtraCharges() {
 		return extraCharges;
 	}
 
-	public void setExtraCharges(int extraCharges) {
+	public void setExtraCharges(float extraCharges) {
 		this.extraCharges = extraCharges;
 	}
 
