@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.logistics.AlertAmcRecord;
 import com.ats.webapi.model.logistics.AlertMachineServicingRecord;
@@ -38,6 +39,8 @@ import com.ats.webapi.repository.logistics.AlertVeihcleServicingRepository;
 import com.ats.webapi.repository.logistics.LogisAmcRepository;
 import com.ats.webapi.repository.logistics.MachineServicingRepository;
 import com.ats.webapi.repository.logistics.MechTypeRepository;
+import com.ats.webapi.repository.logistics.ServDetailRepository;
+import com.ats.webapi.repository.logistics.ServHeaderRepository;
 import com.ats.webapi.repository.logistics.SparePartRepository;
 import com.ats.webapi.repository.logistics.TrayManagementReportRepository;
 import com.ats.webapi.service.logistics.DealerService;
@@ -115,6 +118,12 @@ public class LogisticsApiController {
 	
 	@Autowired
 	SparePartRepository sparePartRepository;
+	
+	@Autowired 
+	ServHeaderRepository servHeaderRepository;
+	
+	@Autowired 
+	ServDetailRepository servDetailRepository;
 	
 	
 	@RequestMapping(value = { "/postDriverMaster" }, method = RequestMethod.POST)
@@ -1621,5 +1630,28 @@ public class LogisticsApiController {
 		} 
 		
 		return getTrayManagementReport; 
+	}
+	
+	@RequestMapping(value = { "/deleteServicing" }, method = RequestMethod.POST)
+	public @ResponseBody ErrorMessage deleteServicing(@RequestParam ("servId") int servId)
+	{ 
+		ErrorMessage errorMessage = new ErrorMessage();
+		
+		 
+		try {
+			  
+			servHeaderRepository.deleteServicing(servId);
+			servDetailRepository.deleteServicingDetail(servId);
+			errorMessage.setError(false);
+			errorMessage.setMessage("successfully Deleted ");
+		 
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return errorMessage;
+
 	}
 }

@@ -33,6 +33,12 @@ public interface ServHeaderRepository extends JpaRepository<ServHeader, Integer>
 	List<ServHeader> showServicingListBetweenDateAndFilter(@Param("fromDate")String fromDate, @Param("toDate")String toDate,@Param("type") int type,@Param("vehId") int vehId);
 
 	@Query(value="select * from m_logis_serv where (bill_date between :fromDate and :toDate) and type_id=:typeId",nativeQuery=true)
-	List<ServHeader> getServicingListBetweenDateByTypeId(@Param("fromDate")String fromDate, @Param("toDate")String toDate,@Param("typeId")int typeId); 
+	List<ServHeader> getServicingListBetweenDateByTypeId(@Param("fromDate")String fromDate, @Param("toDate")String toDate,@Param("typeId")int typeId);
+
+	
+	@Transactional
+	@Modifying
+	@Query(value="delete from ServHeader where serv_id =:servId ") 
+	void deleteServicing(@Param("servId")int servId); 
 
 }
