@@ -8,6 +8,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.Year;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
@@ -165,12 +166,77 @@ public class FrStockApiController {
 		System.out.println(" I/p : currentMonth: " + currentMonth);
 		System.out.println(" I/p : year: " + year);
 
+		PostFrItemStockHeader getCurrentMonthOfCatId = new PostFrItemStockHeader();
+		try {
+			getCurrentMonthOfCatId = postFrOpStockHeaderRepository.findByCatIdAndFrIdAndIsMonthClosed(catId, frId, 0);
+
+			System.err.println("getCurrentMonthByCatIdFrId " + getCurrentMonthOfCatId.toString());
+		} catch (Exception e) {
+			System.err.println("Exce in getCurrentMonthByCatIdFrId " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		int stockMonth = getCurrentMonthOfCatId.getMonth();
+
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+
+		int fromMonth = 0;
+
+		try {
+			Date d1 = df.parse(fromDateTime);
+			System.err.println("Date d1 in try " +d1);
+	
+
+			fromMonth = d1.getMonth();
+			System.err.println("From month from fromDate time String " +fromMonth);
+
+
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+
+		// LocalDate localDate =
+		// fromDate.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+		// int month = localDate.getMonthValue();
+
 		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
 
 		Date todaysDate = new Date();
 		System.out.println(dateFormat.format(todaysDate));
 
 		Calendar cal = Calendar.getInstance();
+
+		if (stockMonth < fromMonth) {
+			System.err.println("Stockl Month " + stockMonth);
+
+			System.err.println("From Month " + fromMonth);
+
+			System.err.println("stockMonth<fromMonth");
+
+			// cal.set(Calendar.MONTH, stockMonth);
+
+			todaysDate.setMonth(stockMonth);
+			currentMonth=stockMonth;
+			
+
+		} else {
+
+			System.err.println("Else block of fromMonth<s");
+
+			System.err.println("Stockl Month " + stockMonth);
+
+			System.err.println("From Month " + fromMonth);
+
+			//
+			// cal.set(Calendar.MONTH, fromMonth);
+			//
+			todaysDate.setMonth(fromMonth);
+			currentMonth=fromMonth;
+			currentMonth=currentMonth+1;
+		}
+
 		cal.setTime(todaysDate);
 
 		cal.set(Calendar.DAY_OF_MONTH, 1);
@@ -210,6 +276,17 @@ public class FrStockApiController {
 
 			int regOpStock = postFrItemStockDetail.getRegOpeningStock();
 			int spOpStock = postFrItemStockDetail.getSpOpeningStock();
+			
+			System.err.println(" Item ID " + itemId);
+
+
+			System.err.println(" total purchase " + totalPurchaseUptoDateTime.getReg());
+
+			System.err.println("total Sale " + totalSellUptoDateTime.getReg());
+
+			System.err.println("regOpStock " + regOpStock);
+
+			System.err.println("grnGvn" + grnGvn);
 
 			int regCurrentStock = (regOpStock + totalPurchaseUptoDateTime.getReg())
 					- (grnGvn + totalSellUptoDateTime.getReg());
@@ -735,28 +812,27 @@ public class FrStockApiController {
 
 		int calCurrentMonth = cal1.get(Calendar.MONTH) + 1;
 		System.out.println("Current Cal Month " + calCurrentMonth);
-		int prevMonth=0;
-		
-		if(calCurrentMonth==1) {
-			prevMonth=12;
-		}else {
-			prevMonth=calCurrentMonth-1;
+		int prevMonth = 0;
+
+		if (calCurrentMonth == 1) {
+			prevMonth = 12;
+		} else {
+			prevMonth = calCurrentMonth - 1;
 		}
-		
-		
+
 		// frOpStockHeaderRepository
 		List<PostFrItemStockHeader> frItemStockHeaderList = new ArrayList<>();
 
 		frItemStockHeaderList = frOpStockHeaderRepository.findByFrIdAndMonth(frId, prevMonth);
 		try {
-			for(PostFrItemStockHeader header: frItemStockHeaderList) {
-				
-				if(header.getIsMonthClosed()==0) {
-					
+			for (PostFrItemStockHeader header : frItemStockHeaderList) {
+
+				if (header.getIsMonthClosed() == 0) {
+
 					info.setError(true);
 					info.setMessage("month end process pending");
 				}
-				
+
 			}
 
 		} catch (Exception e) {
@@ -829,29 +905,27 @@ public class FrStockApiController {
 	public @ResponseBody List<PostFrItemStockHeader> getCurrentMonthOfCatId(@RequestParam("frId") int frId) {
 		List<PostFrItemStockHeader> getCurrentMonthOfCatId = new ArrayList<PostFrItemStockHeader>();
 		try {
-		 getCurrentMonthOfCatId = postFrOpStockHeaderRepository
-				.findByFrIdAndIsMonthClosed(frId, 0);
-		}catch (Exception e) {
-			System.err.println("Exce in getCurrentMonthOfCatId " +e.getMessage());
+			getCurrentMonthOfCatId = postFrOpStockHeaderRepository.findByFrIdAndIsMonthClosed(frId, 0);
+		} catch (Exception e) {
+			System.err.println("Exce in getCurrentMonthOfCatId " + e.getMessage());
 			e.printStackTrace();
 		}
 
 		return getCurrentMonthOfCatId;
 
 	}
-	
-	//getCurrentMonthByCatIdFrId
+
+	// getCurrentMonthByCatIdFrId
 	@RequestMapping(value = "/getCurrentMonthByCatIdFrId", method = RequestMethod.POST)
 	public @ResponseBody PostFrItemStockHeader getCurrentMonthByCatIdFrId(@RequestParam("frId") int frId,
 			@RequestParam("catId") int catId) {
-		PostFrItemStockHeader getCurrentMonthOfCatId = new  PostFrItemStockHeader();
+		PostFrItemStockHeader getCurrentMonthOfCatId = new PostFrItemStockHeader();
 		try {
-		 getCurrentMonthOfCatId = postFrOpStockHeaderRepository
-				.findByCatIdAndFrIdAndIsMonthClosed(catId, frId,0);
-		 
-		 System.err.println("getCurrentMonthByCatIdFrId " +getCurrentMonthOfCatId.toString());
-		}catch (Exception e) {
-			System.err.println("Exce in getCurrentMonthByCatIdFrId " +e.getMessage());
+			getCurrentMonthOfCatId = postFrOpStockHeaderRepository.findByCatIdAndFrIdAndIsMonthClosed(catId, frId, 0);
+
+			System.err.println("getCurrentMonthByCatIdFrId " + getCurrentMonthOfCatId.toString());
+		} catch (Exception e) {
+			System.err.println("Exce in getCurrentMonthByCatIdFrId " + e.getMessage());
 			e.printStackTrace();
 		}
 
