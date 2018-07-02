@@ -722,8 +722,8 @@ public class FrStockApiController {
 
 		Info info = new Info();
 
-		info.setError(true);
-		info.setMessage("month end process is pending");
+		info.setError(false);
+		info.setMessage("month end process completed");
 		DateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
 		Date date = new Date();
 		System.out.println(dateFormat1.format(date));
@@ -735,16 +735,28 @@ public class FrStockApiController {
 
 		int calCurrentMonth = cal1.get(Calendar.MONTH) + 1;
 		System.out.println("Current Cal Month " + calCurrentMonth);
-
+		int prevMonth=0;
+		
+		if(calCurrentMonth==1) {
+			prevMonth=12;
+		}else {
+			prevMonth=calCurrentMonth-1;
+		}
+		
+		
 		// frOpStockHeaderRepository
 		List<PostFrItemStockHeader> frItemStockHeaderList = new ArrayList<>();
 
-		frItemStockHeaderList = frOpStockHeaderRepository.findByFrIdAndMonth(frId, calCurrentMonth);
+		frItemStockHeaderList = frOpStockHeaderRepository.findByFrIdAndMonth(frId, prevMonth);
 		try {
-			if (frItemStockHeaderList.size() > 0) {
-				info.setError(false);
-				info.setMessage("month ended");
-
+			for(PostFrItemStockHeader header: frItemStockHeaderList) {
+				
+				if(header.getIsMonthClosed()==0) {
+					
+					info.setError(true);
+					info.setMessage("month end process pending");
+				}
+				
 			}
 
 		} catch (Exception e) {
