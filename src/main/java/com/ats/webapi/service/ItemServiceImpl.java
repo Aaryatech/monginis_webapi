@@ -283,6 +283,12 @@ public class ItemServiceImpl implements ItemService{
 		List<Item> items=itemRepository.findAllItems(itemList);	
 		return items;
 	}
+ 
+	@Override
+	public List<Item> getItemsByCatIdForGateSale(String itemGrp1) {
+		List<Item> items=itemRepository.getItemsByCatIdForGateSale(itemGrp1);
+		return items;
+	}
 
 	
 

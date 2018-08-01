@@ -43,4 +43,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	
 	public List<Item>  findByItemGrp2OrderByItemGrp2(String subCatId);
 	
+	@Query(value="select m.* from m_item m,m_item_sup s where m.id = s.item_id and s.is_gate_sale = 1 and m.del_status=0 and item_grp1 =:itemGrp1",nativeQuery=true)
+	public List<Item> getItemsByCatIdForGateSale(@Param("itemGrp1")String itemGrp1);
+	
 } 

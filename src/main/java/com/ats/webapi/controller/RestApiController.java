@@ -2707,6 +2707,15 @@ public class RestApiController {
 		return items;
 
 	}
+	
+	
+	@RequestMapping(value = "/getItemsByCatIdForGateSale", method = RequestMethod.POST)
+	public @ResponseBody List<Item> getItemsByCatIdForGateSale(@RequestParam String itemGrp1) {
+
+		List<Item> items = itemService.getItemsByCatIdForGateSale(itemGrp1);
+		return items;
+
+	}
 
 	// Get Items By Category order by sub cat and sort id
 	@RequestMapping(value = "/getItemsByCatIdAndSortId", method = RequestMethod.POST)
