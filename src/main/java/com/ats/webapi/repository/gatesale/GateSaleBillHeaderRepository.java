@@ -40,5 +40,10 @@ public interface GateSaleBillHeaderRepository extends JpaRepository<GateSaleBill
 		int updateCollectGetSaleAmtOfBill(@Param("collectedDate")String collectedDate,@Param("collectedUserId") int collectedUserId,@Param("amtIsCollected") int amtIsCollected,
 				@Param("billIds")List<Integer> billIds);
 
+	    @Transactional
+			@Modifying
+			@Query("UPDATE GateSaleBillHeader  SET del_status=1 where  bill_id In(:billIdList)")
+		int deleteGateSaleBills(@Param("billIdList")List<Integer> billIdList);
+
 	    
 }

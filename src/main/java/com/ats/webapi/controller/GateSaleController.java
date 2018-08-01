@@ -30,6 +30,7 @@ import com.ats.webapi.model.gatesale.OtherItem;
 import com.ats.webapi.model.gatesale.OtherItemList;
 import com.ats.webapi.model.gatesale.OtherSupplier;
 import com.ats.webapi.model.gatesale.OtherSupplierList;
+import com.ats.webapi.repository.gatesale.GateSaleBillHeaderRepository;
 import com.ats.webapi.service.FrItemStockConfigureService;
 import com.ats.webapi.service.gatesale.GateSaleService;
 
@@ -39,6 +40,10 @@ public class GateSaleController {
 
 	@Autowired
 	GateSaleService gateSaleService;
+	
+	@Autowired
+	GateSaleBillHeaderRepository gateSaleBillHeaderRepository;
+	
 	@Autowired
 	FrItemStockConfigureService frItemStockConfigureService;
 	//----------------------Save Gate Sale User------------------------------------
@@ -171,6 +176,26 @@ public class GateSaleController {
 			return errorMessage;
 		}
 		//--------------------------END--------------------------------------------------
+		// deleteGateSaleBill
+		@RequestMapping(value = "/deleteGateSaleBill", method = RequestMethod.POST)
+		public @ResponseBody ErrorMessage deleteGateSaleBills(@RequestParam List<Integer> billIdList) {
+
+			ErrorMessage errorMessage=new ErrorMessage();
+			
+			int isUpdated = gateSaleBillHeaderRepository.deleteGateSaleBills(billIdList);
+			if(isUpdated>=1) {
+				
+				errorMessage.setError(false);
+				errorMessage.setMessage("Bills Deleted Successfully");
+				}
+				else
+				{
+					errorMessage.setError(false);
+					errorMessage.setMessage("Bills Deletion Failed");
+					
+				}
+				return errorMessage;
+		}
 		//--------------------------Delete GateEmployee--------------------------------------------------
 		@RequestMapping(value = { "/deleteGateEmployee" }, method = RequestMethod.POST)
 		public @ResponseBody ErrorMessage deleteGateEmployee(@RequestParam("empId")int empId)

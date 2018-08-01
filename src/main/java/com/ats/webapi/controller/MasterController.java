@@ -1,6 +1,9 @@
 package com.ats.webapi.controller;
 
+import static org.mockito.Matchers.contains;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Firebase;
 import com.ats.webapi.model.CategoryList;
+import com.ats.webapi.model.ConfigureFranchisee;
 import com.ats.webapi.model.FrListForSupp;
 import com.ats.webapi.model.FrTarget;
 import com.ats.webapi.model.FrTargetList;
@@ -28,17 +32,22 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
+import com.ats.webapi.model.PostFrItemStockDetail;
+import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.RegularSpCkOrders;
 import com.ats.webapi.model.SpCake;
 import com.ats.webapi.model.SpCakeSupplement;
 import com.ats.webapi.model.SubCategory;
 import com.ats.webapi.model.tally.FranchiseeList;
 import com.ats.webapi.model.tray.TrayType;
+import com.ats.webapi.repository.ConfigureFrRepository;
 import com.ats.webapi.repository.FrListForSuppRepository;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
 import com.ats.webapi.repository.GetSubCategoryRepository;
 import com.ats.webapi.repository.ItemRepository;
+import com.ats.webapi.repository.PostFrOpStockDetailRepository;
+import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
 import com.ats.webapi.repository.SpCakeListRepository;
 import com.ats.webapi.repository.SpCkDeleteOrderRepository;
 import com.ats.webapi.repository.SubCategoryRepository;
@@ -84,7 +93,18 @@ public class MasterController {
 	
 	@Autowired
 	GetSubCategoryRepository getSubCategoryRepository;
+
 	
+	@Autowired
+	ConfigureFrRepository configureFrRepository;
+	
+
+	@Autowired
+	PostFrOpStockHeaderRepository postFrOpStockHeaderRepository;
+
+	
+	@Autowired
+	PostFrOpStockDetailRepository postFrOpStockDetailRepository;
 	// ----------------------------GET FrToken--------------------------------
 	@RequestMapping(value = { "/getFrToken" }, method = RequestMethod.POST)
 	public @ResponseBody String getFrToken(@RequestParam("frId") int frId) {
@@ -579,4 +599,86 @@ public class MasterController {
 					return subCategoryList;
 
 				}
+				  public static boolean contains(int[] arr, int item) {
+				      for (int n : arr) {
+				         if (item == n) {
+				            return true;
+				         }
+				      }
+				      return false;
+				   }
+				@RequestMapping(value = "/updateConfiguredItems", method = RequestMethod.POST)
+				public @ResponseBody Info updateConfiguredItems(@RequestParam List<String> frIdList,@RequestParam int menuId,@RequestParam List<String> itemIdList,@RequestParam int catId)
+				{
+					Info info=new Info();
+					try {
+						for(String frId:frIdList)
+						{
+							
+						 ConfigureFranchisee configureFr=configureFrRepository.findByFrIdAndMenuIdAndDelStatus(Integer.parseInt(frId),menuId,0);
+						
+						 if(configureFr!=null) {
+						 String itemShow=configureFr.getItemShow();
+						 int[] intArray = null;
+						 try {
+						  intArray = Arrays.stream(itemShow.split(","))
+								    .mapToInt(Integer::parseInt)
+								    .toArray();
+						 }
+						 catch (Exception e) {
+							e.printStackTrace();
+						}
+						  for(String itemId:itemIdList)
+						  {
+							  if(intArray.length!=0)
+							  {
+							  if(!contains(intArray, Integer.parseInt(itemId)))
+							  {
+						     	itemShow=itemShow+","+itemId;
+							  }
+							  }
+						  }
+						  configureFr.setItemShow(itemShow);
+						  
+						  ConfigureFranchisee configureFranchiseeReport=configureFrRepository.save(configureFr);
+						 
+						  try {
+
+							  PostFrItemStockHeader stockHeader=postFrOpStockHeaderRepository.findByFrIdAndCatIdAndIsMonthClosed(Integer.parseInt(frId),catId,0);
+
+							  if(stockHeader!=null)
+							  {				  
+
+							  for(String itemId:itemIdList)
+							  {
+								 
+								  PostFrItemStockDetail stockDetailRes=postFrOpStockDetailRepository.findByOpeningStockHeaderIdAndItemId(stockHeader.getOpeningStockHeaderId(),Integer.parseInt(itemId));
+							  
+								  if(stockDetailRes==null)
+									  {
+									    PostFrItemStockDetail stockDetail=new PostFrItemStockDetail();
+							            stockDetail.setOpeningStockHeaderId(stockHeader.getOpeningStockHeaderId());
+							            stockDetail.setItemId(Integer.parseInt(itemId));		  
+							            postFrOpStockDetailRepository.save(stockDetail);
+									  }
+							  }
+							  }
+							  
+						  }catch (Exception e) {
+							e.printStackTrace();
+						}
+						 }
+						  
+						}
+						info.setError(false);
+						info.setMessage("CF Updated");
+					}catch (Exception e) {
+						e.printStackTrace();
+						info.setError(true);
+						info.setMessage("CF Updation Failed");
+					}
+					
+					return info;
+				}
+		           
 }
