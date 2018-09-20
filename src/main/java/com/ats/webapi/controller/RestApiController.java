@@ -3769,12 +3769,12 @@ public class RestApiController {
 	}
 
 	// 18 sept sachin
-	@RequestMapping(value = { "/showOrderCounts" }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/showOrderCounts" }, method = RequestMethod.POST)
 	@ResponseBody
-	public OrderCountsList showOrderCounts() {
-
+	public OrderCountsList showOrderCounts(@RequestParam String cDate) {
+/*
 		java.sql.Date cDate = new java.sql.Date(Calendar.getInstance().getTime().getTime());
-		System.out.println("date " + cDate);
+		System.out.println("date " + cDate);*/
 
 		List<OrderCounts> orderCountList = orderCountService.findOrderCount(cDate);
 
