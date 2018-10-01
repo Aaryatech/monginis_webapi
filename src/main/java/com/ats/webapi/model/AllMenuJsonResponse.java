@@ -2,7 +2,7 @@ package com.ats.webapi.model;
 
 import java.util.List;
 
-public class AllMenuJsonResponse {
+public class AllMenuJsonResponse{
 
 	private List<AllMenus> menuConfigurationPage;
 

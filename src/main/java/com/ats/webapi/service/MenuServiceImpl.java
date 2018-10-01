@@ -102,4 +102,20 @@ public class MenuServiceImpl implements MenuService{
 		menuJsonResponse.setErrorMessage(errorMessage);
 		return menuJsonResponse;
 	}
+
+
+
+	@Override
+	public List<AllMenus> findByCatIdAndIsSameDayApp(int catId, int isSameDayAppl) {
+		 List<AllMenus> menus=new ArrayList<AllMenus>();
+		 menus=mainMenuConfigurationRepository.findByCatIdAndIsSameDayApp(catId, isSameDayAppl);
+		 AllMenuJsonResponse menuJsonResponse=new AllMenuJsonResponse();
+
+		menuJsonResponse.setMenuConfigurationPage(menus);
+		ErrorMessage errorMessage=new ErrorMessage();
+		errorMessage.setError(false);
+		errorMessage.setMessage("Menus displayed successfully");
+		menuJsonResponse.setErrorMessage(errorMessage);
+		return menus;
+	}
 }

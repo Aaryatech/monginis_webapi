@@ -12,4 +12,6 @@ public interface MenuService {
 	public AllMenuJsonResponse findMenuByCat(int catId);
 	public AllMenus findMenu(int menuId);
 
+	
+	public List<AllMenus> findByCatIdAndIsSameDayApp(int catId,int isSameDayAppl);
 }

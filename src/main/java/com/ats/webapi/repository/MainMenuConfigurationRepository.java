@@ -23,4 +23,8 @@ public interface MainMenuConfigurationRepository extends JpaRepository<AllMenus,
 	@Query(value="select menu_id from m_fr_menu_show where cat_id=:catId",nativeQuery=true)
 	public List<Integer> findMenuIdByMainCatId(@Param("catId")int catId);
 
+	
+	@Query(value="SELECT m_fr_menu_show.* from m_fr_menu_show WHERE m_fr_menu_show.cat_id=:catId AND m_fr_menu_show.is_same_day_applicable=:isSameDayAppl",nativeQuery=true)
+	public List<AllMenus> findByCatIdAndIsSameDayApp(@Param("catId") int catId, @Param("isSameDayAppl")int isSameDayAppl);
+
 }
