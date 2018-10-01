@@ -46,17 +46,43 @@ public class PurchaseOrderServiceImlp implements PurchaseOrderService{
 		pOHeader=purchaseOrderHeaderRepository.save(purchaseOrderHeader);
 		
 		int headerId=pOHeader.getPoId();
-		
-		//PurchaseOrderDetail PurchaseOrderDetail=new PurchaseOrderDetail();
-		//List<PurchaseOrderDetail> purchaseOrderDetailList=purchaseOrderHeader.getPurchaseOrderDetail();
+		int grpId=pOHeader.getUserId();
+		List<Integer> itemList=new ArrayList<Integer>();
+		/*
 		System.out.println("purchaseOrderHeader"+purchaseOrderHeader.toString());
 		System.out.println("purchaseOrderHeader"+purchaseOrderHeader.getPurchaseOrderDetail().toString());
-		
+		*/
 		for(int i=0;i<purchaseOrderHeader.getPurchaseOrderDetail().size();i++)
 		{
 			PurchaseOrderDetail purchaseOrderDetail=purchaseOrderHeader.getPurchaseOrderDetail().get(i);
 			purchaseOrderDetail.setPoId(headerId);
+			itemList.add(purchaseOrderDetail.getRmId());
 			purchaseOrderDetailRepository.save(purchaseOrderDetail);
+		}
+		if(pOHeader.getPoStatus()==0) {
+		if(grpId==4 || grpId==5)
+		{
+			System.err.println("St0=4||5 Item"+itemList.toString());
+			int resp=purchaseOrderHeaderRepository.updateItemStatus(1, itemList);
+			
+		}else
+		{
+			System.err.println("St0=1,2,3 Item"+itemList.toString());
+			int resp=purchaseOrderHeaderRepository.updateRmStatus(1, itemList);
+
+		}
+		}else if(pOHeader.getPoStatus()==5) {
+			if(grpId==4 || grpId==5)
+			{
+				System.err.println("St5=4||5 Item"+itemList.toString());
+				int resp=purchaseOrderHeaderRepository.updateItemStatus(0, itemList);
+
+			}else
+			{
+				System.err.println("St5=1,2,3 Item"+itemList.toString());
+				int resp=purchaseOrderHeaderRepository.updateRmStatus(0, itemList);
+
+			}
 		}
 		Info info=new Info();
 		if(pOHeader!=null)
@@ -227,20 +253,25 @@ public class PurchaseOrderServiceImlp implements PurchaseOrderService{
 
 
 	@Override
-	public GetRmRateAndTax getRmDetailById(int rmId, int suppId) {
+	public GetRmRateAndTax getRmDetailById(int rmId, int suppId,int grpId) {
 		 
-		GetRmRateAndTax getRmRateAndTax=null;
-		GetRmRateAndTax getRmRateAndTax1=getRmRateAndTaxRepository.getRmDetailById(rmId,suppId);
+		GetRmRateAndTax getRmRateAndTax1=null;
+		if(grpId==4||grpId==5)
+		{
+			getRmRateAndTax1=getRmRateAndTaxRepository.getRmDetailByItemId(rmId, suppId);
+		}else {
+		 getRmRateAndTax1=getRmRateAndTaxRepository.getRmDetailById(rmId,suppId);
+		}
+		
 		if(getRmRateAndTax1==null)
 		{
 			System.out.println("List is null");
 		}
 		else {
-			getRmRateAndTax = getRmRateAndTax1;
 			System.out.println("List  :  "+getRmRateAndTax1.toString());
 		}
 		
-		return getRmRateAndTax;
+		return getRmRateAndTax1;
 	}
 
  

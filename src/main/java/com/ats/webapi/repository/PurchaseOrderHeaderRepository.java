@@ -32,4 +32,16 @@ public interface PurchaseOrderHeaderRepository extends JpaRepository<PurchaseOrd
 
 	@Query(value=" select * from t_purchase_order_header where del_status=0 and  po_date between :fromDate and :toDate and po_status in (:status)",nativeQuery=true)
 	List<PurchaseOrderHeader> getDateWisePerchaseOrderList(@Param("status")List<String> status,@Param("fromDate") String fromDate,@Param("toDate") String toDate);
+
+	
+	@Modifying
+	@Transactional
+	@Query(value="update m_rm set rm_clo_qty=:status where rm_id IN(:itemList)",nativeQuery=true)
+	public Integer updateRmStatus(@Param("status")int status,@Param("itemList")List<Integer> itemList);
+
+	@Modifying
+	@Transactional
+	@Query(value="update m_item_sup set is_tally_sync=:status where item_id IN(:itemList)",nativeQuery=true)
+	int updateItemStatus(@Param("status")int status,@Param("itemList")List<Integer> itemList);
+
 }

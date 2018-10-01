@@ -1,5 +1,6 @@
 package com.ats.webapi.service.storestock;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -57,34 +58,54 @@ public class StoreStockServiceImpl implements StoreStockService{
 	}
 
 	@Override
-	public List<StoreStockDetail> getMonthWiseStoreStock(String fromDate, String toDate) {
+	public List<StoreStockDetail> getMonthWiseStoreStock(String fromDate, String toDate,int grpId) {
 		 
-		List<StoreStockDetail> storeStockDetailList= storeStockDetailRepository.getMonthWiseSoreStock(fromDate,toDate);
+		List<StoreStockDetail> storeStockDetailList= storeStockDetailRepository.getMonthWiseSoreStock(fromDate,toDate,grpId);
 		
 		return storeStockDetailList;
 	}
 
 	@Override
-	public List<GetStoreCurrentStock> getCurrentStock(int deptId) {
+	public List<GetStoreCurrentStock> getCurrentStock(int grpId,int deptId) {
+		List<GetStoreCurrentStock> getStoreCurrentStockList=new ArrayList<GetStoreCurrentStock>();
 
+		if(grpId==4)
+		{
+			 getStoreCurrentStockList=getStoreCurrentStockRepository.getCurrentStockGrp2(18);
+			 for(int i=0;i<getStoreCurrentStockList.size();i++)
+				{
+					float closingQty=getStoreCurrentStockList.get(i).getStoreOpeningStock()-getStoreCurrentStockList.get(i).getBmsIssueQty()+getStoreCurrentStockList.get(i).getPurRecQty();
+					getStoreCurrentStockList.get(i).setStoreClosingStock(closingQty);
+				}
 
-		List<GetStoreCurrentStock> getStoreCurrentStockList=getStoreCurrentStockRepository.getCurrentStock(deptId);
+		}else if(grpId==5)
+		{
+			 getStoreCurrentStockList=getStoreCurrentStockRepository.getCurrentStockGrp2(19);
+			 for(int i=0;i<getStoreCurrentStockList.size();i++)
+				{
+					float closingQty=getStoreCurrentStockList.get(i).getStoreOpeningStock()-getStoreCurrentStockList.get(i).getBmsIssueQty()+getStoreCurrentStockList.get(i).getPurRecQty();
+					getStoreCurrentStockList.get(i).setStoreClosingStock(closingQty);
+				}
+
+		}else
+		{
+		 getStoreCurrentStockList=getStoreCurrentStockRepository.getCurrentStock(grpId,deptId);
 		for(int i=0;i<getStoreCurrentStockList.size();i++)
 		{
 			float closingQty=getStoreCurrentStockList.get(i).getStoreOpeningStock()-getStoreCurrentStockList.get(i).getBmsIssueQty()+getStoreCurrentStockList.get(i).getPurRecQty();
 			getStoreCurrentStockList.get(i).setStoreClosingStock(closingQty);
 		}
-		
+		}
 		return getStoreCurrentStockList;
 	}
 
 	@Override
-	public StoreStockHeader getCurrentStockHeader(int status) {
+	public StoreStockHeader getCurrentStockHeader(int subCatId,int status) {
 		
 		StoreStockHeader storeStockHeader = new StoreStockHeader();
 		try
 		{
-		 storeStockHeader=storeStockHeaderRepository.findByStoreStockStatus(status);
+		 storeStockHeader=storeStockHeaderRepository.findByExInt1AndStoreStockStatus(subCatId,status);
 		
 		if(storeStockHeader!=null)
 		{
@@ -99,6 +120,40 @@ public class StoreStockServiceImpl implements StoreStockService{
 		}
 		
 		return storeStockHeader;
+	}
+
+	@Override
+	public List<GetStoreCurrentStock> getCurrentStockReport(int grpId, int deptId) {
+		List<GetStoreCurrentStock> getStoreCurrentStockList=new ArrayList<GetStoreCurrentStock>();
+
+		if(grpId==4)
+		{
+			 getStoreCurrentStockList=getStoreCurrentStockRepository.getCurrentStockGrp2Report(18);
+			 for(int i=0;i<getStoreCurrentStockList.size();i++)
+				{
+					float closingQty=getStoreCurrentStockList.get(i).getStoreOpeningStock()-getStoreCurrentStockList.get(i).getBmsIssueQty()+getStoreCurrentStockList.get(i).getPurRecQty();
+					getStoreCurrentStockList.get(i).setStoreClosingStock(closingQty);
+				}
+
+		}else if(grpId==5)
+		{
+			 getStoreCurrentStockList=getStoreCurrentStockRepository.getCurrentStockGrp2Report(19);
+			 for(int i=0;i<getStoreCurrentStockList.size();i++)
+				{
+					float closingQty=getStoreCurrentStockList.get(i).getStoreOpeningStock()-getStoreCurrentStockList.get(i).getBmsIssueQty()+getStoreCurrentStockList.get(i).getPurRecQty();
+					getStoreCurrentStockList.get(i).setStoreClosingStock(closingQty);
+				}
+
+		}else
+		{
+		 getStoreCurrentStockList=getStoreCurrentStockRepository.getCurrentStockReport(grpId,deptId);
+		for(int i=0;i<getStoreCurrentStockList.size();i++)
+		{
+			float closingQty=getStoreCurrentStockList.get(i).getStoreOpeningStock()-getStoreCurrentStockList.get(i).getBmsIssueQty()+getStoreCurrentStockList.get(i).getPurRecQty();
+			getStoreCurrentStockList.get(i).setStoreClosingStock(closingQty);
+		}
+		}
+		return getStoreCurrentStockList;
 	}
 	
 	

@@ -18,12 +18,14 @@ import com.ats.webapi.model.GetPoHeaderForPdf;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.purchaseorder.GetPurchaseOrderList;
 import com.ats.webapi.model.purchaseorder.GetRmRateAndTax;
+import com.ats.webapi.model.purchaseorder.PoDetailsByChkSupp;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderDetail;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderDetailedList;
 import com.ats.webapi.model.purchaseorder.PurchaseOrderHeader;
 import com.ats.webapi.model.purchaseorder.TransporterDetails;
 import com.ats.webapi.repository.GetPoDetailedForPdfRepository;
 import com.ats.webapi.repository.GetPoDetailedPdfRepository;
+import com.ats.webapi.repository.PoDetailsByChkSuppRepository;
 import com.ats.webapi.repository.PurchaseOrderDetailRepository;
 import com.ats.webapi.repository.PurchaseOrderHeaderRepository;
 import com.ats.webapi.service.FrItemStockConfigureService;
@@ -50,7 +52,30 @@ public class PurchaseOrderApiController {
 	@Autowired
 	GetPoDetailedPdfRepository getPoDetailedPdfRepository;
 
+	@Autowired
+	PoDetailsByChkSuppRepository poDetailsByChkSuppRepository;
 	
+	@RequestMapping(value = { "/poDetailsByChkSuppList" }, method = RequestMethod.POST)
+	public List<PoDetailsByChkSupp> poDetailsByChkSuppList(@RequestParam("suppId")int suppId,@RequestParam("grpId")int grpId)
+	{
+		 List<PoDetailsByChkSupp> poDetailByChkSuppList = null; 
+		 try {
+			 if(grpId==4 || grpId==5) {
+				 
+				 poDetailByChkSuppList = poDetailsByChkSuppRepository.getPoItemDetailsBySuppId(suppId,grpId);
+
+			 }else {
+			 poDetailByChkSuppList = poDetailsByChkSuppRepository.getPoDetailsBySuppId(suppId,grpId);
+			 }
+		 }
+		 catch (Exception e) {
+			e.printStackTrace();
+		}
+		 
+		 return poDetailByChkSuppList;
+		
+		
+	}
 	//----------------------Get Data Of Raw Material Item Categories---------------
 		@RequestMapping(value = { "/insertPurchaseOrder" }, method = RequestMethod.POST)
 		public Info insertPurchaseOrder(@RequestBody  PurchaseOrderHeader purchaseOrderHeader)throws ParseException, JsonParseException, JsonMappingException, IOException 
@@ -161,9 +186,9 @@ public class PurchaseOrderApiController {
  
  
 		@RequestMapping(value = { "/getRmDetailByRmId" }, method = RequestMethod.POST)
-		public GetRmRateAndTax getRmDetailByRmId(@RequestParam("rmId")int rmId, @RequestParam("suppId")int suppId )
+		public GetRmRateAndTax getRmDetailByRmId(@RequestParam("rmId")int rmId, @RequestParam("suppId")int suppId,@RequestParam("grpId")int grpId )
 		{
-			GetRmRateAndTax getRmRateAndTax= purchaseOrderService.getRmDetailById(rmId, suppId);
+			GetRmRateAndTax getRmRateAndTax= purchaseOrderService.getRmDetailById(rmId, suppId,grpId);
 			
 			 
 			return getRmRateAndTax;

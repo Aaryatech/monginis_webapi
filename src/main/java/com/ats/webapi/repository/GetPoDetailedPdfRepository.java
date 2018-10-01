@@ -28,7 +28,7 @@ public interface GetPoDetailedPdfRepository extends JpaRepository<GetPoDetailedF
 			"where\r\n" + 
 			"p.po_id=:poId\r\n" + 
 			"and ru.uom_id=p.rm_uom_id\r\n" + 
-			"and rm.rm_id=p.rm_id",nativeQuery=true)
+			"and rm.rm_id=p.rm_id and p.del_status=0",nativeQuery=true)
 	List<GetPoDetailedForPdf> purchaseOrderDetaillist(@Param("poId")int poId);
 
 }

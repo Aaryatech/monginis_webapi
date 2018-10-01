@@ -34,6 +34,9 @@ import com.ats.webapi.model.rawmaterial.RmItemGroup;
 import com.ats.webapi.model.rawmaterial.RmItemSubCatList;
 import com.ats.webapi.model.rawmaterial.RmItemSubCategory;
 import com.ats.webapi.model.rawmaterial.RmRateVerification;
+import com.ats.webapi.repository.GetRawMaterialByGroupRepository;
+import com.ats.webapi.repository.RawMaterialDetailsRepository;
+import com.ats.webapi.repository.RmItemGroupRepostitory;
 import com.ats.webapi.repository.RmRateVerificationListRepository;
 import com.ats.webapi.service.rawmaterial.RawMaterialService;
 
@@ -43,9 +46,14 @@ public class RawMaterialApiCotroller {
 
 	@Autowired
 	RawMaterialService rawMaterialService;
-	
+	@Autowired
+	GetRawMaterialByGroupRepository getRawMaterialByGroupRepository;
+	@Autowired
+	RmItemGroupRepostitory rmItemGroupRepostitory;
 	@Autowired
 	RmRateVerificationListRepository rmRateVerificationListRepository;
+	@Autowired
+	RawMaterialDetailsRepository rawMaterialDetailsRepository;
 	//----------------------Get Data Of Raw Material Item Categories---------------
 	@RequestMapping(value = { "/showRmItemCategories" }, method = RequestMethod.GET)
 	public @ResponseBody RmItemCatList showRmItemCategories() {
@@ -209,6 +217,14 @@ public class RawMaterialApiCotroller {
 			 
 			
 		}
+		@RequestMapping(value = { "/getRawMaterialDetailByGroupSupp" }, method = RequestMethod.POST)
+		public @ResponseBody List<GetRawMaterialByGroup> getRawMaterialDetailByGroupSupp(@RequestParam ("grpId")int grpId,@RequestParam ("suppId")int suppId)
+		{
+			List<GetRawMaterialByGroup> getRawMaterialByGroupList=getRawMaterialByGroupRepository.getRawMaterialDetailByGroupSupp(grpId,suppId);
+			return getRawMaterialByGroupList;
+			 
+			
+		}
 	//-------------------------------getCategory-----------------------------------------------
 	@RequestMapping(value = { "/getRmItemCategories" }, method = RequestMethod.POST)
 	public @ResponseBody List<RmItemCategory> getRmItemCategories(@RequestParam("grpId")int grpId)
@@ -225,6 +241,41 @@ public class RawMaterialApiCotroller {
 		List<RmItemGroup> rmItemGroupList=rawMaterialService.getAllGroup();
 		return rmItemGroupList;
 	}
+	@RequestMapping(value = { "/getAllRawMaterialByGroup" }, method = RequestMethod.POST)
+	public @ResponseBody RawMaterialDetailsList getAllRawMaterialByGroup(@RequestParam("grpId")int grpId )
+	{
+		RawMaterialDetailsList rawMaterialDetails=new RawMaterialDetailsList();
+		ErrorMessage errorMessage;
+		List<RawMaterialDetails> rawMaterialDetailsList=rawMaterialDetailsRepository.findByGrpIdAndDelStatus(grpId, 0);
+		
+		if(rawMaterialDetailsList!=null)
+		{
+			errorMessage=new ErrorMessage();
+			errorMessage.setError(false);
+			errorMessage.setMessage("RM Details Found Successfully");
+			
+			rawMaterialDetails.setErrorMessage(errorMessage);
+			rawMaterialDetails.setRawMaterialDetailsList(rawMaterialDetailsList);
+		}
+		else
+		{
+			errorMessage=new ErrorMessage();
+			errorMessage.setError(true);
+			errorMessage.setMessage("RM Details Not Found");
+			
+			rawMaterialDetails.setErrorMessage(errorMessage);
+		}
+		return rawMaterialDetails;
+		 
+		
+	}
+	//--------------------------------------------------------------------
+		@RequestMapping(value = { "/getRmItemGroup" }, method = RequestMethod.POST)
+		public @ResponseBody List<RmItemGroup> getRmItemGroup(@RequestParam("suppId")int suppId)
+		{
+			List<RmItemGroup> rmItemGroupList=rmItemGroupRepostitory.getGroupBySupp(suppId);
+			return rmItemGroupList;
+		}
 	//-----------------------------------get RM UOM--------------------------
 	@RequestMapping(value = { "/getRmUom" }, method = RequestMethod.GET)
 	public @ResponseBody List<RawMaterialUom> getRmUom()
@@ -265,10 +316,10 @@ public class RawMaterialApiCotroller {
 	//---------------------------------------getRateVerification------------------------------
 	
 	@RequestMapping(value = { "/getRmRateVerification" }, method = RequestMethod.POST)
-	public @ResponseBody RmRateVerification getRmRateVerification(@RequestParam("suppId")int suppId, @RequestParam("rmId")int rmId)
+	public @ResponseBody RmRateVerification getRmRateVerification(@RequestParam("suppId")int suppId, @RequestParam("rmId")int rmId,@RequestParam("grpId")int grpId)
 	{
 		
-		return rawMaterialService.getRmRateTaxVerification(suppId, rmId);
+		return rawMaterialService.getRmRateTaxVerification(suppId, rmId,grpId);
 	}
 	
 	@RequestMapping(value = { "/getRmRateVerificationList" }, method = RequestMethod.POST)
@@ -371,9 +422,9 @@ public class RawMaterialApiCotroller {
 	//-------------------------getRmTax------------------------------
 	
 	@RequestMapping(value = { "/getUomAndTax" }, method = RequestMethod.POST)
-	public @ResponseBody GetUomAndTax getUomAndTax(@RequestParam("rmId")int rmId)
+	public @ResponseBody GetUomAndTax getUomAndTax(@RequestParam("rmId")int rmId,@RequestParam("grpId")int grpId)
 	{
-		GetUomAndTax getUomAndTax=rawMaterialService.getUomAndTax( rmId);
+		GetUomAndTax getUomAndTax=rawMaterialService.getUomAndTax(rmId,grpId);
 		return getUomAndTax;
 	}
 	//-----------------------------------Delete RM Tax--------------------------

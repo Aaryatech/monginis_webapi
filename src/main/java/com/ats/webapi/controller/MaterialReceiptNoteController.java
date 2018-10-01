@@ -196,5 +196,31 @@ public class MaterialReceiptNoteController {
 		return itemRateByRmIdAndSuppId;
 
 	}
+	@RequestMapping(value = { "/getRateByRmIdGrp" }, method = RequestMethod.POST)
+	public @ResponseBody ItemRateByRmIdAndSuppId getRateByRmIdGrp(@RequestParam("rmId")List<String> rmId,@RequestParam("suppId")int suppId,@RequestParam("grpId")int grpId)
+	{
+		ItemRateByRmIdAndSuppId itemRateByRmIdAndSuppId = new ItemRateByRmIdAndSuppId();
+		try
+		{
+			
+			List<GetItemRateByRmIdAndSuppId> getItemRateByRmIdAndSuppId = new ArrayList<GetItemRateByRmIdAndSuppId>();
+            if(grpId==4||grpId==5) {
+			getItemRateByRmIdAndSuppId = getItemRateByRmIdAndSuppIdRepository.getRateByRmIdAndGrp(rmId,suppId);
+            }
+            else
+            {
+    			getItemRateByRmIdAndSuppId = getItemRateByRmIdAndSuppIdRepository.getRateByRmId(rmId,suppId);
+
+            }
+			itemRateByRmIdAndSuppId.setItemRateByRmIdAndSuppId(getItemRateByRmIdAndSuppId);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+
+		return itemRateByRmIdAndSuppId;
+
+	}
 	
 }

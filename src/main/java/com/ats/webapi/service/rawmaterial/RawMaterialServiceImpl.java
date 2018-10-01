@@ -449,9 +449,9 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	}
 
 	@Override
-	public RmRateVerification getRmRateTaxVerification(int suppId, int rmId) {
+	public RmRateVerification getRmRateTaxVerification(int suppId, int rmId,int grpId) {
 	
-		RmRateVerification rmRateVerification=rmRateVerificationRepository.getRmTaxVer(suppId, rmId);
+		RmRateVerification rmRateVerification=rmRateVerificationRepository.getRmTaxVer(suppId, rmId,grpId);
 		
 		if(rmRateVerification!=null)
 		{
@@ -464,7 +464,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 			  
 		}
 		else
-		{
+		{int taxId=0;
 			System.out.println("Error in Rate Verification or not found ");
 			rmRateVerification=new RmRateVerification();
 			rmRateVerification.setDate1(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
@@ -472,7 +472,9 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 			rmRateVerification.setRateDate(new SimpleDateFormat("dd-MM-yyyy").format(new Date()));
 			rmRateVerification.setRmId(rmId);
 			rmRateVerification.setSuppId(suppId);
-			int taxId=rmRateVerificationRepository.getTaxId(rmRateVerification.getRmId());
+			if(grpId!=4 && grpId!=5) { 
+			taxId=rmRateVerificationRepository.getTaxId(rmRateVerification.getRmId());
+			}
 			System.out.println("Tax Id ----------"+taxId);
 			rmRateVerification.setTaxId(taxId);
 			 
@@ -520,8 +522,18 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 	}
 
 	@Override
-	public GetUomAndTax getUomAndTax(int rmId) {
-		GetUomAndTax getUomAndTax=getUomAndTaxRepository.getUomTax(rmId);
+	public GetUomAndTax getUomAndTax(int rmId,int grpId) {
+		GetUomAndTax getUomAndTax;
+		
+		if(grpId==18||grpId==19)
+		{
+		
+			getUomAndTax=getUomAndTaxRepository.getUomTaxForItem(rmId);
+			
+		}else {
+		 
+			getUomAndTax=getUomAndTaxRepository.getUomTax(rmId);
+		}
 		
 		if(getUomAndTax!=null)
 		{
@@ -692,6 +704,7 @@ public class RawMaterialServiceImpl implements RawMaterialService{
 		}
 		return errorMessage;
 	}
+
 	
 	
 }

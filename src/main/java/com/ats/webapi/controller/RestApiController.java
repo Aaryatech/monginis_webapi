@@ -39,6 +39,8 @@ import com.ats.webapi.model.remarks.GetAllRemarksList;
 */import com.ats.webapi.repository.GetBillDetailsRepository;
 import com.ats.webapi.repository.GetReorderByStockTypeRepository;
 import com.ats.webapi.repository.ItemRepository;
+import com.ats.webapi.repository.ItemResponseRepository;
+import com.ats.webapi.repository.ItemStockRepository;
 import com.ats.webapi.repository.OrderLogRespository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
@@ -133,7 +135,8 @@ public class RestApiController {
 		return date;
 
 	}
-
+	@Autowired
+	ItemStockRepository itemStockRepository;
 	@Autowired
 	private UserService userService;
 
@@ -326,7 +329,26 @@ public class RestApiController {
 
 	@Autowired
 	OrderLogRespository logRespository;
+	
+	@Autowired
+	ItemResponseRepository itemResRepository;
+	@RequestMapping(value = "/getItemsResBySubCatId", method = RequestMethod.POST)
+	public @ResponseBody List<ItemRes> getItemsResBySubCatId(@RequestParam("subCatId") String subCatId) {
 
+		List<ItemRes> items = new ArrayList<ItemRes>();
+		try {
+			
+				items = itemResRepository.findByItemGrp2AndDelStatusOrderByItemGrp2AscItemNameAsc(subCatId,0);
+
+			
+		} catch (Exception e) {
+			items = new ArrayList<>();
+			e.printStackTrace();
+
+		}
+		return items;
+
+	}
 	@RequestMapping(value = { "/changeAdminUserPass" }, method = RequestMethod.POST)
 	public @ResponseBody Info changeAdminUserPass(@RequestBody User user) {
 
@@ -2841,7 +2863,40 @@ public class RestApiController {
 	}
 
 	// 3
+	@RequestMapping(value = "/getStockItemsBySubCatId", method = RequestMethod.POST)
+	public @ResponseBody List<StockItem> getStockItemsBySubCatId(@RequestParam("subCatId") int subCatId,@RequestParam("type") int type) {
 
+		List<StockItem> items = new ArrayList<StockItem>();
+	try {
+			
+		items = itemStockRepository.findBySubCatIdAndType(subCatId,type);
+
+		
+		} catch (Exception e) {
+			items = new ArrayList<>();
+			e.printStackTrace();
+
+		}
+		return items;
+
+	}
+	@RequestMapping(value = "/getStockItemsBySubCatIdAndSupp", method = RequestMethod.POST)
+	public @ResponseBody List<StockItem> getStockItemsBySubCatIdAndSupp(@RequestParam("subCatId") int subCatId,@RequestParam("type") int type,@RequestParam("suppId") int suppId,@RequestParam("grpId") int grpId) {
+
+		List<StockItem> items = new ArrayList<StockItem>();
+	try {
+			
+		items = itemStockRepository.getStockItemsBySubCatIdAndSupp(subCatId,type,suppId,grpId);
+
+		
+		} catch (Exception e) {
+			items = new ArrayList<>();
+			e.printStackTrace();
+
+		}
+		return items;
+
+	}
 	@RequestMapping(value = "/getFrItems", method = RequestMethod.POST)
 	public @ResponseBody List<GetFrItems> getFrItems(@RequestParam List<Integer> items, @RequestParam String frId,
 			@RequestParam String date, @RequestParam String menuId) {

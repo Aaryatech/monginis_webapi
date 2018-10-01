@@ -22,6 +22,9 @@ public interface GetRmRateAndTaxRepository extends JpaRepository<GetRmRateAndTax
 			+ " m_rm_rate_verif v where r.rm_id=:rmId AND v.rm_id=:rmId AND v.supp_id=:suppId AND t.tax_id=r.tax_id",nativeQuery=true)
 	GetRmRateAndTax getRmDetailById(@Param("rmId")int rmId, @Param("suppId")int suppId);
 
+	@Query(value=" select i.id as rm_id,i.item_name as rm_name, s.uom_id as rm_uom_id,i.item_name as rm_specification, (i.item_tax1 + i.item_tax2)as gst_per,i.item_tax1 as sgst_per, i.item_tax2 as cgst_per, i.item_tax3 as igst_per, v.rate_tax_extra, v.rate_tax_incl from m_item i,m_item_sup s, m_rm_rate_verif v where i.id=:rmId AND v.rm_id=:rmId AND v.supp_id=:suppId and i.id=s.item_id",nativeQuery=true)
+	GetRmRateAndTax getRmDetailByItemId(@Param("rmId")int rmId,@Param("suppId") int suppId);
+
 	
 	
 }

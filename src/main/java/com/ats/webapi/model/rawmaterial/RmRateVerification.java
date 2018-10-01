@@ -54,6 +54,18 @@ public class RmRateVerification {
 	
 	/*@Column(name="igst_per")
 	private float igstPer;*/
+	
+	private int grpId;
+	
+	
+
+	public int getGrpId() {
+		return grpId;
+	}
+
+	public void setGrpId(int grpId) {
+		this.grpId = grpId;
+	}
 
 	public int getRmRateVerId() {
 		return rmRateVerId;

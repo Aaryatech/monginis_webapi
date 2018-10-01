@@ -18,7 +18,7 @@ public interface PurchaseOrderService {
 	GetPurchaseOrderList getStatusWisePerchaseOrderList(List<String> status);
 	Info deletePoRecord(int poId);
 	PurchaseOrderHeader getpurchaseorderHeaderWithDetailed(int poId);
-	GetRmRateAndTax getRmDetailById(int rmId, int suppId);
+	GetRmRateAndTax getRmDetailById(int rmId, int suppId,int grpId);
 
  
  

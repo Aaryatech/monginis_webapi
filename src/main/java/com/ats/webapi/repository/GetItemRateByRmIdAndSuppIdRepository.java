@@ -14,4 +14,8 @@ public interface GetItemRateByRmIdAndSuppIdRepository extends JpaRepository< Get
 			+ "from m_rm_rate_verif v, m_rm r where v.rm_id in (:rmId) AND v.supp_id=:suppId and v.rm_id=r.rm_id", nativeQuery = true)
 	 List<GetItemRateByRmIdAndSuppId> getRateByRmId(@Param("rmId") List<String> rmId,@Param("suppId") int suppId);
 
+	@Query(value = "select v.rm_rate_ver_id as rate_id, v.rm_id, i.item_name as rm_name, v.rate_tax_extra as rate, v.supp_id\r\n" + 
+			"		from m_rm_rate_verif v, m_item i where v.rm_id in (:rmId) AND v.supp_id=:suppId and v.rm_id=i.id", nativeQuery = true)
+	List<GetItemRateByRmIdAndSuppId> getRateByRmIdAndGrp(@Param("rmId") List<String> rmId,@Param("suppId") int suppId);
+
 }
