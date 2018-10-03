@@ -30,4 +30,10 @@ public interface RegularSpCkOrderRepository extends JpaRepository<RegularSpCake,
 	@Query("UPDATE RegularSpCake t SET t.isBillGenerated =1  WHERE item_id IN(:regOrderItemId) AND rsp_produ_date=:prodDate AND t.isBillGenerated=0")
 	int updateRegSpCakeBillStatus(@Param("regOrderItemId")List<Integer> regOrderItemId,@Param("prodDate") String prodDate);
 
+	//Sachin 03-10-2018 for Prod App
+	
+	@Query(value="select count(*) from t_regular_sp_cake where rsp_produ_date=:sqlSpProduDate",nativeQuery=true)
+	int findSpCakeOrdCountByProduDate(@Param("sqlSpProduDate")String sqlSpProduDate);
+	
+
 }

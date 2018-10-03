@@ -6,34 +6,35 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ats.webapi.model.prodapp.TSpCakeSup;
+import com.ats.webapi.model.prodapp.TRegSpCakeSup;
 
-
-public interface TSpCakeSupRepo extends JpaRepository<TSpCakeSup, Integer> {
+public interface TRegSpCakeSupRepo extends JpaRepository<TRegSpCakeSup, Integer>{
 	
 	
-	TSpCakeSup save(TSpCakeSup cakeSup);
+	
+	TRegSpCakeSup save(TRegSpCakeSup regSpCakeSup );
+	
 	
 
+	
 	@Transactional
 	@Modifying	
-	@Query("UPDATE TSpCakeSup SET startTimeStamp =:startTimeStamp,status=:status  WHERE tSpCakeSupNo=:tSpCakeSupNo")
-	int startProdByApp(@Param("startTimeStamp") Long startTimeStamp,
-			@Param("tSpCakeSupNo") int tSpCakeSupNo,
+	@Query("UPDATE TRegSpCakeSup SET startTime =:startTime,status=:status  WHERE supId=:supId")
+	int startRegSpCakeProdByApp(@Param("startTime") Long startTime,
+			@Param("supId") int supId,
 			@Param("status") int status);
 	
-	@Transactional
+	/*@Transactional
 	@Modifying	
-	@Query("UPDATE TSpCakeSup SET endTimeStamp =:endTimeStamp,inputKgProd=:inputKgProd,status=:status,"
+	@Query("UPDATE TRegSpCakeSup  SET endTime =:endTime,status=:status,inputKgProd=:inputKgProd"
 			+ "photo1=:photo1,photo2=:photo2, mistryId=:mistryId ,mistryName=:mistryName"
-			+ "  WHERE tSpCakeSupNo=:tSpCakeSupNo")
-	int endProdByApp(@Param("endTimeStamp") Long endTimeStamp,
+			+ "  WHERE supId=:supId")
+	int endRegSpCakeProdByApp(@Param("endTime") Long endTime,
 			@Param("inputKgProd") float inputKgProd,
 			@Param("status") int status,
 			@Param("photo1") String photo1,
 			@Param("photo2") String photo2,
 			@Param("mistryId") int mistryId,
 			@Param("mistryName") String mistryName,
-			@Param("tSpCakeSupNo") int tSpCakeSupNo);
-	
+			@Param("supId") int supId);*/
 }

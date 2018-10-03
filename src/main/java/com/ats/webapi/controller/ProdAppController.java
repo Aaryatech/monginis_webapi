@@ -14,9 +14,13 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.model.AllMenus;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.prodapp.ProdAppUser;
+import com.ats.webapi.model.prodapp.SpCakeForProdApp;
+import com.ats.webapi.model.prodapp.TRegSpCakeSup;
 import com.ats.webapi.model.prodapp.TSpCakeSup;
 import com.ats.webapi.repository.prodapp.MenusRepo;
 import com.ats.webapi.repository.prodapp.ProdAppUserRepo;
+import com.ats.webapi.repository.prodapp.SpCakeForProdAppRepo;
+import com.ats.webapi.repository.prodapp.TRegSpCakeSupRepo;
 import com.ats.webapi.repository.prodapp.TSpCakeSupRepo;
 import com.ats.webapi.service.MenuService;
 
@@ -31,6 +35,12 @@ public class ProdAppController {
 	
 	@Autowired
 	private MenuService menuService;
+	
+	@Autowired
+	TSpCakeSupRepo tSpCakeSupRepo;
+	
+	@Autowired
+	TRegSpCakeSupRepo tRegSpCakeSupRepo;
 
 
 	@RequestMapping(value = { "/addProdAppUser" }, method = RequestMethod.POST)
@@ -225,13 +235,8 @@ public class ProdAppController {
 		return menuList;
 
 	}
-	
-	
 
-	@Autowired
-	TSpCakeSupRepo tSpCakeSupRepo;
-
-	@RequestMapping(value = { "/addTSpCake" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/addTSpCakeSup" }, method = RequestMethod.POST)
 	public @ResponseBody TSpCakeSup addTSpCakeSup(@RequestBody TSpCakeSup tSpCakeSup) {
 
 		TSpCakeSup response = new TSpCakeSup();
@@ -248,4 +253,128 @@ public class ProdAppController {
 		return response;
 
 	}
+	
+	@RequestMapping(value = { "/addTRegSpCakeSup" }, method = RequestMethod.POST)
+	public @ResponseBody TRegSpCakeSup addTSpCakeSup(@RequestBody TRegSpCakeSup regSpCakeSup) {
+
+		TRegSpCakeSup response = new TRegSpCakeSup();
+		try {
+
+			response = tRegSpCakeSupRepo.save(regSpCakeSup);
+
+		} catch (Exception e) {
+
+			System.out.println("Exce in addTRegSpCakeSup Rest ProdAppController " + e.getMessage());
+
+			e.printStackTrace();
+		}
+		return response;
+
+	}
+	
+	@RequestMapping(value = { "/startSpCakeProd" }, method = RequestMethod.POST)
+	public @ResponseBody Info startSpCakeProd(@RequestParam("startTimeStamp") Long startTimeStamp,@RequestParam("tSpCakeSupNo") int tSpCakeSupNo,
+			@RequestParam("status") int status) {
+
+		Info info=new Info();
+		
+		int response=0;
+		
+		try {
+
+			 response = tSpCakeSupRepo.startProdByApp(startTimeStamp, tSpCakeSupNo, status);
+			 
+			 if(response>0) {
+				 
+				 info.setError(false);
+				 info.setMessage("sp cake prod started successfully");
+			 }
+			 else {
+				 
+				 info.setError(true);
+				 info.setMessage("failed to start sp cake prod");
+				 
+			 }
+
+		} catch (Exception e) {
+
+			System.out.println("Exce in startSpCakeProd Rest ProdAppController " + e.getMessage());
+
+			e.printStackTrace();
+		}
+	
+		return info;
+
+	}
+	
+	
+	@RequestMapping(value = { "/endSpCakeProd" }, method = RequestMethod.POST)
+	public @ResponseBody Info endSpCakeProd(@RequestParam("endTimeStamp") Long endTimeStamp,
+			@RequestParam("inputKgProd") float inputKgProd,
+					@RequestParam("photo1") String photo1,
+							@RequestParam("photo2") String photo2,
+			@RequestParam("tSpCakeSupNo") int tSpCakeSupNo,
+			
+			@RequestParam("mistryId") int mistryId,
+			@RequestParam("mistryName") String mistryName,
+			
+			@RequestParam("status") int status) {
+
+		Info info=new Info();
+		
+		int response=0;
+		
+		try {
+
+			 response = tSpCakeSupRepo.endProdByApp(endTimeStamp, inputKgProd, status, photo1, photo2, mistryId, mistryName, tSpCakeSupNo);
+			 
+			 if(response>0) {
+				 
+				 info.setError(false);
+				 info.setMessage("sp cake endSpCakeProd  successfull");
+			 }
+			 else {
+				 
+				 info.setError(true);
+				 info.setMessage("failed to endSpCakeProd");
+				 
+			 }
+
+		} catch (Exception e) {
+
+			System.out.println("Exce in endSpCakeProd Rest ProdAppController " + e.getMessage());
+
+			e.printStackTrace();
+		}
+	
+		return info;
+
+	}
+	
+	@Autowired
+	SpCakeForProdAppRepo getSpCakeForProdAppRepo;
+	
+	@RequestMapping(value = { "/getSpCakeOrdersForApp" }, method = RequestMethod.POST)
+	public @ResponseBody List<SpCakeForProdApp> getSpCakeOrdersForApp(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate,@RequestParam("menuIdList") List<Integer> menuIdList,
+			@RequestParam("isSlotUsed") int isSlotUsed){
+
+		List<SpCakeForProdApp> prodAppUsrList = new ArrayList<SpCakeForProdApp>();
+		try {
+
+			prodAppUsrList = getSpCakeForProdAppRepo.getSpCakeOrderForProdOrderBy(fromDate, toDate, menuIdList, isSlotUsed);
+
+		} catch (Exception e) {
+
+			System.out.println("Exce in getSpCakeOrdersForApp Rest ProdAppController " + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return prodAppUsrList;
+
+	}
+
+	
+	
 }

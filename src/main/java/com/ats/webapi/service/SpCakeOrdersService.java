@@ -18,6 +18,8 @@ public interface SpCakeOrdersService {
 	
 	int findCountOfSlotUsedByProduDate(String sqlSpProduDate);
 	
+	int findSpCkeOrdCountByProduDate(String sqlSpProduDate);
+	
 	
 	
 }

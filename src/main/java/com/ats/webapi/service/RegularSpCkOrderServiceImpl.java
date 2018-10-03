@@ -173,4 +173,13 @@ public class RegularSpCkOrderServiceImpl implements RegularSpCkOrderService{
 		return regularSpCkOrdersList;
 	}
 
+
+	@Override
+	public int getRegSpCakeOrdCountByProdDate(String prodDate) {
+		
+		int orderCount=regularSpCkOrderRepository.findSpCakeOrdCountByProduDate(prodDate);
+		
+		return orderCount;
+	}
+
 }

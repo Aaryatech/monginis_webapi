@@ -34,6 +34,8 @@ import com.ats.webapi.model.phpwebservice.Flavor;
 import com.ats.webapi.model.phpwebservice.GetLogin;
 import com.ats.webapi.model.phpwebservice.SpecialCakeBean;
 import com.ats.webapi.model.phpwebservice.SpecialCakeBeanList;
+import com.ats.webapi.model.prodapp.TRegSpCakeSup;
+import com.ats.webapi.model.prodapp.TSpCakeSup;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
 /*import com.ats.webapi.repository.BillLogRepo;
 */import com.ats.webapi.repository.GetBillDetailsRepository;
@@ -45,6 +47,8 @@ import com.ats.webapi.repository.OrderLogRespository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 import com.ats.webapi.repository.UserRepository;
+import com.ats.webapi.repository.prodapp.TRegSpCakeSupRepo;
+import com.ats.webapi.repository.prodapp.TSpCakeSupRepo;
 import com.ats.webapi.service.AllFrIdNameService;
 import com.ats.webapi.service.BillDetailUpdateService;
 import com.ats.webapi.service.CategoryService;
@@ -1560,6 +1564,10 @@ public class RestApiController {
 
 	}
 
+	@Autowired
+	TSpCakeSupRepo tSpCakeSupRepo;
+	
+	
 	// Place SpCake Order
 	@RequestMapping(value = { "/placeSpCakeOrder" }, method = RequestMethod.POST)
 
@@ -1569,6 +1577,39 @@ public class RestApiController {
 		System.out.println("Inside Place Order " + orderJson.toString());
 
 		SpCakeOrderRes spCakeOrderRes = spCakeOrdersService.placeSpCakeOrder(orderJson);
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		String sqlSpProduDate = dateFormat.format(date);
+		
+		System.out.println("sqlSpProduDate " +sqlSpProduDate);
+		
+		int orderCount = spCakeOrdersService.findSpCkeOrdCountByProduDate(sqlSpProduDate);
+
+		
+		SpCakeOrders order=spCakeOrderRes.getSpCakeOrder();
+		TSpCakeSup spCakeSup=new TSpCakeSup();
+		
+		spCakeSup.setDate(order.getSpProdDate());
+		spCakeSup.setDelStatus(0);
+		spCakeSup.setFrId(order.getFrId());
+		spCakeSup.setInputKgFr(order.getSpSelectedWeight());
+		spCakeSup.setMenuId(order.getMenuId());
+		spCakeSup.setSpCakeId(order.getSpId());
+		spCakeSup.setSrNo(orderCount);
+		spCakeSup.setStatus(0);
+		spCakeSup.settSpCakeOrderNo(order.getSpOrderNo());
+	System.err.println("spCakeSup bean " +spCakeSup.toString());
+		try {
+
+			TSpCakeSup response = tSpCakeSupRepo.save(spCakeSup);
+
+		} catch (Exception e) {
+
+			System.out.println("Exce in addTSpCake Rest RestApi " + e.getMessage());
+
+			e.printStackTrace();
+		}
 
 		return spCakeOrderRes;
 
@@ -1702,6 +1743,9 @@ public class RestApiController {
 
 		return jsonResult;
 	}
+	
+	@Autowired
+	TRegSpCakeSupRepo tRegSpCakeSupRepo;
 
 	// Place SpCake Order
 	@RequestMapping(value = { "/insertRegularSpCake" }, method = RequestMethod.POST)
@@ -1711,9 +1755,48 @@ public class RestApiController {
 
 		System.out.println("Inside Place Order " + regularSpCake.toString());
 
-		RegularSpCake errorMessage = regularSpCkOrderService.placeRegularSpCakeOrder(regularSpCake);
+		RegularSpCake ordRes = regularSpCkOrderService.placeRegularSpCakeOrder(regularSpCake);
 
-		return errorMessage;
+		
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		String sqlSpProduDate = dateFormat.format(date);
+		
+		int orderCount=regularSpCkOrderService.getRegSpCakeOrdCountByProdDate(sqlSpProduDate);
+		
+		
+		TRegSpCakeSup regSpCakeSup = new TRegSpCakeSup();
+
+	
+		regSpCakeSup.setCatId(0);
+		regSpCakeSup.setFrId(ordRes.getFrId());
+		regSpCakeSup.setItemId(Integer.parseInt(ordRes.getItemId()));
+		regSpCakeSup.setProdDate(ordRes.getRspProduDate());
+		regSpCakeSup.setSrNo(orderCount);
+		regSpCakeSup.setStatus(0);
+		regSpCakeSup.setSubCatId(Integer.parseInt(ordRes.getRspSubCat()));
+		regSpCakeSup.settRegSupOrderId(ordRes.getRspId());
+		
+		regSpCakeSup.setMenuId(Integer.parseInt(ordRes.getMenuId()));
+		
+		System.err.println("regSpCakeSup " +regSpCakeSup.toString());
+
+		try {
+
+			TRegSpCakeSup	response = tRegSpCakeSupRepo.save(regSpCakeSup);
+			
+			System.err.println("Res T refg sp cake sup " +response.toString());
+
+		} catch (Exception e) {
+
+			System.out.println("Exce in addTRegSpCakeSup Rest Rest api " + e.getMessage());
+
+			e.printStackTrace();
+		}
+		
+		
+		return ordRes;
 
 	}
 

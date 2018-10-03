@@ -31,8 +31,8 @@ public class TSpCakeSup {
 	private String photo4;
 	
 	
-	private String startTimeStamp;
-	private String endTimeStamp;
+	private Long startTimeStamp;
+	private Long endTimeStamp;
 	
 	private int status;
 	
@@ -43,6 +43,26 @@ public class TSpCakeSup {
 	private int spCakeId;
 	
 	private int status2;
+	
+	private int srNo;
+	private int mistryId;
+	private String mistryName;
+	private int menuId;
+	private String isCharUsed;
+
+	public String getIsCharUsed() {
+		return isCharUsed;
+	}
+
+	public void setIsCharUsed(String isCharUsed) {
+		this.isCharUsed = isCharUsed;
+	}
+
+	private String exVar;
+	private int exInt;
+	private int delStatus;
+	
+	
 
 	public int gettSpCakeSupNo() {
 		return tSpCakeSupNo;
@@ -108,19 +128,21 @@ public class TSpCakeSup {
 		this.photo4 = photo4;
 	}
 
-	public String getStartTimeStamp() {
+	
+
+	public Long getStartTimeStamp() {
 		return startTimeStamp;
 	}
 
-	public void setStartTimeStamp(String startTimeStamp) {
+	public void setStartTimeStamp(Long startTimeStamp) {
 		this.startTimeStamp = startTimeStamp;
 	}
 
-	public String getEndTimeStamp() {
+	public Long getEndTimeStamp() {
 		return endTimeStamp;
 	}
 
-	public void setEndTimeStamp(String endTimeStamp) {
+	public void setEndTimeStamp(Long endTimeStamp) {
 		this.endTimeStamp = endTimeStamp;
 	}
 
@@ -164,32 +186,72 @@ public class TSpCakeSup {
 		this.status2 = status2;
 	}
 
+	public int getSrNo() {
+		return srNo;
+	}
+
+	public void setSrNo(int srNo) {
+		this.srNo = srNo;
+	}
+
+	public int getMistryId() {
+		return mistryId;
+	}
+
+	public void setMistryId(int mistryId) {
+		this.mistryId = mistryId;
+	}
+
+	public String getMistryName() {
+		return mistryName;
+	}
+
+	public void setMistryName(String mistryName) {
+		this.mistryName = mistryName;
+	}
+
+	public int getMenuId() {
+		return menuId;
+	}
+
+	public void setMenuId(int menuId) {
+		this.menuId = menuId;
+	}
+
+	public String getExVar() {
+		return exVar;
+	}
+
+	public void setExVar(String exVar) {
+		this.exVar = exVar;
+	}
+
+	public int getExInt() {
+		return exInt;
+	}
+
+	public void setExInt(int exInt) {
+		this.exInt = exInt;
+	}
+
+	public int getDelStatus() {
+		return delStatus;
+	}
+
+	public void setDelStatus(int delStatus) {
+		this.delStatus = delStatus;
+	}
+
 	@Override
 	public String toString() {
 		return "TSpCakeSup [tSpCakeSupNo=" + tSpCakeSupNo + ", tSpCakeOrderNo=" + tSpCakeOrderNo + ", inputKgProd="
 				+ inputKgProd + ", inputKgFr=" + inputKgFr + ", photo1=" + photo1 + ", photo2=" + photo2 + ", photo3="
 				+ photo3 + ", photo4=" + photo4 + ", startTimeStamp=" + startTimeStamp + ", endTimeStamp="
 				+ endTimeStamp + ", status=" + status + ", date=" + date + ", frId=" + frId + ", spCakeId=" + spCakeId
-				+ ", status2=" + status2 + "]";
+				+ ", status2=" + status2 + ", srNo=" + srNo + ", mistryId=" + mistryId + ", mistryName=" + mistryName
+				+ ", menuId=" + menuId + ", isCharUsed=" + isCharUsed + ", exVar=" + exVar + ", exInt=" + exInt
+				+ ", delStatus=" + delStatus + "]";
 	}
-	
-	
-	
-			
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 
 }
