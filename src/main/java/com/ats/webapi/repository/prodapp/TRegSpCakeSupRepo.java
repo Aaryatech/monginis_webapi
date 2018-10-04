@@ -24,10 +24,10 @@ public interface TRegSpCakeSupRepo extends JpaRepository<TRegSpCakeSup, Integer>
 			@Param("supId") int supId,
 			@Param("status") int status);
 	
-	/*@Transactional
+	@Transactional
 	@Modifying	
-	@Query("UPDATE TRegSpCakeSup  SET endTime =:endTime,status=:status,inputKgProd=:inputKgProd"
-			+ "photo1=:photo1,photo2=:photo2, mistryId=:mistryId ,mistryName=:mistryName"
+	@Query("UPDATE TRegSpCakeSup  SET endTime =:endTime, status=:status, inputKgProd=:inputKgProd, "
+			+ "photo1=:photo1,photo2=:photo2, mistryId=:mistryId ,mistryName=:mistryName,isCharUsed=:isCharUsed "
 			+ "  WHERE supId=:supId")
 	int endRegSpCakeProdByApp(@Param("endTime") Long endTime,
 			@Param("inputKgProd") float inputKgProd,
@@ -36,5 +36,6 @@ public interface TRegSpCakeSupRepo extends JpaRepository<TRegSpCakeSup, Integer>
 			@Param("photo2") String photo2,
 			@Param("mistryId") int mistryId,
 			@Param("mistryName") String mistryName,
-			@Param("supId") int supId);*/
+				@Param("isCharUsed") String isCharUsed,
+			@Param("supId") int supId);
 }

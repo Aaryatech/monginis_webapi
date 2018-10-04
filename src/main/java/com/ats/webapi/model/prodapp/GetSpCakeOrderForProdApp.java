@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
-public class SpCakeForProdApp {
+public class GetSpCakeOrderForProdApp {
 	
 	/*
 	 
@@ -39,7 +39,8 @@ ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_i
 	
 	private int status;
 	
-	private int inputKgFr;
+	private float inputKgFr;
+	private float inputKgProd;
 	
 	private String routeName;
 	private int noInRoute;
@@ -67,6 +68,21 @@ ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_i
 	
 	private String orderPhoto;
 	private String orderPhoto2;
+	
+	
+	private String isCharUsed;
+	
+	private String spEvents;
+	
+	private String spEventsName;
+	
+	
+	public String getIsCharUsed() {
+		return isCharUsed;
+	}
+	public void setIsCharUsed(String isCharUsed) {
+		this.isCharUsed = isCharUsed;
+	}
 	public int gettSpCakeSupNo() {
 		return tSpCakeSupNo;
 	}
@@ -92,10 +108,11 @@ ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_i
 	public void setStatus(int status) {
 		this.status = status;
 	}
-	public int getInputKgFr() {
+	
+	public float getInputKgFr() {
 		return inputKgFr;
 	}
-	public void setInputKgFr(int inputKgFr) {
+	public void setInputKgFr(float inputKgFr) {
 		this.inputKgFr = inputKgFr;
 	}
 	public String getRouteName() {
@@ -209,16 +226,42 @@ ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_i
 		this.orderPhoto2 = orderPhoto2;
 	}
 	
+	
+	
+	public float getInputKgProd() {
+		return inputKgProd;
+	}
+	public void setInputKgProd(float inputKgProd) {
+		this.inputKgProd = inputKgProd;
+	}
+	
+	
+	
+	
+	public String getSpEvents() {
+		return spEvents;
+	}
+	public void setSpEvents(String spEvents) {
+		this.spEvents = spEvents;
+	}
+	public String getSpEventsName() {
+		return spEventsName;
+	}
+	public void setSpEventsName(String spEventsName) {
+		this.spEventsName = spEventsName;
+	}
 	@Override
 	public String toString() {
-		return "SpCakeForProdApp [tSpCakeSupNo=" + tSpCakeSupNo + ", srNo=" + srNo + ", date=" + date + ", status="
-				+ status + ", inputKgFr=" + inputKgFr + ", routeName=" + routeName + ", noInRoute=" + noInRoute
-				+ ", frName=" + frName + ", frCode=" + frCode + ", frId=" + frId + ", routeId=" + routeId + ", spName="
-				+ spName + ", spCode=" + spCode + ", spImage=" + spImage + ", spFlavourId=" + spFlavourId + ", spfName="
-				+ spfName + ", spDeliveryPlace=" + spDeliveryPlace + ", spInstructions=" + spInstructions
-				+ ", spDeliveryDate=" + spDeliveryDate + ", startTimeStamp=" + startTimeStamp + ", endTimeStamp="
-				+ endTimeStamp + ", orderPhoto=" + orderPhoto + ", orderPhoto2=" + orderPhoto2 + "]";
+		return "GetSpCakeOrderForProdApp [tSpCakeSupNo=" + tSpCakeSupNo + ", srNo=" + srNo + ", date=" + date
+				+ ", status=" + status + ", inputKgFr=" + inputKgFr + ", inputKgProd=" + inputKgProd + ", routeName="
+				+ routeName + ", noInRoute=" + noInRoute + ", frName=" + frName + ", frCode=" + frCode + ", frId="
+				+ frId + ", routeId=" + routeId + ", spName=" + spName + ", spCode=" + spCode + ", spImage=" + spImage
+				+ ", spFlavourId=" + spFlavourId + ", spfName=" + spfName + ", spDeliveryPlace=" + spDeliveryPlace
+				+ ", spInstructions=" + spInstructions + ", spDeliveryDate=" + spDeliveryDate + ", startTimeStamp="
+				+ startTimeStamp + ", endTimeStamp=" + endTimeStamp + ", orderPhoto=" + orderPhoto + ", orderPhoto2="
+				+ orderPhoto2 + ", isCharUsed=" + isCharUsed + "]";
 	}
+	
 	
 	
 	

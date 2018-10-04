@@ -13,16 +13,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.AllMenus;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.Item;
 import com.ats.webapi.model.prodapp.ProdAppUser;
-import com.ats.webapi.model.prodapp.SpCakeForProdApp;
+import com.ats.webapi.model.prodapp.GetRegSpCakeOrderForProdApp;
+import com.ats.webapi.model.prodapp.GetSpCakeOrderForProdApp;
 import com.ats.webapi.model.prodapp.TRegSpCakeSup;
 import com.ats.webapi.model.prodapp.TSpCakeSup;
+import com.ats.webapi.model.spprod.GetEmployeeList;
+import com.ats.webapi.repository.prodapp.GetRegSpCakeOrderForProdAppRepo;
 import com.ats.webapi.repository.prodapp.MenusRepo;
 import com.ats.webapi.repository.prodapp.ProdAppUserRepo;
 import com.ats.webapi.repository.prodapp.SpCakeForProdAppRepo;
 import com.ats.webapi.repository.prodapp.TRegSpCakeSupRepo;
 import com.ats.webapi.repository.prodapp.TSpCakeSupRepo;
+import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.MenuService;
+import com.ats.webapi.service.spprod.SpProdService;
 
 @RestController
 public class ProdAppController {
@@ -317,6 +323,7 @@ public class ProdAppController {
 			
 			@RequestParam("mistryId") int mistryId,
 			@RequestParam("mistryName") String mistryName,
+			@RequestParam("isCharUsed") String isCharUsed,
 			
 			@RequestParam("status") int status) {
 
@@ -326,7 +333,7 @@ public class ProdAppController {
 		
 		try {
 
-			 response = tSpCakeSupRepo.endProdByApp(endTimeStamp, inputKgProd, status, photo1, photo2, mistryId, mistryName, tSpCakeSupNo);
+			 response = tSpCakeSupRepo.endProdByApp(endTimeStamp, inputKgProd, status, photo1, photo2, mistryId, mistryName,isCharUsed, tSpCakeSupNo);
 			 
 			 if(response>0) {
 				 
@@ -351,18 +358,130 @@ public class ProdAppController {
 
 	}
 	
+	
+	
+	@RequestMapping(value = { "/startRegSpCakeProd" }, method = RequestMethod.POST)
+	public @ResponseBody Info startRegSpCakeProd(@RequestParam("startTimeStamp") Long startTimeStamp,@RequestParam("supId") int supId,
+			@RequestParam("status") int status) {
+
+		Info info=new Info();
+		
+		int response=0;
+		
+		try {
+
+			 response = tRegSpCakeSupRepo.startRegSpCakeProdByApp(startTimeStamp, supId, status);
+			 
+			 if(response>0) {
+				 
+				 info.setError(false);
+				 info.setMessage(" reg sp cake prod started successfully");
+			 }
+			 else {
+				 
+				 info.setError(true);
+				 info.setMessage("failed to start reg sp cake prod");
+				 
+			 }
+
+		} catch (Exception e) {
+
+			System.out.println("Exce in startSpCakeProd Rest ProdAppController " + e.getMessage());
+
+			e.printStackTrace();
+		}
+	
+		return info;
+
+	}
+	
+	
+	@RequestMapping(value = { "/endRegSpCakeProd" }, method = RequestMethod.POST)
+	public @ResponseBody Info endRegSpCakeProd(@RequestParam("enTime") Long endTime,
+			@RequestParam("inputKgProd") float inputKgProd,
+					@RequestParam("photo1") String photo1,
+							@RequestParam("photo2") String photo2,
+			@RequestParam("supId") int supId,
+			
+			@RequestParam("mistryId") int mistryId,
+			@RequestParam("mistryName") String mistryName,
+			@RequestParam("isCharUsed") String isCharUsed,
+			
+			@RequestParam("status") int status) {
+
+		Info info=new Info();
+		
+		int response=0;
+		
+		try {
+
+			 response = tRegSpCakeSupRepo.endRegSpCakeProdByApp(endTime, inputKgProd, status, photo1, photo2, mistryId, mistryName, isCharUsed, supId);
+			 
+			 if(response>0) {
+				 
+				 info.setError(false);
+				 info.setMessage("sp cake endRegSpCakeProd  successfull");
+			 }
+			 else {
+				 
+				 info.setError(true);
+				 info.setMessage("failed to endRegSpCakeProd");
+				 
+			 }
+
+		} catch (Exception e) {
+
+			System.out.println("Exce in endRegSpCakeProd Rest ProdAppController " + e.getMessage());
+
+			e.printStackTrace();
+		}
+	
+		return info;
+
+	}
+	
 	@Autowired
 	SpCakeForProdAppRepo getSpCakeForProdAppRepo;
 	
 	@RequestMapping(value = { "/getSpCakeOrdersForApp" }, method = RequestMethod.POST)
-	public @ResponseBody List<SpCakeForProdApp> getSpCakeOrdersForApp(@RequestParam("fromDate") String fromDate,
+	public @ResponseBody List<GetSpCakeOrderForProdApp> getSpCakeOrdersForApp(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate,@RequestParam("menuIdList") List<Integer> menuIdList,
-			@RequestParam("isSlotUsed") int isSlotUsed){
+			@RequestParam("isSlotUsed") List<Integer> isSlotUsed,@RequestParam("isOrderBy") int isOrderBy){
 
-		List<SpCakeForProdApp> prodAppUsrList = new ArrayList<SpCakeForProdApp>();
+		List<GetSpCakeOrderForProdApp> spCakeOrdList = new ArrayList<GetSpCakeOrderForProdApp>();
 		try {
+			System.err.println( "For  getSpCakeOrdersForApp // menuId List " +menuIdList.toString() + "order By " +isOrderBy);
+			
+			if(menuIdList.contains(-1) && isOrderBy==0) {
+				System.err.println( "A] menuId -1 and order by 0 ");
+				
+				
+				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeOrderForProdGenAllMenu(fromDate, toDate,  isSlotUsed);
 
-			prodAppUsrList = getSpCakeForProdAppRepo.getSpCakeOrderForProdOrderBy(fromDate, toDate, menuIdList, isSlotUsed);
+				
+			}
+			else if(menuIdList.contains(-1) && isOrderBy==1) {
+				
+				System.err.println(" B] menuId -1 and order by 1 ");
+				
+				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeOrderForProdOrderByAndAllMenu(fromDate, toDate,  isSlotUsed);
+				
+			}
+			
+			else if(isOrderBy==0) {
+				System.err.println(" C] specific menu and order by 0 ");
+				
+				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeOrderForProdGen(fromDate, toDate, menuIdList, isSlotUsed);
+
+				
+			}else {
+				
+				System.err.println(" D] specific menu and order by 1 ");
+				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeOrderForProdOrderBy(fromDate, toDate, menuIdList, isSlotUsed);
+
+			}
+			
+
 
 		} catch (Exception e) {
 
@@ -371,10 +490,87 @@ public class ProdAppController {
 			e.printStackTrace();
 		}
 
-		return prodAppUsrList;
+		return spCakeOrdList;
 
 	}
 
+	@Autowired
+	GetRegSpCakeOrderForProdAppRepo getRegSpCakeOrderForProdAppRepo;
 	
+	@RequestMapping(value = { "/geRegSpCakeOrdersForApp" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetRegSpCakeOrderForProdApp> geRegtSpCakeOrdersForApp(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate,@RequestParam("menuIdList") List<Integer> menuIdList,
+			@RequestParam("isOrderBy") int isOrderBy){
+
+		List<GetRegSpCakeOrderForProdApp> regSpCakeOrderList = new ArrayList<GetRegSpCakeOrderForProdApp>();
+		try {
+			System.err.println( "For  getSpCakeOrdersForApp // menuId List " +menuIdList.toString() + "order By " +isOrderBy);
+			
+			if(menuIdList.contains(-1) && isOrderBy==0) {
+				System.err.println( "A] menuId -1 and order by 0 ");
+				
+				
+				regSpCakeOrderList = getRegSpCakeOrderForProdAppRepo.getRegSpCakeOrderForProdGenAllMenu(fromDate,toDate);
+
+				
+			}
+			else if(menuIdList.contains(-1) && isOrderBy==1) {
+				
+				System.err.println(" B] menuId -1 and order by 1 ");
+				
+				regSpCakeOrderList = getRegSpCakeOrderForProdAppRepo.getRegSpCakeOrderForProdOrderByAndAllMenu(fromDate, toDate);
+				
+			}
+			
+			else if(isOrderBy==0) {
+				System.err.println(" C] specific menu and order by 0 ");
+				
+				regSpCakeOrderList = getRegSpCakeOrderForProdAppRepo.getRegSpCakeOrderForProdGen(fromDate, toDate, menuIdList);
+
+				
+			}else {
+				
+				System.err.println(" D] specific menu and order by 1 ");
+				regSpCakeOrderList = getRegSpCakeOrderForProdAppRepo.getRegSpCakeOrderForProdOrderBy(fromDate, toDate, menuIdList);
+
+			}
+			
+
+
+		} catch (Exception e) {
+
+			System.out.println("Exce in geRegSpCakeOrdersForApp Rest ProdAppController " + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return regSpCakeOrderList;
+
+	}
+
+	@Autowired
+	 SpProdService spProdService;
 	
+	// ---------------------------Getting Employee List-------------------------
+		@RequestMapping(value = { "/getAllMistryByType" }, method = RequestMethod.POST)
+		public @ResponseBody GetEmployeeList getEmployeesByType(@RequestParam("empType") int empType) {
+
+			GetEmployeeList employeeList = spProdService.getEmployeesByType(empType);
+
+			return employeeList;
+
+		}
+
+		
+		@Autowired
+		private ItemService itemService;
+
+		// Get Items existing in web service just renamed from rest api
+		@RequestMapping(value = "/getItemsByCatIdForProdApp", method = RequestMethod.POST)
+		public @ResponseBody List<Item> getItems(@RequestParam String itemGrp1) {
+
+			List<Item> items = itemService.findFrItems(itemGrp1);
+			return items;
+
+		}
 }
