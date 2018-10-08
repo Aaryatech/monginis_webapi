@@ -21,9 +21,12 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.MCategory;
 import com.ats.webapi.model.prodapp.ProdAppUser;
+import com.ats.webapi.model.prodapp.StockTransfDataByTypeGrpByItem;
 import com.ats.webapi.model.prodapp.StockTransfDetail;
 import com.ats.webapi.model.prodapp.StockTransfHeader;
 import com.ats.webapi.model.prodapp.StockTransfType;
+import com.ats.webapi.model.prodapp.DashRegSpCakeCount;
+import com.ats.webapi.model.prodapp.DashSpCakeCount;
 import com.ats.webapi.model.prodapp.GateSaleStockDetail;
 import com.ats.webapi.model.prodapp.GateSaleStockEntry;
 import com.ats.webapi.model.prodapp.GateSaleStockHeader;
@@ -33,6 +36,8 @@ import com.ats.webapi.model.prodapp.GetSpCakeOrderForProdApp;
 import com.ats.webapi.model.prodapp.TRegSpCakeSup;
 import com.ats.webapi.model.prodapp.TSpCakeSup;
 import com.ats.webapi.model.spprod.GetEmployeeList;
+import com.ats.webapi.repository.prodapp.DashRegSpCakeCountRepo;
+import com.ats.webapi.repository.prodapp.DashSpCakeCountRepo;
 import com.ats.webapi.repository.prodapp.GateSaleStockDetailRepo;
 import com.ats.webapi.repository.prodapp.GateSaleStockHeaderRepo;
 import com.ats.webapi.repository.prodapp.GetDataForGateSaleDayEndRepo;
@@ -40,6 +45,7 @@ import com.ats.webapi.repository.prodapp.GetRegSpCakeOrderForProdAppRepo;
 import com.ats.webapi.repository.prodapp.MenusRepo;
 import com.ats.webapi.repository.prodapp.ProdAppUserRepo;
 import com.ats.webapi.repository.prodapp.SpCakeForProdAppRepo;
+import com.ats.webapi.repository.prodapp.StockTransfDataByTypeGrpByItemRepo;
 import com.ats.webapi.repository.prodapp.StockTransfDetailRepo;
 import com.ats.webapi.repository.prodapp.StockTransfHeaderRepo;
 import com.ats.webapi.repository.prodapp.StockTransfTypeRepo;
@@ -80,43 +86,119 @@ public class ProdAppController {
 	GateSaleStockDetailRepo gateSaleStockDetailRepo;
 	@Autowired
 	GateSaleStockHeaderRepo gateSaleStockHeaderRepo;
+
+	@Autowired
+	StockTransfDataByTypeGrpByItemRepo getStockTransfDataByTypeGrpByItemRepo;
+
+	@Autowired DashRegSpCakeCountRepo getDashRegSpCakeCountRepo;
+	@Autowired DashSpCakeCountRepo getDashSpCakeCountRepo;
 	
 	
-	/*
-	 SELECT m_cat_sub.sub_cat_id,m_cat_sub.sub_cat_name,m_category.cat_name,m_category.cat_id,
+	@RequestMapping(value = { "/getDashRegSpCakeCount"}, method = RequestMethod.POST)
+	public @ResponseBody List<DashRegSpCakeCount> getDashRegSpCakeCount(
+			@RequestParam("prodDate") String prodDate,
+			@RequestParam("menuIdList") List<Integer> menuIdList) {
 
-COALESCE((select  SUM(t_stock_trasf_detail.apr_qty1)  FROM t_stock_trasf_detail,t_stock_trasf_header WHERE t_stock_trasf_detail.stock_transf_header_id=t_stock_trasf_header.stock_transf_header_id AND t_stock_trasf_header.stock_date='2018-10-05' AND t_stock_trasf_detail.sub_cat_id=m_cat_sub.sub_cat_id
-GROUP BY t_stock_trasf_detail.sub_cat_id ),0) as in_qty,
+		List<DashRegSpCakeCount> getDashRegSpCakeCountList = new ArrayList<DashRegSpCakeCount>();
+		try {
 
+			if(menuIdList.contains(-1)) {
+				
+			getDashRegSpCakeCountList = getDashRegSpCakeCountRepo.getRegSpCakeOrdCountAllMenu(prodDate);
+			
+			}
+			else {
+				
+				getDashRegSpCakeCountList = getDashRegSpCakeCountRepo.getRegSpCakeOrdCountSpecMenu(prodDate, menuIdList);
 
-COALESCE((SELECT SUM(t_gatesale_bill_detail.item_qty) FROM t_gatesale_bill_detail,t_gatesale_bill_header,
-m_item WHERE t_gatesale_bill_detail.item_id=m_item.id AND t_gatesale_bill_detail.bill_id=t_gatesale_bill_header.bill_id AND t_gatesale_bill_header.bill_date='2018-10-05' AND  m_cat_sub.sub_cat_id=m_item.item_grp2 GROUP BY m_item.item_grp2),0) as sale_qty
-FROM m_cat_sub,m_category WHERE  m_cat_sub.del_status=0 AND m_cat_sub.cat_id=m_category.cat_id
-	 
-	 */
+			}
 
-	@Autowired GetDataForGateSaleDayEndRepo getDataForGateSaleDayEndRepo;
+		} catch (Exception e) {
+
+			System.err.println("Exception in getDashRegSpCakeCount @ProdAppCont  " + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return getDashRegSpCakeCountList;
+
+	}
+
+	@RequestMapping(value = { "/getDashSpCakeCount"}, method = RequestMethod.POST)
+	public @ResponseBody List<DashSpCakeCount> getDashSpCakeCount(
+			@RequestParam("prodDate") String prodDate,
+			@RequestParam("menuIdList") List<Integer> menuIdList) {
+
+		List<DashSpCakeCount> getDashSpCakeCountList = new ArrayList<DashSpCakeCount>();
+		try {
+
+			if(menuIdList.contains(-1)) {
+				
+			getDashSpCakeCountList = getDashSpCakeCountRepo.getSpCakeOrdCountAllMenu(prodDate);
+			
+			}
+			else {
+				
+				getDashSpCakeCountList = getDashSpCakeCountRepo.getSpCakeOrdCountSpecMenu(prodDate, menuIdList);
+
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in getDashSpCakeCount @ProdAppCont  " + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return getDashSpCakeCountList;
+
+	}
+
 	
+	
+	@RequestMapping(value = { "/getStockTransfDataByTypeGrpByItem" }, method = RequestMethod.POST)
+	public @ResponseBody List<StockTransfDataByTypeGrpByItem> getStockTransfDataByTypeGrpByItem(
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("typeIdList") List<Integer> typeIdList) {
+
+		List<StockTransfDataByTypeGrpByItem> itemWiseStockTransfList = new ArrayList<StockTransfDataByTypeGrpByItem>();
+		try {
+
+			itemWiseStockTransfList = getStockTransfDataByTypeGrpByItemRepo.getStockTransfDataByTypeGrpByItem(fromDate,
+					toDate, typeIdList);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in getStockTransfDataByTypeGrpByItem @ProdAppCont  " + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return itemWiseStockTransfList;
+
+	}
+
+	// 12 no web service on google sheet
+	@Autowired
+	GetDataForGateSaleDayEndRepo getDataForGateSaleDayEndRepo;
+
 	@RequestMapping(value = { "/getDataForGateSaleDayEnd" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetDataForGateSaleDayEnd> getDataForGateSaleDayEnd(@RequestParam("stockType") int stockType) {
+	public @ResponseBody List<GetDataForGateSaleDayEnd> getDataForGateSaleDayEnd(
+			@RequestParam("stockType") int stockType) {
 
-		List<GetDataForGateSaleDayEnd> stockTransfTypeList = new ArrayList<GetDataForGateSaleDayEnd>();
+		List<GetDataForGateSaleDayEnd> gateSaleDataDayEndList = new ArrayList<GetDataForGateSaleDayEnd>();
 		try {
 			GateSaleStockHeader saleStockHeader = gateSaleStockHeaderRepo.findByStockStatusAndDelStatus(0, 0);
 
-			DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 
-			String date=df.format(saleStockHeader.getStockDate());
-			
-			System.err.println("date " +date);
-			List<String> dateList1=new ArrayList<>();
-			
-			List<String> dateList2=new ArrayList<>();
-			
-			
-			//int stockType=1;//gate sale stock type
+			String date = df.format(saleStockHeader.getStockDate());
 
-			stockTransfTypeList = getDataForGateSaleDayEndRepo.getInQtyAndSaleQtySubCatwise(date,stockType);
+			System.err.println("date " + date);
+
+			// int stockType=1;//gate sale stock type
+
+			gateSaleDataDayEndList = getDataForGateSaleDayEndRepo.getInQtyAndSaleQtySubCatwise(date, stockType);
 
 		} catch (Exception e) {
 
@@ -125,22 +207,21 @@ FROM m_cat_sub,m_category WHERE  m_cat_sub.del_status=0 AND m_cat_sub.cat_id=m_c
 			e.printStackTrace();
 		}
 
-		return stockTransfTypeList;
+		return gateSaleDataDayEndList;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/insertOrUpdateOpQtyInGateSaleStock" }, method = RequestMethod.POST)
 	public @ResponseBody Info insertOpQtyInGateSaleStock(@RequestBody List<GateSaleStockEntry> stockEntryList) {
 
 		Info info = new Info();
-		
+
 		try {
 
 			List<GateSaleStockDetail> stockDetailList = new ArrayList<>();
 
 			GateSaleStockHeader saleStockHeader = gateSaleStockHeaderRepo.findByStockStatusAndDelStatus(0, 0);
-		
+
 			if (saleStockHeader == null) {
 
 				System.err.println("Null Header Found so insert new Record insert sale stock header and detail");
@@ -150,15 +231,15 @@ FROM m_cat_sub,m_category WHERE  m_cat_sub.del_status=0 AND m_cat_sub.cat_id=m_c
 				stockHead.setDelStatus(0);
 				stockHead.setStockDate(new Date());
 				stockHead.setStockStatus(0);
-				
-				saleStockHeader=new GateSaleStockHeader();
 
-				 saleStockHeader = gateSaleStockHeaderRepo.save(stockHead);
-				 if (saleStockHeader == null) {
-					 
-					 info.setError(true);
-					 info.setMessage("failed to save new sale stock header ");
-				 }
+				saleStockHeader = new GateSaleStockHeader();
+
+				saleStockHeader = gateSaleStockHeaderRepo.save(stockHead);
+				if (saleStockHeader == null) {
+
+					info.setError(true);
+					info.setMessage("failed to save new sale stock header ");
+				}
 				System.err.println("New Record Inserted " + gateSaleStockHeaderRepo.toString());
 
 				for (int i = 0; i < stockEntryList.size(); i++) {
@@ -174,21 +255,20 @@ FROM m_cat_sub,m_category WHERE  m_cat_sub.del_status=0 AND m_cat_sub.cat_id=m_c
 					stockDetail.setSaleQty(0);
 					stockDetail.setStockDate(new Date());
 					stockDetail.setSubCatId(stockEntryList.get(i).getSubCatId());
-					
-					GateSaleStockDetail detailResponse=	gateSaleStockDetailRepo.save(stockDetail);
-					
-					if(detailResponse==null) {
-						
-						 info.setError(true);
-						 info.setMessage("failed to save new sale stock detail ");
+
+					GateSaleStockDetail detailResponse = gateSaleStockDetailRepo.save(stockDetail);
+
+					if (detailResponse == null) {
+
+						info.setError(true);
+						info.setMessage("failed to save new sale stock detail ");
 					}
-					
+
 				}
 
 			} else {
-				
-				System.err.println(" Header Found with 0 status so update sale stock detail");
 
+				System.err.println(" Header Found with 0 status so update sale stock detail");
 
 				stockDetailList = gateSaleStockDetailRepo
 						.findByGateSaleStockHeaderId(saleStockHeader.getGateSaleStockHeaderId());
@@ -200,17 +280,17 @@ FROM m_cat_sub,m_category WHERE  m_cat_sub.del_status=0 AND m_cat_sub.cat_id=m_c
 						if (stockEntryList.get(i).getSubCatId() == stockDetailList.get(j).getSubCatId()) {
 
 							stockDetailList.get(j).setOpQty(stockEntryList.get(i).getQty());
-							
+
 						}
 
 					}
-					
-					GateSaleStockDetail detailResponse=	gateSaleStockDetailRepo.save(stockDetailList.get(j));
-					
-					if(detailResponse==null) {
-						
-						 info.setError(true);
-						 info.setMessage("failed to update sale stock detail ");
+
+					GateSaleStockDetail detailResponse = gateSaleStockDetailRepo.save(stockDetailList.get(j));
+
+					if (detailResponse == null) {
+
+						info.setError(true);
+						info.setMessage("failed to update sale stock detail ");
 					}
 				}
 

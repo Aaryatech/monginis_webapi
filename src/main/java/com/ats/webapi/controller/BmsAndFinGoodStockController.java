@@ -1,5 +1,7 @@
 package com.ats.webapi.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -18,6 +20,9 @@ import com.ats.webapi.model.BmsStockHeader;
 import com.ats.webapi.model.FrItemStockConfigure;
 import com.ats.webapi.model.FrItemStockConfigureList;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.prodapp.GateSaleStockDetail;
+import com.ats.webapi.model.prodapp.GateSaleStockHeader;
+import com.ats.webapi.model.prodapp.GetDataForGateSaleDayEnd;
 import com.ats.webapi.model.stock.FinishedGoodStock;
 import com.ats.webapi.model.stock.FinishedGoodStockDetail;
 import com.ats.webapi.model.stock.GetBmsCurrentStock;
@@ -37,6 +42,9 @@ import com.ats.webapi.repository.bmsstock.GetCurProdAndBillQtyRepo;
 import com.ats.webapi.repository.bmsstock.GetCurrentBmsStockRepo;
 import com.ats.webapi.repository.bmsstock.UpdateBmsSfStockRepo;
 import com.ats.webapi.repository.bmsstock.UpdateBmsStockRepo;
+import com.ats.webapi.repository.prodapp.GateSaleStockDetailRepo;
+import com.ats.webapi.repository.prodapp.GateSaleStockHeaderRepo;
+import com.ats.webapi.repository.prodapp.GetDataForGateSaleDayEndRepo;
 import com.ats.webapi.service.FrItemStockConfigureService;
 
 @RestController
@@ -339,7 +347,13 @@ h1.bms_status=1
 
 		return settingList;
 	}
-
+	
+	@Autowired
+	GateSaleStockHeaderRepo gateSaleStockHeaderRepo;
+	@Autowired GetDataForGateSaleDayEndRepo getDataForGateSaleDayEndRepo;
+	@Autowired
+	GateSaleStockDetailRepo gateSaleStockDetailRepo;
+	
 	@RequestMapping(value = { "/insertFinishedGoodOpStock" }, method = RequestMethod.POST)
 	public @ResponseBody Info insertBmsStock(@RequestBody FinishedGoodStock finishedGoodStockHeader) {
 
@@ -366,6 +380,127 @@ h1.bms_status=1
 				info.setError(false);
 				info.setMessage("Success: Inserted Fin Good Op Stock");
 
+			}
+			
+			if(finishedGoodStockHeader.getFinGoodStockStatus()==1) {
+				
+				System.err.println("It  is fin good stock day end so Day end the gate sale stock header and detail");
+				
+				GateSaleStockHeader saleStockHeader = gateSaleStockHeaderRepo.findByStockStatusAndDelStatus(0, 0);
+				
+				List<GetDataForGateSaleDayEnd> gateSaleDataDayEndList = new ArrayList<GetDataForGateSaleDayEnd>();
+
+				DateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+
+				String date=df.format(saleStockHeader.getStockDate());
+				
+				System.err.println("date " +date);
+				
+				//int stockType=1;//gate sale stock type
+
+				gateSaleDataDayEndList = getDataForGateSaleDayEndRepo.getInQtyAndSaleQtySubCatwise(date,1);
+			
+				List<GateSaleStockDetail> stockDetailList = new ArrayList<>();
+
+				
+				stockDetailList = gateSaleStockDetailRepo
+						.findByGateSaleStockHeaderId(saleStockHeader.getGateSaleStockHeaderId());
+				
+				for(int i=0;i<stockDetailList.size();i++) {
+					
+					
+					for(int j=0;j<gateSaleDataDayEndList.size();j++) {
+						
+						
+						if(stockDetailList.get(i).getSubCatId()==gateSaleDataDayEndList.get(j).getSubCatId()) {
+							
+							
+							stockDetailList.get(i).setSaleQty(gateSaleDataDayEndList.get(j).getSaleQty());
+							
+							stockDetailList.get(i).setInQty(gateSaleDataDayEndList.get(j).getInQty());
+							
+							
+							 float closingQty=(stockDetailList.get(i).getOpQty()+gateSaleDataDayEndList.get(j).getInQty())-gateSaleDataDayEndList.get(j).getSaleQty();
+							
+							stockDetailList.get(i).setClosingQty(closingQty);
+							
+							
+						}
+						
+						
+					}
+					
+				}
+				saleStockHeader.setStockStatus(1);
+				saleStockHeader.setGetGateSaleStockDetailList(stockDetailList);
+				
+				
+				// update stock header detail call
+				
+				GateSaleStockHeader response = new GateSaleStockHeader();
+				try {
+
+					response = gateSaleStockHeaderRepo.save(saleStockHeader);
+
+					//List<GateSaleStockDetail> saleStockDetailList = saleStockHeader.getGetGateSaleStockDetailList();
+
+					for (int i = 0; i < stockDetailList.size(); i++) {
+						
+						GateSaleStockDetail gateSaleStockDetailRes = gateSaleStockDetailRepo.save(stockDetailList.get(i));
+
+						//saleStockDetailList.get(i).setGateSaleStockHeaderId(response.getGateSaleStockHeaderId());
+
+					}
+
+				
+				} catch (Exception e) {
+
+					System.out.println("Exce in bms and fin good stock and gate sale stock method  Controller " + e.getMessage());
+
+					e.printStackTrace();
+				}
+
+				
+				// end update stock header detail call
+				
+				//insert call 
+				saleStockHeader=new GateSaleStockHeader();
+				
+				saleStockHeader.setDelStatus(0);
+				saleStockHeader.setStockDate(new Date());
+				saleStockHeader.setStockStatus(0);
+				
+				response = gateSaleStockHeaderRepo.save(saleStockHeader);
+
+				for (int i = 0; i < stockDetailList.size(); i++) {
+					
+					GateSaleStockDetail stockDetailInsert=new GateSaleStockDetail();
+					
+					stockDetailInsert.setCatId(stockDetailList.get(i).getCatId());
+					stockDetailInsert.setSubCatId(stockDetailList.get(i).getSubCatId());
+					stockDetailInsert.setOpQty(stockDetailList.get(i).getClosingQty());
+
+					stockDetailInsert.setGateSaleStockHeaderId(response.getGateSaleStockHeaderId());
+
+					
+					stockDetailInsert.setDelStatus(0);
+					
+					stockDetailInsert.setClosingQty(0);
+					stockDetailInsert.setInQty(0);
+					stockDetailInsert.setSaleQty(0);
+			
+					stockDetailInsert.setStockDate(new Date());
+					
+					
+					GateSaleStockDetail gateSaleStockDetailRes = gateSaleStockDetailRepo.save(stockDetailInsert);
+
+					//saleStockDetailList.get(i).setGateSaleStockHeaderId(response.getGateSaleStockHeaderId());
+
+				}
+				
+			
+				//end of insert call
+		
 			}
 
 		} catch (Exception e) {
