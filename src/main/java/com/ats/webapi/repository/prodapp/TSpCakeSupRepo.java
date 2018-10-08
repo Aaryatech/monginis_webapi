@@ -1,11 +1,14 @@
 package com.ats.webapi.repository.prodapp;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ats.webapi.model.prodapp.GetSpCakeOrderForProdApp;
 import com.ats.webapi.model.prodapp.TSpCakeSup;
 
 
@@ -14,7 +17,13 @@ public interface TSpCakeSupRepo extends JpaRepository<TSpCakeSup, Integer> {
 	
 	TSpCakeSup save(TSpCakeSup cakeSup);
 	
+	/*@Query(value = "SELECT t_sp_cake.* WHERE date=:date AND menu_id IN (:menIdList) GROUP BY status "
+			+ "", nativeQuery = true)
 
+	List<TSpCakeSup> getSpCakeOrderForProdGen(@Param("date") String date,
+			@Param("menuIdList") List<Integer> menuIdList);
+
+*/
 	@Transactional
 	@Modifying	
 	@Query("UPDATE TSpCakeSup SET startTimeStamp =:startTimeStamp,status=:status  WHERE tSpCakeSupNo=:tSpCakeSupNo")
