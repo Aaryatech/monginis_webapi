@@ -25,6 +25,8 @@ public class Route implements Serializable{
     @Column(name="del_status")
     private int delStatus;
     
+    @Column(name="route_seq_no")//new field added on 08-10-2018
+    private int routeSeqNo;
 	
 	public String getRouteName() {
 		return routeName;
@@ -45,9 +47,20 @@ public class Route implements Serializable{
 	public void setDelStatus(int delStatus) {
 		this.delStatus = delStatus;
 	}
+	
+	
+	
+	
+	public int getRouteSeqNo() {
+		return routeSeqNo;
+	}
+	public void setRouteSeqNo(int routeSeqNo) {
+		this.routeSeqNo = routeSeqNo;
+	}
 	@Override
 	public String toString() {
-		return "Route [routeId=" + routeId + ", routeName=" + routeName + ", delStatus=" + delStatus + "]";
+		return "Route [routeId=" + routeId + ", routeName=" + routeName + ", delStatus=" + delStatus + ", routeSeqNo="
+				+ routeSeqNo + "]";
 	}
 	
 }

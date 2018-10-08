@@ -1969,13 +1969,15 @@ public class RestApiController {
 	// Save Route
 	@RequestMapping(value = { "/insertRoute" }, method = RequestMethod.POST)
 	@ResponseBody
-	public String saveRoute(@RequestParam("routeName") String routeName) {
+	public String saveRoute(@RequestParam("routeName") String routeName,@RequestParam int routeSeqNo) {
 		String jsonResult = "";
 
 		System.out.println("input route " + routeName.toString());
 
 		Route route = new Route();
 		route.setRouteName(routeName);
+		route.setRouteSeqNo(routeSeqNo);
+		
 		route.setDelStatus(0);
 
 		jsonResult = JsonUtil.javaToJson(route);
@@ -2253,7 +2255,7 @@ public class RestApiController {
 	public RouteList showRouteList() {
 
 		List<Route> jsonRouteList = routeService.showAllRoute();
-
+		System.out.println("jsonRouteList" + jsonRouteList.toString());
 		RouteList routeList = new RouteList();
 		routeList.setRoute(jsonRouteList);
 		Info info = new Info();
@@ -3344,12 +3346,14 @@ public class RestApiController {
 
 	// Update Route
 	@RequestMapping("/updateRoute")
-	public @ResponseBody String updateRoute(@RequestParam int id, @RequestParam String routeName) {
+	public @ResponseBody String updateRoute(@RequestParam int id, @RequestParam String routeName,
+			@RequestParam int routeSeqNo) {
 
 		Route route = routeService.findRoute(id);
 		Info info = new Info();
 		try {
 			route.setRouteName(routeName);
+			route.setRouteSeqNo(routeSeqNo);
 
 			String jsonResult = routeService.save(route);
 			if (jsonResult == null) {
