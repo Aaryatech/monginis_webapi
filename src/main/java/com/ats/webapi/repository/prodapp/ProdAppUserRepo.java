@@ -29,7 +29,7 @@ public interface ProdAppUserRepo extends JpaRepository<ProdAppUser, Integer> {
 	@Query(" UPDATE ProdAppUser  SET uDeviceToken=:uDeviceToken "
 			+ " WHERE userId=:userId ")
 		int updateDeviceToken(@Param("uDeviceToken") 
-		int uDeviceToken,@Param("userId") int userId);
+		String uDeviceToken,@Param("userId") int userId);
 	
 	
 	@Transactional

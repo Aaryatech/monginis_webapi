@@ -4,8 +4,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
+import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,29 +23,36 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.MCategory;
 import com.ats.webapi.model.prodapp.ProdAppUser;
+import com.ats.webapi.model.prodapp.RoutewiseOrdCountBean;
 import com.ats.webapi.model.prodapp.StockTransfDataByTypeGrpByItem;
 import com.ats.webapi.model.prodapp.StockTransfDetail;
 import com.ats.webapi.model.prodapp.StockTransfHeader;
 import com.ats.webapi.model.prodapp.StockTransfType;
 import com.ats.webapi.model.prodapp.DashRegSpCakeCount;
 import com.ats.webapi.model.prodapp.DashSpCakeCount;
+import com.ats.webapi.model.prodapp.FrwiseStockTransfData;
 import com.ats.webapi.model.prodapp.GateSaleStockDetail;
 import com.ats.webapi.model.prodapp.GateSaleStockEntry;
 import com.ats.webapi.model.prodapp.GateSaleStockHeader;
 import com.ats.webapi.model.prodapp.GetDataForGateSaleDayEnd;
 import com.ats.webapi.model.prodapp.GetRegSpCakeOrderForProdApp;
+import com.ats.webapi.model.prodapp.GetRoutewiseOrderData;
 import com.ats.webapi.model.prodapp.GetSpCakeOrderForProdApp;
 import com.ats.webapi.model.prodapp.TRegSpCakeSup;
 import com.ats.webapi.model.prodapp.TSpCakeSup;
+import com.ats.webapi.model.prodapp.temp.RegSpOrd;
+import com.ats.webapi.model.prodapp.temp.SpOrder;
 import com.ats.webapi.model.spprod.GetEmployeeList;
 import com.ats.webapi.repository.prodapp.DashRegSpCakeCountRepo;
 import com.ats.webapi.repository.prodapp.DashSpCakeCountRepo;
+import com.ats.webapi.repository.prodapp.FrwiseStockTransfDataRepo;
 import com.ats.webapi.repository.prodapp.GateSaleStockDetailRepo;
 import com.ats.webapi.repository.prodapp.GateSaleStockHeaderRepo;
 import com.ats.webapi.repository.prodapp.GetDataForGateSaleDayEndRepo;
 import com.ats.webapi.repository.prodapp.GetRegSpCakeOrderForProdAppRepo;
 import com.ats.webapi.repository.prodapp.MenusRepo;
 import com.ats.webapi.repository.prodapp.ProdAppUserRepo;
+import com.ats.webapi.repository.prodapp.RoutewiseOrdCountBeanRepo;
 import com.ats.webapi.repository.prodapp.SpCakeForProdAppRepo;
 import com.ats.webapi.repository.prodapp.StockTransfDataByTypeGrpByItemRepo;
 import com.ats.webapi.repository.prodapp.StockTransfDetailRepo;
@@ -59,6 +68,91 @@ import com.ats.webapi.service.spprod.SpProdService;
 @RestController
 public class ProdAppController {
 
+	/*
+	 * sp cake sup ord count by route id SELECT
+	 * m_fr_route.route_name,m_fr_route.route_id,coalesce((SELECT
+	 * COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup WHERE
+	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
+	 * t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date='2018-10-08'
+	 * AND t_sp_cake_sup.status=0 ),0) as status_zero_ord_count,
+	 * 
+	 * coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM
+	 * m_franchisee,t_sp_cake_sup WHERE m_fr_route.route_id=m_franchisee.fr_route_id
+	 * AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND
+	 * t_sp_cake_sup.date='2018-10-08' AND t_sp_cake_sup.status=1 ),0) as
+	 * status_one_ord_count,
+	 * 
+	 * 
+	 * coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM
+	 * m_franchisee,t_sp_cake_sup WHERE m_fr_route.route_id=m_franchisee.fr_route_id
+	 * AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND
+	 * t_sp_cake_sup.date='2018-10-08' AND t_sp_cake_sup.status=2 ),0) as
+	 * status_two_ord_count,
+	 * 
+	 * coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM
+	 * m_franchisee,t_sp_cake_sup WHERE m_fr_route.route_id=m_franchisee.fr_route_id
+	 * AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND
+	 * t_sp_cake_sup.date='2018-10-08' AND t_sp_cake_sup.status=3 ),0) as
+	 * status_three_ord_count,
+	 * 
+	 * coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM
+	 * m_franchisee,t_sp_cake_sup WHERE m_fr_route.route_id=m_franchisee.fr_route_id
+	 * AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND
+	 * t_sp_cake_sup.date='2018-10-08' ),0) as total_ord_count
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * 
+	 * from m_fr_route WHERE m_fr_route.del_status=0 GROUP by m_fr_route.route_id
+	 * ORDER BY m_fr_route.route_seq_no DESC
+	 * 
+	 */
+
+	/*
+	 * reg sp cake sup ord count by route id SELECT
+	 * m_fr_route.route_name,m_fr_route.route_id,coalesce((SELECT
+	 * COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup WHERE
+	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
+	 * t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND
+	 * t_reg_sp_cake_sup.prod_date='2018-10-08' AND t_reg_sp_cake_sup.status=0 ),0)
+	 * as status_zero_ord_count,
+	 * 
+	 * coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM
+	 * m_franchisee,t_reg_sp_cake_sup WHERE
+	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
+	 * t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND
+	 * t_reg_sp_cake_sup.prod_date='2018-10-08' AND t_reg_sp_cake_sup.status=1 ),0)
+	 * as status_one_ord_count,
+	 * 
+	 * 
+	 * coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM
+	 * m_franchisee,t_reg_sp_cake_sup WHERE
+	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
+	 * t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND
+	 * t_reg_sp_cake_sup.prod_date='2018-10-08' AND t_reg_sp_cake_sup.status=2 ),0)
+	 * as status_two_ord_count,
+	 * 
+	 * coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM
+	 * m_franchisee,t_reg_sp_cake_sup WHERE
+	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
+	 * t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND
+	 * t_reg_sp_cake_sup.prod_date='2018-10-08' AND t_reg_sp_cake_sup.status=3 ),0)
+	 * as status_three_ord_count,
+	 * 
+	 * 
+	 * coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM
+	 * m_franchisee,t_reg_sp_cake_sup WHERE
+	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
+	 * t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND
+	 * t_reg_sp_cake_sup.prod_date='2018-10-08' ),0) as total_ord_count
+	 * 
+	 * 
+	 * from m_fr_route WHERE m_fr_route.del_status=0 GROUP by m_fr_route.route_id
+	 * ORDER BY m_fr_route.route_seq_no DESC
+	 */
 	@Autowired
 	ProdAppUserRepo prodAppUserRepo;
 
@@ -90,26 +184,51 @@ public class ProdAppController {
 	@Autowired
 	StockTransfDataByTypeGrpByItemRepo getStockTransfDataByTypeGrpByItemRepo;
 
-	@Autowired DashRegSpCakeCountRepo getDashRegSpCakeCountRepo;
-	@Autowired DashSpCakeCountRepo getDashSpCakeCountRepo;
+	@Autowired
+	DashRegSpCakeCountRepo getDashRegSpCakeCountRepo;
+	@Autowired
+	DashSpCakeCountRepo getDashSpCakeCountRepo;
+	
+	@Autowired FrwiseStockTransfDataRepo getFrwiseStockTransfDataRepo;
+	@RequestMapping(value = { "/getFrwiseStockTransfData" }, method = RequestMethod.POST)//task no 50 
+	public @ResponseBody List<FrwiseStockTransfData> getFrwiseStockTransfData(
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("stockTypeList") List<Integer> stockTypeList,@RequestParam("menuIdList") List<Integer> menuIdList,
+			@RequestParam("frIdList") List<Integer> frIdList) {
+
+		List<FrwiseStockTransfData> frWiseitemStockTransfList = new ArrayList<FrwiseStockTransfData>();
+		try {
+
+			frWiseitemStockTransfList = getFrwiseStockTransfDataRepo.getFrwiseStockTransfData(fromDate, toDate, stockTypeList, menuIdList, frIdList);
+					
+		} catch (Exception e) {
+
+			System.err.println("Exception in getFrwiseStockTransfData @ProdAppCont  " + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return frWiseitemStockTransfList;
+
+	}
 	
 	
-	@RequestMapping(value = { "/getDashRegSpCakeCount"}, method = RequestMethod.POST)
-	public @ResponseBody List<DashRegSpCakeCount> getDashRegSpCakeCount(
-			@RequestParam("prodDate") String prodDate,
+
+	@RequestMapping(value = { "/getDashRegSpCakeCount" }, method = RequestMethod.POST)
+	public @ResponseBody List<DashRegSpCakeCount> getDashRegSpCakeCount(@RequestParam("prodDate") String prodDate,
 			@RequestParam("menuIdList") List<Integer> menuIdList) {
 
 		List<DashRegSpCakeCount> getDashRegSpCakeCountList = new ArrayList<DashRegSpCakeCount>();
 		try {
 
-			if(menuIdList.contains(-1)) {
-				
-			getDashRegSpCakeCountList = getDashRegSpCakeCountRepo.getRegSpCakeOrdCountAllMenu(prodDate);
-			
-			}
-			else {
-				
-				getDashRegSpCakeCountList = getDashRegSpCakeCountRepo.getRegSpCakeOrdCountSpecMenu(prodDate, menuIdList);
+			if (menuIdList.contains(-1)) {
+
+				getDashRegSpCakeCountList = getDashRegSpCakeCountRepo.getRegSpCakeOrdCountAllMenu(prodDate);
+
+			} else {
+
+				getDashRegSpCakeCountList = getDashRegSpCakeCountRepo.getRegSpCakeOrdCountSpecMenu(prodDate,
+						menuIdList);
 
 			}
 
@@ -124,21 +243,19 @@ public class ProdAppController {
 
 	}
 
-	@RequestMapping(value = { "/getDashSpCakeCount"}, method = RequestMethod.POST)
-	public @ResponseBody List<DashSpCakeCount> getDashSpCakeCount(
-			@RequestParam("prodDate") String prodDate,
+	@RequestMapping(value = { "/getDashSpCakeCount" }, method = RequestMethod.POST)
+	public @ResponseBody List<DashSpCakeCount> getDashSpCakeCount(@RequestParam("prodDate") String prodDate,
 			@RequestParam("menuIdList") List<Integer> menuIdList) {
 
 		List<DashSpCakeCount> getDashSpCakeCountList = new ArrayList<DashSpCakeCount>();
 		try {
 
-			if(menuIdList.contains(-1)) {
-				
-			getDashSpCakeCountList = getDashSpCakeCountRepo.getSpCakeOrdCountAllMenu(prodDate);
-			
-			}
-			else {
-				
+			if (menuIdList.contains(-1)) {
+
+				getDashSpCakeCountList = getDashSpCakeCountRepo.getSpCakeOrdCountAllMenu(prodDate);
+
+			} else {
+
 				getDashSpCakeCountList = getDashSpCakeCountRepo.getSpCakeOrdCountSpecMenu(prodDate, menuIdList);
 
 			}
@@ -154,9 +271,215 @@ public class ProdAppController {
 
 	}
 
-	
-	
-	@RequestMapping(value = { "/getStockTransfDataByTypeGrpByItem" }, method = RequestMethod.POST)
+	// route wise count reg and sp cakes
+	@Autowired
+	RoutewiseOrdCountBeanRepo getRoutewiseOrdCountBeanRepo;
+
+	@RequestMapping(value = { "/getRoutewiseOrdCount" }, method = RequestMethod.POST)
+	public @ResponseBody List<RoutewiseOrdCountBean> getRoutewiseOrdCount(@RequestParam("prodDate") String prodDate,
+			@RequestParam("menuIdList") List<Integer> menuIdList) {
+
+		List<RoutewiseOrdCountBean> ordCountResList = new ArrayList<>();
+
+		try {
+
+			if (menuIdList.contains(-1)) {
+
+				ordCountResList = getRoutewiseOrdCountBeanRepo.getRoutewiseOrderCountAllMenu(prodDate);
+
+			} else {
+
+				ordCountResList = getRoutewiseOrdCountBeanRepo.getRoutewiseOrderCountSpecMenu(prodDate, menuIdList);
+
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exception in getRoutewiseOrdCount @ProdAppCont  " + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return ordCountResList;
+
+	}
+
+	// end route wise count reg and sp cakes
+
+	@RequestMapping(value = { "/getGetRoutewiseOrderData" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetRoutewiseOrderData> getGetRoutewiseOrderData(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("menuIdList") List<Integer> menuIdList,
+			@RequestParam("isOrderBy") int isOrderBy, @RequestParam("routeId") int routeId) {
+
+		List<GetRegSpCakeOrderForProdApp> regSpCakeOrderList = new ArrayList<GetRegSpCakeOrderForProdApp>();
+		List<GetSpCakeOrderForProdApp> spCakeOrdList = new ArrayList<GetSpCakeOrderForProdApp>();
+
+		List<GetRoutewiseOrderData> orderDataList = new ArrayList<>();
+
+		try {
+			System.err.println(
+					"For  getGetRoutewiseOrderData // menuId List " + menuIdList.toString() + "order By " + isOrderBy);
+
+			if (menuIdList.contains(-1)) {
+
+				System.err.println("getGetRoutewiseOrderData/ menuId -1 ");
+
+				regSpCakeOrderList = getRegSpCakeOrderForProdAppRepo.getRegSpCakeOrderByRouteIdAllMenu(fromDate, toDate,
+						routeId);
+
+				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeOrderByRouteIdAllMenu(fromDate, toDate, routeId);
+
+			} else {
+
+				System.err.println("getGetRoutewiseOrderData/ specific menus ");
+
+				regSpCakeOrderList = getRegSpCakeOrderForProdAppRepo.getRegSpCakeOrderByRouteIdSpecMenu(fromDate,
+						toDate, menuIdList, routeId);
+
+				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeOrderByRouteIdSpecMenu(fromDate, toDate, menuIdList,
+						routeId);
+				System.err.println("regSpCakeOrderList/  " +regSpCakeOrderList.toString());
+
+				System.err.println("spCakeOrdList/  "+spCakeOrdList.toString());
+
+			}
+			
+			
+
+			List<Integer> frIdArray = new ArrayList<>();
+			for (int i = 0; i < spCakeOrdList.size(); i++) {
+
+				frIdArray.add(spCakeOrdList.get(i).getFrId());
+
+			}
+
+			for (int j = 0; j < regSpCakeOrderList.size(); j++) {
+
+				frIdArray.add(regSpCakeOrderList.get(j).getFrId());
+			}
+			System.err.println("Fr Id array list before sort  " + frIdArray);
+
+			// sort frIdarray for unique frIds
+			HashSet<Integer> tempList = new HashSet<>();
+			tempList.addAll(frIdArray);
+			frIdArray.clear();
+			frIdArray.addAll(tempList);
+			System.err.println("Fr Id array list after sort  " + frIdArray);
+
+			// List<RegSpOrd> regOrdListRes = new ArrayList<RegSpOrd>();
+			// List<SpOrder> spOrdListRes = new ArrayList<SpOrder>();
+
+			for (int a = 0; a < frIdArray.size(); a++) {
+
+				GetRoutewiseOrderData orderData = new GetRoutewiseOrderData();
+
+				orderData.setFrId(frIdArray.get(a));
+
+				List<SpOrder> spOrdListRes = new ArrayList<SpOrder>();
+				List<RegSpOrd> regOrdListRes = new ArrayList<RegSpOrd>();
+
+				for (int b = 0; b < spCakeOrdList.size(); b++) {
+
+					System.err.println("Inside  spCakeOrdList index " + b);
+
+					if (frIdArray.get(a) == spCakeOrdList.get(b).getFrId()) {
+
+						orderData.setFrCode(spCakeOrdList.get(b).getFrCode());
+						orderData.setFrName(spCakeOrdList.get(b).getFrName());
+						orderData.setRouteId(spCakeOrdList.get(b).getRouteId());
+
+						SpOrder spOrder = new SpOrder();
+
+						spOrder.setDate(spCakeOrdList.get(b).getDate());
+						spOrder.setEndTimeStamp(spCakeOrdList.get(b).getEndTimeStamp());
+						spOrder.setFrCode(spCakeOrdList.get(b).getFrCode());
+						spOrder.setFrId(spCakeOrdList.get(b).getFrId());
+						spOrder.setFrName(spCakeOrdList.get(b).getFrName());
+						spOrder.setInputKgFr(spCakeOrdList.get(b).getInputKgFr());
+						spOrder.setInputKgProd(spCakeOrdList.get(b).getInputKgProd());
+						spOrder.setIsCharUsed(spCakeOrdList.get(b).getIsCharUsed());
+						spOrder.setNoInRoute(spCakeOrdList.get(b).getNoInRoute());
+						spOrder.setOrderPhoto(spCakeOrdList.get(b).getOrderPhoto());
+						spOrder.setOrderPhoto2(spCakeOrdList.get(b).getOrderPhoto2());
+						spOrder.setRouteId(spCakeOrdList.get(b).getRouteId());
+						spOrder.setRouteName(spCakeOrdList.get(b).getRouteName());
+						spOrder.setSpCode(spCakeOrdList.get(b).getSpCode());
+						spOrder.setSpDeliveryDate(spCakeOrdList.get(b).getSpDeliveryDate());
+						spOrder.setSpDeliveryPlace(spCakeOrdList.get(b).getSpDeliveryPlace());
+						spOrder.setSpEvents(spCakeOrdList.get(b).getSpEvents());
+						spOrder.setSpEventsName(spCakeOrdList.get(b).getSpEventsName());
+						spOrder.setSpFlavourId(spCakeOrdList.get(b).getSpFlavourId());
+						spOrder.setSpfName(spCakeOrdList.get(b).getSpfName());
+						spOrder.setSpImage(spCakeOrdList.get(b).getSpImage());
+						spOrder.setSpInstructions(spCakeOrdList.get(b).getSpInstructions());
+						spOrder.setSpName(spCakeOrdList.get(b).getSpName());
+						spOrder.setSrNo(spCakeOrdList.get(b).getSrNo());
+						spOrder.setStartTimeStamp(spCakeOrdList.get(b).getStartTimeStamp());
+						spOrder.setStatus(spCakeOrdList.get(b).getStatus());
+						spOrder.settSpCakeSupNo(spCakeOrdList.get(b).gettSpCakeSupNo());
+
+						spOrdListRes.add(spOrder);
+
+					} // end of if
+
+				} // end of for
+				orderData.setSpCakeOrdList(spOrdListRes);
+
+				for (int c = 0; c < regSpCakeOrderList.size(); c++) {
+					System.err.println("Inside regular regSpCakeOrderList index " + c);
+					
+					if (frIdArray.get(a) == regSpCakeOrderList.get(c).getFrId()) {
+
+						orderData.setFrCode(regSpCakeOrderList.get(c).getFrCode());
+						orderData.setFrName(regSpCakeOrderList.get(c).getFrName());
+						orderData.setRouteId(regSpCakeOrderList.get(c).getRouteId());
+
+						RegSpOrd regSpOrd = new RegSpOrd();
+
+						regSpOrd.setCatId(regSpCakeOrderList.get(c).getCatId());
+						regSpOrd.setCatName(regSpCakeOrderList.get(c).getCatName());
+						regSpOrd.setEndTime(regSpCakeOrderList.get(c).getEndTime());
+						regSpOrd.setFrCode(regSpCakeOrderList.get(c).getFrCode());
+						regSpOrd.setFrId(regSpCakeOrderList.get(c).getFrId());
+						regSpOrd.setFrName(regSpCakeOrderList.get(c).getFrName());
+						regSpOrd.setId(regSpCakeOrderList.get(c).getId());
+						regSpOrd.setInputKgProd(regSpCakeOrderList.get(c).getInputKgProd());
+						regSpOrd.setIsCharUsed(regSpCakeOrderList.get(c).getIsCharUsed());
+						regSpOrd.setItemId(regSpCakeOrderList.get(c).getItemId());
+						regSpOrd.setItemImage(regSpCakeOrderList.get(c).getItemImage());
+						regSpOrd.setItemName(regSpCakeOrderList.get(c).getItemName());
+						regSpOrd.setNoInRoute(regSpCakeOrderList.get(c).getNoInRoute());
+						regSpOrd.setPhoto1(regSpCakeOrderList.get(c).getPhoto1());
+						regSpOrd.setPhoto2(regSpCakeOrderList.get(c).getPhoto2());
+						regSpOrd.setProdDate(regSpCakeOrderList.get(c).getProdDate());
+						regSpOrd.setRouteId(regSpCakeOrderList.get(c).getRouteId());
+						regSpOrd.setRouteName(regSpCakeOrderList.get(c).getRouteName());
+						regSpOrd.setRspDeliveryDt(regSpCakeOrderList.get(c).getRspDeliveryDt());
+						regSpOrd.setRspPlace(regSpCakeOrderList.get(c).getRspPlace());
+						regSpOrd.setSrNo(regSpCakeOrderList.get(c).getSrNo());
+						regSpOrd.setStartTime(regSpCakeOrderList.get(c).getStartTime());
+						regSpOrd.setStatus(regSpCakeOrderList.get(c).getStatus());
+						regSpOrd.setSubCatId(regSpCakeOrderList.get(c).getSubCatId());
+						regSpOrd.setSubCatName(regSpCakeOrderList.get(c).getSubCatName());
+						regSpOrd.setSupId(regSpCakeOrderList.get(c).getSupId());
+						regSpOrd.settRegSupOrderId(regSpCakeOrderList.get(c).gettRegSupOrderId());
+
+						regOrdListRes.add(regSpOrd);
+					} // end of if
+				}
+				orderData.setRegSpCakeOrdList(regOrdListRes);
+				orderDataList.add(orderData);
+
+			}
+			System.err.println("orderDataList = " + orderDataList.toString());
+		} catch (Exception e) {
+			System.err.println("Exce in getGetRoutewiseOrderData   " + e.getMessage());
+			e.printStackTrace();
+		}
+		return orderDataList;
+
+	}
+
+	@RequestMapping(value = { "/getStockTransfDataByTypeGrpByItem" }, method = RequestMethod.POST)//task no 40
 	public @ResponseBody List<StockTransfDataByTypeGrpByItem> getStockTransfDataByTypeGrpByItem(
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
 			@RequestParam("typeIdList") List<Integer> typeIdList) {
@@ -475,7 +798,7 @@ public class ProdAppController {
 
 	@RequestMapping(value = { "/updateDeviceToken" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateDeviceToken(@RequestParam("userId") int userId,
-			@RequestParam("uDeviceToken") int uDeviceToken) {
+			@RequestParam("uDeviceToken") String uDeviceToken) {
 
 		Info info = new Info();
 		try {
