@@ -23,12 +23,12 @@ public interface GetCurProdAndBillQtyRepo extends JpaRepository<GetCurProdAndBil
 			"\n" + 
 			"coalesce((Select SUM( t_bill_detail.bill_qty) FROM t_bill_header,t_bill_detail"
 			+ " WHERE t_bill_header.remark BETWEEN :timestamp AND :curTimeStamp  AND t_bill_header.bill_no=t_bill_detail.bill_no "
-			+ "AND m_item.id=t_bill_detail.item_id),0) AS bill_qty,"
+			+ "AND m_item.id=t_bill_detail.item_id AND t_bill_detail.menu_id!=42 ),0) AS bill_qty,"
 			
-			+ "coalesce((Select SUM( t_gatesale_bill_detail.item_qty) "
-			+ "FROM t_gatesale_bill_header,t_gatesale_bill_detail\n" + 
-			"WHERE t_gatesale_bill_header.bill_date=:prodDate AND t_gatesale_bill_header.bill_id=t_gatesale_bill_detail.bill_id "
-			+ "AND m_item.id=t_gatesale_bill_detail.item_id),0) \n" + 
+			+ "coalesce((Select SUM( t_stock_trasf_detail.qty) "
+			+ "FROM t_stock_trasf_header,t_stock_trasf_detail\n" + 
+			"WHERE t_stock_trasf_header.stock_date=:prodDate AND t_stock_trasf_header.stock_transf_header_id =t_stock_trasf_detail.stock_transf_header_id  "
+			+ "AND m_item.id=t_stock_trasf_detail.item_id),0) \n" + 
 			"AS damaged_qty  "
 			+ "FROM m_item where m_item.item_grp1=:catId AND m_item.del_status=:delStatus "
 				+ "",nativeQuery=true)
@@ -52,13 +52,13 @@ public interface GetCurProdAndBillQtyRepo extends JpaRepository<GetCurProdAndBil
 			"\n" + 
 			"coalesce((Select SUM( t_bill_detail.bill_qty) FROM t_bill_header,t_bill_detail"
 			+ " WHERE t_bill_header.remark BETWEEN :timestamp AND :curTimeStamp  AND t_bill_header.bill_no=t_bill_detail.bill_no "
-			+ "AND m_item.id=t_bill_detail.item_id),0) AS bill_qty,"
+			+ "AND m_item.id=t_bill_detail.item_id AND t_bill_detail.menu_id!=42),0) AS bill_qty,"
 			
-			+ "coalesce((Select SUM( t_gatesale_bill_detail.item_qty) "
-			+ "FROM t_gatesale_bill_header,t_gatesale_bill_detail\n" + 
-			"WHERE t_gatesale_bill_header.bill_date=:prodDate AND t_gatesale_bill_header.bill_id=t_gatesale_bill_detail.bill_id "
-			+ "AND m_item.id=t_gatesale_bill_detail.item_id),0) \n" + 
-			"AS damaged_qty  "
+	+ "coalesce((Select SUM( t_stock_trasf_detail.qty) "
+	+ "FROM t_stock_trasf_header,t_stock_trasf_detail\n" + 
+	"WHERE t_stock_trasf_header.stock_date=:prodDate AND t_stock_trasf_header.stock_transf_header_id =t_stock_trasf_detail.stock_transf_header_id  "
+	+ "AND m_item.id=t_stock_trasf_detail.item_id),0) \n" + 
+	"AS damaged_qty  "
 			+ "FROM m_item where m_item.del_status=:delStatus "
 				+ "",nativeQuery=true)
 	List<GetCurProdAndBillQty> getCurProdAndBillQtyAllCat(@Param("prodDate") String prodDate,@Param("delStatus") int delStatus,

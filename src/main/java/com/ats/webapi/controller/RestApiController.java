@@ -1599,6 +1599,10 @@ public class RestApiController {
 		spCakeSup.setSrNo(orderCount);
 		spCakeSup.setStatus(0);
 		spCakeSup.settSpCakeOrderNo(order.getSpOrderNo());
+		
+		spCakeSup.setExVar("0.0");//for report to get required time to complete cake
+		
+		spCakeSup.setExInt(0); //to report for geting if cake rate/cost changed default zero 
 	System.err.println("spCakeSup bean " +spCakeSup.toString());
 		try {
 
@@ -1779,6 +1783,8 @@ public class RestApiController {
 		regSpCakeSup.settRegSupOrderId(ordRes.getRspId());
 		
 		regSpCakeSup.setMenuId(Integer.parseInt(ordRes.getMenuId()));
+		
+		regSpCakeSup.setExChar("0.0");
 		
 		System.err.println("regSpCakeSup " +regSpCakeSup.toString());
 

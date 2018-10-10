@@ -1,5 +1,7 @@
 package com.ats.webapi.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -9,6 +11,7 @@ import java.util.List;
 
 import org.apache.commons.collections4.map.HashedMap;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -30,6 +33,8 @@ import com.ats.webapi.model.prodapp.StockTransfHeader;
 import com.ats.webapi.model.prodapp.StockTransfType;
 import com.ats.webapi.model.prodapp.DashRegSpCakeCount;
 import com.ats.webapi.model.prodapp.DashSpCakeCount;
+import com.ats.webapi.model.prodapp.FrWiseSpCakeOrd;
+import com.ats.webapi.model.prodapp.FrwiseRateChangedItemReport;
 import com.ats.webapi.model.prodapp.FrwiseStockTransfData;
 import com.ats.webapi.model.prodapp.GateSaleStockDetail;
 import com.ats.webapi.model.prodapp.GateSaleStockEntry;
@@ -38,6 +43,8 @@ import com.ats.webapi.model.prodapp.GetDataForGateSaleDayEnd;
 import com.ats.webapi.model.prodapp.GetRegSpCakeOrderForProdApp;
 import com.ats.webapi.model.prodapp.GetRoutewiseOrderData;
 import com.ats.webapi.model.prodapp.GetSpCakeOrderForProdApp;
+import com.ats.webapi.model.prodapp.MisrtrywiseFrItemReport;
+import com.ats.webapi.model.prodapp.MistrywiseReport;
 import com.ats.webapi.model.prodapp.TRegSpCakeSup;
 import com.ats.webapi.model.prodapp.TSpCakeSup;
 import com.ats.webapi.model.prodapp.temp.RegSpOrd;
@@ -60,6 +67,10 @@ import com.ats.webapi.repository.prodapp.StockTransfHeaderRepo;
 import com.ats.webapi.repository.prodapp.StockTransfTypeRepo;
 import com.ats.webapi.repository.prodapp.TRegSpCakeSupRepo;
 import com.ats.webapi.repository.prodapp.TSpCakeSupRepo;
+import com.ats.webapi.repository.prodapp.report.FrWiseSpCakeOrdRepo;
+import com.ats.webapi.repository.prodapp.report.FrwiseRateChangedItemReportRepo;
+import com.ats.webapi.repository.prodapp.report.MisrtrywiseFrItemReportRepo;
+import com.ats.webapi.repository.prodapp.report.MistrywiseReportRepo;
 import com.ats.webapi.service.CategoryService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.MenuService;
@@ -70,11 +81,14 @@ public class ProdAppController {
 
 	/*
 	 * 
-SELECT t_sp_cake_sup.t_sp_cake_sup_no,m_franchisee.fr_name,m_franchisee.fr_code,
-m_sp_cake.sp_code,m_sp_cake.sp_name,t_sp_cake_sup.input_kg_fr,t_sp_cake_sup.input_kg_prod,
-(t_sp_cake_sup.input_kg_prod-t_sp_cake_sup.input_kg_fr) as weight_diff FROM t_sp_cake_sup,m_franchisee,m_sp_cake
-WHERE t_sp_cake_sup.date BETWEEN '2018-10-01' AND '2018-10-10' AND t_sp_cake_sup.fr_id=m_franchisee.fr_id
-AND t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
+	 * SELECT
+	 * t_sp_cake_sup.t_sp_cake_sup_no,m_franchisee.fr_name,m_franchisee.fr_code,
+	 * m_sp_cake.sp_code,m_sp_cake.sp_name,t_sp_cake_sup.input_kg_fr,t_sp_cake_sup.
+	 * input_kg_prod, (t_sp_cake_sup.input_kg_prod-t_sp_cake_sup.input_kg_fr) as
+	 * weight_diff FROM t_sp_cake_sup,m_franchisee,m_sp_cake WHERE
+	 * t_sp_cake_sup.date BETWEEN '2018-10-01' AND '2018-10-10' AND
+	 * t_sp_cake_sup.fr_id=m_franchisee.fr_id AND
+	 * t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
 	 */
 	@Autowired
 	ProdAppUserRepo prodAppUserRepo;
@@ -111,19 +125,21 @@ AND t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
 	DashRegSpCakeCountRepo getDashRegSpCakeCountRepo;
 	@Autowired
 	DashSpCakeCountRepo getDashSpCakeCountRepo;
-	
-	@Autowired FrwiseStockTransfDataRepo getFrwiseStockTransfDataRepo;
-	@RequestMapping(value = { "/getFrwiseStockTransfData" }, method = RequestMethod.POST)//task no 50 
-	public @ResponseBody List<FrwiseStockTransfData> getFrwiseStockTransfData(
-			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
-			@RequestParam("stockTypeList") List<Integer> stockTypeList,@RequestParam("menuIdList") List<Integer> menuIdList,
-			@RequestParam("frIdList") List<Integer> frIdList) {
+
+	@Autowired
+	FrwiseStockTransfDataRepo getFrwiseStockTransfDataRepo;
+
+	@RequestMapping(value = { "/getFrwiseStockTransfData" }, method = RequestMethod.POST) // task no 50
+	public @ResponseBody List<FrwiseStockTransfData> getFrwiseStockTransfData(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("stockTypeList") List<Integer> stockTypeList,
+			@RequestParam("menuIdList") List<Integer> menuIdList, @RequestParam("frIdList") List<Integer> frIdList) {
 
 		List<FrwiseStockTransfData> frWiseitemStockTransfList = new ArrayList<FrwiseStockTransfData>();
 		try {
 
-			frWiseitemStockTransfList = getFrwiseStockTransfDataRepo.getFrwiseStockTransfData(fromDate, toDate, stockTypeList, menuIdList, frIdList);
-					
+			frWiseitemStockTransfList = getFrwiseStockTransfDataRepo.getFrwiseStockTransfData(fromDate, toDate,
+					stockTypeList, menuIdList, frIdList);
+
 		} catch (Exception e) {
 
 			System.err.println("Exception in getFrwiseStockTransfData @ProdAppCont  " + e.getMessage());
@@ -134,8 +150,6 @@ AND t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
 		return frWiseitemStockTransfList;
 
 	}
-	
-	
 
 	@RequestMapping(value = { "/getDashRegSpCakeCount" }, method = RequestMethod.POST)
 	public @ResponseBody List<DashRegSpCakeCount> getDashRegSpCakeCount(@RequestParam("prodDate") String prodDate,
@@ -239,7 +253,7 @@ AND t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
 		List<GetRoutewiseOrderData> orderDataList = new ArrayList<>();
 
 		try {
-			
+
 			if (menuIdList.contains(-1)) {
 
 				System.err.println("getGetRoutewiseOrderData/ menuId -1 ");
@@ -258,13 +272,11 @@ AND t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
 
 				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeOrderByRouteIdSpecMenu(fromDate, toDate, menuIdList,
 						routeId);
-				System.err.println("regSpCakeOrderList/  " +regSpCakeOrderList.toString());
+				System.err.println("regSpCakeOrderList/  " + regSpCakeOrderList.toString());
 
-				System.err.println("spCakeOrdList/  "+spCakeOrdList.toString());
+				System.err.println("spCakeOrdList/  " + spCakeOrdList.toString());
 
 			}
-			
-			
 
 			List<Integer> frIdArray = new ArrayList<>();
 			for (int i = 0; i < spCakeOrdList.size(); i++) {
@@ -347,7 +359,7 @@ AND t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
 
 				for (int c = 0; c < regSpCakeOrderList.size(); c++) {
 					System.err.println("Inside regular regSpCakeOrderList index " + c);
-					
+
 					if (frIdArray.get(a) == regSpCakeOrderList.get(c).getFrId()) {
 
 						orderData.setFrCode(regSpCakeOrderList.get(c).getFrCode());
@@ -400,7 +412,7 @@ AND t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
 
 	}
 
-	@RequestMapping(value = { "/getStockTransfDataByTypeGrpByItem" }, method = RequestMethod.POST)//task no 40
+	@RequestMapping(value = { "/getStockTransfDataByTypeGrpByItem" }, method = RequestMethod.POST) // task no 40
 	public @ResponseBody List<StockTransfDataByTypeGrpByItem> getStockTransfDataByTypeGrpByItem(
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
 			@RequestParam("typeIdList") List<Integer> typeIdList) {
@@ -903,7 +915,7 @@ AND t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
 			@RequestParam("mistryId") int mistryId, @RequestParam("mistryName") String mistryName,
 			@RequestParam("isCharUsed") String isCharUsed,
 
-			@RequestParam("status") int status,@RequestParam("isRateChange") int isRateChange) {
+			@RequestParam("status") int status, @RequestParam("isRateChange") int isRateChange) {
 
 		Info info = new Info();
 
@@ -912,7 +924,7 @@ AND t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
 		try {
 
 			response = tSpCakeSupRepo.endProdByApp(endTimeStamp, inputKgProd, status, photo1, photo2, mistryId,
-					mistryName, isCharUsed, tSpCakeSupNo,isRateChange);
+					mistryName, isCharUsed, tSpCakeSupNo, isRateChange);
 
 			if (response > 0) {
 
@@ -1161,5 +1173,208 @@ AND t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
 
 		return categoryList;
 	}
+
+	// reports
+
+	@Autowired
+	FrWiseSpCakeOrdRepo getFrWiseSpCakeOrdRepo; // report /report no 2 only on t_sp_cake_sup
+	@Autowired
+	MistrywiseReportRepo getMistrywiseReportRepo; // report no 3 and 4 on both table
+	@Autowired
+	MisrtrywiseFrItemReportRepo getMisrtrywiseFrItemReportRepo; // report 5 no group by all table
+	@Autowired
+	FrwiseRateChangedItemReportRepo getFrwiseRateChangedItemReportRepo; // report 6
+
+	@RequestMapping(value = { "/getFrWiseSpCakeOrd" }, method = RequestMethod.POST)
+	public @ResponseBody List<FrWiseSpCakeOrd> getFrWiseSpCakeOrd(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<FrWiseSpCakeOrd> frWiseSpCakeOrdList = new ArrayList<FrWiseSpCakeOrd>();
+		try {
+			frWiseSpCakeOrdList = getFrWiseSpCakeOrdRepo.getFrWiseSpCakeOrd(fromDate, toDate);
+
+		}
+
+		catch (Exception e) {
+			System.err.println("Exce in getFrWiseSpCakeOrd " + e.getMessage());
+			e.printStackTrace();
+		}
+		return frWiseSpCakeOrdList;
+	}
+
+	@RequestMapping(value = { "/getMistrywiseReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<MistrywiseReport> getMistrywiseReport(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("mistryIdList") List<Integer> mistryIdList,
+			@Param("table") String table, @Param("groupBy") String groupBy) {
+
+		List<MistrywiseReport> mistrywiseOrdList = new ArrayList<MistrywiseReport>();
+
+		try {
+
+			if (table.equalsIgnoreCase("sp")) {
+				System.err.println("sp table query");
+
+				if (mistryIdList.contains(-1)) {
+					System.err.println("mistry Id -1 all");
+					if (groupBy.equalsIgnoreCase("date")) {
+						System.err.println("group by date ");
+						mistrywiseOrdList = getMistrywiseReportRepo.getMistrywiseReportSpAllMistryGrpDate(fromDate,
+								toDate);
+
+					} else {
+						// group by mistry id
+
+						System.err.println("group by mistry Id ");
+						mistrywiseOrdList = getMistrywiseReportRepo.getMistrywiseReportSpAllMistry(fromDate, toDate);
+					}
+				} else {
+					System.err.println("spec mistry ids");
+					if (groupBy.equalsIgnoreCase("date")) {
+						System.err.println("group by date ");
+						mistrywiseOrdList = getMistrywiseReportRepo.getMistrywiseReportSpSpecMistryGrpDate(fromDate,
+								toDate, mistryIdList);
+
+					} else {
+						// group by mistry id
+						System.err.println("group by mistry Id ");
+						mistrywiseOrdList = getMistrywiseReportRepo.getMistrywiseReportSpSpecMistry(fromDate, toDate,
+								mistryIdList);
+					}
+
+				}
+
+			} else {
+				System.err.println("reg sp table query");
+				if (mistryIdList.contains(-1)) {
+					System.err.println("mistry Id -1 all");
+					if (groupBy.equalsIgnoreCase("date")) {
+						System.err.println("group by date ");
+						mistrywiseOrdList = getMistrywiseReportRepo.getMistrywiseReportRegSpAllMistryGrpDate(fromDate,
+								toDate);
+
+					} else {
+						// group by mistry id
+						System.err.println("group by mistry Id ");
+						mistrywiseOrdList = getMistrywiseReportRepo.getMistrywiseReportRegSpAllMistry(fromDate, toDate);
+					}
+				} else {
+					System.err.println("spec mistry ids");
+					if (groupBy.equalsIgnoreCase("date")) {
+						System.err.println("group by date ");
+						mistrywiseOrdList = getMistrywiseReportRepo.getMistrywiseReportRegSpSpecMistryGrpDate(fromDate,
+								toDate, mistryIdList);
+
+					} else {
+						// group by mistry id
+						System.err.println("group by mistry Id ");
+						mistrywiseOrdList = getMistrywiseReportRepo.getMistrywiseReportRegSpSpecMistry(fromDate, toDate,
+								mistryIdList);
+					}
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getMistrywiseReport " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return mistrywiseOrdList;
+
+	}
+
+	@RequestMapping(value = { "/getMisrtrywiseFrItemReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<MisrtrywiseFrItemReport> getMisrtrywiseFrItemReport(
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("mistryIdList") List<Integer> mistryIdList, @Param("table") String table) {
+
+		List<MisrtrywiseFrItemReport> misrtrywiseFrItemReportList = new ArrayList<MisrtrywiseFrItemReport>();
+
+		try {
+
+			if (table.equalsIgnoreCase("sp")) {
+
+				if (mistryIdList.contains(-1)) {
+
+					misrtrywiseFrItemReportList = getMisrtrywiseFrItemReportRepo
+							.getMisrtrywiseFrItemReportSpAllMis(fromDate, toDate);
+				} else {
+
+					misrtrywiseFrItemReportList = getMisrtrywiseFrItemReportRepo
+							.getMisrtrywiseFrItemReportSpSpecMis(fromDate, toDate, mistryIdList);
+
+				}
+			} else {
+
+				if (mistryIdList.contains(-1)) {
+
+					misrtrywiseFrItemReportList = getMisrtrywiseFrItemReportRepo
+							.getMisrtrywiseFrItemReportRegSpAllMis(fromDate, toDate);
+				} else {
+
+					misrtrywiseFrItemReportList = getMisrtrywiseFrItemReportRepo
+							.getMisrtrywiseFrItemReportRegSpSpecMis(fromDate, toDate, mistryIdList);
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			System.err.println("Exce in getMisrtrywiseFrItemReport " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return misrtrywiseFrItemReportList;
+	}
+
+	// getFrwiseRateChangedItemReportRepo
+
+	@RequestMapping(value = { "/getFrwiseRateChangedItemReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<FrwiseRateChangedItemReport> getFrWiseSpCakeOrd(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("frIdList") List<Integer> frIdList) {
+
+		List<FrwiseRateChangedItemReport> frwiseRateChangedItemReportList = new ArrayList<FrwiseRateChangedItemReport>();
+
+		try {
+
+			if (frIdList.contains(-1)) {
+
+				frwiseRateChangedItemReportList = getFrwiseRateChangedItemReportRepo
+						.getFrwiseRateChangedItemReportAllFr(fromDate, toDate);
+
+			} else {
+
+				frwiseRateChangedItemReportList = getFrwiseRateChangedItemReportRepo
+						.getFrwiseRateChangedItemReportSpecFr(fromDate, toDate, frIdList);
+
+			}
+
+		} catch (Exception e) {
+			
+			System.err.println("Exce in getFrwiseRateChangedItemReport " + e.getMessage());
+			e.printStackTrace();
+
+		}
+		
+		return frwiseRateChangedItemReportList;
+	}
+	
+	/* route wise last record 
+	 * SELECT m_fr_route.route_id,m_fr_route.route_name,m_fr_route.route_seq_no,
+
+COALESCE(( SELECT MAX(t_sp_cake_sup.end_time_stamp) FROM t_sp_cake_sup,m_franchisee WHERE 
+          t_sp_cake_sup.date BETWEEN '2018-10-10' AND '2018-10-10' AND
+         t_sp_cake_sup.fr_id=m_franchisee.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id
+       ),0)AS max_end_time_sp, 
+       
+       
+COALESCE(( SELECT MAX(t_reg_sp_cake_sup.end_time) FROM t_reg_sp_cake_sup,m_franchisee WHERE 
+          t_reg_sp_cake_sup.prod_date BETWEEN '2018-10-10' AND '2018-10-10' AND
+         t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id
+       ),0)AS max_end_time_reg_sp
+       
+       FROM m_fr_route WHERE m_fr_route.del_status=0
+	 */
 
 }

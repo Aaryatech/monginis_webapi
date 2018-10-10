@@ -56,7 +56,7 @@ public class TRegSpCakeSup {
 	
 	private String isCharUsed;
 	
-	private int exChar;
+	private String exChar;
 	private int exInt;
 	
 	private float inputKgProd;
@@ -171,10 +171,10 @@ public class TRegSpCakeSup {
 	public void setIsCharUsed(String isCharUsed) {
 		this.isCharUsed = isCharUsed;
 	}
-	public int getExChar() {
+	public String getExChar() {
 		return exChar;
 	}
-	public void setExChar(int exChar) {
+	public void setExChar(String exChar) {
 		this.exChar = exChar;
 	}
 	public int getExInt() {
