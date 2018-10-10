@@ -59,14 +59,14 @@ public class TRegSpCakeSup {
 	private int exChar;
 	private int exInt;
 	
-	private int inputKgProd;
+	private float inputKgProd;
 	
 	
 	
-	public int getInputKgProd() {
+	public float getInputKgProd() {
 		return inputKgProd;
 	}
-	public void setInputKgProd(int inputKgProd) {
+	public void setInputKgProd(float inputKgProd) {
 		this.inputKgProd = inputKgProd;
 	}
 	public int getSupId() {

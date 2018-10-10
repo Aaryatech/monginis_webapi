@@ -69,89 +69,12 @@ import com.ats.webapi.service.spprod.SpProdService;
 public class ProdAppController {
 
 	/*
-	 * sp cake sup ord count by route id SELECT
-	 * m_fr_route.route_name,m_fr_route.route_id,coalesce((SELECT
-	 * COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup WHERE
-	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
-	 * t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date='2018-10-08'
-	 * AND t_sp_cake_sup.status=0 ),0) as status_zero_ord_count,
 	 * 
-	 * coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM
-	 * m_franchisee,t_sp_cake_sup WHERE m_fr_route.route_id=m_franchisee.fr_route_id
-	 * AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND
-	 * t_sp_cake_sup.date='2018-10-08' AND t_sp_cake_sup.status=1 ),0) as
-	 * status_one_ord_count,
-	 * 
-	 * 
-	 * coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM
-	 * m_franchisee,t_sp_cake_sup WHERE m_fr_route.route_id=m_franchisee.fr_route_id
-	 * AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND
-	 * t_sp_cake_sup.date='2018-10-08' AND t_sp_cake_sup.status=2 ),0) as
-	 * status_two_ord_count,
-	 * 
-	 * coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM
-	 * m_franchisee,t_sp_cake_sup WHERE m_fr_route.route_id=m_franchisee.fr_route_id
-	 * AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND
-	 * t_sp_cake_sup.date='2018-10-08' AND t_sp_cake_sup.status=3 ),0) as
-	 * status_three_ord_count,
-	 * 
-	 * coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM
-	 * m_franchisee,t_sp_cake_sup WHERE m_fr_route.route_id=m_franchisee.fr_route_id
-	 * AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND
-	 * t_sp_cake_sup.date='2018-10-08' ),0) as total_ord_count
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * 
-	 * from m_fr_route WHERE m_fr_route.del_status=0 GROUP by m_fr_route.route_id
-	 * ORDER BY m_fr_route.route_seq_no DESC
-	 * 
-	 */
-
-	/*
-	 * reg sp cake sup ord count by route id SELECT
-	 * m_fr_route.route_name,m_fr_route.route_id,coalesce((SELECT
-	 * COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup WHERE
-	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
-	 * t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND
-	 * t_reg_sp_cake_sup.prod_date='2018-10-08' AND t_reg_sp_cake_sup.status=0 ),0)
-	 * as status_zero_ord_count,
-	 * 
-	 * coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM
-	 * m_franchisee,t_reg_sp_cake_sup WHERE
-	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
-	 * t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND
-	 * t_reg_sp_cake_sup.prod_date='2018-10-08' AND t_reg_sp_cake_sup.status=1 ),0)
-	 * as status_one_ord_count,
-	 * 
-	 * 
-	 * coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM
-	 * m_franchisee,t_reg_sp_cake_sup WHERE
-	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
-	 * t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND
-	 * t_reg_sp_cake_sup.prod_date='2018-10-08' AND t_reg_sp_cake_sup.status=2 ),0)
-	 * as status_two_ord_count,
-	 * 
-	 * coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM
-	 * m_franchisee,t_reg_sp_cake_sup WHERE
-	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
-	 * t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND
-	 * t_reg_sp_cake_sup.prod_date='2018-10-08' AND t_reg_sp_cake_sup.status=3 ),0)
-	 * as status_three_ord_count,
-	 * 
-	 * 
-	 * coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM
-	 * m_franchisee,t_reg_sp_cake_sup WHERE
-	 * m_fr_route.route_id=m_franchisee.fr_route_id AND
-	 * t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND
-	 * t_reg_sp_cake_sup.prod_date='2018-10-08' ),0) as total_ord_count
-	 * 
-	 * 
-	 * from m_fr_route WHERE m_fr_route.del_status=0 GROUP by m_fr_route.route_id
-	 * ORDER BY m_fr_route.route_seq_no DESC
+SELECT t_sp_cake_sup.t_sp_cake_sup_no,m_franchisee.fr_name,m_franchisee.fr_code,
+m_sp_cake.sp_code,m_sp_cake.sp_name,t_sp_cake_sup.input_kg_fr,t_sp_cake_sup.input_kg_prod,
+(t_sp_cake_sup.input_kg_prod-t_sp_cake_sup.input_kg_fr) as weight_diff FROM t_sp_cake_sup,m_franchisee,m_sp_cake
+WHERE t_sp_cake_sup.date BETWEEN '2018-10-01' AND '2018-10-10' AND t_sp_cake_sup.fr_id=m_franchisee.fr_id
+AND t_sp_cake_sup.sp_cake_id=m_sp_cake.sp_id
 	 */
 	@Autowired
 	ProdAppUserRepo prodAppUserRepo;
@@ -316,9 +239,7 @@ public class ProdAppController {
 		List<GetRoutewiseOrderData> orderDataList = new ArrayList<>();
 
 		try {
-			System.err.println(
-					"For  getGetRoutewiseOrderData // menuId List " + menuIdList.toString() + "order By " + isOrderBy);
-
+			
 			if (menuIdList.contains(-1)) {
 
 				System.err.println("getGetRoutewiseOrderData/ menuId -1 ");
@@ -982,7 +903,7 @@ public class ProdAppController {
 			@RequestParam("mistryId") int mistryId, @RequestParam("mistryName") String mistryName,
 			@RequestParam("isCharUsed") String isCharUsed,
 
-			@RequestParam("status") int status) {
+			@RequestParam("status") int status,@RequestParam("isRateChange") int isRateChange) {
 
 		Info info = new Info();
 
@@ -991,7 +912,7 @@ public class ProdAppController {
 		try {
 
 			response = tSpCakeSupRepo.endProdByApp(endTimeStamp, inputKgProd, status, photo1, photo2, mistryId,
-					mistryName, isCharUsed, tSpCakeSupNo);
+					mistryName, isCharUsed, tSpCakeSupNo,isRateChange);
 
 			if (response > 0) {
 

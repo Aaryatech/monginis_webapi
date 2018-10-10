@@ -33,7 +33,7 @@ public interface TSpCakeSupRepo extends JpaRepository<TSpCakeSup, Integer> {
 	
 	@Transactional
 	@Modifying	
-	@Query("UPDATE TSpCakeSup SET endTimeStamp =:endTimeStamp,inputKgProd=:inputKgProd,status=:status,"
+	@Query("UPDATE TSpCakeSup SET endTimeStamp =:endTimeStamp,inputKgProd=:inputKgProd,status=:status,exInt=:isRateChange,"
 			+ "photo1=:photo1,photo2=:photo2, mistryId=:mistryId ,mistryName=:mistryName,isCharUsed=:isCharUsed"
 			+ "  WHERE tSpCakeSupNo=:tSpCakeSupNo")
 	int endProdByApp(@Param("endTimeStamp") Long endTimeStamp,
@@ -44,6 +44,8 @@ public interface TSpCakeSupRepo extends JpaRepository<TSpCakeSup, Integer> {
 			@Param("mistryId") int mistryId,
 			@Param("mistryName") String mistryName,
 			@Param("isCharUsed") String isCharUsed,
-			@Param("tSpCakeSupNo") int tSpCakeSupNo);
+			@Param("tSpCakeSupNo") int tSpCakeSupNo,
+			@Param("isRateChange") int isRateChange
+			);
 	
 }
