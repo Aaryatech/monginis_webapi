@@ -26,6 +26,7 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
 import com.ats.webapi.model.MCategory;
 import com.ats.webapi.model.prodapp.ProdAppUser;
+import com.ats.webapi.model.prodapp.RoutewiseLastCakeEndTime;
 import com.ats.webapi.model.prodapp.RoutewiseOrdCountBean;
 import com.ats.webapi.model.prodapp.StockTransfDataByTypeGrpByItem;
 import com.ats.webapi.model.prodapp.StockTransfDetail;
@@ -71,6 +72,7 @@ import com.ats.webapi.repository.prodapp.report.FrWiseSpCakeOrdRepo;
 import com.ats.webapi.repository.prodapp.report.FrwiseRateChangedItemReportRepo;
 import com.ats.webapi.repository.prodapp.report.MisrtrywiseFrItemReportRepo;
 import com.ats.webapi.repository.prodapp.report.MistrywiseReportRepo;
+import com.ats.webapi.repository.prodapp.report.RoutewiseLastCakeEndTimeRepo;
 import com.ats.webapi.service.CategoryService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.MenuService;
@@ -1361,6 +1363,25 @@ public class ProdAppController {
 		
 		return frwiseRateChangedItemReportList;
 	}
+	
+	@Autowired RoutewiseLastCakeEndTimeRepo getRoutewiseLastCakeEndTimeRepo;
+	
+	@RequestMapping(value = { "/getRoutewiseLastCakeEndTime" }, method = RequestMethod.POST)
+	public @ResponseBody List<RoutewiseLastCakeEndTime> getRoutewiseLastCakeEndTime(@RequestParam("prodDate") String prodDate) {
+
+		List<RoutewiseLastCakeEndTime> frwiseRateChangedItemReportList = new ArrayList<RoutewiseLastCakeEndTime>();
+
+		try {
+			
+			frwiseRateChangedItemReportList=getRoutewiseLastCakeEndTimeRepo.getRoutewiseLastCakeEndTime(prodDate);
+			
+		}catch (Exception e) {
+			System.err.println("Exce in getRoutewiseLastCakeEndTime " + e.getMessage());
+			e.printStackTrace();
+		}
+		return frwiseRateChangedItemReportList;
+		}
+	
 	
 	/* route wise last record 
 	 * SELECT m_fr_route.route_id,m_fr_route.route_name,m_fr_route.route_seq_no,

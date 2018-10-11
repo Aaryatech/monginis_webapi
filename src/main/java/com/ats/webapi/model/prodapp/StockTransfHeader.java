@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name="t_stock_transf_header")
+@Table(name="t_stock_trasf_header")
 public class StockTransfHeader {
 	
 	@Id
