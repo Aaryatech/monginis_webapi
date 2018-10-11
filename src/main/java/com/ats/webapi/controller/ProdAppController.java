@@ -915,7 +915,8 @@ public class ProdAppController {
 			@RequestParam("mistryId") int mistryId, @RequestParam("mistryName") String mistryName,
 			@RequestParam("isCharUsed") String isCharUsed,
 
-			@RequestParam("status") int status, @RequestParam("isRateChange") int isRateChange) {
+			@RequestParam("status") int status, @RequestParam("isRateChange") int isRateChange,
+			@RequestParam("timeRequired") String timeRequired) {
 
 		Info info = new Info();
 
@@ -924,7 +925,7 @@ public class ProdAppController {
 		try {
 
 			response = tSpCakeSupRepo.endProdByApp(endTimeStamp, inputKgProd, status, photo1, photo2, mistryId,
-					mistryName, isCharUsed, tSpCakeSupNo, isRateChange);
+					mistryName, isCharUsed, tSpCakeSupNo, isRateChange,timeRequired);
 
 			if (response > 0) {
 
@@ -989,6 +990,7 @@ public class ProdAppController {
 
 			@RequestParam("mistryId") int mistryId, @RequestParam("mistryName") String mistryName,
 			@RequestParam("isCharUsed") String isCharUsed,
+			@RequestParam("timeRequired") String timeRequired,
 
 			@RequestParam("status") int status) {
 
@@ -999,7 +1001,7 @@ public class ProdAppController {
 		try {
 
 			response = tRegSpCakeSupRepo.endRegSpCakeProdByApp(endTime, inputKgProd, status, photo1, photo2, mistryId,
-					mistryName, isCharUsed, supId);
+					mistryName, isCharUsed,timeRequired, supId);
 
 			if (response > 0) {
 
