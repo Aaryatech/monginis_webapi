@@ -436,7 +436,7 @@ public class ProdAppController {
 
 	}
 
-	// 12 no web service on google sheet
+	// 12 no web service on google sheet and 10  No
 	@Autowired
 	GetDataForGateSaleDayEndRepo getDataForGateSaleDayEndRepo;
 

@@ -17,6 +17,17 @@ public class GetDataForGateSaleDayEnd {
 	
 	private float inQty;
 	private float saleQty;
+	
+	private float opQty;
+	
+	
+	
+	public float getOpQty() {
+		return opQty;
+	}
+	public void setOpQty(float opQty) {
+		this.opQty = opQty;
+	}
 	public int getSubCatId() {
 		return subCatId;
 	}
@@ -56,7 +67,7 @@ public class GetDataForGateSaleDayEnd {
 	@Override
 	public String toString() {
 		return "GetDataForGateSaleDayEnd [subCatId=" + subCatId + ", catId=" + catId + ", subCatName=" + subCatName
-				+ ", catName=" + catName + ", inQty=" + inQty + ", saleQty=" + saleQty + "]";
+				+ ", catName=" + catName + ", inQty=" + inQty + ", saleQty=" + saleQty + ", opQty=" + opQty + "]";
 	}
 	
 	

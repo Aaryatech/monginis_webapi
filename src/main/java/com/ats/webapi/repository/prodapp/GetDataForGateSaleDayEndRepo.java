@@ -16,10 +16,17 @@ public interface GetDataForGateSaleDayEndRepo extends JpaRepository<GetDataForGa
 			+ ""
 			+ " t_stock_trasf_header.stock_date=:date AND t_stock_trasf_detail.sub_cat_id=m_cat_sub.sub_cat_id "
 			+ " GROUP BY t_stock_trasf_detail.sub_cat_id ),0) AS in_qty,"
+			
 			+ " COALESCE((SELECT SUM(t_gatesale_bill_detail.item_qty) FROM t_gatesale_bill_detail,t_gatesale_bill_header,"
 			+ " m_item WHERE t_gatesale_bill_detail.item_id=m_item.id AND t_gatesale_bill_detail.bill_id=t_gatesale_bill_header.bill_id "
 			+ " AND t_gatesale_bill_header.bill_date=:date  AND  m_cat_sub.sub_cat_id=m_item.item_grp2 GROUP BY m_item.item_grp2),0) "
-			+ " AS sale_qty "
+			+ " AS sale_qty,"
+			
+			+ "COALESCE((SELECT SUM(t_gate_sale_stock_detail.op_qty) FROM t_gate_sale_stock_detail,t_gate_sale_stock_header\n" + 
+			"  WHERE t_gate_sale_stock_header.stock_status=0 AND "
+			+ "t_gate_sale_stock_detail.gate_sale_stock_header_id=t_gate_sale_stock_header.gate_sale_stock_header_id\n" + 
+			"  AND m_cat_sub.sub_cat_id=t_gate_sale_stock_detail.sub_cat_id GROUP by t_gate_sale_stock_detail.sub_cat_id),0) AS op_qty "
+			
 			+ " FROM m_cat_sub,m_category WHERE  m_cat_sub.del_status=0 AND m_cat_sub.cat_id=m_category.cat_id ", nativeQuery = true)
 
 	List<GetDataForGateSaleDayEnd> getInQtyAndSaleQtySubCatwise(@Param("date") String date,@Param("stockType")int stockType);
