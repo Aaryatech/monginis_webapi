@@ -4,15 +4,15 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 
 @Entity
-public class StockTransfDataByTypeGrpByItem {
+public class StockTransfDataByTypeGrpBySubC {
 	
 	@Id
-	private int itemId;
-	
-	private int catId;
 	private int subCatId;
 	
-	private int menuId;
+	
+	private int catId;
+	
+	
 	
 	private float qty;
 	
@@ -20,15 +20,10 @@ public class StockTransfDataByTypeGrpByItem {
 	private float aprQty2;
 	private float aprQty3;
 	
-	private String itemName;
+
 	private String subCatName;
 	private String catName;
-	public int getItemId() {
-		return itemId;
-	}
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}
+	
 	public int getCatId() {
 		return catId;
 	}
@@ -41,12 +36,7 @@ public class StockTransfDataByTypeGrpByItem {
 	public void setSubCatId(int subCatId) {
 		this.subCatId = subCatId;
 	}
-	public int getMenuId() {
-		return menuId;
-	}
-	public void setMenuId(int menuId) {
-		this.menuId = menuId;
-	}
+	
 	public float getQty() {
 		return qty;
 	}
@@ -71,12 +61,7 @@ public class StockTransfDataByTypeGrpByItem {
 	public void setAprQty3(float aprQty3) {
 		this.aprQty3 = aprQty3;
 	}
-	public String getItemName() {
-		return itemName;
-	}
-	public void setItemName(String itemName) {
-		this.itemName = itemName;
-	}
+	
 	public String getSubCatName() {
 		return subCatName;
 	}
@@ -89,12 +74,13 @@ public class StockTransfDataByTypeGrpByItem {
 	public void setCatName(String catName) {
 		this.catName = catName;
 	}
-	
 	@Override
 	public String toString() {
-		return "StockTransfDataByTypeGrpByItem [itemId=" + itemId + ", catId=" + catId + ", subCatId=" + subCatId
-				+ ", menuId=" + menuId + ", qty=" + qty + ", aprQty1=" + aprQty1 + ", aprQty2=" + aprQty2 + ", aprQty3="
-				+ aprQty3 + ", itemName=" + itemName + ", subCatName=" + subCatName + ", catName=" + catName + "]";
+		return "StockTransfDataByTypeGrpByItem [subCatId=" + subCatId + ", catId=" + catId + ", qty=" + qty
+				+ ", aprQty1=" + aprQty1 + ", aprQty2=" + aprQty2 + ", aprQty3=" + aprQty3 + ", subCatName="
+				+ subCatName + ", catName=" + catName + "]";
 	}
+	
+
 	
 }

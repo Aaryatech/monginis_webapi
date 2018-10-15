@@ -28,7 +28,7 @@ import com.ats.webapi.model.MCategory;
 import com.ats.webapi.model.prodapp.ProdAppUser;
 import com.ats.webapi.model.prodapp.RoutewiseLastCakeEndTime;
 import com.ats.webapi.model.prodapp.RoutewiseOrdCountBean;
-import com.ats.webapi.model.prodapp.StockTransfDataByTypeGrpByItem;
+import com.ats.webapi.model.prodapp.StockTransfDataByTypeGrpBySubC;
 import com.ats.webapi.model.prodapp.StockTransfDetail;
 import com.ats.webapi.model.prodapp.StockTransfHeader;
 import com.ats.webapi.model.prodapp.StockTransfType;
@@ -62,7 +62,7 @@ import com.ats.webapi.repository.prodapp.MenusRepo;
 import com.ats.webapi.repository.prodapp.ProdAppUserRepo;
 import com.ats.webapi.repository.prodapp.RoutewiseOrdCountBeanRepo;
 import com.ats.webapi.repository.prodapp.SpCakeForProdAppRepo;
-import com.ats.webapi.repository.prodapp.StockTransfDataByTypeGrpByItemRepo;
+import com.ats.webapi.repository.prodapp.StockTransfDataByTypeGrpBySubcat;
 import com.ats.webapi.repository.prodapp.StockTransfDetailRepo;
 import com.ats.webapi.repository.prodapp.StockTransfHeaderRepo;
 import com.ats.webapi.repository.prodapp.StockTransfTypeRepo;
@@ -121,7 +121,7 @@ public class ProdAppController {
 	GateSaleStockHeaderRepo gateSaleStockHeaderRepo;
 
 	@Autowired
-	StockTransfDataByTypeGrpByItemRepo getStockTransfDataByTypeGrpByItemRepo;
+	StockTransfDataByTypeGrpBySubcat getStockTransfDataByTypeGrpByItemRepo;
 
 	@Autowired
 	DashRegSpCakeCountRepo getDashRegSpCakeCountRepo;
@@ -131,7 +131,7 @@ public class ProdAppController {
 	@Autowired
 	FrwiseStockTransfDataRepo getFrwiseStockTransfDataRepo;
 
-	@RequestMapping(value = { "/getFrwiseStockTransfData" }, method = RequestMethod.POST) // task no 50
+	@RequestMapping(value = { "/getFrwiseStockTransfData" }, method = RequestMethod.POST) // task no 50 webservice for based on selection of date & multiple category/All: show all record in stock transfer tabel which type is dummy franchasi (header & detail)
 	public @ResponseBody List<FrwiseStockTransfData> getFrwiseStockTransfData(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("stockTypeList") List<Integer> stockTypeList,
 			@RequestParam("menuIdList") List<Integer> menuIdList, @RequestParam("frIdList") List<Integer> frIdList) {
@@ -210,7 +210,7 @@ public class ProdAppController {
 
 	}
 
-	// route wise count reg and sp cakes
+	// route wise count reg and sp cakes task no 47
 	@Autowired
 	RoutewiseOrdCountBeanRepo getRoutewiseOrdCountBeanRepo;
 
@@ -242,7 +242,9 @@ public class ProdAppController {
 
 	}
 
-	// end route wise count reg and sp cakes
+	// end route wise count reg and sp cakes 
+	
+	//task no 48 getGetRoutewiseOrderData
 
 	@RequestMapping(value = { "/getGetRoutewiseOrderData" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetRoutewiseOrderData> getGetRoutewiseOrderData(@RequestParam("fromDate") String fromDate,
@@ -413,13 +415,15 @@ public class ProdAppController {
 		return orderDataList;
 
 	}
+	
+	 // task no 40
 
-	@RequestMapping(value = { "/getStockTransfDataByTypeGrpByItem" }, method = RequestMethod.POST) // task no 40
-	public @ResponseBody List<StockTransfDataByTypeGrpByItem> getStockTransfDataByTypeGrpByItem(
+	@RequestMapping(value = { "/getStockTransfDataByTypeGrpBySubcat" }, method = RequestMethod.POST) // task no 40
+	public @ResponseBody List<StockTransfDataByTypeGrpBySubC> getStockTransfDataByTypeGrpByItem(
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
 			@RequestParam("typeIdList") List<Integer> typeIdList) {
 
-		List<StockTransfDataByTypeGrpByItem> itemWiseStockTransfList = new ArrayList<StockTransfDataByTypeGrpByItem>();
+		List<StockTransfDataByTypeGrpBySubC> itemWiseStockTransfList = new ArrayList<StockTransfDataByTypeGrpBySubC>();
 		try {
 
 			itemWiseStockTransfList = getStockTransfDataByTypeGrpByItemRepo.getStockTransfDataByTypeGrpByItem(fromDate,
@@ -427,7 +431,7 @@ public class ProdAppController {
 
 		} catch (Exception e) {
 
-			System.err.println("Exception in getStockTransfDataByTypeGrpByItem @ProdAppCont  " + e.getMessage());
+			System.err.println("Exception in getStockTransfDataByTypeGrpBySubcat @ProdAppCont  " + e.getMessage());
 
 			e.printStackTrace();
 		}
@@ -436,7 +440,7 @@ public class ProdAppController {
 
 	}
 
-	// 12 no web service on google sheet and 10  No
+	// 12 no web service on google sheet
 	@Autowired
 	GetDataForGateSaleDayEndRepo getDataForGateSaleDayEndRepo;
 
