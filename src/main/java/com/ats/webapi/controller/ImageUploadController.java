@@ -27,6 +27,10 @@ public class ImageUploadController {
 	private static String NOTIFICATION_URL = "/opt/tomcat-latest/webapps/uploads/NOTIFICATION/";
 	private static String FEEDBACK_URL = "/opt/tomcat-latest/webapps/uploads/FEEDBACK/";
 
+	private static String SP_PRODAPP_IMAGE="/opt/tomcat-latest/webapps/uploads/SPPRODAPPIMAGE/";
+	
+	private static String REG_SP_PRODAPP_IMAGE="/opt/tomcat-latest/webapps/uploads/REGSPPRODAPPIMAGE/";
+
 	//private static String BILL_FOLDER ="/home/maxadmin/Desktop/photos/";
 	
 	
@@ -83,6 +87,22 @@ public class ImageUploadController {
    			 path =Paths.get(FEEDBACK_URL + imageName);
 
             }
+            
+            
+            else if(type.equalsIgnoreCase("spprodapp"))
+            {
+   			 path =Paths.get(FEEDBACK_URL + imageName);
+
+            }
+            
+            
+            else if(type.equalsIgnoreCase("regspprodapp"))
+            {
+   			 path =Paths.get(FEEDBACK_URL + imageName);
+
+            }
+            
+            
 			byte[] bytes = file.getBytes();
 			
 			Files.write(path, bytes);

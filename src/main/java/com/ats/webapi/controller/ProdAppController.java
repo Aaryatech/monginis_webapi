@@ -1200,7 +1200,7 @@ public class ProdAppController {
 		List<FrWiseSpCakeOrd> frWiseSpCakeOrdList = new ArrayList<FrWiseSpCakeOrd>();
 		try {
 			frWiseSpCakeOrdList = getFrWiseSpCakeOrdRepo.getFrWiseSpCakeOrd(fromDate, toDate);
-
+System.err.println("frWiseSpCakeOrdList" +frWiseSpCakeOrdList.toString());
 		}
 
 		catch (Exception e) {

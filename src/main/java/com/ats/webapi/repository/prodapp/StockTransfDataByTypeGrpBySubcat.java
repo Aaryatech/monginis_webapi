@@ -10,7 +10,7 @@ import com.ats.webapi.model.prodapp.StockTransfDataByTypeGrpBySubC;
 
 public interface StockTransfDataByTypeGrpBySubcat extends JpaRepository<StockTransfDataByTypeGrpBySubC, Integer> {
 
-	@Query(value = "SELECT m_cat_sub.sub_cat_id,m_cat_sub.sub_cat_name,m_category.cat_id,m_category.cat_id,\n" + 
+	@Query(value = "SELECT m_cat_sub.sub_cat_id,m_cat_sub.sub_cat_name,m_category.cat_id,m_category.cat_name,\n" + 
 			
 			"COALESCE((SELECT SUM(t_stock_trasf_detail.qty) FROM t_stock_trasf_detail,t_stock_trasf_header,stock_transf_type WHERE t_stock_trasf_detail.stock_transf_header_id=t_stock_trasf_header.stock_transf_header_id AND\n" + 
 			"t_stock_trasf_header.stock_date BETWEEN :fromDate AND :toDate AND\n" + 
