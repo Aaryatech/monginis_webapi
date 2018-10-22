@@ -10,7 +10,7 @@ import com.ats.webapi.model.prodapp.MisrtrywiseFrItemReport;
 
 public interface MisrtrywiseFrItemReportRepo extends JpaRepository<MisrtrywiseFrItemReport, Integer> {
 	
-	@Query(value = "SELECT t_sp_cake_sup.t_sp_cake_sup_noas ord_id,m_franchisee.fr_name,m_franchisee.fr_code,m_emp.emp_name,\n" + 
+	@Query(value = "SELECT t_sp_cake_sup.t_sp_cake_sup_no as ord_id,m_franchisee.fr_name,m_franchisee.fr_code,m_emp.emp_name,\n" + 
 			"m_sp_cake.sp_code as item_code,m_sp_cake.sp_name as item_name,t_sp_cake_sup.input_kg_fr,t_sp_cake_sup.input_kg_prod,\n" + 
 			"(t_sp_cake_sup.input_kg_prod-t_sp_cake_sup.input_kg_fr) as weight_diff,t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp"
 			+ " FROM t_sp_cake_sup,m_franchisee,m_sp_cake,m_emp\n" + 
@@ -20,7 +20,7 @@ public interface MisrtrywiseFrItemReportRepo extends JpaRepository<MisrtrywiseFr
 	List<MisrtrywiseFrItemReport> getMisrtrywiseFrItemReportSpSpecMis(@Param("fromDate") String fromDate,@Param("toDate") String toDate,
 			@Param("mistryIdList") List<Integer> mistryIdList);
 	
-	@Query(value = "SELECT t_sp_cake_sup.t_sp_cake_sup_noas ord_id,m_franchisee.fr_name,m_franchisee.fr_code,m_emp.emp_name,\n" + 
+	@Query(value = "SELECT t_sp_cake_sup.t_sp_cake_sup_no as ord_id,m_franchisee.fr_name,m_franchisee.fr_code,m_emp.emp_name,\n" + 
 			"m_sp_cake.sp_code as item_code,m_sp_cake.sp_name as item_name,t_sp_cake_sup.input_kg_fr,t_sp_cake_sup.input_kg_prod,\n" + 
 			"(t_sp_cake_sup.input_kg_prod-t_sp_cake_sup.input_kg_fr) as weight_diff,t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp"
 			+ " FROM t_sp_cake_sup,m_franchisee,m_sp_cake,m_emp\n" + 
