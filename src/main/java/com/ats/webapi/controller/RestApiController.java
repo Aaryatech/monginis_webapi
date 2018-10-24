@@ -1578,9 +1578,11 @@ public class RestApiController {
 
 		SpCakeOrderRes spCakeOrderRes = spCakeOrdersService.placeSpCakeOrder(orderJson);
 		
+		
+		System.err.println("Prod Date : "+spCakeOrderRes.getSpCakeOrder().getSpProdDate());
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-		Date date = new Date();
-		String sqlSpProduDate = dateFormat.format(date);
+		//Date date = new Date();
+		String sqlSpProduDate = dateFormat.format(spCakeOrderRes.getSpCakeOrder().getSpProdDate());
 		
 		System.out.println("sqlSpProduDate " +sqlSpProduDate);
 		
@@ -1761,12 +1763,12 @@ public class RestApiController {
 
 		RegularSpCake ordRes = regularSpCkOrderService.placeRegularSpCakeOrder(regularSpCake);
 
-		
+		System.out.println("Inside Place Order ordRes.getRspProduDate() " + ordRes.getRspProduDate());
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
-		String sqlSpProduDate = dateFormat.format(date);
-		
+		String sqlSpProduDate = dateFormat.format(ordRes.getRspProduDate());
+		System.out.println("sqlSpProduDate" +sqlSpProduDate);
 		int orderCount=regularSpCkOrderService.getRegSpCakeOrdCountByProdDate(sqlSpProduDate);
 		
 		
