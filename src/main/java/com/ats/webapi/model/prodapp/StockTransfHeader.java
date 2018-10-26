@@ -22,7 +22,7 @@ public class StockTransfHeader {
 	
 	private Date stockDate;
 	
-	private int stockType;
+	private int type;
 	private int userId;
 	
 	private int aprUserId1;
@@ -58,11 +58,12 @@ public class StockTransfHeader {
 	public void setStockDate(Date stockDate) {
 		this.stockDate = stockDate;
 	}
-	public int getStockType() {
-		return stockType;
+	
+	public int getType() {
+		return type;
 	}
-	public void setStockType(int stockType) {
-		this.stockType = stockType;
+	public void setType(int type) {
+		this.type = type;
 	}
 	public int getUserId() {
 		return userId;
@@ -159,13 +160,15 @@ public class StockTransfHeader {
 		this.stockTransfDetailList = stockTransfDetailList;
 	}
 	
+	
+	
 	@Override
 	public String toString() {
-		return "StockTransfHeader [stockTransfHeaderId=" + stockTransfHeaderId + ", stockDate=" + stockDate
-				+ ", stockType=" + stockType + ", userId=" + userId + ", aprUserId1=" + aprUserId1 + ", aprUserId2="
-				+ aprUserId2 + ", aprUserId3=" + aprUserId3 + ", aprDate1=" + aprDate1 + ", aprDate2=" + aprDate2
-				+ ", aprDate3=" + aprDate3 + ", frId=" + frId + ", frName=" + frName + ", stockStatus=" + stockStatus
-				+ ", delStatus=" + delStatus + ", exInt=" + exInt + ", exVar=" + exVar + ", exFloat=" + exFloat
+		return "StockTransfHeader [stockTransfHeaderId=" + stockTransfHeaderId + ", stockDate=" + stockDate + ", type="
+				+ type + ", userId=" + userId + ", aprUserId1=" + aprUserId1 + ", aprUserId2=" + aprUserId2
+				+ ", aprUserId3=" + aprUserId3 + ", aprDate1=" + aprDate1 + ", aprDate2=" + aprDate2 + ", aprDate3="
+				+ aprDate3 + ", frId=" + frId + ", frName=" + frName + ", stockStatus=" + stockStatus + ", delStatus="
+				+ delStatus + ", exInt=" + exInt + ", exVar=" + exVar + ", exFloat=" + exFloat
 				+ ", stockTransfDetailList=" + stockTransfDetailList + "]";
 	}
 
