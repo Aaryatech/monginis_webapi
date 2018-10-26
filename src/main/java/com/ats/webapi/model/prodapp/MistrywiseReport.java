@@ -1,5 +1,7 @@
 package com.ats.webapi.model.prodapp;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
@@ -15,9 +17,21 @@ public class MistrywiseReport {
 	private int noOfCakes;
 	
 	private float timeRequired;
+	
+	private Date prodDate;
+	
+	
 
 	public int getMistryId() {
 		return mistryId;
+	}
+
+	public Date getProdDate() {
+		return prodDate;
+	}
+
+	public void setProdDate(Date prodDate) {
+		this.prodDate = prodDate;
 	}
 
 	public void setMistryId(int mistryId) {
@@ -51,7 +65,7 @@ public class MistrywiseReport {
 	@Override
 	public String toString() {
 		return "MistrywiseReport [mistryId=" + mistryId + ", empName=" + empName + ", noOfCakes=" + noOfCakes
-				+ ", timeRequired=" + timeRequired + "]";
+				+ ", timeRequired=" + timeRequired + ", prodDate=" + prodDate + "]";
 	}
 	
 	

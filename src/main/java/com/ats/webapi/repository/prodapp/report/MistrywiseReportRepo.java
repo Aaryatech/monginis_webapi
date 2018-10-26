@@ -13,7 +13,7 @@ public interface MistrywiseReportRepo  extends JpaRepository<MistrywiseReport, I
 	
 	//sp 3.1
 	@Query(value = "SELECT t_sp_cake_sup.mistry_id,m_emp.emp_name,COUNT(t_sp_cake_sup.t_sp_cake_sup_no) "
-			+ " AS no_of_cakes,SUM(t_sp_cake_sup.ex_var) AS time_required "
+			+ " AS no_of_cakes,SUM(t_sp_cake_sup.ex_var) AS time_required,t_sp_cake_sup.date AS prod_date "
 			+ " FROM t_sp_cake_sup,m_emp WHERE t_sp_cake_sup.mistry_id=m_emp.emp_id AND t_sp_cake_sup.date "
 			+ " BETWEEN :fromDate AND :toDate AND t_sp_cake_sup.mistry_id IN (:mistryIdList) GROUP BY t_sp_cake_sup.mistry_id \n" + 
 			" " + 
@@ -22,7 +22,7 @@ public interface MistrywiseReportRepo  extends JpaRepository<MistrywiseReport, I
 			@Param("mistryIdList") List<Integer> mistryIdList);
 	//sp 3.2
 	@Query(value = "SELECT t_sp_cake_sup.mistry_id,m_emp.emp_name,COUNT(t_sp_cake_sup.t_sp_cake_sup_no) "
-			+ " AS no_of_cakes,SUM(t_sp_cake_sup.ex_var) AS time_required "
+			+ " AS no_of_cakes,SUM(t_sp_cake_sup.ex_var) AS time_required ,t_sp_cake_sup.date AS prod_date  "
 			+ " FROM t_sp_cake_sup,m_emp WHERE t_sp_cake_sup.mistry_id=m_emp.emp_id AND t_sp_cake_sup.date "
 			+ " BETWEEN :fromDate AND :toDate GROUP BY t_sp_cake_sup.mistry_id \n" + 
 			" " + 
@@ -32,7 +32,7 @@ public interface MistrywiseReportRepo  extends JpaRepository<MistrywiseReport, I
 	//
 	//reg sp 3.1
 	@Query(value = " SELECT t_reg_sp_cake_sup.mistry_id,m_emp.emp_name,COUNT(t_reg_sp_cake_sup.sup_id) "
-			+ " AS no_of_cakes,SUM(t_reg_sp_cake_sup.ex_char) AS time_required FROM "
+			+ " AS no_of_cakes,SUM(t_reg_sp_cake_sup.ex_char) AS time_required ,t_reg_sp_cake_sup.prod_date AS prod_date  FROM "
 			+ " t_reg_sp_cake_sup,m_emp WHERE t_reg_sp_cake_sup.mistry_id=m_emp.emp_id AND "
 			+ " t_reg_sp_cake_sup.prod_date BETWEEN :fromDate AND :toDate  "
 			+ " AND t_reg_sp_cake_sup.mistry_id IN (:mistryIdList) GROUP BY t_reg_sp_cake_sup.mistry_id " + 
@@ -43,7 +43,7 @@ public interface MistrywiseReportRepo  extends JpaRepository<MistrywiseReport, I
 
 	//reg sp 3.2
 	@Query(value = " SELECT t_reg_sp_cake_sup.mistry_id,m_emp.emp_name,COUNT(t_reg_sp_cake_sup.sup_id) " + 
-			" AS no_of_cakes,SUM(t_reg_sp_cake_sup.ex_char) AS time_required FROM " + 
+			" AS no_of_cakes,SUM(t_reg_sp_cake_sup.ex_char) AS time_required ,t_reg_sp_cake_sup.prod_date AS prod_date FROM " + 
 			" t_reg_sp_cake_sup,m_emp WHERE t_reg_sp_cake_sup.mistry_id=m_emp.emp_id AND " + 
 			" t_reg_sp_cake_sup.prod_date BETWEEN :fromDate AND :toDate " + 
 			" GROUP BY t_reg_sp_cake_sup.mistry_id  " + 
@@ -55,7 +55,7 @@ public interface MistrywiseReportRepo  extends JpaRepository<MistrywiseReport, I
 	
 	 //sp 4.1
 	@Query(value = "SELECT t_sp_cake_sup.mistry_id,m_emp.emp_name,COUNT(t_sp_cake_sup.t_sp_cake_sup_no) "
-			+ " AS no_of_cakes,SUM(t_sp_cake_sup.ex_var) AS time_required "
+			+ " AS no_of_cakes,SUM(t_sp_cake_sup.ex_var) AS time_required,t_sp_cake_sup.date AS prod_date "
 			+ " FROM t_sp_cake_sup,m_emp WHERE t_sp_cake_sup.mistry_id=m_emp.emp_id AND t_sp_cake_sup.date "
 			+ " BETWEEN :fromDate AND :toDate AND t_sp_cake_sup.mistry_id IN (:mistryIdList) GROUP BY t_sp_cake_sup.date \n" + 
 			" " + 
@@ -64,7 +64,7 @@ public interface MistrywiseReportRepo  extends JpaRepository<MistrywiseReport, I
 			@Param("mistryIdList") List<Integer> mistryIdList);
 	//sp 4.2
 	@Query(value = "SELECT t_sp_cake_sup.mistry_id,m_emp.emp_name,COUNT(t_sp_cake_sup.t_sp_cake_sup_no) "
-			+ " AS no_of_cakes,SUM(t_sp_cake_sup.ex_var) AS time_required "
+			+ " AS no_of_cakes,SUM(t_sp_cake_sup.ex_var) AS time_required ,t_sp_cake_sup.date AS prod_date "
 			+ " FROM t_sp_cake_sup,m_emp WHERE t_sp_cake_sup.mistry_id=m_emp.emp_id AND t_sp_cake_sup.date "
 			+ " BETWEEN :fromDate AND :toDate GROUP BY t_sp_cake_sup.date \n" + 
 			" " + 
@@ -74,7 +74,7 @@ public interface MistrywiseReportRepo  extends JpaRepository<MistrywiseReport, I
 	//
 	//reg sp 4.1
 	@Query(value = " SELECT t_reg_sp_cake_sup.mistry_id,m_emp.emp_name,COUNT(t_reg_sp_cake_sup.sup_id) "
-			+ " AS no_of_cakes,SUM(t_reg_sp_cake_sup.ex_char) AS time_required FROM "
+			+ " AS no_of_cakes,SUM(t_reg_sp_cake_sup.ex_char) AS time_required ,t_reg_sp_cake_sup.prod_date AS prod_date FROM "
 			+ " t_reg_sp_cake_sup,m_emp WHERE t_reg_sp_cake_sup.mistry_id=m_emp.emp_id AND "
 			+ " t_reg_sp_cake_sup.prod_date BETWEEN :fromDate AND :toDate  "
 			+ " AND t_reg_sp_cake_sup.mistry_id IN (:mistryIdList) GROUP BY t_reg_sp_cake_sup.prod_date " + 
@@ -85,7 +85,7 @@ public interface MistrywiseReportRepo  extends JpaRepository<MistrywiseReport, I
 
 	//reg sp 4.2
 	@Query(value = " SELECT t_reg_sp_cake_sup.mistry_id,m_emp.emp_name,COUNT(t_reg_sp_cake_sup.sup_id) " + 
-			" AS no_of_cakes,SUM(t_reg_sp_cake_sup.ex_char) AS time_required FROM " + 
+			" AS no_of_cakes,SUM(t_reg_sp_cake_sup.ex_char) AS time_required ,t_reg_sp_cake_sup.prod_date AS prod_date FROM " + 
 			" t_reg_sp_cake_sup,m_emp WHERE t_reg_sp_cake_sup.mistry_id=m_emp.emp_id AND " + 
 			" t_reg_sp_cake_sup.prod_date BETWEEN :fromDate AND :toDate " + 
 			" GROUP BY t_reg_sp_cake_sup.prod_date  " + 
