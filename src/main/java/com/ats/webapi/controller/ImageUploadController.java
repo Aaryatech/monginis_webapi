@@ -91,14 +91,14 @@ public class ImageUploadController {
             
             else if(type.equalsIgnoreCase("spprodapp"))
             {
-   			 path =Paths.get(FEEDBACK_URL + imageName);
+   			 path =Paths.get(SP_PRODAPP_IMAGE + imageName);
 
             }
             
             
             else if(type.equalsIgnoreCase("regspprodapp"))
             {
-   			 path =Paths.get(FEEDBACK_URL + imageName);
+   			 path =Paths.get(REG_SP_PRODAPP_IMAGE + imageName);
 
             }
             
