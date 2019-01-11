@@ -43,6 +43,7 @@ import com.ats.webapi.repository.GetReorderByStockTypeRepository;
 import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.ItemResponseRepository;
 import com.ats.webapi.repository.ItemStockRepository;
+import com.ats.webapi.repository.OrderItemSubCatTotalRepository;
 import com.ats.webapi.repository.OrderLogRespository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
@@ -139,6 +140,9 @@ public class RestApiController {
 		return date;
 
 	}
+	@Autowired
+	OrderItemSubCatTotalRepository orderItemSubCatTotalRepository;
+	
 	@Autowired
 	ItemStockRepository itemStockRepository;
 	@Autowired
@@ -3700,6 +3704,40 @@ public class RestApiController {
 			System.out.println("exception in order list rest controller" + e.getMessage());
 		}
 		return orderList;
+
+	}
+	@RequestMapping(value = { "/getSubCatOrderTotal" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<OrderItemSubCatTotal> getSubCatOrderTotal(@RequestParam List<String> frId, @RequestParam List<String> menuId,
+			@RequestParam String date) {
+		List<OrderItemSubCatTotal> orderItemList = null;
+		try {
+			String strDate = Common.convertToYMD(date);
+			orderItemList = orderItemSubCatTotalRepository.findQtyTotalSubCatWise(frId, menuId, strDate);
+
+
+		} catch (Exception e) {
+
+			System.out.println("exception in getSubCatOrderTotal  rest controller" + e.getMessage());
+		}
+		return orderItemList;
+
+	}
+	@RequestMapping(value = { "/getSubCatOrderTotalAllFr" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<OrderItemSubCatTotal> getSubCatOrderTotalAllFr(@RequestParam List<String> menuId,
+			@RequestParam String date) {
+		List<OrderItemSubCatTotal> orderItemList = null;
+		try {
+			String strDate = Common.convertToYMD(date);
+			orderItemList = orderItemSubCatTotalRepository.findQtyTotalSubCatWiseAllFr(menuId, strDate);
+
+
+		} catch (Exception e) {
+
+			System.out.println("exception in getSubCatOrderTotal  rest controller" + e.getMessage());
+		}
+		return orderItemList;
 
 	}
 	@RequestMapping(value = { "/getOrderListByOrder" }, method = RequestMethod.POST)
