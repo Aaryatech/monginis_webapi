@@ -43,6 +43,7 @@ import com.ats.webapi.repository.GetReorderByStockTypeRepository;
 import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.ItemResponseRepository;
 import com.ats.webapi.repository.ItemStockRepository;
+import com.ats.webapi.repository.MiniSubCategoryRepository;
 import com.ats.webapi.repository.OrderItemSubCatTotalRepository;
 import com.ats.webapi.repository.OrderLogRespository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
@@ -340,6 +341,10 @@ public class RestApiController {
 	
 	@Autowired
 	ItemResponseRepository itemResRepository;
+	
+	@Autowired
+	MiniSubCategoryRepository miniSubCategoryRepository;
+	
 	@RequestMapping(value = "/getItemsResBySubCatId", method = RequestMethod.POST)
 	public @ResponseBody List<ItemRes> getItemsResBySubCatId(@RequestParam("subCatId") String subCatId) {
 
@@ -2442,6 +2447,24 @@ public class RestApiController {
 		categoryList.setmCategoryList(jsonCategoryResponse);
 
 		return categoryList;
+	}
+	
+	@RequestMapping(value = { "/showMiniSubCatList" }, method = RequestMethod.GET)
+	@ResponseBody
+	public List<MiniSubCategory> showMiniSubCatList() {
+
+		List<MiniSubCategory> miniSubCategorylist = miniSubCategoryRepository.showMiniSubCatList();
+		 
+		return miniSubCategorylist;
+	}
+	
+	@RequestMapping(value = { "/showMiniSubCatListBySubCatId" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<MiniSubCategory> showMiniSubCatListBySubCatId(@RequestParam("subCatId") int subCatId) {
+
+		List<MiniSubCategory> miniSubCategorylist = miniSubCategoryRepository.showMiniSubCatListBySubCatId(subCatId);
+		 
+		return miniSubCategorylist;
 	}
 
 	// Show Flavor List
