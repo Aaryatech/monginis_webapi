@@ -27,7 +27,32 @@ public interface FinishedGoodStockDetailRepo  extends JpaRepository<FinishedGood
 		List<FinishedGoodStockDetail> findByStockDateBetween(@Param("fromDate")Date fromStockDate, 
 			@Param("toDate")Date toStockDate,@Param("stockStatus") int stockStatus);
 
-	List<FinishedGoodStockDetail> findByStockDate(Date stkDate);
+	@Query(value="select\n" + 
+			"    finished.fin_stock_detail_id,\n" + 
+			"    finished.cat_id,\n" + 
+			"    finished.clo_current,\n" + 
+			"    finished.clo_t1,\n" + 
+			"    finished.clo_t2,\n" + 
+			"    finished.clo_t3,\n" + 
+			"    finished.del_status,\n" + 
+			"    finished.fin_stock_id,\n" + 
+			"    finished.fr_sale_qty,\n" + 
+			"    finished.gate_sale_qty,\n" + 
+			"    finished.item_id,\n" + 
+			"    finished.item_name,\n" + 
+			"    finished.op_t1,\n" + 
+			"    finished.op_t2,\n" + 
+			"    finished.op_t3,\n" + 
+			"    finished.op_total,\n" + 
+			"    finished.prod_qty,\n" + 
+			"    finished.rej_qty,\n" + 
+			"    finished.stock_date,\n" + 
+			"    finished.total_clo_stk \n" + 
+			"from\n" + 
+			"    finished_good_stock_detail finished,m_item i\n" + 
+			"where\n" + 
+			"    finished.stock_date=:stkDate and i.id=finished.item_id order by i.item_grp2,i.item_sort_id",nativeQuery=true)
+	List<FinishedGoodStockDetail> findByStockDate(@Param("stkDate")Date stkDate);
 	
 	
 	//Final Qury GIven by SUMIT SIR //3feb for Fin good Stock Bet Date
