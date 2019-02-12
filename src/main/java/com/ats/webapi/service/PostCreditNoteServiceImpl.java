@@ -8,9 +8,11 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.grngvn.PostCreditNoteDetails;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
+import com.ats.webapi.repository.FrItemStockConfigureRepository;
 import com.ats.webapi.repository.PostCreditNoteDetailsRepository;
 import com.ats.webapi.repository.PostCreditNoteHeaderRepository;
 import com.ats.webapi.repository.UpdateGrnGvnForCreditNoteRepository;
+import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 import com.ats.webapi.repository.grngvnheader.UpdateGrnGvnHeaderForCNRepo;
 
 @Service
@@ -28,6 +30,10 @@ public class PostCreditNoteServiceImpl implements PostCreditNoteService {
 	
 	@Autowired
 	UpdateGrnGvnHeaderForCNRepo updateGrnGvnHeaderForCNRepo;
+	@Autowired
+	FrItemStockConfigureRepository frItemStockConfRepo;
+	@Autowired//added here on 3 march
+	UpdateSeetingForPBRepo updateSeetingForPBRepo;
 	
 	@Override
 	public List<PostCreditNoteHeader> savePostCreditNote(List<PostCreditNoteHeader> postCreditNoteHeader) {
@@ -38,8 +44,22 @@ public class PostCreditNoteServiceImpl implements PostCreditNoteService {
 		for (int i = 0; i < postCreditNoteHeader.size(); i++) {
 
 			creditNoteHeader = new PostCreditNoteHeader();
-
+			
+			int crnSrNo=frItemStockConfRepo.findBySettingKey("CRE_NOTE_NO");
+			
+			postCreditNoteHeader.get(i).setCrnNo(""+crnSrNo);
+			
 			creditNoteHeader = postCreditNoteHeaderRepository.save(postCreditNoteHeader.get(i));
+			
+			if(creditNoteHeader.getCrnId()!=0) {
+			/*	
+				int result= updateGrnGvnForCreditNoteRepository.updateGrnGvnForCreditNoteInsert(
+						creditNoteHeader.getGrnGvnId(), 1);*/
+					
+				System.err.println("crnSrNo  while update " +crnSrNo);
+				int result = updateSeetingForPBRepo.updateSeetingForPurBill(crnSrNo+1, "CRE_NOTE_NO");
+				
+			}
 
 			postCreditNoteHeaderList.add(creditNoteHeader);
 			
@@ -59,10 +79,12 @@ public class PostCreditNoteServiceImpl implements PostCreditNoteService {
 				
 				postCreditNoteDetailsRepository.save(postCreditNoteDetails);
 				
-				int result= updateGrnGvnForCreditNoteRepository.updateGrnGvnForCreditNoteInsert(
-						postCreditNoteDetails.getGrnGvnId(), 1);
+				/*int result= updateGrnGvnForCreditNoteRepository.updateGrnGvnForCreditNoteInsert(
+						postCreditNoteDetails.getGrnGvnId(), 1);*/
 				
-				res=updateGrnGvnHeaderForCNRepo.updateGrnGvnHeaderForCN(postCreditNoteDetails.getCrnId(), 1, postCreditNoteDetails.getGrnGvnHeaderId());
+				System.err.println("crnSrNo  detail for  postCreditNoteDetails.getGrnGvnHeaderId() " +crnSrNo+"="+postCreditNoteDetails.getGrnGvnHeaderId());
+				
+				res=updateGrnGvnHeaderForCNRepo.updateGrnGvnHeaderForCN(crnSrNo, 1, postCreditNoteDetails.getGrnGvnHeaderId());
 
 			}
 		}
