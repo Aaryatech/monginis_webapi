@@ -79,8 +79,8 @@ public class PostCreditNoteServiceImpl implements PostCreditNoteService {
 				
 				postCreditNoteDetailsRepository.save(postCreditNoteDetails);
 				
-				/*int result= updateGrnGvnForCreditNoteRepository.updateGrnGvnForCreditNoteInsert(
-						postCreditNoteDetails.getGrnGvnId(), 1);*/
+				int result= updateGrnGvnForCreditNoteRepository.updateGrnGvnForCreditNoteInsert(
+						postCreditNoteDetails.getGrnGvnId(), 1);
 				
 				System.err.println("crnSrNo  detail for  postCreditNoteDetails.getGrnGvnHeaderId() " +crnSrNo+"="+postCreditNoteDetails.getGrnGvnHeaderId());
 				
