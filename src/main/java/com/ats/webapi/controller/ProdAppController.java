@@ -1,7 +1,5 @@
 package com.ats.webapi.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -131,7 +129,14 @@ public class ProdAppController {
 	@Autowired
 	FrwiseStockTransfDataRepo getFrwiseStockTransfDataRepo;
 
-	@RequestMapping(value = { "/getFrwiseStockTransfData" }, method = RequestMethod.POST) // task no 50 webservice for based on selection of date & multiple category/All: show all record in stock transfer tabel which type is dummy franchasi (header & detail)
+	@RequestMapping(value = { "/getFrwiseStockTransfData" }, method = RequestMethod.POST) // task no 50 webservice for
+																							// based on selection of
+																							// date & multiple
+																							// category/All: show all
+																							// record in stock transfer
+																							// tabel which type is dummy
+																							// franchasi (header &
+																							// detail)
 	public @ResponseBody List<FrwiseStockTransfData> getFrwiseStockTransfData(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("stockTypeList") List<Integer> stockTypeList,
 			@RequestParam("menuIdList") List<Integer> menuIdList, @RequestParam("frIdList") List<Integer> frIdList) {
@@ -242,9 +247,9 @@ public class ProdAppController {
 
 	}
 
-	// end route wise count reg and sp cakes 
-	
-	//task no 48 getGetRoutewiseOrderData
+	// end route wise count reg and sp cakes
+
+	// task no 48 getGetRoutewiseOrderData
 
 	@RequestMapping(value = { "/getGetRoutewiseOrderData" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetRoutewiseOrderData> getGetRoutewiseOrderData(@RequestParam("fromDate") String fromDate,
@@ -415,8 +420,8 @@ public class ProdAppController {
 		return orderDataList;
 
 	}
-	
-	 // task no 40
+
+	// task no 40
 
 	@RequestMapping(value = { "/getStockTransfDataByTypeGrpBySubcat" }, method = RequestMethod.POST) // task no 40
 	public @ResponseBody List<StockTransfDataByTypeGrpBySubC> getStockTransfDataByTypeGrpByItem(
@@ -931,7 +936,7 @@ public class ProdAppController {
 		try {
 
 			response = tSpCakeSupRepo.endProdByApp(endTimeStamp, inputKgProd, status, photo1, photo2, mistryId,
-					mistryName, isCharUsed, tSpCakeSupNo, isRateChange,timeRequired);
+					mistryName, isCharUsed, tSpCakeSupNo, isRateChange, timeRequired);
 
 			if (response > 0) {
 
@@ -995,8 +1000,7 @@ public class ProdAppController {
 			@RequestParam("photo2") String photo2, @RequestParam("supId") int supId,
 
 			@RequestParam("mistryId") int mistryId, @RequestParam("mistryName") String mistryName,
-			@RequestParam("isCharUsed") String isCharUsed,
-			@RequestParam("timeRequired") String timeRequired,
+			@RequestParam("isCharUsed") String isCharUsed, @RequestParam("timeRequired") String timeRequired,
 
 			@RequestParam("status") int status) {
 
@@ -1007,7 +1011,7 @@ public class ProdAppController {
 		try {
 
 			response = tRegSpCakeSupRepo.endRegSpCakeProdByApp(endTime, inputKgProd, status, photo1, photo2, mistryId,
-					mistryName, isCharUsed,timeRequired, supId);
+					mistryName, isCharUsed, timeRequired, supId);
 
 			if (response > 0) {
 
@@ -1200,7 +1204,7 @@ public class ProdAppController {
 		List<FrWiseSpCakeOrd> frWiseSpCakeOrdList = new ArrayList<FrWiseSpCakeOrd>();
 		try {
 			frWiseSpCakeOrdList = getFrWiseSpCakeOrdRepo.getFrWiseSpCakeOrd(fromDate, toDate);
-System.err.println("frWiseSpCakeOrdList" +frWiseSpCakeOrdList.toString());
+			System.err.println("frWiseSpCakeOrdList" + frWiseSpCakeOrdList.toString());
 		}
 
 		catch (Exception e) {
@@ -1359,49 +1363,51 @@ System.err.println("frWiseSpCakeOrdList" +frWiseSpCakeOrdList.toString());
 			}
 
 		} catch (Exception e) {
-			
+
 			System.err.println("Exce in getFrwiseRateChangedItemReport " + e.getMessage());
 			e.printStackTrace();
 
 		}
-		
+
 		return frwiseRateChangedItemReportList;
 	}
-	
-	@Autowired RoutewiseLastCakeEndTimeRepo getRoutewiseLastCakeEndTimeRepo;
-	
+
+	@Autowired
+	RoutewiseLastCakeEndTimeRepo getRoutewiseLastCakeEndTimeRepo;
+
 	@RequestMapping(value = { "/getRoutewiseLastCakeEndTime" }, method = RequestMethod.POST)
-	public @ResponseBody List<RoutewiseLastCakeEndTime> getRoutewiseLastCakeEndTime(@RequestParam("prodDate") String prodDate) {
+	public @ResponseBody List<RoutewiseLastCakeEndTime> getRoutewiseLastCakeEndTime(
+			@RequestParam("prodDate") String prodDate) {
 
 		List<RoutewiseLastCakeEndTime> frwiseRateChangedItemReportList = new ArrayList<RoutewiseLastCakeEndTime>();
 
 		try {
-			
-			frwiseRateChangedItemReportList=getRoutewiseLastCakeEndTimeRepo.getRoutewiseLastCakeEndTime(prodDate);
-			
-		}catch (Exception e) {
+
+			frwiseRateChangedItemReportList = getRoutewiseLastCakeEndTimeRepo.getRoutewiseLastCakeEndTime(prodDate);
+
+		} catch (Exception e) {
 			System.err.println("Exce in getRoutewiseLastCakeEndTime " + e.getMessage());
 			e.printStackTrace();
 		}
 		return frwiseRateChangedItemReportList;
-		}
-	
-	
-	/* route wise last record 
-	 * SELECT m_fr_route.route_id,m_fr_route.route_name,m_fr_route.route_seq_no,
+	}
 
-COALESCE(( SELECT MAX(t_sp_cake_sup.end_time_stamp) FROM t_sp_cake_sup,m_franchisee WHERE 
-          t_sp_cake_sup.date BETWEEN '2018-10-10' AND '2018-10-10' AND
-         t_sp_cake_sup.fr_id=m_franchisee.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id
-       ),0)AS max_end_time_sp, 
-       
-       
-COALESCE(( SELECT MAX(t_reg_sp_cake_sup.end_time) FROM t_reg_sp_cake_sup,m_franchisee WHERE 
-          t_reg_sp_cake_sup.prod_date BETWEEN '2018-10-10' AND '2018-10-10' AND
-         t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id
-       ),0)AS max_end_time_reg_sp
-       
-       FROM m_fr_route WHERE m_fr_route.del_status=0
+	/*
+	 * route wise last record SELECT
+	 * m_fr_route.route_id,m_fr_route.route_name,m_fr_route.route_seq_no,
+	 * 
+	 * COALESCE(( SELECT MAX(t_sp_cake_sup.end_time_stamp) FROM
+	 * t_sp_cake_sup,m_franchisee WHERE t_sp_cake_sup.date BETWEEN '2018-10-10' AND
+	 * '2018-10-10' AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND
+	 * m_franchisee.fr_route_id=m_fr_route.route_id ),0)AS max_end_time_sp,
+	 * 
+	 * 
+	 * COALESCE(( SELECT MAX(t_reg_sp_cake_sup.end_time) FROM
+	 * t_reg_sp_cake_sup,m_franchisee WHERE t_reg_sp_cake_sup.prod_date BETWEEN
+	 * '2018-10-10' AND '2018-10-10' AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id
+	 * AND m_franchisee.fr_route_id=m_fr_route.route_id ),0)AS max_end_time_reg_sp
+	 * 
+	 * FROM m_fr_route WHERE m_fr_route.del_status=0
 	 */
 
 }

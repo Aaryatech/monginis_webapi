@@ -1,6 +1,7 @@
 package com.ats.webapi.controller;
 
 import java.io.BufferedWriter;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -19,7 +20,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import org.bouncycastle.util.io.StreamOverflowException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.data.repository.query.Param;
@@ -62,7 +62,7 @@ import com.ats.webapi.service.PostFrOpStockService;
 import com.ats.webapi.util.JsonUtil;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
- 
+
 @RestController
 public class FrStockApiController {
 
@@ -764,12 +764,10 @@ public class FrStockApiController {
 			@RequestParam("currentMonth") int currentMonth, @RequestParam("year") int year,
 			@RequestParam("itemIdList") List<Integer> itemIdList, @RequestParam("catId") int catId,
 			@RequestParam("frStockType") int frStockType) {
-		
-		
-		List<ViewFrStockBackEnd> backEndFrStockList=new ArrayList<ViewFrStockBackEnd>();
 
+		List<ViewFrStockBackEnd> backEndFrStockList = new ArrayList<ViewFrStockBackEnd>();
 
-		//System.out.println("inside rest getCurrentStock : I/p : frId: " + frId);
+		// System.out.println("inside rest getCurrentStock : I/p : frId: " + frId);
 		System.out.println("inside rest getCurrentStock : I/p : frStockType: " + frStockType);
 		System.out.println("inside rest getCurrentStock : I/p : fromDate: " + fromDate);
 		System.out.println("inside rest getCurrentStock : I/p : toDate: " + toDate);
@@ -785,121 +783,120 @@ public class FrStockApiController {
 		StockRegSpSell totalRegSell = new StockRegSpSell();
 
 		StockRegSpPurchase regSpPurchase = new StockRegSpPurchase();
-		
-		
-		//List<Integer>frLi=StreamOf(frIdList.split(",")map(Integer::parseInt).Colle	
-				
-				List<Integer> frIdList = Stream.of(frIds.split(","))
-                .map(Integer::parseInt)
-                .collect(Collectors.toList());	
-				
-		
-		for(int p=0;p<frIdList.size();p++) {
-			//String frIdStr=frIdList.get(p);
-			int frId=frIdList.get(p);
-			System.err.println("Fr Id at Index  " +p +"= " +frId);
+
+		// List<Integer>frLi=StreamOf(frIdList.split(",")map(Integer::parseInt).Colle
+
+		List<Integer> frIdList = Stream.of(frIds.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+
+		for (int p = 0; p < frIdList.size(); p++) {
+			// String frIdStr=frIdList.get(p);
+			int frId = frIdList.get(p);
+			System.err.println("Fr Id at Index  " + p + "= " + frId);
 			stockDetailsList = new ArrayList<GetCurrentStockDetails>();
-		for (int i = 0; i < itemsList.size(); i++) {
-			int itemId = itemsList.get(i).getId();
-			regSpPurchase = stockPurchaseRepository.getTotalPurchase(frId, fromDate, toDate, itemId);
-			int totalRegGrnGvn = calculationRepository.getRegTotalGrnGvn(frId, fromDate, toDate, itemId);
-			totalRegSell = stockSellRepository.getRegTotalSell(frId, fromDate, toDate, itemId);
-			int reorderQty = 0;
-			try {
-				//reorderQty = getFrItemStockConfigurationRepository.findByItemIdAndType(itemId, frStockType);
-			} catch (Exception e) {
-				reorderQty = 0;
-			}
-			try {
-				//System.out.println("for ItemId " + itemId);
-				postFrItemStockDetail = getItemStockService.getOpeningStock(frId, currentMonth, year, itemId, catId);
-
-				if (postFrItemStockDetail != null) {
-					//System.out.println("fr stock response " + postFrItemStockDetail.toString());
-
-					GetCurrentStockDetails getCurrentStockDetails = new GetCurrentStockDetails();
-
-					getCurrentStockDetails.setStockHeaderId(postFrItemStockDetail.getOpeningStockHeaderId());
-					getCurrentStockDetails.setStockDetailId(postFrItemStockDetail.getOpeningStockDetailId());
-					getCurrentStockDetails.setRegOpeningStock(postFrItemStockDetail.getRegOpeningStock());
-					getCurrentStockDetails.setSpOpeningStock(postFrItemStockDetail.getSpOpeningStock());
-					getCurrentStockDetails.setRegTotalGrnGvn(totalRegGrnGvn);
-					getCurrentStockDetails.setRegTotalPurchase(regSpPurchase.getReg());
-					getCurrentStockDetails.setSpTotalPurchase(regSpPurchase.getSp());
-					getCurrentStockDetails.setRegTotalSell(totalRegSell.getReg());
-					getCurrentStockDetails.setSpTotalSell(totalRegSell.getSp());
-					getCurrentStockDetails.setId(postFrItemStockDetail.getItemId());
-					getCurrentStockDetails.setItemId(itemsList.get(i).getItemId());
-					getCurrentStockDetails.setItemName(itemsList.get(i).getItemName());
-					getCurrentStockDetails.setReOrderQty(reorderQty);
-					getCurrentStockDetails
-							.setCurrentRegStock((postFrItemStockDetail.getRegOpeningStock() + regSpPurchase.getReg())
-									- (totalRegGrnGvn + totalRegSell.getReg()));
-					getCurrentStockDetails
-							.setCurrentSpStock((postFrItemStockDetail.getSpOpeningStock() + regSpPurchase.getSp())
-									- (totalRegSell.getSp()));
-
-					if (itemsList.get(i).getDelStatus() == 0) {
-						stockDetailsList.add(getCurrentStockDetails);
-
-					} else if (itemsList.get(i).getDelStatus() == 1) {
-
-						if (getCurrentStockDetails.getCurrentRegStock() > 0) {
-							stockDetailsList.add(getCurrentStockDetails);
-						}
-
-					}
-
-				} else {
-
-					GetCurrentStockDetails getCurrentStockDetails = new GetCurrentStockDetails();
-
-					getCurrentStockDetails.setStockHeaderId(0);
-					getCurrentStockDetails.setStockDetailId(0);
-					getCurrentStockDetails.setRegOpeningStock(0);
-					getCurrentStockDetails.setSpOpeningStock(0);
-					getCurrentStockDetails.setRegTotalGrnGvn(totalRegGrnGvn);
-					getCurrentStockDetails.setRegTotalPurchase(regSpPurchase.getReg());
-					getCurrentStockDetails.setSpTotalPurchase(regSpPurchase.getSp());
-					getCurrentStockDetails.setRegTotalSell(totalRegSell.getReg());
-					getCurrentStockDetails.setSpTotalSell(totalRegSell.getSp());
-					getCurrentStockDetails.setId(itemsList.get(i).getId());
-					getCurrentStockDetails.setItemId(itemsList.get(i).getItemId());
-					getCurrentStockDetails.setItemName(itemsList.get(i).getItemName());
-					getCurrentStockDetails
-							.setCurrentRegStock((regSpPurchase.getReg()) - (totalRegGrnGvn + totalRegSell.getReg()));
-					getCurrentStockDetails.setCurrentSpStock(regSpPurchase.getSp() - totalRegSell.getSp());
-
-					if (itemsList.get(i).getDelStatus() == 0) {
-						stockDetailsList.add(getCurrentStockDetails);
-
-					} else if (itemsList.get(i).getDelStatus() == 1) {
-
-						if (getCurrentStockDetails.getCurrentRegStock() > 0) {
-							stockDetailsList.add(getCurrentStockDetails);
-						}
-					}
-					
+			for (int i = 0; i < itemsList.size(); i++) {
+				int itemId = itemsList.get(i).getId();
+				regSpPurchase = stockPurchaseRepository.getTotalPurchase(frId, fromDate, toDate, itemId);
+				int totalRegGrnGvn = calculationRepository.getRegTotalGrnGvn(frId, fromDate, toDate, itemId);
+				totalRegSell = stockSellRepository.getRegTotalSell(frId, fromDate, toDate, itemId);
+				int reorderQty = 0;
+				try {
+					// reorderQty =
+					// getFrItemStockConfigurationRepository.findByItemIdAndType(itemId,
+					// frStockType);
+				} catch (Exception e) {
+					reorderQty = 0;
 				}
-				
-				System.err.println(" fr Id "+frId + "Stock Detail List  " +stockDetailsList.toString());
+				try {
+					// System.out.println("for ItemId " + itemId);
+					postFrItemStockDetail = getItemStockService.getOpeningStock(frId, currentMonth, year, itemId,
+							catId);
 
-			} catch (Exception e) {
-				e.printStackTrace(); 
-			}
-		}//end of ItemList For Loop
-		for(int b=0;b<stockDetailsList.size();b++) {
-			
-			ViewFrStockBackEnd frStock=new ViewFrStockBackEnd();
-			
-			frStock.setFrId(frId);
-			frStock.setItemId(stockDetailsList.get(b).getId());
-			frStock.setItemName(stockDetailsList.get(b).getItemName());
-			frStock.setRegCurStock(stockDetailsList.get(b).getCurrentRegStock());
+					if (postFrItemStockDetail != null) {
+						// System.out.println("fr stock response " + postFrItemStockDetail.toString());
 
-			backEndFrStockList.add(frStock);
-		}//end of stock Detail For 
-		}//end of FrIdList For
+						GetCurrentStockDetails getCurrentStockDetails = new GetCurrentStockDetails();
+
+						getCurrentStockDetails.setStockHeaderId(postFrItemStockDetail.getOpeningStockHeaderId());
+						getCurrentStockDetails.setStockDetailId(postFrItemStockDetail.getOpeningStockDetailId());
+						getCurrentStockDetails.setRegOpeningStock(postFrItemStockDetail.getRegOpeningStock());
+						getCurrentStockDetails.setSpOpeningStock(postFrItemStockDetail.getSpOpeningStock());
+						getCurrentStockDetails.setRegTotalGrnGvn(totalRegGrnGvn);
+						getCurrentStockDetails.setRegTotalPurchase(regSpPurchase.getReg());
+						getCurrentStockDetails.setSpTotalPurchase(regSpPurchase.getSp());
+						getCurrentStockDetails.setRegTotalSell(totalRegSell.getReg());
+						getCurrentStockDetails.setSpTotalSell(totalRegSell.getSp());
+						getCurrentStockDetails.setId(postFrItemStockDetail.getItemId());
+						getCurrentStockDetails.setItemId(itemsList.get(i).getItemId());
+						getCurrentStockDetails.setItemName(itemsList.get(i).getItemName());
+						getCurrentStockDetails.setReOrderQty(reorderQty);
+						getCurrentStockDetails.setCurrentRegStock(
+								(postFrItemStockDetail.getRegOpeningStock() + regSpPurchase.getReg())
+										- (totalRegGrnGvn + totalRegSell.getReg()));
+						getCurrentStockDetails
+								.setCurrentSpStock((postFrItemStockDetail.getSpOpeningStock() + regSpPurchase.getSp())
+										- (totalRegSell.getSp()));
+
+						if (itemsList.get(i).getDelStatus() == 0) {
+							stockDetailsList.add(getCurrentStockDetails);
+
+						} else if (itemsList.get(i).getDelStatus() == 1) {
+
+							if (getCurrentStockDetails.getCurrentRegStock() > 0) {
+								stockDetailsList.add(getCurrentStockDetails);
+							}
+
+						}
+
+					} else {
+
+						GetCurrentStockDetails getCurrentStockDetails = new GetCurrentStockDetails();
+
+						getCurrentStockDetails.setStockHeaderId(0);
+						getCurrentStockDetails.setStockDetailId(0);
+						getCurrentStockDetails.setRegOpeningStock(0);
+						getCurrentStockDetails.setSpOpeningStock(0);
+						getCurrentStockDetails.setRegTotalGrnGvn(totalRegGrnGvn);
+						getCurrentStockDetails.setRegTotalPurchase(regSpPurchase.getReg());
+						getCurrentStockDetails.setSpTotalPurchase(regSpPurchase.getSp());
+						getCurrentStockDetails.setRegTotalSell(totalRegSell.getReg());
+						getCurrentStockDetails.setSpTotalSell(totalRegSell.getSp());
+						getCurrentStockDetails.setId(itemsList.get(i).getId());
+						getCurrentStockDetails.setItemId(itemsList.get(i).getItemId());
+						getCurrentStockDetails.setItemName(itemsList.get(i).getItemName());
+						getCurrentStockDetails.setCurrentRegStock(
+								(regSpPurchase.getReg()) - (totalRegGrnGvn + totalRegSell.getReg()));
+						getCurrentStockDetails.setCurrentSpStock(regSpPurchase.getSp() - totalRegSell.getSp());
+
+						if (itemsList.get(i).getDelStatus() == 0) {
+							stockDetailsList.add(getCurrentStockDetails);
+
+						} else if (itemsList.get(i).getDelStatus() == 1) {
+
+							if (getCurrentStockDetails.getCurrentRegStock() > 0) {
+								stockDetailsList.add(getCurrentStockDetails);
+							}
+						}
+
+					}
+
+					System.err.println(" fr Id " + frId + "Stock Detail List  " + stockDetailsList.toString());
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} // end of ItemList For Loop
+			for (int b = 0; b < stockDetailsList.size(); b++) {
+
+				ViewFrStockBackEnd frStock = new ViewFrStockBackEnd();
+
+				frStock.setFrId(frId);
+				frStock.setItemId(stockDetailsList.get(b).getId());
+				frStock.setItemName(stockDetailsList.get(b).getItemName());
+				frStock.setRegCurStock(stockDetailsList.get(b).getCurrentRegStock());
+
+				backEndFrStockList.add(frStock);
+			} // end of stock Detail For
+		} // end of FrIdList For
 		System.out.println("ViewFrStockBackEnd Result:  " + backEndFrStockList.toString());
 
 		return backEndFrStockList;

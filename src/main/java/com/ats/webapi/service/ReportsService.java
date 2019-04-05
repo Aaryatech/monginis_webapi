@@ -10,12 +10,13 @@ import com.ats.webapi.model.ItemWiseDetailList;
 import com.ats.webapi.model.ItemWiseReportList;
 import com.ats.webapi.model.MonthWiseReportList;
 import com.ats.webapi.model.report.DispatchReport;
+
 @Service
 public interface ReportsService {
 
 	BillWisePurchaseList getBillWisePurchaseReport(int frId, String fromDate, String toDate);
 
-	ItemWiseDetailList getItemWiseDetailReport(int frId,int catId, String fromDate, String toDate);
+	ItemWiseDetailList getItemWiseDetailReport(int frId, int catId, String fromDate, String toDate);
 
 	MonthWiseReportList getMonthWiseReport(int frId, String fromDate, String toDate);
 
@@ -24,5 +25,7 @@ public interface ReportsService {
 	ItemWiseReportList getItemWiseReport(int frId, int catId, String fromDate, String toDate);
 
 	List<DispatchReport> getDispatchItemReport(String billDateYMD, List<String> frId, List<String> categories);
+
+	List<DispatchReport> getStationItemReport(String billDateYMD, List<String> frId, List<Integer> itemIdList);
 
 }

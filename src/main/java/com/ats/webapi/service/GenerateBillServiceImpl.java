@@ -1,7 +1,5 @@
 package com.ats.webapi.service;
 
-import static org.assertj.core.api.Assertions.failBecauseExceptionWasNotThrown;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -39,14 +37,14 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 
 		List<GenerateSpBill> generateSpBills = generateSpBillRepository.generateSpBill(frId, menuId, delDate);
 
-		List<GenerateRegSpBill> generateRegSpBills = regSpBillRepository.generateRegSpBill(frId,menuId, delDate);
-		
-		System.out.println("Regular Sp Cake Orders "+generateRegSpBills.toString());
+		List<GenerateRegSpBill> generateRegSpBills = regSpBillRepository.generateRegSpBill(frId, menuId, delDate);
+
+		System.out.println("Regular Sp Cake Orders " + generateRegSpBills.toString());
 
 		generateBills = convertSpCakeToItem(generateSpBills, generateBills);
 
 		generateBills = convertRegSpCakeToItem(generateRegSpBills, generateBills);
-		
+
 		Info info = new Info();
 
 		if (generateBills != null) {
@@ -77,16 +75,14 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 		List<GenerateBill> generateBills = billRepository.generateBillForAllFr(menuId, delDate);
 
 		List<GenerateSpBill> generateSpBills = generateSpBillRepository.generateSpBillForAllFr(menuId, delDate);
-		
-		List<GenerateRegSpBill> generateRegSpBills = regSpBillRepository.generateRegSpBillForAllFr(menuId, delDate);
-		System.out.println("Regular Sp Cake Orders "+generateRegSpBills.toString());
 
+		List<GenerateRegSpBill> generateRegSpBills = regSpBillRepository.generateRegSpBillForAllFr(menuId, delDate);
+		System.out.println("Regular Sp Cake Orders " + generateRegSpBills.toString());
 
 		generateBills = convertSpCakeToItem(generateSpBills, generateBills);
 
 		generateBills = convertRegSpCakeToItem(generateRegSpBills, generateBills);
 
-		
 		Info info = new Info();
 
 		if (generateBills != null) {
@@ -118,15 +114,15 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 
 		List<GenerateSpBill> generateSpBills = generateSpBillRepository.generateSpBillForAllFrAllMenu(delDate);
 
-		List<GenerateRegSpBill> generateRegSpBills = regSpBillRepository.generateRegSpBillForAllFrAllMenu( delDate);
+		List<GenerateRegSpBill> generateRegSpBills = regSpBillRepository.generateRegSpBillForAllFrAllMenu(delDate);
 
-		System.out.println("Regular Sp Cake Orders "+generateRegSpBills.toString());
+		System.out.println("Regular Sp Cake Orders " + generateRegSpBills.toString());
 
 		generateBills = convertSpCakeToItem(generateSpBills, generateBills);
-		
+
 		try {
-		generateBills = convertRegSpCakeToItem(generateRegSpBills, generateBills);
-		}catch (Exception e) {
+			generateBills = convertRegSpCakeToItem(generateRegSpBills, generateBills);
+		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
@@ -163,9 +159,9 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 
 		List<GenerateRegSpBill> generateRegSpBills = regSpBillRepository.generateRegSpBillForAllMenu(frId, delDate);
 
-		//System.out.println("sp cake orders " + generateSpBills.toString());
+		// System.out.println("sp cake orders " + generateSpBills.toString());
 
-		System.out.println("Regular Sp Cake Orders "+generateRegSpBills.toString());
+		System.out.println("Regular Sp Cake Orders " + generateRegSpBills.toString());
 
 		generateBills = convertSpCakeToItem(generateSpBills, generateBills);
 
@@ -196,12 +192,11 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 
 	private List<GenerateBill> convertRegSpCakeToItem(List<GenerateRegSpBill> generateRegSpBills,
 			List<GenerateBill> generateBillList) {
-		
-		
-		for(int i=0;i<generateRegSpBills.size();i++) {
-			
-			GenerateRegSpBill regSpBill=generateRegSpBills.get(i);
-			
+
+		for (int i = 0; i < generateRegSpBills.size(); i++) {
+
+			GenerateRegSpBill regSpBill = generateRegSpBills.get(i);
+
 			GenerateBill generateBill = new GenerateBill();
 
 			generateBill.setCatId(regSpBill.getItemGrp1());
@@ -226,12 +221,10 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 			generateBill.setSubCatId(regSpBill.getItemGrp2());
 			generateBill.setIsSameState(regSpBill.getIsSameState());
 			generateBillList.add(generateBill);
-			
-			System.out.println("converted Bill : "+generateBillList.toString());
-			
-			
+
+			System.out.println("converted Bill : " + generateBillList.toString());
+
 		}
-			
 
 		return generateBillList;
 	}
