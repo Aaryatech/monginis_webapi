@@ -51,4 +51,12 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	public List<Item> findByIdInAndDelStatusOrderByItemGrp2AscItemSortIdAsc(List<Integer> itemIdList, int i);
 
+	@Query(value = "select id   ,\n" + "  item_id   ,\n" + "  item_name   ,\n" + "  item_grp1  ,\n" + "  item_grp2  ,\n"
+			+ "  item_grp3   ,\n" + "  item_rate1   ,\n" + "  item_rate2   ,\n" + "  item_rate3   ,\n"
+			+ "  item_mrp1   ,\n" + "  item_mrp2  ,\n" + "  item_mrp3   ,\n" + "  item_image   ,\n" + "  item_tax1  ,\n"
+			+ "  item_tax2  ,\n" + "  item_tax3  ,\n" + "  item_is_used  ,\n" + "  item_sort_id   ,\n" + "  grn_two ,\n"
+			+ "  del_status  ,\n" + "  min_qty  ,\n"
+			+ "  item_shelf_life  from m_item  where m_item.id IN (:itemIdList) AND m_item.del_status=0", nativeQuery = true)
+	public List<Item> findByIdInAndDelStatusOrderByItemGrp2AscItemSortIdAscNew(List<Integer> itemIdList, int i);
+
 }

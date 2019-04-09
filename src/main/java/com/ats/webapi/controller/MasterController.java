@@ -581,6 +581,22 @@ public class MasterController {
 		return items;
 
 	}
+	
+	//neha
+	@RequestMapping(value = "/getItemsByItemIdForDispNew", method = RequestMethod.POST)
+	public @ResponseBody List<Item> getItemsByItemIdForDispNew(@RequestParam List<Integer> itemIdList) {
+
+		List<Item> items = null;
+		try {
+			items = itemRepository.findByIdInAndDelStatusOrderByItemGrp2AscItemSortIdAscNew(itemIdList, 0);
+		} catch (Exception e) {
+			items = new ArrayList<>();
+			e.printStackTrace();
+
+		}
+		return items;
+
+	}
 
 	// Get SubCategories
 	@RequestMapping(value = "/getSubCatList")
