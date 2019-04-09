@@ -14,7 +14,7 @@ public interface StationRepo extends JpaRepository<Station, Integer> {
 
 	@Transactional
 	@Modifying
-	@Query("UPDATE Station SET del_status=:delStatus WHERE usr_id=:stationId")
+	@Query("UPDATE Station SET del_status=:delStatus WHERE station_id=:stationId")
 	int delteStation(@Param("stationId") int stationId, @Param("delStatus") int delStatus);
 
 	Station findByStationIdAndDelStatus(int stationId, int i);
