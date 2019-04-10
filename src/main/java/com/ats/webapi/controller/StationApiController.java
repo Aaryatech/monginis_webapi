@@ -27,7 +27,9 @@ public class StationApiController {
 	StationRepo stationRepo;
 
 	@Autowired
-	private ItemService itemService;
+	ItemService itemService;
+	
+	
 	@Autowired
 	ItemRepository itemRepository;
 
@@ -82,7 +84,22 @@ public class StationApiController {
 		return stationList;
 
 	}
+	
+	@RequestMapping(value = "/getStationCount", method = RequestMethod.POST)
+	public @ResponseBody List<Station> getStationCount(@RequestParam("Bill_date") String Bill_date) {
+		List<Station> stationList = null;
 
+		try {
+			System.out.println("Bill_date"+Bill_date);
+			stationList = stationRepo.stationOrdercount(Bill_date);
+			 
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return stationList;
+
+	}
 	//
 
 	@RequestMapping(value = { "/getStationList" }, method = RequestMethod.GET)
