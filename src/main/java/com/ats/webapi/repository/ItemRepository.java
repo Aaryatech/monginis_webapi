@@ -51,12 +51,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 
 	public List<Item> findByIdInAndDelStatusOrderByItemGrp2AscItemSortIdAsc(List<Integer> itemIdList, int i);
 
-	@Query(value = "select id   ,\n" + "  item_id   ,\n" + "  item_name   ,\n" + "  item_grp1  ,\n" + "  item_grp2  ,\n"
-			+ "  item_grp3   ,\n" + "  item_rate1   ,\n" + "  item_rate2   ,\n" + "  item_rate3   ,\n"
-			+ "  item_mrp1   ,\n" + "  item_mrp2  ,\n" + "  item_mrp3   ,\n" + "  item_image   ,\n" + "  item_tax1  ,\n"
-			+ "  item_tax2  ,\n" + "  item_tax3  ,\n" + "  item_is_used  ,\n" + "  item_sort_id   ,\n" + "  grn_two ,\n"
-			+ "  del_status  ,\n" + "  min_qty  ,\n"
-			+ "  item_shelf_life  from m_item  where m_item.id IN (:itemIdList) AND m_item.del_status=0", nativeQuery = true)
-	public List<Item> findByIdInAndDelStatusOrderByItemGrp2AscItemSortIdAscNew(List<Integer> itemIdList, int i);
+	@Query(value = "select id,item_id,item_name,item_grp1,item_grp2,item_grp3,item_rate1,item_rate2,item_rate3,item_mrp1,item_mrp2,item_mrp3,(select s.station_id from m_station s where FIND_IN_SET(id,s.item_id) and s.del_status=0 and s.is_used=1) as item_image,item_tax1  ,item_tax2  ,item_tax3,item_is_used  ,\n" + 
+			"item_sort_id,grn_two ,del_status  ,min_qty, item_shelf_life  from m_item  where m_item.id IN (:itemIdList) AND m_item.del_status=:delStatus", nativeQuery = true)
+	public List<Item> findByIdInAndDelStatusOrderByItemGrp2AscItemSortIdAscNew(@Param("itemIdList")List<Integer> itemIdList,@Param("delStatus") int i);
 
 }
