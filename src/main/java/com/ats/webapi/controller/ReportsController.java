@@ -97,7 +97,8 @@ public class ReportsController {
 
 	}
 
-	// ---------------------------------Dispatch Item Report-----------------------------------------
+	// ---------------------------------Dispatch Item
+	// Report-----------------------------------------
 	@RequestMapping(value = "/getDispatchItemReport", method = RequestMethod.POST)
 	public @ResponseBody List<DispatchReport> getDispatchItemReport(@RequestParam("billDate") String billDate,
 			@RequestParam("frId") List<String> frId, @RequestParam("categories") List<String> categories) {
@@ -108,13 +109,26 @@ public class ReportsController {
 
 	}
 
+	// ---------------------------------Dispatch Item
+	// Report-----------------------------------------
+	@RequestMapping(value = "/getDispatchItemReportByOrder", method = RequestMethod.POST)
+	public @ResponseBody List<DispatchReport> getDispatchItemReportByOrder(@RequestParam("billDate") String billDate,
+			@RequestParam("frId") List<String> frId, @RequestParam("categories") List<String> categories) {
+
+		String billDateYMD = Common.convertToYMD(billDate);
+		List<DispatchReport> dispatchReportList = reportsService.getDispatchItemReportByOrder(billDateYMD, frId,
+				categories);
+		return dispatchReportList;
+
+	}
+
 	// ---------------------------Station report---------------
 
 	@RequestMapping(value = "/getStationItemReport", method = RequestMethod.POST)
 	public @ResponseBody List<DispatchReport> getStationItemReport(@RequestParam("billDate") String billDate,
 			@RequestParam("frId") List<String> frId, @RequestParam("itemIdList") List<Integer> itemIdList) {
-		
-		System.out.println("itemIdList"+itemIdList.toString());
+
+		System.out.println("itemIdList" + itemIdList.toString());
 
 		String billDateYMD = Common.convertToYMD(billDate);
 		List<DispatchReport> dispatchReportList = reportsService.getStationItemReport(billDateYMD, frId, itemIdList);
