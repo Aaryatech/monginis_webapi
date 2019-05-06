@@ -28,4 +28,6 @@ public interface ReportsService {
 
 	List<DispatchReport> getStationItemReport(String billDateYMD, List<String> frId, List<Integer> itemIdList);
 
+	List<DispatchReport> getDispatchItemReportByOrder(String billDateYMD, List<String> frId, List<String> categories);
+
 }

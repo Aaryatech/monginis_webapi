@@ -210,6 +210,21 @@ public class ReportsServiceImpl implements ReportsService {
 		return dispatchReportList;
 	}
 
+	@Override
+	public List<DispatchReport> getDispatchItemReportByOrder(String billDateYMD, List<String> frId,
+			List<String> categories) {
+
+		List<DispatchReport> dispatchReportList;
+		try {
+			dispatchReportList = dispatchReportRepository.findDispatchReportListByOrder(billDateYMD, frId, categories);
+
+		} catch (Exception e) {
+			dispatchReportList = new ArrayList<>();
+			e.printStackTrace();
+		}
+		return dispatchReportList;
+	}
+
 //================neha station=================
 	@Override
 	public List<DispatchReport> getStationItemReport(String billDateYMD, List<String> frId, List<Integer> itemIdList) {
