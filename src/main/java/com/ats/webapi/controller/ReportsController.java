@@ -109,8 +109,7 @@ public class ReportsController {
 
 	}
 
-	// ---------------------------------Dispatch Item
-	// Report-----------------------------------------
+	// ---------------------------------Dispatch Item Report-----------------------------------------
 	@RequestMapping(value = "/getDispatchItemReportByOrder", method = RequestMethod.POST)
 	public @ResponseBody List<DispatchReport> getDispatchItemReportByOrder(@RequestParam("billDate") String billDate,
 			@RequestParam("frId") List<String> frId, @RequestParam("categories") List<String> categories) {
