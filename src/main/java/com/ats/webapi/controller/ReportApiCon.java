@@ -23,13 +23,13 @@ public class ReportApiCon {
 
 	@RequestMapping(value = { "/getSpCakeCountBetDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<SpCakeWtCount> getSpCakeCountBetDate(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate) {
+			@RequestParam("toDate") String toDate, @RequestParam("menuIdList") List<String> menuIdList) {
 		System.out.println(fromDate);
 		System.out.println(toDate);
 		List<SpCakeWtCount> spCakeList = null;
 		try {
 
-			spCakeList = spCakeWtCountRepo.getSpCakeBetDateCount(fromDate, toDate);
+			spCakeList = spCakeWtCountRepo.getSpCakeBetDateCount(fromDate, toDate, menuIdList);
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
