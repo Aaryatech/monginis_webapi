@@ -20,165 +20,166 @@ import com.ats.webapi.repository.GetRegSpCakeOrdersRepository;
 import com.ats.webapi.repository.RegularCkOrderDelRepository;
 import com.ats.webapi.repository.RegularSpCkOrderAdminRepo;
 import com.ats.webapi.repository.RegularSpCkOrderRepository;
+import com.ats.webapi.repository.TRegSpCakeSupDeleteRepository;
 
 @Service
-public class RegularSpCkOrderServiceImpl implements RegularSpCkOrderService{
+public class RegularSpCkOrderServiceImpl implements RegularSpCkOrderService {
 
-	
 	@Autowired
 	RegularSpCkOrderRepository regularSpCkOrderRepository;
 	@Autowired
 	RegularSpCkOrderAdminRepo regularSpCkOrderAdminRepo;
-	
+
 	@Autowired
 	GetRegSpCakeOrdersRepository getRegSpCakeOrdersRepository;
-	
+
 	@Autowired
 	RegularCkOrderDelRepository regularCkOrderDelRepository;
-	
+
+	@Autowired
+	TRegSpCakeSupDeleteRepository tRegSpCakeSupDeleteRepository;
+
 	@Override
 	public RegularSpCake placeRegularSpCakeOrder(RegularSpCake regularSpCake) {
-	  
-		ErrorMessage errorMessage=new ErrorMessage();
-		
-		RegularSpCake regularSpCakeOrder=regularSpCkOrderRepository.save(regularSpCake);
-		
-		if(regularSpCakeOrder!=null)
-		{
+
+		ErrorMessage errorMessage = new ErrorMessage();
+
+		RegularSpCake regularSpCakeOrder = regularSpCkOrderRepository.save(regularSpCake);
+
+		if (regularSpCakeOrder != null) {
 			errorMessage.setError(false);
 			errorMessage.setMessage("Regular Sp Cake Order Placed Successfully");
-		}
-		else
-		{
+		} else {
 			errorMessage.setError(true);
 			errorMessage.setMessage("Regular Sp Cake Order Failed to Insert");
-			
+
 		}
-		
+
 		return regularSpCakeOrder;
 	}
 
-
 	@Override
 	public RegSpCkOrderResponse findRegularSpCkOrder(List<Integer> frId, String strDate) {
-		
-		RegSpCkOrderResponse regSpCkOrderResponse=new RegSpCkOrderResponse();
-        ErrorMessage errorMessage=new ErrorMessage();
 
-		List<RegularSpCkOrders> regularSpCkOrdersList=new ArrayList<RegularSpCkOrders>();
-		/*try {*/
-			System.out.println("sevice try " );
-			regularSpCkOrdersList=regularSpCkOrderAdminRepo.findRegularSpCakeOrder(frId, strDate);
-			if(regularSpCkOrdersList!=null)
-			{System.out.println("sevice tryif " );
-				regSpCkOrderResponse.setRegularSpCkOrdersList(regularSpCkOrdersList);
-				errorMessage.setError(false);
-				errorMessage.setMessage("Regular Special Cake Orders Found");
-				regSpCkOrderResponse.setErrorMessage(errorMessage);
-			}
-			else
-			{System.out.println("sevice try else" );
-				errorMessage.setError(true);
-				errorMessage.setMessage("Regular Special Cake Orders Not Found");
-				regSpCkOrderResponse.setErrorMessage(errorMessage);
-			}
-		/*}
-		catch(Exception e){
-			System.out.println("sevice try exc" );
-			errorMessage.setError(true);
-			errorMessage.setMessage("Regular Special Cake Orders Not Found EXC");
+		RegSpCkOrderResponse regSpCkOrderResponse = new RegSpCkOrderResponse();
+		ErrorMessage errorMessage = new ErrorMessage();
+
+		List<RegularSpCkOrders> regularSpCkOrdersList = new ArrayList<RegularSpCkOrders>();
+		/* try { */
+		System.out.println("sevice try ");
+		regularSpCkOrdersList = regularSpCkOrderAdminRepo.findRegularSpCakeOrder(frId, strDate);
+		if (regularSpCkOrdersList != null) {
+			System.out.println("sevice tryif ");
+			regSpCkOrderResponse.setRegularSpCkOrdersList(regularSpCkOrdersList);
+			errorMessage.setError(false);
+			errorMessage.setMessage("Regular Special Cake Orders Found");
 			regSpCkOrderResponse.setErrorMessage(errorMessage);
-		}
-		*/
-		return regSpCkOrderResponse;
-	}
-	
-
-
-	@Override
-	public RegSpCkOrderResponse findRegSpCakeOrderAllFr(String strDate) {
-
-		RegSpCkOrderResponse regSpCkOrderResponse=new RegSpCkOrderResponse();
-          ErrorMessage errorMessage=new ErrorMessage();
-          
-		List<RegularSpCkOrders> regularSpCkOrdersList=new ArrayList<RegularSpCkOrders>();
-		try {
-			regularSpCkOrdersList=regularSpCkOrderAdminRepo.findRegularSpCakeOrderAllFr(strDate);
-		
-			if(regularSpCkOrdersList!=null)
-			{
-				regSpCkOrderResponse.setRegularSpCkOrdersList(regularSpCkOrdersList);
-				errorMessage.setError(false);
-				errorMessage.setMessage("Regular Special Cake Orders Found");
-				regSpCkOrderResponse.setErrorMessage(errorMessage);
-			}
-			else
-			{
-				errorMessage.setError(true);
-				errorMessage.setMessage("Regular Special Cake Orders Not Found");
-				regSpCkOrderResponse.setErrorMessage(errorMessage);
-			}
-		}
-		catch(Exception e){
+		} else {
+			System.out.println("sevice try else");
 			errorMessage.setError(true);
 			errorMessage.setMessage("Regular Special Cake Orders Not Found");
 			regSpCkOrderResponse.setErrorMessage(errorMessage);
 		}
-		
+		/*
+		 * } catch(Exception e){ System.out.println("sevice try exc" );
+		 * errorMessage.setError(true);
+		 * errorMessage.setMessage("Regular Special Cake Orders Not Found EXC");
+		 * regSpCkOrderResponse.setErrorMessage(errorMessage); }
+		 */
 		return regSpCkOrderResponse;
 	}
 
+	@Override
+	public RegSpCkOrderResponse findRegSpCakeOrderAllFr(String strDate) {
+
+		RegSpCkOrderResponse regSpCkOrderResponse = new RegSpCkOrderResponse();
+		ErrorMessage errorMessage = new ErrorMessage();
+
+		List<RegularSpCkOrders> regularSpCkOrdersList = new ArrayList<RegularSpCkOrders>();
+		try {
+			regularSpCkOrdersList = regularSpCkOrderAdminRepo.findRegularSpCakeOrderAllFr(strDate);
+
+			if (regularSpCkOrdersList != null) {
+				regSpCkOrderResponse.setRegularSpCkOrdersList(regularSpCkOrdersList);
+				errorMessage.setError(false);
+				errorMessage.setMessage("Regular Special Cake Orders Found");
+				regSpCkOrderResponse.setErrorMessage(errorMessage);
+			} else {
+				errorMessage.setError(true);
+				errorMessage.setMessage("Regular Special Cake Orders Not Found");
+				regSpCkOrderResponse.setErrorMessage(errorMessage);
+			}
+		} catch (Exception e) {
+			errorMessage.setError(true);
+			errorMessage.setMessage("Regular Special Cake Orders Not Found");
+			regSpCkOrderResponse.setErrorMessage(errorMessage);
+		}
+
+		return regSpCkOrderResponse;
+	}
 
 	@Override
 	public List<GetRegSpCakeOrders> getRegSpCakeOrder(List<String> orderNo) {
-		 
+
 		return getRegSpCakeOrdersRepository.getRegSpOrders(orderNo);
 	}
-
 
 	@Override
 	public Info deleteRegularSpOrder(int rspId) {
 
-		int isDeleted=regularCkOrderDelRepository.deleteRegularSpOrder(rspId);
-		Info info=new Info();
-		
-		if(isDeleted==1)
-		{
+		int isDeleted = regularCkOrderDelRepository.deleteRegularSpOrder(rspId);
+		Info info = new Info();
+
+		if (isDeleted == 1) {
 			info.setError(false);
 			info.setMessage("Regular Sp Order Deleted Successfully");
-		}
-		else
-		{
+		} else {
 			info.setError(true);
 			info.setMessage("Regular Sp Order Deletion Failed");
 
 		}
-		
+
 		return info;
 	}
 
+	@Override
+	public Info deleteRegularSpCkOrderSupplement(int rspId) {
+
+		int isDeleted = tRegSpCakeSupDeleteRepository.deleteRegularSpCkOrderSupplement(rspId);
+		Info info = new Info();
+
+		if (isDeleted == 1) {
+			info.setError(false);
+			info.setMessage("Regular Sp Order Deleted Successfully");
+		} else {
+			info.setError(true);
+			info.setMessage("Regular Sp Order Deletion Failed");
+
+		}
+
+		return info;
+	}
 
 	@Override
 	public List<GetRegSpCakeOrders> getRegSpCakeOrderHistory(String spDeliveryDt, int frId) {
 
-		List<GetRegSpCakeOrders> regularSpCkOrdersList=null;
+		List<GetRegSpCakeOrders> regularSpCkOrdersList = null;
 		try {
-			regularSpCkOrdersList=getRegSpCakeOrdersRepository.findRegularCakeOrderHistory(spDeliveryDt,frId);
-		
-		}catch (Exception e) {
-			regularSpCkOrdersList=new ArrayList<GetRegSpCakeOrders>();
+			regularSpCkOrdersList = getRegSpCakeOrdersRepository.findRegularCakeOrderHistory(spDeliveryDt, frId);
+
+		} catch (Exception e) {
+			regularSpCkOrdersList = new ArrayList<GetRegSpCakeOrders>();
 			e.printStackTrace();
 		}
-		
+
 		return regularSpCkOrdersList;
 	}
 
-
 	@Override
 	public int getRegSpCakeOrdCountByProdDate(String prodDate) {
-		
-		int orderCount=regularSpCkOrderRepository.findSpCakeOrdCountByProduDate(prodDate);
-		
+
+		int orderCount = regularSpCkOrderRepository.findSpCakeOrdCountByProduDate(prodDate);
+
 		return orderCount;
 	}
 

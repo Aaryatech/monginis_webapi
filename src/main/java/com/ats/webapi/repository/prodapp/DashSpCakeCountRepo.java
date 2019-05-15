@@ -19,13 +19,13 @@ public interface DashSpCakeCountRepo extends JpaRepository<DashSpCakeCount, Inte
 
 	
 	@Query(value = " SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) AS sp_order_count,t_sp_cake_sup.status FROM "
-			+ " t_sp_cake_sup WHERE t_sp_cake_sup.status IN(0,1,2) and t_sp_cake_sup.date=:prodDate "
+			+ " t_sp_cake_sup WHERE t_sp_cake_sup.status IN(0,1,2) and t_sp_cake_sup.del_status=0 and t_sp_cake_sup.date=:prodDate "
 			+ " AND menu_id IN (:menuIdList) GROUP BY t_sp_cake_sup.status  ", nativeQuery = true)
 	List<DashSpCakeCount> getSpCakeOrdCountSpecMenu(@Param("prodDate") String prodDate,@Param("menuIdList") List<Integer> menuIdList);
 	
 	
 	@Query(value = " SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) AS sp_order_count,t_sp_cake_sup.status FROM "
-			+ " t_sp_cake_sup WHERE t_sp_cake_sup.status IN(0,1,2) and t_sp_cake_sup.date=:prodDate "
+			+ " t_sp_cake_sup WHERE t_sp_cake_sup.status IN(0,1,2) and t_sp_cake_sup.del_status=0 and t_sp_cake_sup.date=:prodDate "
 			+ "  GROUP BY t_sp_cake_sup.status  ", nativeQuery = true)
 	List<DashSpCakeCount> getSpCakeOrdCountAllMenu(@Param("prodDate") String prodDate);
 

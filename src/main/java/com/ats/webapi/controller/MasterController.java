@@ -49,6 +49,8 @@ import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
 import com.ats.webapi.repository.SpCakeListRepository;
 import com.ats.webapi.repository.SpCkDeleteOrderRepository;
 import com.ats.webapi.repository.SubCategoryRepository;
+import com.ats.webapi.repository.TRegSpCakeSupDeleteRepository;
+import com.ats.webapi.repository.TSpCakeSupDeleteRepository;
 import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.OrderService;
@@ -100,6 +102,12 @@ public class MasterController {
 
 	@Autowired
 	PostFrOpStockDetailRepository postFrOpStockDetailRepository;
+
+	@Autowired
+	TSpCakeSupDeleteRepository tSpCakeSupDeleteRepository;
+
+	@Autowired
+	TRegSpCakeSupDeleteRepository tRegSpCakeSupDeleteRepository;
 
 	// ----------------------------GET FrToken--------------------------------
 	@RequestMapping(value = { "/getFrToken" }, method = RequestMethod.POST)
@@ -489,6 +497,7 @@ public class MasterController {
 	public @ResponseBody Info deleteRegularSpOrder(@RequestParam int rspId) {
 
 		Info info = regularSpCkOrderService.deleteRegularSpOrder(rspId);
+		info = regularSpCkOrderService.deleteRegularSpCkOrderSupplement(rspId);
 		return info;
 	}
 
@@ -500,8 +509,12 @@ public class MasterController {
 		int isDeleted = spCkDeleteOrderRepository.deleteSpCkOrder(spOrderNo);
 		Info info = new Info();
 		if (isDeleted == 1) {
+
 			info.setError(false);
 			info.setMessage("SpCkOrder Deleted");
+
+			int isDeleted1 = tSpCakeSupDeleteRepository.deleteSpCkOrderSupplement(spOrderNo);
+
 		} else {
 			info.setError(true);
 			info.setMessage("SpCkOrder Deletion Failed");
@@ -581,8 +594,8 @@ public class MasterController {
 		return items;
 
 	}
-	
-	//neha
+
+	// neha
 	@RequestMapping(value = "/getItemsByItemIdForDispNew", method = RequestMethod.POST)
 	public @ResponseBody List<Item> getItemsByItemIdForDispNew(@RequestParam List<Integer> itemIdList) {
 
