@@ -23,7 +23,7 @@ public interface GetRegSpCakeOrderForProdAppRepo extends JpaRepository<GetRegSpC
 			+ " AND m_franchisee.fr_id=m_franchise_sup.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id "
 			+ " AND m_item.id=t_reg_sp_cake_sup.item_id AND "
 			+ " m_item.item_grp1=m_category.cat_id AND m_item.item_grp2=m_cat_sub.sub_cat_id "
-			+ " ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_reg_sp_cake_sup.fr_id ", nativeQuery = true)
+			+ " ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_reg_sp_cake_sup.fr_id ", nativeQuery = true)
 
 	List<GetRegSpCakeOrderForProdApp> getRegSpCakeOrderForProdOrderBy(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate, @Param("menuIdList") List<Integer> menuIdList);// D] specific menu order by
@@ -40,7 +40,7 @@ public interface GetRegSpCakeOrderForProdAppRepo extends JpaRepository<GetRegSpC
 			+ " AND m_franchisee.fr_id=m_franchise_sup.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id "
 			+ " AND m_item.id=t_reg_sp_cake_sup.item_id AND "
 			+ " m_item.item_grp1=m_category.cat_id AND m_item.item_grp2=m_cat_sub.sub_cat_id "
-			+ " ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_reg_sp_cake_sup.fr_id ", nativeQuery = true)
+			+ " ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_reg_sp_cake_sup.fr_id ", nativeQuery = true)
 
 
 	List<GetRegSpCakeOrderForProdApp> getRegSpCakeOrderForProdOrderByAndAllMenu(@Param("fromDate") String fromDate,
@@ -99,7 +99,7 @@ public interface GetRegSpCakeOrderForProdAppRepo extends JpaRepository<GetRegSpC
 			+ " AND m_franchisee.fr_id=m_franchise_sup.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id AND m_fr_route.route_id=:routeId  "
 			+ " AND m_item.id=t_reg_sp_cake_sup.item_id AND "
 			+ " m_item.item_grp1=m_category.cat_id AND m_item.item_grp2=m_cat_sub.sub_cat_id "
-			+ " ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_reg_sp_cake_sup.fr_id ", nativeQuery = true)
+			+ " ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_reg_sp_cake_sup.fr_id ", nativeQuery = true)
 
 	List<GetRegSpCakeOrderForProdApp> getRegSpCakeOrderByRouteIdSpecMenu(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate, @Param("menuIdList") List<Integer> menuIdList,@Param("routeId") int routeId);// D] specific menu order by
@@ -117,7 +117,7 @@ public interface GetRegSpCakeOrderForProdAppRepo extends JpaRepository<GetRegSpC
 			+ " AND m_franchisee.fr_id=m_franchise_sup.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id AND m_fr_route.route_id=:routeId  "
 			+ " AND m_item.id=t_reg_sp_cake_sup.item_id AND "
 			+ " m_item.item_grp1=m_category.cat_id AND m_item.item_grp2=m_cat_sub.sub_cat_id "
-			+ " ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_reg_sp_cake_sup.fr_id ", nativeQuery = true)
+			+ " ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_reg_sp_cake_sup.fr_id ", nativeQuery = true)
 
 	List<GetRegSpCakeOrderForProdApp> getRegSpCakeOrderByRouteIdAllMenu(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate,@Param("routeId") int routeId);// D] specific menu order by
