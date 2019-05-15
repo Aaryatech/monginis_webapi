@@ -17,7 +17,6 @@ public interface SpCakeOrdersService {
 	SpCkOrderHisList searchOrderHistory(int menuId, String spDeliveryDt,String frCode);
 	
 	int findCountOfSlotUsedByProduDate(String sqlSpProduDate);
-	
 	int findSpCkeOrdCountByProduDate(String sqlSpProduDate);
 	
 	
