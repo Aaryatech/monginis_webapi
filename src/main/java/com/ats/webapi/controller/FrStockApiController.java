@@ -167,7 +167,7 @@ public class FrStockApiController {
 		System.out.println(" I/p : toDateTime: " + toDateTime);
 
 		System.out.println(" I/p : currentMonth: " + currentMonth);
-		System.out.println(" I/p : year: " + year);
+		System.out.println(" I/p : year: " + year+"catId"+catId);
 
 		PostFrItemStockHeader getCurrentMonthOfCatId = new PostFrItemStockHeader();
 		try {
