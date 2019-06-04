@@ -36,6 +36,10 @@ public class DashBoardReporApi {
 	public @ResponseBody FrPurchaseDash getFrPurchaseReport(@RequestParam("preMonth") String preMonth,
 			@RequestParam("curMonth") String curMonth, @RequestParam("frId") int frId) {
 
+		System.out.println(preMonth);
+		System.out.println(curMonth);
+		System.out.println(frId);
+
 		FrPurchaseDash frPurchaseDash = null;
 
 		try {
