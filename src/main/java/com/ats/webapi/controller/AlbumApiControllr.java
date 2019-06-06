@@ -61,7 +61,7 @@ public class AlbumApiControllr {
 
 	}
 
-	@RequestMapping(value = { "/getAlbumByAlbumId" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/getAlbumByAlbumId" }, method = RequestMethod.GET)
 	public @ResponseBody Album getAlbumByAlbumId(@RequestParam("albumId") int albumId) {
 
 		Album info = new Album();
