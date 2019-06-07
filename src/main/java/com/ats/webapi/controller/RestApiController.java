@@ -4485,4 +4485,36 @@ public class RestApiController {
 		return regSpCakeOrder;
 	}
 
+	@RequestMapping(value = { "/updatePhoto4ByAlbum" }, method = RequestMethod.POST)
+	public @ResponseBody Info updatePhoto4ByAlbum(@RequestParam("tSpCakeOrderNo") int tSpCakeOrderNo,
+			@RequestParam("photo4") String photo4) {
+
+		System.out.println("tSpCakeOrderNotSpCakeOrderNo" + tSpCakeOrderNo);
+		System.out.println("photo4photo4" + photo4);
+
+		Info info = new Info();
+
+		try {
+
+			int update = tSpCakeSupRepo.updatePhoto4(tSpCakeOrderNo, photo4);
+
+			if (update == 1) {
+				info.setError(false);
+				info.setMessage("successfully update");
+			} else {
+				info.setError(true);
+				info.setMessage(" failed to update");
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+			info.setError(true);
+			info.setMessage(" failed to update");
+
+		}
+		return info;
+
+	}
+
 }

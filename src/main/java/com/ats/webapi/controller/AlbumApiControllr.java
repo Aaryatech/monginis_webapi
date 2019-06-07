@@ -79,6 +79,28 @@ public class AlbumApiControllr {
 
 	}
 
+	@RequestMapping(value = { "/getAlbumsBySpId" }, method = RequestMethod.POST)
+	public @ResponseBody List<Album> getAlbumsBySpId(@RequestParam("spId") int spId) {
+
+		System.out.println("spIdspIiiiiiiiiiiiii" + spId);
+
+		List<Album> albumList = new ArrayList<>();
+
+		try {
+
+			albumList = albumRepo.findBySpIdAndDelStatus(spId, 0);
+
+			System.out.println("albumListalbumListalbumList" + albumList.toString());
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return albumList;
+
+	}
+
 	@RequestMapping(value = { "/deleteAlbum" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteAlbum(@RequestParam("albumId") int albumId) {
 
