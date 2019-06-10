@@ -42,9 +42,25 @@ public class DashBoardReporApi {
 
 		FrPurchaseDash frPurchaseDash = null;
 
+		String[] preArray = preMonth.split("-");
+
+		String[] curArray = curMonth.split("-");
+
+		int preMon = Integer.parseInt(preArray[1].toString().trim());
+		int preYear = Integer.parseInt(preArray[0].toString().trim());
+
+		int curMon = Integer.parseInt(curArray[1].toString().trim());
+		int curYear = Integer.parseInt(curArray[0].toString().trim());
+
+		System.out.println(preMon);
+		System.out.println(preYear);
+		System.out.println(curMon);
+		System.out.println(curYear);
+
 		try {
 
-			frPurchaseDash = frPurchaseDashRepo.getFrPurCount(preMonth, curMonth, frId);
+			frPurchaseDash = frPurchaseDashRepo.getFrPurCount(preMonth, curMonth, frId, preMon, preYear, curMon,
+					curYear);
 
 		} catch (Exception e) {
 
