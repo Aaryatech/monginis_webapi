@@ -24,6 +24,12 @@ public class FrPurchaseDash {
 	private float curSchoolTarget;
 	private float curAchSchoolTarget;
 
+	private float preGrnTarget;
+	private float preSaleTarget;
+
+	private float curGrnTarget;
+	private float curSaleTarget;
+
 	public float getPrevPurchaseTotal() {
 		return prevPurchaseTotal;
 	}
@@ -120,13 +126,47 @@ public class FrPurchaseDash {
 		this.curAchSchoolTarget = curAchSchoolTarget;
 	}
 
+	public float getPreGrnTarget() {
+		return preGrnTarget;
+	}
+
+	public void setPreGrnTarget(float preGrnTarget) {
+		this.preGrnTarget = preGrnTarget;
+	}
+
+	public float getPreSaleTarget() {
+		return preSaleTarget;
+	}
+
+	public void setPreSaleTarget(float preSaleTarget) {
+		this.preSaleTarget = preSaleTarget;
+	}
+
+	public float getCurGrnTarget() {
+		return curGrnTarget;
+	}
+
+	public void setCurGrnTarget(float curGrnTarget) {
+		this.curGrnTarget = curGrnTarget;
+	}
+
+	public float getCurSaleTarget() {
+		return curSaleTarget;
+	}
+
+	public void setCurSaleTarget(float curSaleTarget) {
+		this.curSaleTarget = curSaleTarget;
+	}
+
 	@Override
 	public String toString() {
 		return "FrPurchaseDash [prevPurchaseTotal=" + prevPurchaseTotal + ", curPurchaseTotal=" + curPurchaseTotal
 				+ ", prevGrnTotal=" + prevGrnTotal + ", curGrnTotal=" + curGrnTotal + ", prevGvnTotal=" + prevGvnTotal
 				+ ", curGvnTotal=" + curGvnTotal + ", prevActualTotal=" + prevActualTotal + ", curActualTotal="
 				+ curActualTotal + ", preSchoolTarget=" + preSchoolTarget + ", preAchSchoolTarget=" + preAchSchoolTarget
-				+ ", curSchoolTarget=" + curSchoolTarget + ", curAchSchoolTarget=" + curAchSchoolTarget + "]";
+				+ ", curSchoolTarget=" + curSchoolTarget + ", curAchSchoolTarget=" + curAchSchoolTarget
+				+ ", preGrnTarget=" + preGrnTarget + ", preSaleTarget=" + preSaleTarget + ", curGrnTarget="
+				+ curGrnTarget + ", curSaleTarget=" + curSaleTarget + "]";
 	}
 
 }
