@@ -18,17 +18,17 @@ public class FrPurchaseDash {
 	private float prevActualTotal;
 	private float curActualTotal;
 
-	private float preSchoolTarget;
-	private float preAchSchoolTarget;
-
-	private float curSchoolTarget;
-	private float curAchSchoolTarget;
-
 	private float preGrnTarget;
 	private float preSaleTarget;
 
 	private float curGrnTarget;
 	private float curSaleTarget;
+
+	private float curSchoolTarget;
+	private float curAchSchoolTarget;
+
+	private float preSaleSpGrandTotal;
+	private float curSaleSpGrandTotal;
 
 	public float getPrevPurchaseTotal() {
 		return prevPurchaseTotal;
@@ -94,22 +94,6 @@ public class FrPurchaseDash {
 		this.curActualTotal = curActualTotal;
 	}
 
-	public float getPreSchoolTarget() {
-		return preSchoolTarget;
-	}
-
-	public void setPreSchoolTarget(float preSchoolTarget) {
-		this.preSchoolTarget = preSchoolTarget;
-	}
-
-	public float getPreAchSchoolTarget() {
-		return preAchSchoolTarget;
-	}
-
-	public void setPreAchSchoolTarget(float preAchSchoolTarget) {
-		this.preAchSchoolTarget = preAchSchoolTarget;
-	}
-
 	public float getCurSchoolTarget() {
 		return curSchoolTarget;
 	}
@@ -158,15 +142,31 @@ public class FrPurchaseDash {
 		this.curSaleTarget = curSaleTarget;
 	}
 
+	public float getPreSaleSpGrandTotal() {
+		return preSaleSpGrandTotal;
+	}
+
+	public void setPreSaleSpGrandTotal(float preSaleSpGrandTotal) {
+		this.preSaleSpGrandTotal = preSaleSpGrandTotal;
+	}
+
+	public float getCurSaleSpGrandTotal() {
+		return curSaleSpGrandTotal;
+	}
+
+	public void setCurSaleSpGrandTotal(float curSaleSpGrandTotal) {
+		this.curSaleSpGrandTotal = curSaleSpGrandTotal;
+	}
+
 	@Override
 	public String toString() {
 		return "FrPurchaseDash [prevPurchaseTotal=" + prevPurchaseTotal + ", curPurchaseTotal=" + curPurchaseTotal
 				+ ", prevGrnTotal=" + prevGrnTotal + ", curGrnTotal=" + curGrnTotal + ", prevGvnTotal=" + prevGvnTotal
 				+ ", curGvnTotal=" + curGvnTotal + ", prevActualTotal=" + prevActualTotal + ", curActualTotal="
-				+ curActualTotal + ", preSchoolTarget=" + preSchoolTarget + ", preAchSchoolTarget=" + preAchSchoolTarget
-				+ ", curSchoolTarget=" + curSchoolTarget + ", curAchSchoolTarget=" + curAchSchoolTarget
-				+ ", preGrnTarget=" + preGrnTarget + ", preSaleTarget=" + preSaleTarget + ", curGrnTarget="
-				+ curGrnTarget + ", curSaleTarget=" + curSaleTarget + "]";
+				+ curActualTotal + ", preGrnTarget=" + preGrnTarget + ", preSaleTarget=" + preSaleTarget
+				+ ", curGrnTarget=" + curGrnTarget + ", curSaleTarget=" + curSaleTarget + ", curSchoolTarget="
+				+ curSchoolTarget + ", curAchSchoolTarget=" + curAchSchoolTarget + ", preSaleSpGrandTotal="
+				+ preSaleSpGrandTotal + ", curSaleSpGrandTotal=" + curSaleSpGrandTotal + "]";
 	}
 
 }

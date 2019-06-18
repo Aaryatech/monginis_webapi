@@ -20,14 +20,15 @@ public interface FrPurchaseDashRepo extends JpaRepository<FrPurchaseDash, Intege
 			+ "\n" + "\n"
 			+ "coalesce((SELECT SUM( h.grand_total)  FROM t_sell_bill_header h WHERE h.del_status=0 AND  DATE_FORMAT(h.bill_date,'%Y-%m')=:preMonth AND h.fr_id=:frId),0) as prev_actual_total,\n"
 			+ "coalesce((SELECT SUM( h.grand_total)  FROM t_sell_bill_header h WHERE h.del_status=0 AND DATE_FORMAT(h.bill_date,'%Y-%m')=:curMonth AND h.fr_id=:frId),0) as cur_actual_total,"
-			+ "coalesce((SELECT  h.fr_award  FROM  m_fr_target h  WHERE  h.del_status=0   AND h.fr_target_year =:preYear AND h.fr_target_month =:preMon  AND h.fr_id=:frId), 0) as pre_school_target,\n"
-			+ " coalesce((SELECT  h.remark    FROM  m_fr_target h   WHERE   h.del_status=0  AND h.fr_target_year =:preYear AND h.fr_target_month =:preMon AND h.fr_id=:frId),  0) as pre_ach_school_target,\n"
-			+ "  coalesce((SELECT  h.fr_award   FROM  m_fr_target h   WHERE h.del_status=0    AND h.fr_target_year =:curYear AND h.fr_target_month =:curMon AND h.fr_id=:frId),  0) as cur_school_target, \n"
-			+ "  coalesce((SELECT  h.remark    FROM   m_fr_target h   WHERE  h.del_status=0   AND h.fr_target_year =:curYear AND h.fr_target_month =:curMon  AND h.fr_id=:frId), 0) as cur_ach_school_target,"
+
+			+ "  coalesce((SELECT  SUM(h.fr_award)   FROM  m_fr_target h   WHERE h.del_status=0    AND h.fr_target_year =:curYear AND h.fr_id=:frId),  0) as cur_school_target, \n"
+			+ "  coalesce((SELECT  SUM(h.remark)    FROM   m_fr_target h   WHERE  h.del_status=0   AND h.fr_target_year =:curYear   AND h.fr_id=:frId), 0) as cur_ach_school_target,"
 			+ "coalesce((SELECT  h.fr_achieved_sale  FROM  m_fr_target h  WHERE  h.del_status=0   AND h.fr_target_year =:preYear AND h.fr_target_month =:preMon  AND h.fr_id=:frId), 0) as pre_grn_target,\n"
 			+ " coalesce((SELECT  h.fr_target_amt    FROM  m_fr_target h   WHERE   h.del_status=0  AND h.fr_target_year =:preYear AND h.fr_target_month =:preMon AND h.fr_id=:frId),  0) as pre_sale_target,\n"
 			+ "  coalesce((SELECT  h.fr_achieved_sale   FROM  m_fr_target h   WHERE h.del_status=0    AND h.fr_target_year =:curYear AND h.fr_target_month =:curMon AND h.fr_id=:frId),  0) as cur_grn_target, \n"
-			+ "  coalesce((SELECT  h.fr_target_amt    FROM   m_fr_target h   WHERE  h.del_status=0   AND h.fr_target_year =:curYear AND h.fr_target_month =:curMon  AND h.fr_id=:frId), 0) as cur_sale_target"
+			+ "  coalesce((SELECT  h.fr_target_amt    FROM   m_fr_target h   WHERE  h.del_status=0   AND h.fr_target_year =:curYear AND h.fr_target_month =:curMon  AND h.fr_id=:frId), 0) as cur_sale_target, "
+			+ "  coalesce((SELECT SUM( h.sp_grand_total)  FROM t_sp_cake h WHERE  h.del_status=0 AND  DATE_FORMAT(h.sp_est_deli_date,'%Y-%m')=:preMonth AND h.fr_id=:frId), 0) as pre_sale_sp_grand_total,"
+			+ "  coalesce((SELECT SUM( h.sp_grand_total)  FROM t_sp_cake h WHERE  h.del_status=0 AND  DATE_FORMAT(h.sp_est_deli_date,'%Y-%m')=:curMonth AND h.fr_id=:frId), 0) as cur_sale_sp_grand_total"
 			+ "", nativeQuery = true)
 	FrPurchaseDash getFrPurCount(@Param("preMonth") String preMonth, @Param("curMonth") String curMonth,
 			@Param("frId") int frId, @Param("preMon") int preMon, @Param("preYear") int preYear,
