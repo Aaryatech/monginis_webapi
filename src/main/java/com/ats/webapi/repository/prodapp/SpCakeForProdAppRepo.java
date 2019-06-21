@@ -21,7 +21,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id\n"
 			+ "AND m_franchisee.fr_id=m_franchise_sup.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id\n"
 			+ "AND m_sp_cake.sp_id=t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id=t_sp_cake.sp_flavour_id\n"
-			+ "ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id GROUP BY t_sp_cake_sup.t_sp_cake_order_no ", nativeQuery = true)
+			+ " GROUP BY t_sp_cake_sup.t_sp_cake_order_no  ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id ", nativeQuery = true)
 
 	List<GetSpCakeOrderForProdApp> getSpCakeOrderForProdOrderBy(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate, @Param("menuIdList") List<Integer> menuIdList,
@@ -38,7 +38,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id "
 			+ "AND m_franchisee.fr_id=m_franchise_sup.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id\n"
 			+ "AND m_sp_cake.sp_id=t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id=t_sp_cake.sp_flavour_id\n"
-			+ "ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id  GROUP BY t_sp_cake_sup.t_sp_cake_order_no ", nativeQuery = true)
+			+ " GROUP BY t_sp_cake_sup.t_sp_cake_order_no ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id   ", nativeQuery = true)
 
 	List<GetSpCakeOrderForProdApp> getSpCakeOrderForProdOrderByAndAllMenu(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate, @Param("isSlotUsed") List<Integer> isSlotUsed);// B] all menu order by
