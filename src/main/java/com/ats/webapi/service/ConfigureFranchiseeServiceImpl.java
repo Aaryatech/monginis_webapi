@@ -1,5 +1,6 @@
 package com.ats.webapi.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,6 @@ public class ConfigureFranchiseeServiceImpl implements ConfigureFranchiseeServic
 	ConfigureFranchisee configureFranchisee = null;
 	List<FrMenus> frMenus;
 
-
-
 	@Autowired
 	FrMenusRepository frMenusRepository;
 
@@ -45,50 +44,80 @@ public class ConfigureFranchiseeServiceImpl implements ConfigureFranchiseeServic
 	@Override
 	public List<FrMenus> findFrMenus(int frId) {
 
-			frMenus = frMenusRepository.findAllByFrId(frId);
-		
+		frMenus = frMenusRepository.findAllByFrId(frId);
+
 		return frMenus;
 	}
+
 	@Override
 	public ConfigureFranchisee findFranchiseeById(int setting_id) {
-		ConfigureFranchisee configureFranchisee=configureFrRepository.findOne(setting_id);
-		
+		ConfigureFranchisee configureFranchisee = configureFrRepository.findOne(setting_id);
+
 		return configureFranchisee;
 	}
+
 	@Override
 	public ConfigureFranchisee updateFrConfig(int setting_id) {
-		
-ConfigureFranchisee configureFranchisee=configureFrRepository.findOne(setting_id);
-				
+
+		ConfigureFranchisee configureFranchisee = configureFrRepository.findOne(setting_id);
+
 		return configureFranchisee;
 	}
 
 	@Override
 	public List<Integer> findConfiguredMenuId(int frId) {
-		List<Integer>  configuredMenuIdList=configureFrRepository.findConfiguredMenuId(frId);
+		List<Integer> configuredMenuIdList = configureFrRepository.findConfiguredMenuId(frId);
 		return configuredMenuIdList;
 	}
 
 	@Override
-	public int updateFrConfForSelectedFr(List<Integer> frIdList, int menuId,String fromTime,String toTime) {
+	public int updateFrConfForSelectedFr(List<Integer> frIdList, int menuId, String fromTime, String toTime) {
 		int response = 0;
 		try {
-			response=configureFrRepository.updateFrConfSelFr(frIdList, menuId, fromTime, toTime);
-			
-		}catch (Exception e) {
-			System.err.println("Ex in Conf Fr Service Impl Selected Fr "+e.getMessage());
+			response = configureFrRepository.updateFrConfSelFr(frIdList, menuId, fromTime, toTime);
+
+		} catch (Exception e) {
+			System.err.println("Ex in Conf Fr Service Impl Selected Fr " + e.getMessage());
 			e.printStackTrace();
 		}
 		return response;
 	}
 
 	@Override
-	public int updateFrConfForAllFr(int menuId,String fromTime,String toTime) {
+	public int updateFrConfForAllFr(int menuId, String fromTime, String toTime) {
 		int response = 0;
 		try {
-			response=configureFrRepository.updateFrConfAllFr(menuId, fromTime, toTime);
-		}catch (Exception e) {
-			System.err.println("Ex in Conf Fr Service Impl All fr"+e.getMessage());
+			response = configureFrRepository.updateFrConfAllFr(menuId, fromTime, toTime);
+		} catch (Exception e) {
+			System.err.println("Ex in Conf Fr Service Impl All fr" + e.getMessage());
+			e.printStackTrace();
+		}
+		return response;
+	}
+
+	public List<ConfigureFranchisee> getDataByFrAndMenu(List<Integer> frIdList, List<Integer> menuIdList) {
+
+		List<ConfigureFranchisee> resultList = new ArrayList<>();
+
+		try {
+			
+			resultList=configureFrRepository.findRecByFrAndMenu(frIdList,menuIdList);
+			
+		} catch (Exception e) {
+			System.err.println("Ex in getDataByFrAndMenu " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return resultList;
+	}
+
+	@Override
+	public int updateFrConfItems(String items, int settingId) {
+		int response = 0;
+		try {
+			response = configureFrRepository.updateItemList(items,settingId);
+		} catch (Exception e) {
+			System.err.println("Ex in Conf Fr Service Impl All fr" + e.getMessage());
 			e.printStackTrace();
 		}
 		return response;

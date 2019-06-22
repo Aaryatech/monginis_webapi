@@ -18,4 +18,11 @@ public interface ConfigureFranchiseeService {
 	//23 March
 	public int updateFrConfForSelectedFr(List<Integer> frIdList, int menuId,String fromTime,String toTime);
 	public int updateFrConfForAllFr(int menuId,String fromTime,String toTime);
+	
+	
+	//21-6-2019
+	public List<ConfigureFranchisee> getDataByFrAndMenu(List<Integer> frIdList,List<Integer> menuIdList);
+	public int updateFrConfItems(String items,int settingId);
+	
+	
 }
