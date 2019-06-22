@@ -1442,7 +1442,7 @@ public class RestApiController {
 		return jsonFr;
 
 	}
-//php web service anmol android 
+	// php web service anmol android
 
 	@RequestMapping(value = { "/getLogin" }, method = RequestMethod.POST)
 	@ResponseBody
@@ -4516,5 +4516,45 @@ public class RestApiController {
 		return info;
 
 	}
+
+	// 21/6/2019
+
+	@RequestMapping(value = "/getConfigListByFrAndMenu", method = RequestMethod.POST)
+	public @ResponseBody List<ConfigureFranchisee> getConfigListByFrAndMenu(@RequestParam("frIds") List<Integer> frIds,
+			@RequestParam("menuIds") List<Integer> menuIds) {
+		System.err.println("in ws---------- FR "+frIds);
+		System.err.println("in ws---------- MENU "+menuIds);
+		
+		List<ConfigureFranchisee> resultList = new ArrayList();
+		resultList = connfigureService.getDataByFrAndMenu(frIds, menuIds);
+		System.err.println("LIST -------------- "+resultList);
+		return resultList;
+
+	}
+	
+	
+	@RequestMapping(value = "/updateFrConfItemShow")
+	public @ResponseBody Info updateFrConfItemShow( @RequestParam("items") String items,
+			@RequestParam("settingId") int settingId) {
+		Info info = new Info();
+		int result = 0;
+		try {
+				result = connfigureService.updateFrConfItems(items,settingId);
+
+			if (result > 0) {
+				info.setError(false);
+				info.setMessage("update Conf fr Successs");
+			} else {
+				info.setError(true);
+				info.setMessage("update Conf fr Failed");
+			}
+		} catch (Exception e) {
+			System.err.println("Exc in rest /updateFrConfItems" + e.getMessage());
+			e.printStackTrace();
+		}
+		return info;
+
+	}
+	
 
 }
