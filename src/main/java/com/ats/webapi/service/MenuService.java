@@ -14,4 +14,5 @@ public interface MenuService {
 
 	
 	public List<AllMenus> findByCatIdAndIsSameDayApp(int catId,int isSameDayAppl);
+	public List<AllMenus> findByCatIdAndIsSameDayAppAndDelStatus(int catId,int isSameDayAppl,int delStatus);
 }
