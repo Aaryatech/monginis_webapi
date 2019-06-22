@@ -7,15 +7,16 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
 @Entity
 public class ItemIdOnly implements Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id")
+	@Column(name = "id")
 	private int id;
-	
-	@Column(name="item_name")
+
+	@Column(name = "item_name")
 	private String itemName;
 
 	public int getId() {
