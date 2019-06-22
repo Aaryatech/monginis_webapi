@@ -28,6 +28,7 @@ import com.ats.webapi.model.GetSpCkSupplement;
 import com.ats.webapi.model.GetSubCategory;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
+import com.ats.webapi.model.ItemIdOnly;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
 import com.ats.webapi.model.PostFrItemStockDetail;
@@ -43,6 +44,7 @@ import com.ats.webapi.repository.FrListForSuppRepository;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
 import com.ats.webapi.repository.GetSubCategoryRepository;
+import com.ats.webapi.repository.ItemIdOnlyRepository;
 import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.PostFrOpStockDetailRepository;
 import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
@@ -741,6 +743,20 @@ public class MasterController {
 		}
 
 		return info;
+	}
+
+	@Autowired
+	ItemIdOnlyRepository itemIdOnlyRepository;
+
+	@RequestMapping(value = { "/getItemsByMenuIdMultiple" }, method = RequestMethod.POST)
+	public @ResponseBody List<ItemIdOnly> getItemsByMenuIdMultiple(@RequestParam("menuId") List<Integer> menuId) {
+		System.out.println("menuId" + menuId);
+
+		List<ItemIdOnly> itemList;
+		itemList = itemIdOnlyRepository.finditmsMenuIdInMultiple(0, menuId);
+
+		System.out.println("itemList" + itemList.toString());
+		return itemList;
 	}
 
 }
