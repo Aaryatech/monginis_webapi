@@ -1,7 +1,11 @@
 package com.ats.webapi.controller;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +50,7 @@ import com.ats.webapi.repository.FranchiseeRepository;
 import com.ats.webapi.repository.GetSubCategoryRepository;
 import com.ats.webapi.repository.ItemIdOnlyRepository;
 import com.ats.webapi.repository.ItemRepository;
+import com.ats.webapi.repository.OrderRepository;
 import com.ats.webapi.repository.PostFrOpStockDetailRepository;
 import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
 import com.ats.webapi.repository.SpCakeListRepository;
@@ -745,22 +750,48 @@ public class MasterController {
 		return info;
 	}
 
-	
-	
-	
-	
 	@Autowired
 	ItemIdOnlyRepository itemIdOnlyRepository;
 
 	@RequestMapping(value = { "/getItemsByMenuIdMultiple" }, method = RequestMethod.POST)
-	public @ResponseBody List<ItemIdOnly> getItemsByMenuIdMultiple(@RequestParam("frId")List<Integer>  frId,@RequestParam("menuId") List<Integer> menuId) {
+	public @ResponseBody List<ItemIdOnly> getItemsByMenuIdMultiple(@RequestParam("menuId") List<Integer> menuId) {
 		System.out.println("menuId" + menuId);
 
 		List<ItemIdOnly> itemList;
-		itemList = itemIdOnlyRepository.finditmsMenuIdInMultiple(frId,0, menuId);
+		itemList = itemIdOnlyRepository.finditmsMenuIdInMultiple(0, menuId);
 
 		System.out.println("itemList" + itemList.toString());
 		return itemList;
+	}
+
+	@Autowired
+	OrderRepository orderRepository;
+
+	@RequestMapping(value = "/updateOrderDetails", method = RequestMethod.POST)
+	public @ResponseBody Info updateOrderDetails(@RequestParam List<Integer> orderIds, @RequestParam String delDate,
+			@RequestParam String prodDate) {
+		Info info = new Info();
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		System.err.println(orderIds.toString());
+		Date dateDel = new Date();
+		Date dateProd = new Date();
+		try {
+			dateDel = df.parse(delDate);
+			dateProd = df.parse(prodDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		int isUpdated = orderRepository.updateOrderDelivery(orderIds, dateDel, dateProd);
+		if (isUpdated > 0) {
+			info.setError(false);
+			info.setMessage("Order Updated Successfully");
+		} else {
+			info.setError(true);
+			info.setMessage("Orders Not Updated");
+		}
+
+		return info;
 	}
 
 }
