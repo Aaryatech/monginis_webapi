@@ -4023,6 +4023,54 @@ public class RestApiController {
 
 	}
 
+	@RequestMapping(value = { "/getOrderListByItem" }, method = RequestMethod.POST)
+	@ResponseBody
+	public GetOrderList getOrderListByItem(@RequestParam List<String> frId, @RequestParam List<String> menuId,
+			@RequestParam String date, @RequestParam List<Integer> itemId) {
+		GetOrderList orderList = new GetOrderList();
+		try {
+			String strDate = Common.convertToYMD(date);
+			List<GetOrder> jsonOrderList = getOrderService.findOrderByItemId(frId, menuId, strDate, itemId);
+
+			orderList.setGetOrder(jsonOrderList);
+			Info info = new Info();
+			info.setError(false);
+			info.setMessage("Order list displayed Successfully");
+			orderList.setInfo(info);
+
+		} catch (Exception e) {
+
+			System.out.println("exception in order list rest controller" + e.getMessage());
+		}
+		return orderList;
+
+	}
+
+	@RequestMapping(value = { "/getOrderListForAllFrAndItem" }, method = RequestMethod.POST)
+	@ResponseBody
+	public GetOrderList getOrderListForAllFrAndItem(@RequestParam List<String> menuId, @RequestParam String date,
+			@RequestParam List<Integer> itemId) {
+		GetOrderList orderList = new GetOrderList();
+		try {
+
+			String strDate = Common.convertToYMD(date);
+			System.out.println("Converted date " + strDate);
+
+			List<GetOrder> jsonOrderList = getOrderService.findOrderAllFrAndItem(menuId, strDate, itemId);
+
+			orderList.setGetOrder(jsonOrderList);
+			Info info = new Info();
+			info.setError(false);
+			info.setMessage("Order list displayed Successfully");
+			orderList.setInfo(info);
+
+		} catch (Exception e) {
+
+			System.out.println("exception in order list rest controller" + e.getMessage());
+		}
+		return orderList;
+
+	}
 	@RequestMapping(value = { "/getAllFrRegSpCakeOrders" }, method = RequestMethod.POST)
 	@ResponseBody
 	public RegSpCkOrderResponse getAllFrRegSpCakeOrders(@RequestParam String prodDate) {

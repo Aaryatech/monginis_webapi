@@ -753,11 +753,11 @@ public class MasterController {
 	ItemIdOnlyRepository itemIdOnlyRepository;
 
 	@RequestMapping(value = { "/getItemsByMenuIdMultiple" }, method = RequestMethod.POST)
-	public @ResponseBody List<ItemIdOnly> getItemsByMenuIdMultiple(@RequestParam("menuId") List<Integer> menuId) {
+	public @ResponseBody List<ItemIdOnly> getItemsByMenuIdMultiple(@RequestParam("frId")List<Integer>  frId,@RequestParam("menuId") List<Integer> menuId) {
 		System.out.println("menuId" + menuId);
 
 		List<ItemIdOnly> itemList;
-		itemList = itemIdOnlyRepository.finditmsMenuIdInMultiple(0, menuId);
+		itemList = itemIdOnlyRepository.finditmsMenuIdInMultiple(frId,0, menuId);
 
 		System.out.println("itemList" + itemList.toString());
 		return itemList;

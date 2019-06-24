@@ -24,5 +24,12 @@ public interface GetOrderService {
 
 
 	public List<GetOrder> findOrderAllFrByOrder(List<String> menuId, String strDate);
+
+
+	public List<GetOrder> findOrderAllFrAndItem(List<String> menuId, String strDate, List<Integer> itemId);
+
+
+	public List<GetOrder> findOrderByItemId(List<String> frId, List<String> menuId, String strDate,
+			List<Integer> itemId);
 	
 }
