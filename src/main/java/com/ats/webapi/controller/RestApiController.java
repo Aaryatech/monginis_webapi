@@ -2496,6 +2496,93 @@ public class RestApiController {
 		return spBeanList;
 
 	}
+	
+	// Anmol  24-6-2019
+			@RequestMapping(value = { "/getAllSpCakesByFrForAlbum" }, method = RequestMethod.POST)
+			@ResponseBody
+			public SpecialCakeBeanList getAllSpCakesByFrForAlbum(@RequestParam("frId") int frId) {
+				SpecialCakeBeanList spBeanList = new SpecialCakeBeanList();
+
+				try {
+
+					List<SpecialCake> jsonSpecialCakeList = specialCakeRepository.getDataByFr(frId);
+					System.err.println("Sp cake Size " + jsonSpecialCakeList.size());
+
+					List<Event> eventsList = eventService.findAllEvent();
+					List<SpecialCakeBean> spList = new ArrayList<SpecialCakeBean>();
+
+					if (jsonSpecialCakeList.isEmpty() == false) {
+
+						spBeanList.setStatus("success");
+
+					}
+
+					List<Integer> eIds;
+					for (SpecialCake spCake : jsonSpecialCakeList) {
+
+						SpecialCakeBean bean = new SpecialCakeBean();
+
+						bean.setDel_status("" + spCake.getDelStatus());
+						bean.setErp_link_code("" + spCake.getErpLinkcode());
+						bean.setIs_used("" + spCake.getIsUsed());
+						bean.setSp_book_b4("" + spCake.getSpBookb4());
+						bean.setSp_code("" + spCake.getSpCode());
+						bean.setSp_id("" + spCake.getSpId());
+						bean.setSp_image("" + spCake.getSpImage());
+						bean.setSp_max_wt("" + spCake.getSpMaxwt());
+						bean.setSp_min_wt("" + spCake.getSpMinwt());
+						bean.setSp_name("" + spCake.getSpName());
+						bean.setSp_pho_upload("" + spCake.getSpPhoupload());
+						bean.setSp_tax1("" + spCake.getSpTax1());
+						bean.setSp_tax2("" + spCake.getSpTax2());
+						bean.setSp_tax3("" + spCake.getSpTax3());
+						bean.setSp_type("" + spCake.getSpType());
+						bean.setSpr_add_on_rate("" + spCake.getMrpRate3());
+						bean.setSpr_id("" + spCake.getSprId());
+						bean.setSpr_name("" + spCake.getMrpRate1());
+						bean.setSpr_rate("" + spCake.getMrpRate2());
+
+						eIds = new ArrayList<Integer>();
+
+						String events = spCake.getSpeIdlist();
+
+						// Remove whitespace and split by comma
+						List<String> result = Arrays.asList(events.split("\\s*,\\s*"));
+						// System.err.println("Sp Name " + spCake.getSpName());
+						// System.err.println("EVENT ARRAYList " + result.toString());
+
+						String eventNameList = "";
+						for (int j = 0; j < result.size(); j++) {
+
+							String strEventId = result.get(j);
+							int eventId = Integer.parseInt(strEventId);
+
+							for (Event event : eventsList) {
+
+								if (event.getSpeId() == eventId) {
+
+									eventNameList = eventNameList + event.getSpeName() + ",";
+								}
+							}
+
+						}
+						bean.setSpe_id_list(eventNameList);
+						spList.add(bean);
+
+					}
+					spBeanList.setSp_cake(spList);
+
+				} catch (Exception e) {
+
+					System.err.println(
+							"Exception in getting sp cake List for Php web service @Rest /getAllSpCakesByFrForAlbum" + e.getMessage());
+					e.printStackTrace();
+
+				}
+				return spBeanList;
+
+			}
+
 
 	// Show Message List
 	@RequestMapping(value = { "/showMessageList" }, method = RequestMethod.GET)
