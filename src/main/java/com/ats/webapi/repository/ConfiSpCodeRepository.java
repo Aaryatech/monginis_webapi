@@ -17,5 +17,10 @@ public interface ConfiSpCodeRepository extends JpaRepository<OrderSpecialCake, L
 	public List<String> findSpCode(@Param ("items") List<Integer>items,@Param("frId")int frId,@Param("menuId")int menuId);
 
 	
+	@Query(value="SELECT  m.sp_code FROM m_sp_cake_category m , m_fr_configure f"
+			+ " WHERE m.sp_id IN(:items) AND  m.del_status=0"
+			+ " AND f.menu_id=:menuId AND f.fr_id=:frId",nativeQuery=true)
+	public List<String> findSpCatCode(@Param ("items") List<Integer>items,@Param("frId")int frId,@Param("menuId")int menuId);
+
 	
 }

@@ -33,5 +33,28 @@ public interface GetSpCakeSupRepository extends JpaRepository<GetSpCkSupplement,
 			"  s.del_status,\n" + 
 			"  s.cut_section from m_spcake_sup s,m_sp_cake sp where s.del_status=0 And s.sp_id=sp.sp_id And id=:id",nativeQuery=true)
 	GetSpCkSupplement findById(@Param("id")int id);
+	
+	
+	@Query(value="select\n" + 
+			"  s.id,sp.sp_code,\n" + 
+			"  s.sp_id,\n" + 
+			"  sp.sp_name,\n" + 
+			"  s.sp_hsncd,\n" + 
+			"  s.sp_uom,s.uom_id,s.sp_cess,\n" + 
+			"  s.is_tally_sync,\n" + 
+			"  s.del_status,\n" + 
+			"  s.cut_section from m_spcake_category_sup s,m_sp_cake_category sp where s.del_status=:delStatus And s.sp_id=sp.sp_id",nativeQuery=true)
+	List<GetSpCkSupplement> findSpCakeCatByDelStatus(@Param("delStatus")int delStatus);
+
+	@Query(value="select\n" + 
+			"  s.id,sp.sp_code,\n" + 
+			"  s.sp_id,\n" + 
+			"  sp.sp_name,\n" + 
+			"  s.sp_hsncd,\n" + 
+			"  s.sp_uom,s.uom_id,s.sp_cess,\n" + 
+			"  s.is_tally_sync,\n" + 
+			"  s.del_status,\n" + 
+			"  s.cut_section from m_spcake_category_sup s,m_sp_cake_category sp where s.del_status=0 And s.sp_id=sp.sp_id And id=:id",nativeQuery=true)
+	GetSpCkSupplement findSpCakeCatById(@Param("id")int id);
 
 }
