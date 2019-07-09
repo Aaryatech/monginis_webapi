@@ -16,28 +16,33 @@ import com.ats.webapi.repository.salecomparereport.SalesComparisonReportRepo;
 
 @RestController
 public class SalesCompareReportController {
-	
+
 	@Autowired
 	SalesComparisonReportRepo salesComparisonReportRepo;
-	
+
 	@Autowired
 	SalesCompareGrnRepository salesCompareGrnRepository;
-	
+
 	@RequestMapping(value = { "/getSalesReportComparion" }, method = RequestMethod.POST)
-	public @ResponseBody SalesComparison getSalesReportComparion(@RequestParam("monthNumber") int monthNumber,@RequestParam("year") int year) {
-		SalesComparison saleCompare=new SalesComparison();
-		
+	public @ResponseBody SalesComparison getSalesReportComparion(@RequestParam("monthNumber") int monthNumber,
+			@RequestParam("year") int year) {
+		SalesComparison saleCompare = new SalesComparison();
+
 		try {
-			
-		List<SalesComparisonReport> billTotalList =salesComparisonReportRepo.getSalesReportComparisonBillTotal(monthNumber,year);
-		
-		List<SalesGrn> grnGvnTotalList =salesCompareGrnRepository.getSalesReportComparisonGrnGvnTotal(monthNumber,year);
-		
-		saleCompare.setBillTotalList(billTotalList);
-		saleCompare.setGrnGvnTotalList(grnGvnTotalList);
-		
-		}catch (Exception e) {
-			
+
+			List<SalesComparisonReport> billTotalList = salesComparisonReportRepo
+					.getSalesReportComparisonBillTotal(monthNumber, year);
+
+			List<SalesGrn> grnGvnTotalList = salesCompareGrnRepository.getSalesReportComparisonGrnGvnTotal(monthNumber,
+					year);
+
+			saleCompare.setBillTotalList(billTotalList);
+			saleCompare.setGrnGvnTotalList(grnGvnTotalList);
+
+			System.out.println("saleComparesaleComparesaleComparesaleCompare" + saleCompare.toString());
+
+		} catch (Exception e) {
+
 			System.err.println(" Error In web service @ /getSalesReportComparion In /SalesCompareReportController ");
 			e.printStackTrace();
 		}
@@ -45,5 +50,35 @@ public class SalesCompareReportController {
 		return saleCompare;
 
 	}
-	
+
+	@RequestMapping(value = { "/getSalesReportComparionForFr" }, method = RequestMethod.POST)
+	public @ResponseBody SalesComparison getSalesReportComparionForFr(@RequestParam("monthNumber") int monthNumber,
+			@RequestParam("year") int year) {
+		SalesComparison saleCompare = new SalesComparison();
+
+		try {
+
+			List<SalesComparisonReport> billTotalList = salesComparisonReportRepo
+					.getSalesReportComparisonBillTotal(monthNumber, year);
+
+			List<SalesGrn> grnGvnTotalList = salesCompareGrnRepository
+					.getSalesReportComparisonGrnGvnTotalForFr(monthNumber, year);
+
+			saleCompare.setBillTotalList(billTotalList);
+			saleCompare.setGrnGvnTotalList(grnGvnTotalList);
+
+			System.out.println(
+					"saleComparesaleComparesaleComparesaleCompare**********************" + saleCompare.toString());
+
+		} catch (Exception e) {
+
+			System.err
+					.println(" Error In web service @ /getSalesReportComparionForFr In /SalesCompareReportController ");
+			e.printStackTrace();
+		}
+
+		return saleCompare;
+
+	}
+
 }
