@@ -29,6 +29,7 @@ import com.ats.webapi.model.FranchiseSupList;
 import com.ats.webapi.model.GetItemSup;
 import com.ats.webapi.model.GetRegSpCakeOrders;
 import com.ats.webapi.model.GetSpCkSupplement;
+import com.ats.webapi.model.GetSpCkSupplementCat;
 import com.ats.webapi.model.GetSubCategory;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Item;
@@ -40,6 +41,7 @@ import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.RegularSpCkOrders;
 import com.ats.webapi.model.SpCake;
 import com.ats.webapi.model.SpCakeSupplement;
+import com.ats.webapi.model.SpCakeSupplementCat;
 import com.ats.webapi.model.SubCategory;
 import com.ats.webapi.model.tally.FranchiseeList;
 import com.ats.webapi.model.tray.TrayType;
@@ -201,6 +203,40 @@ public class MasterController {
 
 	}
 
+	@RequestMapping(value = { "/saveSpCakeSupCat" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveSpCakeSupCat(@RequestBody SpCakeSupplementCat spCakeSupplementCat) {
+
+		System.out
+				.println("spCakeSupplementCatspCakeSupplementCatspCakeSupplementCat" + spCakeSupplementCat.toString());
+
+		SpCakeSupplementCat spCakeSupplementRes = null;
+		Info info = new Info();
+		try {
+
+			spCakeSupplementRes = spCakeService.saveSpCakeSupCat(spCakeSupplementCat);
+
+			if (spCakeSupplementRes != null) {
+				info.setError(false);
+				info.setMessage("SpCakeSupplement Saved Successfully.");
+
+			} else {
+				info.setError(true);
+				info.setMessage("SpCakeSupplement Not Saved .");
+			}
+
+		} catch (Exception e) {
+
+			info.setError(true);
+			info.setMessage("SpCakeSupplement Not Saved .");
+
+			e.printStackTrace();
+			System.out.println("Exception In MasterController /saveSpCakeSupCat" + e.getMessage());
+
+		}
+		return info;
+
+	}
+
 	// ---------------------------------------------------------------------------
 	// ------------------------Delete SpCake Sup------------------------------------
 	@RequestMapping(value = { "/deleteSpCakeSup" }, method = RequestMethod.POST)
@@ -241,6 +277,15 @@ public class MasterController {
 
 	}
 
+	@RequestMapping(value = { "/getSpCakeSuppCatList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetSpCkSupplementCat> getSpCakeSuppCatList() {
+
+		List<GetSpCkSupplementCat> spCakeSupplementList = spCakeService.getSpCakeSupCatList();
+
+		return spCakeSupplementList;
+
+	}
+
 	// ------------------------------------------------------------------------
 	// ---------------------------Getting SpCakeList List-----------------------
 	@RequestMapping(value = { "/getSpCakeList" }, method = RequestMethod.GET)
@@ -249,6 +294,21 @@ public class MasterController {
 		List<SpCake> spCakeList;
 		try {
 			spCakeList = spCakeListRepository.getSpCakeList();
+		} catch (Exception e) {
+			spCakeList = new ArrayList<>();
+			e.printStackTrace();
+		}
+		return spCakeList;
+
+	}
+
+	// ---------------------------Getting SpCakeCatList List-----------------------
+	@RequestMapping(value = { "/getSpCakeCatList" }, method = RequestMethod.GET)
+	public @ResponseBody List<SpCake> getSpCakeCatList() {
+
+		List<SpCake> spCakeList;
+		try {
+			spCakeList = spCakeListRepository.getSpCakeCatList();
 		} catch (Exception e) {
 			spCakeList = new ArrayList<>();
 			e.printStackTrace();
@@ -292,6 +352,32 @@ public class MasterController {
 		GetSpCkSupplement getSpCkSupRes = null;
 		try {
 			getSpCkSupRes = spCakeService.getSpCakeSupp(id);
+
+			if (getSpCkSupRes != null) {
+				getSpCkSupRes.setError(false);
+				getSpCkSupRes.setMessage("GetSpCkSupplement Found Successfully");
+			} else {
+				getSpCkSupRes = new GetSpCkSupplement();
+				getSpCkSupRes.setError(true);
+				getSpCkSupRes.setMessage("GetSpCkSupplement Not Found");
+			}
+		} catch (Exception e) {
+			getSpCkSupRes = new GetSpCkSupplement();
+			getSpCkSupRes.setError(true);
+			getSpCkSupRes.setMessage("GetSpCkSupplement Not Found");
+			System.out.println("Exception In getSpCakeSupp:" + e.getMessage());
+		}
+
+		return getSpCkSupRes;
+
+	}
+
+	@RequestMapping(value = { "/getSpCakeSuppCat" }, method = RequestMethod.POST)
+	public @ResponseBody GetSpCkSupplement getSpCakeSuppCat(@RequestParam("id") int id) {
+
+		GetSpCkSupplement getSpCkSupRes = null;
+		try {
+			getSpCkSupRes = spCakeService.getSpCakeSuppCat(id);
 
 			if (getSpCkSupRes != null) {
 				getSpCkSupRes.setError(false);

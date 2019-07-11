@@ -9,9 +9,12 @@ import org.springframework.stereotype.Repository;
 import com.ats.webapi.model.SpCake;
 
 @Repository
-public interface SpCakeListRepository extends JpaRepository<SpCake, Integer>{
+public interface SpCakeListRepository extends JpaRepository<SpCake, Integer> {
 
-	@Query(value="select sp_id,sp_name,sp_code from m_sp_cake where del_status=0 And sp_id Not In(select sp_id from m_spcake_sup where del_status=0);",nativeQuery=true)
+	@Query(value = "select sp_id,sp_name,sp_code from m_sp_cake where del_status=0 And sp_id Not In(select sp_id from m_spcake_sup where del_status=0);", nativeQuery = true)
 	List<SpCake> getSpCakeList();
+
+	@Query(value = "select sp_id,sp_name,sp_code from m_sp_cake_category where del_status=0 And sp_id Not In(select sp_id from m_spcake_category_sup where del_status=0);", nativeQuery = true)
+	List<SpCake> getSpCakeCatList();
 
 }
