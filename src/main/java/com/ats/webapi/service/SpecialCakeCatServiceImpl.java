@@ -161,10 +161,10 @@ public class SpecialCakeCatServiceImpl implements SpecialCakeCatService {
 	}
 
 	@Override
-	public List<GetSpCkSupplement> getSpCakeSupList() {
+	public List<GetSpCkSupplement> getSpCakeCatSupList() {
 		List<GetSpCkSupplement> spSuppList;
 		try {
-			spSuppList = getSpCakeSupRepository.findByDelStatus(0);
+			spSuppList = getSpCakeSupRepository.findSpCakeCatByDelStatus(0);
 
 		} catch (Exception e) {
 			spSuppList = new ArrayList<GetSpCkSupplement>();

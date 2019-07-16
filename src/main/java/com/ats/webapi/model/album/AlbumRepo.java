@@ -21,4 +21,6 @@ public interface AlbumRepo extends JpaRepository<Album, Integer> {
 
 	List<Album> findBySpIdAndDelStatus(int spId, int i);
 
+	Album findByAlbumCodeAndDelStatus(String albumCode, int i);
+
 }

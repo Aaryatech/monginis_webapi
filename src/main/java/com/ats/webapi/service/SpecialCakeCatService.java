@@ -20,6 +20,6 @@ public interface SpecialCakeCatService {
 	public SpCakeCatSupplement saveSpCakeSup(SpCakeCatSupplement spCakeSupplement);
 	public Info deleteSpCakeSup(int id);
 	public GetSpCkSupplement getSpCakeSupp(int id);
-	public List<GetSpCkSupplement> getSpCakeSupList();
+	public List<GetSpCkSupplement> getSpCakeCatSupList();
 	
 }

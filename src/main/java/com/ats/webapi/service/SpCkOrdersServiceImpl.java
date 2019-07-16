@@ -75,6 +75,46 @@ public class SpCkOrdersServiceImpl implements SpCkOrdersService {
 		
 		return getSpCakeOrderRepository.getSpCakeOrder(spOrderNo);
 	}
+
+
+	@Override
+	public List<SpCakeOrdersBean> findSpCakeAlbumOrder(List<Integer> frId, String prodDate) {
+		List<SpCakeOrdersBean> spCakeOrders=null;
+		try {
+			spCakeOrders=spCakeOrdersRepository.FindAllSpCakeAlbumOrder(frId, prodDate);
+					
+		
+		}catch (Exception e) {
+			System.out.println("inside sp cake order service impl ex"+e.getMessage());
+		}
+		return spCakeOrders;
+	}
+
+
+	@Override
+	public List<SpCakeOrdersBean> findSpCakeAlbumOrderAllFr(String prodDate) {
+		List<SpCakeOrdersBean> spCakeOrders=null;
+		try {
+			spCakeOrders=spCakeOrdersRepository.FindAllSpCakeAlbumOrderAllFr(prodDate);
+					
+		
+		}catch (Exception e) {
+			System.out.println("inside sp cake order album service impl ex"+e.getMessage());
+		}
+		return spCakeOrders;
+	}
+
+
+	@Override
+	public List<GetSpCakeOrders> getSpCakeAlbumOrder(List<String> spOrderNo) {
+		return getSpCakeOrdersRepository.getSpCakeOrdersAlbum(spOrderNo);
+	}
+
+
+	@Override
+	public List<GetSpCkOrder> getSpCkAlbumOrder(List<String> spOrderNo) {
+		return getSpCakeOrderRepository.getSpCakeAlbumOrder(spOrderNo);
+	}
 	}
 
 

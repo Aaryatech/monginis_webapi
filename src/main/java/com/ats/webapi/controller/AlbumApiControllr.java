@@ -12,12 +12,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.AllMenus;
+import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Franchisee;
 import com.ats.webapi.model.FranchiseeAndMenuList;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Message;
+import com.ats.webapi.model.OrderSpecialCake;
+import com.ats.webapi.model.SearchSpCakeResponse;
 import com.ats.webapi.model.album.Album;
+import com.ats.webapi.model.album.AlbumCodeAndName;
 import com.ats.webapi.model.album.AlbumRepo;
+import com.ats.webapi.model.album.SearchAlbumCakeResponse;
+import com.ats.webapi.repository.AlbumCodeAndNameRepo;
+import com.ats.webapi.repository.OrderSpCakeRepository;
 import com.ats.webapi.service.MenuService;
 import com.ats.webapi.util.JsonUtil;
 
@@ -26,9 +33,15 @@ public class AlbumApiControllr {
 
 	@Autowired
 	AlbumRepo albumRepo;
-	
+
 	@Autowired
 	private MenuService menuService;
+
+	@Autowired
+	OrderSpCakeRepository orderSpCakeRepository;
+	
+	@Autowired
+	AlbumCodeAndNameRepo albumCodeAndNameRepo;
 
 	@RequestMapping(value = { "/saveAlbum" }, method = RequestMethod.POST)
 	public @ResponseBody Album saveAlbum(@RequestBody Album album) {
@@ -134,18 +147,59 @@ public class AlbumApiControllr {
 		return info;
 
 	}
-	
-	
-	
-	@RequestMapping(value = { "/getMenuForAlbum" }, method = RequestMethod.POST)
-	public @ResponseBody List<AllMenus> getMenuForAlbum(@RequestParam("catId") int catId,@RequestParam("isSameDay") int isSameDay,@RequestParam("delStatus") int delStatus) {
 
-		List<AllMenus> allMenu =new ArrayList(); 
-		allMenu=menuService.findByCatIdAndIsSameDayAppAndDelStatus(catId,isSameDay,delStatus);
+	@RequestMapping(value = { "/getMenuForAlbum" }, method = RequestMethod.POST)
+	public @ResponseBody List<AllMenus> getMenuForAlbum(@RequestParam("catId") int catId,
+			@RequestParam("isSameDay") int isSameDay, @RequestParam("delStatus") int delStatus) {
+
+		List<AllMenus> allMenu = new ArrayList();
+		allMenu = menuService.findByCatIdAndIsSameDayAppAndDelStatus(catId, isSameDay, delStatus);
 
 		return allMenu;
 	}
+
+	// Search Special Cake By album Code
+	@RequestMapping(value = { "/searchAlbumByCode" }, method = RequestMethod.POST)
+	public @ResponseBody SearchAlbumCakeResponse searchAlbumByCode(@RequestParam("albumCode") String albumCode) {
+
+		OrderSpecialCake specialCake = null;
+		Album album = null;
+		ErrorMessage errorMessage = new ErrorMessage();
+		SearchAlbumCakeResponse searchAlbumCakeResponse = new SearchAlbumCakeResponse();
+
+		try {
+			album = albumRepo.findByAlbumCodeAndDelStatus(albumCode, 0);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		searchAlbumCakeResponse.setAlbum(album);
+
+		specialCake = orderSpCakeRepository.findBySpId(album.getSpId());
+		if (specialCake == null) {
+			errorMessage.setError(true);
+			errorMessage.setMessage("Special Cake Not Found");
+			searchAlbumCakeResponse.setErrorMessage(errorMessage);
+		} else {
+			errorMessage.setError(false);
+			errorMessage.setMessage("Special Cake Found Successfully");
+			searchAlbumCakeResponse.setErrorMessage(errorMessage);
+			searchAlbumCakeResponse.setSpecialCake(specialCake);
+		}
+
+		return searchAlbumCakeResponse;
+
+	}
 	
 	
+	@RequestMapping(value = { "/getAlbumCodeAndNameList" }, method = RequestMethod.POST)
+	public @ResponseBody List<AlbumCodeAndName> getAlbumCodeAndNameList(@RequestParam("items") List<Integer> items, @RequestParam("frId") int frId,
+			@RequestParam("menuId") int menuId) {
+
+		List<AlbumCodeAndName> albumCodeList = new ArrayList();
+		albumCodeList = albumCodeAndNameRepo.findAlbumCodeAndName(items, frId, menuId);
+
+		return albumCodeList;
+	}
 
 }

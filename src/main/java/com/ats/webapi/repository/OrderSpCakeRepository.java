@@ -16,6 +16,9 @@ public interface OrderSpCakeRepository extends JpaRepository<OrderSpecialCake, I
 
 	@Query(value="SELECT m_sp_cake_category.*,m_sp_rates.spr_rate,m_sp_rates.spr_add_on_rate FROM m_sp_rates,m_sp_cake_category WHERE m_sp_cake_category.sp_code =:spCode AND m_sp_cake_category.spr_id=m_sp_rates.spr_id and m_sp_cake_category.del_status=0",nativeQuery=true)
 	public OrderSpecialCake findBySpCatCode(@Param("spCode")String spCode);
+	
+	@Query(value="SELECT m_sp_cake_category.*,m_sp_rates.spr_rate,m_sp_rates.spr_add_on_rate FROM m_sp_rates,m_sp_cake_category WHERE m_sp_cake_category.sp_id =:spId AND m_sp_cake_category.spr_id=m_sp_rates.spr_id and m_sp_cake_category.del_status=0",nativeQuery=true)
+	public OrderSpecialCake findBySpId(@Param("spId") int spId);
 
 	/*@Query(value="SELECT  m.sp_code FROM m_sp_cake m , m_fr_configure f WHERE m.sp_id IN(:items) AND  m.del_status=0 AND f.menu_id=:menuId AND f.fr_id=:frId",nativeQuery=true)
 	public List<String> findSpCode(@Param ("items") List<Integer>items,@Param("frId")int frId,@Param("menuId")int menuId);

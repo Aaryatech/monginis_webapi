@@ -1086,6 +1086,59 @@ public class ProdAppController {
 		return spCakeOrdList;
 
 	}
+	
+	
+	//--------ANMOL 13-7-2019-----------------------
+	@RequestMapping(value = { "/getSpCakeAlbumOrdersForApp" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetSpCakeOrderForProdApp> getSpCakeAlbumOrdersForApp(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("menuIdList") List<Integer> menuIdList,
+			@RequestParam("isSlotUsed") List<Integer> isSlotUsed, @RequestParam("isOrderBy") int isOrderBy) {
+
+		List<GetSpCakeOrderForProdApp> spCakeOrdList = new ArrayList<GetSpCakeOrderForProdApp>();
+		try {
+			System.err.println(
+					"For  getSpCakeOrdersForApp // menuId List " + menuIdList.toString() + "order By " + isOrderBy);
+
+			if (menuIdList.contains(-1) && isOrderBy == 0) {
+				System.err.println("A] menuId -1 and order by 0 ");
+
+				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeAlbumOrderForProdGenAllMenu(fromDate, toDate, isSlotUsed);
+
+			} else if (menuIdList.contains(-1) && isOrderBy == 1) {
+
+				System.err.println(" B] menuId -1 and order by 1 ");
+
+				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeAlbumOrderForProdOrderByAndAllMenu(fromDate, toDate,
+						isSlotUsed);
+
+			}
+
+			else if (isOrderBy == 0) {
+				System.err.println(" C] specific menu and order by 0 ");
+
+				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeAlbumOrderForProdGen(fromDate, toDate, menuIdList,
+						isSlotUsed);
+
+			} else {
+
+				System.err.println(" D] specific menu and order by 1 ");
+				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeAlbumOrderForProdOrderBy(fromDate, toDate, menuIdList,
+						isSlotUsed);
+
+			}
+
+		} catch (Exception e) {
+
+			System.out.println("Exce in getSpCakeOrdersForApp Rest ProdAppController " + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return spCakeOrdList;
+
+	}
+	
+	
 
 	@Autowired
 	GetRegSpCakeOrderForProdAppRepo getRegSpCakeOrderForProdAppRepo;

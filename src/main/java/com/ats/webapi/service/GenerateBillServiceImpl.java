@@ -38,10 +38,14 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 		List<GenerateSpBill> generateSpBills = generateSpBillRepository.generateSpBill(frId, menuId, delDate);
 
 		List<GenerateRegSpBill> generateRegSpBills = regSpBillRepository.generateRegSpBill(frId, menuId, delDate);
+		
+		List<GenerateSpBill> generateSpAlbumBills = generateSpBillRepository.generateSpAlbumBill(frId, menuId, delDate);
 
 		System.out.println("Regular Sp Cake Orders " + generateRegSpBills.toString());
 
 		generateBills = convertSpCakeToItem(generateSpBills, generateBills);
+		
+		generateBills = convertSpCakeToItem(generateSpAlbumBills, generateBills);
 
 		generateBills = convertRegSpCakeToItem(generateRegSpBills, generateBills);
 
@@ -78,8 +82,12 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 
 		List<GenerateRegSpBill> generateRegSpBills = regSpBillRepository.generateRegSpBillForAllFr(menuId, delDate);
 		System.out.println("Regular Sp Cake Orders " + generateRegSpBills.toString());
+		
+		List<GenerateSpBill> generateSpAlbumBills = generateSpBillRepository.generateSpAlbumBillForAllFr(menuId, delDate);
 
 		generateBills = convertSpCakeToItem(generateSpBills, generateBills);
+		
+		generateBills = convertSpCakeToItem(generateSpAlbumBills, generateBills);
 
 		generateBills = convertRegSpCakeToItem(generateRegSpBills, generateBills);
 
@@ -115,10 +123,13 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 		List<GenerateSpBill> generateSpBills = generateSpBillRepository.generateSpBillForAllFrAllMenu(delDate);
 
 		List<GenerateRegSpBill> generateRegSpBills = regSpBillRepository.generateRegSpBillForAllFrAllMenu(delDate);
+		
+		List<GenerateSpBill> generateSpAlbumBills = generateSpBillRepository.generateSpAlbumBillForAllFrAllMenu(delDate);
 
 		System.out.println("Regular Sp Cake Orders " + generateRegSpBills.toString());
 
 		generateBills = convertSpCakeToItem(generateSpBills, generateBills);
+		generateBills = convertSpCakeToItem(generateSpAlbumBills, generateBills);
 
 		try {
 			generateBills = convertRegSpCakeToItem(generateRegSpBills, generateBills);
@@ -158,12 +169,16 @@ public class GenerateBillServiceImpl implements GenerateBillService {
 		List<GenerateSpBill> generateSpBills = generateSpBillRepository.generateSpBillForAllMenu(frId, delDate);
 
 		List<GenerateRegSpBill> generateRegSpBills = regSpBillRepository.generateRegSpBillForAllMenu(frId, delDate);
+		
+		List<GenerateSpBill> generateSpAlbumBills = generateSpBillRepository.generateSpAlbumBillForAllMenu(frId, delDate);
 
 		// System.out.println("sp cake orders " + generateSpBills.toString());
 
 		System.out.println("Regular Sp Cake Orders " + generateRegSpBills.toString());
 
 		generateBills = convertSpCakeToItem(generateSpBills, generateBills);
+		
+		generateBills = convertSpCakeToItem(generateSpAlbumBills, generateBills);
 
 		generateBills = convertRegSpCakeToItem(generateRegSpBills, generateBills);
 

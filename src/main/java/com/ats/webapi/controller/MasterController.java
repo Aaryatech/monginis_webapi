@@ -64,6 +64,7 @@ import com.ats.webapi.service.FranchiseeService;
 import com.ats.webapi.service.ItemService;
 import com.ats.webapi.service.OrderService;
 import com.ats.webapi.service.RegularSpCkOrderService;
+import com.ats.webapi.service.SpecialCakeCatService;
 import com.ats.webapi.service.SpecialCakeService;
 
 @RestController
@@ -85,6 +86,9 @@ public class MasterController {
 
 	@Autowired
 	SpecialCakeService spCakeService;
+	
+	@Autowired
+	SpecialCakeCatService spCakeCatService;
 
 	@Autowired
 	FrListForSuppRepository frListForSuppRepository;
@@ -276,6 +280,20 @@ public class MasterController {
 		return spCakeSupplementList;
 
 	}
+	
+	
+	//--------ANMOL 10-7-19
+	// ------------------------------------------------------------------------
+	// ---------------------------Getting SpCakeCatSup List-----------------------
+	@RequestMapping(value = { "/getSpCakeCatSuppList" }, method = RequestMethod.GET)
+	public @ResponseBody List<GetSpCkSupplement> getSpCakeCatSupList() {
+
+		List<GetSpCkSupplement> spCakeSupplementList = spCakeCatService.getSpCakeCatSupList();
+
+		return spCakeSupplementList;
+
+	}
+	
 
 	@RequestMapping(value = { "/getSpCakeSuppCatList" }, method = RequestMethod.GET)
 	public @ResponseBody List<GetSpCkSupplementCat> getSpCakeSuppCatList() {

@@ -4399,6 +4399,35 @@ public class RestApiController {
 		return spCakeOrderList;
 
 	}
+	
+	
+	//Anmol 13-7-2019
+		//----------SP CAKE ALBUM ORDER--------------------------------------------------
+		@RequestMapping(value = { "/getSpCakeAlbumOrderLists" }, method = RequestMethod.POST)
+		@ResponseBody
+		public SpCakeOrdersBeanList SpCakeAlbumOrderLists(@RequestParam List<Integer> frId, @RequestParam String prodDate) {
+			SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
+			try {
+
+				String strDate = Common.convertToYMD(prodDate);
+				System.out.println("Converted date " + strDate);
+
+				List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeAlbumOrder(frId, strDate);
+
+				spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
+				Info info = new Info();
+				info.setError(false);
+				info.setMessage("Sp Cake Album Order list displayed Successfully");
+				spCakeOrderList.setInfo(info);
+
+			} catch (Exception e) {
+
+				System.out.println("exception in Album order list rest controller" + e.getMessage());
+			}
+			return spCakeOrderList;
+
+		}
+		
 
 	// getAllFrSpCakeOrderList
 
@@ -4426,6 +4455,32 @@ public class RestApiController {
 		return spCakeOrderList;
 
 	}
+	
+	//Anmol 13/7/2019
+		@RequestMapping(value = { "/getAllFrSpCakeAlbumOrderList" }, method = RequestMethod.POST)
+		@ResponseBody
+		public SpCakeOrdersBeanList getAllFrSpCakeAlbumOrderList(@RequestParam String prodDate) {
+			SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
+			try {
+
+				String strDate = Common.convertToYMD(prodDate);
+				System.out.println("Converted date " + strDate);
+
+				List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeAlbumOrderAllFr(strDate);
+
+				spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
+				Info info = new Info();
+				info.setError(false);
+				info.setMessage("Sp Cake Order Album list displayed Successfully");
+				spCakeOrderList.setInfo(info);
+
+			} catch (Exception e) {
+
+				System.out.println("exception in order list rest controller" + e.getMessage());
+			}
+			return spCakeOrderList;
+
+		}
 
 	@RequestMapping(value = { "/showEventList" }, method = RequestMethod.GET)
 	@ResponseBody
@@ -4961,6 +5016,18 @@ public class RestApiController {
 		System.out.println("Res  :" + spCakeOrder.toString());
 		return spCakeOrder;
 	}
+	
+	//-------------ANMOL 13-7-2019---------------------
+	@RequestMapping(value = { "/getSpCakeAlbumOrderBySpOrderNo" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<GetSpCakeOrders> getSpCakeAlbumOrderBySpOrderNo(@RequestParam List<String> spOrderNo) {
+		System.out.println("Order Id " + spOrderNo.toString());
+		List<GetSpCakeOrders> spCakeOrder = spCkOrdersService.getSpCakeAlbumOrder(spOrderNo);
+
+		System.out.println("Res  :" + spCakeOrder.toString());
+		return spCakeOrder;
+	}
+
 
 	@RequestMapping(value = { "/getSpCKOrderBySpOrderNo" }, method = RequestMethod.POST)
 	@ResponseBody
@@ -4970,6 +5037,16 @@ public class RestApiController {
 
 		return spCakeOrder;
 	}
+	
+	//---------ANMOL 13-7-2019----------------
+		@RequestMapping(value = { "/getSpCKAlbumOrderBySpOrderNo" }, method = RequestMethod.POST)
+		@ResponseBody
+		public List<GetSpCkOrder> getSpCKAlbumOrderBySpOrderNo(@RequestParam("spOrderNo") List<String> spOrderNo) {
+
+			List<GetSpCkOrder> spCakeOrder = spCkOrdersService.getSpCkAlbumOrder(spOrderNo);
+
+			return spCakeOrder;
+		}
 
 	@RequestMapping(value = { "/getRegSpCakeOrderBySpOrderNo" }, method = RequestMethod.POST)
 	@ResponseBody
