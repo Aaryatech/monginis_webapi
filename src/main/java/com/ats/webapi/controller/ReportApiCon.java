@@ -1,5 +1,6 @@
 package com.ats.webapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +53,13 @@ public class ReportApiCon {
 		CrNoteRegisterList crNoteList = new CrNoteRegisterList();
 
 		List<CrNoteRegItem> crNoteRegItemList;
-		List<CrNoteRegSp> crNoteRegSpList;
+		List<CrNoteRegSp> crNoteRegSpList = new ArrayList<CrNoteRegSp>();
 
 		crNoteRegItemList = getCrNoteRegItemRepo.getCrNoteRegItemDoneByFrId(frId, fromDate, toDate);
 		crNoteList.setCrNoteRegItemList(crNoteRegItemList);
 
-		crNoteRegSpList = getCrNoteRegSpRepo.getCrNoteRegSpDoneByFrId(frId, fromDate, toDate);
+		// crNoteRegSpList = getCrNoteRegSpRepo.getCrNoteRegSpDoneByFrId(frId, fromDate,
+		// toDate);
 		crNoteList.setCrNoteRegSpList(crNoteRegSpList);
 
 		System.err.println("size Item  crNoteList " + crNoteList.getCrNoteRegItemList().size());

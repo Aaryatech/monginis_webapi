@@ -29,7 +29,7 @@ public interface CrNoteRegSpRepo extends JpaRepository<CrNoteRegSp, Integer> {
 			+ "        AND t_credit_note_header.crn_date BETWEEN :fromDate  AND  :toDate \n"
 			+ "        AND t_credit_note_header.fr_id=m_franchisee.fr_id \n"
 			+ "        AND t_credit_note_details.item_id=m_item.id \n" + "        AND m_franchisee.fr_id=:frId  \n"
-			+ "        AND t_credit_note_details.cat_id!=5\n" + "    GROUP BY\n"
+			+ "        \n" + "    GROUP BY\n"
 			+ "        (t_credit_note_details.cgst_per+t_credit_note_details.sgst_per),\n"
 			+ "        t_credit_note_details.crn_id   \n" + "    order by\n"
 			+ "        t_credit_note_header.crn_no ", nativeQuery = true)
