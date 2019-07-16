@@ -11,8 +11,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class CrNoteRegSp {
 	@Id
 	private int crndId;
-	private String hsnCode;
-	
+
 	private int crnId;
 	private Date crnDate;
 	private String invoiceNo;
@@ -22,25 +21,16 @@ public class CrNoteRegSp {
 	private String frGstNo;
 	private float crnQty;
 	private float crnTaxable;
-	
-	
+
 	private float cgstPer;
 	private float sgstPer;
 	private float igstPer;
-	
+
 	private float cgstAmt;
 	private float sgstAmt;
 	private float igstAmt;
-	
+
 	private float crnAmt;
-
-	public String getHsnCode() {
-		return hsnCode;
-	}
-
-	public void setHsnCode(String hsnCode) {
-		this.hsnCode = hsnCode;
-	}
 
 	public int getCrnId() {
 		return crnId;
@@ -49,6 +39,7 @@ public class CrNoteRegSp {
 	public void setCrnId(int crnId) {
 		this.crnId = crnId;
 	}
+
 	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getCrnDate() {
 		return crnDate;
@@ -65,6 +56,7 @@ public class CrNoteRegSp {
 	public void setInvoiceNo(String invoiceNo) {
 		this.invoiceNo = invoiceNo;
 	}
+
 	@JsonFormat(locale = "hi", timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getBillDate() {
 		return billDate;
@@ -180,11 +172,11 @@ public class CrNoteRegSp {
 
 	@Override
 	public String toString() {
-		return "CrNoteRegSp [crndId=" + crndId + ", hsnCode=" + hsnCode + ", crnId=" + crnId + ", crnDate=" + crnDate
-				+ ", invoiceNo=" + invoiceNo + ", billDate=" + billDate + ", frName=" + frName + ", frCode=" + frCode
-				+ ", frGstNo=" + frGstNo + ", crnQty=" + crnQty + ", crnTaxable=" + crnTaxable + ", cgstPer=" + cgstPer
-				+ ", sgstPer=" + sgstPer + ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt
-				+ ", igstAmt=" + igstAmt + ", crnAmt=" + crnAmt + "]";
+		return "CrNoteRegSp [crndId=" + crndId + ", crnId=" + crnId + ", crnDate=" + crnDate + ", invoiceNo="
+				+ invoiceNo + ", billDate=" + billDate + ", frName=" + frName + ", frCode=" + frCode + ", frGstNo="
+				+ frGstNo + ", crnQty=" + crnQty + ", crnTaxable=" + crnTaxable + ", cgstPer=" + cgstPer + ", sgstPer="
+				+ sgstPer + ", igstPer=" + igstPer + ", cgstAmt=" + cgstAmt + ", sgstAmt=" + sgstAmt + ", igstAmt="
+				+ igstAmt + ", crnAmt=" + crnAmt + "]";
 	}
 
 }
