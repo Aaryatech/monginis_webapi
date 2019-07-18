@@ -52,6 +52,8 @@ private int tSpCakeSupNo;
 	
 	private String spEventsName;
 	
+	private int isAllocated;
+	
 	
 	public String getIsCharUsed() {
 		return isCharUsed;
@@ -226,6 +228,17 @@ private int tSpCakeSupNo;
 	public void setSpEventsName(String spEventsName) {
 		this.spEventsName = spEventsName;
 	}
+	
+	
+	
+	public int getIsAllocated() {
+		return isAllocated;
+	}
+	public void setIsAllocated(int isAllocated) {
+		this.isAllocated = isAllocated;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "SpOrder [tSpCakeSupNo=" + tSpCakeSupNo + ", srNo=" + srNo + ", date=" + date + ", status=" + status
@@ -236,7 +249,7 @@ private int tSpCakeSupNo;
 				+ ", spInstructions=" + spInstructions + ", spDeliveryDate=" + spDeliveryDate + ", startTimeStamp="
 				+ startTimeStamp + ", endTimeStamp=" + endTimeStamp + ", orderPhoto=" + orderPhoto + ", orderPhoto2="
 				+ orderPhoto2 + ", isCharUsed=" + isCharUsed + ", spEvents=" + spEvents + ", spEventsName="
-				+ spEventsName + "]";
+				+ spEventsName + ", isAllocated=" + isAllocated + "]";
 	}
 	
 }

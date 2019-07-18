@@ -10,99 +10,532 @@ import com.ats.webapi.model.prodapp.RoutewiseOrdCountBean;
 
 public interface RoutewiseOrdCountBeanRepo extends JpaRepository<RoutewiseOrdCountBean, Integer> {
 	
-	@Query(value = " SELECT m_fr_route.route_name,m_fr_route.route_id,m_fr_route.route_seq_no,\n" + 
-			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
-			"			  AND t_sp_cake_sup.status=0  ),0) AS sp_status_zero_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
-			"			 AND t_sp_cake_sup.status=1  ),0) AS sp_status_one_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
-			"			 AND t_sp_cake_sup.status=2  ),0) AS sp_status_two_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
-			"			 AND t_sp_cake_sup.status=3  ),0) AS sp_status_three_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate),0) \n" + 
-			"			 AS sp_total_ord_count,\n" + 
-			"\n" + 
-			"\n" + 
-			"coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
-			"			 AND t_reg_sp_cake_sup.status=0  ),0) AS reg_sp_status_zero_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
-			"			 AND t_reg_sp_cake_sup.status=1  ),0) AS reg_sp_status_one_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
-			"			 AND t_reg_sp_cake_sup.status=2  ),0) AS reg_sp_status_two_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
-			"			 AND t_reg_sp_cake_sup.status=3  ),0) AS reg_sp_status_three_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate),0) \n" + 
-			"			 AS reg_sp_total_ord_count \n" + 
-			"\n" + 
-			"			\n" + 
-			"			 FROM m_fr_route WHERE m_fr_route.del_status=0 GROUP BY m_fr_route.route_id ORDER BY m_fr_route.route_seq_no DESC", nativeQuery = true)
+//	@Query(value = " SELECT m_fr_route.route_name,m_fr_route.route_id,m_fr_route.route_seq_no,\n" + 
+//			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
+//			"			  AND t_sp_cake_sup.status=0  ),0) AS sp_status_zero_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
+//			"			 AND t_sp_cake_sup.status=1  ),0) AS sp_status_one_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
+//			"			 AND t_sp_cake_sup.status=2  ),0) AS sp_status_two_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
+//			"			 AND t_sp_cake_sup.status=3  ),0) AS sp_status_three_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate),0) \n" + 
+//			"			 AS sp_total_ord_count,\n" + 
+//			"\n" + 
+//			"\n" + 
+//			"coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
+//			"			 AND t_reg_sp_cake_sup.status=0  ),0) AS reg_sp_status_zero_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
+//			"			 AND t_reg_sp_cake_sup.status=1  ),0) AS reg_sp_status_one_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
+//			"			 AND t_reg_sp_cake_sup.status=2  ),0) AS reg_sp_status_two_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
+//			"			 AND t_reg_sp_cake_sup.status=3  ),0) AS reg_sp_status_three_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate),0) \n" + 
+//			"			 AS reg_sp_total_ord_count \n" + 
+//			"\n" + 
+//			"			\n" + 
+//			"			 FROM m_fr_route WHERE m_fr_route.del_status=0 GROUP BY m_fr_route.route_id ORDER BY m_fr_route.route_seq_no DESC", nativeQuery = true)
+//
+//
+//	List<RoutewiseOrdCountBean> getRoutewiseOrderCountAllMenu(@Param("prodDate") String prodDate);// B] all menu
+
+	
+//	@Query(value = " SELECT m_fr_route.route_name,m_fr_route.route_id,m_fr_route.route_seq_no,\n" + 
+//			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
+//			"			  AND t_sp_cake_sup.status=0 AND t_sp_cake_sup.menu_id IN (:menuIdList)),0) AS sp_status_zero_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
+//			"			 AND t_sp_cake_sup.status=1 AND t_sp_cake_sup.menu_id IN (:menuIdList)  ),0) AS sp_status_one_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
+//			"			 AND t_sp_cake_sup.status=2  AND t_sp_cake_sup.menu_id IN (:menuIdList) ),0) AS sp_status_two_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
+//			"			 AND t_sp_cake_sup.status=3  AND t_sp_cake_sup.menu_id IN (:menuIdList) ),0) AS sp_status_three_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate AND t_sp_cake_sup.menu_id IN (:menuIdList)),0) \n" + 
+//			"			 AS sp_total_ord_count,\n" + 
+//			"\n" + 
+//			"\n" + 
+//			"coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
+//			"			 AND t_reg_sp_cake_sup.status=0 AND t_reg_sp_cake_sup.menu_id IN (:menuIdList)  ),0) AS reg_sp_status_zero_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
+//			"			 AND t_reg_sp_cake_sup.status=1 AND t_reg_sp_cake_sup.menu_id IN (:menuIdList)  ),0) AS reg_sp_status_one_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
+//			"			 AND t_reg_sp_cake_sup.status=2 AND t_reg_sp_cake_sup.menu_id IN (:menuIdList)  ),0) AS reg_sp_status_two_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
+//			"			 AND t_reg_sp_cake_sup.status=3 AND t_reg_sp_cake_sup.menu_id IN (:menuIdList)  ),0) AS reg_sp_status_three_ord_count,\n" + 
+//			"\n" + 
+//			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
+//			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate AND t_reg_sp_cake_sup.menu_id IN (:menuIdList)),0) \n" + 
+//			"			 AS reg_sp_total_ord_count \n" + 
+//			"\n" + 
+//			"			\n" + 
+//			"			 FROM m_fr_route WHERE m_fr_route.del_status=0 GROUP BY m_fr_route.route_id ORDER BY m_fr_route.route_seq_no DESC", nativeQuery = true)
+//
+//	
+//	
+//	List<RoutewiseOrdCountBean> getRoutewiseOrderCountSpecMenu(@Param("prodDate") String prodDate,
+//			@Param("menuIdList") List<Integer> menuIdList);// A] specific menu 
+	
+	
+	
+	//-----------------------------------------------------------------------------------------------
+	
+	//----Anmol 17-7-2019
+	
+	@Query(value = "SELECT\n" + 
+			"    m_fr_route.route_name,\n" + 
+			"    m_fr_route.route_id,\n" + 
+			"    m_fr_route.route_seq_no,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 0 AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 0\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS sp_status_zero_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 1\n" + 
+			"            AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 0\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS sp_status_one_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 2\n" + 
+			"            AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 0\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS sp_status_two_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 3\n" + 
+			"            AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 0\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS sp_status_three_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 0\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS sp_total_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_reg_sp_cake_sup.sup_id)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_reg_sp_cake_sup\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date = :prodDate AND t_reg_sp_cake_sup.status = 0\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS reg_sp_status_zero_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_reg_sp_cake_sup.sup_id)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_reg_sp_cake_sup\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date = :prodDate AND t_reg_sp_cake_sup.status = 1\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS reg_sp_status_one_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_reg_sp_cake_sup.sup_id)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_reg_sp_cake_sup\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date = :prodDate AND t_reg_sp_cake_sup.status = 2\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS reg_sp_status_two_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_reg_sp_cake_sup.sup_id)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_reg_sp_cake_sup\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date = :prodDate AND t_reg_sp_cake_sup.status = 3\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS reg_sp_status_three_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_reg_sp_cake_sup.sup_id)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_reg_sp_cake_sup\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date = :prodDate\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS reg_sp_total_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 0 AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 1\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS album_status_zero_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 1\n" + 
+			"            AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 1\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS album_status_one_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 2\n" + 
+			"            AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 1\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS album_status_two_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 3\n" + 
+			"            AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 1\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS album_status_three_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 1\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS album_total_ord_count\n" + 
+			"FROM\n" + 
+			"    m_fr_route\n" + 
+			"WHERE\n" + 
+			"    m_fr_route.del_status = 0\n" + 
+			"GROUP BY\n" + 
+			"    m_fr_route.route_id\n" + 
+			"ORDER BY\n" + 
+			"    m_fr_route.route_seq_no\n" + 
+			"DESC\n" + 
+			"    ", nativeQuery = true)
 
 
 	List<RoutewiseOrdCountBean> getRoutewiseOrderCountAllMenu(@Param("prodDate") String prodDate);// B] all menu
-
 	
-	@Query(value = " SELECT m_fr_route.route_name,m_fr_route.route_id,m_fr_route.route_seq_no,\n" + 
-			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
-			"			  AND t_sp_cake_sup.status=0 AND t_sp_cake_sup.menu_id IN (:menuIdList)),0) AS sp_status_zero_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
-			"			 AND t_sp_cake_sup.status=1 AND t_sp_cake_sup.menu_id IN (:menuIdList)  ),0) AS sp_status_one_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
-			"			 AND t_sp_cake_sup.status=2  AND t_sp_cake_sup.menu_id IN (:menuIdList) ),0) AS sp_status_two_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate \n" + 
-			"			 AND t_sp_cake_sup.status=3  AND t_sp_cake_sup.menu_id IN (:menuIdList) ),0) AS sp_status_three_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_sp_cake_sup.t_sp_cake_sup_no) FROM m_franchisee,t_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_sp_cake_sup.date=:prodDate AND t_sp_cake_sup.menu_id IN (:menuIdList)),0) \n" + 
-			"			 AS sp_total_ord_count,\n" + 
-			"\n" + 
-			"\n" + 
-			"coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
-			"			 AND t_reg_sp_cake_sup.status=0 AND t_reg_sp_cake_sup.menu_id IN (:menuIdList)  ),0) AS reg_sp_status_zero_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
-			"			 AND t_reg_sp_cake_sup.status=1 AND t_reg_sp_cake_sup.menu_id IN (:menuIdList)  ),0) AS reg_sp_status_one_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
-			"			 AND t_reg_sp_cake_sup.status=2 AND t_reg_sp_cake_sup.menu_id IN (:menuIdList)  ),0) AS reg_sp_status_two_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate \n" + 
-			"			 AND t_reg_sp_cake_sup.status=3 AND t_reg_sp_cake_sup.menu_id IN (:menuIdList)  ),0) AS reg_sp_status_three_ord_count,\n" + 
-			"\n" + 
-			"			 coalesce((SELECT COUNT(t_reg_sp_cake_sup.sup_id) FROM m_franchisee,t_reg_sp_cake_sup \n" + 
-			"			 WHERE m_fr_route.route_id=m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id=m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date=:prodDate AND t_reg_sp_cake_sup.menu_id IN (:menuIdList)),0) \n" + 
-			"			 AS reg_sp_total_ord_count \n" + 
-			"\n" + 
-			"			\n" + 
-			"			 FROM m_fr_route WHERE m_fr_route.del_status=0 GROUP BY m_fr_route.route_id ORDER BY m_fr_route.route_seq_no DESC", nativeQuery = true)
+	
+	
+	
+	@Query(value = " SELECT\n" + 
+			"    m_fr_route.route_name,\n" + 
+			"    m_fr_route.route_id,\n" + 
+			"    m_fr_route.route_seq_no,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 0 AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 0\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS sp_status_zero_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 1 AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 0\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS sp_status_one_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 2 AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 0\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS sp_status_two_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 3 AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 0\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS sp_status_three_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 0\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS sp_total_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_reg_sp_cake_sup.sup_id)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_reg_sp_cake_sup\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date = :prodDate AND t_reg_sp_cake_sup.status = 0 AND t_reg_sp_cake_sup.menu_id IN(:menuIdList)\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS reg_sp_status_zero_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_reg_sp_cake_sup.sup_id)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_reg_sp_cake_sup\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date = :prodDate AND t_reg_sp_cake_sup.status = 1 AND t_reg_sp_cake_sup.menu_id IN(:menuIdList)\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS reg_sp_status_one_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_reg_sp_cake_sup.sup_id)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_reg_sp_cake_sup\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date = :prodDate AND t_reg_sp_cake_sup.status = 2 AND t_reg_sp_cake_sup.menu_id IN(:menuIdList)\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS reg_sp_status_two_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_reg_sp_cake_sup.sup_id)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_reg_sp_cake_sup\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date = :prodDate AND t_reg_sp_cake_sup.status = 3 AND t_reg_sp_cake_sup.menu_id IN(:menuIdList)\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS reg_sp_status_three_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_reg_sp_cake_sup.sup_id)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_reg_sp_cake_sup\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_reg_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_reg_sp_cake_sup.prod_date = :prodDate AND t_reg_sp_cake_sup.menu_id IN(:menuIdList)\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS reg_sp_total_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 0 AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 1\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS album_status_zero_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 1 AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 1\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS album_status_one_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 2 AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 1\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS album_status_two_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.status = 3 AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 1\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS album_status_three_ord_count,\n" + 
+			"    COALESCE(\n" + 
+			"        (\n" + 
+			"        SELECT\n" + 
+			"            COUNT(t_sp_cake_sup.t_sp_cake_sup_no)\n" + 
+			"        FROM\n" + 
+			"            m_franchisee,\n" + 
+			"            t_sp_cake_sup,\n" + 
+			"            t_sp_cake\n" + 
+			"        WHERE\n" + 
+			"            m_fr_route.route_id = m_franchisee.fr_route_id AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND t_sp_cake_sup.date = :prodDate AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake.is_allocated = 1\n" + 
+			"    ),\n" + 
+			"    0\n" + 
+			"    ) AS album_total_ord_count\n" + 
+			"FROM\n" + 
+			"    m_fr_route\n" + 
+			"WHERE\n" + 
+			"    m_fr_route.del_status = 0\n" + 
+			"GROUP BY\n" + 
+			"    m_fr_route.route_id\n" + 
+			"ORDER BY\n" + 
+			"    m_fr_route.route_seq_no\n" + 
+			"DESC\n" + 
+			"    ", nativeQuery = true)
 
 	
 	

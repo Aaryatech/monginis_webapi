@@ -14,6 +14,7 @@ public class GetRoutewiseOrderData {
 
 	List<RegSpOrd> regSpCakeOrdList ;
 	List<SpOrder> spCakeOrdList ;
+	List<SpOrder> spCakeAlbumOrdList ;
 	
 	public String getFrName() {
 		return frName;
@@ -52,10 +53,21 @@ public class GetRoutewiseOrderData {
 		this.spCakeOrdList = spCakeOrdList;
 	}
 	
+	
+	
+	public List<SpOrder> getSpCakeAlbumOrdList() {
+		return spCakeAlbumOrdList;
+	}
+	public void setSpCakeAlbumOrdList(List<SpOrder> spCakeAlbumOrdList) {
+		this.spCakeAlbumOrdList = spCakeAlbumOrdList;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "GetRoutewiseOrderData [frName=" + frName + ", frCode=" + frCode + ", frId=" + frId + ", routeId="
-				+ routeId + ", regSpCakeOrdList=" + regSpCakeOrdList + ", spCakeOrdList=" + spCakeOrdList + "]";
+				+ routeId + ", regSpCakeOrdList=" + regSpCakeOrdList + ", spCakeOrdList=" + spCakeOrdList
+				+ ", spCakeAlbumOrdList=" + spCakeAlbumOrdList + "]";
 	}
 	
 	

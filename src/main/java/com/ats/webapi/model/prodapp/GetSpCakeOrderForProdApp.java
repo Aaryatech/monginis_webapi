@@ -76,6 +76,8 @@ ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_i
 	
 	private String spEventsName;
 	
+	private int isAllocated;
+	
 	
 	public String getIsCharUsed() {
 		return isCharUsed;
@@ -250,6 +252,19 @@ ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_i
 	public void setSpEventsName(String spEventsName) {
 		this.spEventsName = spEventsName;
 	}
+	
+	
+	
+	
+	
+	public int getIsAllocated() {
+		return isAllocated;
+	}
+	public void setIsAllocated(int isAllocated) {
+		this.isAllocated = isAllocated;
+	}
+	
+	
 	@Override
 	public String toString() {
 		return "GetSpCakeOrderForProdApp [tSpCakeSupNo=" + tSpCakeSupNo + ", srNo=" + srNo + ", date=" + date
@@ -259,7 +274,8 @@ ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_i
 				+ ", spFlavourId=" + spFlavourId + ", spfName=" + spfName + ", spDeliveryPlace=" + spDeliveryPlace
 				+ ", spInstructions=" + spInstructions + ", spDeliveryDate=" + spDeliveryDate + ", startTimeStamp="
 				+ startTimeStamp + ", endTimeStamp=" + endTimeStamp + ", orderPhoto=" + orderPhoto + ", orderPhoto2="
-				+ orderPhoto2 + ", isCharUsed=" + isCharUsed + "]";
+				+ orderPhoto2 + ", isCharUsed=" + isCharUsed + ", spEvents=" + spEvents + ", spEventsName="
+				+ spEventsName + ", isAllocated=" + isAllocated + "]";
 	}
 	
 	

@@ -26,6 +26,13 @@ public class RoutewiseOrdCountBean {
 	private int regSpStatusTwoOrdCount;
 	private int regSpStatusThreeOrdCount;
 	private int regSpTotalOrdCount;
+	
+	private int albumStatusZeroOrdCount;
+	private int albumStatusOneOrdCount;
+	private int albumStatusTwoOrdCount;
+	private int albumStatusThreeOrdCount;
+	private int albumTotalOrdCount;
+	
 	public int getRouteId() {
 		return routeId;
 	}
@@ -104,6 +111,39 @@ public class RoutewiseOrdCountBean {
 	public void setRegSpTotalOrdCount(int regSpTotalOrdCount) {
 		this.regSpTotalOrdCount = regSpTotalOrdCount;
 	}
+	
+	
+	
+	public int getAlbumStatusZeroOrdCount() {
+		return albumStatusZeroOrdCount;
+	}
+	public void setAlbumStatusZeroOrdCount(int albumStatusZeroOrdCount) {
+		this.albumStatusZeroOrdCount = albumStatusZeroOrdCount;
+	}
+	public int getAlbumStatusOneOrdCount() {
+		return albumStatusOneOrdCount;
+	}
+	public void setAlbumStatusOneOrdCount(int albumStatusOneOrdCount) {
+		this.albumStatusOneOrdCount = albumStatusOneOrdCount;
+	}
+	public int getAlbumStatusTwoOrdCount() {
+		return albumStatusTwoOrdCount;
+	}
+	public void setAlbumStatusTwoOrdCount(int albumStatusTwoOrdCount) {
+		this.albumStatusTwoOrdCount = albumStatusTwoOrdCount;
+	}
+	public int getAlbumStatusThreeOrdCount() {
+		return albumStatusThreeOrdCount;
+	}
+	public void setAlbumStatusThreeOrdCount(int albumStatusThreeOrdCount) {
+		this.albumStatusThreeOrdCount = albumStatusThreeOrdCount;
+	}
+	public int getAlbumTotalOrdCount() {
+		return albumTotalOrdCount;
+	}
+	public void setAlbumTotalOrdCount(int albumTotalOrdCount) {
+		this.albumTotalOrdCount = albumTotalOrdCount;
+	}
 	@Override
 	public String toString() {
 		return "RoutewiseOrdCountBean [routeId=" + routeId + ", routeSeqNo=" + routeSeqNo + ", routeName=" + routeName
@@ -112,7 +152,10 @@ public class RoutewiseOrdCountBean {
 				+ ", spTotalOrdCount=" + spTotalOrdCount + ", regSpStatusZeroOrdCount=" + regSpStatusZeroOrdCount
 				+ ", regSpStatusOneOrdCount=" + regSpStatusOneOrdCount + ", regSpStatusTwoOrdCount="
 				+ regSpStatusTwoOrdCount + ", regSpStatusThreeOrdCount=" + regSpStatusThreeOrdCount
-				+ ", regSpTotalOrdCount=" + regSpTotalOrdCount + "]";
+				+ ", regSpTotalOrdCount=" + regSpTotalOrdCount + ", albumStatusZeroOrdCount=" + albumStatusZeroOrdCount
+				+ ", albumStatusOneOrdCount=" + albumStatusOneOrdCount + ", albumStatusTwoOrdCount="
+				+ albumStatusTwoOrdCount + ", albumStatusThreeOrdCount=" + albumStatusThreeOrdCount
+				+ ", albumTotalOrdCount=" + albumTotalOrdCount + "]";
 	}
 	
 	

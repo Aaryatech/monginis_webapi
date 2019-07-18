@@ -214,6 +214,35 @@ public class ProdAppController {
 		return getDashSpCakeCountList;
 
 	}
+	
+	//Anmol 16-7-2019
+	@RequestMapping(value = { "/getDashAlbumSpCakeCount" }, method = RequestMethod.POST)
+	public @ResponseBody List<DashSpCakeCount> getDashAlbumSpCakeCount(@RequestParam("prodDate") String prodDate,
+			@RequestParam("menuIdList") List<Integer> menuIdList) {
+
+		List<DashSpCakeCount> getDashSpCakeCountList = new ArrayList<DashSpCakeCount>();
+		try {
+
+			if (menuIdList.contains(-1)) {
+
+				getDashSpCakeCountList = getDashSpCakeCountRepo.getAlbumSpCakeOrdCountAllMenu(prodDate);
+
+			} else {
+
+				getDashSpCakeCountList = getDashSpCakeCountRepo.getAlbumSpCakeOrdCountSpecMenu(prodDate, menuIdList);
+
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in getDashSpCakeCount @ProdAppCont  " + e.getMessage());
+
+			e.printStackTrace();
+		}
+
+		return getDashSpCakeCountList;
+
+	}
 
 	// route wise count reg and sp cakes task no 47
 	@Autowired
@@ -258,6 +287,7 @@ public class ProdAppController {
 
 		List<GetRegSpCakeOrderForProdApp> regSpCakeOrderList = new ArrayList<GetRegSpCakeOrderForProdApp>();
 		List<GetSpCakeOrderForProdApp> spCakeOrdList = new ArrayList<GetSpCakeOrderForProdApp>();
+		List<GetSpCakeOrderForProdApp> spCakeAlbumOrdList = new ArrayList<GetSpCakeOrderForProdApp>();
 
 		List<GetRoutewiseOrderData> orderDataList = new ArrayList<>();
 
@@ -271,7 +301,10 @@ public class ProdAppController {
 						routeId);
 
 				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeOrderByRouteIdAllMenu(fromDate, toDate, routeId);
+				spCakeAlbumOrdList = getSpCakeForProdAppRepo.getSpCakeAlbumOrderByRouteIdAllMenu(fromDate, toDate, routeId);
 
+				System.err.println("ALBUM--------------------------------- "+spCakeAlbumOrdList);
+				
 			} else {
 
 				System.err.println("getGetRoutewiseOrderData/ specific menus ");
@@ -280,6 +313,9 @@ public class ProdAppController {
 						toDate, menuIdList, routeId);
 
 				spCakeOrdList = getSpCakeForProdAppRepo.getSpCakeOrderByRouteIdSpecMenu(fromDate, toDate, menuIdList,
+						routeId);
+				
+				spCakeAlbumOrdList = getSpCakeForProdAppRepo.getSpCakeAlbumOrderByRouteIdSpecMenu(fromDate, toDate, menuIdList,
 						routeId);
 				System.err.println("regSpCakeOrderList/  " + regSpCakeOrderList.toString());
 
@@ -297,6 +333,11 @@ public class ProdAppController {
 			for (int j = 0; j < regSpCakeOrderList.size(); j++) {
 
 				frIdArray.add(regSpCakeOrderList.get(j).getFrId());
+			}
+			
+			for (int j = 0; j < spCakeAlbumOrdList.size(); j++) {
+
+				frIdArray.add(spCakeAlbumOrdList.get(j).getFrId());
 			}
 			System.err.println("Fr Id array list before sort  " + frIdArray);
 
@@ -318,7 +359,8 @@ public class ProdAppController {
 
 				List<SpOrder> spOrdListRes = new ArrayList<SpOrder>();
 				List<RegSpOrd> regOrdListRes = new ArrayList<RegSpOrd>();
-
+				List<SpOrder> spAlbumOrdListRes = new ArrayList<SpOrder>();
+				
 				for (int b = 0; b < spCakeOrdList.size(); b++) {
 
 					System.err.println("Inside  spCakeOrdList index " + b);
@@ -358,6 +400,7 @@ public class ProdAppController {
 						spOrder.setStartTimeStamp(spCakeOrdList.get(b).getStartTimeStamp());
 						spOrder.setStatus(spCakeOrdList.get(b).getStatus());
 						spOrder.settSpCakeSupNo(spCakeOrdList.get(b).gettSpCakeSupNo());
+						spOrder.setIsAllocated(spCakeOrdList.get(b).getIsAllocated());
 
 						spOrdListRes.add(spOrder);
 
@@ -365,6 +408,56 @@ public class ProdAppController {
 
 				} // end of for
 				orderData.setSpCakeOrdList(spOrdListRes);
+				
+				
+				for (int b = 0; b < spCakeAlbumOrdList.size(); b++) {
+
+					System.err.println("Inside  spCakeAlbumOrdList index " + b);
+
+					if (frIdArray.get(a) == spCakeAlbumOrdList.get(b).getFrId()) {
+
+						orderData.setFrCode(spCakeAlbumOrdList.get(b).getFrCode());
+						orderData.setFrName(spCakeAlbumOrdList.get(b).getFrName());
+						orderData.setRouteId(spCakeAlbumOrdList.get(b).getRouteId());
+
+						SpOrder spOrder = new SpOrder();
+
+						spOrder.setDate(spCakeAlbumOrdList.get(b).getDate());
+						spOrder.setEndTimeStamp(spCakeAlbumOrdList.get(b).getEndTimeStamp());
+						spOrder.setFrCode(spCakeAlbumOrdList.get(b).getFrCode());
+						spOrder.setFrId(spCakeAlbumOrdList.get(b).getFrId());
+						spOrder.setFrName(spCakeAlbumOrdList.get(b).getFrName());
+						spOrder.setInputKgFr(spCakeAlbumOrdList.get(b).getInputKgFr());
+						spOrder.setInputKgProd(spCakeAlbumOrdList.get(b).getInputKgProd());
+						spOrder.setIsCharUsed(spCakeAlbumOrdList.get(b).getIsCharUsed());
+						spOrder.setNoInRoute(spCakeAlbumOrdList.get(b).getNoInRoute());
+						spOrder.setOrderPhoto(spCakeAlbumOrdList.get(b).getOrderPhoto());
+						spOrder.setOrderPhoto2(spCakeAlbumOrdList.get(b).getOrderPhoto2());
+						spOrder.setRouteId(spCakeAlbumOrdList.get(b).getRouteId());
+						spOrder.setRouteName(spCakeAlbumOrdList.get(b).getRouteName());
+						spOrder.setSpCode(spCakeAlbumOrdList.get(b).getSpCode());
+						spOrder.setSpDeliveryDate(spCakeAlbumOrdList.get(b).getSpDeliveryDate());
+						spOrder.setSpDeliveryPlace(spCakeAlbumOrdList.get(b).getSpDeliveryPlace());
+						spOrder.setSpEvents(spCakeAlbumOrdList.get(b).getSpEvents());
+						spOrder.setSpEventsName(spCakeAlbumOrdList.get(b).getSpEventsName());
+						spOrder.setSpFlavourId(spCakeAlbumOrdList.get(b).getSpFlavourId());
+						spOrder.setSpfName(spCakeAlbumOrdList.get(b).getSpfName());
+						spOrder.setSpImage(spCakeAlbumOrdList.get(b).getSpImage());
+						spOrder.setSpInstructions(spCakeAlbumOrdList.get(b).getSpInstructions());
+						spOrder.setSpName(spCakeAlbumOrdList.get(b).getSpName());
+						spOrder.setSrNo(spCakeAlbumOrdList.get(b).getSrNo());
+						spOrder.setStartTimeStamp(spCakeAlbumOrdList.get(b).getStartTimeStamp());
+						spOrder.setStatus(spCakeAlbumOrdList.get(b).getStatus());
+						spOrder.settSpCakeSupNo(spCakeAlbumOrdList.get(b).gettSpCakeSupNo());
+						spOrder.setIsAllocated(spCakeAlbumOrdList.get(b).getIsAllocated());
+
+
+						spAlbumOrdListRes.add(spOrder);
+
+					} // end of if
+
+				} // end of for
+				orderData.setSpCakeAlbumOrdList(spAlbumOrdListRes);
 
 				for (int c = 0; c < regSpCakeOrderList.size(); c++) {
 					System.err.println("Inside regular regSpCakeOrderList index " + c);
@@ -420,6 +513,9 @@ public class ProdAppController {
 		return orderDataList;
 
 	}
+	
+	
+
 
 	// task no 40
 
