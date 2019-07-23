@@ -1469,7 +1469,7 @@ public class RestApiController {
 			admin.setError(false);
 			admin.setFr_id("" + frLogRes.getFranchisee().getFrId());
 			admin.setFr_name(frLogRes.getFranchisee().getFrName());
-			admin.setFr_email(frLogRes.getFranchisee().getFrEmail());
+			admin.setFr_email(frLogRes.getFranchisee().getFrMob());
 			admin.setFr_image(frLogRes.getFranchisee().getFrImage());
 			admin.setType("" + frLogRes.getFranchisee().getFrRateCat());
 
