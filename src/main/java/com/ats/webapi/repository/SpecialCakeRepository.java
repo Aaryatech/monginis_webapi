@@ -29,7 +29,7 @@ public interface SpecialCakeRepository extends JpaRepository<SpecialCake, Intege
 			+ "sc.del_status, sc.base_code, sc.sp_desc, sc.order_qty, sc.order_discount, "
 			+ "sc.is_cust_choice_ck, sc.is_addon_rate_appli, sc.mrp_rate1, sc.mrp_rate2, "
 			+ "sc.mrp_rate3, sc.sp_rate1, sc.sp_rate2, sc.sp_rate3, sc.is_slot_used, "
-			+ "sc.sp_code AS erp_link_code FROM m_sp_cake sc, t_sp_cake_album a "
+			+ "sc.sp_code AS erp_link_code FROM m_sp_cake_category sc, t_sp_cake_album a "
 			+ "WHERE sc.del_status = 0 AND a.del_status = 0 AND a.is_active = 1 AND "
 			+ "a.sp_id = sc.sp_id AND FIND_IN_SET(a.album_id,(SELECT GROUP_CONCAT(fc.item_show) "
 			+ "FROM m_fr_configure fc,m_fr_menu_show m WHERE fc.menu_id=m.menu_id AND "
