@@ -76,7 +76,7 @@ public interface TallyCreditNoteRepository extends JpaRepository<CreditNote, Int
 			"            where\n" + 
 			"                itemsup.item_id=d.item_id) \n" + 
 			"        END AS uom,\n" + 
-			"        d.grn_gvn_qty,\n" + 
+			"        d.grn_gvn_qty,f.is_same_state," + 
 			"        d.base_rate,\n" + 
 			"        d.taxable_amt,\n" + 
 			"        d.cgst_per,\n" + 
@@ -203,7 +203,7 @@ public interface TallyCreditNoteRepository extends JpaRepository<CreditNote, Int
 			"        d.cat_id,\n" + 
 			"        h.crn_taxable_amt,\n" + 
 			"        h.crn_total_tax,\n" + 
-			"        h.crn_grand_total, "
+			"        h.crn_grand_total, f.is_same_state, "
 			+ "d.is_grn,"
 			+ "CASE                                        \n" + 
 			"            WHEN d.cat_id = 5  THEN (select\n" + 
