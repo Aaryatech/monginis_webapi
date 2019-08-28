@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.model.OrderDispatchRepDao;
 import com.ats.webapi.model.SpCakeWtCount;
 import com.ats.webapi.model.reportv2.CrNoteRegItem;
 import com.ats.webapi.model.reportv2.CrNoteRegSp;
@@ -17,6 +18,7 @@ import com.ats.webapi.model.reportv2.CrNoteRegisterList;
 import com.ats.webapi.repository.SpCakeWtCountRepo;
 import com.ats.webapi.repository.reportv2.CrNoteRegItemRepo;
 import com.ats.webapi.repository.reportv2.CrNoteRegSpRepo;
+import com.ats.webapi.repository.taxreport.OrderDispatchRepDaoRepository;
 
 @RestController
 public class ReportApiCon {
@@ -29,6 +31,9 @@ public class ReportApiCon {
 
 	@Autowired
 	CrNoteRegItemRepo getCrNoteRegItemRepo;
+	
+	@Autowired
+	OrderDispatchRepDaoRepository orderDispatchRepDaoRepository;
 
 	@RequestMapping(value = { "/getSpCakeCountBetDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<SpCakeWtCount> getSpCakeCountBetDate(@RequestParam("fromDate") String fromDate,
@@ -66,5 +71,19 @@ public class ReportApiCon {
 		System.err.println("size Sp  crNoteList " + crNoteList.getCrNoteRegSpList());
 
 		return crNoteList;
+	}
+	
+	@RequestMapping(value = { "/getOrderDispatchReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<OrderDispatchRepDao> getOrderDispatchReport(@RequestParam("deliveryDate") String deliveryDate,
+			@RequestParam("catId") int catId,@RequestParam("menuId") int menuId){
+		List<OrderDispatchRepDao> orderDispReportList = null;
+		try {
+
+			orderDispReportList = orderDispatchRepDaoRepository.getOrderDispatchReport(deliveryDate,catId,menuId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return orderDispReportList;
 	}
 }
