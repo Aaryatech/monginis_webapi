@@ -167,13 +167,28 @@ public class AlbumApiControllr {
 		ErrorMessage errorMessage = new ErrorMessage();
 		SearchAlbumCakeResponse searchAlbumCakeResponse = new SearchAlbumCakeResponse();
 
+		System.err.println("ALBUM CODE --------- searchAlbumByCode--------------------------------- "+albumCode);
+		System.err.println("ALBUM CODE --------- searchAlbumByCode---------------2------------------ "+albumCode.indexOf('-'));
+		
+		String abCode="";
+		if(albumCode.indexOf('-')==-1) {
+			abCode=albumCode;
+		}else {
+			abCode=albumCode.substring(0,albumCode.indexOf('-'));
+		}
+		
+		
+		System.err.println("ALBUM CODE --------- searchAlbumByCode-------------------NEW-------------- "+abCode);
+		
 		try {
-			album = albumRepo.findByAlbumCodeAndDelStatus(albumCode, 0);
+			album = albumRepo.findByAlbumCodeAndDelStatus(abCode, 0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		searchAlbumCakeResponse.setAlbum(album);
+		
+		System.err.println("ALBUM --------- searchAlbumByCode--------------------------------- "+album);
 
 		specialCake = orderSpCakeRepository.findBySpId(album.getSpId());
 		if (specialCake == null) {
