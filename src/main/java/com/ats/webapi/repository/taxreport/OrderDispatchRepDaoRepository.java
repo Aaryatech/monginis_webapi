@@ -16,8 +16,8 @@ public interface OrderDispatchRepDaoRepository extends JpaRepository<OrderDispat
 			"LEFT JOIN\n" + 
 			"(select d.item_id,d.op_total  from finished_good_stock_detail d,finished_good_stock h where h.fin_stock_id=d.fin_stock_id and h.fin_good_stock_status=0 and h.del_status=0 and  d.del_status=0) as stock  ON stock.item_id=item.id\n" + 
 			"LEFT JOIN\n" + 
-			"(select o.item_id,SUM(o.order_qty) as order_qty from t_order o where o.menu_id=:menuId and o.delivery_date=:deliveryDate group by o.item_id) as iorder ON\n" + 
+			"(select o.item_id,SUM(o.order_qty) as order_qty from t_order o where o.menu_id IN(:menuId) and o.delivery_date=:deliveryDate group by o.item_id) as iorder ON\n" + 
 			"iorder.item_id=item.id And iorder.item_id=stock.item_id",nativeQuery=true)
-	List<OrderDispatchRepDao> getOrderDispatchReport(@Param("deliveryDate")String deliveryDate,@Param("catId")int catId,@Param("menuId") int menuId);
+	List<OrderDispatchRepDao> getOrderDispatchReport(@Param("deliveryDate")String deliveryDate,@Param("catId")int catId,@Param("menuId") List<String> menuId);
 
 }

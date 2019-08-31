@@ -75,7 +75,7 @@ public class ReportApiCon {
 	
 	@RequestMapping(value = { "/getOrderDispatchReport" }, method = RequestMethod.POST)
 	public @ResponseBody List<OrderDispatchRepDao> getOrderDispatchReport(@RequestParam("deliveryDate") String deliveryDate,
-			@RequestParam("catId") int catId,@RequestParam("menuId") int menuId){
+			@RequestParam("catId") int catId,@RequestParam("menuId") List<String> menuId){
 		List<OrderDispatchRepDao> orderDispReportList = null;
 		try {
 
