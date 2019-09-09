@@ -31,7 +31,7 @@ public interface SpecialCakeRepository extends JpaRepository<SpecialCake, Intege
 			+ "sc.mrp_rate3, sc.sp_rate1, sc.sp_rate2, sc.sp_rate3, sc.is_slot_used, "
 			+ "sc.sp_code AS erp_link_code FROM m_sp_cake_category sc, t_sp_cake_album a "
 			+ "WHERE sc.del_status = 0 AND a.del_status = 0 AND a.is_active = 1 AND "
-			+ "a.sp_id = sc.sp_id AND FIND_IN_SET(a.album_id,(SELECT GROUP_CONCAT(fc.item_show) "
+			+ "a.sp_id = sc.sp_id AND a.is_visible_to_album=0 AND FIND_IN_SET(a.album_id,(SELECT GROUP_CONCAT(fc.item_show) "
 			+ "FROM m_fr_configure fc,m_fr_menu_show m WHERE fc.menu_id=m.menu_id AND "
 			+ "fc.is_del=0 AND m.del_status=0 AND fc.fr_id=:frId AND m.cat_id=5 AND "
 			+ "m.is_same_day_applicable=4))", nativeQuery = true)
