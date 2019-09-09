@@ -17,8 +17,8 @@ public interface DispatchReportRepository extends JpaRepository<DispatchReport, 
 			+ "where t_bill_detail.bill_no In(select bill_no from t_bill_header\n"
 			+ "where bill_date=:billDateYMD and fr_id in(:frId)) And t_bill_detail.cat_id In(:categories) \n"
 			+ "And t_bill_detail.cat_id=m_category.cat_id And t_bill_header.fr_id=m_franchisee.fr_id and t_bill_header.del_status=0 \n"
-			+ "And m_item.id=t_bill_detail.item_id And m_cat_sub.sub_cat_id=m_item.item_grp2 And t_bill_header.bill_no=t_bill_detail.bill_no \n"
-			+ "group by t_bill_detail.item_id,t_bill_header.fr_id order by t_bill_header.fr_id\n"
+			+ "And m_item.id=t_bill_detail.item_id And m_cat_sub.sub_cat_id=m_item.item_grp2 And t_bill_header.bill_no=t_bill_detail.bill_no and t_bill_detail.cat_id!=5"
+			+ " group by t_bill_detail.item_id,t_bill_header.fr_id order by t_bill_header.fr_id\n"
 			+ "", nativeQuery = true)
 	List<DispatchReport> findDispatchReportList(@Param("billDateYMD") String billDateYMD,
 			@Param("frId") List<String> frId, @Param("categories") List<String> categories);
@@ -46,7 +46,7 @@ public interface DispatchReportRepository extends JpaRepository<DispatchReport, 
 			"        And t_order.order_type=m_category.cat_id \n" + 
 			"        And t_order.fr_id=m_franchisee.fr_id  \n" + 
 			"        And m_item.id=t_order.item_id \n" + 
-			"        And m_cat_sub.sub_cat_id=m_item.item_grp2 \n" + 
+			"        And m_cat_sub.sub_cat_id=m_item.item_grp2 and t_order.order_type!=5 " + 
 			"        \n" + 
 			"    group by\n" + 
 			"        t_order.item_id,\n" + 
@@ -62,8 +62,8 @@ public interface DispatchReportRepository extends JpaRepository<DispatchReport, 
 			+ "where t_bill_detail.bill_no In(select bill_no from t_bill_header\n"
 			+ "where bill_date=:billDateYMD and fr_id in(:frId)) And t_bill_detail.item_id In(:itemIdList) \n"
 			+ "And t_bill_detail.cat_id=m_category.cat_id And t_bill_header.fr_id=m_franchisee.fr_id and t_bill_header.del_status=0 \n"
-			+ "And m_item.id=t_bill_detail.item_id And m_cat_sub.sub_cat_id=m_item.item_grp2 And t_bill_header.bill_no=t_bill_detail.bill_no \n"
-			+ "group by t_bill_detail.item_id,t_bill_header.fr_id order by t_bill_header.fr_id\n"
+			+ "And m_item.id=t_bill_detail.item_id And m_cat_sub.sub_cat_id=m_item.item_grp2 And t_bill_header.bill_no=t_bill_detail.bill_no and t_bill_detail.cat_id!=5"
+			+ " group by t_bill_detail.item_id,t_bill_header.fr_id order by t_bill_header.fr_id\n"
 			+ "", nativeQuery = true)
 	List<DispatchReport> findStationReportList(@Param("billDateYMD") String billDateYMD,
 			@Param("frId") List<String> frId, @Param("itemIdList") List<Integer> itemIdList);
