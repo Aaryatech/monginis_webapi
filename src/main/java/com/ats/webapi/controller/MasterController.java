@@ -249,6 +249,13 @@ public class MasterController {
 		Info info = spCakeService.deleteSpCakeSup(id);
 		return info;
 	}
+	
+	@RequestMapping(value = { "/deleteSpCakeCatSup" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSpCakeCatSup(@RequestParam("id") int id) {
+
+		Info info = spCakeCatService.deleteSpCakeSup(id);
+		return info;
+	}
 
 	// ------------------------------------------------------------------------
 	// ------------------------Delete ItemSup------------------------------------
