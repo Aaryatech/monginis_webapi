@@ -127,4 +127,11 @@ public class SubCategoryServiceImpl implements SubCategoryService {
 		return allSubCategory;
 	}
 
+
+	@Override
+	public List<SubCategory> getSubCatListByCatIdInForDisp(List<String> catId) {
+		List<SubCategory> subList=subCategoryRepository.findByCatIdInAndDelStatus(catId);
+		return subList;
+	}
+
 }

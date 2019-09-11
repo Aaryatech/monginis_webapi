@@ -37,10 +37,10 @@ public class GetItemDetail {
 		private int rmUomId;
 		
 		@Column(name="rm_qty")
-		private int rmQty;
+		private float rmQty;
 		
 		@Column(name="rm_weight")
-		private int rmWeight;
+		private float rmWeight;
 		
 		@Column(name="del_status")
 		private int delStatus;
@@ -87,11 +87,11 @@ public class GetItemDetail {
 			this.rmType = rmType;
 		}
 
-		public int getRmQty() {
+		public float getRmQty() {
 			return rmQty;
 		}
 
-		public void setRmQty(int rmQty) {
+		public void setRmQty(float rmQty) {
 			this.rmQty = rmQty;
 		}
 
@@ -122,11 +122,11 @@ public class GetItemDetail {
 			this.rmUomId = rmUomId;
 		}
 
-		public int getRmWeight() {
+		public float getRmWeight() {
 			return rmWeight;
 		}
 
-		public void setRmWeight(int rmWeight) {
+		public void setRmWeight(float rmWeight) {
 			this.rmWeight = rmWeight;
 		}
 

@@ -31,13 +31,13 @@ public interface ProdMixingReqP1Repo  extends JpaRepository<ProdMixingReqP1, Int
 	@Query(value="sELECT m_item_detail.item_detail_id, m_item_detail.item_id, m_item_detail.rm_name, m_item_detail.rm_type,"
 			+ "sum(t_production_plan_detail.plan_qty) as plan_qty, sum(t_production_plan_detail.order_qty) AS order_qty,m_item_detail.rm_id, "
 			+ "m_item_detail.no_pieces_per_item, m_item_detail.rm_qty,CASE WHEN t_production_plan_header.is_planned=1 "
-			+ "THEN ((SUM(t_production_plan_detail.plan_qty)* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item) "
-			+ "ELSE ((SUM(t_production_plan_detail.order_qty)* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item) END AS total "
+			+ "THEN SUM(((t_production_plan_detail.plan_qty)* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item) "
+			+ "ELSE SUM(((t_production_plan_detail.order_qty)* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item) END AS total "
 			+ ",m_rm_uom.uom, coalesce((Select m_item_sf_header.mul_factor From m_item_sf_header "
 			+ "where m_item_sf_header.sf_id=m_item_detail.rm_id),0) AS mul_factor FROM m_item_detail, "
 			+ "t_production_plan_header, t_production_plan_detail,m_rm_uom WHERE t_production_plan_detail.item_id=m_item_detail.item_id "
 			+ "AND t_production_plan_header.production_header_id=t_production_plan_detail.production_header_id "
-			+ "AND t_production_plan_header.production_header_id=:headerId AND m_rm_uom.uom_id=m_item_detail.rm_uom_id and m_item_detail.rm_type=2 "
+			+ "AND t_production_plan_header.production_header_id=:headerId AND m_rm_uom.uom_id=m_item_detail.rm_uom_id and m_item_detail.rm_type=2 and m_item_detail.del_status=0"
 			+ "GROUP BY m_item_detail.rm_id " + 
 			"",nativeQuery=true)
 	

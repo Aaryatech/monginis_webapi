@@ -6,6 +6,8 @@ import javax.persistence.Id;
 public class SalesGrn {
 
 	@Id
+	private String id;
+	
 	private int frId;
 	
 	private	int month;
@@ -19,6 +21,16 @@ public class SalesGrn {
 	private	int frRouteId;
 	
 	private	float billTotal;
+
+	
+	
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
 
 	public int getFrId() {
 		return frId;
@@ -78,9 +90,10 @@ public class SalesGrn {
 
 	@Override
 	public String toString() {
-		return "SalesGrn [frId=" + frId + ", month=" + month + ", monthName=" + monthName + ", routeName=" + routeName
-				+ ", frName=" + frName + ", frRouteId=" + frRouteId + ", billTotal=" + billTotal + "]";
+		return "SalesGrn [id=" + id + ", frId=" + frId + ", month=" + month + ", monthName=" + monthName
+				+ ", routeName=" + routeName + ", frName=" + frName + ", frRouteId=" + frRouteId + ", billTotal="
+				+ billTotal + "]";
 	}
-	
+
 	
 }

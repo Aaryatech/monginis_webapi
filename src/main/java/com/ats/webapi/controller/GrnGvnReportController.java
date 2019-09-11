@@ -2,6 +2,8 @@ package com.ats.webapi.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -111,10 +113,10 @@ public class GrnGvnReportController {
 				+ frIdList + "isGrn : " + isGrn);
 
 		List<GGReportGrpByFrId> grpByFrIdList = null;
-
 		try {
 			if (!frIdList.contains("0")) {
 				System.out.println("fr Id List doesn't contain zero ");
+			
 				grpByFrIdList = gGReportGrpByFrIdRepo.getGGReportGrpByFrIdSelFr(fromDate, toDate, isGrn, frIdList);
 			} else {
 				System.out.println("fr id list is zero : get For All Fr");
