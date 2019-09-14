@@ -110,6 +110,49 @@ public class SpCakeOrdersServiceImpl implements SpCakeOrdersService {
 		}
 		return spCakeOrderHisList;
 	}
+	
+	
+	@Override
+	public SpCkOrderHisList searchOrderHistoryAlbum(int menuId, String spDeliveryDt,String frCode) {
+		List<SpCkOrderHis> spCakeOrders=null;
+		SpCkOrderHisList spCakeOrderHisList;
+		ErrorMessage errorMessage;
+		try {
+			spCakeOrders=spCakeOrderHisRepository.findByMenuIdInAndSpDeliveryDtAlbum(menuId, spDeliveryDt,frCode);
+		
+			if(spCakeOrders==null)
+			{
+				errorMessage=new ErrorMessage();
+				spCakeOrderHisList=new SpCkOrderHisList();
+				
+				errorMessage.setError(true);
+				errorMessage.setMessage("Orders Not Found");
+				
+				spCakeOrderHisList.setErrorMessage(errorMessage);
+			}
+			else
+			{
+				errorMessage=new ErrorMessage();
+				spCakeOrderHisList=new SpCkOrderHisList();
+				
+				errorMessage.setError(false);
+				errorMessage.setMessage("Orders found Successfully");
+				
+				spCakeOrderHisList.setSpOrderList(spCakeOrders);
+				spCakeOrderHisList.setErrorMessage(errorMessage);
+			}
+		}catch (Exception e) {
+			errorMessage=new ErrorMessage();
+			spCakeOrderHisList=new SpCkOrderHisList();
+
+			errorMessage.setError(true);
+			errorMessage.setMessage("Orders Not Found(EXC)");
+			spCakeOrderHisList.setErrorMessage(errorMessage);
+		}
+		return spCakeOrderHisList;
+	}
+	
+	
 	@Override
 	public int findCountOfSlotUsedByProduDate(String sqlSpProduDate) {
 		

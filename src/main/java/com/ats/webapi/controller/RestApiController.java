@@ -169,7 +169,7 @@ public class RestApiController {
 
 	@Autowired
 	private SpecialCakeService specialcakeService;
-	
+
 	@Autowired
 	private SpecialCakeCatService specialcakeCatService;
 
@@ -1643,17 +1643,17 @@ public class RestApiController {
 		return searchSpCakeResponse;
 
 	}
-	
-	//Anmol 9/7/2019-----------------------------------------
+
+	// Anmol 9/7/2019-----------------------------------------
 	// Search Special Cake By SpecialCake Category Code
-		@RequestMapping("/searchSpecialCakeCat")
-		public @ResponseBody SearchSpCakeResponse searchSpecialCakeCat(@RequestParam String spCode) {
+	@RequestMapping("/searchSpecialCakeCat")
+	public @ResponseBody SearchSpCakeResponse searchSpecialCakeCat(@RequestParam String spCode) {
 
-			SearchSpCakeResponse searchSpCakeResponse = specialcakeCatService.searchSpecialCake(spCode);
+		SearchSpCakeResponse searchSpCakeResponse = specialcakeCatService.searchSpecialCake(spCode);
 
-			return searchSpCakeResponse;
+		return searchSpCakeResponse;
 
-		}
+	}
 
 	// Search Special Cake Configured spCode of Franchisee
 	@RequestMapping("/searchSpCodes")
@@ -1665,18 +1665,18 @@ public class RestApiController {
 		return spCakeCodesResponse;
 
 	}
-	
-	//Anmol 9/7/2019------------------------------------------
+
+	// Anmol 9/7/2019------------------------------------------
 	// Search Special Cake Cat Configured spCode of Franchisee
-		@RequestMapping("/searchSpCatCodes")
-		public @ResponseBody List<String> searchSpCatCodes(@RequestParam List<Integer> items, @RequestParam int frId,
-				@RequestParam int menuId) {
+	@RequestMapping("/searchSpCatCodes")
+	public @ResponseBody List<String> searchSpCatCodes(@RequestParam List<Integer> items, @RequestParam int frId,
+			@RequestParam int menuId) {
 
-			List<String> spCakeCodesResponse = specialcakeCatService.searchSpecialCakeSpCodes(items, frId, menuId);
+		List<String> spCakeCodesResponse = specialcakeCatService.searchSpecialCakeSpCodes(items, frId, menuId);
 
-			return spCakeCodesResponse;
+		return spCakeCodesResponse;
 
-		}
+	}
 
 	// Search Special Cake Order History
 	@RequestMapping("/SpCakeOrderHistory")
@@ -1684,6 +1684,17 @@ public class RestApiController {
 			@RequestParam String spDeliveryDt, String frCode) {
 
 		SpCkOrderHisList spCakeOrderList = spCakeOrdersService.searchOrderHistory(menuId, spDeliveryDt, frCode);
+		return spCakeOrderList;
+
+	}
+
+	// Search Special Cake Order History
+	@RequestMapping("/albumOrderHistory")
+	public @ResponseBody SpCkOrderHisList searchAlbumOrderHistory(@RequestParam int menuId,
+			@RequestParam String spDeliveryDt, String frCode) {
+
+		SpCkOrderHisList spCakeOrderList = spCakeOrdersService.searchOrderHistoryAlbum(menuId, spDeliveryDt, frCode);
+
 		return spCakeOrderList;
 
 	}
@@ -2160,81 +2171,77 @@ public class RestApiController {
 		return jsonResult;
 
 	}
-	
-	
-	
+
 	// Anmol- 9/7/2019---------------------
-	
+
 	// Special Cake Category Insert
-		@RequestMapping(value = { "/insertSpecialCakeCat" }, method = RequestMethod.POST)
-		@ResponseBody
-		public String saveSpecialCakeCat(@RequestParam("spCode") String spcode, @RequestParam("spName") String spname,
-				@RequestParam("spType") int sptype, @RequestParam("spMinwt") String spminwt,
-				@RequestParam("spMaxwt") String spmaxwt, @RequestParam("spBookb4") String spbookb4,
-				@RequestParam("spImage") String spimage, @RequestParam("spTax1") double sptax1,
-				@RequestParam("spTax2") double sptax2, @RequestParam("spTax3") double sptax3,
-				@RequestParam("speIdlist") String speidlist, @RequestParam("erpLinkcode") String erplinkcode,
-				@RequestParam("spPhoupload") int spphoupload, @RequestParam("timeTwoappli") int timetwoappli,
-				@RequestParam("isUsed") int isused, @RequestParam("spDesc") String spDesc,
-				@RequestParam("orderQty") int orderQty, @RequestParam("orderDiscount") float orderDiscount,
-				@RequestParam("isCustChoiceCk") int isCustChoiceCk, @RequestParam("isAddonRateAppli") int isAddonRateAppli,
-				@RequestParam("mrpRate1") int mrpRate1, @RequestParam("mrpRate2") int mrpRate2,
-				@RequestParam("mrpRate3") int mrpRate3, @RequestParam("spRate1") int spRate1,
-				@RequestParam("spRate2") int spRate2, @RequestParam("spRate3") int spRate3,
-				@RequestParam("isSlotUsed") int isSlotUsed) {
+	@RequestMapping(value = { "/insertSpecialCakeCat" }, method = RequestMethod.POST)
+	@ResponseBody
+	public String saveSpecialCakeCat(@RequestParam("spCode") String spcode, @RequestParam("spName") String spname,
+			@RequestParam("spType") int sptype, @RequestParam("spMinwt") String spminwt,
+			@RequestParam("spMaxwt") String spmaxwt, @RequestParam("spBookb4") String spbookb4,
+			@RequestParam("spImage") String spimage, @RequestParam("spTax1") double sptax1,
+			@RequestParam("spTax2") double sptax2, @RequestParam("spTax3") double sptax3,
+			@RequestParam("speIdlist") String speidlist, @RequestParam("erpLinkcode") String erplinkcode,
+			@RequestParam("spPhoupload") int spphoupload, @RequestParam("timeTwoappli") int timetwoappli,
+			@RequestParam("isUsed") int isused, @RequestParam("spDesc") String spDesc,
+			@RequestParam("orderQty") int orderQty, @RequestParam("orderDiscount") float orderDiscount,
+			@RequestParam("isCustChoiceCk") int isCustChoiceCk, @RequestParam("isAddonRateAppli") int isAddonRateAppli,
+			@RequestParam("mrpRate1") int mrpRate1, @RequestParam("mrpRate2") int mrpRate2,
+			@RequestParam("mrpRate3") int mrpRate3, @RequestParam("spRate1") int spRate1,
+			@RequestParam("spRate2") int spRate2, @RequestParam("spRate3") int spRate3,
+			@RequestParam("isSlotUsed") int isSlotUsed) {
 
-			String jsonResult = "";
-			try {
-				System.out.println("isSlotUsed");
+		String jsonResult = "";
+		try {
+			System.out.println("isSlotUsed");
 
-				SpecialCakeCat specialcake = new SpecialCakeCat();
+			SpecialCakeCat specialcake = new SpecialCakeCat();
 
-				specialcake.setSpCode(spcode);
-				specialcake.setSpName(spname);
-				specialcake.setSpType(sptype);
-				specialcake.setSpMinwt(spminwt);
-				specialcake.setSpMaxwt(spmaxwt);
-				specialcake.setSpBookb4(spbookb4);
-				specialcake.setSprId(1);
-				specialcake.setSpImage(spimage);
-				specialcake.setSpTax1(sptax1);
-				specialcake.setSpTax2(sptax2);
-				specialcake.setSpTax3(sptax3);
-				specialcake.setSpeIdlist(speidlist);
-				specialcake.setErpLinkcode(erplinkcode);
-				specialcake.setIsUsed(isused);
-				specialcake.setSpPhoupload(spphoupload);
-				specialcake.setTimeTwoappli(timetwoappli);
-				specialcake.setBaseCode("0");
-				specialcake.setDelStatus(0);
+			specialcake.setSpCode(spcode);
+			specialcake.setSpName(spname);
+			specialcake.setSpType(sptype);
+			specialcake.setSpMinwt(spminwt);
+			specialcake.setSpMaxwt(spmaxwt);
+			specialcake.setSpBookb4(spbookb4);
+			specialcake.setSprId(1);
+			specialcake.setSpImage(spimage);
+			specialcake.setSpTax1(sptax1);
+			specialcake.setSpTax2(sptax2);
+			specialcake.setSpTax3(sptax3);
+			specialcake.setSpeIdlist(speidlist);
+			specialcake.setErpLinkcode(erplinkcode);
+			specialcake.setIsUsed(isused);
+			specialcake.setSpPhoupload(spphoupload);
+			specialcake.setTimeTwoappli(timetwoappli);
+			specialcake.setBaseCode("0");
+			specialcake.setDelStatus(0);
 
-				specialcake.setSpDesc(spDesc);
-				specialcake.setOrderQty(orderQty);
-				specialcake.setOrderDiscount(orderDiscount);
-				specialcake.setIsCustChoiceCk(isCustChoiceCk);
-				specialcake.setIsAddonRateAppli(isAddonRateAppli);
-				specialcake.setMrpRate1(mrpRate1);
-				specialcake.setMrpRate2(mrpRate2);
-				specialcake.setMrpRate3(mrpRate3);
-				specialcake.setSpRate1(spRate1);
-				specialcake.setSpRate2(spRate2);
-				specialcake.setSpRate3(spRate3);
-				specialcake.setIsSlotUsed(isSlotUsed);
+			specialcake.setSpDesc(spDesc);
+			specialcake.setOrderQty(orderQty);
+			specialcake.setOrderDiscount(orderDiscount);
+			specialcake.setIsCustChoiceCk(isCustChoiceCk);
+			specialcake.setIsAddonRateAppli(isAddonRateAppli);
+			specialcake.setMrpRate1(mrpRate1);
+			specialcake.setMrpRate2(mrpRate2);
+			specialcake.setMrpRate3(mrpRate3);
+			specialcake.setSpRate1(spRate1);
+			specialcake.setSpRate2(spRate2);
+			specialcake.setSpRate3(spRate3);
+			specialcake.setIsSlotUsed(isSlotUsed);
 
-				System.out.println("*********Special Cake:***************" + specialcake.toString());
+			System.out.println("*********Special Cake:***************" + specialcake.toString());
 
-				jsonResult = specialcakeCatService.save(specialcake);
-				System.out.println("\n " + jsonResult);
-			} catch (Exception e) {
-				System.out.println("inser cake error " + e.getMessage());
+			jsonResult = specialcakeCatService.save(specialcake);
+			System.out.println("\n " + jsonResult);
+		} catch (Exception e) {
+			System.out.println("inser cake error " + e.getMessage());
 
-				e.printStackTrace();
-			}
-			return jsonResult;
-
+			e.printStackTrace();
 		}
-	
-	
+		return jsonResult;
+
+	}
 
 	// Save Message
 	@RequestMapping(value = { "/insertMessage" }, method = RequestMethod.POST)
@@ -2396,27 +2403,22 @@ public class RestApiController {
 		return specialCakeList;
 
 	}
-	
-	
-	
-	//Anmol 9/7/2019-----------------------------------
-	// show Special Cake Cat List
-		@RequestMapping(value = { "/showSpecialCakeCatList" }, method = RequestMethod.GET)
-		@ResponseBody
-		public SpecialCakeCatList showSpecialCakeCatList() {
-			List<SpecialCakeCat> jsonSpecialCakeList = specialcakeCatService.showAllSpecialCake();
-			SpecialCakeCatList specialCakeList = new SpecialCakeCatList();
-			specialCakeList.setSpecialCakeCat(jsonSpecialCakeList);
-			Info info = new Info();
-			info.setError(false);
-			info.setMessage("SpecialCake Cat list displayed Successfully");
-			specialCakeList.setInfo(info);
-			return specialCakeList;
 
-		}
-		
-		
-		
+	// Anmol 9/7/2019-----------------------------------
+	// show Special Cake Cat List
+	@RequestMapping(value = { "/showSpecialCakeCatList" }, method = RequestMethod.GET)
+	@ResponseBody
+	public SpecialCakeCatList showSpecialCakeCatList() {
+		List<SpecialCakeCat> jsonSpecialCakeList = specialcakeCatService.showAllSpecialCake();
+		SpecialCakeCatList specialCakeList = new SpecialCakeCatList();
+		specialCakeList.setSpecialCakeCat(jsonSpecialCakeList);
+		Info info = new Info();
+		info.setError(false);
+		info.setMessage("SpecialCake Cat list displayed Successfully");
+		specialCakeList.setInfo(info);
+		return specialCakeList;
+
+	}
 
 	// php web service anmol 25-26-05-2018
 	@RequestMapping(value = { "/getAllSpCakes" }, method = RequestMethod.GET)
@@ -2533,126 +2535,123 @@ public class RestApiController {
 		return spBeanList;
 
 	}
-	
-	
-	//Anmol 9/7/2019----------------------------------------
+
+	// Anmol 9/7/2019----------------------------------------
 	// php web service anmol 25-26-05-2018
-		@RequestMapping(value = { "/getAllSpCakesCat" }, method = RequestMethod.GET)
-		@ResponseBody
-		public SpecialCakeBeanList getAllSpCakesCat() {
-			SpecialCakeBeanList spBeanList = new SpecialCakeBeanList();
+	@RequestMapping(value = { "/getAllSpCakesCat" }, method = RequestMethod.GET)
+	@ResponseBody
+	public SpecialCakeBeanList getAllSpCakesCat() {
+		SpecialCakeBeanList spBeanList = new SpecialCakeBeanList();
 
-			try {
+		try {
 
-				List<SpecialCakeCat> jsonSpecialCakeList = specialcakeCatService.showAllSpecialCake();
-				System.err.println("Sp cake Size " + jsonSpecialCakeList.size());
+			List<SpecialCakeCat> jsonSpecialCakeList = specialcakeCatService.showAllSpecialCake();
+			System.err.println("Sp cake Size " + jsonSpecialCakeList.size());
 
-				List<Event> eventsList = eventService.findAllEvent();
-				List<SpecialCakeBean> spList = new ArrayList<SpecialCakeBean>();
+			List<Event> eventsList = eventService.findAllEvent();
+			List<SpecialCakeBean> spList = new ArrayList<SpecialCakeBean>();
 
-				if (jsonSpecialCakeList.isEmpty() == false) {
+			if (jsonSpecialCakeList.isEmpty() == false) {
 
-					spBeanList.setStatus("success");
-
-				}
-
-				List<Integer> eIds;
-				for (SpecialCakeCat spCake : jsonSpecialCakeList) {
-
-					SpecialCakeBean bean = new SpecialCakeBean();
-
-					bean.setDel_status("" + spCake.getDelStatus());
-					bean.setErp_link_code("" + spCake.getErpLinkcode());
-					bean.setIs_used("" + spCake.getIsUsed());
-					bean.setSp_book_b4("" + spCake.getSpBookb4());
-					bean.setSp_code("" + spCake.getSpCode());
-					bean.setSp_id("" + spCake.getSpId());
-					bean.setSp_image("" + spCake.getSpImage());
-					bean.setSp_max_wt("" + spCake.getSpMaxwt());
-					bean.setSp_min_wt("" + spCake.getSpMinwt());
-					bean.setSp_name("" + spCake.getSpName());
-					bean.setSp_pho_upload("" + spCake.getSpPhoupload());
-					bean.setSp_tax1("" + spCake.getSpTax1());
-					bean.setSp_tax2("" + spCake.getSpTax2());
-					bean.setSp_tax3("" + spCake.getSpTax3());
-					bean.setSp_type("" + spCake.getSpType());
-					bean.setSpr_add_on_rate("" + spCake.getMrpRate3());
-					bean.setSpr_id("" + spCake.getSprId());
-					bean.setSpr_name("" + spCake.getMrpRate1());
-					bean.setSpr_rate("" + spCake.getMrpRate2());
-
-					eIds = new ArrayList<Integer>();
-
-					String events = spCake.getSpeIdlist();
-
-					// Remove whitespace and split by comma
-					List<String> result = Arrays.asList(events.split("\\s*,\\s*"));
-					// System.err.println("Sp Name " + spCake.getSpName());
-					// System.err.println("EVENT ARRAYList " + result.toString());
-
-					String eventNameList = "";
-					for (int j = 0; j < result.size(); j++) {
-
-						String strEventId = result.get(j);
-						int eventId = Integer.parseInt(strEventId);
-
-						for (Event event : eventsList) {
-
-							if (event.getSpeId() == eventId) {
-
-								eventNameList = eventNameList + event.getSpeName() + ",";
-							}
-						}
-
-					}
-					bean.setSpe_id_list(eventNameList);
-					spList.add(bean);
-
-					// List<Event> eventsList = eventService.getAllEventsBySpeIdIn(intEvId);
-					// System.err.println("eList " + eventsList.toString());
-
-				}
-				spBeanList.setSp_cake(spList);
-
-				/*
-				 * if (jsonSpecialCakeList.isEmpty() == false) {
-				 * 
-				 * spBeanList.setStatus("success");
-				 * 
-				 * }
-				 * 
-				 * List<SpecialCakeBean> spList = new ArrayList<SpecialCakeBean>(); for
-				 * (SpecialCake spCake : jsonSpecialCakeList) {
-				 * 
-				 * SpecialCakeBean bean = new SpecialCakeBean();
-				 * 
-				 * bean.setDel_status("" + spCake.getDelStatus()); bean.setErp_link_code("" +
-				 * spCake.getErpLinkcode()); bean.setIs_used("" + spCake.getIsUsed());
-				 * bean.setSp_book_b4("" + spCake.getSpBookb4()); bean.setSp_code("" +
-				 * spCake.getSpCode()); bean.setSp_id("" + spCake.getSpId());
-				 * bean.setSp_image("" + spCake.getSpImage()); bean.setSp_max_wt("" +
-				 * spCake.getSpMaxwt()); bean.setSp_min_wt("" + spCake.getSpMinwt());
-				 * bean.setSp_name("" + spCake.getSpName()); bean.setSp_pho_upload("" +
-				 * spCake.getSpPhoupload()); bean.setSp_tax1("" + spCake.getSpTax1());
-				 * bean.setSp_tax2("" + spCake.getSpTax2()); bean.setSp_tax3("" +
-				 * spCake.getSpTax3()); bean.setSp_type("" + spCake.getSpType());
-				 * bean.setSpe_id_list("" + spCake.getSpeIdlist()); bean.setSpr_add_on_rate("" +
-				 * spCake.getSpRate3()); bean.setSpr_id("" + spCake.getSprId());
-				 * bean.setSpr_name("" + spCake.getSpRate1()); bean.setSpr_rate("" +
-				 * spCake.getSpRate2()); spList.add(bean); } spBeanList.setSp_cake(spList);
-				 */
-			} catch (Exception e) {
-
-				System.err.println(
-						"Exception in getting sp cake List for Php web service @Rest /getAllSpCakesCat" + e.getMessage());
-				e.printStackTrace();
+				spBeanList.setStatus("success");
 
 			}
-			return spBeanList;
+
+			List<Integer> eIds;
+			for (SpecialCakeCat spCake : jsonSpecialCakeList) {
+
+				SpecialCakeBean bean = new SpecialCakeBean();
+
+				bean.setDel_status("" + spCake.getDelStatus());
+				bean.setErp_link_code("" + spCake.getErpLinkcode());
+				bean.setIs_used("" + spCake.getIsUsed());
+				bean.setSp_book_b4("" + spCake.getSpBookb4());
+				bean.setSp_code("" + spCake.getSpCode());
+				bean.setSp_id("" + spCake.getSpId());
+				bean.setSp_image("" + spCake.getSpImage());
+				bean.setSp_max_wt("" + spCake.getSpMaxwt());
+				bean.setSp_min_wt("" + spCake.getSpMinwt());
+				bean.setSp_name("" + spCake.getSpName());
+				bean.setSp_pho_upload("" + spCake.getSpPhoupload());
+				bean.setSp_tax1("" + spCake.getSpTax1());
+				bean.setSp_tax2("" + spCake.getSpTax2());
+				bean.setSp_tax3("" + spCake.getSpTax3());
+				bean.setSp_type("" + spCake.getSpType());
+				bean.setSpr_add_on_rate("" + spCake.getMrpRate3());
+				bean.setSpr_id("" + spCake.getSprId());
+				bean.setSpr_name("" + spCake.getMrpRate1());
+				bean.setSpr_rate("" + spCake.getMrpRate2());
+
+				eIds = new ArrayList<Integer>();
+
+				String events = spCake.getSpeIdlist();
+
+				// Remove whitespace and split by comma
+				List<String> result = Arrays.asList(events.split("\\s*,\\s*"));
+				// System.err.println("Sp Name " + spCake.getSpName());
+				// System.err.println("EVENT ARRAYList " + result.toString());
+
+				String eventNameList = "";
+				for (int j = 0; j < result.size(); j++) {
+
+					String strEventId = result.get(j);
+					int eventId = Integer.parseInt(strEventId);
+
+					for (Event event : eventsList) {
+
+						if (event.getSpeId() == eventId) {
+
+							eventNameList = eventNameList + event.getSpeName() + ",";
+						}
+					}
+
+				}
+				bean.setSpe_id_list(eventNameList);
+				spList.add(bean);
+
+				// List<Event> eventsList = eventService.getAllEventsBySpeIdIn(intEvId);
+				// System.err.println("eList " + eventsList.toString());
+
+			}
+			spBeanList.setSp_cake(spList);
+
+			/*
+			 * if (jsonSpecialCakeList.isEmpty() == false) {
+			 * 
+			 * spBeanList.setStatus("success");
+			 * 
+			 * }
+			 * 
+			 * List<SpecialCakeBean> spList = new ArrayList<SpecialCakeBean>(); for
+			 * (SpecialCake spCake : jsonSpecialCakeList) {
+			 * 
+			 * SpecialCakeBean bean = new SpecialCakeBean();
+			 * 
+			 * bean.setDel_status("" + spCake.getDelStatus()); bean.setErp_link_code("" +
+			 * spCake.getErpLinkcode()); bean.setIs_used("" + spCake.getIsUsed());
+			 * bean.setSp_book_b4("" + spCake.getSpBookb4()); bean.setSp_code("" +
+			 * spCake.getSpCode()); bean.setSp_id("" + spCake.getSpId());
+			 * bean.setSp_image("" + spCake.getSpImage()); bean.setSp_max_wt("" +
+			 * spCake.getSpMaxwt()); bean.setSp_min_wt("" + spCake.getSpMinwt());
+			 * bean.setSp_name("" + spCake.getSpName()); bean.setSp_pho_upload("" +
+			 * spCake.getSpPhoupload()); bean.setSp_tax1("" + spCake.getSpTax1());
+			 * bean.setSp_tax2("" + spCake.getSpTax2()); bean.setSp_tax3("" +
+			 * spCake.getSpTax3()); bean.setSp_type("" + spCake.getSpType());
+			 * bean.setSpe_id_list("" + spCake.getSpeIdlist()); bean.setSpr_add_on_rate("" +
+			 * spCake.getSpRate3()); bean.setSpr_id("" + spCake.getSprId());
+			 * bean.setSpr_name("" + spCake.getSpRate1()); bean.setSpr_rate("" +
+			 * spCake.getSpRate2()); spList.add(bean); } spBeanList.setSp_cake(spList);
+			 */
+		} catch (Exception e) {
+
+			System.err.println(
+					"Exception in getting sp cake List for Php web service @Rest /getAllSpCakesCat" + e.getMessage());
+			e.printStackTrace();
 
 		}
-	
-	
+		return spBeanList;
+
+	}
 
 	// php web service neha 25-26-05-2018
 	@RequestMapping(value = { "/getAllSpCakesByAlbum" }, method = RequestMethod.GET)
@@ -2739,93 +2738,92 @@ public class RestApiController {
 		return spBeanList;
 
 	}
-	
-	// Anmol  24-6-2019
-			@RequestMapping(value = { "/getAllSpCakesByFrForAlbum" }, method = RequestMethod.POST)
-			@ResponseBody
-			public SpecialCakeBeanList getAllSpCakesByFrForAlbum(@RequestParam("frId") int frId) {
-				SpecialCakeBeanList spBeanList = new SpecialCakeBeanList();
 
-				try {
+	// Anmol 24-6-2019
+	@RequestMapping(value = { "/getAllSpCakesByFrForAlbum" }, method = RequestMethod.POST)
+	@ResponseBody
+	public SpecialCakeBeanList getAllSpCakesByFrForAlbum(@RequestParam("frId") int frId) {
+		SpecialCakeBeanList spBeanList = new SpecialCakeBeanList();
 
-					List<SpecialCake> jsonSpecialCakeList = specialCakeRepository.getDataByFr(frId);
-					System.err.println("Sp cake Size " + jsonSpecialCakeList.size());
+		try {
 
-					List<Event> eventsList = eventService.findAllEvent();
-					List<SpecialCakeBean> spList = new ArrayList<SpecialCakeBean>();
+			List<SpecialCake> jsonSpecialCakeList = specialCakeRepository.getDataByFr(frId);
+			System.err.println("Sp cake Size " + jsonSpecialCakeList.size());
 
-					if (jsonSpecialCakeList.isEmpty() == false) {
+			List<Event> eventsList = eventService.findAllEvent();
+			List<SpecialCakeBean> spList = new ArrayList<SpecialCakeBean>();
 
-						spBeanList.setStatus("success");
+			if (jsonSpecialCakeList.isEmpty() == false) {
 
-					}
-
-					List<Integer> eIds;
-					for (SpecialCake spCake : jsonSpecialCakeList) {
-
-						SpecialCakeBean bean = new SpecialCakeBean();
-
-						bean.setDel_status("" + spCake.getDelStatus());
-						bean.setErp_link_code("" + spCake.getErpLinkcode());
-						bean.setIs_used("" + spCake.getIsUsed());
-						bean.setSp_book_b4("" + spCake.getSpBookb4());
-						bean.setSp_code("" + spCake.getSpCode());
-						bean.setSp_id("" + spCake.getSpId());
-						bean.setSp_image("" + spCake.getSpImage());
-						bean.setSp_max_wt("" + spCake.getSpMaxwt());
-						bean.setSp_min_wt("" + spCake.getSpMinwt());
-						bean.setSp_name("" + spCake.getSpName());
-						bean.setSp_pho_upload("" + spCake.getSpPhoupload());
-						bean.setSp_tax1("" + spCake.getSpTax1());
-						bean.setSp_tax2("" + spCake.getSpTax2());
-						bean.setSp_tax3("" + spCake.getSpTax3());
-						bean.setSp_type("" + spCake.getSpType());
-						bean.setSpr_add_on_rate("" + spCake.getMrpRate3());
-						bean.setSpr_id("" + spCake.getSprId());
-						bean.setSpr_name("" + spCake.getMrpRate1());
-						bean.setSpr_rate("" + spCake.getMrpRate2());
-
-						eIds = new ArrayList<Integer>();
-
-						String events = spCake.getSpeIdlist();
-
-						// Remove whitespace and split by comma
-						List<String> result = Arrays.asList(events.split("\\s*,\\s*"));
-						// System.err.println("Sp Name " + spCake.getSpName());
-						// System.err.println("EVENT ARRAYList " + result.toString());
-
-						String eventNameList = "";
-						for (int j = 0; j < result.size(); j++) {
-
-							String strEventId = result.get(j);
-							int eventId = Integer.parseInt(strEventId);
-
-							for (Event event : eventsList) {
-
-								if (event.getSpeId() == eventId) {
-
-									eventNameList = eventNameList + event.getSpeName() + ",";
-								}
-							}
-
-						}
-						bean.setSpe_id_list(eventNameList);
-						spList.add(bean);
-
-					}
-					spBeanList.setSp_cake(spList);
-
-				} catch (Exception e) {
-
-					System.err.println(
-							"Exception in getting sp cake List for Php web service @Rest /getAllSpCakesByFrForAlbum" + e.getMessage());
-					e.printStackTrace();
-
-				}
-				return spBeanList;
+				spBeanList.setStatus("success");
 
 			}
 
+			List<Integer> eIds;
+			for (SpecialCake spCake : jsonSpecialCakeList) {
+
+				SpecialCakeBean bean = new SpecialCakeBean();
+
+				bean.setDel_status("" + spCake.getDelStatus());
+				bean.setErp_link_code("" + spCake.getErpLinkcode());
+				bean.setIs_used("" + spCake.getIsUsed());
+				bean.setSp_book_b4("" + spCake.getSpBookb4());
+				bean.setSp_code("" + spCake.getSpCode());
+				bean.setSp_id("" + spCake.getSpId());
+				bean.setSp_image("" + spCake.getSpImage());
+				bean.setSp_max_wt("" + spCake.getSpMaxwt());
+				bean.setSp_min_wt("" + spCake.getSpMinwt());
+				bean.setSp_name("" + spCake.getSpName());
+				bean.setSp_pho_upload("" + spCake.getSpPhoupload());
+				bean.setSp_tax1("" + spCake.getSpTax1());
+				bean.setSp_tax2("" + spCake.getSpTax2());
+				bean.setSp_tax3("" + spCake.getSpTax3());
+				bean.setSp_type("" + spCake.getSpType());
+				bean.setSpr_add_on_rate("" + spCake.getMrpRate3());
+				bean.setSpr_id("" + spCake.getSprId());
+				bean.setSpr_name("" + spCake.getMrpRate1());
+				bean.setSpr_rate("" + spCake.getMrpRate2());
+
+				eIds = new ArrayList<Integer>();
+
+				String events = spCake.getSpeIdlist();
+
+				// Remove whitespace and split by comma
+				List<String> result = Arrays.asList(events.split("\\s*,\\s*"));
+				// System.err.println("Sp Name " + spCake.getSpName());
+				// System.err.println("EVENT ARRAYList " + result.toString());
+
+				String eventNameList = "";
+				for (int j = 0; j < result.size(); j++) {
+
+					String strEventId = result.get(j);
+					int eventId = Integer.parseInt(strEventId);
+
+					for (Event event : eventsList) {
+
+						if (event.getSpeId() == eventId) {
+
+							eventNameList = eventNameList + event.getSpeName() + ",";
+						}
+					}
+
+				}
+				bean.setSpe_id_list(eventNameList);
+				spList.add(bean);
+
+			}
+			spBeanList.setSp_cake(spList);
+
+		} catch (Exception e) {
+
+			System.err.println("Exception in getting sp cake List for Php web service @Rest /getAllSpCakesByFrForAlbum"
+					+ e.getMessage());
+			e.printStackTrace();
+
+		}
+		return spBeanList;
+
+	}
 
 	// Show Message List
 	@RequestMapping(value = { "/showMessageList" }, method = RequestMethod.GET)
@@ -3893,84 +3891,80 @@ public class RestApiController {
 		return "" + JsonUtil.javaToJson(info);
 
 	}
-	
-	
-	
-	//Anmol 9/7/2019-------------------------------------
+
+	// Anmol 9/7/2019-------------------------------------
 	// Update Special Cake
-		@RequestMapping("/updateSpecialCakeCat")
-		public @ResponseBody String updateSpecialCakeCat(@RequestParam int id, @RequestParam String spname,
-				@RequestParam int sptype, @RequestParam String spminwt, @RequestParam String spmaxwt,
-				@RequestParam String spCode, @RequestParam String spbookb4, @RequestParam String spimage,
-				@RequestParam double sptax1, @RequestParam double sptax2, @RequestParam double sptax3,
-				@RequestParam String spidlist, @RequestParam String erplinkcode, @RequestParam int spphoupload,
-				@RequestParam int timetwoappli, @RequestParam("spDesc") String spDesc,
-				@RequestParam("orderQty") int orderQty, @RequestParam("orderDiscount") float orderDiscount,
-				@RequestParam("isCustChoiceCk") int isCustChoiceCk, @RequestParam("isAddonRateAppli") int isAddonRateAppli,
-				@RequestParam("mrpRate1") int mrpRate1, @RequestParam("mrpRate2") int mrpRate2,
-				@RequestParam("mrpRate3") int mrpRate3, @RequestParam("spRate1") int spRate1,
-				@RequestParam("spRate2") int spRate2, @RequestParam("spRate3") int spRate3,
-				@RequestParam("isUsed") int isUsed, @RequestParam("isSlotUsed") int isSlotUsed) {
+	@RequestMapping("/updateSpecialCakeCat")
+	public @ResponseBody String updateSpecialCakeCat(@RequestParam int id, @RequestParam String spname,
+			@RequestParam int sptype, @RequestParam String spminwt, @RequestParam String spmaxwt,
+			@RequestParam String spCode, @RequestParam String spbookb4, @RequestParam String spimage,
+			@RequestParam double sptax1, @RequestParam double sptax2, @RequestParam double sptax3,
+			@RequestParam String spidlist, @RequestParam String erplinkcode, @RequestParam int spphoupload,
+			@RequestParam int timetwoappli, @RequestParam("spDesc") String spDesc,
+			@RequestParam("orderQty") int orderQty, @RequestParam("orderDiscount") float orderDiscount,
+			@RequestParam("isCustChoiceCk") int isCustChoiceCk, @RequestParam("isAddonRateAppli") int isAddonRateAppli,
+			@RequestParam("mrpRate1") int mrpRate1, @RequestParam("mrpRate2") int mrpRate2,
+			@RequestParam("mrpRate3") int mrpRate3, @RequestParam("spRate1") int spRate1,
+			@RequestParam("spRate2") int spRate2, @RequestParam("spRate3") int spRate3,
+			@RequestParam("isUsed") int isUsed, @RequestParam("isSlotUsed") int isSlotUsed) {
 
-			SpecialCakeCat specialCake = specialcakeCatService.findSpecialCake(id);
-			Info info = new Info();
-			try {
+		SpecialCakeCat specialCake = specialcakeCatService.findSpecialCake(id);
+		Info info = new Info();
+		try {
 
-				specialCake.setSpName(spname);
-				specialCake.setSpCode(spCode);
-				specialCake.setSpType(sptype);
-				specialCake.setSpMinwt(spminwt);
-				specialCake.setSpMaxwt(spmaxwt);
-				specialCake.setSpBookb4(spbookb4);
-				specialCake.setSpImage(spimage);
-				specialCake.setSpTax1(sptax1);
-				specialCake.setSprId(1);
-				specialCake.setSpTax2(sptax2);
-				specialCake.setSpTax3(sptax3);
-				specialCake.setSpeIdlist(spidlist);
-				specialCake.setErpLinkcode(erplinkcode);
-				specialCake.setSpPhoupload(spphoupload);
-				specialCake.setTimeTwoappli(timetwoappli);
-				specialCake.setBaseCode("0");
-				specialCake.setIsUsed(isUsed);
+			specialCake.setSpName(spname);
+			specialCake.setSpCode(spCode);
+			specialCake.setSpType(sptype);
+			specialCake.setSpMinwt(spminwt);
+			specialCake.setSpMaxwt(spmaxwt);
+			specialCake.setSpBookb4(spbookb4);
+			specialCake.setSpImage(spimage);
+			specialCake.setSpTax1(sptax1);
+			specialCake.setSprId(1);
+			specialCake.setSpTax2(sptax2);
+			specialCake.setSpTax3(sptax3);
+			specialCake.setSpeIdlist(spidlist);
+			specialCake.setErpLinkcode(erplinkcode);
+			specialCake.setSpPhoupload(spphoupload);
+			specialCake.setTimeTwoappli(timetwoappli);
+			specialCake.setBaseCode("0");
+			specialCake.setIsUsed(isUsed);
 
-				specialCake.setSpDesc(spDesc);
-				specialCake.setOrderQty(orderQty);
-				specialCake.setOrderDiscount(orderDiscount);
-				specialCake.setIsCustChoiceCk(isCustChoiceCk);
-				specialCake.setIsAddonRateAppli(isAddonRateAppli);
-				specialCake.setMrpRate1(mrpRate1);
-				specialCake.setMrpRate2(mrpRate2);
-				specialCake.setMrpRate3(mrpRate3);
-				specialCake.setSpRate1(spRate1);
-				specialCake.setSpRate2(spRate2);
-				specialCake.setSpRate3(spRate3);
-				specialCake.setIsSlotUsed(isSlotUsed);
+			specialCake.setSpDesc(spDesc);
+			specialCake.setOrderQty(orderQty);
+			specialCake.setOrderDiscount(orderDiscount);
+			specialCake.setIsCustChoiceCk(isCustChoiceCk);
+			specialCake.setIsAddonRateAppli(isAddonRateAppli);
+			specialCake.setMrpRate1(mrpRate1);
+			specialCake.setMrpRate2(mrpRate2);
+			specialCake.setMrpRate3(mrpRate3);
+			specialCake.setSpRate1(spRate1);
+			specialCake.setSpRate2(spRate2);
+			specialCake.setSpRate3(spRate3);
+			specialCake.setIsSlotUsed(isSlotUsed);
 
-				System.out.println("*********Special Cake:***************" + specialCake.getIsSlotUsed());
+			System.out.println("*********Special Cake:***************" + specialCake.getIsSlotUsed());
 
-				String jsonResult = specialcakeCatService.save(specialCake);
+			String jsonResult = specialcakeCatService.save(specialCake);
 
-				if (jsonResult == null) {
+			if (jsonResult == null) {
 
-					info.setError(true);
-					info.setMessage("Special cake cat update failed");
-
-				} else if (jsonResult != null) {
-
-					info.setError(false);
-					info.setMessage("Special cake cat successfully updated");
-				}
-			} catch (Exception e) {
 				info.setError(true);
-				info.setMessage("" + e.getMessage());
+				info.setMessage("Special cake cat update failed");
+
+			} else if (jsonResult != null) {
+
+				info.setError(false);
+				info.setMessage("Special cake cat successfully updated");
 			}
-
-			return "" + JsonUtil.javaToJson(info);
-
+		} catch (Exception e) {
+			info.setError(true);
+			info.setMessage("" + e.getMessage());
 		}
-		
-		
+
+		return "" + JsonUtil.javaToJson(info);
+
+	}
 
 	// Delete Special Cake
 	@RequestMapping(value = "/deleteSpecialCake")
@@ -3998,35 +3992,33 @@ public class RestApiController {
 		}
 		return "" + JsonUtil.javaToJson(info);
 	}
-	
-	
+
 	// Delete Special Cake Cat
-		@RequestMapping(value = "/deleteSpecialCakeCat")
-		public @ResponseBody String deleteSpecialCakeCat(@RequestParam int spId) {
+	@RequestMapping(value = "/deleteSpecialCakeCat")
+	public @ResponseBody String deleteSpecialCakeCat(@RequestParam int spId) {
 
-			Info info = new Info();
-			try {
-				SpecialCakeCat specialCake = specialcakeCatService.findSpecialCake(spId);
-				specialCake.setDelStatus(1);
-				String jsonResult = specialcakeCatService.save(specialCake);
+		Info info = new Info();
+		try {
+			SpecialCakeCat specialCake = specialcakeCatService.findSpecialCake(spId);
+			specialCake.setDelStatus(1);
+			String jsonResult = specialcakeCatService.save(specialCake);
 
-				if (jsonResult == null) {
-					info.setError(true);
-					info.setMessage("deletion of Special Cake cat failed");
-				} else if (jsonResult != null) {
-					info.setError(false);
-					info.setMessage("deletion of Special Cake cat Successful");
-
-				}
-			} catch (Exception e) {
-				System.out.println("error in deleting special cake cat" + e.getMessage());
+			if (jsonResult == null) {
 				info.setError(true);
-				info.setMessage("" + e.getMessage());
+				info.setMessage("deletion of Special Cake cat failed");
+			} else if (jsonResult != null) {
+				info.setError(false);
+				info.setMessage("deletion of Special Cake cat Successful");
 
 			}
-			return "" + JsonUtil.javaToJson(info);
+		} catch (Exception e) {
+			System.out.println("error in deleting special cake cat" + e.getMessage());
+			info.setError(true);
+			info.setMessage("" + e.getMessage());
+
 		}
-		
+		return "" + JsonUtil.javaToJson(info);
+	}
 
 	/*
 	 * @RequestMapping(value = { "/getOrderList" }, method = RequestMethod.POST)
@@ -4206,17 +4198,16 @@ public class RestApiController {
 		return specialCake;
 
 	}
-	
-	
+
 	// get Special Cake Cat
 
-		@RequestMapping("/getSpecialCakeCat")
-		public @ResponseBody SpecialCakeCat getSpecialCakeCat(@RequestParam int spId) {
+	@RequestMapping("/getSpecialCakeCat")
+	public @ResponseBody SpecialCakeCat getSpecialCakeCat(@RequestParam int spId) {
 
-			SpecialCakeCat specialCake = specialcakeCatService.findSpecialCake(spId);
-			return specialCake;
+		SpecialCakeCat specialCake = specialcakeCatService.findSpecialCake(spId);
+		return specialCake;
 
-		}
+	}
 
 	// get Scheduler or news
 	@RequestMapping(value = "/getScheduler")
@@ -4399,35 +4390,34 @@ public class RestApiController {
 		return spCakeOrderList;
 
 	}
-	
-	
-	//Anmol 13-7-2019
-		//----------SP CAKE ALBUM ORDER--------------------------------------------------
-		@RequestMapping(value = { "/getSpCakeAlbumOrderLists" }, method = RequestMethod.POST)
-		@ResponseBody
-		public SpCakeOrdersBeanList SpCakeAlbumOrderLists(@RequestParam List<Integer> frId, @RequestParam String prodDate) {
-			SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
-			try {
 
-				String strDate = Common.convertToYMD(prodDate);
-				System.out.println("Converted date " + strDate);
+	// Anmol 13-7-2019
+	// ----------SP CAKE ALBUM
+	// ORDER--------------------------------------------------
+	@RequestMapping(value = { "/getSpCakeAlbumOrderLists" }, method = RequestMethod.POST)
+	@ResponseBody
+	public SpCakeOrdersBeanList SpCakeAlbumOrderLists(@RequestParam List<Integer> frId, @RequestParam String prodDate) {
+		SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
+		try {
 
-				List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeAlbumOrder(frId, strDate);
+			String strDate = Common.convertToYMD(prodDate);
+			System.out.println("Converted date " + strDate);
 
-				spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
-				Info info = new Info();
-				info.setError(false);
-				info.setMessage("Sp Cake Album Order list displayed Successfully");
-				spCakeOrderList.setInfo(info);
+			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeAlbumOrder(frId, strDate);
 
-			} catch (Exception e) {
+			spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
+			Info info = new Info();
+			info.setError(false);
+			info.setMessage("Sp Cake Album Order list displayed Successfully");
+			spCakeOrderList.setInfo(info);
 
-				System.out.println("exception in Album order list rest controller" + e.getMessage());
-			}
-			return spCakeOrderList;
+		} catch (Exception e) {
 
+			System.out.println("exception in Album order list rest controller" + e.getMessage());
 		}
-		
+		return spCakeOrderList;
+
+	}
 
 	// getAllFrSpCakeOrderList
 
@@ -4455,32 +4445,32 @@ public class RestApiController {
 		return spCakeOrderList;
 
 	}
-	
-	//Anmol 13/7/2019
-		@RequestMapping(value = { "/getAllFrSpCakeAlbumOrderList" }, method = RequestMethod.POST)
-		@ResponseBody
-		public SpCakeOrdersBeanList getAllFrSpCakeAlbumOrderList(@RequestParam String prodDate) {
-			SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
-			try {
 
-				String strDate = Common.convertToYMD(prodDate);
-				System.out.println("Converted date " + strDate);
+	// Anmol 13/7/2019
+	@RequestMapping(value = { "/getAllFrSpCakeAlbumOrderList" }, method = RequestMethod.POST)
+	@ResponseBody
+	public SpCakeOrdersBeanList getAllFrSpCakeAlbumOrderList(@RequestParam String prodDate) {
+		SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
+		try {
 
-				List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeAlbumOrderAllFr(strDate);
+			String strDate = Common.convertToYMD(prodDate);
+			System.out.println("Converted date " + strDate);
 
-				spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
-				Info info = new Info();
-				info.setError(false);
-				info.setMessage("Sp Cake Order Album list displayed Successfully");
-				spCakeOrderList.setInfo(info);
+			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeAlbumOrderAllFr(strDate);
 
-			} catch (Exception e) {
+			spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
+			Info info = new Info();
+			info.setError(false);
+			info.setMessage("Sp Cake Order Album list displayed Successfully");
+			spCakeOrderList.setInfo(info);
 
-				System.out.println("exception in order list rest controller" + e.getMessage());
-			}
-			return spCakeOrderList;
+		} catch (Exception e) {
 
+			System.out.println("exception in order list rest controller" + e.getMessage());
 		}
+		return spCakeOrderList;
+
+	}
 
 	@RequestMapping(value = { "/showEventList" }, method = RequestMethod.GET)
 	@ResponseBody
@@ -4574,6 +4564,7 @@ public class RestApiController {
 		return orderList;
 
 	}
+
 	@RequestMapping(value = { "/getAllFrRegSpCakeOrders" }, method = RequestMethod.POST)
 	@ResponseBody
 	public RegSpCkOrderResponse getAllFrRegSpCakeOrders(@RequestParam String prodDate) {
@@ -5016,8 +5007,8 @@ public class RestApiController {
 		System.out.println("Res  :" + spCakeOrder.toString());
 		return spCakeOrder;
 	}
-	
-	//-------------ANMOL 13-7-2019---------------------
+
+	// -------------ANMOL 13-7-2019---------------------
 	@RequestMapping(value = { "/getSpCakeAlbumOrderBySpOrderNo" }, method = RequestMethod.POST)
 	@ResponseBody
 	public List<GetSpCakeOrders> getSpCakeAlbumOrderBySpOrderNo(@RequestParam List<String> spOrderNo) {
@@ -5028,7 +5019,6 @@ public class RestApiController {
 		return spCakeOrder;
 	}
 
-
 	@RequestMapping(value = { "/getSpCKOrderBySpOrderNo" }, method = RequestMethod.POST)
 	@ResponseBody
 	public List<GetSpCkOrder> getSpCKOrderBySpOrderNo(@RequestParam("spOrderNo") List<String> spOrderNo) {
@@ -5037,16 +5027,16 @@ public class RestApiController {
 
 		return spCakeOrder;
 	}
-	
-	//---------ANMOL 13-7-2019----------------
-		@RequestMapping(value = { "/getSpCKAlbumOrderBySpOrderNo" }, method = RequestMethod.POST)
-		@ResponseBody
-		public List<GetSpCkOrder> getSpCKAlbumOrderBySpOrderNo(@RequestParam("spOrderNo") List<String> spOrderNo) {
 
-			List<GetSpCkOrder> spCakeOrder = spCkOrdersService.getSpCkAlbumOrder(spOrderNo);
+	// ---------ANMOL 13-7-2019----------------
+	@RequestMapping(value = { "/getSpCKAlbumOrderBySpOrderNo" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<GetSpCkOrder> getSpCKAlbumOrderBySpOrderNo(@RequestParam("spOrderNo") List<String> spOrderNo) {
 
-			return spCakeOrder;
-		}
+		List<GetSpCkOrder> spCakeOrder = spCkOrdersService.getSpCkAlbumOrder(spOrderNo);
+
+		return spCakeOrder;
+	}
 
 	@RequestMapping(value = { "/getRegSpCakeOrderBySpOrderNo" }, method = RequestMethod.POST)
 	@ResponseBody
@@ -5095,24 +5085,23 @@ public class RestApiController {
 	@RequestMapping(value = "/getConfigListByFrAndMenu", method = RequestMethod.POST)
 	public @ResponseBody List<ConfigureFranchisee> getConfigListByFrAndMenu(@RequestParam("frIds") List<Integer> frIds,
 			@RequestParam("menuIds") List<Integer> menuIds) {
-		System.err.println("in ws---------- FR "+frIds);
-		System.err.println("in ws---------- MENU "+menuIds);
-		
+		System.err.println("in ws---------- FR " + frIds);
+		System.err.println("in ws---------- MENU " + menuIds);
+
 		List<ConfigureFranchisee> resultList = new ArrayList();
 		resultList = connfigureService.getDataByFrAndMenu(frIds, menuIds);
-		System.err.println("LIST -------------- "+resultList);
+		System.err.println("LIST -------------- " + resultList);
 		return resultList;
 
 	}
-	
-	
+
 	@RequestMapping(value = "/updateFrConfItemShow")
-	public @ResponseBody Info updateFrConfItemShow( @RequestParam("items") String items,
+	public @ResponseBody Info updateFrConfItemShow(@RequestParam("items") String items,
 			@RequestParam("settingId") int settingId) {
 		Info info = new Info();
 		int result = 0;
 		try {
-				result = connfigureService.updateFrConfItems(items,settingId);
+			result = connfigureService.updateFrConfItems(items, settingId);
 
 			if (result > 0) {
 				info.setError(false);
@@ -5128,6 +5117,7 @@ public class RestApiController {
 		return info;
 
 	}
+
 	@RequestMapping(value = "/getSubCatListByCatIdInForDisp", method = RequestMethod.POST)
 	public @ResponseBody List<SubCategory> getSubCatListByCatIdInForDisp(@RequestParam("catId") List<String> catId,
 			@RequestParam("isAllCatSelected") boolean isAllCatSelected) {
