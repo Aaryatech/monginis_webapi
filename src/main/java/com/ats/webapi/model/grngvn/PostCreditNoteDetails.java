@@ -13,103 +13,101 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "t_credit_note_details")
 public class PostCreditNoteDetails implements Serializable {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="crnd_id")
+	@Column(name = "crnd_id")
 	private int crndId;
-	
-	
-	@Column(name="crn_id")
+
+	@Column(name = "crn_id")
 	private int crnId;
-	
-	
-	@Column(name="item_id")
+
+	@Column(name = "item_id")
 	private int itemId;
-	
-	
-	@Column(name="grn_gvn_id")
+
+	@Column(name = "grn_gvn_id")
 	private int grnGvnId;
-	
-	
-	@Column(name="is_grn")
+
+	@Column(name = "is_grn")
 	private int isGrn;
-	
-	
-	@Column(name="grn_type")
+
+	@Column(name = "grn_type")
 	private int grnType;
-	
-	@Column(name="grn_gvn_date")
+
+	@Column(name = "grn_gvn_date")
 	private Date grnGvnDate;
-	
-	@Column(name="grn_gvn_qty")
+
+	@Column(name = "grn_gvn_qty")
 	private int grnGvnQty;
-	
-	@Column(name="taxable_amt")
+
+	@Column(name = "taxable_amt")
 	private float taxableAmt;
-	
-	@Column(name="total_tax")
+
+	@Column(name = "total_tax")
 	private float totalTax;
-	
-	@Column(name="grn_gvn_amt")
+
+	@Column(name = "grn_gvn_amt")
 	private float grnGvnAmt;
-	
-	@Column(name="cgst_per")
+
+	@Column(name = "cgst_per")
 	private float cgstPer;
-	
-	@Column(name="sgst_per")
+
+	@Column(name = "sgst_per")
 	private float sgstPer;
-	
-	
-	@Column(name="igst_per")
+
+	@Column(name = "igst_per")
 	private float igstPer;
-	
-	@Column(name="cgst_rs")
+
+	@Column(name = "cgst_rs")
 	private float cgstRs;
-	
-	@Column(name="sgst_rs")
+
+	@Column(name = "sgst_rs")
 	private float sgstRs;
-	
-	@Column(name="igst_rs")
+
+	@Column(name = "igst_rs")
 	private float igstRs;
-	
-	@Column(name="cess_rs")
+
+	@Column(name = "cess_rs")
 	private float cessRs;
-	
-	@Column(name="del_status")
+
+	@Column(name = "del_status")
 	private int delStatus;
-	
-	@Column(name="bill_no")
+
+	@Column(name = "bill_no")
 	private int billNo;
-	
-	@Column(name="bill_date")
+
+	@Column(name = "bill_date")
 	private Date billDate;
-	
-	
-	//newly added
-	
-		@Column(name = "cat_id")
-		private int catId;
-		
-		
-		@Column(name = "base_rate")
-		private float baseRate;
-		
-		@Column(name = "cess_per")
-		private float cessPer;
-		
-		@Column(name = "ref_invoice_no")
-		private String  refInvoiceNo;
-		
-		
-		//new column 23 FEB
-		@Column(name = "grngvn_srno")
-		private String grngvnSrno;
-		
-		//new column 23 FEB
-		@Column(name = "grn_gvn_header_id")
-		private int grnGvnHeaderId;
-		
+
+	// newly added
+
+	@Column(name = "cat_id")
+	private int catId;
+
+	@Column(name = "base_rate")
+	private float baseRate;
+
+	@Column(name = "cess_per")
+	private float cessPer;
+
+	@Column(name = "ref_invoice_no")
+	private String refInvoiceNo;
+
+	// new column 23 FEB
+	@Column(name = "grngvn_srno")
+	private String grngvnSrno;
+
+	// new column 23 FEB
+	@Column(name = "grn_gvn_header_id")
+	private int grnGvnHeaderId;
+
+	// new column 16-9-2019
+	@Column(name = "ex_int1")
+	private Integer exInt1;
+
+	// new column 16-9-2019
+	@Column(name = "ex_varchar1")
+	private String exVarchar1;
 
 	public int getBillNo() {
 		return billNo;
@@ -326,6 +324,30 @@ public class PostCreditNoteDetails implements Serializable {
 	public void setGrnGvnHeaderId(int grnGvnHeaderId) {
 		this.grnGvnHeaderId = grnGvnHeaderId;
 	}
+	
+	
+
+	
+	
+	
+
+	public Integer getExInt1() {
+		return exInt1;
+	}
+
+	public void setExInt1(Integer exInt1) {
+		this.exInt1 = exInt1;
+	}
+
+	public String getExVarchar1() {
+		return exVarchar1;
+	}
+
+	public void setExVarchar1(String exVarchar1) {
+		this.exVarchar1 = exVarchar1;
+	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -336,8 +358,19 @@ public class PostCreditNoteDetails implements Serializable {
 				+ ", sgstRs=" + sgstRs + ", igstRs=" + igstRs + ", cessRs=" + cessRs + ", delStatus=" + delStatus
 				+ ", billNo=" + billNo + ", billDate=" + billDate + ", catId=" + catId + ", baseRate=" + baseRate
 				+ ", cessPer=" + cessPer + ", refInvoiceNo=" + refInvoiceNo + ", grngvnSrno=" + grngvnSrno
-				+ ", grnGvnHeaderId=" + grnGvnHeaderId + "]";
+				+ ", grnGvnHeaderId=" + grnGvnHeaderId + ", exInt1=" + exInt1 + ", exVarchar1=" + exVarchar1
+				+ ", getBillNo()=" + getBillNo() + ", getBillDate()=" + getBillDate() + ", getCrndId()=" + getCrndId()
+				+ ", getCrnId()=" + getCrnId() + ", getItemId()=" + getItemId() + ", getGrnGvnId()=" + getGrnGvnId()
+				+ ", getIsGrn()=" + getIsGrn() + ", getGrnType()=" + getGrnType() + ", getGrnGvnDate()="
+				+ getGrnGvnDate() + ", getGrnGvnQty()=" + getGrnGvnQty() + ", getTaxableAmt()=" + getTaxableAmt()
+				+ ", getTotalTax()=" + getTotalTax() + ", getGrnGvnAmt()=" + getGrnGvnAmt() + ", getCgstPer()="
+				+ getCgstPer() + ", getSgstPer()=" + getSgstPer() + ", getIgstPer()=" + getIgstPer() + ", getCgstRs()="
+				+ getCgstRs() + ", getSgstRs()=" + getSgstRs() + ", getIgstRs()=" + getIgstRs() + ", getCessRs()="
+				+ getCessRs() + ", getDelStatus()=" + getDelStatus() + ", getCatId()=" + getCatId() + ", getBaseRate()="
+				+ getBaseRate() + ", getCessPer()=" + getCessPer() + ", getRefInvoiceNo()=" + getRefInvoiceNo()
+				+ ", getGrngvnSrno()=" + getGrngvnSrno() + ", getGrnGvnHeaderId()=" + getGrnGvnHeaderId()
+				+ ", getExInt1()=" + getExInt1() + ", getExVarchar1()=" + getExVarchar1() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
 
-	
 }

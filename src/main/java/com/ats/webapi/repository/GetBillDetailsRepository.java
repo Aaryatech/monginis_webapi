@@ -59,11 +59,11 @@ public interface GetBillDetailsRepository extends JpaRepository<GetBillDetails, 
 			")\n" + 
 			"END ELSE(\n" + 
 			"    SELECT\n" + 
-			"        a.album_name\n" + 
+			"        SUBSTRING_INDEX(t_sp_cake.item_id, '#', -1)\n" + 
 			"    FROM\n" + 
-			"        t_sp_cake_album a\n" + 
+			"        t_sp_cake\n" + 
 			"    WHERE\n" + 
-			"        a.del_status = 1 AND a.album_id = t_bill_detail.item_id AND t_bill_detail.cat_id = 5\n" + 
+			"        t_sp_cake.sp_order_no = t_bill_detail.order_id AND t_bill_detail.cat_id = 5\n" + 
 			")\n" + 
 			"END AS item_name,\n" + 
 			"m_category.cat_name,\n" + 

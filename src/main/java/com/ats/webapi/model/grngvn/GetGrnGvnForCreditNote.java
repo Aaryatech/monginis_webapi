@@ -9,15 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
-
 
 @Entity
 
 public class GetGrnGvnForCreditNote implements Serializable {
-	
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "grn_gvn_id")
@@ -25,7 +22,6 @@ public class GetGrnGvnForCreditNote implements Serializable {
 
 	@Column(name = "grn_gvn_date")
 	Date grnGvnDate;
-	
 
 	@Column(name = "bill_no")
 	private int billNo;
@@ -35,10 +31,10 @@ public class GetGrnGvnForCreditNote implements Serializable {
 
 	@Column(name = "item_id")
 	private int itemId;
-	
+
 	@Column(name = "item_rate")
 	private float itemRate;
-	
+
 	@Column(name = "item_mrp")
 	private float itemMrp;
 
@@ -50,103 +46,90 @@ public class GetGrnGvnForCreditNote implements Serializable {
 
 	@Column(name = "grn_type")
 	private int grnType;
-	
+
 	@Column(name = "is_grn")
 	private int isGrn;
-	
+
 	@Column(name = "is_grn_edit")
 	private int isGrnEdit;
-	
-	
 
 	@Column(name = "fr_grn_gvn_remark")
 	private String frGrnGvnRemark;
 
-	
-
 	@Column(name = "grn_gvn_status")
 	private int grnGvnStatus;
-
-	
 
 	@Column(name = "approved_datetime_acc")
 	private String grnApprovedDateTimeAcc;
 
-
 	@Column(name = "del_status")
 	private int delStatus;
-	
+
 	@Column(name = "grn_gvn_qty_auto")
 	private int grnGvnQtyAuto;
-	
-	
-	
-//newly added 04/11/17
-	
+
+	// newly added 04/11/17
+
 	@Column(name = "is_tally_sync")
 	private int isTallySync;
-	
-	
+
 	@Column(name = "base_rate")
 	private float baseRate;
-	
+
 	@Column(name = "sgst_per")
 	private float sgstPer;
-	
+
 	@Column(name = "cgst_per")
 	private float cgstPer;
-	
+
 	@Column(name = "igst_per")
 	private float igstPer;
-	
+
 	@Column(name = "apr_taxable_amt")
 	private float aprTaxableAmt;
-	
+
 	@Column(name = "apr_total_tax")
 	private float aprTotalTax;
-	
-	
-	
+
 	@Column(name = "apr_r_off")
 	private float aprROff;
-	
-	
+
 	@Column(name = "item_name")
 	private String itemName;
 
 	@Column(name = "fr_name")
 	private String frName;
 
-	
-	
 	@Column(name = "is_credit_note")
 	private int isCreditNote;
-	
-	
-	
+
 	@Column(name = "menu_id")
 	private int menuId;
-	
 
 	@Column(name = "cat_id")
 	private int catId;
-	
 
 	@Column(name = "invoice_no")
 	private String invoiceNo;
-	
 
 	@Column(name = "ref_invoice_date")
 	private Date refInvoiceDate;
-	
-	
-	//new column 23 FEB
+
+	// new column 23 FEB
 	@Column(name = "grngvn_srno")
 	private String grngvnSrno;
-	
-	//new column 23 FEB
+
+	// new column 23 FEB
 	@Column(name = "grn_gvn_header_id")
 	private int grnGvnHeaderId;
+
+	// new column 16-9-2019
+	@Column(name = "album_code")
+	private String albumCode;
+
+	// new column 16-9-2019
+	@Column(name = "album_sp_id")
+	private int albumSpId;
 
 	public int getGrnGvnId() {
 		return grnGvnId;
@@ -420,6 +403,27 @@ public class GetGrnGvnForCreditNote implements Serializable {
 		this.grnGvnHeaderId = grnGvnHeaderId;
 	}
 
+	
+	
+	
+	public String getAlbumCode() {
+		return albumCode;
+	}
+
+	public void setAlbumCode(String albumCode) {
+		this.albumCode = albumCode;
+	}
+
+	public int getAlbumSpId() {
+		return albumSpId;
+	}
+
+	public void setAlbumSpId(int albumSpId) {
+		this.albumSpId = albumSpId;
+	}
+	
+	
+
 	@Override
 	public String toString() {
 		return "GetGrnGvnForCreditNote [grnGvnId=" + grnGvnId + ", grnGvnDate=" + grnGvnDate + ", billNo=" + billNo
@@ -432,8 +436,7 @@ public class GetGrnGvnForCreditNote implements Serializable {
 				+ aprTaxableAmt + ", aprTotalTax=" + aprTotalTax + ", aprROff=" + aprROff + ", itemName=" + itemName
 				+ ", frName=" + frName + ", isCreditNote=" + isCreditNote + ", menuId=" + menuId + ", catId=" + catId
 				+ ", invoiceNo=" + invoiceNo + ", refInvoiceDate=" + refInvoiceDate + ", grngvnSrno=" + grngvnSrno
-				+ ", grnGvnHeaderId=" + grnGvnHeaderId + "]";
+				+ ", grnGvnHeaderId=" + grnGvnHeaderId + ", albumCode=" + albumCode + ", albumSpId=" + albumSpId + "]";
 	}
-	
 
 }

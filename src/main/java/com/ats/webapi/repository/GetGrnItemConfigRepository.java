@@ -71,7 +71,7 @@ public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConf
 	public List<GetGrnItemConfig> getGvnItemConfig(@Param("billNo") int billNo);*/
 	
 	
-	@Query(value = "SELECT\n" + 
+	/*@Query(value = "SELECT\n" + 
 			"        t_bill_header.bill_no,\n" + 
 			"        t_bill_header.bill_no as autoGrnQty,\n" + 
 			"        t_bill_header.bill_date,\n" + 
@@ -145,6 +145,67 @@ public interface GetGrnItemConfigRepository extends JpaRepository<GetGrnItemConf
 			"        AND t_bill_detail.menu_id IN(SELECT menu_id FROM m_fr_menu_show WHERE del_status=0 AND is_same_day_applicable=4 AND cat_id=5)\n" + 
 			"    group by\n" + 
 			"        t_bill_detail.bill_detail_no", nativeQuery = true)
+	
+	public List<GetGrnItemConfig> getGvnItemConfig(@Param("billNo") int billNo);*/
+	
+	
+	//Anmol----------16-9-2019
+	@Query(value = "SELECT\n" + 
+			"    t_bill_header.bill_no,\n" + 
+			"    t_bill_header.bill_no AS autoGrnQty,\n" + 
+			"    t_bill_header.bill_date,\n" + 
+			"    t_bill_header.bill_date_time,\n" + 
+			"    t_bill_detail.item_id,\n" + 
+			"    CASE WHEN t_bill_detail.menu_id NOT IN(\n" + 
+			"    SELECT\n" + 
+			"        menu_id\n" + 
+			"    FROM\n" + 
+			"        m_fr_menu_show\n" + 
+			"    WHERE\n" + 
+			"        del_status = 0 AND is_same_day_applicable = 4 AND cat_id = 5\n" + 
+			") THEN CASE WHEN t_bill_detail.cat_id = 5 THEN s.sp_name ELSE m_item.item_name\n" + 
+			"END ELSE(\n" + 
+			"    SELECT\n" + 
+			"        SUBSTRING_INDEX(t_sp_cake.item_id, '#', -1)\n" + 
+			"    FROM\n" + 
+			"        t_sp_cake\n" + 
+			"    WHERE\n" + 
+			"        t_sp_cake.sp_order_no = t_bill_detail.order_id AND t_bill_detail.cat_id = 5\n" + 
+			")\n" + 
+			"END AS item_name,\n" + 
+			"t_bill_detail.grn_type,\n" + 
+			"t_bill_detail.rate,\n" + 
+			"t_bill_detail.mrp,\n" + 
+			"t_bill_detail.bill_qty,\n" + 
+			"t_bill_detail.bill_detail_no,\n" + 
+			"t_bill_detail.bill_no,\n" + 
+			"t_bill_detail.sgst_per,\n" + 
+			"t_bill_detail.cgst_per,\n" + 
+			"t_bill_detail.igst_per,\n" + 
+			"t_bill_header.fr_id,\n" + 
+			"t_bill_header.invoice_no,\n" + 
+			"t_bill_detail.cat_id,\n" + 
+			"t_bill_detail.menu_id\n" + 
+			"FROM\n" + 
+			"    t_bill_header,\n" + 
+			"    t_bill_detail,\n" + 
+			"    m_item,\n" + 
+			"    m_sp_cake s\n" + 
+			"WHERE\n" + 
+			"    t_bill_detail.bill_no = :billNo AND t_bill_header.bill_no = t_bill_detail.bill_no AND t_bill_header.status = 2 AND(\n" + 
+			"        CASE WHEN t_bill_detail.menu_id NOT IN(\n" + 
+			"        SELECT\n" + 
+			"            menu_id\n" + 
+			"        FROM\n" + 
+			"            m_fr_menu_show\n" + 
+			"        WHERE\n" + 
+			"            del_status = 0 AND is_same_day_applicable = 4 AND cat_id = 5\n" + 
+			"    ) THEN CASE WHEN t_bill_detail.cat_id = 5 THEN t_bill_detail.item_id = s.sp_id ELSE t_bill_detail.item_id = m_item.id\n" + 
+			"    END ELSE 1\n" + 
+			"END\n" + 
+			") AND t_bill_detail.is_grngvn_applied = 0\n" + 
+			"GROUP BY\n" + 
+			"    t_bill_detail.bill_detail_no", nativeQuery = true)
 	
 	public List<GetGrnItemConfig> getGvnItemConfig(@Param("billNo") int billNo);
 	

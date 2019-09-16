@@ -97,10 +97,9 @@ public interface GetGrnGvnDetailsRepository extends JpaRepository<GetGrnGvnDetai
 			"    SELECT\n" + 
 			"        m_spcake_category_sup.sp_hsncd\n" + 
 			"    FROM\n" + 
-			"        m_spcake_category_sup,\n" + 
-			"        t_sp_cake_album\n" + 
+			"        m_spcake_category_sup\n" + 
 			"    WHERE\n" + 
-			"        m_spcake_category_sup.sp_id = t_sp_cake_album.sp_id AND t_sp_cake_album.album_id = t_grn_gvn.item_id AND t_grn_gvn.cat_id = 5\n" + 
+			"        m_spcake_category_sup.sp_id = t_grn_gvn.item_id AND t_grn_gvn.cat_id = 5\n" + 
 			")\n" + 
 			"END AS item_hsncd,\n" + 
 			"CASE WHEN t_grn_gvn.menu_id NOT IN(\n" + 
@@ -127,11 +126,12 @@ public interface GetGrnGvnDetailsRepository extends JpaRepository<GetGrnGvnDetai
 			")\n" + 
 			"END ELSE(\n" + 
 			"    SELECT\n" + 
-			"        album_name\n" + 
+			"        SUBSTRING_INDEX(t_sp_cake.item_id, '#', -1)\n" + 
 			"    FROM\n" + 
-			"        t_sp_cake_album\n" + 
+			"        t_sp_cake,\n" + 
+			"        t_bill_detail\n" + 
 			"    WHERE\n" + 
-			"        del_status = 1 AND album_id = t_grn_gvn.item_id AND t_grn_gvn.cat_id = 5\n" + 
+			"        t_sp_cake.sp_order_no = t_bill_detail.order_id AND t_bill_detail.bill_detail_no = t_grn_gvn.bill_detail_no AND t_grn_gvn.cat_id = 5\n" + 
 			")\n" + 
 			"END AS item_name,\n" + 
 			"t_grn_gvn.apr_qty_gate,\n" + 
