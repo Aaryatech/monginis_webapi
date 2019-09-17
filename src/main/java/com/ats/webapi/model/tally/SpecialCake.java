@@ -73,6 +73,9 @@ public class SpecialCake implements Serializable {
 	
 	@Column(name="erp_link_code")
 	private String erpLinkCode;
+	
+	@Transient
+	private int isAlbum;
 
 	@PostLoad
 	public void onLoad() {
@@ -234,6 +237,18 @@ public class SpecialCake implements Serializable {
 	public void setErpLinkCode(String erpLinkCode) {
 		this.erpLinkCode = erpLinkCode;
 	}
+	
+	
+
+	public int getIsAlbum() {
+		return isAlbum;
+	}
+
+	public void setIsAlbum(int isAlbum) {
+		this.isAlbum = isAlbum;
+	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -241,7 +256,8 @@ public class SpecialCake implements Serializable {
 				+ subGroup + ", subSubGroup=" + subSubGroup + ", hsnCode=" + hsnCode + ", uom=" + uom + ", sgstPer="
 				+ sgstPer + ", cgstPer=" + cgstPer + ", igstPer=" + igstPer + ", cessPer=" + cessPer + ", spCode="
 				+ spCode + ", spRate1=" + spRate1 + ", spRate2=" + spRate2 + ", spRate3=" + spRate3 + ", mrpRate1="
-				+ mrpRate1 + ", mrpRate2=" + mrpRate2 + ", mrpRate3=" + mrpRate3 + ", erpLinkCode=" + erpLinkCode + "]";
+				+ mrpRate1 + ", mrpRate2=" + mrpRate2 + ", mrpRate3=" + mrpRate3 + ", erpLinkCode=" + erpLinkCode
+				+ ", isAlbum=" + isAlbum + "]";
 	}
 
 	

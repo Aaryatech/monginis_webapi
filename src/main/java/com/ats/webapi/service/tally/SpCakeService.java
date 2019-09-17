@@ -11,6 +11,8 @@ import com.ats.webapi.model.tally.SpCakeList;
 public interface SpCakeService {
 
 	SpCakeList getAllSpCake();
+	
+	SpCakeList getAllSpCakeAndAlbum();
 
 	ErrorMessage updateSpCakes(int spId, int isTallySync);
 

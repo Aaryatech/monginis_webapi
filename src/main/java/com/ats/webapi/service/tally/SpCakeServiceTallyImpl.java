@@ -45,6 +45,33 @@ public class SpCakeServiceTallyImpl implements SpCakeService {
 			}
 		return allSpCakeList;
 	}
+	
+	//Anmol-----------17-6-2019
+	@Override
+	public SpCakeList getAllSpCakeAndAlbum() {
+		 List<SpecialCake> spCakeList=tallySpCakeRepository.findByIsTallySyncSpAndAlbum();
+			
+			SpCakeList allSpCakeList=new SpCakeList();
+			ErrorMessage errorMessage=new ErrorMessage();
+			
+			if(spCakeList==null)
+			{
+			
+				errorMessage.setError(true);
+				errorMessage.setMessage("Item Not Found");
+				
+				allSpCakeList.setErrorMessage(errorMessage);
+			}
+			else
+			{
+				errorMessage.setError(false);
+				errorMessage.setMessage("Item Found Successfully");
+				
+				allSpCakeList.setSpecialCakeList(spCakeList);
+				allSpCakeList.setErrorMessage(errorMessage);			
+			}
+		return allSpCakeList;
+	}
 
 	@Override
 	public ErrorMessage updateSpCakes(int spId, int isTallySync) {
