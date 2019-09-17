@@ -32,4 +32,5 @@ public interface ItemService {
 	public List<Item> getItemsByCatIdForSup(String itemGrp1);
 	public List<Item> findAllItemsByItemId(List<Integer> itemList);
 	public List<Item> getItemsByCatIdForGateSale(String itemGrp1);
+	public ItemsList getItemsForItemDetail(int rmId,int rmType);
 }

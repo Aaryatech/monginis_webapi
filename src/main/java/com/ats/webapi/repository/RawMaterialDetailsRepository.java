@@ -34,5 +34,7 @@ public interface RawMaterialDetailsRepository extends JpaRepository<RawMaterialD
 	@Query(" UPDATE RawMaterialDetails SET isTallySync=:isTallySync WHERE rmId=:rmId ")
 	int updateRawMaterial(@Param("rmId")int rmId,@Param("isTallySync")int isTallySync);
 
+	List<RawMaterialDetails> findByDelStatusAndRmOpRate(int i, int deptId);
+
 
 }

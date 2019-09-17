@@ -38,7 +38,7 @@ public interface ProdMixingReqP1Repo  extends JpaRepository<ProdMixingReqP1, Int
 			+ "t_production_plan_header, t_production_plan_detail,m_rm_uom WHERE t_production_plan_detail.item_id=m_item_detail.item_id "
 			+ "AND t_production_plan_header.production_header_id=t_production_plan_detail.production_header_id "
 			+ "AND t_production_plan_header.production_header_id=:headerId AND m_rm_uom.uom_id=m_item_detail.rm_uom_id and m_item_detail.rm_type=2 and m_item_detail.del_status=0"
-			+ "GROUP BY m_item_detail.rm_id " + 
+			+ " GROUP BY m_item_detail.rm_id " + 
 			"",nativeQuery=true)
 	
 	List<ProdMixingReqP1> getSFAndPlanDetailForMixing(@Param("headerId") int headerId);

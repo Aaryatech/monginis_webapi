@@ -185,7 +185,7 @@ public class TempProdApi {
 		
 		//bom started
 		@RequestMapping(value = { "/getSfPlanDetailForBom" }, method = RequestMethod.POST)
-		public @ResponseBody GetSFPlanDetailForMixingList getSfPlanDetailForBom(@RequestParam("headerId")int headerId) {
+		public @ResponseBody GetSFPlanDetailForMixingList getSfPlanDetailForBom(@RequestParam("headerId")int headerId,@RequestParam("deptId") int deptId) {
 
 			GetSFPlanDetailForMixingList sfAndPlanDetailList = new GetSFPlanDetailForMixingList();
 			
@@ -193,7 +193,7 @@ public class TempProdApi {
 
 			try {
 			
-				List<GetSFPlanDetailForMixing> sfPlanDetailForBom=getSFPlanDetailForMixingRepo.getSfPlanDetailForBom(headerId);
+				List<GetSFPlanDetailForMixing> sfPlanDetailForBom=getSFPlanDetailForMixingRepo.getSfPlanDetailForBom(headerId,deptId);
 			
 			if(!sfPlanDetailForBom.isEmpty()) {
 				

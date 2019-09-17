@@ -10,7 +10,7 @@ import com.ats.webapi.model.MiniSubCategory;
 
 public interface MiniSubCategoryRepository extends JpaRepository<MiniSubCategory, Integer>{
 
-	@Query(value="select m.*,s.sub_cat_name,c.cat_name from m_cat_sub2 m,m_cat_sub s,m_category c where m.sub_cat_id=s.sub_cat_id and s.cat_id=c.cat_id and s.del_status=0",nativeQuery=true)
+	@Query(value="select m.*,'-' as sub_cat_name,'-' as cat_name from m_cat_sub2 m where  m.del_status=0",nativeQuery=true)
 	List<MiniSubCategory> showMiniSubCatList();
 
 	@Query(value="select m.*,s.sub_cat_name,c.cat_name from m_cat_sub2 m,m_cat_sub s,m_category c where m.sub_cat_id=s.sub_cat_id and s.cat_id=c.cat_id and s.del_status=0"

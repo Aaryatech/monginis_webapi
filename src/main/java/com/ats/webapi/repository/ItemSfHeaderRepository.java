@@ -31,7 +31,7 @@ public interface  ItemSfHeaderRepository extends JpaRepository<GetItemSfHeader, 
 			"        m_item_sf_header.max_level_qty,\n" + 
 			"        m_item_sf_header.reorder_level_qty,\n" + 
 			"        m_item_sf_header.mul_factor,\n" + 
-			"        m_item_sf_header.del_status \n" + 
+			"        m_item_sf_header.del_status, m_item_sf_header.int_1, m_item_sf_header.int_2, m_item_sf_header.varchar_1, m_item_sf_header.varchar_2, m_item_sf_header.bool_1 \n" + 
 			"    from\n" + 
 			"        m_item_sf_header,\n" + 
 			"        m_sf_type \n" + 

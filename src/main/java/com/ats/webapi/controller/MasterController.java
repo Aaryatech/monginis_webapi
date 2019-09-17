@@ -43,6 +43,7 @@ import com.ats.webapi.model.SpCake;
 import com.ats.webapi.model.SpCakeSupplement;
 import com.ats.webapi.model.SpCakeSupplementCat;
 import com.ats.webapi.model.SubCategory;
+import com.ats.webapi.model.SubCategory2;
 import com.ats.webapi.model.tally.FranchiseeList;
 import com.ats.webapi.model.tray.TrayType;
 import com.ats.webapi.repository.ConfigureFrRepository;
@@ -57,6 +58,7 @@ import com.ats.webapi.repository.PostFrOpStockDetailRepository;
 import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
 import com.ats.webapi.repository.SpCakeListRepository;
 import com.ats.webapi.repository.SpCkDeleteOrderRepository;
+import com.ats.webapi.repository.SubCategory2Repository;
 import com.ats.webapi.repository.SubCategoryRepository;
 import com.ats.webapi.repository.TRegSpCakeSupDeleteRepository;
 import com.ats.webapi.repository.TSpCakeSupDeleteRepository;
@@ -121,6 +123,9 @@ public class MasterController {
 
 	@Autowired
 	TRegSpCakeSupDeleteRepository tRegSpCakeSupDeleteRepository;
+	
+	@Autowired
+	SubCategory2Repository subCategory2Repository;
 
 	// ----------------------------GET FrToken--------------------------------
 	@RequestMapping(value = { "/getFrToken" }, method = RequestMethod.POST)
@@ -132,6 +137,55 @@ public class MasterController {
 	}
 
 	// -------------------------------------------------------------------------
+	// ----------------------------SAVE Sub Category 2---------------------------
+		@RequestMapping(value = { "/saveSubCategory2" }, method = RequestMethod.POST)
+		public @ResponseBody SubCategory2 SubCategory2(@RequestBody SubCategory2 subCategory2) {
+
+			SubCategory2 subCategory2Res = null;
+			try {
+
+				subCategory2Res = subCategory2Repository.save(subCategory2);
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+			}
+			return subCategory2Res;
+
+		}
+		// ------------------------Getting One Sub Category 2-----------------------
+		@RequestMapping(value = { "/getSubCategory2ById" }, method = RequestMethod.POST)
+		public @ResponseBody SubCategory2 getSubCategory2ById(@RequestParam("miniCatId") int miniCatId) {
+
+			SubCategory2 subCategory2Res = null;
+			try {
+				subCategory2Res = subCategory2Repository.findByMiniCatIdAndDelStatus(miniCatId,0);
+
+			} catch (Exception e) {
+				
+				System.out.println("Exception In SubCategory2:" + e.getMessage());
+			}
+
+			return subCategory2Res;
+
+		}
+		@RequestMapping(value = { "/deleteSubCategory2ById" }, method = RequestMethod.POST)
+		public @ResponseBody Info deleteSubCategory2ById(@RequestParam int miniCatId) {
+
+			int isDeleted = subCategory2Repository.deleteSubCategory2ById(miniCatId);
+			Info info = new Info();
+			if (isDeleted == 1) {
+
+				info.setError(false);
+				info.setMessage("SubCategory2 Deleted");
+
+			} else {
+				info.setError(true);
+				info.setMessage("SubCategory2 Deletion Failed");
+			}
+			return info;
+		}
+
 	// ----------------------------SAVE Item Sup---------------------------
 	@RequestMapping(value = { "/saveItemSup" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveItemSup(@RequestBody ItemSup itemSup) {

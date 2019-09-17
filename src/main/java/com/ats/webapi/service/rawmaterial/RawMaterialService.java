@@ -94,4 +94,8 @@ public interface RawMaterialService {
 	RawMaterialResList getAllRawMaterialForTally();
 
 	ErrorMessage updateRawMaterial(int rmId, int isTallySync);
+
+	List<RawMaterialDetails> getAllRawMaterialByDept(int deptId);
+
+	List<ItemSfHeader> getItemSfHeadersByDept(int deptId);
 }

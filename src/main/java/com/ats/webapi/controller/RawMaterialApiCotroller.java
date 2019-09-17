@@ -197,6 +197,34 @@ public class RawMaterialApiCotroller {
 		return rawMaterialDetails;
 		 
 		
+	}	
+	@RequestMapping(value = { "/getAllRawMaterialByDept" }, method = RequestMethod.POST)
+	public @ResponseBody RawMaterialDetailsList getAllRawMaterialByDept(@RequestParam ("deptId")int deptId)
+	{
+		RawMaterialDetailsList rawMaterialDetails=new RawMaterialDetailsList();
+		ErrorMessage errorMessage;
+		List<RawMaterialDetails> rawMaterialDetailsList=rawMaterialService.getAllRawMaterialByDept(deptId);
+		
+		if(rawMaterialDetailsList!=null)
+		{
+			errorMessage=new ErrorMessage();
+			errorMessage.setError(false);
+			errorMessage.setMessage("RM Details Found Successfully");
+			
+			rawMaterialDetails.setErrorMessage(errorMessage);
+			rawMaterialDetails.setRawMaterialDetailsList(rawMaterialDetailsList);
+		}
+		else
+		{
+			errorMessage=new ErrorMessage();
+			errorMessage.setError(true);
+			errorMessage.setMessage("RM Details Not Found");
+			
+			rawMaterialDetails.setErrorMessage(errorMessage);
+		}
+		return rawMaterialDetails;
+		 
+		
 	}
 	//------------------------------------Get Rm Details------------------------------------
 	@RequestMapping(value = { "/getRawMaterialDetail" }, method = RequestMethod.POST)
@@ -573,6 +601,29 @@ public class RawMaterialApiCotroller {
 	public @ResponseBody ItemSfHeaderList getItemSfHeaders()
 	{
 		List<ItemSfHeader> itemSfHeaders=rawMaterialService.getItemSfHeaders();
+		
+		ItemSfHeaderList itemSfHeaderList=new ItemSfHeaderList();
+		
+		ErrorMessage errorMessage=new ErrorMessage();
+		if(itemSfHeaders!=null)
+		{
+			errorMessage.setError(false);
+			errorMessage.setMessage("ItemSfHeader List  Found successFully");
+			itemSfHeaderList.setErrorMessage(errorMessage);
+			itemSfHeaderList.setItemSfHeaderList(itemSfHeaders);
+		}
+		else
+		{
+			errorMessage.setError(true);
+			errorMessage.setMessage("ItemSfHeader List Not Found.");
+			itemSfHeaderList.setErrorMessage(errorMessage);
+		}
+		return itemSfHeaderList;
+	}
+	@RequestMapping(value = { "/getItemSfHeadersByDept" }, method = RequestMethod.GET)
+	public @ResponseBody ItemSfHeaderList getItemSfHeadersByDept(int deptId)
+	{
+		List<ItemSfHeader> itemSfHeaders=rawMaterialService.getItemSfHeadersByDept(deptId);
 		
 		ItemSfHeaderList itemSfHeaderList=new ItemSfHeaderList();
 		
