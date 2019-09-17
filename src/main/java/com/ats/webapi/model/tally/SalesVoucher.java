@@ -133,6 +133,9 @@ public class SalesVoucher implements Serializable{
 	
 	@Column(name="erp_link")
 	private String erpLink;
+	
+	@Column(name="is_album")
+	private int isAlbum;
 
 	@PostLoad
 	public void onLoad() {
@@ -456,7 +459,18 @@ public class SalesVoucher implements Serializable{
 	public void setErpLink(String erpLink) {
 		this.erpLink = erpLink;
 	}
+	
+	
 
+	public int getIsAlbum() {
+		return isAlbum;
+	}
+
+	public void setIsAlbum(int isAlbum) {
+		this.isAlbum = isAlbum;
+	}
+
+	
 	@Override
 	public String toString() {
 		return "SalesVoucher [billDetailNo=" + billDetailNo + ", billNo=" + billNo + ", vNo=" + vNo + ", date=" + date
@@ -468,7 +482,8 @@ public class SalesVoucher implements Serializable{
 				+ roundOff + ", totalAmt=" + totalAmt + ", billTotal=" + billTotal + ", totalTaxableAmt="
 				+ totalTaxableAmt + ", sgstSum=" + sgstSum + ", cgstSum=" + cgstSum + ", igstSum=" + igstSum
 				+ ", totalTax=" + totalTax + ", frId=" + frId + ", itemId=" + itemId + ", catId=" + catId
-				+ ", itemCode=" + itemCode + ", frCode=" + frCode + ", remark=" + remark + ", erpLink=" + erpLink + "]";
+				+ ", itemCode=" + itemCode + ", frCode=" + frCode + ", remark=" + remark + ", erpLink=" + erpLink
+				+ ", isAlbum=" + isAlbum + "]";
 	}
 	
 	

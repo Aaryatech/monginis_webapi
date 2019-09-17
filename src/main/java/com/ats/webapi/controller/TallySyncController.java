@@ -132,9 +132,13 @@ public class TallySyncController {
 
 				for (int i = 0; i < salesVoucher.size(); i++) {
 
-					if (salesVoucher.get(i).getErpLink().equalsIgnoreCase("0")) {
-						salesVoucher.get(i).setErpLink("A");
+					if (salesVoucher.get(i).getErpLink() != null) {
+						if (salesVoucher.get(i).getErpLink().equalsIgnoreCase("0")) {
+							salesVoucher.get(i).setErpLink("A");
 
+						}
+					} else {
+						salesVoucher.get(i).setErpLink("A");
 					}
 				}
 

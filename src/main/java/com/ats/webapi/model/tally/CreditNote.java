@@ -155,6 +155,9 @@ public class CreditNote implements Serializable{
 	@Column(name="is_same_state")
 	private int isSameState;//new
 	
+	@Column(name="is_album")
+	private Integer isAlbum;//new
+	
 	@PostLoad
 	public void onLoad() {
 		this.vType="Credit Note";
@@ -534,6 +537,20 @@ public class CreditNote implements Serializable{
 	public void setErpLink(String erpLink) {
 		this.erpLink = erpLink;
 	}
+	
+	
+
+	
+	
+	public Integer getIsAlbum() {
+		return isAlbum;
+	}
+
+	public void setIsAlbum(Integer isAlbum) {
+		this.isAlbum = isAlbum;
+	}
+	
+	
 
 	@Override
 	public String toString() {
@@ -548,7 +565,7 @@ public class CreditNote implements Serializable{
 				+ ", crDbNo=" + crDbNo + ", crDbDate=" + crDbDate + ", frId=" + frId + ", frCode=" + frCode
 				+ ", itemId=" + itemId + ", catId=" + catId + ", crnTaxableAmt=" + crnTaxableAmt + ", crnTotalTax="
 				+ crnTotalTax + ", crnGrandTotal=" + crnGrandTotal + ", itemcode=" + itemcode + ", isGrn=" + isGrn
-				+ ", erpLink=" + erpLink + ", isSameState=" + isSameState + "]";
+				+ ", erpLink=" + erpLink + ", isSameState=" + isSameState + ", isAlbum=" + isAlbum + "]";
 	}
  
   
