@@ -3525,7 +3525,14 @@ public class RestApiController {
 		ItemsList itemsList = itemService.findAllItems();
 		return itemsList;
 	}
-
+	
+	
+	// Get All Items ForItemDetail"
+		@RequestMapping(value = { "/getAllItemsForForItemDetail" }, method = RequestMethod.POST)
+		public @ResponseBody ItemsList findAllItems(@RequestParam int rmId,@RequestParam int rmType) {
+			ItemsList itemsList = itemService.getItemsForItemDetail(rmId,rmType);
+			return itemsList;
+		}
 	// Get All Items order By Sub category, Sort Id
 	@RequestMapping(value = { "/getAllItemsBySorting" }, method = RequestMethod.GET)
 	public @ResponseBody ItemsList getAllItemsBySorting() {
