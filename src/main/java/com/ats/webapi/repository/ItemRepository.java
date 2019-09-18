@@ -55,7 +55,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 			"item_sort_id,grn_two ,del_status  ,min_qty, item_shelf_life  from m_item  where m_item.id IN (:itemIdList) AND m_item.del_status=:delStatus order by m_item.item_grp2,m_item.item_name", nativeQuery = true)
 	public List<Item> findByIdInAndDelStatusOrderByItemGrp2AscItemSortIdAscNew(@Param("itemIdList")List<Integer> itemIdList,@Param("delStatus") int i);
 
-	@Query(value = "select m_item.* from m_item where m_item.del_status=0 and m_item.id In(select m_item_detail.item_id from m_item_detail where del_status=0 and m_item_detail.rm_id=:rmId and rm_type=:rmType",nativeQuery=true)
+	@Query(value = "select m_item.* from m_item where m_item.del_status=0 and m_item.id In(select m_item_detail.item_id from m_item_detail where del_status=0 and m_item_detail.rm_id=:rmId and rm_type=:rmType)",nativeQuery=true)
 	public List<Item> getItemsByRmIdAndRmType(@Param("rmId")int rmId,@Param("rmType") int rmType);
 
 }

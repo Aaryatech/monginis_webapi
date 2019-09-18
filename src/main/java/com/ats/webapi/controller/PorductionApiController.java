@@ -379,10 +379,10 @@ if(!postProdPlanHeader.getPostProductionPlanDetail().isEmpty()) {
 	
 	//----------------------------------END------------------------------------- 
 	@RequestMapping(value = { "/updateisMixingandBom" }, method = RequestMethod.POST)
-	public @ResponseBody int updateisMixing(@RequestParam("productionId") int productionId,@RequestParam("flag") int flag)
+	public @ResponseBody int updateisMixing(@RequestParam("productionId") int productionId,@RequestParam("flag") int flag,@RequestParam("deptId")int deptId)
 	{
 		
-		int menuList=productionService.updateisMixing(productionId,flag);
+		int menuList=productionService.updateisMixing(productionId,flag,deptId);
 		
 		return menuList;
 		

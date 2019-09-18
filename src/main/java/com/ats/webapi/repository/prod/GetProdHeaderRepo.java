@@ -11,7 +11,7 @@ import com.ats.webapi.model.prod.GetProdPlanHeader;
 
 public interface GetProdHeaderRepo extends JpaRepository<GetProdPlanHeader, Integer> {
 	
-@Query(value=" SELECT t_production_plan_header.production_header_id,t_production_plan_header.is_planned,\n" + 
+@Query(value=" SELECT t_production_plan_header.production_header_id,t_production_plan_header.is_planned,t_production_plan_header.int_2,\n" + 
 		"t_production_plan_header.production_date,\n" + 
 		"t_production_plan_header.cat_id,\n" + 
 		"t_production_plan_header.production_batch,\n" + 

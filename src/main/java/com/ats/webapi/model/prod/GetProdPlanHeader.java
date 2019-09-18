@@ -52,6 +52,19 @@ public class GetProdPlanHeader implements Serializable {
 	@Column(name="is_planned")
 	private int isPlanned;
 	
+	@Column(name="int_2")
+	private int isStoreBom;
+	
+	
+	
+
+	public int getIsStoreBom() {
+		return isStoreBom;
+	}
+
+	public void setIsStoreBom(int isStoreBom) {
+		this.isStoreBom = isStoreBom;
+	}
 
 	public int getProductionHeaderId() {
 		return productionHeaderId;
@@ -140,6 +153,14 @@ public class GetProdPlanHeader implements Serializable {
 
 	public void setIsPlanned(int isPlanned) {
 		this.isPlanned = isPlanned;
+	}
+
+	@Override
+	public String toString() {
+		return "GetProdPlanHeader [productionHeaderId=" + productionHeaderId + ", catId=" + catId + ", timeSlot="
+				+ timeSlot + ", productionBatch=" + productionBatch + ", productionStatus=" + productionStatus
+				+ ", productionDate=" + productionDate + ", isMixing=" + isMixing + ", isBom=" + isBom + ", delStatus="
+				+ delStatus + ", catName=" + catName + ", isPlanned=" + isPlanned + ", isStoreBom=" + isStoreBom + "]";
 	}
 	
 

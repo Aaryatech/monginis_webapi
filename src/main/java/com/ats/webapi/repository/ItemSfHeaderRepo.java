@@ -26,5 +26,8 @@ public interface ItemSfHeaderRepo extends JpaRepository<ItemSfHeader, Integer>{
 	
 	List<ItemSfHeader> getSfHeader();
 	*/
-	
+	@Transactional
+	@Modifying
+	@Query("UPDATE ItemSfHeader t SET t.sfWeight =:sfWeight  WHERE t.sfId=:sfId")
+	public int updateRmWeightInHeader(@Param("sfId") int sfId,@Param("sfWeight") float sfWeight);
 }

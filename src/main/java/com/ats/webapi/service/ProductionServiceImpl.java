@@ -191,7 +191,7 @@ public class ProductionServiceImpl implements ProductionService{
 	}
 
 	@Override
-	public int updateisMixing(int productionId,int flag) {
+	public int updateisMixing(int productionId,int flag,int deptId) {
 		int update = 0;
 		try
 		{
@@ -202,9 +202,14 @@ public class ProductionServiceImpl implements ProductionService{
 			}
 			else if(flag==1)
 			{
-				System.out.println("flag 1 in if else");
+				if(deptId==17) {
 				update=postProdPlanHeaderRepository.updateisBom(productionId);	
+				}else if(deptId==10)
+				{
+					update=postProdPlanHeaderRepository.updateisMixing(productionId);		
+				}
 			}
+			
 			 
 		}catch(Exception e)
 		{

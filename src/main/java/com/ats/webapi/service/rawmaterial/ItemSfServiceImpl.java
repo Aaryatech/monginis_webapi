@@ -47,12 +47,17 @@ public class ItemSfServiceImpl implements ItemSfService {
 		ItemSfDetail itemSfDetail=new ItemSfDetail();
 		Info info=new Info();
 		
+		float sfWeight=0.0f;
 		
 		for(int i=0;i<itemSfDetailList.size();i++) {
 			
 			 itemSfDetail=itemSfDetailRepo.save(itemSfDetailList.get(i));
+			 sfWeight+=itemSfDetailList.get(i).getRmWeight();
 		}
-		
+		if(sfWeight>0)
+		{
+		int isUpdated=itemSfHeaderRepo.updateRmWeightInHeader(itemSfDetailList.get(0).getSfId(),sfWeight);
+		}
 		if(itemSfDetail!=null) {
 			
 			info.setError(false);
