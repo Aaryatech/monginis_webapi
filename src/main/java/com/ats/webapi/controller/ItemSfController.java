@@ -190,5 +190,24 @@ public class ItemSfController {
 	return itemDetails;
 	
 	}
+	@RequestMapping(value = { "/getSfItemDetailsForCreamPrep" }, method = RequestMethod.POST)
+	public @ResponseBody SfItemDetailList getSfItemDetailsForCreamPrep(@RequestParam("sfId")int sfId,@RequestParam("sfQty")int sfQty) {
+		
+		SfItemDetailList itemDetails=new SfItemDetailList();
+		List<ItemSfDetail> list=null;	
+		try {
+			list=new ArrayList<>();
+	ItemSfDetail	itemList=itemSfDetailRepo.getSfItemDetailsForCreamPrep(sfQty, sfId);
+		
+	list.add(itemList);itemDetails.setSfItemDetail(list);
+		}catch (Exception e) {
+			
+			System.out.println("Exe getting Sf Item Details  "+e.getMessage());
+			e.printStackTrace();
+		}
+		
+	return itemDetails;
+	
+	}
 	
 }
