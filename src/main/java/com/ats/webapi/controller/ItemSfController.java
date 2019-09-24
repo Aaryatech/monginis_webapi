@@ -191,15 +191,14 @@ public class ItemSfController {
 	
 	}
 	@RequestMapping(value = { "/getSfItemDetailsForCreamPrep" }, method = RequestMethod.POST)
-	public @ResponseBody SfItemDetailList getSfItemDetailsForCreamPrep(@RequestParam("sfId")int sfId,@RequestParam("sfQty")int sfQty) {
+	public @ResponseBody SfItemDetailList getSfItemDetailsForCreamPrep(@RequestParam("sfId")List<Integer> sfId) {
 		
 		SfItemDetailList itemDetails=new SfItemDetailList();
-		List<ItemSfDetail> list=null;	
+		List<ItemSfDetail> itemList=null;	
 		try {
-			list=new ArrayList<>();
-	ItemSfDetail	itemList=itemSfDetailRepo.getSfItemDetailsForCreamPrep(sfQty, sfId);
+			itemList=itemSfDetailRepo.getSfItemDetailsForCreamPrep(sfId);
 		
-	list.add(itemList);itemDetails.setSfItemDetail(list);
+	        itemDetails.setSfItemDetail(itemList);
 		}catch (Exception e) {
 			
 			System.out.println("Exe getting Sf Item Details  "+e.getMessage());
