@@ -218,8 +218,8 @@ public class TempProdApi {
 			}
 				return sfAndPlanDetailList;
 		  }
-		@RequestMapping(value = { "/getBomDataForLayering" }, method = RequestMethod.POST)
-		public @ResponseBody GetSFPlanDetailForMixingList getBomDataForLayering(@RequestParam("headerId")int headerId,@RequestParam("deptId") int deptId) {
+		@RequestMapping(value = { "/showDetailsForCp" }, method = RequestMethod.POST)
+		public @ResponseBody GetSFPlanDetailForMixingList showDetailsForCp(@RequestParam("headerId")int headerId,@RequestParam("deptId") int deptId) {
 
 			GetSFPlanDetailForMixingList sfAndPlanDetailList = new GetSFPlanDetailForMixingList();
 			
@@ -227,7 +227,7 @@ public class TempProdApi {
 
 			try {
 			
-				List<GetSFPlanDetailForMixing> sfPlanDetailForBom=getSFPlanDetailForMixingRepo.getBomDataForLayering(headerId,deptId);
+				List<GetSFPlanDetailForMixing> sfPlanDetailForBom=getSFPlanDetailForMixingRepo.showDetailsForCp(headerId,deptId);
 			
 			if(!sfPlanDetailForBom.isEmpty()) {
 				
@@ -252,7 +252,74 @@ public class TempProdApi {
 			}
 				return sfAndPlanDetailList;
 		  }
-		
+		@RequestMapping(value = { "/showDetailsForLayering" }, method = RequestMethod.POST)
+		public @ResponseBody GetSFPlanDetailForMixingList showDetailsForLayering(@RequestParam("headerId")int headerId,@RequestParam("deptId") int deptId) {
+
+			GetSFPlanDetailForMixingList sfAndPlanDetailList = new GetSFPlanDetailForMixingList();
+			
+			Info info=new Info();
+
+			try {
+			
+				List<GetSFPlanDetailForMixing> sfPlanDetailForBom=getSFPlanDetailForMixingRepo.showDetailsForLayering(headerId,deptId);
+			
+			if(!sfPlanDetailForBom.isEmpty()) {
+				
+				info.setError(false);
+				info.setMessage("success");
+				
+			}
+			else {
+				
+				info.setError(true);
+				info.setMessage("failed");
+			}
+	  
+			sfAndPlanDetailList.setSfPlanDetailForMixing(sfPlanDetailForBom);
+			sfAndPlanDetailList.setInfo(info);
+			
+			
+			}catch (Exception e) {
+				System.out.println("Error getting sf and Plan Detail For Bom ");
+				e.printStackTrace();
+				
+			}
+				return sfAndPlanDetailList;
+		  }
+		@RequestMapping(value = { "/showDetailsForCoating" }, method = RequestMethod.POST)
+		public @ResponseBody GetSFPlanDetailForMixingList showDetailsForCoating(@RequestParam("headerId")int headerId,@RequestParam("deptId") int deptId) {
+
+			GetSFPlanDetailForMixingList sfAndPlanDetailList = new GetSFPlanDetailForMixingList();
+			
+			Info info=new Info();
+
+			try {
+			
+				List<GetSFPlanDetailForMixing> sfPlanDetailForBom=getSFPlanDetailForMixingRepo.showDetailsForCoating(headerId,deptId);
+			
+			if(!sfPlanDetailForBom.isEmpty()) {
+				
+				info.setError(false);
+				info.setMessage("success");
+				
+			}
+			else {
+				
+				info.setError(true);
+				info.setMessage("failed");
+			}
+	  
+			sfAndPlanDetailList.setSfPlanDetailForMixing(sfPlanDetailForBom);
+			sfAndPlanDetailList.setInfo(info);
+			
+			
+			}catch (Exception e) {
+				System.out.println("Error getting sf and Plan Detail For Bom ");
+				e.printStackTrace();
+				
+			}
+				return sfAndPlanDetailList;
+		  }
 		//bom second web service
 		
 

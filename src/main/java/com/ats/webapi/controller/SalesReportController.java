@@ -478,7 +478,7 @@ public class SalesReportController {
 			@RequestParam("toDate") String toDate, @RequestParam("frIdList") List<Integer> frIdList,
 			@RequestParam("subCatIdList") List<Integer> subCatIdList) {
 
-		List<SubCatItemReport> catReportList = new ArrayList<>();
+		List<SubCatItemReport> catReportList = new ArrayList<SubCatItemReport>();
 		List<SubCatFrItemRepBill> catReportBill = null;
 
 		List<SubCatCreditGrnFrItemRep> subCatCreditGrnRep = null;
