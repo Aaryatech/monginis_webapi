@@ -24,6 +24,7 @@ import com.ats.webapi.model.album.AlbumCodeAndName;
 import com.ats.webapi.model.album.AlbumRepo;
 import com.ats.webapi.model.album.SearchAlbumCakeResponse;
 import com.ats.webapi.repository.AlbumCodeAndNameRepo;
+import com.ats.webapi.repository.MenuForAlbumRepo;
 import com.ats.webapi.repository.OrderSpCakeRepository;
 import com.ats.webapi.service.MenuService;
 import com.ats.webapi.util.JsonUtil;
@@ -42,6 +43,9 @@ public class AlbumApiControllr {
 	
 	@Autowired
 	AlbumCodeAndNameRepo albumCodeAndNameRepo;
+	
+	
+	
 
 	@RequestMapping(value = { "/saveAlbum" }, method = RequestMethod.POST)
 	public @ResponseBody Album saveAlbum(@RequestBody Album album) {

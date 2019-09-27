@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.ats.webapi.model.SpecialCake;
 import com.ats.webapi.model.SpecialCakeCat;
 
 public interface SpecialCakeCatRepository extends JpaRepository<SpecialCakeCat, Integer> {
@@ -35,5 +36,7 @@ public interface SpecialCakeCatRepository extends JpaRepository<SpecialCakeCat, 
 			+ "fc.is_del=0 AND m.del_status=0 AND fc.fr_id=:frId AND m.cat_id=5 AND "
 			+ "m.is_same_day_applicable=4))", nativeQuery = true)
 	List<SpecialCakeCat> getDataByFr(@Param("frId") int frId);
+	
+	
 	
 }
