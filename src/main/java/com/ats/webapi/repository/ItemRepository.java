@@ -58,4 +58,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 	@Query(value = "select m_item.* from m_item where m_item.del_status=0 and m_item.id In(select m_item_detail.item_id from m_item_detail where del_status=0 and m_item_detail.rm_id=:rmId and rm_type=:rmType)",nativeQuery=true)
 	public List<Item> getItemsByRmIdAndRmType(@Param("rmId")int rmId,@Param("rmType") int rmType);
 
+	@Query(value = "select m_item.* from m_item where m_item.del_status=0 And m_item.item_grp3=:itemGrp3 and m_item.id IN (select d.item_id from t_production_plan_detail d where d.production_header_id=:prodHeaderId group by d.item_id) order by m_item.item_name ", nativeQuery = true)
+	public List<Item> findByItemGrp3(@Param("itemGrp3") String itemGrp3,@Param("prodHeaderId") int prodHeaderId);
+
 }

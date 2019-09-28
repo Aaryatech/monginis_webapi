@@ -322,7 +322,40 @@ public class TempProdApi {
 		  }
 		//bom second web service
 		
+		@RequestMapping(value = { "/getSfDetailsForIssue" }, method = RequestMethod.POST)
+		public @ResponseBody GetSFPlanDetailForMixingList getSfDetailsForIssue(@RequestParam("headerId")int headerId,@RequestParam("deptId") int deptId,@RequestParam("itemId") List<String> itemId) {
 
+			GetSFPlanDetailForMixingList sfAndPlanDetailList = new GetSFPlanDetailForMixingList();
+			
+			Info info=new Info();
+
+			try {
+			
+				List<GetSFPlanDetailForMixing> sfPlanDetailForBom=getSFPlanDetailForMixingRepo.getSfDetailsForIssue(headerId,deptId,itemId);
+			
+			if(!sfPlanDetailForBom.isEmpty()) {
+				
+				info.setError(false);
+				info.setMessage("success");
+				
+			}
+			else {
+				
+				info.setError(true);
+				info.setMessage("failed");
+			}
+	  
+			sfAndPlanDetailList.setSfPlanDetailForMixing(sfPlanDetailForBom);
+			sfAndPlanDetailList.setInfo(info);
+			
+			
+			}catch (Exception e) {
+				System.out.println("Error getting sf and Plan Detail For Bom ");
+				e.printStackTrace();
+				
+			}
+				return sfAndPlanDetailList;
+		  }
 		@RequestMapping(value = { "/getSFMixingForBom" }, method = RequestMethod.POST)
 		public @ResponseBody GetSFMixingForBomList getSFMixingForBom(@RequestParam("mixingId")int mixingId) {
 

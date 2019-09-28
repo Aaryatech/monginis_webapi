@@ -28,9 +28,8 @@ public interface ItemSfDetailRepo extends JpaRepository<ItemSfDetail, Integer>{
 			"    FROM\n" + 
 			"        m_item_sf_detail,m_rm_uom" + 
 			"    WHERE\n" + 
-			"        m_item_sf_detail.sf_id in(:sfId) and m_item_sf_detail.del_status=0 and m_rm_uom.uom=m_item_sf_detail.rm_unit" + 
-			"    GROUP by\n" + 
-			"        m_item_sf_detail.rm_id",nativeQuery=true)
+			"        m_item_sf_detail.sf_id in(:sfId) and m_item_sf_detail.del_status=0 and m_rm_uom.uom_id=m_item_sf_detail.rm_unit" + 
+			"  ",nativeQuery=true)
 	public List<ItemSfDetail> getSfItemDetailsForCreamPrep(@Param("sfId")List<Integer> sfId);
 
 }

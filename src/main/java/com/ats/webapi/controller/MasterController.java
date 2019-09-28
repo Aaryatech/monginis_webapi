@@ -735,6 +735,13 @@ public class MasterController {
 		return items;
 
 	}
+	@RequestMapping(value = "/findItemsByGrpIdForRmIssue", method = RequestMethod.POST)
+	public @ResponseBody List<Item> findItemsByGrpIdForRmIssue(@RequestParam String itemGrp3,@RequestParam int prodHeaderId) {
+
+		 List<Item> itemList=itemRepository.findByItemGrp3(itemGrp3,prodHeaderId);
+	   return itemList;
+
+	}
 
 	// Get Items By Category order by sub cat and sort id
 	@RequestMapping(value = "/getItemsByCatIdForDisp", method = RequestMethod.POST)
