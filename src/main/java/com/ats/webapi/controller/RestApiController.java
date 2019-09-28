@@ -12,6 +12,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
@@ -24,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.*;
+import com.ats.webapi.model.album.MenuForAlbum;
 import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
 import com.ats.webapi.model.grngvn.GrnGvnHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
@@ -43,9 +46,11 @@ import com.ats.webapi.repository.GetReorderByStockTypeRepository;
 import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.ItemResponseRepository;
 import com.ats.webapi.repository.ItemStockRepository;
+import com.ats.webapi.repository.MenuForAlbumRepo;
 import com.ats.webapi.repository.MiniSubCategoryRepository;
 import com.ats.webapi.repository.OrderItemSubCatTotalRepository;
 import com.ats.webapi.repository.OrderLogRespository;
+import com.ats.webapi.repository.SpecialCakeCatRepository;
 import com.ats.webapi.repository.SpecialCakeRepository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
@@ -353,6 +358,12 @@ public class RestApiController {
 
 	@Autowired
 	SpecialCakeRepository specialCakeRepository;
+
+	@Autowired
+	SpecialCakeCatRepository specialCakeCatRepository;
+
+	@Autowired
+	MenuForAlbumRepo menuForAlbumRepo;
 
 	@RequestMapping(value = "/getItemsResBySubCatId", method = RequestMethod.POST)
 	public @ResponseBody List<ItemRes> getItemsResBySubCatId(@RequestParam("subCatId") String subCatId) {
@@ -2747,7 +2758,24 @@ public class RestApiController {
 
 		try {
 
-			List<SpecialCake> jsonSpecialCakeList = specialCakeRepository.getDataByFr(frId);
+			List<MenuForAlbum> menuAlbumList = menuForAlbumRepo.getData(frId);
+
+			String itemIdList = "";
+			if (menuAlbumList != null) {
+				if (menuAlbumList.size() > 0) {
+					for (int i = 0; i < menuAlbumList.size(); i++) {
+						itemIdList = itemIdList + menuAlbumList.get(i).getItemShow() + ",";
+					}
+				}
+			}
+
+			String itemIds = itemIdList.substring(0, itemIdList.length() - 1);
+			System.err.println("MENU ITEM LIST-------------------------------------- " + itemIds);
+
+			List<Integer> newList = Stream.of(itemIds.split(",")).map(Integer::parseInt)
+					.collect(Collectors.toList());
+
+			List<SpecialCake> jsonSpecialCakeList = specialCakeRepository.getDataByFr(newList);
 			System.err.println("Sp cake Size " + jsonSpecialCakeList.size());
 
 			List<Event> eventsList = eventService.findAllEvent();
@@ -3525,14 +3553,14 @@ public class RestApiController {
 		ItemsList itemsList = itemService.findAllItems();
 		return itemsList;
 	}
-	
-	
+
 	// Get All Items ForItemDetail"
-		@RequestMapping(value = { "/getAllItemsForForItemDetail" }, method = RequestMethod.POST)
-		public @ResponseBody ItemsList findAllItems(@RequestParam int rmId,@RequestParam int rmType) {
-			ItemsList itemsList = itemService.getItemsForItemDetail(rmId,rmType);
-			return itemsList;
-		}
+	@RequestMapping(value = { "/getAllItemsForForItemDetail" }, method = RequestMethod.POST)
+	public @ResponseBody ItemsList findAllItems(@RequestParam int rmId, @RequestParam int rmType) {
+		ItemsList itemsList = itemService.getItemsForItemDetail(rmId, rmType);
+		return itemsList;
+	}
+
 	// Get All Items order By Sub category, Sort Id
 	@RequestMapping(value = { "/getAllItemsBySorting" }, method = RequestMethod.GET)
 	public @ResponseBody ItemsList getAllItemsBySorting() {
