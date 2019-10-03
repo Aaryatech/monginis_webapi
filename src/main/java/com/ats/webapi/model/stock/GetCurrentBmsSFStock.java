@@ -23,17 +23,15 @@ public class GetCurrentBmsSFStock {
 	@Column(name="sf_uom_id")
 	private int sfUomId;
 	
-	float prodIssueQty;
+	float prodIssueQty; //prodIssueQty
 	float prodRejectedQty;
 	
 	float prodReturnQty;
-	float mixingIssueQty;
+	float mixingIssueQty; //productionQty
 	float mixingRejectedQty; 
-	//float mixing_return_qty; not used in sf current stock
-	//float store_issue_qty; 
-	//float store_rejected_qty;
-	float bmsClosingStock;//new for bet Date;
-	float bmsOpeningStock;
+	 
+	float bmsClosingStock; 
+	float bmsOpeningStock; //openingQty
 	public int getSfId() {
 		return sfId;
 	}

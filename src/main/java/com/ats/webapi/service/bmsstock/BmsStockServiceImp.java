@@ -102,4 +102,13 @@ public class BmsStockServiceImp implements BmsStockService {
 		 
 	}
 
+	@Override
+	public BmsStockHeader getBmsStockHeader(int status, int rmType, int deptId) {
+		
+		BmsStockHeader bmsStockHeader=new BmsStockHeader(); 
+		bmsStockHeader=bmsStockHeaderRepository.getStockDetails(status,  rmType,deptId);
+		
+		return bmsStockHeader;
+	}
+
 }

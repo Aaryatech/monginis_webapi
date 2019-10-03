@@ -181,20 +181,21 @@ public class BmsStockApiController {
 	
 	
 	@RequestMapping(value = { "/getBmsStockHeader" }, method = RequestMethod.POST)
-	public @ResponseBody BmsStockHeader getBmsStockHeader(@RequestParam("status")int status ,  @RequestParam("rmType")int rmType) {
+	public @ResponseBody BmsStockHeader getBmsStockHeader(@RequestParam("status")int status ,  @RequestParam("rmType")int rmType,
+			@RequestParam("deptId")int deptId) {
 
 		BmsStockHeader bmsStockHeader = new BmsStockHeader();
 		try {
 
-	System.out.println("status : "+status +"And rmType : "+rmType);
-			bmsStockHeader = bmsStockService.getBmsStockHeader(status,  rmType );
+			System.out.println("status : "+status +"And rmType : "+rmType + " deptId " + deptId);
+			bmsStockHeader = bmsStockService.getBmsStockHeader(status,  rmType,deptId );
 			
 			if(bmsStockHeader!=null )
 			{
 				System.out.println("successfully  ");
 			}
 			
-System.out.println("Response from getBms Header  : "+bmsStockHeader.toString());
+ 
 		} catch (Exception e) {
 			
 			e.printStackTrace();

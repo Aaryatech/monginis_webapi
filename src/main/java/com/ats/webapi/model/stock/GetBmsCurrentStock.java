@@ -29,16 +29,16 @@ public class GetBmsCurrentStock {
 		this.rmUomId = rmUomId;
 	}
 	
-	float prodIssueQty;
+	float prodIssueQty; //issueQty
 	float prodRejectedQty;
 	
 	float prodReturnQty;
-	float mixingIssueQty;
+	float mixingIssueQty; //productionQty
 	float mixingRejectedQty; 
 	float mixingReturnQty;
 	float storeIssueQty; 
 	float storeRejectedQty;
-	float bmsOpeningStock;
+	float bmsOpeningStock; //openingQty
 	
 	float bmsClosingStock;
 	
