@@ -168,7 +168,23 @@ public class ItemSfController {
 	return sfHeader;
 	
 	}
+	@RequestMapping(value = { "/getItemSfHeadersBySfType" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetItemSfHeader> getItemSfHeadersBySfType(@RequestParam("sfType")int sfType) {
+		
+		List<GetItemSfHeader> sfHeader=new ArrayList<GetItemSfHeader>();
+		
+		try {
+			
+			sfHeader=getItemSfHeaderRepo.getItemSfHeadersBySfType(sfType);
+		}catch (Exception e) {
+			
+			System.out.println("Exe getting Sf Item Header  "+e.getMessage());
+			e.printStackTrace();
+		}
+		
+	return sfHeader;
 	
+	}
 	
 	@RequestMapping(value = { "/getSfItemDetailList" }, method = RequestMethod.POST)
 	public @ResponseBody SfItemDetailList getSfItemDetailList(@RequestParam("delStatus")int delStatus,

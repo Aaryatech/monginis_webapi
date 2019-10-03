@@ -98,7 +98,7 @@ public interface GetSFPlanDetailForMixingRepo extends JpaRepository<GetSFPlanDet
 			"          a.no_pieces_per_item,\n" + 
 			"          a.rm_qty,\n" + 
 			"          a.uom,\n" + 
-			"        coalesce((b.single_cut),1) as single_cut,\n" + 
+			"        coalesce((b.single_cut),0) as single_cut,\n" + 
 			"        coalesce((c.double_cut),0) as double_cut,  coalesce((a.total),0) as total" + 
 			"        from(\n" + 
 			"       SELECT\n" + 
