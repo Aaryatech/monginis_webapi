@@ -15,7 +15,7 @@ public interface BmsStockService {
 
 	BmsStockHeader getBmsStockHeader(int status, int rmType);
 
-	BmsStockHeader getBmsStockForEdit(int type);
+	BmsStockHeader getBmsStockForEdit(int type, int deptId);
 
 	BmsStockHeader getBmsStockHeader(int status, int rmType, int deptId);
 

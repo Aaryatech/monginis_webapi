@@ -86,13 +86,13 @@ public class BmsStockApiController {
 	}
 	
 	@RequestMapping(value = { "/getBmsStockForEdit" }, method = RequestMethod.POST)
-	public @ResponseBody BmsStockHeader getBmsStockForEdit(@RequestParam("type") int type) {
+	public @ResponseBody BmsStockHeader getBmsStockForEdit(@RequestParam("type") int type,@RequestParam("deptId") int deptId) {
 
 		BmsStockHeader bmsStockHeaderloc = new BmsStockHeader();
 		try {
 
 	
-			bmsStockHeaderloc = bmsStockService.getBmsStockForEdit(type);
+			bmsStockHeaderloc = bmsStockService.getBmsStockForEdit(type,deptId);
 			
 			 	System.out.println("bmsStockHeaderloc"+bmsStockHeaderloc);
 			 	if(bmsStockHeaderloc ==null) {
