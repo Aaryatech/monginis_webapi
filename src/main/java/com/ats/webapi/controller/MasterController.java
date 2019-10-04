@@ -736,9 +736,9 @@ public class MasterController {
 
 	}
 	@RequestMapping(value = "/findItemsByGrpIdForRmIssue", method = RequestMethod.POST)
-	public @ResponseBody List<Item> findItemsByGrpIdForRmIssue(@RequestParam String itemGrp3,@RequestParam int prodHeaderId) {
+	public @ResponseBody List<Item> findItemsByGrpIdForRmIssue(@RequestParam String itemGrp3,@RequestParam int prodHeaderId,@RequestParam int fromDept,@RequestParam int toDept) {
 
-		 List<Item> itemList=itemRepository.findByItemGrp3(itemGrp3,prodHeaderId);
+		 List<Item> itemList=itemRepository.findByItemGrp3(itemGrp3,prodHeaderId,fromDept,toDept);
 	   return itemList;
 
 	}

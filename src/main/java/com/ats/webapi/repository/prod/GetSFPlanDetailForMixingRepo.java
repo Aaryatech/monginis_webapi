@@ -206,7 +206,7 @@ public interface GetSFPlanDetailForMixingRepo extends JpaRepository<GetSFPlanDet
 			"  s.rm_type,\n" + 
 			"  s.rm_qty,\n" + 
 			"  s.single_cut,\n" + 
-			"  s.double_cut,\n" + 
+			"    coalesce(c.double_cut,0)as double_cut,\n" + 
 			"  s.total,\n" + 
 			"  s.uom,\n" + 
 			"  s.plan_qty,\n" + 
@@ -333,7 +333,8 @@ public interface GetSFPlanDetailForMixingRepo extends JpaRepository<GetSFPlanDet
 			"        and m_item_detail.rm_type=2          \n" + 
 			"        and    t_production_plan_header.production_header_id =:headerId      \n" + 
 			"    GROUP by\n" + 
-			"        m_item_detail.rm_id) m on l.sf_id=m.rm_id group by l.rm_id ) s where FIND_IN_SET(s.rm_id,(select setting_value1 from t_setting_new where setting_key='sf_cream_item' and del_status=0))",nativeQuery=true)
+			"        m_item_detail.rm_id) m on l.sf_id=m.rm_id group by l.rm_id ) s LEFT JOIN\n" + 
+			"                (  select DISTINCT d.sf_id,1 as double_cut from t_mixing_detail d where   d.mixing_id IN( select  h.mix_id from t_mixing_header h where  h.Production_id=:headerId  order by h.mix_id DESC) ) c  ON s.rm_id=c.sf_id where FIND_IN_SET(s.rm_id,(select setting_value1 from t_setting_new where setting_key='sf_cream_item' and del_status=0))",nativeQuery=true)
 	List<GetSFPlanDetailForMixing> showDetailsForCp(@Param("headerId") int headerId,@Param("deptId") int deptId);
 
 	@Query(value=" select  s.item_detail_id,\n" + 
@@ -480,7 +481,7 @@ public interface GetSFPlanDetailForMixingRepo extends JpaRepository<GetSFPlanDet
 			"  s.rm_type,\n" + 
 			"  s.rm_qty,\n" + 
 			"  s.single_cut,\n" + 
-			"  s.double_cut,\n" + 
+			"  coalesce(c.double_cut,0)as double_cut,\n" + 
 			"  s.total,\n" + 
 			"  s.uom,\n" + 
 			"  s.plan_qty,\n" + 
@@ -607,7 +608,8 @@ public interface GetSFPlanDetailForMixingRepo extends JpaRepository<GetSFPlanDet
 			"        and m_item_detail.rm_type=2          \n" + 
 			"        and    t_production_plan_header.production_header_id =:headerId      \n" + 
 			"    GROUP by\n" + 
-			"        m_item_detail.rm_id) m on l.sf_id=m.rm_id group by l.rm_id ) s where FIND_IN_SET(s.rm_id,(select setting_value1 from t_setting_new where setting_key='rm_cream_item' and del_status=0))",nativeQuery=true)
+			"        m_item_detail.rm_id) m on l.sf_id=m.rm_id group by l.rm_id ) s   LEFT JOIN " + 
+			"			               (  select DISTINCT d.sf_id,1 as double_cut from t_mixing_detail d where   d.mixing_id IN( select  h.mix_id from t_mixing_header h where  h.Production_id=:headerId  order by h.mix_id DESC) ) c  ON s.rm_id=c.sf_id    where FIND_IN_SET(s.rm_id,(select setting_value1 from t_setting_new where setting_key='rm_cream_item' and del_status=0))",nativeQuery=true)
 	List<GetSFPlanDetailForMixing> showDetailsForCoating(@Param("headerId") int headerId,@Param("deptId") int deptId);
 
 	@Query(value=" SELECT\n" + 
