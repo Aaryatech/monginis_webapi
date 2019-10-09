@@ -20,8 +20,8 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "WHERE t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake_sup.menu_id IN (:menuIdList) AND t_sp_cake.is_slot_used IN (:isSlotUsed) "
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id\n"
 			+ "AND m_franchisee.fr_id=m_franchise_sup.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id\n"
-			+ "AND m_sp_cake.sp_id=t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id=t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 0\n"
-			+ " GROUP BY t_sp_cake_sup.t_sp_cake_order_no  ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id ", nativeQuery = true)
+			+ "AND m_sp_cake.sp_id=t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id=t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 0 "
+			+ "  GROUP BY t_sp_cake_sup.t_sp_cake_order_no  ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id ", nativeQuery = true)
 
 	List<GetSpCakeOrderForProdApp> getSpCakeOrderForProdOrderBy(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate, @Param("menuIdList") List<Integer> menuIdList,
@@ -37,8 +37,8 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "WHERE t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake.is_slot_used IN (:isSlotUsed) "
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id "
 			+ "AND m_franchisee.fr_id=m_franchise_sup.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id\n"
-			+ "AND m_sp_cake.sp_id=t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id=t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 0\n"
-			+ " GROUP BY t_sp_cake_sup.t_sp_cake_order_no ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id   ", nativeQuery = true)
+			+ "AND m_sp_cake.sp_id=t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id=t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 0 "
+			+ "  GROUP BY t_sp_cake_sup.t_sp_cake_order_no ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id   ", nativeQuery = true)
 
 	List<GetSpCakeOrderForProdApp> getSpCakeOrderForProdOrderByAndAllMenu(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate, @Param("isSlotUsed") List<Integer> isSlotUsed);// B] all menu order by
@@ -88,8 +88,8 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "WHERE t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake_sup.menu_id IN (:menuIdList) "
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id\n"
 			+ "AND m_franchisee.fr_id=m_franchise_sup.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id AND m_fr_route.route_id=:routeId "
-			+ "AND m_sp_cake.sp_id=t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id=t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 0\n"
-			+ "ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id ", nativeQuery = true)
+			+ "AND m_sp_cake.sp_id=t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id=t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 0 "
+			+ " ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id ", nativeQuery = true)
 
 	List<GetSpCakeOrderForProdApp> getSpCakeOrderByRouteIdSpecMenu(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate, @Param("menuIdList") List<Integer> menuIdList,
@@ -105,8 +105,8 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "WHERE t_sp_cake_sup.date BETWEEN :fromDate AND :toDate   "
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id\n"
 			+ "AND m_franchisee.fr_id=m_franchise_sup.fr_id AND m_franchisee.fr_route_id=m_fr_route.route_id AND m_fr_route.route_id=:routeId "
-			+ "AND m_sp_cake.sp_id=t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id=t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 0\n"
-			+ "ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id ", nativeQuery = true)
+			+ "AND m_sp_cake.sp_id=t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id=t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 0 "
+			+ " ORDER BY m_fr_route.route_seq_no DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_id ", nativeQuery = true)
 
 	List<GetSpCakeOrderForProdApp> getSpCakeOrderByRouteIdAllMenu(@Param("fromDate") String fromDate,
 			@Param("toDate") String toDate, @Param("routeId") int routeId);// specific menu order by
@@ -158,8 +158,8 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    m_sp_cake_category,\n" + 
 			"    m_sp_flavour\n" + 
 			"WHERE\n" + 
-			"    t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake.is_slot_used IN(:isSlotUsed) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND m_franchisee.fr_id = m_franchise_sup.fr_id AND m_franchisee.fr_route_id = m_fr_route.route_id AND m_sp_cake_category.sp_id = t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id = t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 1" + 
-			"GROUP BY\n" + 
+			"    t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake.is_slot_used IN(:isSlotUsed) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND m_franchisee.fr_id = m_franchise_sup.fr_id AND m_franchisee.fr_route_id = m_fr_route.route_id AND m_sp_cake_category.sp_id = t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id = t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 1 " + 
+			"  GROUP BY\n" + 
 			"    t_sp_cake_sup.t_sp_cake_order_no"
 			+ " ", nativeQuery = true)
 
@@ -206,10 +206,10 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    m_sp_cake_category,\n" + 
 			"    m_sp_flavour\n" + 
 			"WHERE\n" + 
-			"    t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake.is_slot_used IN(:isSlotUsed) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND m_franchisee.fr_id = m_franchise_sup.fr_id AND m_franchisee.fr_route_id = m_fr_route.route_id AND m_sp_cake_category.sp_id = t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id = t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 1" + 
+			"    t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake.is_slot_used IN(:isSlotUsed) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND m_franchisee.fr_id = m_franchise_sup.fr_id AND m_franchisee.fr_route_id = m_fr_route.route_id AND m_sp_cake_category.sp_id = t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id = t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 1 " + 
 			"GROUP BY\n" + 
 			"    t_sp_cake_sup.t_sp_cake_order_no\n" + 
-			"ORDER BY\n" + 
+			" ORDER BY\n" + 
 			"    m_fr_route.route_seq_no\n" + 
 			"DESC\n" + 
 			"    ,\n" + 
@@ -259,7 +259,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    m_sp_flavour\n" + 
 			"WHERE\n" + 
 			"    t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.is_slot_used IN(:isSlotUsed) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND m_franchisee.fr_id = m_franchise_sup.fr_id AND m_franchisee.fr_route_id = m_fr_route.route_id AND m_sp_cake_category.sp_id = t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id = t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 1 " + 
-			"GROUP BY \n" + 
+			" GROUP BY \n" + 
 			"    t_sp_cake_sup.t_sp_cake_order_no"
 			+ "", nativeQuery = true)
 
@@ -311,7 +311,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.is_slot_used IN(:isSlotUsed) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND m_franchisee.fr_id = m_franchise_sup.fr_id AND m_franchisee.fr_route_id = m_fr_route.route_id AND m_sp_cake_category.sp_id = t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id = t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 1 " + 
 			"GROUP BY\n" + 
 			"    t_sp_cake_sup.t_sp_cake_order_no\n" + 
-			"ORDER BY\n" + 
+			" ORDER BY\n" + 
 			"    m_fr_route.route_seq_no\n" + 
 			"DESC\n" + 
 			"    ,\n" + 
@@ -363,8 +363,8 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    m_sp_cake_category,\n" + 
 			"    m_sp_flavour\n" + 
 			"WHERE\n" + 
-			"    t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND m_franchisee.fr_id = m_franchise_sup.fr_id AND m_franchisee.fr_route_id = m_fr_route.route_id AND m_fr_route.route_id = :routeId AND m_sp_cake_category.sp_id = t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id = t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 1 \n" + 
-			"ORDER BY \n" + 
+			"    t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake_sup.menu_id IN(:menuIdList) AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND m_franchisee.fr_id = m_franchise_sup.fr_id AND m_franchisee.fr_route_id = m_fr_route.route_id AND m_fr_route.route_id = :routeId AND m_sp_cake_category.sp_id = t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id = t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 1 " + 
+			" ORDER BY \n" + 
 			"    m_fr_route.route_seq_no\n" + 
 			"DESC\n" + 
 			"    ,\n" + 
@@ -413,8 +413,8 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    m_sp_cake_category,\n" + 
 			"    m_sp_flavour\n" + 
 			"WHERE\n" + 
-			"    t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND m_franchisee.fr_id = m_franchise_sup.fr_id AND m_franchisee.fr_route_id = m_fr_route.route_id AND m_fr_route.route_id = :routeId AND m_sp_cake_category.sp_id = t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id = t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 1 \n" + 
-			"ORDER BY \n" + 
+			"    t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake.sp_order_no = t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id = m_franchisee.fr_id AND m_franchisee.fr_id = m_franchise_sup.fr_id AND m_franchisee.fr_route_id = m_fr_route.route_id AND m_fr_route.route_id = :routeId AND m_sp_cake_category.sp_id = t_sp_cake_sup.sp_cake_id AND m_sp_flavour.spf_id = t_sp_cake.sp_flavour_id AND t_sp_cake.is_allocated = 1 " + 
+			" ORDER BY \n" + 
 			"    m_fr_route.route_seq_no\n" + 
 			"DESC\n" + 
 			"    ,\n" + 
