@@ -16,7 +16,6 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,6 +38,7 @@ import com.ats.webapi.model.phpwebservice.SpecialCakeBean;
 import com.ats.webapi.model.phpwebservice.SpecialCakeBeanList;
 import com.ats.webapi.model.prodapp.TRegSpCakeSup;
 import com.ats.webapi.model.prodapp.TSpCakeSup;
+import com.ats.webapi.model.rawmaterial.ItemDetail;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
 /*import com.ats.webapi.repository.BillLogRepo;
 */import com.ats.webapi.repository.GetBillDetailsRepository;
@@ -2920,6 +2920,7 @@ public class RestApiController {
 
 		return flavourList;
 	}
+	
 
 	// Show Scheduler List
 	@RequestMapping(value = { "/showSchedulerList" }, method = RequestMethod.GET)
@@ -3278,6 +3279,15 @@ public class RestApiController {
 		return flavour;
 
 	}
+	
+	// Get Flavour  Mahendra
+		@RequestMapping(value = "/getFlavourById", method = RequestMethod.POST)
+		public @ResponseBody Flavour getFlavourById(@RequestParam int id) {
+			int spfId=id;
+			Flavour flavour = flavourService.findFlavour(spfId);
+			return flavour;
+
+		}
 
 	// Get Items
 	@RequestMapping(value = "/getItemsByCatId", method = RequestMethod.POST)
