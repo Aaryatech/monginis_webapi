@@ -286,6 +286,40 @@ public class TempProdApi {
 			}
 				return sfAndPlanDetailList;
 		  }
+		@RequestMapping(value = { "/showDetailItemLayering" }, method = RequestMethod.POST)
+		public @ResponseBody GetSFPlanDetailForMixingList showDetailItemLayering(@RequestParam("headerId")int headerId,@RequestParam("rmId")int rmId,@RequestParam("deptId") int deptId) {
+
+			GetSFPlanDetailForMixingList sfAndPlanDetailList = new GetSFPlanDetailForMixingList();
+			
+			Info info=new Info();
+
+			try {
+			
+				List<GetSFPlanDetailForMixing> sfPlanDetailForBom=getSFPlanDetailForMixingRepo.showDetailItemLayering(headerId,rmId,deptId);
+			
+			if(!sfPlanDetailForBom.isEmpty()) {
+				
+				info.setError(false);
+				info.setMessage("success");
+				
+			}
+			else {
+				
+				info.setError(true);
+				info.setMessage("failed");
+			}
+	  
+			sfAndPlanDetailList.setSfPlanDetailForMixing(sfPlanDetailForBom);
+			sfAndPlanDetailList.setInfo(info);
+			
+			
+			}catch (Exception e) {
+				System.out.println("Error getting sf and Plan Detail For Bom ");
+				e.printStackTrace();
+				
+			}
+				return sfAndPlanDetailList;
+		  }
 		@RequestMapping(value = { "/showDetailsForCoating" }, method = RequestMethod.POST)
 		public @ResponseBody GetSFPlanDetailForMixingList showDetailsForCoating(@RequestParam("headerId")int headerId,@RequestParam("deptId") int deptId) {
 
