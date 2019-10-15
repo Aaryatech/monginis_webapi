@@ -19,6 +19,7 @@ import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.TrayMgtDetailList;
 import com.ats.webapi.model.logistics.VehicalMaster;
+import com.ats.webapi.model.tray.DriverDetailByFr;
 import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FranchiseInRoute;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
@@ -28,6 +29,7 @@ import com.ats.webapi.model.tray.TrayMgtDetail;
 import com.ats.webapi.model.tray.TrayMgtDetailBean;
 import com.ats.webapi.model.tray.TrayMgtHeader;
 import com.ats.webapi.repository.logistics.VehicalMasterRepository;
+import com.ats.webapi.repository.tray.DriverDetailByFrRepo;
 import com.ats.webapi.repository.tray.GetVehDriverMobNoRepo;
 import com.ats.webapi.repository.tray.GetVehicleAvgRepository;
 import com.ats.webapi.repository.tray.TrayMgtHeaderRepository;
@@ -50,6 +52,9 @@ public class TrayManagementController {
 	
 	@Autowired
 	GetVehicleAvgRepository getVehicleAvgRepository;
+	
+	@Autowired
+	DriverDetailByFrRepo driverDetailByFrRepo;
 	
 	@RequestMapping(value = { "/getVehMobNo" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetVehDriverMobNo> getVehMobNo(@RequestParam("routeId") int routeId,@RequestParam("curDate")String curDate) {
@@ -537,6 +542,25 @@ public class TrayManagementController {
 			e.printStackTrace();
 		}
 		return getTrayMgtHeaders;
+	}
+	
+	@RequestMapping(value = { "/getDriverInfoByFr" }, method = RequestMethod.POST)
+	public @ResponseBody List<DriverDetailByFr> getDriverInfoByFr(@RequestParam("frId") int frId) {
+
+		List<DriverDetailByFr> driverList=null;
+		try {
+			
+			Calendar cal=Calendar.getInstance();
+			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
+			
+			System.err.println("DATE -------- "+sdf.format(cal.getTimeInMillis()));
+			
+			driverList = driverDetailByFrRepo.getDriverInfo(frId, sdf.format(cal.getTimeInMillis()));
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+		}
+		return driverList;
 	}
 
 }
