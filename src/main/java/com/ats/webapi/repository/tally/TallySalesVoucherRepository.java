@@ -328,7 +328,7 @@ public interface TallySalesVoucherRepository extends JpaRepository<SalesVoucher,
 			"    m_franchisee f,\n" + 
 			"    m_franchise_sup frsup\n" + 
 			"WHERE\n" + 
-			"    h.del_status = 0 AND h.fr_id = f.fr_id AND h.fr_id = frsup.fr_id AND h.bill_no = d.bill_no AND h.bill_no IN(:billNo)" + 
+			"    h.del_status = 0 AND h.fr_id = f.fr_id AND h.fr_id = frsup.fr_id AND h.bill_no = d.bill_no AND h.bill_no IN(:billNo)   order by h.bill_no,d.bill_detail_no" + 
 			"",nativeQuery=true)
 	List<SalesVoucher> getSalesVouchersByBillNo(@Param("billNo")List<Integer> billNo);
 	
@@ -534,7 +534,7 @@ public interface TallySalesVoucherRepository extends JpaRepository<SalesVoucher,
 			"    m_franchisee f,\n" + 
 			"    m_franchise_sup frsup\n" + 
 			"WHERE\n" + 
-			"    h.del_status = 0 AND h.fr_id = f.fr_id AND h.fr_id = frsup.fr_id AND h.bill_no = d.bill_no " 
+			"    h.del_status = 0 AND h.fr_id = f.fr_id AND h.fr_id = frsup.fr_id AND h.bill_no = d.bill_no  order by h.bill_no,d.bill_detail_no" 
 			,nativeQuery=true)
 	List<SalesVoucher> findByIsTallySync();
 
@@ -739,7 +739,7 @@ public interface TallySalesVoucherRepository extends JpaRepository<SalesVoucher,
 			"    m_franchisee f,\n" + 
 			"    m_franchise_sup frsup\n" + 
 			"WHERE\n" + 
-			"    h.del_status = 0 AND h.fr_id = f.fr_id AND h.fr_id = frsup.fr_id AND h.bill_no = d.bill_no AND h.bill_date BETWEEN :fromDate AND :toDate\n" + 
+			"    h.del_status = 0 AND h.fr_id = f.fr_id AND h.fr_id = frsup.fr_id AND h.bill_no = d.bill_no AND h.bill_date BETWEEN :fromDate AND :toDate  order by h.bill_no,d.bill_detail_no" + 
 			"",nativeQuery=true)
 	List<SalesVoucher> getSalesVouchersAll(@Param("fromDate")String fromDate,@Param("toDate") String toDate);
 
