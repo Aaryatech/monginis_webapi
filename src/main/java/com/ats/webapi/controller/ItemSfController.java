@@ -224,5 +224,22 @@ public class ItemSfController {
 	return itemDetails;
 	
 	}
+	@RequestMapping(value = { "/getSfItemDetailsApp" }, method = RequestMethod.POST)
+	public @ResponseBody SfItemDetailList getSfItemDetailsApp(@RequestParam("sfId")List<Integer> sfId,@RequestParam("rmQty") float rmQty) {
+		
+		SfItemDetailList itemDetails=new SfItemDetailList();
+		List<ItemSfDetail> itemList=null;	
+		try {
+			itemList=itemSfDetailRepo.getSfItemDetailsApp(sfId,rmQty);
+		
+	        itemDetails.setSfItemDetail(itemList);
+		}catch (Exception e) {
+			
+			System.out.println("Exe getting Sf Item Details  "+e.getMessage());
+			e.printStackTrace();
+		}
+		
+	return itemDetails;
 	
+	}
 }

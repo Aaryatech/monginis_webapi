@@ -102,7 +102,7 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 			"        m_item.item_name \n" + 
 			") a LEFT JOIN\n" + 
 			"(\n" + 
-			"select id,1 as item_id from m_item where FIND_IN_SET(id,(select GROUP_CONCAT(ex_varchar1) from t_req_bom where production_id=:prodHeaderId    and from_dept_id=:fromDept and to_dept_id=:toDept and ex_int2=1))  and m_item.del_status=0\n" + 
+			"select id,1 as item_id from m_item where FIND_IN_SET(id,(select GROUP_CONCAT(ex_varchar2) from t_req_bom where production_id=:prodHeaderId    and from_dept_id=:fromDept and to_dept_id=:toDept and ex_int2=1))  and m_item.del_status=0\n" + 
 			") b ON a.id=b.id", nativeQuery = true)
 	public List<Item> findByItemGrp3(@Param("itemGrp3") String itemGrp3,@Param("prodHeaderId") int prodHeaderId,@Param("fromDept")int fromDept,@Param("toDept") int toDept);
 
