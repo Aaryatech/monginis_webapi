@@ -1,5 +1,9 @@
 package com.ats.webapi.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.BillWisePurchaseList;
 import com.ats.webapi.model.BillWiseTaxReportList;
+import com.ats.webapi.model.ItemListWithDateRecord;
+import com.ats.webapi.model.ItemRecordByDate;
 import com.ats.webapi.model.ItemWiseDetailList;
 import com.ats.webapi.model.ItemWiseReportList;
 import com.ats.webapi.model.MonthWiseReportList;
@@ -23,8 +29,12 @@ import com.ats.webapi.model.report.GetRepItemwiseSell;
 import com.ats.webapi.model.report.GetRepMenuwiseSell;
 import com.ats.webapi.model.report.GetRepMonthwiseSell;
 import com.ats.webapi.model.report.GetRepTaxSell;
+import com.ats.webapi.repository.ItemListWithDateRecordRepo;
+import com.ats.webapi.repository.ItemRecordByDateRepo;
 import com.ats.webapi.service.RepFrSellServise;
 import com.ats.webapi.service.ReportsService;
+
+import ch.qos.logback.classic.pattern.DateConverter;
 
 @RestController
 public class ReportsController {
@@ -34,6 +44,12 @@ public class ReportsController {
 
 	@Autowired
 	RepFrSellServise repFrSellServise;
+
+	@Autowired
+	ItemListWithDateRecordRepo itemListWithDateRecordRepo;
+
+	@Autowired
+	ItemRecordByDateRepo itemRecordByDateRepo;
 
 	@RequestMapping(value = { "/showBillWisePurchaseReport" }, method = RequestMethod.POST)
 	public @ResponseBody BillWisePurchaseList showBillWisePurchase(@RequestParam("frId") int frId,
@@ -109,7 +125,8 @@ public class ReportsController {
 
 	}
 
-	// ---------------------------------Dispatch Item Report-----------------------------------------
+	// ---------------------------------Dispatch Item
+	// Report-----------------------------------------
 	@RequestMapping(value = "/getDispatchItemReportByOrder", method = RequestMethod.POST)
 	public @ResponseBody List<DispatchReport> getDispatchItemReportByOrder(@RequestParam("billDate") String billDate,
 			@RequestParam("frId") List<String> frId, @RequestParam("categories") List<String> categories) {
@@ -264,5 +281,94 @@ public class ReportsController {
 		System.out.println("  List  :" + getCustBillTaxList);
 		return getCustBillTaxList;
 
+	}
+
+	@RequestMapping(value = "/getorderreportByItemIdandDate", method = RequestMethod.POST)
+	public @ResponseBody List<ItemListWithDateRecord> getorderreportByItemIdandDate(
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<ItemListWithDateRecord> list = new ArrayList<>();
+
+		try {
+
+			List<Date> dates = new ArrayList<Date>();
+
+			DateFormat formatter;
+
+			formatter = new SimpleDateFormat("dd-MM-yyyy");
+
+			Date startDate = (Date) formatter.parse(fromDate);
+
+			Date endDate = (Date) formatter.parse(toDate);
+
+			long interval = 24 * 1000 * 60 * 60;
+
+			long endTime = endDate.getTime();
+
+			long curTime = startDate.getTime();
+
+			while (curTime <= endTime) {
+
+				dates.add(new Date(curTime));
+
+				curTime += interval;
+
+			}
+
+			/*for (int i = 0; i < dates.size(); i++) {
+
+				Date lDate = (Date) dates.get(i);
+
+				String ds = formatter.format(lDate);
+
+				System.out.println(" Date -" + ds);
+
+			}*/
+
+			list = itemListWithDateRecordRepo.getorderreportByItemIdandDate(Common.convertToYMD(fromDate), Common.convertToYMD(toDate));
+
+			List<ItemRecordByDate> datewiseList = itemRecordByDateRepo.getorderreportByItemIdandDate(Common.convertToYMD(fromDate), Common.convertToYMD(toDate));
+
+			//System.out.println(datewiseList);
+			for (int i = 0; i < list.size(); i++) {
+				
+				List<DateAndQty> newlist = new ArrayList<>();
+				
+				for (int k = 0; k < dates.size(); k++) {
+					 
+					int flag=0;
+					
+					for (int j = 0; j < datewiseList.size(); j++) {
+						
+						if(dates.get(k).compareTo(datewiseList.get(j).getDeliveryDate())==0 && datewiseList.get(j).getItemId()==list.get(i).getItemId()) {
+							
+							DateAndQty DateAndQty = new DateAndQty();
+							DateAndQty.setDlvDate(datewiseList.get(j).getDeliveryDate());
+							DateAndQty.setQty(datewiseList.get(j).getOrderQty());
+							//newlist.add(datewiseList.get(j));
+							newlist.add(DateAndQty);
+							flag=1;
+							break;
+						}
+
+					}
+					
+					if(flag==0) {
+						
+						DateAndQty itemRecordByDate = new DateAndQty(); 
+						itemRecordByDate.setDlvDate(dates.get(k));
+						itemRecordByDate.setQty(0);
+						newlist.add(itemRecordByDate);
+					}
+				}
+				
+				list.get(i).setList(newlist);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
 	}
 }
