@@ -138,7 +138,7 @@ public class ItemSfController {
 		
 		try {
 			
-			sfTypeList=sfTypeRepository.findByDelStatus(delStatus);
+			sfTypeList=sfTypeRepository.findAll();
 		
 		}catch (Exception e) {
 			
