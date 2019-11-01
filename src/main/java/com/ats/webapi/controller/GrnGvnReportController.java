@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.model.ItemWiseGrnGvnReport;
 import com.ats.webapi.model.grngvnreport.GGReportByDate;
 import com.ats.webapi.model.grngvnreport.GGReportGrpByFrId;
 import com.ats.webapi.model.grngvnreport.GGReportGrpByMonthDate;
 import com.ats.webapi.model.grngvnreport.GrnGvnReportByGrnType;
+import com.ats.webapi.repository.ItemWiseGrnGvnReportRepo;
 import com.ats.webapi.repository.ggreport.GGReportByDateRepo;
 import com.ats.webapi.repository.ggreport.GGReportGrpByFrIdRepo;
 import com.ats.webapi.repository.ggreport.GGreportGrpByDateMonthRepo;
@@ -34,6 +36,9 @@ public class GrnGvnReportController {
 
 	@Autowired
 	GrnGvnReportByGrnTypeRepo getGrnGvnReportByGrnTypeRepo; // 25-05-2018
+	
+	@Autowired
+	ItemWiseGrnGvnReportRepo itemWiseGrnGvnReportRepo;
 
 	@RequestMapping(value = { "/getGrnGvnReportByGrnType" }, method = RequestMethod.POST)
 	public @ResponseBody List<GrnGvnReportByGrnType> getGrnGvnReportByGrnType(@RequestParam("fromDate") String fromDate,
@@ -180,6 +185,25 @@ public class GrnGvnReportController {
 						isGrn);
 
 			}
+		} catch (Exception e) {
+
+			System.err.println("Exce in /GrnGvnReportController : /getGGReportGrpByMonth" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return grpByDateList;
+	}
+	
+	@RequestMapping(value = { "/itemwiseGrnGvnReportbetweenDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<ItemWiseGrnGvnReport> itemwiseGrnGvnReportbetweenDate(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<Integer> isGrn) {
+		  
+		List<ItemWiseGrnGvnReport> grpByDateList = new ArrayList<>();
+		
+		try {
+			 
+				grpByDateList = itemWiseGrnGvnReportRepo.itemwiseGrnGvnReportbetweenDate(fromDate, toDate,  isGrn);
+			 
 		} catch (Exception e) {
 
 			System.err.println("Exce in /GrnGvnReportController : /getGGReportGrpByMonth" + e.getMessage());
