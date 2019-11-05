@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ats.webapi.model.GetMixingList;
 import com.ats.webapi.model.MixingHeader;
 
 public interface MixingHeaderRepository extends JpaRepository<MixingHeader, Integer>{
@@ -25,6 +26,12 @@ public interface MixingHeaderRepository extends JpaRepository<MixingHeader, Inte
 	@Modifying
 	@Query(" UPDATE MixingHeader SET is_bom=1,status=1 WHERE mix_id=:mixId")
 	int updateisBom(@Param("mixId")int mixId);
+
+	@Query(value=" select * from t_mixing_header where  mix_date BETWEEN :frmdate and :frmdate and ex_int1=:deptId and del_status=0",nativeQuery=true)
+	List<MixingHeader> getMixingReqList(@Param("frmdate")String frmdate, @Param("deptId")int deptId);
+	
+	@Query(value=" select * from t_mixing_header where  mix_date BETWEEN :frmdate and :todate and ex_int1=:deptId and del_status=0",nativeQuery=true)
+	List<MixingHeader> gettMixingHeaderByDeptId(@Param("frmdate")String frmdate,@Param("todate") String todate,@Param("deptId") int deptId);
 	
 
 }
