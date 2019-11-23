@@ -26,6 +26,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.*;
 import com.ats.webapi.model.album.MenuForAlbum;
+import com.ats.webapi.model.album.SpCakeEnqAlbmFrnchse;
 import com.ats.webapi.model.grngvn.GetGrnGvnForCreditNoteList;
 import com.ats.webapi.model.grngvn.GrnGvnHeader;
 import com.ats.webapi.model.grngvn.PostCreditNoteHeader;
@@ -50,6 +51,7 @@ import com.ats.webapi.repository.MenuForAlbumRepo;
 import com.ats.webapi.repository.MiniSubCategoryRepository;
 import com.ats.webapi.repository.OrderItemSubCatTotalRepository;
 import com.ats.webapi.repository.OrderLogRespository;
+import com.ats.webapi.repository.SpCakeEnqAlbmFrnchseRepo;
 import com.ats.webapi.repository.SpecialCakeCatRepository;
 import com.ats.webapi.repository.SpecialCakeRepository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
@@ -5184,5 +5186,16 @@ public class RestApiController {
 		return subCategoryList;
 
 	}
+	
+	@Autowired SpCakeEnqAlbmFrnchseRepo spAlbmFrRepo;
+	
+	@RequestMapping(value = "/getSpCakeEnaAlbmFrDetail", method = RequestMethod.GET)
+	public @ResponseBody List<SpCakeEnqAlbmFrnchse> getSpCakeEnaAlbmFrDetail() {
+
+		List<SpCakeEnqAlbmFrnchse> list = spAlbmFrRepo.getSpcakeEnqAlbmFrData();
+		return list;
+
+	}
+	
 
 }
