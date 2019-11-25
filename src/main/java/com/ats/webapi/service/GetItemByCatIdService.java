@@ -6,5 +6,8 @@ public interface GetItemByCatIdService {
 	
 	GetItemByCatIdList getItemByCatId(int catId);
 	
+	GetItemByCatIdList getItemBySubCatId(int subCatId);
+
+	
 
 }

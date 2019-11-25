@@ -13,5 +13,6 @@ public interface SubCategoryService {
 	public List<SubCategory> getAllSubCategory();
 	public CategoryList findSubCategoryByCatId(int catId);
 	public List<SubCategory> getSubCatListByCatIdInForDisp(List<String> catId);
+	public List<SubCategory> findSubCatByCatId(int catId);
 
 }

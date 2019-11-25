@@ -5187,6 +5187,23 @@ public class RestApiController {
 
 	}
 	
+	@RequestMapping(value = "/getSubCateListByCatId", method = RequestMethod.POST)
+	public @ResponseBody List<SubCategory> getSubCateListByCatId(@RequestParam("catId") int catId) {
+
+		List<SubCategory> subCategoryList = subCategoryService.findSubCatByCatId(catId);
+		return subCategoryList;
+
+	}
+	
+	@RequestMapping(value = "/getItemBySubCatId", method = RequestMethod.POST)
+	public @ResponseBody GetItemByCatIdList getItemByCategoryIdAndSubCatId(@RequestParam("subCatId") int subCatId) {
+
+		GetItemByCatIdList getItemByCatIdList = getItemByCatIdService.getItemByCatId(subCatId);
+
+		return getItemByCatIdList;
+
+	}
+	
 	@Autowired SpCakeEnqAlbmFrnchseRepo spAlbmFrRepo;
 	
 	@RequestMapping(value = "/getSpCakeEnaAlbmFrDetail", method = RequestMethod.GET)
