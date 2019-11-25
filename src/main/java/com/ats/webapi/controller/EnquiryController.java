@@ -27,7 +27,7 @@ public class EnquiryController {
 	// --Get all AlbumEnquiry--
 		@GetMapping("/getAllEnquiry")
 		public List<AlbumEnquiry> getAllPurposesWithName() {
-			return albmEnq.findByDelStatus(1);
+			return albmEnq.findByDelStatus(0);
 		}
 		
 		// --Save new AlbumEnquiry--
@@ -39,7 +39,7 @@ public class EnquiryController {
 		// --Get AlbumEnquiry By Id--
 		@PostMapping("/getEnquiryById")
 		public AlbumEnquiry getEnquiryById(@RequestParam int enqNo) {
-			return albmEnq.findByEnquiryNoAndDelStatus(enqNo, 1);
+			return albmEnq.findByEnquiryNoAndDelStatus(enqNo, 0);
 		}
 		
 		// --deleteAlbumEnquiry--
@@ -50,7 +50,7 @@ public class EnquiryController {
 			AlbumEnquiry albm = albmEnq.findByEnquiryNo(enqNo);
 
 			if (albm != null) {
-				albm.setDelStatus(0);
+				albm.setDelStatus(1);
 				AlbumEnquiry updatedAlbmEnq = albmEnq.save(albm);
 				info = new Info();
 				info.setError(false);

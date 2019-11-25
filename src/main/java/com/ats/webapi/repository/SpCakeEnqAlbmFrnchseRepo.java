@@ -36,6 +36,6 @@ public interface SpCakeEnqAlbmFrnchseRepo extends JpaRepository<SpCakeEnqAlbmFrn
 			"WHERE\n" + 
 			"		fr.fr_id=enq.fr_id AND\n" + 
 			"		enq.album_id=sp.album_id\n" + 
-			"        AND sp.del_status=1",nativeQuery=true)
+			"        AND sp.del_status=0",nativeQuery=true)
 	public List<SpCakeEnqAlbmFrnchse> getSpcakeEnqAlbmFrData();
 }

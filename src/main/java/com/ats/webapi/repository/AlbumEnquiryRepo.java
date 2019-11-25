@@ -49,7 +49,7 @@ public interface AlbumEnquiryRepo extends JpaRepository<AlbumEnquiry, Integer> {
 			"	\n" + 
 			"FROM t_album_enquiry a, m_franchisee m\n" + 
 			"WHERE a.fr_id=m.fr_id AND\n" + 
-			"	a.del_status=1",nativeQuery=true)
+			"	a.del_status=0",nativeQuery=true)
 	List<AlbumEnquiry> getAlbmFrDetail();
 
 }
