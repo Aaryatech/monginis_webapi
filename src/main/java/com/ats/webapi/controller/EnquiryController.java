@@ -1,16 +1,21 @@
 package com.ats.webapi.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.AlbumEnquiry;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.album.Album;
 import com.ats.webapi.repository.AlbumEnquiryRepo;
 
 
@@ -74,5 +79,23 @@ public class EnquiryController {
 					}						
 					
 					return info;
+				}
+				
+				@RequestMapping(value = { "/getFrnchseEnqAlbmInfo" }, method = RequestMethod.GET)
+				public @ResponseBody List<AlbumEnquiry> getFrnchseEnqAlbmInfo() {
+
+					List<AlbumEnquiry> albumList = new ArrayList<>();
+
+					try {
+
+						albumList = albmEnq.getAlbmFrDetail();
+
+					} catch (Exception e) {
+
+						e.printStackTrace();
+
+					}
+					return albumList;
+
 				}
 }
