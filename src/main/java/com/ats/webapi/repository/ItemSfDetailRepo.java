@@ -24,7 +24,7 @@ public interface ItemSfDetailRepo extends JpaRepository<ItemSfDetail, Integer>{
 			"        m_item_sf_detail.rm_qty,\n" + 
 			"        m_item_sf_detail.rm_weight,\n" + 
 			"        m_item_sf_detail.del_status,\n" + 
-			"        m_item_sf_detail.rm_unit\n" + 
+			"        m_item_sf_detail.rm_unit,m_item_sf_detail.int_1 " + 
 			"    FROM\n" + 
 			"        m_item_sf_detail,m_rm_uom" + 
 			"    WHERE\n" + 
@@ -42,7 +42,7 @@ public interface ItemSfDetailRepo extends JpaRepository<ItemSfDetail, Integer>{
 			"		       m_item_sf_detail.rm_qty,\n" + 
 			"		       m_item_sf_detail.rm_weight, \n" + 
 			"		       m_item_sf_detail.del_status,\n" + 
-			"		       m_item_sf_detail.rm_unit\n" + 
+			"		       m_item_sf_detail.rm_unit,m_item_sf_detail.int_1 " + 
 			"		    FROM \n" + 
 			"			       m_item_sf_detail,m_rm_uom\n" + 
 			"		    WHERE\n" + 

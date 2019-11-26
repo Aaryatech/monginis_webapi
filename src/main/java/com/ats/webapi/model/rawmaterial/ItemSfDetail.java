@@ -11,7 +11,6 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="m_item_sf_detail")
-
 public class ItemSfDetail implements Serializable{
 	
 	
@@ -43,6 +42,18 @@ public class ItemSfDetail implements Serializable{
 	
 	@Column(name="del_status")
 	private int delStatus;
+	
+	@Column(name="int_1")
+	private int seqNo;
+	
+	
+	public int getSeqNo() {
+		return seqNo;
+	}
+
+	public void setSeqNo(int seqNo) {
+		this.seqNo = seqNo;
+	}
 
 	public int getSfDid() {
 		return sfDid;
@@ -114,6 +125,13 @@ public class ItemSfDetail implements Serializable{
 
 	public void setRmType(int rmType) {
 		this.rmType = rmType;
+	}
+
+	@Override
+	public String toString() {
+		return "ItemSfDetail [sfDid=" + sfDid + ", sfId=" + sfId + ", rmType=" + rmType + ", rmId=" + rmId + ", rmName="
+				+ rmName + ", rmQty=" + rmQty + ", rmUnit=" + rmUnit + ", rmWeight=" + rmWeight + ", delStatus="
+				+ delStatus + ", seqNo=" + seqNo + "]";
 	}
 
 }

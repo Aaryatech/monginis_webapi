@@ -176,7 +176,9 @@ public interface BillDetailForPrintRepo extends JpaRepository<GetBillDetailPrint
 			"        sp_id = t_bill_detail.item_id AND t_bill_detail.cat_id = 5\n" + 
 			")\n" + 
 			"END AS item_uom,\n" + 
-			"CASE WHEN t_bill_detail.cat_id = 5 THEN(0) ELSE(\n" + 
+			"CASE WHEN t_bill_detail.cat_id = 5 THEN(0) "
+			+ "   WHEN t_bill_detail.grn_type=3 THEN(8) "
+			+ " ELSE(\n" + 
 			"    SELECT\n" + 
 			"        m_item.item_grp2\n" + 
 			"    FROM\n" + 
