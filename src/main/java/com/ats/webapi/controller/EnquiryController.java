@@ -98,4 +98,24 @@ public class EnquiryController {
 					return albumList;
 
 				}
+				
+				//Anmol-->27-11-2019---
+				@RequestMapping(value = { "/getFrnchseEnqAlbmInfoByDate" }, method = RequestMethod.GET)
+				public @ResponseBody List<AlbumEnquiry> getFrnchseEnqAlbmInfoByDate(@RequestParam(value = "fromDate") String fromDate,@RequestParam(value = "toDate") String toDate) {
+
+					List<AlbumEnquiry> albumList = new ArrayList<>();
+
+					try {
+
+						albumList = albmEnq.getAlbmFrDetailByDate(fromDate,toDate);
+
+					} catch (Exception e) {
+
+						e.printStackTrace();
+
+					}
+					return albumList;
+
+				}
+				
 }

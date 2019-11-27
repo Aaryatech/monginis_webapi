@@ -5206,13 +5206,22 @@ public class RestApiController {
 	
 	@Autowired SpCakeEnqAlbmFrnchseRepo spAlbmFrRepo;
 	
-	@RequestMapping(value = "/getSpCakeEnaAlbmFrDetail", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/getSpCakeEnaAlbmFrDetail", method = RequestMethod.GET)
 	public @ResponseBody List<SpCakeEnqAlbmFrnchse> getSpCakeEnaAlbmFrDetail() {
 
 		List<SpCakeEnqAlbmFrnchse> list = spAlbmFrRepo.getSpcakeEnqAlbmFrData();
 		return list;
 
+	}*/
+	
+	@RequestMapping(value = "/getSpCakeEnaAlbmFrDetail", method = RequestMethod.GET)
+	public @ResponseBody List<SpCakeEnqAlbmFrnchse> getSpCakeEnaAlbmFrDetailBYDate(@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<SpCakeEnqAlbmFrnchse> list = spAlbmFrRepo.getSpcakeEnqAlbmFrDataByDate(fromDate,toDate);
+		return list;
+
 	}
+	
 	
 
 }
