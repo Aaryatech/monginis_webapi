@@ -39,6 +39,7 @@ import com.ats.webapi.model.ItemSupList;
 import com.ats.webapi.model.PostFrItemStockDetail;
 import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.RegularSpCkOrders;
+import com.ats.webapi.model.SettingNew;
 import com.ats.webapi.model.SpCake;
 import com.ats.webapi.model.SpCakeSupplement;
 import com.ats.webapi.model.SpCakeSupplementCat;
@@ -56,6 +57,7 @@ import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.OrderRepository;
 import com.ats.webapi.repository.PostFrOpStockDetailRepository;
 import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
+import com.ats.webapi.repository.SettingNewRepository;
 import com.ats.webapi.repository.SpCakeListRepository;
 import com.ats.webapi.repository.SpCkDeleteOrderRepository;
 import com.ats.webapi.repository.SubCategory2Repository;
@@ -88,7 +90,7 @@ public class MasterController {
 
 	@Autowired
 	SpecialCakeService spCakeService;
-	
+
 	@Autowired
 	SpecialCakeCatService spCakeCatService;
 
@@ -123,9 +125,12 @@ public class MasterController {
 
 	@Autowired
 	TRegSpCakeSupDeleteRepository tRegSpCakeSupDeleteRepository;
-	
+
 	@Autowired
 	SubCategory2Repository subCategory2Repository;
+
+	@Autowired
+	SettingNewRepository settingNewRepository;
 
 	// ----------------------------GET FrToken--------------------------------
 	@RequestMapping(value = { "/getFrToken" }, method = RequestMethod.POST)
@@ -138,53 +143,55 @@ public class MasterController {
 
 	// -------------------------------------------------------------------------
 	// ----------------------------SAVE Sub Category 2---------------------------
-		@RequestMapping(value = { "/saveSubCategory2" }, method = RequestMethod.POST)
-		public @ResponseBody SubCategory2 SubCategory2(@RequestBody SubCategory2 subCategory2) {
+	@RequestMapping(value = { "/saveSubCategory2" }, method = RequestMethod.POST)
+	public @ResponseBody SubCategory2 SubCategory2(@RequestBody SubCategory2 subCategory2) {
 
-			SubCategory2 subCategory2Res = null;
-			try {
+		SubCategory2 subCategory2Res = null;
+		try {
 
-				subCategory2Res = subCategory2Repository.save(subCategory2);
+			subCategory2Res = subCategory2Repository.save(subCategory2);
 
-			} catch (Exception e) {
+		} catch (Exception e) {
 
-				e.printStackTrace();
-			}
-			return subCategory2Res;
-
+			e.printStackTrace();
 		}
-		// ------------------------Getting One Sub Category 2-----------------------
-		@RequestMapping(value = { "/getSubCategory2ById" }, method = RequestMethod.POST)
-		public @ResponseBody SubCategory2 getSubCategory2ById(@RequestParam("miniCatId") int miniCatId) {
+		return subCategory2Res;
 
-			SubCategory2 subCategory2Res = null;
-			try {
-				subCategory2Res = subCategory2Repository.findByMiniCatIdAndDelStatus(miniCatId,0);
+	}
 
-			} catch (Exception e) {
-				
-				System.out.println("Exception In SubCategory2:" + e.getMessage());
-			}
+	// ------------------------Getting One Sub Category 2-----------------------
+	@RequestMapping(value = { "/getSubCategory2ById" }, method = RequestMethod.POST)
+	public @ResponseBody SubCategory2 getSubCategory2ById(@RequestParam("miniCatId") int miniCatId) {
 
-			return subCategory2Res;
+		SubCategory2 subCategory2Res = null;
+		try {
+			subCategory2Res = subCategory2Repository.findByMiniCatIdAndDelStatus(miniCatId, 0);
 
+		} catch (Exception e) {
+
+			System.out.println("Exception In SubCategory2:" + e.getMessage());
 		}
-		@RequestMapping(value = { "/deleteSubCategory2ById" }, method = RequestMethod.POST)
-		public @ResponseBody Info deleteSubCategory2ById(@RequestParam int miniCatId) {
 
-			int isDeleted = subCategory2Repository.deleteSubCategory2ById(miniCatId);
-			Info info = new Info();
-			if (isDeleted == 1) {
+		return subCategory2Res;
 
-				info.setError(false);
-				info.setMessage("SubCategory2 Deleted");
+	}
 
-			} else {
-				info.setError(true);
-				info.setMessage("SubCategory2 Deletion Failed");
-			}
-			return info;
+	@RequestMapping(value = { "/deleteSubCategory2ById" }, method = RequestMethod.POST)
+	public @ResponseBody Info deleteSubCategory2ById(@RequestParam int miniCatId) {
+
+		int isDeleted = subCategory2Repository.deleteSubCategory2ById(miniCatId);
+		Info info = new Info();
+		if (isDeleted == 1) {
+
+			info.setError(false);
+			info.setMessage("SubCategory2 Deleted");
+
+		} else {
+			info.setError(true);
+			info.setMessage("SubCategory2 Deletion Failed");
 		}
+		return info;
+	}
 
 	// ----------------------------SAVE Item Sup---------------------------
 	@RequestMapping(value = { "/saveItemSup" }, method = RequestMethod.POST)
@@ -303,7 +310,7 @@ public class MasterController {
 		Info info = spCakeService.deleteSpCakeSup(id);
 		return info;
 	}
-	
+
 	@RequestMapping(value = { "/deleteSpCakeCatSup" }, method = RequestMethod.POST)
 	public @ResponseBody Info deleteSpCakeCatSup(@RequestParam("id") int id) {
 
@@ -341,9 +348,8 @@ public class MasterController {
 		return spCakeSupplementList;
 
 	}
-	
-	
-	//--------ANMOL 10-7-19
+
+	// --------ANMOL 10-7-19
 	// ------------------------------------------------------------------------
 	// ---------------------------Getting SpCakeCatSup List-----------------------
 	@RequestMapping(value = { "/getSpCakeCatSuppList" }, method = RequestMethod.GET)
@@ -354,7 +360,6 @@ public class MasterController {
 		return spCakeSupplementList;
 
 	}
-	
 
 	@RequestMapping(value = { "/getSpCakeSuppCatList" }, method = RequestMethod.GET)
 	public @ResponseBody List<GetSpCkSupplementCat> getSpCakeSuppCatList() {
@@ -735,11 +740,13 @@ public class MasterController {
 		return items;
 
 	}
-	@RequestMapping(value = "/findItemsByGrpIdForRmIssue", method = RequestMethod.POST)
-	public @ResponseBody List<Item> findItemsByGrpIdForRmIssue(@RequestParam String itemGrp3,@RequestParam int prodHeaderId,@RequestParam int fromDept,@RequestParam int toDept) {
 
-		 List<Item> itemList=itemRepository.findByItemGrp3(itemGrp3,prodHeaderId,fromDept,toDept);
-	   return itemList;
+	@RequestMapping(value = "/findItemsByGrpIdForRmIssue", method = RequestMethod.POST)
+	public @ResponseBody List<Item> findItemsByGrpIdForRmIssue(@RequestParam String itemGrp3,
+			@RequestParam int prodHeaderId, @RequestParam int fromDept, @RequestParam int toDept) {
+
+		List<Item> itemList = itemRepository.findByItemGrp3(itemGrp3, prodHeaderId, fromDept, toDept);
+		return itemList;
 
 	}
 
@@ -965,5 +972,72 @@ public class MasterController {
 
 		return info;
 	}
+
+	// Anmol-->27-11-2019--->Update_Setting_new_value
+	@RequestMapping(value = { "/updateSettingValueById" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateSettingValueById(@RequestParam("settingId") int settingId,
+			@RequestParam("value") String value) {
+
+		Info info = new Info();
+
+		int res = settingNewRepository.udateValueById(settingId, value);
+		if (res > 0) {
+			info.setError(false);
+			info.setMessage("Success");
+		} else {
+			info.setError(true);
+			info.setMessage("Failed");
+		}
+
+		return info;
+	}
+
+	// Anmol-->27-11-2019--->Update_Setting_new_value
+	@RequestMapping(value = { "/updateSettingValueByKey" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateSettingValueByKey(@RequestParam("settingKey") String settingKey,
+			@RequestParam("value") String value) {
+
+		Info info = new Info();
+
+		int res = settingNewRepository.udateValueByKey(settingKey, value);
+		if (res > 0) {
+			info.setError(false);
+			info.setMessage("Success");
+		} else {
+			info.setError(true);
+			info.setMessage("Failed");
+		}
+
+		return info;
+	}
+
+	// Anmol-->27-11-2019--->Get_Setting_new_value
+	@RequestMapping(value = { "/getSettingValueByKey" }, method = RequestMethod.POST)
+	public @ResponseBody SettingNew getSettingValueByKey(@RequestParam("settingKey") String settingKey) {
+
+		SettingNew setting;
+
+		setting = settingNewRepository.findBySettingKey(settingKey);
+		if (setting == null) {
+			setting = new SettingNew();
+		}
+
+		return setting;
+	}
+	
+	// Anmol-->27-11-2019--->Get_Setting_new_value
+		@RequestMapping(value = { "/getSettingValueById" }, method = RequestMethod.POST)
+		public @ResponseBody SettingNew getSettingValueById(@RequestParam("settingId") int settingId) {
+
+			SettingNew setting;
+
+			setting = settingNewRepository.findBySettingId(settingId);
+			if (setting == null) {
+				setting = new SettingNew();
+			}
+
+			return setting;
+		}
+
 
 }
