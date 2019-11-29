@@ -13,109 +13,135 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.commons.Firebase;
 import com.ats.webapi.model.AlbumEnquiry;
+import com.ats.webapi.model.EnquiryScheduleEmpToken;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.album.Album;
 import com.ats.webapi.repository.AlbumEnquiryRepo;
-
+import com.ats.webapi.repository.EnquiryScheduleEmpTokenRepo;
 
 @RestController
 public class EnquiryController {
 
-	@Autowired AlbumEnquiryRepo albmEnq;
+	@Autowired
+	AlbumEnquiryRepo albmEnq;
 	
+	@Autowired
+	EnquiryScheduleEmpTokenRepo enquiryScheduleEmpTokenRepo;
+
 	// --Get all AlbumEnquiry--
-		@GetMapping("/getAllEnquiry")
-		public List<AlbumEnquiry> getAllPurposesWithName() {
-			return albmEnq.findByDelStatus(0);
-		}
-		
-		// --Save new AlbumEnquiry--
-		@PostMapping("/saveAlbumEnquiry")
-		public AlbumEnquiry saveAlbumEnquiry(@RequestBody AlbumEnquiry enq) {
-			return albmEnq.save(enq);
-		}
-		
-		// --Get AlbumEnquiry By Id--
-		@PostMapping("/getEnquiryById")
-		public AlbumEnquiry getEnquiryById(@RequestParam int enqNo) {
-			return albmEnq.findByEnquiryNoAndDelStatus(enqNo, 0);
-		}
-		
-		// --deleteAlbumEnquiry--
-		@PostMapping("/deleteAlbumEnquiry")
-		public Info deleteAlbumEnquiry(@RequestParam int enqNo) {
-			Info info = null;
+	@GetMapping("/getAllEnquiry")
+	public List<AlbumEnquiry> getAllPurposesWithName() {
+		return albmEnq.findByDelStatus(0);
+	}
 
-			AlbumEnquiry albm = albmEnq.findByEnquiryNo(enqNo);
+	// --Save new AlbumEnquiry--
+	@PostMapping("/saveAlbumEnquiry")
+	public AlbumEnquiry saveAlbumEnquiry(@RequestBody AlbumEnquiry enq) {
 
-			if (albm != null) {
-				albm.setDelStatus(1);
-				AlbumEnquiry updatedAlbmEnq = albmEnq.save(albm);
-				info = new Info();
-				info.setError(false);
-				info.setMessage("AlbumEnquiry Deleted Successfully");
-			} else {
-				info = new Info();
-				info.setError(true);
-				info.setMessage("AlbumEnquiry Deletion Failed");
+		AlbumEnquiry res = albmEnq.save(enq);
+
+		if (res != null) {
+
+			List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo.getUserTokens("album-emp");
+			if (enqEmpToken != null) {
+
+				List<String> tokenList = new ArrayList<>();
+				for (int j = 0; j < enqEmpToken.size(); j++) {
+					tokenList.add(enqEmpToken.get(j).getToken1());
+				}
+
+				new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from franchisee",
+						"PLease check the enquiry and revert back soon.", "album_enq");
+
 			}
-			return info;
 		}
-		
-		// --Update AlbumId--
-				@PostMapping("/updateAlbumId")
-				public Info saveAlbumEnquiry(@RequestParam int enqId, @RequestParam(value = "albmId") int albmId) {
-				Info info = new Info();
-					int updatedAlbmId = albmEnq.updtAlbmIdByEnqId(enqId, albmId);
-					
-					if(updatedAlbmId!=0) {
-						info.setError(false);
-						info.setMessage("AlbumEnquiry Updated Successfully");
-					} else {
-						info = new Info();
-						info.setError(true);
-						info.setMessage("AlbumEnquiry Update Failed");
-					}						
-					
-					return info;
-				}
-				
-				@RequestMapping(value = { "/getFrnchseEnqAlbmInfo" }, method = RequestMethod.GET)
-				public @ResponseBody List<AlbumEnquiry> getFrnchseEnqAlbmInfo() {
 
-					List<AlbumEnquiry> albumList = new ArrayList<>();
+		return res;
+	}
 
-					try {
+	// --Get AlbumEnquiry By Id--
+	@PostMapping("/getEnquiryById")
+	public AlbumEnquiry getEnquiryById(@RequestParam int enqNo) {
+		return albmEnq.findByEnquiryNoAndDelStatus(enqNo, 0);
+	}
 
-						albumList = albmEnq.getAlbmFrDetail();
+	// --deleteAlbumEnquiry--
+	@PostMapping("/deleteAlbumEnquiry")
+	public Info deleteAlbumEnquiry(@RequestParam int enqNo) {
+		Info info = null;
 
-					} catch (Exception e) {
+		AlbumEnquiry albm = albmEnq.findByEnquiryNo(enqNo);
 
-						e.printStackTrace();
+		if (albm != null) {
+			albm.setDelStatus(1);
+			AlbumEnquiry updatedAlbmEnq = albmEnq.save(albm);
+			info = new Info();
+			info.setError(false);
+			info.setMessage("AlbumEnquiry Deleted Successfully");
+		} else {
+			info = new Info();
+			info.setError(true);
+			info.setMessage("AlbumEnquiry Deletion Failed");
+		}
+		return info;
+	}
 
-					}
-					return albumList;
+	// --Update AlbumId--
+	@PostMapping("/updateAlbumId")
+	public Info saveAlbumEnquiry(@RequestParam int enqId, @RequestParam(value = "albmId") int albmId) {
+		Info info = new Info();
+		int updatedAlbmId = albmEnq.updtAlbmIdByEnqId(enqId, albmId);
 
-				}
-				
-				//Anmol-->27-11-2019---
-				@RequestMapping(value = { "/getFrnchseEnqAlbmInfoByDate" }, method = RequestMethod.GET)
-				public @ResponseBody List<AlbumEnquiry> getFrnchseEnqAlbmInfoByDate(@RequestParam(value = "fromDate") String fromDate,@RequestParam(value = "toDate") String toDate) {
+		if (updatedAlbmId != 0) {
+			info.setError(false);
+			info.setMessage("AlbumEnquiry Updated Successfully");
+		} else {
+			info = new Info();
+			info.setError(true);
+			info.setMessage("AlbumEnquiry Update Failed");
+		}
 
-					List<AlbumEnquiry> albumList = new ArrayList<>();
+		return info;
+	}
 
-					try {
+	@RequestMapping(value = { "/getFrnchseEnqAlbmInfo" }, method = RequestMethod.GET)
+	public @ResponseBody List<AlbumEnquiry> getFrnchseEnqAlbmInfo() {
 
-						albumList = albmEnq.getAlbmFrDetailByDate(fromDate,toDate);
+		List<AlbumEnquiry> albumList = new ArrayList<>();
 
-					} catch (Exception e) {
+		try {
 
-						e.printStackTrace();
+			albumList = albmEnq.getAlbmFrDetail();
 
-					}
-					return albumList;
+		} catch (Exception e) {
 
-				}
-				
+			e.printStackTrace();
+
+		}
+		return albumList;
+
+	}
+
+	// Anmol-->27-11-2019---
+	@RequestMapping(value = { "/getFrnchseEnqAlbmInfoByDate" }, method = RequestMethod.GET)
+	public @ResponseBody List<AlbumEnquiry> getFrnchseEnqAlbmInfoByDate(
+			@RequestParam(value = "fromDate") String fromDate, @RequestParam(value = "toDate") String toDate) {
+
+		List<AlbumEnquiry> albumList = new ArrayList<>();
+
+		try {
+
+			albumList = albmEnq.getAlbmFrDetailByDate(fromDate, toDate);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return albumList;
+
+	}
+
 }

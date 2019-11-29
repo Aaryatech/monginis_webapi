@@ -20,11 +20,18 @@ public interface AlbumEnquiryRepo extends JpaRepository<AlbumEnquiry, Integer> {
 	AlbumEnquiry findByEnquiryNoAndDelStatus(int enqNo, int del);
 
 	AlbumEnquiry findByEnquiryNo(int enqNo);
+	
+	List<AlbumEnquiry> findByDelStatusAndStatus(int del,int status);
 
 	@Transactional
 	@Modifying
 	@Query(value="UPDATE AlbumEnquiry SET album_id=:albmId WHERE enquiry_no=:enqId")
 	int updtAlbmIdByEnqId(@Param("enqId") int enqId, @Param("albmId") int albmId);
+	
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE t_album_enquiry SET ex_int1=:status WHERE enquiry_no=:enqId",nativeQuery=true)
+	int updateNotifyStatusByEnqId(@Param("enqId") int enqId, @Param("status") int status);
 
 	@Query(value="SELECT a.enquiry_no,\n" + 
 			"	m.fr_id,\n" + 
