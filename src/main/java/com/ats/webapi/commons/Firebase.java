@@ -223,7 +223,7 @@ public class Firebase {
 		return arrEmpId;
 	}
 
-	public final static String ENQUIRY_FCM_KEY = "AAAA_pkE7j8:APA91bF8N3Shx3Sct36Rut_lhDCqyfacyBecmSGNQ5D4YAyt0CGSL_nfciBKwNaW3K0--2Zm2e9J9BU62e8qboI9beElB_oArhpzJ5eS1KWWSyBwyKEjhPnGAoJB4tIhANdfzfjbkjqs";
+	public final static String ENQUIRY_FCM_KEY = "AAAA2RWgVfE:APA91bGe10FrLoZQSPVTGnHM3M9uYeiyVFPzzfep3mBIIao7O8NRKSHY641Z-dBVS8VdetQdn0NnpOko2Gd37x9jb6mT_HvyWHMRe8VcWcei8HpzFtgtZki5V7SM2Ti1EX3pzqOhv14R";
 
 	public void send_FCM_NotificationList(List<String> putIds2, String title, String message, String tag) {
 		try {
