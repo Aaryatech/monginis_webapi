@@ -24,14 +24,14 @@ public interface ItemSfDetailRepo extends JpaRepository<ItemSfDetail, Integer>{
 			"        m_item_sf_detail.rm_qty,\n" + 
 			"        m_item_sf_detail.rm_weight,\n" + 
 			"        m_item_sf_detail.del_status,\n" + 
-			"        m_item_sf_detail.rm_unit,m_item_sf_detail.int_1 " + 
+			"        m_item_sf_detail.rm_unit,m_item_sf_detail.seq_no " + 
 			"    FROM\n" + 
 			"        m_item_sf_detail,m_rm_uom" + 
 			"    WHERE\n" + 
 			"        m_item_sf_detail.sf_id in(:sfId) and m_item_sf_detail.del_status=0 and m_rm_uom.uom_id=m_item_sf_detail.rm_unit" + 
 			"  ",nativeQuery=true)
 	public List<ItemSfDetail> getSfItemDetailsForCreamPrep(@Param("sfId")List<Integer> sfId);
-	@Query(value="select a.sf_did,a.sf_id,a.rm_id,a.rm_name,a.rm_type,round(SUM((:rmQty*(a.rm_weight/rm_weight_per))/100),3) as rm_qty,SUM(a.rm_weight) as rm_weight,a.del_status,a.rm_unit\n" + 
+	@Query(value="select a.sf_did,a.seq_no,a.sf_id,a.rm_id,a.rm_name,a.rm_type,round(SUM((:rmQty*(a.rm_weight/rm_weight_per))/100),3) as rm_qty,SUM(a.rm_weight) as rm_weight,a.del_status,a.rm_unit\n" + 
 			"from\n" + 
 			"(SELECT\n" + 
 			"		       m_item_sf_detail.sf_did,\n" + 
@@ -42,7 +42,7 @@ public interface ItemSfDetailRepo extends JpaRepository<ItemSfDetail, Integer>{
 			"		       m_item_sf_detail.rm_qty,\n" + 
 			"		       m_item_sf_detail.rm_weight, \n" + 
 			"		       m_item_sf_detail.del_status,\n" + 
-			"		       m_item_sf_detail.rm_unit,m_item_sf_detail.int_1 " + 
+			"		       m_item_sf_detail.rm_unit,m_item_sf_detail.seq_no " + 
 			"		    FROM \n" + 
 			"			       m_item_sf_detail,m_rm_uom\n" + 
 			"		    WHERE\n" + 

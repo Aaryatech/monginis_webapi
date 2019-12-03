@@ -43,7 +43,7 @@ public class ItemSfDetail implements Serializable{
 	@Column(name="del_status")
 	private int delStatus;
 	
-	@Column(name="int_1")
+	@Column(name="seq_no")
 	private int seqNo;
 	
 	
