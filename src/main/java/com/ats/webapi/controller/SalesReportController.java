@@ -21,9 +21,19 @@ import com.ats.webapi.model.report.frpurchase.SalesReportRoyaltyFr;
 import com.ats.webapi.model.reportv2.SubCatCreditGrnFrItemRep;
 import com.ats.webapi.model.reportv2.SubCatFrItemRepBill;
 import com.ats.webapi.model.reportv2.SubCatItemReport;
+import com.ats.webapi.model.salesreport.SubCatBillRep;
+import com.ats.webapi.model.salesreport.SubCatCreditGrnFrRep;
+import com.ats.webapi.model.salesreport.SubCatCreditGrnRep;
+import com.ats.webapi.model.salesreport.SubCatFrRepBill;
+import com.ats.webapi.model.salesreport.SubCatFrReport;
+import com.ats.webapi.model.salesreport.SubCatReport;
 import com.ats.webapi.model.salesvaluereport.SalesReturnItemDaoList;
 import com.ats.webapi.model.salesvaluereport.SalesReturnValueItemDao;
 import com.ats.webapi.model.taxreport.Tax1Report;
+import com.ats.webapi.repository.SubCatBillRepRepo;
+import com.ats.webapi.repository.SubCatCreditGrnFrRepRepo;
+import com.ats.webapi.repository.SubCatCreditGrnRepRepo;
+import com.ats.webapi.repository.SubCatFrRepBillRepo;
 import com.ats.webapi.repository.frpurchasereport.SaleReportBillwiseAllFrRepo;
 import com.ats.webapi.repository.frpurchasereport.SaleReportBillwiseRepo;
 import com.ats.webapi.repository.frpurchasereport.SaleReportItemwiseRepo;
@@ -55,6 +65,7 @@ public class SalesReportController {
 
 	@Autowired
 	SalesReturnValueItemDaoRepo salesReturnValueItemDaoRepo;
+
 	// Report 1 sales report bill wise order by date
 	@RequestMapping(value = { "/getSaleReportBillwise" }, method = RequestMethod.POST)
 	public @ResponseBody List<SalesReportBillwise> getSaleReportBillwise(
@@ -474,6 +485,7 @@ public class SalesReportController {
 		}
 		return tax1ReportList;
 	}
+
 	@Autowired
 	SubCatCreditGrnFrItemRepRepo subCatCreditGrnFrItemRepRepo;
 
@@ -526,17 +538,19 @@ public class SalesReportController {
 			for (int i = 0; i < catReportList.size(); i++) {
 				for (int j = 0; j < subCatCreditGrnRep.size(); j++) {
 
-					if (catReportList.get(i).getItemId() == subCatCreditGrnRep.get(j).getItemId() && catReportList.get(i).getSubCatId() ==subCatCreditGrnRep.get(j).getSubCatId()&& catReportList.get(i).getFrId() ==subCatCreditGrnRep.get(j).getFrId()) {
+					if (catReportList.get(i).getItemId() == subCatCreditGrnRep.get(j).getItemId()
+							&& catReportList.get(i).getSubCatId() == subCatCreditGrnRep.get(j).getSubCatId()
+							&& catReportList.get(i).getFrId() == subCatCreditGrnRep.get(j).getFrId()) {
 
 						catReportList.get(i).setRetAmt(subCatCreditGrnRep.get(j).getVarAmt());
 						catReportList.get(i).setRetQty(subCatCreditGrnRep.get(j).getVarQty());
 						break;
 
-					} /*else {
-
-						catReportList.get(i).setRetAmt(0);
-						catReportList.get(i).setRetQty(0);
-					}*/
+					} /*
+						 * else {
+						 * 
+						 * catReportList.get(i).setRetAmt(0); catReportList.get(i).setRetQty(0); }
+						 */
 
 				}
 			}
@@ -544,17 +558,19 @@ public class SalesReportController {
 			for (int i = 0; i < catReportList.size(); i++) {
 				for (int j = 0; j < subCatCreditGvnRep.size(); j++) {
 
-					if (catReportList.get(i).getItemId() == subCatCreditGrnRep.get(j).getItemId() && catReportList.get(i).getSubCatId() ==subCatCreditGrnRep.get(j).getSubCatId()&& catReportList.get(i).getFrId() ==subCatCreditGrnRep.get(j).getFrId()) {
+					if (catReportList.get(i).getItemId() == subCatCreditGrnRep.get(j).getItemId()
+							&& catReportList.get(i).getSubCatId() == subCatCreditGrnRep.get(j).getSubCatId()
+							&& catReportList.get(i).getFrId() == subCatCreditGrnRep.get(j).getFrId()) {
 
 						catReportList.get(i).setVarAmt(subCatCreditGvnRep.get(j).getVarAmt());
 						catReportList.get(i).setVarQty(subCatCreditGvnRep.get(j).getVarQty());
 						break;
 
-					} /*else {
-
-						catReportList.get(i).setVarAmt(0);
-						catReportList.get(i).setVarQty(0);
-					}*/
+					} /*
+						 * else {
+						 * 
+						 * catReportList.get(i).setVarAmt(0); catReportList.get(i).setVarQty(0); }
+						 */
 
 				}
 			}
@@ -565,6 +581,7 @@ public class SalesReportController {
 		}
 		return catReportList;
 	}
+
 	@RequestMapping(value = { "/getSalesReturnValueItemReport" }, method = RequestMethod.POST)
 	public @ResponseBody List<SalesReturnItemDaoList> getSalesReturnValueItemReport(
 			@RequestParam("fromYear") int fromYear, @RequestParam("toYear") int toYear,
@@ -592,14 +609,14 @@ public class SalesReportController {
 			String month = formatter.format(parser.parse(months.get(i)));
 			SalesReturnItemDaoList salesReturnItemDaoList = new SalesReturnItemDaoList();
 			salesReturnItemDaoList.setMonth(month);
-			List<SalesReturnValueItemDao> salesReturnValueDao =null;
-			if(subCatId.contains(4)) {//4 is sp sub cAt
-				salesReturnValueDao=salesReturnValueItemDaoRepo.getSalesReturnValueSpReport1(months.get(i));
-			}else
-			{
-				salesReturnValueDao=salesReturnValueItemDaoRepo.getSalesReturnValueItemReport1(months.get(i), subCatId);
+			List<SalesReturnValueItemDao> salesReturnValueDao = null;
+			if (subCatId.contains(4)) {// 4 is sp sub cAt
+				salesReturnValueDao = salesReturnValueItemDaoRepo.getSalesReturnValueSpReport1(months.get(i));
+			} else {
+				salesReturnValueDao = salesReturnValueItemDaoRepo.getSalesReturnValueItemReport1(months.get(i),
+						subCatId);
 			}
-			
+
 			salesReturnItemDaoList.setSalesReturnValueItemDao(salesReturnValueDao);
 			repList.add(salesReturnItemDaoList);
 			System.out.println(months.toString());
@@ -609,4 +626,192 @@ public class SalesReportController {
 		return repList;
 
 	}
+	
+	@Autowired
+	SubCatBillRepRepo subCatBillRepRepo;
+
+	@Autowired
+	SubCatCreditGrnRepRepo subCatCreditGrnRepRepo;
+	
+	@RequestMapping(value = { "/getSubCatReportApi" }, method = RequestMethod.POST)
+	public @ResponseBody List<SubCatReport> getSubCatReportApi(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<SubCatReport> catReportList = new ArrayList<>();
+		List<SubCatBillRep> catReportBill = null;
+
+		List<SubCatCreditGrnRep> subCatCreditGrnRep = new ArrayList<>();
+		List<SubCatCreditGrnRep> subCatCreditGvnRep = new ArrayList<>();
+		try {
+			fromDate = Common.convertToYMD(fromDate);
+			toDate = Common.convertToYMD(toDate);
+
+			// catReportList = subCatReportRepo.getData(fromDate, toDate);
+
+			catReportBill = subCatBillRepRepo.getData(fromDate, toDate);
+
+			
+			subCatCreditGrnRep = subCatCreditGrnRepRepo.getDataGRN(fromDate, toDate);
+			
+			System.err.println("Matched -------------------- " + subCatCreditGrnRep);
+
+			subCatCreditGvnRep = subCatCreditGrnRepRepo.getDataGVN(fromDate, toDate);
+			System.err.println("Matched -------------------- " + subCatCreditGvnRep);
+
+			for (int i = 0; i < catReportBill.size(); i++) {
+
+				SubCatReport subCatReport = new SubCatReport();
+
+				subCatReport.setCatId(catReportBill.get(i).getCatId());
+				subCatReport.setSubCatId(catReportBill.get(i).getSubCatId());
+				subCatReport.setSubCatName(catReportBill.get(i).getSubCatName());
+
+				subCatReport.setSoldAmt(catReportBill.get(i).getSoldAmt());
+				subCatReport.setSoldQty(catReportBill.get(i).getSoldQty());
+
+				catReportList.add(subCatReport);
+
+			}
+
+			for (int i = 0; i < catReportList.size(); i++) {
+				for (int j = 0; j < subCatCreditGrnRep.size(); j++) {
+
+					if (catReportList.get(i).getSubCatId() == subCatCreditGrnRep.get(j).getSubCatId()) {
+
+						System.err.println("Matched -------------------- " + subCatCreditGrnRep.get(j).getSubCatId());
+
+						catReportList.get(i).setRetQty(subCatCreditGrnRep.get(j).getVarQty());
+						catReportList.get(i).setRetAmt(subCatCreditGrnRep.get(j).getVarAmt());
+						
+						System.err.println("GRN " + subCatCreditGrnRep.get(j).getVarQty());
+						System.err.println("GRN AMT  " + subCatCreditGrnRep.get(j).getVarAmt());
+
+						break;
+
+					} else {
+
+						catReportList.get(i).setRetAmt(0);
+						catReportList.get(i).setRetQty(0);
+					}
+
+				}
+			}
+
+			for (int i = 0; i < catReportList.size(); i++) {
+				for (int j = 0; j < subCatCreditGvnRep.size(); j++) {
+
+					if (catReportList.get(i).getSubCatId() == subCatCreditGvnRep.get(j).getSubCatId()) {
+
+						catReportList.get(i).setVarAmt(subCatCreditGvnRep.get(j).getVarAmt());
+						catReportList.get(i).setVarQty(subCatCreditGvnRep.get(j).getVarQty());
+						System.err.println("GVN " + subCatCreditGvnRep.get(j).getVarQty());
+						System.err.println("GVN AMT  " + subCatCreditGvnRep.get(j).getVarAmt());
+						
+						break;
+
+					} else {
+
+						catReportList.get(i).setVarAmt(0);
+						catReportList.get(i).setVarQty(0);
+					}
+
+				}
+			}
+
+		} catch (Exception e) {
+			System.out.println(" Exce in Tax1 Report " + e.getMessage());
+			e.printStackTrace();
+		}
+		return catReportList;
+	}
+
+	/*
+	 * @Autowired SubCatFrRepBillRepo subCatFrRepBillRepo;
+	 * 
+	 * @Autowired SubCatCreditGrnFrRepRepo subCatCreditGrnFrRepRepo;
+	 */
+
+	/*
+	 * @RequestMapping(value = { "/getSubCatFrReportApi" }, method =
+	 * RequestMethod.POST) public @ResponseBody List<SubCatFrReport>
+	 * getSubCatFrReportApi(@RequestParam("fromDate") String fromDate,
+	 * 
+	 * @RequestParam("toDate") String toDate, @RequestParam("frIdList")
+	 * List<Integer> frIdList,
+	 * 
+	 * @RequestParam("subCatIdList") List<Integer> subCatIdList) {
+	 * 
+	 * List<SubCatFrReport> catReportList = new ArrayList<>(); List<SubCatFrRepBill>
+	 * catReportBill = null;
+	 * 
+	 * List<SubCatCreditGrnFrRep> subCatCreditGrnRep = null;
+	 * List<SubCatCreditGrnFrRep> subCatCreditGvnRep = null; try { fromDate =
+	 * Common.convertToYMD(fromDate); toDate = Common.convertToYMD(toDate);
+	 * 
+	 * // catReportList = subCatReportRepo.getData(fromDate, toDate);
+	 * 
+	 * catReportBill = subCatFrRepBillRepo.getData(fromDate, toDate, frIdList,
+	 * subCatIdList);
+	 * 
+	 * subCatCreditGrnRep = subCatCreditGrnFrRepRepo.getDataGRN(fromDate, toDate,
+	 * frIdList, subCatIdList);
+	 * 
+	 * subCatCreditGvnRep = subCatCreditGrnFrRepRepo.getDataGVN(fromDate, toDate,
+	 * frIdList, subCatIdList);
+	 * 
+	 * System.out.println(catReportBill.toString());
+	 * System.out.println(subCatCreditGrnRep.toString());
+	 * System.out.println(subCatCreditGvnRep.toString());
+	 * 
+	 * for (int i = 0; i < catReportBill.size(); i++) {
+	 * 
+	 * SubCatFrReport subCatReport = new SubCatFrReport();
+	 * 
+	 * subCatReport.setSubCatId(catReportBill.get(i).getSubCatId());
+	 * subCatReport.setSubCatName(catReportBill.get(i).getSubCatName());
+	 * subCatReport.setFrId(catReportBill.get(i).getFrId());
+	 * subCatReport.setFrName(catReportBill.get(i).getFrName());
+	 * subCatReport.setSoldAmt(catReportBill.get(i).getSoldAmt());
+	 * subCatReport.setSoldQty(catReportBill.get(i).getSoldQty());
+	 * subCatReport.setBillDetailNo(catReportBill.get(i).getBillDetailNo());
+	 * 
+	 * catReportList.add(subCatReport);
+	 * 
+	 * }
+	 * 
+	 * for (int i = 0; i < catReportList.size(); i++) { for (int j = 0; j <
+	 * subCatCreditGrnRep.size(); j++) {
+	 * 
+	 * if (catReportList.get(i).getFrId() == subCatCreditGrnRep.get(j).getFrId() &&
+	 * catReportList.get(i).getSubCatId() ==
+	 * subCatCreditGrnRep.get(j).getSubCatId()) {
+	 * 
+	 * catReportList.get(i).setRetAmt(subCatCreditGrnRep.get(j).getVarAmt());
+	 * catReportList.get(i).setRetQty(subCatCreditGrnRep.get(j).getVarQty()); break;
+	 * 
+	 * } else {
+	 * 
+	 * catReportList.get(i).setRetAmt(0); catReportList.get(i).setRetQty(0); }
+	 * 
+	 * } }
+	 * 
+	 * for (int i = 0; i < catReportList.size(); i++) { for (int j = 0; j <
+	 * subCatCreditGvnRep.size(); j++) {
+	 * 
+	 * if (catReportList.get(i).getFrId() == subCatCreditGrnRep.get(j).getFrId() &&
+	 * catReportList.get(i).getSubCatId() ==
+	 * subCatCreditGrnRep.get(j).getSubCatId()) {
+	 * 
+	 * catReportList.get(i).setVarAmt(subCatCreditGvnRep.get(j).getVarAmt());
+	 * catReportList.get(i).setVarQty(subCatCreditGvnRep.get(j).getVarQty()); break;
+	 * 
+	 * } else {
+	 * 
+	 * catReportList.get(i).setVarAmt(0); catReportList.get(i).setVarQty(0); }
+	 * 
+	 * } }
+	 * 
+	 * } catch (Exception e) { System.out.println(" Exce in Tax1 Report " +
+	 * e.getMessage()); e.printStackTrace(); } return catReportList; }
+	 */
 }

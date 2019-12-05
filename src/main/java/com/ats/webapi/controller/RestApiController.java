@@ -41,6 +41,9 @@ import com.ats.webapi.model.prodapp.TRegSpCakeSup;
 import com.ats.webapi.model.prodapp.TSpCakeSup;
 import com.ats.webapi.model.rawmaterial.ItemDetail;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
+import com.ats.webapi.model.salesreport.SalesReport;
+import com.ats.webapi.model.salesvaluereport.SalesReturnValueDao;
+import com.ats.webapi.model.salesvaluereport.SalesReturnValueDaoList;
 /*import com.ats.webapi.repository.BillLogRepo;
 */import com.ats.webapi.repository.GetBillDetailsRepository;
 import com.ats.webapi.repository.GetReorderByStockTypeRepository;
@@ -51,6 +54,7 @@ import com.ats.webapi.repository.MenuForAlbumRepo;
 import com.ats.webapi.repository.MiniSubCategoryRepository;
 import com.ats.webapi.repository.OrderItemSubCatTotalRepository;
 import com.ats.webapi.repository.OrderLogRespository;
+import com.ats.webapi.repository.SalesReportRepo;
 import com.ats.webapi.repository.SpCakeEnqAlbmFrnchseRepo;
 import com.ats.webapi.repository.SpecialCakeCatRepository;
 import com.ats.webapi.repository.SpecialCakeRepository;
@@ -59,6 +63,7 @@ import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 import com.ats.webapi.repository.UserRepository;
 import com.ats.webapi.repository.prodapp.TRegSpCakeSupRepo;
 import com.ats.webapi.repository.prodapp.TSpCakeSupRepo;
+import com.ats.webapi.repository.salesreturnrepo.SalesReturnValueDaoRepository;
 import com.ats.webapi.service.AllFrIdNameService;
 import com.ats.webapi.service.BillDetailUpdateService;
 import com.ats.webapi.service.CategoryService;
@@ -5220,6 +5225,66 @@ public class RestApiController {
 		List<SpCakeEnqAlbmFrnchse> list = spAlbmFrRepo.getSpcakeEnqAlbmFrDataByDate(fromDate,toDate);
 		return list;
 
+	}
+	
+	/***************************************************************************************************/
+	@Autowired
+	SalesReturnValueDaoRepository salesReturnValueDaoRepository;
+	
+	//Mahendra
+	@RequestMapping(value = { "/getSalesReturnValueReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<SalesReturnValueDaoList> getSalesReturnValueReport(@RequestParam("fromYear") int fromYear,
+			@RequestParam("toYear") int toYear) throws ParseException {
+
+		List<SalesReturnValueDaoList> repList = new ArrayList<>();
+		List<String> months = new ArrayList<String>();
+		months.add(fromYear + "-04");
+		months.add(fromYear + "-05");
+		months.add(fromYear + "-06");
+		months.add(fromYear + "-07");
+		months.add(fromYear + "-08");
+		months.add(fromYear + "-09");
+		months.add(fromYear + "-10");
+		months.add(fromYear + "-11");
+		months.add(fromYear + "-12");
+		months.add(toYear + "-01");
+		months.add(toYear + "-02");
+		months.add(toYear + "-03");
+
+		for (int i = 0; i < months.size(); i++) {
+			SimpleDateFormat parser = new SimpleDateFormat("yyyy-MM");
+			// output format: yyyy-MM-dd
+			SimpleDateFormat formatter = new SimpleDateFormat("MMM-yyyy");
+			String month = formatter.format(parser.parse(months.get(i)));
+			SalesReturnValueDaoList salesReturnValueReportList = new SalesReturnValueDaoList();
+			salesReturnValueReportList.setMonth(month);
+			List<SalesReturnValueDao> salesReturnValueDao = salesReturnValueDaoRepository
+					.getSalesReturnValueReport(months.get(i));
+			salesReturnValueReportList.setSalesReturnQtyValueList(salesReturnValueDao);
+			repList.add(salesReturnValueReportList);
+		}
+		return repList;
+
+	}
+
+	@Autowired
+	SalesReportRepo getSalesReportRepo;
+	@RequestMapping(value = { "/getSalesReportV2" }, method = RequestMethod.POST)
+	public @ResponseBody List<SalesReport> getSalesReportV2(@RequestParam("frIdList") List<String> frIdList,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<SalesReport> saleList = new ArrayList<>();
+
+		if (frIdList.contains("-1")) {
+
+			saleList = getSalesReportRepo.getSalesReportAllFr(fromDate, toDate);
+
+		} else {
+
+			saleList = getSalesReportRepo.getSalesReportSpecFr(fromDate, toDate, frIdList);
+		}
+
+		return saleList;
 	}
 	
 	
