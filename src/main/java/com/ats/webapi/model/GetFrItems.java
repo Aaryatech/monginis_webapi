@@ -59,6 +59,8 @@ public class GetFrItems {
 	
 	private int minQty;
 	
+	private int qtyLimit;
+	
 	public double getItemRate3() {
 		return itemRate3;
 	}
@@ -252,14 +254,28 @@ public class GetFrItems {
 		this.menuId = menuId;
 	}
 
+	
+	
+	
+	public int getQtyLimit() {
+		return qtyLimit;
+	}
+
+	public void setQtyLimit(int qtyLimit) {
+		this.qtyLimit = qtyLimit;
+	}
+	
+	
+
 	@Override
 	public String toString() {
 		return "GetFrItems [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1
 				+ ", itemGrp2=" + itemGrp2 + ", itemGrp3=" + itemGrp3 + ", itemRate1=" + itemRate1 + ", itemRate2="
-				+ itemRate2 + ", itemMrp1=" + itemMrp1 + ", itemMrp2=" + itemMrp2 + ", itemImage=" + itemImage
-				+ ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2 + ", itemTax3=" + itemTax3 + ", itemIsUsed="
-				+ itemIsUsed + ", itemSortId=" + itemSortId + ", grnTwo=" + grnTwo + ", itemQty=" + itemQty
-				+ ", delStatus=" + delStatus + ", subCatName=" + subCatName + ", menuId=" + menuId + "]";
+				+ itemRate2 + ", itemMrp1=" + itemMrp1 + ", itemMrp2=" + itemMrp2 + ", itemMrp3=" + itemMrp3
+				+ ", itemImage=" + itemImage + ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2 + ", itemTax3="
+				+ itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId + ", grnTwo=" + grnTwo
+				+ ", itemQty=" + itemQty + ", delStatus=" + delStatus + ", subCatName=" + subCatName + ", menuId="
+				+ menuId + ", itemRate3=" + itemRate3 + ", minQty=" + minQty + ", qtyLimit=" + qtyLimit + "]";
 	}
 
 

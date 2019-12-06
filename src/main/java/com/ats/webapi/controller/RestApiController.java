@@ -1373,8 +1373,33 @@ public class RestApiController {
 
 			boolean isUnique = true;
 			for (int m = 0; m < frStockResponseList.size(); m++) {
+				
+				FrStockResponse resp=frStockResponseList.get(m);
 
-				if (frStockResponseList.get(m).getItemId() == frItemStockConfigurePostParent.getItemId()) {
+				if (resp.getItemId() == frItemStockConfigurePostParent.getItemId()) {
+					
+					List<StockDetails> stockDetailsList =resp.getStockDetails();
+					
+					for (int j = 0; j < frItemStockConfigurePosts.size(); j++) {
+
+						GetFrItemStockConfiguration frItemStockConfigurePostChild = frItemStockConfigurePosts.get(j);
+
+						if (frItemStockConfigurePostChild.getItemId() == frItemStockConfigurePostParent.getItemId()) {
+
+							StockDetails stockDetails = new StockDetails();
+							System.out.println("child object " + frItemStockConfigurePostChild.toString());
+
+							stockDetails.setFrStockId(frItemStockConfigurePostChild.getFrStockId());
+							stockDetails.setType(frItemStockConfigurePostChild.getType());
+							stockDetails.setMinQty(frItemStockConfigurePostChild.getMinQty());
+							stockDetails.setMaxQty(frItemStockConfigurePostChild.getMaxQty());
+							stockDetails.setReorderQty(frItemStockConfigurePostChild.getReorderQty());
+							stockDetailsList.add(stockDetails);
+
+						}
+					}
+					resp.setStockDetails(stockDetailsList);
+					
 					isUnique = false;
 				}
 
@@ -3547,6 +3572,92 @@ public class RestApiController {
 		return frItemList;
 
 	}
+	
+	
+	
+	//Anmol----->6/12/2019---------------------->OPS---Regular Cakes & Pastries Time 2---Items----with ----limit 
+	@RequestMapping(value = "/getFrItemsWithLimit", method = RequestMethod.POST)
+	public @ResponseBody List<GetFrItems> getFrItemsWithLimit(@RequestParam List<Integer> items, @RequestParam String frId,
+			@RequestParam String date, @RequestParam String menuId,@RequestParam int type) {
+
+		List<ItemWithSubCat> itemList = new ArrayList<>();
+		List<GetFrItems> frItemList = new ArrayList<>();
+
+		List<Orders> orderList = new ArrayList<>();
+
+		System.out.println("input param items= " + items.toString());
+
+		System.out.println("date param = " + date.toString());
+
+		try {
+			itemList = getFrItemsService.findFrItemsWithLimit(items,type);
+			
+			System.err.println("ITEMS ----------------- "+itemList);
+			
+			
+			try {
+				orderList = prevItemOrderService.findFrItemOrders(items, frId, date, menuId);
+
+				for (int i = 0; i < itemList.size(); i++) {
+
+					ItemWithSubCat item = itemList.get(i);
+
+					GetFrItems getFrItems = new GetFrItems();
+
+					getFrItems.setDelStatus(item.getDelStatus());
+					getFrItems.setGrnTwo(item.getGrnTwo());
+					getFrItems.setId(item.getId());
+					getFrItems.setItemGrp1(item.getItemGrp1());
+					getFrItems.setItemGrp2(item.getItemGrp2());
+					getFrItems.setItemGrp3(item.getItemGrp3());
+					getFrItems.setItemId(item.getItemId());
+					getFrItems.setItemImage(item.getItemImage());
+					getFrItems.setItemIsUsed(item.getItemIsUsed());
+					getFrItems.setItemMrp1(item.getItemMrp1());
+					getFrItems.setItemMrp2(item.getItemMrp2());
+					getFrItems.setItemMrp3(item.getItemMrp3());
+					getFrItems.setItemName(item.getItemName());
+					getFrItems.setItemRate1(item.getItemRate1());
+					getFrItems.setItemRate2(item.getItemRate2());
+					getFrItems.setItemSortId(item.getItemSortId());
+					getFrItems.setItemTax1(item.getItemTax1());
+					getFrItems.setItemTax2(item.getItemTax2());
+					getFrItems.setItemTax3(item.getItemTax3());
+					getFrItems.setSubCatName(item.getSubCatName());
+					getFrItems.setMinQty(item.getMinQty());
+					getFrItems.setItemRate3(item.getItemRate3());
+					getFrItems.setQtyLimit(item.getQtyLimit());
+
+					for (int j = 0; j < orderList.size(); j++) {
+
+						if (String.valueOf(item.getId()).equalsIgnoreCase(orderList.get(j).getItemId())) {
+
+							getFrItems.setItemQty(orderList.get(j).getOrderQty());
+							getFrItems.setMenuId(orderList.get(j).getMenuId());
+
+						}
+
+					}
+
+					frItemList.add(getFrItems);
+
+				}
+
+			} catch (Exception e) {
+				System.out.println("Exception fr Prev Item order " + e.getMessage());
+			}
+			System.out.println("All Prev Order Record" + orderList.toString());
+
+		} catch (Exception e) {
+			System.out.println("Exception fr Items " + e.getClass());
+		}
+
+		return frItemList;
+
+	}
+	
+	
+	
 
 	@RequestMapping("/getMessage")
 	public @ResponseBody Message getMessage(@RequestParam int msgId) {

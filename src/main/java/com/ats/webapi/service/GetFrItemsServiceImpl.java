@@ -24,5 +24,13 @@ public class GetFrItemsServiceImpl implements GetFrItemsService {
 		
 		return list;
 	}
+	
+	@Override
+	public List<ItemWithSubCat> findFrItemsWithLimit(List<Integer> items,int type) {
+		List<ItemWithSubCat> list=getFrItemRepository.findFrItemsWithLimit(items,type);
+
+		
+		return list;
+	}
 
 }

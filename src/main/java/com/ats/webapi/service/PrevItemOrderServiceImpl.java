@@ -21,6 +21,9 @@ public class PrevItemOrderServiceImpl  implements PrevItemOrderService {
 	public List<Orders> findFrItemOrders(List<Integer>items , String frId, String date, String menuId) {
 
 		List<Orders>list =prevItemOrderRepository.findAllOrders(items ,  frId,  date, menuId);
+		
+		System.err.println("ITEMLIST ----------------------- "+list);
+		
 		return list;
 	}
 
