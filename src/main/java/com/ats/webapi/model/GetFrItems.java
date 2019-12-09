@@ -59,7 +59,7 @@ public class GetFrItems {
 	
 	private int minQty;
 	
-	private int qtyLimit;
+	
 	
 	public double getItemRate3() {
 		return itemRate3;
@@ -257,13 +257,6 @@ public class GetFrItems {
 	
 	
 	
-	public int getQtyLimit() {
-		return qtyLimit;
-	}
-
-	public void setQtyLimit(int qtyLimit) {
-		this.qtyLimit = qtyLimit;
-	}
 	
 	
 
@@ -275,7 +268,7 @@ public class GetFrItems {
 				+ ", itemImage=" + itemImage + ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2 + ", itemTax3="
 				+ itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId + ", grnTwo=" + grnTwo
 				+ ", itemQty=" + itemQty + ", delStatus=" + delStatus + ", subCatName=" + subCatName + ", menuId="
-				+ menuId + ", itemRate3=" + itemRate3 + ", minQty=" + minQty + ", qtyLimit=" + qtyLimit + "]";
+				+ menuId + ", itemRate3=" + itemRate3 + ", minQty=" + minQty + "]";
 	}
 
 

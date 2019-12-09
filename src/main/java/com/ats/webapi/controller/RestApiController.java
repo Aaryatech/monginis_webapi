@@ -3577,11 +3577,11 @@ public class RestApiController {
 	
 	//Anmol----->6/12/2019---------------------->OPS---Regular Cakes & Pastries Time 2---Items----with ----limit 
 	@RequestMapping(value = "/getFrItemsWithLimit", method = RequestMethod.POST)
-	public @ResponseBody List<GetFrItems> getFrItemsWithLimit(@RequestParam List<Integer> items, @RequestParam String frId,
+	public @ResponseBody List<GetFrItemsWithLimit> getFrItemsWithLimit(@RequestParam List<Integer> items, @RequestParam String frId,
 			@RequestParam String date, @RequestParam String menuId,@RequestParam int type) {
 
 		List<ItemWithSubCat> itemList = new ArrayList<>();
-		List<GetFrItems> frItemList = new ArrayList<>();
+		List<GetFrItemsWithLimit> frItemList = new ArrayList<>();
 
 		List<Orders> orderList = new ArrayList<>();
 
@@ -3602,7 +3602,7 @@ public class RestApiController {
 
 					ItemWithSubCat item = itemList.get(i);
 
-					GetFrItems getFrItems = new GetFrItems();
+					GetFrItemsWithLimit getFrItems = new GetFrItemsWithLimit();
 
 					getFrItems.setDelStatus(item.getDelStatus());
 					getFrItems.setGrnTwo(item.getGrnTwo());
