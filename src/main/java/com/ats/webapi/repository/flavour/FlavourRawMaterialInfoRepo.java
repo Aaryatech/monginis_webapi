@@ -14,7 +14,7 @@ public interface FlavourRawMaterialInfoRepo extends JpaRepository<FlavourRawMate
 			"		a.flavour_detail_id,\n" + 
 			"		a.flavour_id,\n" + 
 			"        a.rm_name,\n" + 
-			"        COALESCE((SUM(a.rm_qty*b.ttl_weight)),0) AS ttl_qty,\n" + 
+			"        COALESCE((SUM(a.rm_qty*a.varchar_1*b.ttl_weight)),0) AS ttl_qty,\n" + 
 			"        SUM(a.rm_qty) AS rm_qty,\n" + 
 			"        SUM(b.ttl_weight) as weight,\n" + 
 			"        a.rm_type\n" + 
@@ -25,7 +25,8 @@ public interface FlavourRawMaterialInfoRepo extends JpaRepository<FlavourRawMate
 			"                    f.flavour_id,\n" + 
 			"                    f.rm_name,\n" + 
 			"                    f.rm_qty,\n" + 
-			"                    f.rm_id, f.rm_type\n" + 
+			"                    f.rm_id, f.rm_type,\n" + 
+			"        			 f.varchar_1\n" + 
 			"         \n" + 
 			"            FROM 		\n" + 
 			"                    m_flavour_detail f\n" + 
