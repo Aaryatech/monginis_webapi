@@ -54,6 +54,8 @@ import com.ats.webapi.repository.MenuForAlbumRepo;
 import com.ats.webapi.repository.MiniSubCategoryRepository;
 import com.ats.webapi.repository.OrderItemSubCatTotalRepository;
 import com.ats.webapi.repository.OrderLogRespository;
+import com.ats.webapi.repository.ProdItemStockRepo;
+import com.ats.webapi.repository.ProdItemStockTotalRepo;
 import com.ats.webapi.repository.SalesReportRepo;
 import com.ats.webapi.repository.SpCakeEnqAlbmFrnchseRepo;
 import com.ats.webapi.repository.SpecialCakeCatRepository;
@@ -371,6 +373,12 @@ public class RestApiController {
 
 	@Autowired
 	MenuForAlbumRepo menuForAlbumRepo;
+	
+	@Autowired
+	ProdItemStockRepo prodItemStockRepo;
+	
+	@Autowired
+	ProdItemStockTotalRepo prodItemStockTotalRepo;
 
 	@RequestMapping(value = "/getItemsResBySubCatId", method = RequestMethod.POST)
 	public @ResponseBody List<ItemRes> getItemsResBySubCatId(@RequestParam("subCatId") String subCatId) {
@@ -5399,5 +5407,27 @@ public class RestApiController {
 	}
 	
 	
+	
+	
+	
+	@RequestMapping(value = { "/getItemwiseStockLimitByCat" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProdItemStock> getItemwiseStockLimitByCat(@RequestParam("catId") int catId) {
+
+		List<ProdItemStock> result = new ArrayList<>();
+
+		result = prodItemStockRepo.getItemwiseStocklimit(catId);
+
+		return result;
+	}
+	
+	@RequestMapping(value = { "/getItemwiseStockTotalByCat" }, method = RequestMethod.POST)
+	public @ResponseBody List<ProdItemStockTotal> getItemwiseStockTotalByCat(@RequestParam("catId") int catId) {
+
+		List<ProdItemStockTotal> result = new ArrayList<>();
+
+		result = prodItemStockTotalRepo.getItemwiseStockTotal(catId);
+
+		return result;
+	}
 
 }
