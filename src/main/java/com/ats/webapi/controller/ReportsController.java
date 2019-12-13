@@ -371,4 +371,98 @@ public class ReportsController {
 
 		return list;
 	}
+	
+	
+	//-------------------Anmol------>12/12/2019---------
+	@RequestMapping(value = "/getOrderReportByDateAndFr", method = RequestMethod.POST)
+	public @ResponseBody List<ItemListWithDateRecord> getOrderReportByDateAndFr(
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate, @RequestParam("frIds") List<Integer> frIds) {
+
+		List<ItemListWithDateRecord> list = new ArrayList<>();
+
+		try {
+			System.err.println("FR_IDS --------------   "+frIds);
+			
+
+			List<Date> dates = new ArrayList<Date>();
+
+			DateFormat formatter;
+
+			formatter = new SimpleDateFormat("dd-MM-yyyy");
+
+			Date startDate = (Date) formatter.parse(fromDate);
+
+			Date endDate = (Date) formatter.parse(toDate);
+
+			long interval = 24 * 1000 * 60 * 60;
+
+			long endTime = endDate.getTime();
+
+			long curTime = startDate.getTime();
+
+			while (curTime <= endTime) {
+
+				dates.add(new Date(curTime));
+
+				curTime += interval;
+
+			}
+
+			List<ItemRecordByDate> datewiseList=new ArrayList<>();
+			
+			if(frIds.contains(-1)) {
+				list = itemListWithDateRecordRepo.getorderreportByItemIdandDate(Common.convertToYMD(fromDate), Common.convertToYMD(toDate));
+
+				datewiseList = itemRecordByDateRepo.getorderreportByItemIdandDate(Common.convertToYMD(fromDate), Common.convertToYMD(toDate));
+
+			}else {
+				list = itemListWithDateRecordRepo.getOrderReportByDateAndFr(Common.convertToYMD(fromDate), Common.convertToYMD(toDate),frIds);
+
+				datewiseList = itemRecordByDateRepo.getOrderReportByDateAndFr(Common.convertToYMD(fromDate), Common.convertToYMD(toDate),frIds);
+
+			}
+
+			
+			//System.out.println(datewiseList);
+			for (int i = 0; i < list.size(); i++) {
+				
+				List<DateAndQty> newlist = new ArrayList<>();
+				
+				for (int k = 0; k < dates.size(); k++) {
+					 
+					int flag=0;
+					
+					for (int j = 0; j < datewiseList.size(); j++) {
+						
+						if(dates.get(k).compareTo(datewiseList.get(j).getDeliveryDate())==0 && datewiseList.get(j).getItemId()==list.get(i).getItemId()) {
+							
+							DateAndQty DateAndQty = new DateAndQty();
+							DateAndQty.setDlvDate(datewiseList.get(j).getDeliveryDate());
+							DateAndQty.setQty(datewiseList.get(j).getOrderQty());
+							//newlist.add(datewiseList.get(j));
+							newlist.add(DateAndQty);
+							flag=1;
+							break;
+						}
+
+					}
+					
+					if(flag==0) {
+						
+						DateAndQty itemRecordByDate = new DateAndQty(); 
+						itemRecordByDate.setDlvDate(dates.get(k));
+						itemRecordByDate.setQty(0);
+						newlist.add(itemRecordByDate);
+					}
+				}
+				
+				list.get(i).setList(newlist);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return list;
+	}
 }
