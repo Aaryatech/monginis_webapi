@@ -62,6 +62,9 @@ public class ItemWithSubCat implements Serializable {
 	@Column(name="min_qty")
 	private int minQty;
 	
+	@Column(name="item_shelf_life")
+	private int itemShelfLife;
+	
 	private String subCatName;
 	
 	
@@ -269,6 +272,18 @@ public class ItemWithSubCat implements Serializable {
 
 	
 	
+	
+	
+	public int getItemShelfLife() {
+		return itemShelfLife;
+	}
+
+	public void setItemShelfLife(int itemShelfLife) {
+		this.itemShelfLife = itemShelfLife;
+	}
+	
+	
+
 	@Override
 	public String toString() {
 		return "ItemWithSubCat [itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1 + ", itemGrp2="
@@ -276,8 +291,8 @@ public class ItemWithSubCat implements Serializable {
 				+ ", itemMrp1=" + itemMrp1 + ", itemMrp2=" + itemMrp2 + ", itemMrp3=" + itemMrp3 + ", itemImage="
 				+ itemImage + ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2 + ", itemTax3=" + itemTax3
 				+ ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId + ", grnTwo=" + grnTwo + ", delStatus="
-				+ delStatus + ", itemRate3=" + itemRate3 + ", minQty=" + minQty + ", subCatName=" + subCatName
-				+ ", qtyLimit=" + qtyLimit + ", id=" + id + "]";
+				+ delStatus + ", itemRate3=" + itemRate3 + ", minQty=" + minQty + ", itemShelfLife=" + itemShelfLife
+				+ ", subCatName=" + subCatName + ", qtyLimit=" + qtyLimit + ", id=" + id + "]";
 	}
 	
 	

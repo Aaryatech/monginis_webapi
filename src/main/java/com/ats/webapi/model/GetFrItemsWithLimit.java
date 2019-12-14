@@ -54,6 +54,8 @@ private int minQty;
 
 private int qtyLimit;
 
+private int itemShelfLife;
+
 public double getItemRate3() {
 	return itemRate3;
 }
@@ -260,15 +262,28 @@ public void setQtyLimit(int qtyLimit) {
 
 
 
+
+
+public int getItemShelfLife() {
+	return itemShelfLife;
+}
+
+public void setItemShelfLife(int itemShelfLife) {
+	this.itemShelfLife = itemShelfLife;
+}
+
+
+
 @Override
 public String toString() {
-	return "GetFrItems [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1
+	return "GetFrItemsWithLimit [id=" + id + ", itemId=" + itemId + ", itemName=" + itemName + ", itemGrp1=" + itemGrp1
 			+ ", itemGrp2=" + itemGrp2 + ", itemGrp3=" + itemGrp3 + ", itemRate1=" + itemRate1 + ", itemRate2="
 			+ itemRate2 + ", itemMrp1=" + itemMrp1 + ", itemMrp2=" + itemMrp2 + ", itemMrp3=" + itemMrp3
 			+ ", itemImage=" + itemImage + ", itemTax1=" + itemTax1 + ", itemTax2=" + itemTax2 + ", itemTax3="
 			+ itemTax3 + ", itemIsUsed=" + itemIsUsed + ", itemSortId=" + itemSortId + ", grnTwo=" + grnTwo
-			+ ", itemQty=" + itemQty + ", delStatus=" + delStatus + ", subCatName=" + subCatName + ", menuId="
-			+ menuId + ", itemRate3=" + itemRate3 + ", minQty=" + minQty + ", qtyLimit=" + qtyLimit + "]";
+			+ ", itemQty=" + itemQty + ", delStatus=" + delStatus + ", subCatName=" + subCatName + ", menuId=" + menuId
+			+ ", itemRate3=" + itemRate3 + ", minQty=" + minQty + ", qtyLimit=" + qtyLimit + ", itemShelfLife="
+			+ itemShelfLife + "]";
 }
 
 

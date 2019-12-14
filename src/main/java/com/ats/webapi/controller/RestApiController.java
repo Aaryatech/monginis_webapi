@@ -3552,6 +3552,7 @@ public class RestApiController {
 					getFrItems.setSubCatName(item.getSubCatName());
 					getFrItems.setMinQty(item.getMinQty());
 					getFrItems.setItemRate3(item.getItemRate3());
+					getFrItems.setItemShelfLife(item.getItemShelfLife());
 
 					for (int j = 0; j < orderList.size(); j++) {
 
@@ -3635,6 +3636,7 @@ public class RestApiController {
 					getFrItems.setMinQty(item.getMinQty());
 					getFrItems.setItemRate3(item.getItemRate3());
 					getFrItems.setQtyLimit(item.getQtyLimit());
+					getFrItems.setItemShelfLife(item.getItemShelfLife());
 
 					for (int j = 0; j < orderList.size(); j++) {
 
