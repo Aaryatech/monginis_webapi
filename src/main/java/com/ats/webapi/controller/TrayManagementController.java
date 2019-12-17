@@ -2,6 +2,7 @@ package com.ats.webapi.controller;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -19,8 +20,10 @@ import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.TrayMgtDetailList;
 import com.ats.webapi.model.logistics.VehicalMaster;
+import com.ats.webapi.model.tray.CalCulateTray;
 import com.ats.webapi.model.tray.DriverDetailByFr;
 import com.ats.webapi.model.tray.FrOutTrays;
+import com.ats.webapi.model.tray.FrTrayConsumeQty;
 import com.ats.webapi.model.tray.FranchiseInRoute;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
 import com.ats.webapi.model.tray.GetVehDriverMobNo;
@@ -29,7 +32,10 @@ import com.ats.webapi.model.tray.TrayMgtDetail;
 import com.ats.webapi.model.tray.TrayMgtDetailBean;
 import com.ats.webapi.model.tray.TrayMgtHeader;
 import com.ats.webapi.repository.logistics.VehicalMasterRepository;
+import com.ats.webapi.repository.tray.CalculateTrayRepo;
 import com.ats.webapi.repository.tray.DriverDetailByFrRepo;
+import com.ats.webapi.repository.tray.FrTrayConsumeQtyRepo;
+import com.ats.webapi.repository.tray.FranchiseInRouteRepository;
 import com.ats.webapi.repository.tray.GetVehDriverMobNoRepo;
 import com.ats.webapi.repository.tray.GetVehicleAvgRepository;
 import com.ats.webapi.repository.tray.TrayMgtHeaderRepository;
@@ -43,21 +49,31 @@ public class TrayManagementController {
 
 	@Autowired
 	TrayMgtService trayMgtService;
-	
+
 	@Autowired
-	GetVehDriverMobNoRepo vehMobNoRepo;//Sachin 20 MArch
-	
+	GetVehDriverMobNoRepo vehMobNoRepo;// Sachin 20 MArch
+
 	@Autowired
 	VehicalMasterRepository vehicleMasterRepository;
-	
+
 	@Autowired
 	GetVehicleAvgRepository getVehicleAvgRepository;
-	
+
 	@Autowired
 	DriverDetailByFrRepo driverDetailByFrRepo;
+
+	@Autowired
+	FrTrayConsumeQtyRepo frTrayConsumeQtyRepo;
+
+	@Autowired
+	CalculateTrayRepo calculateTrayRepo;
 	
+	@Autowired
+	FranchiseInRouteRepository franchiseInRouteRepository;
+
 	@RequestMapping(value = { "/getVehMobNo" }, method = RequestMethod.POST)
-	public @ResponseBody List<GetVehDriverMobNo> getVehMobNo(@RequestParam("routeId") int routeId,@RequestParam("curDate")String curDate) {
+	public @ResponseBody List<GetVehDriverMobNo> getVehMobNo(@RequestParam("routeId") int routeId,
+			@RequestParam("curDate") String curDate) {
 
 		List<GetVehDriverMobNo> driverList = vehMobNoRepo.getVehicleAndMobNo(routeId, curDate);
 
@@ -65,50 +81,52 @@ public class TrayManagementController {
 
 	}
 
-	
+	// ----------------------------SAVE Tray Management
+	// Header---------------------------
+	@RequestMapping(value = { "/saveTrayMgtHeader" }, method = RequestMethod.POST)
+	public @ResponseBody TrayMgtHeader saveTrayMgtHeader(@RequestBody TrayMgtHeader trayMgtHeader) {
 
-	// ----------------------------SAVE Tray Management Header---------------------------
-		@RequestMapping(value = { "/saveTrayMgtHeader" }, method = RequestMethod.POST)
-		public @ResponseBody TrayMgtHeader saveTrayMgtHeader(@RequestBody TrayMgtHeader trayMgtHeader) {
-
-			TrayMgtHeader trayMgtHeaderRes = null;
+		TrayMgtHeader trayMgtHeaderRes = null;
+		try {
+			TrayMgtHeader isHeaderAvail = null;
 			try {
-				TrayMgtHeader isHeaderAvail=null;
-				try {
-					System.out.println("----------------------"+trayMgtHeader.getTranDate()+"--"+new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-	              isHeaderAvail = trayMgtHeaderRepository.findByTranDateAndVehIdAndDelStatus(new SimpleDateFormat("yyyy-MM-dd").format(new Date()), trayMgtHeader.getVehId(), 0);
-
-				}
-				catch (Exception e) {
-					 isHeaderAvail=null;
-					e.printStackTrace();
-				}
-	              if (isHeaderAvail!=null) {
-
-	  				trayMgtHeaderRes = new TrayMgtHeader();
-	  				trayMgtHeaderRes.setError(true);
-	  				trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .");
-				} else {
-					trayMgtHeader.setTranDate(new Date());
-					trayMgtHeaderRes = trayMgtService.saveTrayMgtHeader(trayMgtHeader);
-
-					trayMgtHeaderRes.setError(false);
-					trayMgtHeaderRes.setMessage("TrayMgtHeader Saved Successfully.");
-				}
+				System.out.println("----------------------" + trayMgtHeader.getTranDate() + "--"
+						+ new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+				isHeaderAvail = trayMgtHeaderRepository.findByTranDateAndVehIdAndDelStatus(
+						new SimpleDateFormat("yyyy-MM-dd").format(new Date()), trayMgtHeader.getVehId(), 0);
 
 			} catch (Exception e) {
-
-				trayMgtHeaderRes.setError(true);
-				trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .Exc");
-
+				isHeaderAvail = null;
 				e.printStackTrace();
-				System.out.println("Exception In TrayManagementController /saveTrayMgtHeader" + e.getMessage());
-
 			}
-			return trayMgtHeaderRes;
+			if (isHeaderAvail != null) {
+
+				trayMgtHeaderRes = new TrayMgtHeader();
+				trayMgtHeaderRes.setError(true);
+				trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .");
+			} else {
+				trayMgtHeader.setTranDate(new Date());
+				trayMgtHeaderRes = trayMgtService.saveTrayMgtHeader(trayMgtHeader);
+
+				trayMgtHeaderRes.setError(false);
+				trayMgtHeaderRes.setMessage("TrayMgtHeader Saved Successfully.");
+			}
+
+		} catch (Exception e) {
+
+			trayMgtHeaderRes.setError(true);
+			trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .Exc");
+
+			e.printStackTrace();
+			System.out.println("Exception In TrayManagementController /saveTrayMgtHeader" + e.getMessage());
 
 		}
-	// ----------------------------SAVE Tray Management Detail---------------------------
+		return trayMgtHeaderRes;
+
+	}
+
+	// ----------------------------SAVE Tray Management
+	// Detail---------------------------
 	@RequestMapping(value = { "/saveTrayMgtDetail" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveTrayMgtDetail(@RequestBody TrayMgtDetailBean trayMgtDetail) {
 
@@ -141,7 +159,8 @@ public class TrayManagementController {
 	}
 
 	// ---------------------------------------------------------------------------
-	// ----------------------------SAVE Tray Management Detail---------------------------
+	// ----------------------------SAVE Tray Management
+	// Detail---------------------------
 	@RequestMapping(value = { "/saveTrayMgtDetailForBill" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveTrayMgtDetailForBill(@RequestBody List<TrayMgtDetailBean> trayMgtDetails) {
 
@@ -183,7 +202,8 @@ public class TrayManagementController {
 	}
 	// --------------------------END--------------------------------------------------
 
-	// ---------------------------Getting TrayMgtDetail By FrId-------------------------
+	// ---------------------------Getting TrayMgtDetail By
+	// FrId-------------------------
 	@RequestMapping(value = { "/getTrayMgtDetailByFrId" }, method = RequestMethod.POST)
 	public @ResponseBody TrayMgtDetail getTrayMgtDetailByFrId(@RequestParam("frId") int frId,
 			@RequestParam("tranId") int tranId) {
@@ -195,7 +215,8 @@ public class TrayManagementController {
 	}
 
 	// ------------------------------------------------------------------------------------
-	// ---------------------------Getting TrayMgtDetail By TranId-------------------------
+	// ---------------------------Getting TrayMgtDetail By
+	// TranId-------------------------
 	@RequestMapping(value = { "/getTrayMgtDetailByTranId" }, method = RequestMethod.POST)
 	public @ResponseBody List<TrayMgtDetail> getTrayMgtDetailByTranId(@RequestParam("tranId") int tranId) {
 
@@ -206,7 +227,8 @@ public class TrayManagementController {
 	}
 
 	// ------------------------------------------------------------------------------------
-	// ---------------------------Getting TrayMgtDetails By TranId-------------------------
+	// ---------------------------Getting TrayMgtDetails By
+	// TranId-------------------------
 	@RequestMapping(value = { "/getTrayMgtDetailsByTranIdAndDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<TrayMgtDetailList> getTrayMgtDetailsByTranIdAndDate(@RequestParam("tranId") int tranId,
 			@RequestParam("date") String date) {
@@ -217,8 +239,9 @@ public class TrayManagementController {
 
 	}
 
-		// ------------------------------------------------------------------------------------
-	// ---------------------------Getting TrayMgtDetail By Status For Bill-------------------------
+	// ------------------------------------------------------------------------------------
+	// ---------------------------Getting TrayMgtDetail By Status For
+	// Bill-------------------------
 	@RequestMapping(value = { "/getTrayMgtDetailsForBill" }, method = RequestMethod.GET)
 	public @ResponseBody List<TrayMgtDetail> getTrayMgtDetailsForBill() {
 
@@ -229,7 +252,8 @@ public class TrayManagementController {
 	}
 
 	// ------------------------------------------------------------------------------------
-	// ---------------------------Getting TrayMgtDetail By Status For Bill-------------------------
+	// ---------------------------Getting TrayMgtDetail By Status For
+	// Bill-------------------------
 	@RequestMapping(value = { "/viewTrayMgtBillDetails" }, method = RequestMethod.POST)
 	public @ResponseBody List<TrayMgtDetail> viewTrayMgtBillDetails(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("frIds") List<String> frIds) {
@@ -242,7 +266,8 @@ public class TrayManagementController {
 	}
 
 	// ------------------------------------------------------------------------------------
-	// ---------------------------Getting TrayMgtDetail Between Date And Status-------------------------
+	// ---------------------------Getting TrayMgtDetail Between Date And
+	// Status-------------------------
 	@RequestMapping(value = { "/getTrayMgtDetailList" }, method = RequestMethod.POST)
 	public @ResponseBody List<TrayMgtDetail> getTrayMgtDetailList(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("frId") int frId,
@@ -257,7 +282,8 @@ public class TrayManagementController {
 	}
 	// ------------------------------------------------------------------------------------
 
-	// ---------------------------Getting TrayMgtDetail By FrId And status-------------------------
+	// ---------------------------Getting TrayMgtDetail By FrId And
+	// status-------------------------
 	@RequestMapping(value = { "/getTrayDetailByStatus" }, method = RequestMethod.POST)
 	public @ResponseBody TrayMgtDetail getTrayDetailByStatus(@RequestParam("frId") int frId,
 			@RequestParam("trayStatus") int trayStatus, @RequestParam("isSameDay") int isSameDay) {
@@ -281,7 +307,8 @@ public class TrayManagementController {
 	}
 
 	// ------------------------------------------------------------------------------------
-	// --------Getting Out Trays of different types For Franchise(Based on order of Items,no. of tray needed to Franchise)----
+	// --------Getting Out Trays of different types For Franchise(Based on order of
+	// Items,no. of tray needed to Franchise)----
 	@RequestMapping(value = { "/getOutTraysForFr" }, method = RequestMethod.POST)
 	public @ResponseBody List<FrOutTrays> getOutTraysForFr(@RequestParam("frId") int frId,
 			@RequestParam("billDate") String billDate) {
@@ -292,7 +319,8 @@ public class TrayManagementController {
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------------
-	// --------------------------Update Extra Out Trays------------------------------------------------------
+	// --------------------------Update Extra Out
+	// Trays------------------------------------------------------
 	@RequestMapping(value = { "/updateExtraOutTrays" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateExtraOutTrays(@RequestParam("tranId") int tranId,
 			@RequestParam("extraOutTrays") int extraOutTrays) {
@@ -303,7 +331,8 @@ public class TrayManagementController {
 	}
 
 	// ----------------------------------------------------------------------------------------------------------
-	// --------------------------Update Extra In Trays------------------------------------------------------
+	// --------------------------Update Extra In
+	// Trays------------------------------------------------------
 	@RequestMapping(value = { "/updateExtraInTrays" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateExtraInTrays(@RequestParam("tranId") int tranId,
 			@RequestParam("extraInTrays") int extraInTrays) {
@@ -314,7 +343,8 @@ public class TrayManagementController {
 	}
 
 	// ----------------------------------------------------------------------------------------------------------
-	// --------------------------Update Diesel ------------------------------------------------------
+	// --------------------------Update Diesel
+	// ------------------------------------------------------
 	@RequestMapping(value = { "/updateDieselOfVehicle" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateDieselForTransaction(@RequestParam("tranId") int tranId,
 			@RequestParam("diesel") float diesel) {
@@ -325,7 +355,8 @@ public class TrayManagementController {
 	}
 
 	// ----------------------------------------------------------------------------------------------------------
-	// --------------------------------Getting Tray Management Headers---------------------------
+	// --------------------------------Getting Tray Management
+	// Headers---------------------------
 	@RequestMapping(value = { "/getLoadedVehicles" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetTrayMgtHeader> getLoadedVehicles(@RequestParam("date") String date,
 			@RequestParam("vehStatus") int vehStatus) {
@@ -336,7 +367,8 @@ public class TrayManagementController {
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------------
-	// --------------------------------Getting Tray Management Headers---------------------------
+	// --------------------------------Getting Tray Management
+	// Headers---------------------------
 	@RequestMapping(value = { "/getLoadedVehiclesByStatus" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetTrayMgtHeader> getLoadedVehiclesByStatus(@RequestParam("vehStatus") int vehStatus) {
 
@@ -346,7 +378,8 @@ public class TrayManagementController {
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------------
-	// --------------------------------Getting Server Date---------------------------
+	// --------------------------------Getting Server
+	// Date---------------------------
 	@RequestMapping(value = { "/getServerDate" }, method = RequestMethod.GET)
 	public @ResponseBody Info getServerDate() {
 
@@ -366,7 +399,8 @@ public class TrayManagementController {
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------------
-	// --------------------------------Getting Tray Management Headers---------------------------
+	// --------------------------------Getting Tray Management
+	// Headers---------------------------
 	@RequestMapping(value = { "/getAllVehicles" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetTrayMgtHeader> getAllVehicles(@RequestParam("date") String date) {
 
@@ -376,7 +410,8 @@ public class TrayManagementController {
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------------
-	// --------------------------------Getting Tray Management Header---------------------------
+	// --------------------------------Getting Tray Management
+	// Header---------------------------
 	@RequestMapping(value = { "/getTrayMgtHeader" }, method = RequestMethod.POST)
 	public @ResponseBody GetTrayMgtHeader getTrayMgtHeader(@RequestParam("tranId") int tranId) {
 
@@ -386,23 +421,26 @@ public class TrayManagementController {
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------------
-	// --------------------------Update Vehicle Status to (1) and out km&time------------------------------------------------------
+	// --------------------------Update Vehicle Status to (1) and out
+	// km&time------------------------------------------------------
 	@RequestMapping(value = { "/updateOutVehicleData" }, method = RequestMethod.POST)
-	public @ResponseBody Info updateVehicleOutData(@RequestParam("tranId") int tranId, @RequestParam("vehOutkm") float vehOutKm) {
-		
+	public @ResponseBody Info updateVehicleOutData(@RequestParam("tranId") int tranId,
+			@RequestParam("vehOutkm") float vehOutKm) {
+
 		DateFormat df = new SimpleDateFormat("HH:mm:ss");
 		Calendar calobj = Calendar.getInstance();
-		
+
 		Info info = trayMgtService.updateVehicleOutData(tranId, df.format(calobj.getTime()), vehOutKm);
 
 		return info;
 	}
 
 	// ----------------------------------------------------------------------------------------------------------
-	// --------------------------Update Vehicle Status to (2) and In km,running km & time------------------------------------------------------
+	// --------------------------Update Vehicle Status to (2) and In km,running km &
+	// time------------------------------------------------------
 	@RequestMapping(value = { "/updateInVehicleData" }, method = RequestMethod.POST)
-	public @ResponseBody Info updateInVehicleData(@RequestParam("tranId") int tranId,@RequestParam("vehInkm") float vehInkm,
-			@RequestParam("extraTrayIn") int extraTrayIn) {
+	public @ResponseBody Info updateInVehicleData(@RequestParam("tranId") int tranId,
+			@RequestParam("vehInkm") float vehInkm, @RequestParam("extraTrayIn") int extraTrayIn) {
 
 		Info info = null;
 		try {
@@ -413,16 +451,17 @@ public class TrayManagementController {
 			getTrayMgtHeaderRes.setVehInkm(vehInkm);
 			getTrayMgtHeaderRes.setExtraTrayIn(extraTrayIn);
 			getTrayMgtHeaderRes.setVehStatus(2);
-			getTrayMgtHeaderRes.setVehRunningKm(vehInkm - getTrayMgtHeaderRes.getVehOutkm());//update current km in vehical against vehId
+			getTrayMgtHeaderRes.setVehRunningKm(vehInkm - getTrayMgtHeaderRes.getVehOutkm());// update current km in
+																								// vehical against vehId
 
 			TrayMgtHeader trayMgtHeader = trayMgtService.saveTrayMgtHeader(getTrayMgtHeaderRes);
 			if (trayMgtHeader != null) {
 				info = new Info();
 				info.setError(false);
 				info.setMessage("In Vehicle Data Updated");
-				
-				VehicalMaster vehicleMasterRes=vehicleMasterRepository.findByVehId(trayMgtHeader.getVehId());
-				vehicleMasterRes.setCurrentRunningKm((int)vehInkm);
+
+				VehicalMaster vehicleMasterRes = vehicleMasterRepository.findByVehId(trayMgtHeader.getVehId());
+				vehicleMasterRes.setCurrentRunningKm((int) vehInkm);
 				vehicleMasterRepository.saveAndFlush(vehicleMasterRes);
 			}
 		} catch (Exception e) {
@@ -435,12 +474,21 @@ public class TrayManagementController {
 	}
 
 	// ----------------------------------------------------------------------------------------------------------
-	// ----------------------------------------Getting Franchise In Route-----------------------------------------------------
+	// ----------------------------------------Getting Franchise In
+	// Route-----------------------------------------------------
 	@RequestMapping(value = { "/getFranchiseInRoute" }, method = RequestMethod.POST)
 	public @ResponseBody List<FranchiseInRoute> getFranchiseInRoute(@RequestParam("routeId") int routeId,
 			@RequestParam("tranId") int tranId) {
 
 		List<FranchiseInRoute> franchiseInRoute = trayMgtService.getFranchiseInRoute(routeId, tranId);
+
+		return franchiseInRoute;
+	}
+
+	@RequestMapping(value = { "/getFranchiseInRouteForTray" }, method = RequestMethod.POST)
+	public @ResponseBody List<FranchiseInRoute> getFranchiseInRouteForTray(@RequestParam("routeId") int routeId) {
+
+		List<FranchiseInRoute> franchiseInRoute =franchiseInRouteRepository.findFrInRouteForTray(routeId);
 
 		return franchiseInRoute;
 	}
@@ -530,37 +578,76 @@ public class TrayManagementController {
 		}
 		return info;
 	}
-	
+
 	@RequestMapping(value = { "/getAllTrayHeadersByDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetVehicleAvg> getAllTrayHeadersByDate(@RequestParam("date") String date) {
 
-		List<GetVehicleAvg> getTrayMgtHeaders=null;
+		List<GetVehicleAvg> getTrayMgtHeaders = null;
 		try {
-		 getTrayMgtHeaders = getVehicleAvgRepository.getAllTrayHeadersByDate(date);
-		}
-		catch (Exception e) {
+			getTrayMgtHeaders = getVehicleAvgRepository.getAllTrayHeadersByDate(date);
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return getTrayMgtHeaders;
 	}
-	
+
 	@RequestMapping(value = { "/getDriverInfoByFr" }, method = RequestMethod.POST)
 	public @ResponseBody List<DriverDetailByFr> getDriverInfoByFr(@RequestParam("frId") int frId) {
 
-		List<DriverDetailByFr> driverList=null;
+		List<DriverDetailByFr> driverList = null;
 		try {
-			
-			Calendar cal=Calendar.getInstance();
-			SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-			
-			System.err.println("DATE -------- "+sdf.format(cal.getTimeInMillis()));
-			
+
+			Calendar cal = Calendar.getInstance();
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+			System.err.println("DATE -------- " + sdf.format(cal.getTimeInMillis()));
+
 			driverList = driverDetailByFrRepo.getDriverInfo(frId, sdf.format(cal.getTimeInMillis()));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return driverList;
+	}
+
+	// ----ANMOL--------->17-12-2019----------------
+
+	@RequestMapping(value = { "/getTotalFrTrayConsumed" }, method = RequestMethod.POST)
+	public @ResponseBody FrTrayConsumeQty getTotalFrTrayConsumed(@RequestParam("frId") int frId,
+			@RequestParam("deliveryDate") String deliveryDate) {
+
+		FrTrayConsumeQty result = new FrTrayConsumeQty();
+		try {
+
+			result = frTrayConsumeQtyRepo.getFrConsumeTrayList(frId, deliveryDate);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	// -------Anmol---->17/12/2019-----------------------------
+
+	@RequestMapping(value = { "/getAllCalTrayReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<CalCulateTray> getAllCalTrayReport(@RequestParam("deliveryDate") String deliveryDate,
+			@RequestParam("frIdList") List<Integer> frIdList, @RequestParam("menuIdList") List<Integer> menuIdList) {
+
+		List<CalCulateTray> list = new ArrayList<CalCulateTray>();
+
+		try {
+
+			System.out.println("frIdList" + frIdList);
+			System.out.println("menuIdList" + menuIdList);
+
+			list = calculateTrayRepo.getCalculateTray(deliveryDate, frIdList, menuIdList);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return list;
+
 	}
 
 }

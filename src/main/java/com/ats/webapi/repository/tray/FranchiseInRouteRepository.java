@@ -17,6 +17,10 @@ public interface FranchiseInRouteRepository extends JpaRepository<FranchiseInRou
 			"f.fr_id=s.fr_id order by s.no_in_route  ",nativeQuery=true)
 	List<FranchiseInRoute> findFrInRoute(@Param("routeId")int routeId,@Param("tranId")int tranId);
 
+	
+	@Query(value="select f.fr_id,f.fr_name,f.fr_code from m_franchisee f,m_franchise_sup s where f.del_status=0 and f.fr_route_id=:routeId and f.fr_id=s.fr_id order by s.no_in_route  ",nativeQuery=true)
+	List<FranchiseInRoute> findFrInRouteForTray(@Param("routeId")int routeId);
+
 
 	//select f.fr_id,f.fr_name,f.fr_code from m_franchisee f,m_franchise_sup s where f.del_status=0 and f.fr_route_id=:routeId and f.fr_id=s.fr_id order by s.no_in_route Desc
 }

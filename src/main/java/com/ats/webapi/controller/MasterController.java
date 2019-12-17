@@ -51,6 +51,7 @@ import com.ats.webapi.repository.ConfigureFrRepository;
 import com.ats.webapi.repository.FrListForSuppRepository;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
+import com.ats.webapi.repository.GetItemSupRepository;
 import com.ats.webapi.repository.GetSubCategoryRepository;
 import com.ats.webapi.repository.ItemIdOnlyRepository;
 import com.ats.webapi.repository.ItemRepository;
@@ -131,6 +132,9 @@ public class MasterController {
 
 	@Autowired
 	SettingNewRepository settingNewRepository;
+
+	@Autowired
+	GetItemSupRepository getItemSupRepository;
 
 	// ----------------------------GET FrToken--------------------------------
 	@RequestMapping(value = { "/getFrToken" }, method = RequestMethod.POST)
@@ -1024,20 +1028,32 @@ public class MasterController {
 
 		return setting;
 	}
-	
+
 	// Anmol-->27-11-2019--->Get_Setting_new_value
-		@RequestMapping(value = { "/getSettingValueById" }, method = RequestMethod.POST)
-		public @ResponseBody SettingNew getSettingValueById(@RequestParam("settingId") int settingId) {
+	@RequestMapping(value = { "/getSettingValueById" }, method = RequestMethod.POST)
+	public @ResponseBody SettingNew getSettingValueById(@RequestParam("settingId") int settingId) {
 
-			SettingNew setting;
+		SettingNew setting;
 
-			setting = settingNewRepository.findBySettingId(settingId);
-			if (setting == null) {
-				setting = new SettingNew();
-			}
-
-			return setting;
+		setting = settingNewRepository.findBySettingId(settingId);
+		if (setting == null) {
+			setting = new SettingNew();
 		}
 
+		return setting;
+	}
 
+	// Anmol---->17-12-2019-------------
+	@RequestMapping(value = { "/getItemSupDataByItemId" }, method = RequestMethod.POST)
+	public @ResponseBody GetItemSup getItemSupDataByItemId(@RequestParam("itemId") int itemId) {
+
+		GetItemSup res;
+
+		res = getItemSupRepository.findByItemId(itemId);
+		if (res == null) {
+			res = new GetItemSup();
+		}
+		System.err.println("RES---------------------------------- " + res);
+		return res;
+	}
 }
