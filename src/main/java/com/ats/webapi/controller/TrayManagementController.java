@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.commons.Common;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.Route;
+import com.ats.webapi.model.RouteWithFrList;
 import com.ats.webapi.model.TrayMgtDetailList;
 import com.ats.webapi.model.logistics.VehicalMaster;
 import com.ats.webapi.model.tray.CalCulateTray;
@@ -31,6 +33,7 @@ import com.ats.webapi.model.tray.GetVehicleAvg;
 import com.ats.webapi.model.tray.TrayMgtDetail;
 import com.ats.webapi.model.tray.TrayMgtDetailBean;
 import com.ats.webapi.model.tray.TrayMgtHeader;
+import com.ats.webapi.repository.RouteRepository;
 import com.ats.webapi.repository.logistics.VehicalMasterRepository;
 import com.ats.webapi.repository.tray.CalculateTrayRepo;
 import com.ats.webapi.repository.tray.DriverDetailByFrRepo;
@@ -70,6 +73,9 @@ public class TrayManagementController {
 	
 	@Autowired
 	FranchiseInRouteRepository franchiseInRouteRepository;
+	
+	@Autowired
+	RouteRepository routeRepository;
 
 	@RequestMapping(value = { "/getVehMobNo" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetVehDriverMobNo> getVehMobNo(@RequestParam("routeId") int routeId,
@@ -491,6 +497,35 @@ public class TrayManagementController {
 		List<FranchiseInRoute> franchiseInRoute =franchiseInRouteRepository.findFrInRouteForTray(routeId);
 
 		return franchiseInRoute;
+	}
+	
+	@RequestMapping(value = { "/getFranchiseInRouteListForTray" }, method = RequestMethod.POST)
+	public @ResponseBody List<FranchiseInRoute> getFranchiseInRouteListForTray(@RequestParam("routeIds") List<String> routeIds) {
+
+		List<FranchiseInRoute> franchiseInRoute =franchiseInRouteRepository.findFrInRouteListForTray(routeIds);
+
+		return franchiseInRoute;
+	}
+	
+	@RequestMapping(value = { "/getRouteWithFrListForTray" }, method = RequestMethod.POST)
+	public @ResponseBody List<RouteWithFrList> getRouteWithFrListForTray(@RequestParam("routeIds") List<String> routeIds) {
+
+		List<RouteWithFrList> result=new ArrayList<>();
+		
+		for(int i=0;i<routeIds.size();i++) {
+			
+			Route route=routeRepository.findOne(Integer.parseInt(routeIds.get(i)));
+			RouteWithFrList routeFr=new RouteWithFrList();
+			routeFr.setRouteId(route.getRouteId());
+			routeFr.setRouteName(route.getRouteName());
+			
+			List<FranchiseInRoute> franchiseInRoute =franchiseInRouteRepository.findFrInRouteForTray(Integer.parseInt(routeIds.get(i)));
+			
+			routeFr.setFrList(franchiseInRoute);
+		
+			result.add(routeFr);
+		}
+		return result;
 	}
 
 	// --------------------------------------------------------------------------------------------------------------------------
