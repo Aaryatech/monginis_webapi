@@ -46,18 +46,18 @@ public interface FrTrayConsumeQtyRepo extends JpaRepository<FrTrayConsumeQty, In
 			"    t_order.fr_id,\r\n" + 
 			"    COALESCE((SUM(t_order.order_qty)),0) AS order_qty,\r\n" + 
 			"    COALESCE(\r\n" + 
-			"        SUM(\r\n" + 
+			"         CEILING(SUM(\r\n" + 
 			"            (\r\n" + 
-			"                CEILING(\r\n" + 
+			"               \r\n" + 
 			"                    (\r\n" + 
 			"                        t_order.order_qty / m_item_sup.no_of_item_per_tray\r\n" + 
 			"                    )\r\n" + 
-			"                )\r\n" + 
+			"                \r\n" + 
 			"            )\r\n" + 
-			"        ),\r\n" + 
+			"        )),\r\n" + 
 			"        0\r\n" + 
-			"    ) AS tray_qty\r\n" + 
-			"FROM\r\n" + 
+			"    ) AS tray_qty" + 
+			" FROM\r\n" + 
 			"    t_order,\r\n" + 
 			"    m_cat_sub,\r\n" + 
 			"    m_item_sup\r\n" + 

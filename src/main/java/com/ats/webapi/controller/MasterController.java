@@ -39,6 +39,7 @@ import com.ats.webapi.model.ItemSupList;
 import com.ats.webapi.model.PostFrItemStockDetail;
 import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.RegularSpCkOrders;
+import com.ats.webapi.model.Setting;
 import com.ats.webapi.model.SettingNew;
 import com.ats.webapi.model.SpCake;
 import com.ats.webapi.model.SpCakeSupplement;
@@ -59,6 +60,7 @@ import com.ats.webapi.repository.OrderRepository;
 import com.ats.webapi.repository.PostFrOpStockDetailRepository;
 import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
 import com.ats.webapi.repository.SettingNewRepository;
+import com.ats.webapi.repository.SettingRepository;
 import com.ats.webapi.repository.SpCakeListRepository;
 import com.ats.webapi.repository.SpCkDeleteOrderRepository;
 import com.ats.webapi.repository.SubCategory2Repository;
@@ -135,6 +137,9 @@ public class MasterController {
 
 	@Autowired
 	GetItemSupRepository getItemSupRepository;
+	
+	@Autowired
+	SettingRepository settingRepository;
 
 	// ----------------------------GET FrToken--------------------------------
 	@RequestMapping(value = { "/getFrToken" }, method = RequestMethod.POST)
@@ -1056,4 +1061,21 @@ public class MasterController {
 		System.err.println("RES---------------------------------- " + res);
 		return res;
 	}
+	
+	
+	// Anmol---->18-12-2019-------------
+		@RequestMapping(value = { "/getSettingDataById" }, method = RequestMethod.POST)
+		public @ResponseBody Setting getSettingDataById(@RequestParam("settingId") int settingId) {
+
+			Setting res;
+
+			res = settingRepository.findBySettingId(settingId);
+			if (res == null) {
+				res = new Setting();
+			}
+			System.err.println("RES---------------------------------- " + res);
+			return res;
+		}
+		
+	
 }

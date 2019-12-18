@@ -614,11 +614,17 @@ public class TrayManagementController {
 	@RequestMapping(value = { "/getTotalFrTrayConsumed" }, method = RequestMethod.POST)
 	public @ResponseBody FrTrayConsumeQty getTotalFrTrayConsumed(@RequestParam("frId") int frId,
 			@RequestParam("deliveryDate") String deliveryDate) {
-
+		System.err.println("PARAM -------------------- frId - "+frId+"                  DeliveryDate - "+deliveryDate);
 		FrTrayConsumeQty result = new FrTrayConsumeQty();
 		try {
 
 			result = frTrayConsumeQtyRepo.getFrConsumeTrayList(frId, deliveryDate);
+			
+			if(result==null) {
+				result = new FrTrayConsumeQty();
+			}
+			
+			System.err.println("LIMIT -------------------- "+result);
 
 		} catch (Exception e) {
 			e.printStackTrace();
