@@ -68,4 +68,57 @@ public interface FrTrayConsumeQtyRepo extends JpaRepository<FrTrayConsumeQty, In
 	FrTrayConsumeQty getFrConsumeTrayList(@Param("frId") int frId,@Param("deliveryDate") String deliveryDate);
 
 	
+	@Query(value="SELECT\r\n" + 
+			"    t_order.order_id,\r\n" + 
+			"    t_order.fr_id,\r\n" + 
+			"    COALESCE((SUM(t_order.order_qty)),0) AS order_qty,\r\n" + 
+			"    COALESCE(\r\n" + 
+			"         CEILING(SUM(\r\n" + 
+			"            (\r\n" + 
+			"               \r\n" + 
+			"                    (\r\n" + 
+			"                        t_order.order_qty / m_item_sup.no_of_item_per_tray\r\n" + 
+			"                    )\r\n" + 
+			"                \r\n" + 
+			"            )\r\n" + 
+			"        )),\r\n" + 
+			"        0\r\n" + 
+			"    ) AS tray_qty" + 
+			" FROM\r\n" + 
+			"    t_order,\r\n" + 
+			"    m_cat_sub,\r\n" + 
+			"    m_item_sup\r\n" + 
+			"WHERE\r\n" + 
+			"    m_cat_sub.sub_cat_id = t_order.order_sub_type AND t_order.delivery_date =:deliveryDate AND t_order.fr_id IN(:frId) AND m_item_sup.item_id = t_order.item_id AND t_order.menu_id=:menuId \r\n" + 
+			"GROUP BY\r\n" + 
+			"    t_order.fr_id  ",nativeQuery=true)
+	FrTrayConsumeQty getFrConsumeTrayListByMenu(@Param("frId") int frId,@Param("deliveryDate") String deliveryDate,@Param("menuId") int menuId);
+
+	
+	@Query(value="SELECT\r\n" + 
+			"    t_order.order_id,\r\n" + 
+			"    t_order.fr_id,\r\n" + 
+			"    COALESCE((SUM(t_order.order_qty)),0) AS order_qty,\r\n" + 
+			"    COALESCE(\r\n" + 
+			"         CEILING(SUM(\r\n" + 
+			"            (\r\n" + 
+			"               \r\n" + 
+			"                    (\r\n" + 
+			"                        t_order.order_qty / m_item_sup.no_of_item_per_tray\r\n" + 
+			"                    )\r\n" + 
+			"                \r\n" + 
+			"            )\r\n" + 
+			"        )),\r\n" + 
+			"        0\r\n" + 
+			"    ) AS tray_qty" + 
+			" FROM\r\n" + 
+			"    t_order,\r\n" + 
+			"    m_cat_sub,\r\n" + 
+			"    m_item_sup\r\n" + 
+			"WHERE\r\n" + 
+			"    m_cat_sub.sub_cat_id = t_order.order_sub_type AND t_order.delivery_date =:deliveryDate AND t_order.fr_id IN(:frId) AND m_item_sup.item_id = t_order.item_id AND t_order.menu_id!=:menuId \r\n" + 
+			"GROUP BY\r\n" + 
+			"    t_order.fr_id  ",nativeQuery=true)
+	FrTrayConsumeQty getFrConsumeTrayListByMenuNotIn(@Param("frId") int frId,@Param("deliveryDate") String deliveryDate,@Param("menuId") int menuId);
+
 }

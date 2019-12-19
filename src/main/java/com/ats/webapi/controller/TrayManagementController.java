@@ -666,6 +666,51 @@ public class TrayManagementController {
 		}
 		return result;
 	}
+	
+	//-------Anmol-------->19/12/2019------------------------------------------
+	
+	@RequestMapping(value = { "/getTotalFrTrayConsumedByMenu" }, method = RequestMethod.POST)
+	public @ResponseBody FrTrayConsumeQty getTotalFrTrayConsumedByMenu(@RequestParam("frId") int frId,
+			@RequestParam("deliveryDate") String deliveryDate,@RequestParam("menuId") int menuId) {
+		System.err.println("PARAM -------------------- frId - "+frId+"                  DeliveryDate - "+deliveryDate+"             MENUID - "+menuId);
+		FrTrayConsumeQty result = new FrTrayConsumeQty();
+		try {
+
+			result = frTrayConsumeQtyRepo.getFrConsumeTrayListByMenu(frId, deliveryDate,menuId);
+			
+			if(result==null) {
+				result = new FrTrayConsumeQty();
+			}
+			
+			System.err.println("LIMIT -------------------- "+result);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	@RequestMapping(value = { "/getTotalFrTrayConsumedByMenuNotIn" }, method = RequestMethod.POST)
+	public @ResponseBody FrTrayConsumeQty getTotalFrTrayConsumedByMenuNotIn(@RequestParam("frId") int frId,
+			@RequestParam("deliveryDate") String deliveryDate,@RequestParam("menuId") int menuId) {
+		System.err.println("PARAM -------------------- frId - "+frId+"                  DeliveryDate - "+deliveryDate+"             MENUID - "+menuId);
+		FrTrayConsumeQty result = new FrTrayConsumeQty();
+		try {
+
+			result = frTrayConsumeQtyRepo.getFrConsumeTrayListByMenuNotIn(frId, deliveryDate,menuId);
+			
+			if(result==null) {
+				result = new FrTrayConsumeQty();
+			}
+			
+			System.err.println("LIMIT -------------------- "+result);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
 
 	// -------Anmol---->17/12/2019-----------------------------
 
