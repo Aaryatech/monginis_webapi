@@ -14,6 +14,9 @@ public interface PostBillHeaderRepository extends JpaRepository<PostBillHeader, 
 
 	PostBillHeader save(PostBillHeader postBillHeader);
 
+	@Query(value="SELECT SUM(t_bill_header.grand_total) FROM t_bill_header WHERE t_bill_header.bill_date BETWEEN :fromDate AND :toDate and t_bill_header.del_status=0 GROUP by t_bill_header.bill_date",nativeQuery=true)
+    int getTotalSellBetFdTd(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
+	
 	// sum(CASE WHEN payment_mode = 1 THEN payable_amt ELSE 0 END) as cash,
 
 	
