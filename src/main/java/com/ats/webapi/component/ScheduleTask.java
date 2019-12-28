@@ -111,7 +111,7 @@ public class ScheduleTask {
 
 		try {
 
-			List<AlbumEnquiry> enqList = albumEnquiryRepo.findByDelStatusAndStatus(1, 0);
+			List<AlbumEnquiry> enqList = albumEnquiryRepo.findByDelStatusAndStatus(0, 0);
 
 			if (enqList != null) {
 
