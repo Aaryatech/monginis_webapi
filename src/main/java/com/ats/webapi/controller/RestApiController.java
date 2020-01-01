@@ -47,6 +47,7 @@ import com.ats.webapi.model.salesvaluereport.SalesReturnValueDaoList;
 /*import com.ats.webapi.repository.BillLogRepo;
 */import com.ats.webapi.repository.GetBillDetailsRepository;
 import com.ats.webapi.repository.GetReorderByStockTypeRepository;
+import com.ats.webapi.repository.ItemCreamTypeRepo;
 import com.ats.webapi.repository.ItemRepository;
 import com.ats.webapi.repository.ItemResponseRepository;
 import com.ats.webapi.repository.ItemStockRepository;
@@ -5431,5 +5432,51 @@ public class RestApiController {
 
 		return result;
 	}
+	//Get All By Fr_Opening_Date
+		@RequestMapping(value = { "/getAllFranchiseeByOpnDate" }, method = RequestMethod.GET)
+		public @ResponseBody List<Franchisee> getAllFranchiseeByOpnDate() {
+			List<Franchisee> franchisee = new ArrayList<Franchisee>();
+			franchisee = franchiseeService.findAllFranchiseeOrderByFrOpeningDate();
+			System.err.println("Fr Date List----------"+franchisee);
+			ErrorMessage errorMessage = new ErrorMessage();
+			if (franchisee != null) {
+				errorMessage.setError(false);
+				errorMessage.setMessage("Franchisee displayed Successfully");
 
+			} else {
+				errorMessage.setError(true);
+				errorMessage.setMessage("Franchisee Not displayed");
+			}
+
+			return franchisee;
+		}
+		
+		@Autowired
+		ItemCreamTypeRepo itemCremTypeRepo;
+		
+		@RequestMapping(value = { "/saveItemCreamType" }, method = RequestMethod.POST)
+		public @ResponseBody ItemCreamType saveItemCreamType(@RequestBody ItemCreamType itemCream ) {
+			ItemCreamType item = new ItemCreamType();
+					try {
+						item=itemCremTypeRepo.save(itemCream);
+					}catch (Exception e) {
+						e.printStackTrace();
+					}
+			
+			return item;
+			
+		}
+		
+		@RequestMapping(value = { "/getItmeCreamTypeList" }, method = RequestMethod.GET)
+		public List<ItemCreamType> getItmeCreamTypeList(){
+			List<ItemCreamType> list = new ArrayList<ItemCreamType>();
+			try {
+				list=itemCremTypeRepo.findBydelStatus(0);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return list;
+			
+		}
 }

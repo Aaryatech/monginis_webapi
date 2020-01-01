@@ -519,4 +519,11 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 		return franchiseSup;
 	}
 	
+	@Override
+	public List<Franchisee> findAllFranchiseeOrderByFrOpeningDate() {
+		 List<Franchisee> franchisee=new ArrayList<Franchisee>();
+			franchisee=franchiseeRepository.findAllByDelStatusOrderByFrOpeningDateDesc(0);
+		return franchisee;
+	}
+	
 }
