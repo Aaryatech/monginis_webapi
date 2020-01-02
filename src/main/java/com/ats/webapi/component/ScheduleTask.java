@@ -17,11 +17,13 @@ import org.springframework.stereotype.Component;
 import com.ats.webapi.commons.Firebase;
 import com.ats.webapi.model.AlbumEnquiry;
 import com.ats.webapi.model.EnquiryScheduleEmpToken;
+import com.ats.webapi.model.Franchisee;
 import com.ats.webapi.model.ShopAnivData;
 import com.ats.webapi.repository.AlbumEnquiryRepo;
 import com.ats.webapi.repository.EnquiryScheduleEmpTokenRepo;
 import com.ats.webapi.repository.FrAniversaryRepository;
 import com.ats.webapi.repository.FranchiseSupRepository;
+import com.ats.webapi.repository.FranchiseeRepository;
 
 @Component
 public class ScheduleTask {
@@ -37,6 +39,9 @@ public class ScheduleTask {
 
 	@Autowired
 	EnquiryScheduleEmpTokenRepo enquiryScheduleEmpTokenRepo;
+	
+	  @Autowired
+	    FranchiseeRepository franchiseeRepository;
 
 	private static final Logger logger = LoggerFactory.getLogger(ScheduleTask.class);
 	private static final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss");
@@ -120,6 +125,12 @@ public class ScheduleTask {
 				for (int i = 0; i < enqList.size(); i++) {
 
 					AlbumEnquiry enq = enqList.get(i);
+					
+					Franchisee franchisee=franchiseeRepository.findOne(enq.getFrId());
+					String frName="";
+					if(enq!=null) {
+						frName=franchisee.getFrName();
+					}
 
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 					SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm:ss");
@@ -146,7 +157,7 @@ public class ScheduleTask {
 								tokenList.add(enqEmpToken.get(j).getToken1());
 							}
 
-							new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from franchisee",
+							new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from "+frName+" franchisee",
 									"PLease check the enquiry and revert back soon.", "album_enq");
 							
 							int res=albumEnquiryRepo.updateNotifyStatusByEnqId(enq.getEnquiryNo(),0);
@@ -181,7 +192,7 @@ public class ScheduleTask {
 							}
 						}
 
-						new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from franchisee",
+						new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from "+frName+" franchisee",
 								"PLease check the enquiry and revert back soon.", "album_enq");
 						
 						int res=albumEnquiryRepo.updateNotifyStatusByEnqId(enq.getEnquiryNo(),1);
@@ -225,7 +236,7 @@ public class ScheduleTask {
 							}
 						}
 
-						new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from franchisee",
+						new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from "+frName+" franchisee",
 								"PLease check the enquiry and revert back soon.", "album_enq");
 						
 						int res=albumEnquiryRepo.updateNotifyStatusByEnqId(enq.getEnquiryNo(),2);

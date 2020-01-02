@@ -304,4 +304,18 @@ public class Firebase {
 		}
 	}
 
+	/*public static void main(String[] args) {
+
+		List<String> token = new ArrayList<>();
+		
+		token.add("d86d-v8HZWA:APA91bEdbHo8M-dD6KyKKTZfuDnpIS5nmJo0TH-Z2w5NZcTxdnPN6H_Yv5mV6igN2OqlxL8KMvMhBkrTnOJyDqPWqNw_isEeqXJ0Qti28mBvLpyQvko36xmD1SE_oc5GvtZHP36RnYEf");
+		
+		for(int i=0;i<50;i++) {
+			new Firebase().send_FCM_NotificationList(token, "Hi", "TEST NOTIFICATION", "tag");
+		}
+		
+		
+
+	}*/
+
 }

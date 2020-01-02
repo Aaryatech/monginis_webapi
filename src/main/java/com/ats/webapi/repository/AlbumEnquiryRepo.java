@@ -62,6 +62,11 @@ public interface AlbumEnquiryRepo extends JpaRepository<AlbumEnquiry, Integer> {
 	@Query(value="SELECT a.enquiry_no, m.fr_id, m.fr_name AS ex_var3, a.cust_name, a.mobile_no, a.photo, a.enquiry_date, a.enquiry_date_time, a.approved_date_time, a.approved_user_id, a.approved_user_name, a.album_id, a.status, a.del_status, a.no_notifictn_fired, a.ex_var1, a.ex_var2, a.ex_int1, a.ex_int2, a.ex_int3 FROM t_album_enquiry a, m_franchisee m WHERE a.fr_id=m.fr_id AND a.del_status=0 AND a.enquiry_date BETWEEN :fromDate AND :toDate",nativeQuery=true)
 	List<AlbumEnquiry> getAlbmFrDetailByDate(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 	
+	
+	@Transactional
+	@Modifying
+	@Query(value="UPDATE t_album_enquiry SET status=:status WHERE enquiry_no=:enqId",nativeQuery=true)
+	int updateEnquiryStatusByEnqId(@Param("enqId") int enqId, @Param("status") int status);
 	 
 
 }

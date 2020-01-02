@@ -20,6 +20,7 @@ import com.ats.webapi.model.Info;
 import com.ats.webapi.model.album.Album;
 import com.ats.webapi.repository.AlbumEnquiryRepo;
 import com.ats.webapi.repository.EnquiryScheduleEmpTokenRepo;
+import com.ats.webapi.repository.FranchiseeRepository;
 
 @RestController
 public class EnquiryController {
@@ -29,6 +30,8 @@ public class EnquiryController {
 	
 	@Autowired
 	EnquiryScheduleEmpTokenRepo enquiryScheduleEmpTokenRepo;
+	
+	
 
 	// --Get all AlbumEnquiry--
 	@GetMapping("/getAllEnquiry")
@@ -143,5 +146,56 @@ public class EnquiryController {
 		return albumList;
 
 	}
+	
+	
+	// --Update AlbumId--
+		@PostMapping("/updateAlbumEnquiry")
+		public Info updateAlbumEnquiry(@RequestParam(value = "enqId") int enqId, @RequestParam(value = "status") int status) {
+			Info info = new Info();
+			int updatedEnq = albmEnq.updateEnquiryStatusByEnqId(enqId, status);
+
+			if (updatedEnq != 0) {
+				info.setError(false);
+				info.setMessage("Updated Successfully");
+				
+				AlbumEnquiry enq=albmEnq.findByEnquiryNoAndDelStatus(enqId, 0);
+				
+				if(status==1) {
+					
+					
+					if(enq!=null) {
+						if(!enq.getExVar1().isEmpty()) {
+							
+							List<String> tokenList = new ArrayList<>();
+							tokenList.add(enq.getExVar1());
+							
+							new Firebase().send_FCM_NotificationList(tokenList, enq.getCustName()+" enquiry has Approved",
+									"Cake enquiry for "+enq.getCustName()+" has Approved.", "album_enq");
+						}
+					}
+					
+				}else if(status==2) {
+					
+					if(enq!=null) {
+						if(!enq.getExVar1().isEmpty()) {
+							
+							List<String> tokenList = new ArrayList<>();
+							tokenList.add(enq.getExVar1());
+							
+							new Firebase().send_FCM_NotificationList(tokenList, enq.getCustName()+" enquiry has Rejected",
+									"Cake enquiry for "+enq.getCustName()+" has Rejected.", "album_enq");
+						}
+					}
+					
+				}
+				
+			} else {
+				info = new Info();
+				info.setError(true);
+				info.setMessage("Update Failed");
+			}
+
+			return info;
+		}
 
 }
