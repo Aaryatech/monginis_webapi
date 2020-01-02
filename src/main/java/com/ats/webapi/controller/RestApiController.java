@@ -5479,4 +5479,44 @@ public class RestApiController {
 			return list;
 			
 		}
+		
+		@RequestMapping(value = { "/getItmeCreamTypeById" }, method = RequestMethod.POST)
+		public ItemCreamType getItmeCreamTypeById(@RequestParam int itemCreamId){
+			ItemCreamType item = new ItemCreamType();
+			try {
+				item=itemCremTypeRepo.findByItemCreamIdAndDelStatus(itemCreamId, 0);
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return item;
+			
+		}
+		
+		@RequestMapping(value = { "/deleteItemCreamTypeById" }, method = RequestMethod.POST)
+		public @ResponseBody Info updatePhoto4ByAlbum(@RequestParam("itemCreamId") int itemCreamId) {
+			Info info = new Info();
+
+			try {
+
+				int res = itemCremTypeRepo.deleteItemCreamType(itemCreamId);
+
+				if (res>0) {
+					info.setError(false);
+					info.setMessage("successfully Deleted");
+				} else {
+					info.setError(true);
+					info.setMessage(" failed to delete");
+				}
+
+			} catch (Exception e) {
+
+				e.printStackTrace();
+				info.setError(true);
+				info.setMessage(" failed to delete");
+
+			}
+			return info;
+
+		}
 }
