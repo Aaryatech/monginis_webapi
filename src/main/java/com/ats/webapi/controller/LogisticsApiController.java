@@ -33,12 +33,14 @@ import com.ats.webapi.model.logistics.Variant;
 import com.ats.webapi.model.logistics.VehicalMaster;
 import com.ats.webapi.model.logistics.VehicalType;
 import com.ats.webapi.model.logistics.VehicleDcoument;
+import com.ats.webapi.model.report.RouteTargetReport;
 import com.ats.webapi.repository.logistics.AlertAmcRecordRepository;
 import com.ats.webapi.repository.logistics.AlertMachineServicingRepository;
 import com.ats.webapi.repository.logistics.AlertVeihcleServicingRepository;
 import com.ats.webapi.repository.logistics.LogisAmcRepository;
 import com.ats.webapi.repository.logistics.MachineServicingRepository;
 import com.ats.webapi.repository.logistics.MechTypeRepository;
+import com.ats.webapi.repository.logistics.RouteTargetReportRepo;
 import com.ats.webapi.repository.logistics.ServDetailRepository;
 import com.ats.webapi.repository.logistics.ServHeaderRepository;
 import com.ats.webapi.repository.logistics.SparePartRepository;
@@ -1652,6 +1654,30 @@ public class LogisticsApiController {
         
 		
 		return errorMessage;
+
+	}
+	
+	/***************************************************************************/
+	//mahendra
+	
+	@Autowired
+	RouteTargetReportRepo routeTargetRepo;
+	@RequestMapping(value = { "/getRouteTargetReport" }, method = RequestMethod.GET)
+	public @ResponseBody List<RouteTargetReport> getRouteTargetReport()
+	{ 
+		
+		List<RouteTargetReport> list = new ArrayList<RouteTargetReport>();
+		try {
+			  
+			list = routeTargetRepo.getRouteTargeTReportList();
+			System.out.println(list.toString());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+        
+		
+		return list;
 
 	}
 }
