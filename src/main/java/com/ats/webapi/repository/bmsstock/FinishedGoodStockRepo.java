@@ -14,4 +14,6 @@ public interface FinishedGoodStockRepo   extends JpaRepository<FinishedGoodStock
 	
 	FinishedGoodStock findByFinGoodStockDate(Date stkDate);
 	
+	FinishedGoodStock findByFinGoodStockDateAndFinGoodStockStatus(Date endDate, int stockStatus);
+	
 }

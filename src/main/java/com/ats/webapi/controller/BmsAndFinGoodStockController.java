@@ -636,6 +636,30 @@ h1.bms_status=1
 
 	}
 	
+	/***************************************************************************************/
+	//mahendra
+	//10-01-2020
+	@RequestMapping(value = { "/getFinGoodStockHeaderByEndDate" }, method = RequestMethod.POST)
+	public @ResponseBody FinishedGoodStock getFinGoodStockHeaderByEndDate(@RequestParam("endDate") String endDt) {
+
+		FinishedGoodStock finishHeader = new FinishedGoodStock();
+
+		try {
+				Date endDate=Common.convertToSqlDate(endDt);
+			finishHeader = finishedGoodStockRepo.findByFinGoodStockDateAndFinGoodStockStatus(endDate, 0);
+		} catch (Exception e) {
+
+			System.out.println("Exce in getting Finished Good Stock Header By End Date" + e.getMessage());
+			e.printStackTrace();
+
+		}
+		
+		System.out.println("output finished Good  = "+finishHeader.toString());
+		return finishHeader;
+
+	}
+	
+	/***************************************************************************************/
 	
 	
 	@RequestMapping(value = { "/getFinGoodStockDetail" }, method = RequestMethod.POST)
