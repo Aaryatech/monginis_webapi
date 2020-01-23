@@ -22,9 +22,7 @@ public class PostFrItemStockDetail {
 	private int openingStockHeaderId;
 
 	@Column(name="item_id")
-	private int 	itemId;
-	
-	
+	private int itemId;
 	
 	@Column(name="reg_opening_stock")
 	private int regOpeningStock;

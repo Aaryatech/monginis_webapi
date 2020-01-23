@@ -178,7 +178,7 @@ public class FrStockApiController {
 			System.err.println("Exce in getCurrentMonthByCatIdFrId " + e.getMessage());
 			e.printStackTrace();
 		}
-
+/*
 		int stockMonth = getCurrentMonthOfCatId.getMonth();
 
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -240,6 +240,35 @@ public class FrStockApiController {
 
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 
+		*/
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		Date date=null;
+		try {
+			date = sdf.parse(fromDateTime);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		 
+		Calendar calendar = Calendar.getInstance();
+		calendar.setTime(date);
+		
+		int calYear=calendar.get(Calendar.YEAR);
+		int calMonth=calendar.get(Calendar.MONTH)+1;
+		String calFromDateTime=calYear+"-"+calMonth+"-01 00:00:00";
+		System.err.println("********************calFromDateTime*******************"+calFromDateTime+"calMonth"+calMonth+"calYear"+calYear);
+		//---------------------------------------------------------------------------
+		
+		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
+
+		Date todaysDate = new Date();
+		System.out.println(dateFormat.format(todaysDate));
+
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(todaysDate);
+
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+
 		Date firstDay = cal.getTime();
 
 		String strFirstDay = dateFormat.format(firstDay);
@@ -263,15 +292,15 @@ public class FrStockApiController {
 			int itemId = itemsList.get(i).getId();
 
 			// current stock
-			int grnGvn = getItemStockService.getTotalGrnGvnUptoDateTime(frId, strFirstDay, fromDateTime, itemId);
+			int grnGvn = getItemStockService.getTotalGrnGvnUptoDateTime(frId, calFromDateTime, fromDateTime, itemId);
 
-			totalSellUptoDateTime = getItemStockService.getTotalSellUpToDateTime(frId, strFirstDay, fromDateTime,
+			totalSellUptoDateTime = getItemStockService.getTotalSellUpToDateTime(frId, calFromDateTime, fromDateTime,
 					itemId);
 
-			totalPurchaseUptoDateTime = getItemStockService.getTotalPurchaseUptoDateTime(frId, strFirstDay,
+			totalPurchaseUptoDateTime = getItemStockService.getTotalPurchaseUptoDateTime(frId, calFromDateTime,
 					fromDateTime, itemId);
 
-			postFrItemStockDetail = getItemStockService.getOpeningStock(frId, currentMonth, year, itemId, catId);
+			postFrItemStockDetail = getItemStockService.getOpeningStock(frId, calMonth, calYear, itemId, catId);
 
 			int regOpStock = postFrItemStockDetail.getRegOpeningStock();
 			int spOpStock = postFrItemStockDetail.getSpOpeningStock();

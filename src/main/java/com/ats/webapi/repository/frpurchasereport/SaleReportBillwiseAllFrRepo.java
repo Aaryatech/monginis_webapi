@@ -47,7 +47,7 @@ public interface SaleReportBillwiseAllFrRepo extends JpaRepository<SalesReportBi
 			"        m_item_sup " + */
 			"    WHERE " + 
 			"        t_bill_header.bill_no=t_bill_detail.bill_no " + 
-			"        AND t_bill_header.fr_id=m_franchisee.fr_id " + 
+			"        AND t_bill_header.fr_id=m_franchisee.fr_id and t_bill_header.del_status=0 and  t_bill_header.del_status=0 " + 
 		/*	"        AND m_item.id=m_item_sup.item_id " + 
 			"        AND t_bill_detail.item_id=m_item.id " + */
 			"        AND t_bill_header.bill_date BETWEEN :fromDate AND :toDate " + 

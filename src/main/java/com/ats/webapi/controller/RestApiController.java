@@ -55,6 +55,8 @@ import com.ats.webapi.repository.MenuForAlbumRepo;
 import com.ats.webapi.repository.MiniSubCategoryRepository;
 import com.ats.webapi.repository.OrderItemSubCatTotalRepository;
 import com.ats.webapi.repository.OrderLogRespository;
+import com.ats.webapi.repository.PostFrOpStockDetailRepository;
+import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
 import com.ats.webapi.repository.ProdItemStockRepo;
 import com.ats.webapi.repository.ProdItemStockTotalRepo;
 import com.ats.webapi.repository.SalesReportRepo;
@@ -381,6 +383,12 @@ public class RestApiController {
 	@Autowired
 	ProdItemStockTotalRepo prodItemStockTotalRepo;
 
+	@Autowired
+	PostFrOpStockDetailRepository postFrOpStockDetailRepository;
+	
+	@Autowired
+	PostFrOpStockHeaderRepository postFrOpStockHeaderRepository;
+	
 	@RequestMapping(value = "/getItemsResBySubCatId", method = RequestMethod.POST)
 	public @ResponseBody List<ItemRes> getItemsResBySubCatId(@RequestParam("subCatId") String subCatId) {
 
@@ -2025,7 +2033,53 @@ public class RestApiController {
 		configureFr.setSubCatId(11);
 
 		String jsonResult = connfigureService.configureFranchisee(configureFr);
+		try {
+			/*// -------------------------------------------------------------------------------------
+			AllFrIdNameList allFrIdNamesList = allFrIdNameService.getFrIdAndName();
 
+			for (int i = 0; i < allFrIdNamesList.getFrIdNamesList().size(); i++) {*/
+
+				List<PostFrItemStockHeader> prevStockHeader = postFrOpStockHeaderRepository
+						.findByFrIdAndIsMonthClosedAndCatId(frId, 0,
+								configureFr.getCatId());
+				// --------------------------------------------------------------------------------------------
+				List<PostFrItemStockDetail> postFrItemStockDetailList = new ArrayList<PostFrItemStockDetail>();
+				List<Integer> ids = Stream.of(configureFr.getItemShow().split(",")).map(Integer::parseInt)
+						.collect(Collectors.toList());
+				System.err.println("16 ids --" + ids.toString());
+				List<Item> itemsList = itemService.findAllItemsByItemId(ids);
+				System.err.println("17 itemsList --" + itemsList.toString());
+				for (int k = 0; k < itemsList.size(); k++) {
+
+					PostFrItemStockDetail prevFrItemStockDetail = postFrOpStockDetailRepository
+							.findByItemIdAndOpeningStockHeaderId(itemsList.get(k).getId(),
+									prevStockHeader.get(0).getOpeningStockHeaderId());
+					System.err.println("18 prevFrItemStockDetail --" + prevFrItemStockDetail);
+					if (prevFrItemStockDetail == null) {
+						PostFrItemStockDetail postFrItemStockDetail = new PostFrItemStockDetail();
+						postFrItemStockDetail
+								.setOpeningStockHeaderId(prevStockHeader.get(0).getOpeningStockHeaderId());// first
+																											// stock
+																											// header
+																											// (month
+																											// closed
+																											// 0
+																											// status))
+						postFrItemStockDetail.setOpeningStockDetailId(0);
+						postFrItemStockDetail.setRegOpeningStock(0);
+						postFrItemStockDetail.setItemId(itemsList.get(k).getId());
+						postFrItemStockDetail.setRemark("");
+						postFrItemStockDetailList.add(postFrItemStockDetail);
+						System.err.println("19 postFrItemStockDetail --" + postFrItemStockDetail.toString());
+					}
+				}
+				postFrOpStockDetailRepository.save(postFrItemStockDetailList);
+				System.err.println("20 postFrItemStockDetailList --" + postFrItemStockDetailList.toString());
+				// ---------------------------------------------------------------------------------------
+			//}
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
 		return jsonResult;
 	}
 
@@ -4893,6 +4947,54 @@ public class RestApiController {
 			configureFranchisee.setToTime(toTime);
 
 			String jsonResult = connfigureService.configureFranchisee(configureFranchisee);
+
+			try {
+				/*// -------------------------------------------------------------------------------------
+				AllFrIdNameList allFrIdNamesList = allFrIdNameService.getFrIdAndName();
+
+				for (int i = 0; i < allFrIdNamesList.getFrIdNamesList().size(); i++) {*/
+
+					List<PostFrItemStockHeader> prevStockHeader = postFrOpStockHeaderRepository
+							.findByFrIdAndIsMonthClosedAndCatId(configureFranchisee.getFrId(), 0,
+									configureFranchisee.getCatId());
+					// --------------------------------------------------------------------------------------------
+					List<PostFrItemStockDetail> postFrItemStockDetailList = new ArrayList<PostFrItemStockDetail>();
+					List<Integer> ids = Stream.of(configureFranchisee.getItemShow().split(",")).map(Integer::parseInt)
+							.collect(Collectors.toList());
+					System.err.println("16 ids --" + ids.toString());
+					List<Item> itemsList = itemService.findAllItemsByItemId(ids);
+					System.err.println("17 itemsList --" + itemsList.toString());
+					for (int k = 0; k < itemsList.size(); k++) {
+
+						PostFrItemStockDetail prevFrItemStockDetail = postFrOpStockDetailRepository
+								.findByItemIdAndOpeningStockHeaderId(itemsList.get(k).getId(),
+										prevStockHeader.get(0).getOpeningStockHeaderId());
+						System.err.println("18 prevFrItemStockDetail --" + prevFrItemStockDetail);
+						if (prevFrItemStockDetail == null) {
+							PostFrItemStockDetail postFrItemStockDetail = new PostFrItemStockDetail();
+							postFrItemStockDetail
+									.setOpeningStockHeaderId(prevStockHeader.get(0).getOpeningStockHeaderId());// first
+																												// stock
+																												// header
+																												// (month
+																												// closed
+																												// 0
+																												// status))
+							postFrItemStockDetail.setOpeningStockDetailId(0);
+							postFrItemStockDetail.setRegOpeningStock(0);
+							postFrItemStockDetail.setItemId(itemsList.get(k).getId());
+							postFrItemStockDetail.setRemark("");
+							postFrItemStockDetailList.add(postFrItemStockDetail);
+							System.err.println("19 postFrItemStockDetail --" + postFrItemStockDetail.toString());
+						}
+					}
+					postFrOpStockDetailRepository.save(postFrItemStockDetailList);
+					System.err.println("20 postFrItemStockDetailList --" + postFrItemStockDetailList.toString());
+					// ---------------------------------------------------------------------------------------
+				//}
+			} catch (Exception e) {
+				// TODO: handle exception
+			}
 			if (jsonResult == null) {
 				info.setError(true);
 				info.setMessage("fr confi update failure");
@@ -5325,7 +5427,7 @@ public class RestApiController {
 	@RequestMapping(value = "/getItemBySubCatId", method = RequestMethod.POST)
 	public @ResponseBody GetItemByCatIdList getItemByCategoryIdAndSubCatId(@RequestParam("subCatId") int subCatId) {
 
-		GetItemByCatIdList getItemByCatIdList = getItemByCatIdService.getItemByCatId(subCatId);
+		GetItemByCatIdList getItemByCatIdList = getItemByCatIdService.getItemBySubCatId(subCatId);
 
 		return getItemByCatIdList;
 

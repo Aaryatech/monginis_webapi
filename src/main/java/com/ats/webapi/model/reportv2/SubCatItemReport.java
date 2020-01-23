@@ -2,10 +2,11 @@ package com.ats.webapi.model.reportv2;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
-
+@Entity
 public class SubCatItemReport {
 
-	private int crndId;
+	@Id
+	private String crndId;
 	private int itemId;
 	private String itemName;
 	private int subCatId;
@@ -24,11 +25,11 @@ public class SubCatItemReport {
 	private float retQty;
 	private float retAmt;
 
-	public int getCrndId() {
+	public String getCrndId() {
 		return crndId;
 	}
 
-	public void setCrndId(int crndId) {
+	public void setCrndId(String crndId) {
 		this.crndId = crndId;
 	}
 

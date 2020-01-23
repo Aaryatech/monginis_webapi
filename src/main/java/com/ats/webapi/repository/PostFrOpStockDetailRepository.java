@@ -37,5 +37,7 @@ public interface PostFrOpStockDetailRepository extends JpaRepository<PostFrItemS
 
 	PostFrItemStockDetail findByOpeningStockHeaderIdAndItemId(int openingStockHeaderId, int parseInt);
 
+	PostFrItemStockDetail findByItemIdAndOpeningStockHeaderId(int id, int openingStockHeaderId);
+
 	
 }

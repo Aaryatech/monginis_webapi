@@ -41,6 +41,7 @@ import com.ats.webapi.repository.frpurchasereport.SalesReportRoyaltyFrRepo;
 import com.ats.webapi.repository.frpurchasereport.SalesReportRoyaltyRepo;
 import com.ats.webapi.repository.reportv2.SubCatCreditGrnFrItemRepRepo;
 import com.ats.webapi.repository.reportv2.SubCatFrItemRepBillRepo;
+import com.ats.webapi.repository.reportv2.SubCatItemReportRepository;
 import com.ats.webapi.repository.salesreturnrepo.SalesReturnValueItemDaoRepo;
 import com.ats.webapi.repository.taxreport.Tax1ReportRepository;
 import com.ats.webapi.repository.taxreport.Tax2ReportRepository;
@@ -257,17 +258,17 @@ public class SalesReportController {
 			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
 
 		List<SalesReportRoyalty> salesReportRoyaltyList = null;
-		try {
+		//try {
 			fromDate = Common.convertToYMD(fromDate);
 			toDate = Common.convertToYMD(toDate);
 			System.out.println("Input received " + fromDate + "" + toDate);
 			salesReportRoyaltyList = salesReportRoyaltyRepo.getSaleReportRoyaltyAllFr(fromDate, toDate);
-			System.out.println("getSaleReportBillwise" + salesReportRoyaltyList.toString());
+			//System.out.println("getSaleReportBillwise" + salesReportRoyaltyList.toString());
 
-		} catch (Exception e) {
+		/*} catch (Exception e) {
 			System.out.println(" Exce in sales Report Royalty all fr " + e.getMessage());
 			e.printStackTrace();
-		}
+		}*/
 		return salesReportRoyaltyList;
 	}
 
@@ -492,23 +493,26 @@ public class SalesReportController {
 	@Autowired
 	SubCatFrItemRepBillRepo subCatFrItemRepBillRepo;
 
+	@Autowired
+	SubCatItemReportRepository subCatItemReportRepository;
+	
 	@RequestMapping(value = { "/getSubCatFrItemReportApi" }, method = RequestMethod.POST)
 	public @ResponseBody List<SubCatItemReport> getSubCatFrItemReportApi(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate, @RequestParam("frIdList") List<Integer> frIdList,
 			@RequestParam("subCatIdList") List<Integer> subCatIdList) {
 
 		List<SubCatItemReport> catReportList = new ArrayList<SubCatItemReport>();
-		List<SubCatFrItemRepBill> catReportBill = null;
+		///List<SubCatFrItemRepBill> catReportBill = null;
 
-		List<SubCatCreditGrnFrItemRep> subCatCreditGrnRep = null;
-		List<SubCatCreditGrnFrItemRep> subCatCreditGvnRep = null;
+		///List<SubCatCreditGrnFrItemRep> subCatCreditGrnRep = null;
+		///List<SubCatCreditGrnFrItemRep> subCatCreditGvnRep = null;
 		try {
 			fromDate = Common.convertToYMD(fromDate);
 			toDate = Common.convertToYMD(toDate);
 
-			// catReportList = subCatReportRepo.getData(fromDate, toDate);
-
-			catReportBill = subCatFrItemRepBillRepo.getData(fromDate, toDate, frIdList, subCatIdList);
+			catReportList = subCatItemReportRepository.getData(fromDate, toDate, frIdList, subCatIdList);
+            System.err.println("catReportList"+catReportList.size());
+		/*	catReportBill = subCatFrItemRepBillRepo.getData(fromDate, toDate, frIdList, subCatIdList);
 
 			subCatCreditGrnRep = subCatCreditGrnFrItemRepRepo.getDataGRN(fromDate, toDate, frIdList, subCatIdList);
 
@@ -546,11 +550,7 @@ public class SalesReportController {
 						catReportList.get(i).setRetQty(subCatCreditGrnRep.get(j).getVarQty());
 						break;
 
-					} /*
-						 * else {
-						 * 
-						 * catReportList.get(i).setRetAmt(0); catReportList.get(i).setRetQty(0); }
-						 */
+					} 
 
 				}
 			}
@@ -566,14 +566,10 @@ public class SalesReportController {
 						catReportList.get(i).setVarQty(subCatCreditGvnRep.get(j).getVarQty());
 						break;
 
-					} /*
-						 * else {
-						 * 
-						 * catReportList.get(i).setVarAmt(0); catReportList.get(i).setVarQty(0); }
-						 */
+					} 
 
 				}
-			}
+			}*/
 
 		} catch (Exception e) {
 			System.out.println(" Exce in Tax1 Report " + e.getMessage());
@@ -610,7 +606,7 @@ public class SalesReportController {
 			SalesReturnItemDaoList salesReturnItemDaoList = new SalesReturnItemDaoList();
 			salesReturnItemDaoList.setMonth(month);
 			List<SalesReturnValueItemDao> salesReturnValueDao = null;
-			if (subCatId.contains(4)) {// 4 is sp sub cAt
+			if (subCatId.contains(21)) {// 4 is sp sub cAt
 				salesReturnValueDao = salesReturnValueItemDaoRepo.getSalesReturnValueSpReport1(months.get(i));
 			} else {
 				salesReturnValueDao = salesReturnValueItemDaoRepo.getSalesReturnValueItemReport1(months.get(i),

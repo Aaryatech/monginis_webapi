@@ -8,28 +8,195 @@ import com.ats.webapi.model.report.frpurchase.SalesReportRoyalty;
 
 public interface SalesReportRoyaltyRepo extends JpaRepository<SalesReportRoyalty, Integer> {
 	//report 5
-	@Query(value=" SELECT m_item.id,m_item.item_name,m_category.cat_name,m_category.cat_id, COALESCE((SELECT SUM(t_bill_detail.bill_qty) FROM t_bill_detail,t_bill_header WHERE t_bill_header.bill_date BETWEEN :fromDate AND :toDate AND t_bill_header.bill_no=t_bill_detail.bill_no AND m_item.id=t_bill_detail.item_id AND t_bill_header.fr_id IN(:frIdList) AND t_bill_header.del_status=0),0) AS t_bill_qty," + 
-			" COALESCE((SELECT SUM(t_bill_detail.taxable_amt) FROM t_bill_detail,t_bill_header WHERE t_bill_header.bill_date BETWEEN :fromDate AND :toDate AND t_bill_header.bill_no=t_bill_detail.bill_no AND m_item.id=t_bill_detail.item_id AND t_bill_header.fr_id IN(:frIdList) AND t_bill_header.del_status=0),0) AS  t_bill_taxable_amt,\n" + 
-			" COALESCE((SELECT SUM(t_credit_note_details.grn_gvn_qty) FROM t_credit_note_details,t_credit_note_header WHERE t_credit_note_header.crn_date  BETWEEN :fromDate AND :toDate AND t_credit_note_header.crn_id=t_credit_note_details.crn_id AND m_item.id=t_credit_note_details.item_id  AND t_credit_note_header.is_grn=1 AND t_credit_note_header.fr_id IN(:frIdList) AND t_credit_note_details.del_status=0),0) AS  t_grn_qty," + 
-		
-			" COALESCE((SELECT SUM(t_credit_note_details.taxable_amt) FROM t_credit_note_details,t_credit_note_header WHERE t_credit_note_header.crn_date  BETWEEN :fromDate AND :toDate AND t_credit_note_header.crn_id=t_credit_note_details.crn_id AND m_item.id=t_credit_note_details.item_id  AND t_credit_note_header.is_grn=1 AND t_credit_note_header.fr_id IN(:frIdList) AND t_credit_note_details.del_status=0),0) AS  t_grn_taxable_amt," + 
-		
-			" COALESCE((SELECT SUM(t_credit_note_details.grn_gvn_qty) FROM t_credit_note_details,t_credit_note_header WHERE t_credit_note_header.crn_date  BETWEEN :fromDate AND :toDate AND t_credit_note_header.crn_id=t_credit_note_details.crn_id AND m_item.id=t_credit_note_details.item_id  AND t_credit_note_header.is_grn=0 AND t_credit_note_header.fr_id IN(:frIdList) AND t_credit_note_details.del_status=0),0) AS  t_gvn_qty," + 
-			
-			" COALESCE((SELECT SUM(t_credit_note_details.taxable_amt) FROM t_credit_note_details,t_credit_note_header WHERE t_credit_note_header.crn_date  BETWEEN :fromDate AND :toDate AND t_credit_note_header.crn_id=t_credit_note_details.crn_id AND m_item.id=t_credit_note_details.item_id  AND t_credit_note_header.is_grn=0 AND t_credit_note_header.fr_id IN(:frIdList) AND t_credit_note_details.del_status=0),0) AS  t_gvn_taxable_amt" + 
-			
-			"	FROM m_item,m_category WHERE m_item.item_grp1=m_category.cat_id group by m_item.id order by m_category.cat_id",nativeQuery=true)
+	@Query(value="select a.id,a.item_name,a.cat_name,a.cat_id,coalesce(b.t_bill_qty,0) as t_bill_qty,round(coalesce(b.t_bill_taxable_amt,0),2) as t_bill_taxable_amt,coalesce(c.t_grn_qty,0) as t_grn_qty,round(coalesce(c.t_grn_taxable_amt,0),2) as t_grn_taxable_amt,coalesce(d.t_gvn_qty,0) as t_gvn_qty,round(coalesce(d.t_gvn_taxable_amt,0),2) as t_gvn_taxable_amt from (SELECT\n" + 
+			"        m_item.id,\n" + 
+			"        m_item.item_name,\n" + 
+			"        m_category.cat_name,\n" + 
+			"        m_category.cat_id\n" + 
+			"    FROM\n" + 
+			"        m_item,\n" + 
+			"        m_category \n" + 
+			"    WHERE\n" + 
+			"        m_item.item_grp1=m_category.cat_id and m_item.del_status=0\n" + 
+			"        ) a left join  (SELECT t_bill_detail.item_id,\n" + 
+			"            SUM(t_bill_detail.bill_qty) as t_bill_qty, SUM(t_bill_detail.taxable_amt) as t_bill_taxable_amt\n" + 
+			"        FROM\n" + 
+			"            t_bill_detail,\n" + 
+			"            t_bill_header \n" + 
+			"        WHERE\n" + 
+			"            t_bill_header.bill_date BETWEEN :fromDate AND :toDate \n" + 
+			"            AND t_bill_header.bill_no=t_bill_detail.bill_no and  t_bill_header.fr_id IN(:frIdList) \n" + 
+			"            AND t_bill_header.del_status=0 and t_bill_detail.del_status=0 and t_bill_detail.cat_id!=5 group by t_bill_detail.item_id) b \n" + 
+			"            \n" + 
+			"            on a.id=b.item_id \n" + 
+			"            \n" + 
+			"            left join (\n" + 
+			"            SELECT t_credit_note_details.item_id,\n" + 
+			"            SUM(t_credit_note_details.grn_gvn_qty)  as t_grn_qty, SUM(t_credit_note_details.taxable_amt) AS  t_grn_taxable_amt\n" + 
+			"        FROM\n" + 
+			"            t_credit_note_details,\n" + 
+			"            t_credit_note_header \n" + 
+			"        WHERE\n" + 
+			"            t_credit_note_header.crn_date BETWEEN :fromDate AND :toDate \n" + 
+			"            AND t_credit_note_header.crn_id=t_credit_note_details.crn_id \n" + 
+			"            AND t_credit_note_header.is_grn=1 \n" + 
+			"             AND t_credit_note_header.fr_id IN(:frIdList) \n" + 
+			"            AND  t_credit_note_details.del_status=0  and t_credit_note_details.cat_id!=5 group by t_credit_note_details.item_id) c on a.id=c.item_id  \n" + 
+			"            \n" + 
+			"            left join (\n" + 
+			"            SELECT t_credit_note_details.item_id,\n" + 
+			"            SUM(t_credit_note_details.grn_gvn_qty)  as t_gvn_qty, SUM(t_credit_note_details.taxable_amt) AS  t_gvn_taxable_amt\n" + 
+			"        FROM\n" + 
+			"            t_credit_note_details,\n" + 
+			"            t_credit_note_header \n" + 
+			"        WHERE\n" + 
+			"            t_credit_note_header.crn_date BETWEEN :fromDate AND :toDate \n" + 
+			"            AND t_credit_note_header.crn_id=t_credit_note_details.crn_id \n" + 
+			"            AND t_credit_note_header.is_grn=0 \n" + 
+			"             AND t_credit_note_header.fr_id IN(:frIdList) \n" + 
+			"            AND  t_credit_note_details.del_status=0  and t_credit_note_details.cat_id!=5 group by t_credit_note_details.item_id) d on a.id=d.item_id   "
+			+ "union all "
+			+ "select a.id,a.item_name,a.cat_name,a.cat_id,coalesce(b.t_bill_qty,0) as t_bill_qty,round(coalesce(b.t_bill_taxable_amt,0),2) as t_bill_taxable_amt,coalesce(c.t_grn_qty,0) as t_grn_qty,round(coalesce(c.t_grn_taxable_amt,0),2) as t_grn_taxable_amt,coalesce(d.t_gvn_qty,0) as t_gvn_qty,round(coalesce(d.t_gvn_taxable_amt,0),2) as t_gvn_taxable_amt from (SELECT " + 
+			"			        s.sp_id as id, " + 
+			"			       concat(s.sp_name,'--',s.sp_code) as item_name, " + 
+			"			      'Special Cake' as cat_name, " + 
+			"			      5 as cat_id " + 
+			"			    FROM " + 
+			"			        m_sp_cake s " + 
+			"			   WHERE " + 
+			"			        s.del_status=0 " + 
+			"			       ) a left join  (SELECT t_bill_detail.item_id, " + 
+			"			           SUM(t_bill_detail.bill_qty) as t_bill_qty, SUM(t_bill_detail.taxable_amt) as t_bill_taxable_amt" + 
+			"			        FROM" + 
+			"			            t_bill_detail," + 
+			"			            t_bill_header " + 
+			"			        WHERE" + 
+			"			            t_bill_header.bill_date BETWEEN :fromDate AND :toDate " + 
+			"			            AND t_bill_header.bill_no=t_bill_detail.bill_no and  t_bill_header.fr_id IN(:frIdList) " + 
+			"			            AND t_bill_header.del_status=0 and t_bill_detail.del_status=0 and t_bill_detail.cat_id=5 group by t_bill_detail.item_id) b " + 
+			"			            " + 
+			"			            on a.id=b.item_id " + 
+			"			            " + 
+			"			            left join (" + 
+			"			            SELECT t_credit_note_details.item_id," + 
+			"			            SUM(t_credit_note_details.grn_gvn_qty)  as t_grn_qty, SUM(t_credit_note_details.taxable_amt) AS  t_grn_taxable_amt" + 
+			"			        FROM" + 
+			"			            t_credit_note_details," + 
+			"			            t_credit_note_header " + 
+			"			        WHERE" + 
+			"			            t_credit_note_header.crn_date BETWEEN :fromDate AND :toDate " + 
+			"			            AND t_credit_note_header.crn_id=t_credit_note_details.crn_id " + 
+			"			            AND t_credit_note_header.is_grn=1 " + 
+			"			             AND t_credit_note_header.fr_id IN(:frIdList) " + 
+			"			            AND  t_credit_note_details.del_status=0  and t_credit_note_details.cat_id=5 group by t_credit_note_details.item_id) c on a.id=c.item_id  " + 
+			"			            " + 
+			"			            left join (" + 
+			"			            SELECT t_credit_note_details.item_id," + 
+			"			            SUM(t_credit_note_details.grn_gvn_qty)  as t_gvn_qty, SUM(t_credit_note_details.taxable_amt) AS  t_gvn_taxable_amt" + 
+			"			        FROM" + 
+			"			            t_credit_note_details," + 
+			"			            t_credit_note_header " + 
+			"			        WHERE" + 
+			"			            t_credit_note_header.crn_date BETWEEN :fromDate AND :toDate " + 
+			"			            AND t_credit_note_header.crn_id=t_credit_note_details.crn_id " + 
+			"			            AND t_credit_note_header.is_grn=0 " + 
+			"			             AND t_credit_note_header.fr_id IN(:frIdList) " + 
+			"			            AND  t_credit_note_details.del_status=0  and t_credit_note_details.cat_id=5 group by t_credit_note_details.item_id) d on a.id=d.item_id "
+			+ "",nativeQuery=true)
 		
 		List<SalesReportRoyalty> getSaleReportRoyalty(@Param("frIdList") List<String> frIdList,@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 
 	//report 5 all fr //Ok Tested changed to credit note 11 april
-	@Query(value=" SELECT m_item.id,m_item.item_name,m_category.cat_name,m_category.cat_id, COALESCE((SELECT SUM(t_bill_detail.bill_qty) FROM t_bill_detail,t_bill_header WHERE t_bill_header.bill_date BETWEEN :fromDate AND :toDate AND t_bill_header.bill_no=t_bill_detail.bill_no AND m_item.id=t_bill_detail.item_id AND t_bill_header.del_status=0),0) AS t_bill_qty," + 
-			"	COALESCE((SELECT SUM(t_bill_detail.taxable_amt) FROM t_bill_detail,t_bill_header WHERE t_bill_header.bill_date BETWEEN :fromDate AND :toDate AND t_bill_header.bill_no=t_bill_detail.bill_no AND m_item.id=t_bill_detail.item_id AND  t_bill_header.del_status=0),0) AS  t_bill_taxable_amt," + 
-			"	COALESCE((SELECT SUM(t_credit_note_details.grn_gvn_qty) FROM t_credit_note_details,t_credit_note_header WHERE t_credit_note_header.crn_date  BETWEEN :fromDate AND :toDate AND t_credit_note_header.crn_id=t_credit_note_details.crn_id AND m_item.id=t_credit_note_details.item_id  AND t_credit_note_header.is_grn=1 AND  t_credit_note_details.del_status=0),0) AS  t_grn_qty," + 
-			"	COALESCE((SELECT SUM(t_credit_note_details.taxable_amt) FROM t_credit_note_details,t_credit_note_header WHERE t_credit_note_header.crn_date  BETWEEN :fromDate AND :toDate AND t_credit_note_header.crn_id=t_credit_note_details.crn_id AND m_item.id=t_credit_note_details.item_id  AND t_credit_note_header.is_grn=1 AND  t_credit_note_details.del_status=0),0) AS  t_grn_taxable_amt," + 
-			"	COALESCE((SELECT SUM(t_credit_note_details.grn_gvn_qty) FROM t_credit_note_details,t_credit_note_header WHERE t_credit_note_header.crn_date  BETWEEN :fromDate AND :toDate AND t_credit_note_header.crn_id=t_credit_note_details.crn_id AND m_item.id=t_credit_note_details.item_id  AND t_credit_note_header.is_grn=0 AND  t_credit_note_details.del_status=0),0) AS  t_gvn_qty," + 
-			"	COALESCE((SELECT SUM(t_credit_note_details.taxable_amt) FROM t_credit_note_details,t_credit_note_header WHERE t_credit_note_header.crn_date  BETWEEN :fromDate AND :toDate AND t_credit_note_header.crn_id=t_credit_note_details.crn_id AND m_item.id=t_credit_note_details.item_id  AND t_credit_note_header.is_grn=0 AND  t_credit_note_details.del_status=0),0) AS  t_gvn_taxable_amt " + 
-			"	FROM m_item,m_category WHERE m_item.item_grp1=m_category.cat_id group by m_item.id order by m_category.cat_id",nativeQuery=true)
+	@Query(value="select a.id,a.item_name,a.cat_name,a.cat_id,coalesce(b.t_bill_qty,0) as t_bill_qty,round(coalesce(b.t_bill_taxable_amt,0),2) as t_bill_taxable_amt,coalesce(c.t_grn_qty,0) as t_grn_qty,round(coalesce(c.t_grn_taxable_amt,0),2) as t_grn_taxable_amt,coalesce(d.t_gvn_qty,0) as t_gvn_qty,round(coalesce(d.t_gvn_taxable_amt,0),2) as t_gvn_taxable_amt from (SELECT\n" + 
+			"        m_item.id,\n" + 
+			"        m_item.item_name,\n" + 
+			"        m_category.cat_name,\n" + 
+			"        m_category.cat_id\n" + 
+			"    FROM\n" + 
+			"        m_item,\n" + 
+			"        m_category \n" + 
+			"    WHERE\n" + 
+			"        m_item.item_grp1=m_category.cat_id and m_item.del_status=0\n" + 
+			"        ) a left join  (SELECT t_bill_detail.item_id,\n" + 
+			"            SUM(t_bill_detail.bill_qty) as t_bill_qty, SUM(t_bill_detail.taxable_amt) as t_bill_taxable_amt\n" + 
+			"        FROM\n" + 
+			"            t_bill_detail,\n" + 
+			"            t_bill_header \n" + 
+			"        WHERE\n" + 
+			"            t_bill_header.bill_date BETWEEN :fromDate AND :toDate \n" + 
+			"            AND t_bill_header.bill_no=t_bill_detail.bill_no \n" + 
+			"            AND t_bill_header.del_status=0 and t_bill_detail.del_status=0 and t_bill_detail.cat_id!=5 group by t_bill_detail.item_id) b \n" + 
+			"            \n" + 
+			"            on a.id=b.item_id \n" + 
+			"            \n" + 
+			"            left join (\n" + 
+			"            SELECT t_credit_note_details.item_id,\n" + 
+			"            SUM(t_credit_note_details.grn_gvn_qty)  as t_grn_qty, SUM(t_credit_note_details.taxable_amt) AS  t_grn_taxable_amt\n" + 
+			"        FROM\n" + 
+			"            t_credit_note_details,\n" + 
+			"            t_credit_note_header \n" + 
+			"        WHERE\n" + 
+			"            t_credit_note_header.crn_date BETWEEN :fromDate AND :toDate \n" + 
+			"            AND t_credit_note_header.crn_id=t_credit_note_details.crn_id \n" + 
+			"            AND t_credit_note_header.is_grn=1 \n" + 
+			"            AND  t_credit_note_details.del_status=0 and t_credit_note_details.cat_id!=5 group by t_credit_note_details.item_id) c on a.id=c.item_id  \n" + 
+			"            \n" + 
+			"            left join (\n" + 
+			"            SELECT t_credit_note_details.item_id,\n" + 
+			"            SUM(t_credit_note_details.grn_gvn_qty)  as t_gvn_qty, SUM(t_credit_note_details.taxable_amt) AS  t_gvn_taxable_amt\n" + 
+			"        FROM\n" + 
+			"            t_credit_note_details,\n" + 
+			"            t_credit_note_header \n" + 
+			"        WHERE\n" + 
+			"            t_credit_note_header.crn_date BETWEEN :fromDate AND :toDate \n" + 
+			"            AND t_credit_note_header.crn_id=t_credit_note_details.crn_id \n" + 
+			"            AND t_credit_note_header.is_grn=0 \n" + 
+			"            AND  t_credit_note_details.del_status=0 and t_credit_note_details.cat_id!=5 group by t_credit_note_details.item_id) d on a.id=d.item_id "
+			+ "union all"
+			+ " select a.id,a.item_name,a.cat_name,a.cat_id,coalesce(b.t_bill_qty,0) as t_bill_qty,round(coalesce(b.t_bill_taxable_amt,0),2) as t_bill_taxable_amt,coalesce(c.t_grn_qty,0) as t_grn_qty,round(coalesce(c.t_grn_taxable_amt,0),2) as t_grn_taxable_amt,coalesce(d.t_gvn_qty,0) as t_gvn_qty,round(coalesce(d.t_gvn_taxable_amt,0),2) as t_gvn_taxable_amt from (SELECT " + 
+			"			        s.sp_id as id," + 
+			"			        concat(s.sp_name,'--',s.sp_code) as item_name," + 
+			"			       'Special Cake' as cat_name," + 
+			"			         5 as cat_id" + 
+			"			    FROM" + 
+			"			       m_sp_cake s " + 
+			"			    WHERE" + 
+			"			         s.del_status=0 " + 
+			"			        ) a left join  (SELECT t_bill_detail.item_id," + 
+			"			            SUM(t_bill_detail.bill_qty) as t_bill_qty, SUM(t_bill_detail.taxable_amt) as t_bill_taxable_amt" + 
+			"			        FROM" + 
+			"			            t_bill_detail," + 
+			"			            t_bill_header " + 
+			"			        WHERE" + 
+			"			            t_bill_header.bill_date BETWEEN :fromDate AND :toDate " + 
+			"			            AND t_bill_header.bill_no=t_bill_detail.bill_no " + 
+			"			            AND t_bill_header.del_status=0 and t_bill_detail.del_status=0 and t_bill_detail.cat_id=5 group by t_bill_detail.item_id) b " + 
+			"			            " + 
+			"			            on a.id=b.item_id " + 
+			"			            " + 
+			"			            left join (" + 
+			"			            SELECT t_credit_note_details.item_id," + 
+			"			            SUM(t_credit_note_details.grn_gvn_qty)  as t_grn_qty, SUM(t_credit_note_details.taxable_amt) AS  t_grn_taxable_amt" + 
+			"			        FROM" + 
+			"			            t_credit_note_details," + 
+			"			            t_credit_note_header " + 
+			"			        WHERE" + 
+			"			            t_credit_note_header.crn_date BETWEEN :fromDate AND :toDate " + 
+			"			            AND t_credit_note_header.crn_id=t_credit_note_details.crn_id " + 
+			"			            AND t_credit_note_header.is_grn=1 " + 
+			"			            AND  t_credit_note_details.del_status=0 and t_credit_note_details.cat_id=5 group by t_credit_note_details.item_id) c on a.id=c.item_id  " + 
+			"			            " + 
+			"			            left join (" + 
+			"			            SELECT t_credit_note_details.item_id," + 
+			"			            SUM(t_credit_note_details.grn_gvn_qty)  as t_gvn_qty, SUM(t_credit_note_details.taxable_amt) AS  t_gvn_taxable_amt" + 
+			"			        FROM" + 
+			"			            t_credit_note_details," + 
+			"			            t_credit_note_header " + 
+			"			        WHERE" + 
+			"			            t_credit_note_header.crn_date BETWEEN :fromDate AND :toDate " + 
+			"			            AND t_credit_note_header.crn_id=t_credit_note_details.crn_id " + 
+			"			            AND t_credit_note_header.is_grn=0 " + 
+			"			            AND  t_credit_note_details.del_status=0 and t_credit_note_details.cat_id=5 group by t_credit_note_details.item_id) d on a.id=d.item_id",nativeQuery=true)
 		
 		List<SalesReportRoyalty> getSaleReportRoyaltyAllFr(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 
