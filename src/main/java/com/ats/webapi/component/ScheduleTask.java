@@ -121,17 +121,11 @@ public class ScheduleTask {
 			if (enqList != null) {
 
 				//System.err.println("ENQ_LIST ------------- > " + enqList);
-
-				for (int i = 0; i < enqList.size(); i++) {
-
-					AlbumEnquiry enq = enqList.get(i);
+				
+				if(enqList.size()>0) {
 					
-					Franchisee franchisee=franchiseeRepository.findOne(enq.getFrId());
-					String frName="";
-					if(enq!=null) {
-						frName=franchisee.getFrName();
-					}
-
+					AlbumEnquiry enq = enqList.get(0);
+					
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 					SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm:ss");
 
@@ -156,9 +150,11 @@ public class ScheduleTask {
 							for (int j = 0; j < enqEmpToken.size(); j++) {
 								tokenList.add(enqEmpToken.get(j).getToken1());
 							}
+							
+							//System.err.println("TOKEN ----------- "+tokenList);
 
-							new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from "+frName+" franchisee",
-									"PLease check the enquiry and revert back soon.", "album_enq");
+							new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from franchisee",
+									"Please check the enquiry and revert back soon.", "album_enq");
 							
 							int res=albumEnquiryRepo.updateNotifyStatusByEnqId(enq.getEnquiryNo(),0);
 							
@@ -192,8 +188,8 @@ public class ScheduleTask {
 							}
 						}
 
-						new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from "+frName+" franchisee",
-								"PLease check the enquiry and revert back soon.", "album_enq");
+						new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from franchisee",
+								"Please check the enquiry and revert back soon.", "album_enq");
 						
 						int res=albumEnquiryRepo.updateNotifyStatusByEnqId(enq.getEnquiryNo(),1);
 
@@ -236,8 +232,135 @@ public class ScheduleTask {
 							}
 						}
 
+						new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from franchisee",
+								"Please check the enquiry and revert back soon.", "album_enq");
+						
+						int res=albumEnquiryRepo.updateNotifyStatusByEnqId(enq.getEnquiryNo(),2);
+
+						
+					}
+					
+					
+				}
+				
+				
+
+				for (int i = 0; i < enqList.size(); i++) {
+
+					AlbumEnquiry enq = enqList.get(i);
+					
+					/*Franchisee franchisee=franchiseeRepository.findOne(enq.getFrId());
+					String frName="";
+					if(enq!=null) {
+						frName=franchisee.getFrName();
+					}*/
+
+					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+					SimpleDateFormat sdfTime = new SimpleDateFormat("hh:mm:ss");
+
+					Date d1 = sdf.parse(enq.getEnquiryDateTime());
+					Date d2 = Calendar.getInstance().getTime();
+
+					//System.err.println("TIME_1 ------ > " + d1.getTime());
+					//System.err.println("TIME_2 ------ > " + d2.getTime());
+
+					long difference = d2.getTime() - d1.getTime();
+					//System.err.println("TIME_DIFF ------ > " + difference / 60000);
+
+					if ((difference / 60000) <= 2) {
+
+						//System.err.println("------------ <=2 ------  " + difference / 60000);
+
+						/*List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo
+								.getUserTokens("album-emp");
+						if (enqEmpToken != null) {
+
+							List<String> tokenList = new ArrayList<>();
+							for (int j = 0; j < enqEmpToken.size(); j++) {
+								tokenList.add(enqEmpToken.get(j).getToken1());
+							}
+
+							new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from "+frName+" franchisee",
+									"Please check the enquiry and revert back soon.", "album_enq");*/
+							
+							int res=albumEnquiryRepo.updateNotifyStatusByEnqId(enq.getEnquiryNo(),0);
+							
+						//}
+
+					} else if ((difference / 60000) <= 5) {
+
+						//System.err.println("------------ <=5 ------  " + difference / 60000);
+
+						/*List<String> tokenList = new ArrayList<>();
+
+						List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo
+								.getUserTokens("album-emp");
+						if (enqEmpToken != null) {
+
+							for (int j = 0; j < enqEmpToken.size(); j++) {
+								if (enqEmpToken.get(j).getToken1() != null) {
+									tokenList.add(enqEmpToken.get(j).getToken1());
+								}
+							}
+						}
+
+						List<EnquiryScheduleEmpToken> enqSupToken = enquiryScheduleEmpTokenRepo
+								.getUserTokens("album-sup");
+						if (enqSupToken != null) {
+
+							for (int j = 0; j < enqSupToken.size(); j++) {
+								if (enqSupToken.get(j).getToken1() != null) {
+									tokenList.add(enqSupToken.get(j).getToken1());
+								}
+							}
+						}
+
 						new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from "+frName+" franchisee",
-								"PLease check the enquiry and revert back soon.", "album_enq");
+								"Please check the enquiry and revert back soon.", "album_enq");*/
+						
+						int res=albumEnquiryRepo.updateNotifyStatusByEnqId(enq.getEnquiryNo(),1);
+
+
+					} else {
+						//System.err.println("------------ >5 ------  " + difference / 60000);
+
+						/*List<String> tokenList = new ArrayList<>();
+
+						List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo
+								.getUserTokens("album-emp");
+						if (enqEmpToken != null) {
+
+							for (int j = 0; j < enqEmpToken.size(); j++) {
+								if (enqEmpToken.get(j).getToken1() != null) {
+									tokenList.add(enqEmpToken.get(j).getToken1());
+								}
+							}
+						}
+
+						List<EnquiryScheduleEmpToken> enqSupToken = enquiryScheduleEmpTokenRepo
+								.getUserTokens("album-sup");
+						if (enqSupToken != null) {
+
+							for (int j = 0; j < enqSupToken.size(); j++) {
+								if (enqSupToken.get(j).getToken1() != null) {
+									tokenList.add(enqSupToken.get(j).getToken1());
+								}
+							}
+						}
+						
+						List<EnquiryScheduleEmpToken> enqAdminToken = enquiryScheduleEmpTokenRepo
+								.getUserTokens("album-admin");
+						if (enqAdminToken != null) {
+
+							for (int j = 0; j < enqAdminToken.size(); j++) {
+								if (enqAdminToken.get(j).getToken1() != null) {
+									tokenList.add(enqAdminToken.get(j).getToken1());
+								}
+							}
+						}
+
+						new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from "+frName+" franchisee",
+								"Please check the enquiry and revert back soon.", "album_enq");*/
 						
 						int res=albumEnquiryRepo.updateNotifyStatusByEnqId(enq.getEnquiryNo(),2);
 
