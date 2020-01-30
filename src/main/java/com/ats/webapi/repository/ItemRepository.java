@@ -106,5 +106,8 @@ public interface ItemRepository extends JpaRepository<Item, Integer> {
 			") b ON a.id=b.id", nativeQuery = true)
 	public List<Item> findByItemGrp3(@Param("itemGrp3") String itemGrp3,@Param("prodHeaderId") int prodHeaderId,@Param("fromDept")int fromDept,@Param("toDept") int toDept);
 
+	@Query(value = "select m_item.* from m_item where m_item.del_status=0 and m_item.item_grp1=(select cat_id from t_production_plan_header where production_header_id=:prodHeaderId)  ", nativeQuery = true)
+	public List<Item> getItemsByProductionIdCatId(@Param("prodHeaderId")int prodHeaderId);
+
 
 }

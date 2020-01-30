@@ -837,6 +837,21 @@ public class MasterController {
 		return subCategoryList;
 
 	}
+	
+	@RequestMapping(value = "/getItemsByProductionIdCatId", method = RequestMethod.POST)
+	public @ResponseBody List<Item> getItemsByProductionIdCatId(@RequestParam int prodHeaderId) {
+
+		List<Item> itemList;
+		try {
+			itemList = itemRepository.getItemsByProductionIdCatId(prodHeaderId);
+		} catch (Exception e) {
+			itemList = new ArrayList<>();
+			e.printStackTrace();
+
+		}
+		return itemList;
+
+	}
 
 	@RequestMapping(value = { "/getRegSpCakeOrderHistory" }, method = RequestMethod.POST)
 	@ResponseBody
