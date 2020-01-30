@@ -875,6 +875,408 @@ public interface GetSFPlanDetailForMixingRepo extends JpaRepository<GetSFPlanDet
 			"(select id,1 as double_cut from m_item where m_item.del_status=0 and FIND_IN_SET(m_item.id,(\n" + 
 			"select group_concat(ex_varchar1) as item_ids  from t_mixing_header where production_id=:headerId and del_status=0 and ex_int1=:deptId and ex_varchar1 !=\"\"))) m on m.id=n.item_id",nativeQuery=true)
 	List<GetSFPlanDetailForMixing> showDetailItemLayering(@Param("headerId")int headerId,@Param("rmId") int rmId,@Param("deptId") int deptId);
+
+	@Query(value="select\n" + 
+			"        s.item_detail_id,\n" + 
+			"        s.item_id,\n" + 
+			"        s.rm_id,\n" + 
+			"        s.rm_name,\n" + 
+			"        s.rm_type,\n" + 
+			"        s.rm_qty,\n" + 
+			"        s.single_cut,\n" + 
+			"        s.double_cut,\n" + 
+			"        s.total,\n" + 
+			"        s.uom,\n" + 
+			"        s.plan_qty,\n" + 
+			"        s.order_qty,\n" + 
+			"        s.no_pieces_per_item  \n" + 
+			"    from\n" + 
+			"        ( SELECT\n" + 
+			"            m_item_detail.item_detail_id,\n" + 
+			"            m_item_detail.item_id,\n" + 
+			"            m_item_detail.rm_id,\n" + 
+			"            m_item_detail.rm_name,\n" + 
+			"            m_item_detail.rm_type,\n" + 
+			"            m_item_detail.rm_qty,\n" + 
+			"            m_item_sf_header.mul_factor as single_cut,\n" + 
+			"            0 as double_cut,\n" + 
+			"            SUM(CEIL((t_temp_prod.rm_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item)*m_item_detail.varchar_1*m_item_sf_header.sf_weight)                              \n" + 
+			"             as total,\n" + 
+			"            m_rm_uom.uom,\n" + 
+			"            SUM(t_temp_prod.rm_qty) as plan_qty,\n" + 
+			"            SUM(t_temp_prod.rm_qty) as order_qty,\n" + 
+			"            m_item_detail.no_pieces_per_item    \n" + 
+			"        FROM\n" + 
+			"            m_item_detail,\n" + 
+			"\n" + 
+			"           t_temp_prod,\n" + 
+			"            m_rm_uom,\n" + 
+			"            m_item_sf_header,\n" + 
+			"            m_item_sup              \n" + 
+			"        WHERE\n" + 
+			"            m_item_detail.del_status=0          \n" + 
+			"            and          t_temp_prod.sf_id=m_item_detail.item_id          \n" + 
+			"            and m_item_sf_header.sf_id=m_item_detail.rm_id                  \n" + 
+			"            and m_item_sup.item_id=m_item_detail.item_id                  \n" + 
+			"\n" + 
+			"            AND  m_item_sf_header.int_1=:deptId\n" + 
+			"            and m_item_detail.rm_type=2                  \n" + 
+			"\n" + 
+			"            AND m_rm_uom.uom_id=m_item_detail.rm_uom_id          \n" + 
+			"        GROUP by\n" + 
+			"            m_item_detail.rm_id                  \n" + 
+			"        UNION\n" + 
+			"        ALL     select\n" + 
+			"            l.sf_did as item_detail_id,\n" + 
+			"            l.sf_id as item_id,\n" + 
+			"            l.rm_id,\n" + 
+			"            l.rm_name,\n" + 
+			"            l.rm_type,\n" + 
+			"            SUM(l.rm_qty) as rm_qty,\n" + 
+			"            1 as single_cut,\n" + 
+			"            SUM(l.rm_weight) as double_cut,\n" + 
+			"            SUM(round(((m.total*l.rm_weight_per)/100),\n" + 
+			"            0)) as total,\n" + 
+			"            l.rm_unit,\n" + 
+			"            0 as plan_qty,\n" + 
+			"            0 as order_qty,\n" + 
+			"            0 as no_pieces_per_item  \n" + 
+			"        from\n" + 
+			"            (         select\n" + 
+			"                a.sf_did,\n" + 
+			"                a.sf_id,\n" + 
+			"                a.rm_id,\n" + 
+			"                a.rm_name,\n" + 
+			"                a.rm_type,\n" + 
+			"                a.rm_qty,\n" + 
+			"                a.rm_weight,\n" + 
+			"                a.del_status,\n" + 
+			"                a.rm_unit,\n" + 
+			"                round((a.rm_weight/b.rm_weight),\n" + 
+			"                2) as rm_weight_per\n" + 
+			"            from\n" + 
+			"                (SELECT\n" + 
+			"                    m_item_sf_detail.sf_did,\n" + 
+			"                    m_item_sf_detail.sf_id,\n" + 
+			"                    m_item_sf_detail.rm_id,\n" + 
+			"                    concat(m_item_sf_detail.rm_name) as rm_name,\n" + 
+			"                    m_item_sf_detail.rm_type,\n" + 
+			"                    m_item_sf_detail.rm_qty,\n" + 
+			"                    m_item_sf_detail.rm_weight,\n" + 
+			"                    m_item_sf_detail.del_status,\n" + 
+			"                    m_rm_uom.uom as rm_unit    \n" + 
+			"                FROM\n" + 
+			"                    m_item_sf_detail,\n" + 
+			"                    m_rm_uom    \n" + 
+			"                WHERE\n" + 
+			"                    m_item_sf_detail.sf_id in (\n" + 
+			"                        SELECT\n" + 
+			"                            m_item_detail.rm_id          \n" + 
+			"                        FROM\n" + 
+			"                            m_item_detail,\n" + 
+			"\n" + 
+			"                          t_temp_prod," + 
+			"                            m_item_sf_header    \n" + 
+			"                        WHERE\n" + 
+			"                            m_item_detail.del_status=0        \n" + 
+			"                            and  t_temp_prod.sf_id=m_item_detail.item_id          \n" + 
+			"                            and m_item_sf_header.sf_id=m_item_detail.rm_id                  \n" + 
+			"\n" + 
+			"                            AND  m_item_sf_header.int_1=:deptId          \n" + 
+			"                            and m_item_detail.rm_type=2                  \n" + 
+			"\n" + 
+			"                        group by\n" + 
+			"                            rm_id    \n" + 
+			"                    )\n" + 
+			"                    and m_item_sf_detail.del_status=0  \n" + 
+			"                    and m_item_sf_detail.rm_type=2\n" + 
+			"                    and m_rm_uom.uom_id=m_item_sf_detail.rm_unit\n" + 
+			"                ) a        \n" + 
+			"            LEFT JOIN\n" + 
+			"                (\n" + 
+			"                    SELECT\n" + 
+			"                        m_item_sf_detail.sf_id,\n" + 
+			"                        SUM(m_item_sf_detail.rm_weight)/100 as rm_weight    \n" + 
+			"                    FROM\n" + 
+			"                        m_item_sf_detail    \n" + 
+			"                    WHERE\n" + 
+			"                        m_item_sf_detail.sf_id in (\n" + 
+			"                            SELECT\n" + 
+			"                                m_item_detail.rm_id          \n" + 
+			"                            FROM\n" + 
+			"                                m_item_detail,\n" + 
+			"\n" + 
+			"                               t_temp_prod,\n" + 
+			"                                m_item_sf_header    \n" + 
+			"                            WHERE\n" + 
+			"                                m_item_detail.del_status=0        \n" + 
+			"                                and  t_temp_prod.sf_id=m_item_detail.item_id          \n" + 
+			"                                and m_item_sf_header.sf_id=m_item_detail.rm_id                  \n" + 
+			"\n" + 
+			"                                AND  m_item_sf_header.int_1=:deptId           \n" + 
+			"                                and m_item_detail.rm_type=2                  \n" + 
+			"\n" + 
+			"                            group by\n" + 
+			"                                rm_id    \n" + 
+			"                        )\n" + 
+			"                        and m_item_sf_detail.del_status=0  \n" + 
+			"                    group by\n" + 
+			"                        m_item_sf_detail.sf_id        ) b\n" + 
+			"                            ON b.sf_id=a.sf_id        \n" + 
+			"                    ) l        \n" + 
+			"            LEFT JOIN\n" + 
+			"                (\n" + 
+			"                    SELECT\n" + 
+			"                        m_item_detail.item_detail_id,\n" + 
+			"                        m_item_detail.item_id,\n" + 
+			"                        m_item_detail.rm_type,\n" + 
+			"                        m_item_detail.rm_id,\n" + 
+			"                       SUM(CEIL((t_temp_prod.rm_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item)*m_item_detail.varchar_1*m_item_sf_header.sf_weight)                            \n" + 
+			"                             as total    \n" + 
+			"                    FROM\n" + 
+			"                        m_item_detail,\n" + 
+			"\n" + 
+			"                     t_temp_prod, " + 
+			"                        m_item_sf_header    \n" + 
+			"                    WHERE\n" + 
+			"                        m_item_detail.del_status=0        \n" + 
+			"                        and t_temp_prod.sf_id=m_item_detail.item_id          \n" + 
+			"                        and m_item_sf_header.sf_id=m_item_detail.rm_id                  \n" + 
+			"\n" + 
+			"                        AND  m_item_sf_header.int_1=:deptId         \n" + 
+			"                        and m_item_detail.rm_type=2                  \n" + 
+			"\n" + 
+			"                    GROUP by\n" + 
+			"                        m_item_detail.rm_id\n" + 
+			"                ) m\n" + 
+			"                    on l.sf_id=m.rm_id\n" + 
+			"            group by\n" + 
+			"                l.rm_id ) s\n" + 
+			"            where\n" + 
+			"                !FIND_IN_SET(\n" + 
+			"                    s.rm_id,(\n" + 
+			"                        select\n" + 
+			"                            setting_value1\n" + 
+			"                        from\n" + 
+			"                            t_setting_new\n" + 
+			"                        where\n" + 
+			"                            setting_key='sf_cream_item'\n" + 
+			"                            and del_status=0\n" + 
+			"                    )\n" + 
+			"                )\n" + 
+			"                and !FIND_IN_SET(\n" + 
+			"                    s.rm_id,(\n" + 
+			"                        select\n" + 
+			"                            setting_value1\n" + 
+			"                        from\n" + 
+			"                            t_setting_new\n" + 
+			"                        where\n" + 
+			"                            setting_key='rm_cream_item'\n" + 
+			"                            and del_status=0\n" + 
+			"                    )\n" + 
+			"                )  ",nativeQuery=true)
+	List<GetSFPlanDetailForMixing> showDetailsForManualProduction1(@Param("deptId")  int deptId);
+
+	@Query(value="select\n" + 
+			"        s.item_detail_id,\n" + 
+			"        s.item_id,\n" + 
+			"        s.rm_id,\n" + 
+			"        s.rm_name,\n" + 
+			"        s.rm_type,\n" + 
+			"        s.rm_qty,\n" + 
+			"        s.single_cut,\n" + 
+			"        s.double_cut,\n" + 
+			"        s.total,\n" + 
+			"        s.uom,\n" + 
+			"        s.plan_qty,\n" + 
+			"        s.order_qty,\n" + 
+			"        s.no_pieces_per_item  \n" + 
+			"    from\n" + 
+			"        ( SELECT\n" + 
+			"            m_item_detail.item_detail_id,\n" + 
+			"            m_item_detail.item_id,\n" + 
+			"            m_item_detail.rm_id,\n" + 
+			"            m_item_detail.rm_name,\n" + 
+			"            m_item_detail.rm_type,\n" + 
+			"            m_item_detail.rm_qty,\n" + 
+			"            m_item_sf_header.mul_factor as single_cut,\n" + 
+			"            0 as double_cut,\n" + 
+			"            SUM(CEIL((t_temp_prod.rm_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item)*m_item_detail.varchar_1*m_item_sf_header.sf_weight)                              \n" + 
+			"             as total,\n" + 
+			"            m_rm_uom.uom,\n" + 
+			"            SUM(t_temp_prod.rm_qty) as plan_qty,\n" + 
+			"            SUM(t_temp_prod.rm_qty) as order_qty,\n" + 
+			"            m_item_detail.no_pieces_per_item    \n" + 
+			"        FROM\n" + 
+			"            m_item_detail,\n" + 
+			"\n" + 
+			"           t_temp_prod,\n" + 
+			"            m_rm_uom,\n" + 
+			"            m_item_sf_header,\n" + 
+			"            m_item_sup              \n" + 
+			"        WHERE\n" + 
+			"            m_item_detail.del_status=0          \n" + 
+			"            and          t_temp_prod.sf_id=m_item_detail.item_id          \n" + 
+			"            and m_item_sf_header.sf_id=m_item_detail.rm_id                  \n" + 
+			"            and m_item_sup.item_id=m_item_detail.item_id                  \n" + 
+			"\n" + 
+			"            AND  m_item_sf_header.int_1=:deptId\n" + 
+			"            and m_item_detail.rm_type=2                  \n" + 
+			"\n" + 
+			"            AND m_rm_uom.uom_id=m_item_detail.rm_uom_id          \n" + 
+			"        GROUP by\n" + 
+			"            m_item_detail.rm_id                  \n" + 
+			"        UNION\n" + 
+			"        ALL     select\n" + 
+			"            l.sf_did as item_detail_id,\n" + 
+			"            l.sf_id as item_id,\n" + 
+			"            l.rm_id,\n" + 
+			"            l.rm_name,\n" + 
+			"            l.rm_type,\n" + 
+			"            SUM(l.rm_qty) as rm_qty,\n" + 
+			"            1 as single_cut,\n" + 
+			"            SUM(l.rm_weight) as double_cut,\n" + 
+			"            SUM(round(((m.total*l.rm_weight_per)/100),\n" + 
+			"            0)) as total,\n" + 
+			"            l.rm_unit,\n" + 
+			"            0 as plan_qty,\n" + 
+			"            0 as order_qty,\n" + 
+			"            0 as no_pieces_per_item  \n" + 
+			"        from\n" + 
+			"            (         select\n" + 
+			"                a.sf_did,\n" + 
+			"                a.sf_id,\n" + 
+			"                a.rm_id,\n" + 
+			"                a.rm_name,\n" + 
+			"                a.rm_type,\n" + 
+			"                a.rm_qty,\n" + 
+			"                a.rm_weight,\n" + 
+			"                a.del_status,\n" + 
+			"                a.rm_unit,\n" + 
+			"                round((a.rm_weight/b.rm_weight),\n" + 
+			"                2) as rm_weight_per\n" + 
+			"            from\n" + 
+			"                (SELECT\n" + 
+			"                    m_item_sf_detail.sf_did,\n" + 
+			"                    m_item_sf_detail.sf_id,\n" + 
+			"                    m_item_sf_detail.rm_id,\n" + 
+			"                    concat(m_item_sf_detail.rm_name) as rm_name,\n" + 
+			"                    m_item_sf_detail.rm_type,\n" + 
+			"                    m_item_sf_detail.rm_qty,\n" + 
+			"                    m_item_sf_detail.rm_weight,\n" + 
+			"                    m_item_sf_detail.del_status,\n" + 
+			"                    m_rm_uom.uom as rm_unit    \n" + 
+			"                FROM\n" + 
+			"                    m_item_sf_detail,\n" + 
+			"                    m_rm_uom    \n" + 
+			"                WHERE\n" + 
+			"                    m_item_sf_detail.sf_id in (\n" + 
+			"                        SELECT\n" + 
+			"                            m_item_detail.rm_id          \n" + 
+			"                        FROM\n" + 
+			"                            m_item_detail,\n" + 
+			"\n" + 
+			"                          t_temp_prod," + 
+			"                            m_item_sf_header    \n" + 
+			"                        WHERE\n" + 
+			"                            m_item_detail.del_status=0        \n" + 
+			"                            and  t_temp_prod.sf_id=m_item_detail.item_id          \n" + 
+			"                            and m_item_sf_header.sf_id=m_item_detail.rm_id                  \n" + 
+			"\n" + 
+			"                            AND  m_item_sf_header.int_1=:deptId          \n" + 
+			"                            and m_item_detail.rm_type=2                  \n" + 
+			"\n" + 
+			"                        group by\n" + 
+			"                            rm_id    \n" + 
+			"                    )\n" + 
+			"                    and m_item_sf_detail.del_status=0  \n" + 
+			"                    and m_item_sf_detail.rm_type=2\n" + 
+			"                    and m_rm_uom.uom_id=m_item_sf_detail.rm_unit\n" + 
+			"                ) a        \n" + 
+			"            LEFT JOIN\n" + 
+			"                (\n" + 
+			"                    SELECT\n" + 
+			"                        m_item_sf_detail.sf_id,\n" + 
+			"                        SUM(m_item_sf_detail.rm_weight)/100 as rm_weight    \n" + 
+			"                    FROM\n" + 
+			"                        m_item_sf_detail    \n" + 
+			"                    WHERE\n" + 
+			"                        m_item_sf_detail.sf_id in (\n" + 
+			"                            SELECT\n" + 
+			"                                m_item_detail.rm_id          \n" + 
+			"                            FROM\n" + 
+			"                                m_item_detail,\n" + 
+			"\n" + 
+			"                               t_temp_prod,\n" + 
+			"                                m_item_sf_header    \n" + 
+			"                            WHERE\n" + 
+			"                                m_item_detail.del_status=0        \n" + 
+			"                                and  t_temp_prod.sf_id=m_item_detail.item_id          \n" + 
+			"                                and m_item_sf_header.sf_id=m_item_detail.rm_id                  \n" + 
+			"\n" + 
+			"                                AND  m_item_sf_header.int_1=:deptId           \n" + 
+			"                                and m_item_detail.rm_type=2                  \n" + 
+			"\n" + 
+			"                            group by\n" + 
+			"                                rm_id    \n" + 
+			"                        )\n" + 
+			"                        and m_item_sf_detail.del_status=0  \n" + 
+			"                    group by\n" + 
+			"                        m_item_sf_detail.sf_id        ) b\n" + 
+			"                            ON b.sf_id=a.sf_id        \n" + 
+			"                    ) l        \n" + 
+			"            LEFT JOIN\n" + 
+			"                (\n" + 
+			"                    SELECT\n" + 
+			"                        m_item_detail.item_detail_id,\n" + 
+			"                        m_item_detail.item_id,\n" + 
+			"                        m_item_detail.rm_type,\n" + 
+			"                        m_item_detail.rm_id,\n" + 
+			"                       SUM(CEIL((t_temp_prod.rm_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item)*m_item_detail.varchar_1*m_item_sf_header.sf_weight)                            \n" + 
+			"                             as total    \n" + 
+			"                    FROM\n" + 
+			"                        m_item_detail,\n" + 
+			"\n" + 
+			"                     t_temp_prod, " + 
+			"                        m_item_sf_header    \n" + 
+			"                    WHERE\n" + 
+			"                        m_item_detail.del_status=0        \n" + 
+			"                        and t_temp_prod.sf_id=m_item_detail.item_id          \n" + 
+			"                        and m_item_sf_header.sf_id=m_item_detail.rm_id                  \n" + 
+			"\n" + 
+			"                        AND  m_item_sf_header.int_1=:deptId         \n" + 
+			"                        and m_item_detail.rm_type=2                  \n" + 
+			"\n" + 
+			"                    GROUP by\n" + 
+			"                        m_item_detail.rm_id\n" + 
+			"                ) m\n" + 
+			"                    on l.sf_id=m.rm_id\n" + 
+			"            group by\n" + 
+			"                l.rm_id ) s\n" + 
+			"            where\n" + 
+			"                !FIND_IN_SET(\n" + 
+			"                    s.rm_id,(\n" + 
+			"                        select\n" + 
+			"                            setting_value1\n" + 
+			"                        from\n" + 
+			"                            t_setting_new\n" + 
+			"                        where\n" + 
+			"                            setting_key='sf_cream_item'\n" + 
+			"                            and del_status=0\n" + 
+			"                    )\n" + 
+			"                )\n" + 
+			"                and FIND_IN_SET(\n" + 
+			"                    s.rm_id,(\n" + 
+			"                        select\n" + 
+			"                            setting_value1\n" + 
+			"                        from\n" + 
+			"                            t_setting_new\n" + 
+			"                        where\n" + 
+			"                            setting_key='rm_cream_item'\n" + 
+			"                            and del_status=0\n" + 
+			"                    )\n" + 
+			"                )  ",nativeQuery=true)
+	List<GetSFPlanDetailForMixing> showDetailsForManualProduction2(@Param("deptId")  int deptId);
 	
 	/*"       CASE \n" + 
 	"            WHEN m_item_sup.cut_section=1 THEN  (CASE \n" + 
