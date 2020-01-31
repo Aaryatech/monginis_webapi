@@ -91,6 +91,14 @@ public class TallySyncController {
 		return itemList;
 
 	}
+	//Sachin 31-0-2020 for Item List Excel Export GFPL Admin
+	@RequestMapping(value = { "/getAllExcelItemsByCatId" }, method = RequestMethod.POST)
+	public @ResponseBody ItemList getAllExcelItemsByCatId(@RequestParam int catId) {
+
+		ItemList itemList = itemService.getAllExcelItemsByCatId(catId);
+		return itemList;
+
+	}
 
 	@RequestMapping(value = { "/getAllExcelSpCake" }, method = RequestMethod.GET)
 	public @ResponseBody SpCakeList getAllExcelSpCake() {

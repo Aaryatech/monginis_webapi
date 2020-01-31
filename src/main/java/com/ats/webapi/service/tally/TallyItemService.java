@@ -14,4 +14,6 @@ public interface TallyItemService {
 
 	ErrorMessage updateItems(int id, int isTallySync);
 
+	ItemList getAllExcelItemsByCatId(int catId);
+
 }
