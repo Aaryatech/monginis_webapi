@@ -9,4 +9,6 @@ public interface AllFrIdNameService {
 
 	AllFrIdNameList findNonOrderFranchisee(String orderDate, int menuId);
 
+	AllFrIdNameList getFrIdAndNameByDelstatus(int i);
+
 }

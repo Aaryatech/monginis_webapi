@@ -37,5 +37,9 @@ public interface FranchiseeRepository extends JpaRepository<Franchisee, Integer>
 
 		public List<Franchisee> findAllByDelStatusOrderByFrOpeningDateDesc(int i);
 
+		public List<Franchisee> findAllByOrderByFrOpeningDateDesc();
+
+		
+
 		
 	}

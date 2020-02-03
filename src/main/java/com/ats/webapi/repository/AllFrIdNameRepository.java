@@ -22,5 +22,10 @@ public interface AllFrIdNameRepository extends JpaRepository<AllFrIdName, Intege
 		@Query(value=" SELECT fr_id,fr_name from m_franchisee where fr_id=:frId",nativeQuery=true)
 		AllFrIdName findByFrId(@Param("frId")int frId);
 
+		
+		
+		@Query(value="SELECT fr_id,fr_name from m_franchisee where del_status=:del", nativeQuery=true)
+		List<AllFrIdName> getAllFrIdNameByDelStatus(@Param("del")int del);
+
 }
 

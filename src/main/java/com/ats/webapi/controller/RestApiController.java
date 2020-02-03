@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.TimeZone;
 import java.util.stream.Collectors;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
+import com.ats.webapi.commons.EmailUtility;
 import com.ats.webapi.model.*;
 import com.ats.webapi.model.album.MenuForAlbum;
 import com.ats.webapi.model.album.SpCakeEnqAlbmFrnchse;
@@ -1356,7 +1358,8 @@ public class RestApiController {
 	@RequestMapping(value = "/getAllFrIdName", method = RequestMethod.GET)
 	public @ResponseBody AllFrIdNameList getAllFrIdName() {
 
-		AllFrIdNameList allFrIdNamesList = allFrIdNameService.getFrIdAndName();
+		//AllFrIdNameList allFrIdNamesList = allFrIdNameService.getFrIdAndName();	//mahendra //31-01-2020
+		AllFrIdNameList allFrIdNamesList = allFrIdNameService.getFrIdAndNameByDelstatus(0);
 
 		return allFrIdNamesList;
 
@@ -2155,7 +2158,7 @@ public class RestApiController {
 			@RequestParam("frPassword") String frPassword, @RequestParam("frMob") String frMob,
 			@RequestParam("frOwner") String frOwner, @RequestParam("frRateCat") int frRateCat,
 			@RequestParam("grnTwo") int grnTwo, @RequestParam("ownerBirthDate") String ownerBirthDate,
-			@RequestParam("fbaLicenseDate") String fbaLicenseDate,
+			@RequestParam("fbaLicenseDate") String fbaLicenseDate,	@RequestParam("delStatus") int delStatus,
 			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
 			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
 			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget,
@@ -2202,6 +2205,7 @@ public class RestApiController {
 		franchisee.setStockType(stockType);
 		franchisee.setFrTarget(frTarget);
 		franchisee.setIsSameState(isSameState);
+		franchisee.setDelStatus(delStatus);
 
 		System.out.println("" + franchisee.toString());
 		ErrorMessage jsonResult = franchiseeService.saveFranchisee(franchisee);
@@ -3862,7 +3866,9 @@ public class RestApiController {
 	// Get All Franchisees
 	@RequestMapping(value = { "/getAllFranchisee" }, method = RequestMethod.GET)
 	public @ResponseBody FranchiseeList getAllFranchinsees() {
-		List<Franchisee> franchisee = franchiseeService.findAllFranchisee();
+		//List<Franchisee> franchisee = franchiseeService.findAllFranchisee();
+		
+		List<Franchisee> franchisee = franchiseeService.getAllFranchisee();	//mahendra //31-01-2020
 		FranchiseeList franchiseeList = new FranchiseeList();
 		franchiseeList.setFranchiseeList(franchisee);
 		ErrorMessage errorMessage = new ErrorMessage();
@@ -5623,5 +5629,319 @@ public class RestApiController {
 			}
 			return info;
 
+		}
+		
+		/***************************************************************************************/
+		@RequestMapping(value = { "/getUserInfoByEmail" }, method = RequestMethod.POST)
+		public @ResponseBody User getUserInfoByEmail(@RequestParam String email) {
+
+			User res = new User();
+			res = userService.checkUniqueEmail(email);
+			return res;
+		}
+		
+		@RequestMapping(value = { "/getUserInfoByContact" }, method = RequestMethod.POST)
+		public @ResponseBody User getUserInfoByContact(@RequestParam String contact) {
+
+			User res = new User();
+			res = userService.checkUniqueContact(contact);
+			return res;
+		}
+		
+		
+		@RequestMapping(value = { "/getUserInfoByUser" }, method = RequestMethod.POST)
+		public @ResponseBody User getUserInfoByUser(@RequestParam String uname) {
+
+			User res = new User();
+			res = userService.checkUniqueUser(uname);
+			return res;
+		}
+		
+		static String senderEmail ="atsinfosoft@gmail.com";
+		static String senderPassword ="atsinfosoft@123";
+		static String mailsubject = "";
+		String otp1 = null;
+		@RequestMapping(value = { "/getUserInfoByUsername" }, method = RequestMethod.POST)
+		public @ResponseBody User getUserInfoByUsername(@RequestParam String username) {
+
+			OTPVerification.setConNumber(null);
+			OTPVerification.setEmailId(null);
+			OTPVerification.setOtp(null);
+			OTPVerification.setPass(null);
+			Info info = new Info();
+			
+			User res = new User();
+			res = userService.getUserData(username);
+			System.err.println("Resss-------"+res);
+			
+			if(res!= null) {
+				OTPVerification.setUserId(res.getId());
+				
+				String emailId = res.getEmail();
+				String conNumber = res.getContact();
+				
+				char[] otp = Common.OTP(6);
+				otp1 = String.valueOf(otp);
+				System.err.println("User otp is" + otp1);
+				
+				Info inf = EmailUtility.sendOtp(otp1, conNumber, "MONGII OTP Verification ");
+				
+				 mailsubject = " OTP  Verification ";
+				 String text = "\n OTP for change your Password: ";
+				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword,emailId, mailsubject,
+						text, otp1);
+
+			
+				OTPVerification.setConNumber(conNumber);
+				OTPVerification.setEmailId(emailId);
+				OTPVerification.setOtp(otp1);
+				OTPVerification.setPass(res.getPassword());
+			}else {
+				System.err.println("In Else ");
+
+				info.setError(true);
+				info.setMessage("not Matched");
+				System.err.println(" not Matched ");
+			}
+			return res;
+		}
+		
+		@RequestMapping(value = { "/VerifyOTP" }, method = RequestMethod.POST)
+		public @ResponseBody User VerifyOTP(@RequestParam String otp) {
+			Info info = new Info();
+			
+			Object object=new Object();
+			HashMap<Integer, User>  hashMap=new HashMap<>();
+			
+			User user=new User();
+			
+			try {
+			//	System.err.println("OTP Found------------------"+OTPVerification.getOtp()+" "+OTPVerification.getUserId());
+				if (otp.equals(OTPVerification.getOtp()) == true) {
+					info.setError(false);
+					info.setMessage("success");
+
+					String mobile = OTPVerification.getConNumber();
+					String email = OTPVerification.getEmailId();
+					String pass = Common.getAlphaNumericString(7);
+					// System.out.println("pass");
+					//int res = staffrepo.chagePass(pass, OTPVerification.getUserId());
+					
+					user=userService.findByIdAndDelStatus(OTPVerification.getUserId(),0);
+					hashMap.put(1, user);
+
+				} else {
+					info.setError(true);
+					info.setMessage("failed");
+				}
+				
+			} catch (Exception e) {
+
+				System.err.println("Exce in getAllInstitutes Institute " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMessage("excep");
+			}
+
+			return user;
+
+		}
+		
+		@RequestMapping(value = { "/updateToNewPassword" }, method = RequestMethod.POST)
+		public @ResponseBody Info updateToNewPassword(@RequestParam int userId, @RequestParam String newPass) {
+
+			Info res = new Info();
+			
+			int a = updateUserRepo.changePassword(userId, newPass);
+			if (a > 0) {
+
+				mailsubject = " New Credentials ";
+				String text = "\n Your new username and password are : \n";
+
+				User usr = new User();
+				usr = userService.findByUserId(userId);
+				if (usr != null) {
+					String emailId = usr.getEmail();
+					String password = "\n Username : " + usr.getUsername() + " \n Password : " + usr.getPassword();
+
+					Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, emailId, mailsubject, text, password);
+				}
+				res.setError(false);
+				res.setMessage("success");
+			}else {
+				res.setError(true);
+				res.setMessage("fail");
+			}
+		
+			return res;
+		}
+		
+		/******************************************************************************/
+		//OPS
+	/*	@RequestMapping(value = { "/getFranchiseeByFrCode" }, method = RequestMethod.POST)
+		@ResponseBody
+		public Franchisee getFranchiseeByFrCode(@RequestParam("frCode") String frCode) {
+		
+			OTPVerification.setConNumber(null);
+			OTPVerification.setEmailId(null);
+			OTPVerification.setOtp(null);
+			OTPVerification.setPass(null);
+			Info info = new Info();
+			
+			Franchisee franchisee = franchiseeService.getFranchiseeByFrCode(frCode);
+			System.out.println("JsonString" + franchisee);
+			if(franchisee!= null) {
+				OTPVerification.setUserId(franchisee.getFrId());
+				
+				String emailId = franchisee.getFrEmail();
+				String conNumber = franchisee.getFrMob();
+				
+				char[] otp = Common.OTP(6);
+				otp1 = String.valueOf(otp);
+				System.err.println("User otp is" + otp1);
+				
+				Info inf = EmailUtility.sendOtp(otp1, conNumber, "MONGII OTP Verification ");
+				
+				 mailsubject = " OTP  Verification ";
+				 String text = "\n OTP for change your Password: ";
+				
+				Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword,emailId, mailsubject,
+						text, otp1);
+
+			
+				OTPVerification.setConNumber(conNumber);
+				OTPVerification.setEmailId(emailId);
+				OTPVerification.setOtp(otp1);
+				OTPVerification.setPass(franchisee.getFrPassword());
+			}else {
+				System.err.println("In Else ");
+
+				info.setError(true);
+				info.setMessage("not Matched");
+				System.err.println(" not Matched ");
+			}
+
+			return franchisee;
+
+		}
+		
+		@RequestMapping(value = { "/verifyOPSOTP" }, method = RequestMethod.POST)
+		public @ResponseBody Franchisee VerifyOPSOTP(@RequestParam String otp) {
+			Info info = new Info();
+			
+			Object object=new Object();
+			HashMap<Integer, Franchisee>  hashMap=new HashMap<>();
+			
+			Franchisee franchisee=new Franchisee();
+			
+			try {
+				//System.err.println("OTP Found------------------"+OTPVerification.getOtp()+" "+OTPVerification.getUserId()+" "+otp);
+				if (otp.equals(OTPVerification.getOtp()) == true) {
+					info.setError(false);
+					info.setMessage("success");
+
+					String mobile = OTPVerification.getConNumber();
+					String email = OTPVerification.getEmailId();
+					String pass = Common.getAlphaNumericString(7);
+					// System.out.println("pass");
+					//int res = staffrepo.chagePass(pass, OTPVerification.getUserId());
+					
+					franchisee=franchiseeService.findByFrId(OTPVerification.getUserId());
+					hashMap.put(1, franchisee);
+
+				} else {
+					info.setError(true);
+					info.setMessage("failed");
+				}
+				
+			} catch (Exception e) {
+
+				System.err.println("Exce in VerifyOPSOTP Institute " + e.getMessage());
+				e.printStackTrace();
+				info.setError(true);
+				info.setMessage("excep");
+			}
+			return franchisee;
+		}
+		
+		@RequestMapping(value = { "/updateToNewOPSPassword" }, method = RequestMethod.POST)
+		public @ResponseBody Info updateToNewOPSPassword(@RequestParam int frId, @RequestParam String newPass) {
+
+			Info res = new Info();
+			
+			int a = franchiseeRepository.changeOPSPassword(frId, newPass);
+			if(a>0) {
+				int b = franchiseSupRepository.updatePOSFrPwd(frId, newPass);
+				if(b>0) {
+					
+				Franchisee franchisee=franchiseeService.findByFrId(OTPVerification.getUserId());
+					if(franchisee!=null) {
+						mailsubject = " New Credentials ";
+						String text = "\n Your new username and password are : \n";					
+						
+						String password = "\n Username : " + franchisee.getFrCode() + " \n Password : " + franchisee.getFrPassword();
+						String emailId = franchisee.getFrEmail();
+
+						Info emailRes = EmailUtility.sendEmail(senderEmail, senderPassword, emailId, mailsubject, text, password);
+					}
+				res.setError(false);
+				res.setMessage("success");
+				}
+				else {
+					res.setError(true);
+					res.setMessage("fail");
+				}
+			}else {
+				res.setError(true);
+				res.setMessage("fail");
+			}
+		
+			return res;
+		}*/
+		
+		/*****************************************************************************/
+		//mahendra //31-01-2020
+		@RequestMapping(value = { "/getAllFranchiseeByStatus" }, method = RequestMethod.POST)
+		public @ResponseBody  List<Franchisee>  getAllFranchiseeByStatus(@RequestParam int status) {
+			List<Franchisee> franchisee = new ArrayList<Franchisee>();
+			if(status<0) {
+				System.err.println("Status Found-----------"+status);
+				franchisee = franchiseeService.getAllFranchisee();	
+				
+			}
+			else{
+				System.err.println("Status Found-----------"+status);
+				franchisee = franchiseeService.getAllFranchiseeByStatus(status);	
+			}
+		/*
+		 * FranchiseeList franchiseeList = new FranchiseeList();
+		 * franchiseeList.setFranchiseeList(franchisee); ErrorMessage errorMessage = new
+		 * ErrorMessage(); if (franchisee != null) { errorMessage.setError(false);
+		 * errorMessage.setMessage("Franchisee displayed Successfully");
+		 * franchiseeList.setErrorMessage(errorMessage);
+		 * 
+		 * } else { errorMessage.setError(true);
+		 * errorMessage.setMessage("Franchisee Not displayed");
+		 * franchiseeList.setErrorMessage(errorMessage); }
+		 */
+
+			return franchisee;
+		
+		}
+		
+		@RequestMapping(value = { "/showFrRouteList" }, method = RequestMethod.GET)
+		@ResponseBody
+		public List<Route> showFrRouteList() {
+
+			List<Route> jsonRouteList = routeService.showAllRoute();
+			System.out.println("jsonRouteList" + jsonRouteList.toString());
+			RouteList routeList = new RouteList();
+			routeList.setRoute(jsonRouteList);
+			Info info = new Info();
+			info.setError(false);
+			info.setMessage("Route displayed Successfully ");
+			routeList.setInfo(info);
+
+			return jsonRouteList;
 		}
 }

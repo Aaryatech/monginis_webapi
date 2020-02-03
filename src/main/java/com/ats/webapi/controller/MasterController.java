@@ -504,6 +504,10 @@ public class MasterController {
 			franchiseSupRes = franchiseeService.saveFranchiseSup(franchiseSup);
 
 			if (franchiseSupRes != null) {
+				int a = franchiseeRepository.updateAdminPwd(franchiseSup.getFrId(), franchiseSup.getPass1());
+				if(a>0) {
+					System.err.println("Password Update successfully");
+				}
 				info.setError(false);
 				info.setMessage("FranchiseSup Saved Successfully.");
 			} else {

@@ -47,4 +47,8 @@ public interface FranchiseeService {
 	FrLoginResponse getLogin(String frCode, String frPassword);//php web service anmol  android
 	
 	public List<Franchisee> findAllFranchiseeOrderByFrOpeningDate();
+
+	public List<Franchisee> getAllFranchisee();
+
+	public List<Franchisee> getAllFranchiseeByStatus(int i);
 }
