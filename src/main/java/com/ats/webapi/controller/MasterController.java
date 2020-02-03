@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -137,7 +139,7 @@ public class MasterController {
 
 	@Autowired
 	GetItemSupRepository getItemSupRepository;
-	
+
 	@Autowired
 	SettingRepository settingRepository;
 
@@ -837,7 +839,7 @@ public class MasterController {
 		return subCategoryList;
 
 	}
-	
+
 	@RequestMapping(value = "/getItemsByProductionIdCatId", method = RequestMethod.POST)
 	public @ResponseBody List<Item> getItemsByProductionIdCatId(@RequestParam int prodHeaderId) {
 
@@ -907,6 +909,7 @@ public class MasterController {
 						if (intArray.length != 0) {
 							if (!contains(intArray, Integer.parseInt(itemId))) {
 								itemShow = itemShow + "," + itemId;
+
 							}
 						}
 					}
@@ -949,6 +952,90 @@ public class MasterController {
 			info.setError(true);
 			info.setMessage("CF Updation Failed");
 		}
+
+		return info;
+	}
+
+	// Sachin 3-2-2020
+	@RequestMapping(value = "/updateConfiguredItemsRemove", method = RequestMethod.POST)
+	public @ResponseBody Info updateConfiguredItemsTemp(@RequestParam List<String> frIdList, @RequestParam int menuId,
+			@RequestParam String itemIdList, @RequestParam int catId) {
+		Info info = new Info();
+		List<Integer> inputArray = Stream.of(itemIdList.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+
+		System.err.println("inputArray Ids  " + inputArray.toString());
+
+		try {
+			for (String frId : frIdList) {
+
+				ConfigureFranchisee configureFr = configureFrRepository
+						.findByFrIdAndMenuIdAndDelStatus(Integer.parseInt(frId), menuId, 0);
+
+				if (configureFr != null) {
+					String itemShow = configureFr.getItemShow();
+					List<Integer> intArray = null;
+					try {
+						intArray = Stream.of(itemShow.split(",")).map(Integer::parseInt).collect(Collectors.toList());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					System.err.println("intArray before  " + intArray.toString());
+
+					for (int i = 0; i < inputArray.size(); i++) {
+						int find = 0;
+						int index = 0;
+
+						for (int j = 0; j < intArray.size(); j++) {
+							if (intArray.get(j).equals(inputArray.get(i))) {
+								System.err.println("Match found " + j);
+								intArray.remove(j);
+								break;
+							}
+
+						}
+
+					}
+					System.err.println("intArray after " + intArray.toString());
+					System.err.println("commas seperated  itemShow ="
+							+ intArray.stream().map(String::valueOf).collect(Collectors.joining(",")));
+					itemShow=intArray.stream().map(String::valueOf).collect(Collectors.joining(","));
+					configureFr.setItemShow(itemShow);
+					
+					ConfigureFranchisee configureFranchiseeReport =
+							  configureFrRepository.save(configureFr);
+					info.setError(false);
+				}
+			} // fr Id for Loop;
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		/*
+		 * Info info = new Info(); try { for (String frId : frIdList) {
+		 * 
+		 * ConfigureFranchisee configureFr = configureFrRepository
+		 * .findByFrIdAndMenuIdAndDelStatus(Integer.parseInt(frId), menuId, 0);
+		 * 
+		 * if (configureFr != null) { String itemShow = configureFr.getItemShow(); int[]
+		 * intArray = null; try { intArray =
+		 * Arrays.stream(itemShow.split(",")).mapToInt(Integer::parseInt).toArray(); }
+		 * catch (Exception e) { e.printStackTrace(); } for (String itemId : itemIdList)
+		 * { if (intArray.length != 0) { if (!contains(intArray,
+		 * Integer.parseInt(itemId))) { itemShow = itemShow + "," + itemId;
+		 * 
+		 * } } } configureFr.setItemShow(itemShow);
+		 * System.err.println("itemShow "+itemShow);
+		 * 
+		 * //ConfigureFranchisee configureFranchiseeReport =
+		 * configureFrRepository.save(configureFr);
+		 * 
+		 * 
+		 * }
+		 * 
+		 * } info.setError(false); info.setMessage("CF Updated"); } catch (Exception e)
+		 * { e.printStackTrace(); info.setError(true);
+		 * info.setMessage("CF Updation Failed"); }
+		 */
 
 		return info;
 	}
@@ -1076,21 +1163,19 @@ public class MasterController {
 		System.err.println("RES---------------------------------- " + res);
 		return res;
 	}
-	
-	
+
 	// Anmol---->18-12-2019-------------
-		@RequestMapping(value = { "/getSettingDataById" }, method = RequestMethod.POST)
-		public @ResponseBody Setting getSettingDataById(@RequestParam("settingId") int settingId) {
+	@RequestMapping(value = { "/getSettingDataById" }, method = RequestMethod.POST)
+	public @ResponseBody Setting getSettingDataById(@RequestParam("settingId") int settingId) {
 
-			Setting res;
+		Setting res;
 
-			res = settingRepository.findBySettingId(settingId);
-			if (res == null) {
-				res = new Setting();
-			}
-			System.err.println("RES---------------------------------- " + res);
-			return res;
+		res = settingRepository.findBySettingId(settingId);
+		if (res == null) {
+			res = new Setting();
 		}
-		
-	
+		System.err.println("RES---------------------------------- " + res);
+		return res;
+	}
+
 }

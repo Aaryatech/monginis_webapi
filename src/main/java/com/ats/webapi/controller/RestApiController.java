@@ -4622,16 +4622,18 @@ public class RestApiController {
 	// Anmol 13-7-2019
 	// ----------SP CAKE ALBUM
 	// ORDER--------------------------------------------------
+	//Sachin 31-01-2020 MenuId Added
 	@RequestMapping(value = { "/getSpCakeAlbumOrderLists" }, method = RequestMethod.POST)
 	@ResponseBody
-	public SpCakeOrdersBeanList SpCakeAlbumOrderLists(@RequestParam List<Integer> frId, @RequestParam String prodDate) {
+	public SpCakeOrdersBeanList SpCakeAlbumOrderLists(@RequestParam List<Integer> frId, @RequestParam String prodDate,
+			@RequestParam int spMenuId) {
 		SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
 		try {
 
 			String strDate = Common.convertToYMD(prodDate);
 			System.out.println("Converted date " + strDate);
 
-			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeAlbumOrder(frId, strDate);
+			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeAlbumOrder(frId, strDate,spMenuId);
 
 			spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
 			Info info = new Info();
@@ -4675,16 +4677,17 @@ public class RestApiController {
 	}
 
 	// Anmol 13/7/2019
+	//Sachin 31-01-2020 MenuId Added
 	@RequestMapping(value = { "/getAllFrSpCakeAlbumOrderList" }, method = RequestMethod.POST)
 	@ResponseBody
-	public SpCakeOrdersBeanList getAllFrSpCakeAlbumOrderList(@RequestParam String prodDate) {
+	public SpCakeOrdersBeanList getAllFrSpCakeAlbumOrderList(@RequestParam String prodDate,@RequestParam int spMenuId) {
 		SpCakeOrdersBeanList spCakeOrderList = new SpCakeOrdersBeanList();
 		try {
 
 			String strDate = Common.convertToYMD(prodDate);
 			System.out.println("Converted date " + strDate);
 
-			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeAlbumOrderAllFr(strDate);
+			List<SpCakeOrdersBean> jsonSpCakeOrderList = spCkOrdersService.findSpCakeAlbumOrderAllFr(strDate,spMenuId);
 
 			spCakeOrderList.setSpCakeOrdersBean(jsonSpCakeOrderList);
 			Info info = new Info();

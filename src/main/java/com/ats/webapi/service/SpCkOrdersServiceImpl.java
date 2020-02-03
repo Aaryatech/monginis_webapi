@@ -78,10 +78,10 @@ public class SpCkOrdersServiceImpl implements SpCkOrdersService {
 
 
 	@Override
-	public List<SpCakeOrdersBean> findSpCakeAlbumOrder(List<Integer> frId, String prodDate) {
+	public List<SpCakeOrdersBean> findSpCakeAlbumOrder(List<Integer> frId, String prodDate,int spMenuId) {
 		List<SpCakeOrdersBean> spCakeOrders=null;
 		try {
-			spCakeOrders=spCakeOrdersRepository.FindAllSpCakeAlbumOrder(frId, prodDate);
+			spCakeOrders=spCakeOrdersRepository.FindAllSpCakeAlbumOrder(frId, prodDate,spMenuId);
 					
 		
 		}catch (Exception e) {
@@ -92,10 +92,10 @@ public class SpCkOrdersServiceImpl implements SpCkOrdersService {
 
 
 	@Override
-	public List<SpCakeOrdersBean> findSpCakeAlbumOrderAllFr(String prodDate) {
+	public List<SpCakeOrdersBean> findSpCakeAlbumOrderAllFr(String prodDate, int spMenuId) {
 		List<SpCakeOrdersBean> spCakeOrders=null;
 		try {
-			spCakeOrders=spCakeOrdersRepository.FindAllSpCakeAlbumOrderAllFr(prodDate);
+			spCakeOrders=spCakeOrdersRepository.FindAllSpCakeAlbumOrderAllFr(prodDate,spMenuId);
 					
 		
 		}catch (Exception e) {
