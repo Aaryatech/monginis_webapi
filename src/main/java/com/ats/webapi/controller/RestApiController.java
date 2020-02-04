@@ -46,6 +46,8 @@ import com.ats.webapi.model.remarks.GetAllRemarksList;
 import com.ats.webapi.model.salesreport.SalesReport;
 import com.ats.webapi.model.salesvaluereport.SalesReturnValueDao;
 import com.ats.webapi.model.salesvaluereport.SalesReturnValueDaoList;
+import com.ats.webapi.repository.FranchiseSupRepository;
+import com.ats.webapi.repository.FranchiseeRepository;
 /*import com.ats.webapi.repository.BillLogRepo;
 */import com.ats.webapi.repository.GetBillDetailsRepository;
 import com.ats.webapi.repository.GetReorderByStockTypeRepository;
@@ -390,6 +392,12 @@ public class RestApiController {
 	
 	@Autowired
 	PostFrOpStockHeaderRepository postFrOpStockHeaderRepository;
+	
+	@Autowired
+	FranchiseeRepository franchiseeRepository;
+
+	@Autowired
+	FranchiseSupRepository franchiseSupRepository;
 	
 	@RequestMapping(value = "/getItemsResBySubCatId", method = RequestMethod.POST)
 	public @ResponseBody List<ItemRes> getItemsResBySubCatId(@RequestParam("subCatId") String subCatId) {
@@ -5778,7 +5786,7 @@ public class RestApiController {
 		
 		/******************************************************************************/
 		//OPS
-	/*	@RequestMapping(value = { "/getFranchiseeByFrCode" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/getFranchiseeByFrCode" }, method = RequestMethod.POST)
 		@ResponseBody
 		public Franchisee getFranchiseeByFrCode(@RequestParam("frCode") String frCode) {
 		
@@ -5871,7 +5879,7 @@ public class RestApiController {
 			
 			int a = franchiseeRepository.changeOPSPassword(frId, newPass);
 			if(a>0) {
-				int b = franchiseSupRepository.updatePOSFrPwd(frId, newPass);
+				int b = franchiseSupRepository.updateOPSFrPwd(frId, newPass);
 				if(b>0) {
 					
 				Franchisee franchisee=franchiseeService.findByFrId(OTPVerification.getUserId());
@@ -5897,7 +5905,7 @@ public class RestApiController {
 			}
 		
 			return res;
-		}*/
+		}
 		
 		/*****************************************************************************/
 		//mahendra //31-01-2020
