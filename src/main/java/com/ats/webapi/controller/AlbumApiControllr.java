@@ -24,8 +24,10 @@ import com.ats.webapi.model.album.AlbumCodeAndName;
 import com.ats.webapi.model.album.AlbumRepo;
 import com.ats.webapi.model.album.SearchAlbumCakeResponse;
 import com.ats.webapi.repository.AlbumCodeAndNameRepo;
+import com.ats.webapi.repository.FrItemStockConfigureRepository;
 import com.ats.webapi.repository.MenuForAlbumRepo;
 import com.ats.webapi.repository.OrderSpCakeRepository;
+import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 import com.ats.webapi.service.MenuService;
 import com.ats.webapi.util.JsonUtil;
 
@@ -40,12 +42,24 @@ public class AlbumApiControllr {
 
 	@Autowired
 	OrderSpCakeRepository orderSpCakeRepository;
-	
+
 	@Autowired
 	AlbumCodeAndNameRepo albumCodeAndNameRepo;
+
+	@Autowired // added here 3 march Sac here 04-02-2020
+	FrItemStockConfigureRepository frItemStockConfRepo;
 	
-	
-	
+	@Autowired//added here on 3 march Sac here 04-02-2020
+	UpdateSeetingForPBRepo updateSeetingForPBRepo;
+
+	@RequestMapping(value = { "/getAlbumCode" }, method = RequestMethod.POST)
+	public @ResponseBody String getAlbumCode() {
+
+		int settingValue = frItemStockConfRepo.findBySettingKey("ALBUM_CODE_SR");
+
+		return "" + settingValue;
+
+	}
 
 	@RequestMapping(value = { "/saveAlbum" }, method = RequestMethod.POST)
 	public @ResponseBody Album saveAlbum(@RequestBody Album album) {
@@ -62,6 +76,14 @@ public class AlbumApiControllr {
 
 			e.printStackTrace();
 
+		}
+		if(res!=null && album.getAlbumId()==0) {
+			
+			int settingValue = frItemStockConfRepo.findBySettingKey("ALBUM_CODE_SR");
+
+			settingValue=settingValue+1;
+			
+			int result = updateSeetingForPBRepo.updateSeetingForPurBill(settingValue, "ALBUM_CODE_SR");
 		}
 		return res;
 
@@ -171,28 +193,28 @@ public class AlbumApiControllr {
 		ErrorMessage errorMessage = new ErrorMessage();
 		SearchAlbumCakeResponse searchAlbumCakeResponse = new SearchAlbumCakeResponse();
 
-		System.err.println("ALBUM CODE --------- searchAlbumByCode--------------------------------- "+albumCode);
-		System.err.println("ALBUM CODE --------- searchAlbumByCode---------------2------------------ "+albumCode.indexOf('-'));
-		
-		String abCode="";
-		if(albumCode.indexOf('-')==-1) {
-			abCode=albumCode;
-		}else {
-			abCode=albumCode.substring(0,albumCode.indexOf('-'));
+		System.err.println("ALBUM CODE --------- searchAlbumByCode--------------------------------- " + albumCode);
+		System.err.println(
+				"ALBUM CODE --------- searchAlbumByCode---------------2------------------ " + albumCode.indexOf('-'));
+
+		String abCode = "";
+		if (albumCode.indexOf('-') == -1) {
+			abCode = albumCode;
+		} else {
+			abCode = albumCode.substring(0, albumCode.indexOf('-'));
 		}
-		
-		
-		System.err.println("ALBUM CODE --------- searchAlbumByCode-------------------NEW-------------- "+abCode);
-		
+
+		System.err.println("ALBUM CODE --------- searchAlbumByCode-------------------NEW-------------- " + abCode);
+
 		try {
 			album = albumRepo.findByAlbumCodeAndDelStatus(abCode, 0);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		searchAlbumCakeResponse.setAlbum(album);
-		
-		System.err.println("ALBUM --------- searchAlbumByCode--------------------------------- "+album);
+
+		System.err.println("ALBUM --------- searchAlbumByCode--------------------------------- " + album);
 
 		specialCake = orderSpCakeRepository.findBySpId(album.getSpId());
 		if (specialCake == null) {
@@ -209,11 +231,10 @@ public class AlbumApiControllr {
 		return searchAlbumCakeResponse;
 
 	}
-	
-	
+
 	@RequestMapping(value = { "/getAlbumCodeAndNameList" }, method = RequestMethod.POST)
-	public @ResponseBody List<AlbumCodeAndName> getAlbumCodeAndNameList(@RequestParam("items") List<Integer> items, @RequestParam("frId") int frId,
-			@RequestParam("menuId") int menuId) {
+	public @ResponseBody List<AlbumCodeAndName> getAlbumCodeAndNameList(@RequestParam("items") List<Integer> items,
+			@RequestParam("frId") int frId, @RequestParam("menuId") int menuId) {
 
 		List<AlbumCodeAndName> albumCodeList = new ArrayList();
 		albumCodeList = albumCodeAndNameRepo.findAlbumCodeAndName(items, frId, menuId);
