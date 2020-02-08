@@ -65,8 +65,8 @@ public interface AlbumEnquiryRepo extends JpaRepository<AlbumEnquiry, Integer> {
 	
 	@Transactional
 	@Modifying
-	@Query(value="UPDATE t_album_enquiry SET status=:status WHERE enquiry_no=:enqId",nativeQuery=true)
-	int updateEnquiryStatusByEnqId(@Param("enqId") int enqId, @Param("status") int status);
+	@Query(value="UPDATE t_album_enquiry SET status=:status,approved_date_time=:approvedDateTime WHERE enquiry_no=:enqId",nativeQuery=true)
+	int updateEnquiryStatusByEnqId(@Param("enqId") int enqId, @Param("status") int status,@Param("approvedDateTime") String approvedDateTime);
 	 
 
 }

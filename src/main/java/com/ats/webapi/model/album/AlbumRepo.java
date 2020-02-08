@@ -23,4 +23,16 @@ public interface AlbumRepo extends JpaRepository<Album, Integer> {
 
 	Album findByAlbumCodeAndDelStatus(String albumCode, int i);
 
+	@Query(value="select count(t_sp_cake_album.album_id) from t_sp_cake_album WHERE album_code=:code",nativeQuery=true)
+	int getCountOfTSPCakeAlbCode(@Param("code") String code);
+	
+	@Query(value="select count(m_item.item_id) from m_item  WHERE item_id=:code",nativeQuery=true)
+	int getCountOfMItemCode(@Param("code") String code);
+	
+	
+	@Query(value="select count(m_sp_cake.sp_code) from m_sp_cake WHERE sp_code=:code",nativeQuery=true)
+	int getCountOfMSpcakeCode(@Param("code") String code);
+	
+	
+	
 }

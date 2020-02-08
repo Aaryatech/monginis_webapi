@@ -150,9 +150,9 @@ public class EnquiryController {
 	
 	// --Update AlbumId--
 		@PostMapping("/updateAlbumEnquiry")
-		public Info updateAlbumEnquiry(@RequestParam(value = "enqId") int enqId, @RequestParam(value = "status") int status) {
+		public Info updateAlbumEnquiry(@RequestParam(value = "enqId") int enqId, @RequestParam(value = "status") int status,@RequestParam String approvedDateTime) {
 			Info info = new Info();
-			int updatedEnq = albmEnq.updateEnquiryStatusByEnqId(enqId, status);
+			int updatedEnq = albmEnq.updateEnquiryStatusByEnqId(enqId, status,approvedDateTime);
 
 			if (updatedEnq != 0) {
 				info.setError(false);

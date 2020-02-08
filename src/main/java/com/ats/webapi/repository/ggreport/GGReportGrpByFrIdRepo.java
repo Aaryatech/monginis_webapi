@@ -41,7 +41,7 @@ public interface GGReportGrpByFrIdRepo extends JpaRepository<GGReportGrpByFrId, 
 			"(	   \n" + 
 			"			 SELECT   t_grn_gvn_header.fr_id,sum((t_bill_detail.grand_total/t_bill_detail.bill_qty)*t_grn_gvn.apr_qty_acc) as bill_amt FROM t_grn_gvn_header,t_grn_gvn,t_bill_detail WHERE t_grn_gvn_header.grn_gvn_header_id= t_grn_gvn.grn_gvn_header_id and t_grn_gvn.bill_detail_no=t_bill_detail.bill_detail_no and t_grn_gvn_header.fr_id IN (:frId) \n" + 
 			"		   AND t_grn_gvn_header.grngvn_date BETWEEN :fromDate and :toDate\n" + 
-			"		      AND t_grn_gvn.is_grn IN (:isGrn) and find_in_set(1,':fininset') and t_grn_gvn.grn_gvn_status=6  GROUP by t_grn_gvn_header.fr_id ) b on b.fr_id=a.fr_id  LEFT JOIN \n" + 
+			"		      AND t_grn_gvn.is_grn IN (:isGrn)  and t_grn_gvn.grn_gvn_status=6  GROUP by t_grn_gvn_header.fr_id ) b on b.fr_id=a.fr_id  LEFT JOIN \n" + 
 			"(	   \n" + 
 			"			SELECT t_grn_gvn_header.fr_id, \n" + 
 			"			 sum(t_grn_gvn.apr_grand_total)as grn_grand_total\n" + 

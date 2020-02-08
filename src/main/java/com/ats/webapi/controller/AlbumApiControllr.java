@@ -48,9 +48,37 @@ public class AlbumApiControllr {
 
 	@Autowired // added here 3 march Sac here 04-02-2020
 	FrItemStockConfigureRepository frItemStockConfRepo;
-	
-	@Autowired//added here on 3 march Sac here 04-02-2020
+
+	@Autowired // added here on 3 march Sac here 04-02-2020
 	UpdateSeetingForPBRepo updateSeetingForPBRepo;
+
+	// Check Unique code in Item,Sp,Album Sp Master -Sachin 08-02-2020
+	@RequestMapping(value = { "/getAlbumCode1" }, method = RequestMethod.POST)
+	public @ResponseBody String checkUniqueCode(@RequestParam String code, @RequestParam int tableId) {
+		System.err.println("hiii***");
+		int codeCount = 0;
+		try {
+			if (tableId == 1) {
+				codeCount = albumRepo.getCountOfMItemCode(code);
+			} else if (tableId == 2) {
+				codeCount = albumRepo.getCountOfMSpcakeCode(code);
+			} else if (tableId == 3) {
+				codeCount = albumRepo.getCountOfTSPCakeAlbCode(code);
+			}
+
+			if (codeCount > 0) {
+				return "No";
+			} else {
+				return "Yes";
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+		System.err.println("codeCount"+codeCount);
+		return "Sachin";
+	}
 
 	@RequestMapping(value = { "/getAlbumCode" }, method = RequestMethod.POST)
 	public @ResponseBody String getAlbumCode() {
@@ -77,12 +105,12 @@ public class AlbumApiControllr {
 			e.printStackTrace();
 
 		}
-		if(res!=null && album.getAlbumId()==0) {
-			
+		if (res != null && album.getAlbumId() == 0) {
+
 			int settingValue = frItemStockConfRepo.findBySettingKey("ALBUM_CODE_SR");
 
-			settingValue=settingValue+1;
-			
+			settingValue = settingValue + 1;
+
 			int result = updateSeetingForPBRepo.updateSeetingForPurBill(settingValue, "ALBUM_CODE_SR");
 		}
 		return res;
