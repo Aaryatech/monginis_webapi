@@ -101,7 +101,8 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 			FrLoginResponse frLoginResponse = new FrLoginResponse();
 			LoginInfo loginInfo=new LoginInfo();
 			try {
-				dbFranchisee = franchiseRepository.findByFrCodeAndDelStatus(frCode,0);
+				//dbFranchisee = franchiseRepository.findByFrCodeAndDelStatus(frCode,0);old 
+				dbFranchisee = franchiseRepository.findByFrCodeAndDelStatusZeroTwo(frCode);//new Sachin 10-02-2020
 				System.out.println(" details "+dbFranchisee.toString());
 				
 				dbFrCode = dbFranchisee.getFrCode();

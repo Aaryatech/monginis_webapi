@@ -12,4 +12,8 @@ public interface FranchiseRepository extends JpaRepository<Franchise, Integer> {
 
 	@Query(value="select f.*,r.route_name from m_franchisee f,m_fr_route r where f.fr_route_id=r.route_id And f.fr_code=:frCode And f.del_status=:delStatus",nativeQuery=true)
 	public Franchise findByFrCodeAndDelStatus(@Param("frCode")String frCode,@Param("delStatus") int delStatus);
+	
+	//For New Login with delStatus 0 and 2 ie active and non regular
+	@Query(value="select f.*,r.route_name from m_franchisee f,m_fr_route r where f.fr_route_id=r.route_id And f.fr_code=:frCode And f.del_status IN (0,2)",nativeQuery=true)
+	public Franchise findByFrCodeAndDelStatusZeroTwo(@Param("frCode")String frCode);
 }

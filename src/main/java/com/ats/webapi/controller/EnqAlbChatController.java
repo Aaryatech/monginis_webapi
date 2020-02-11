@@ -22,20 +22,25 @@ Date 08-02-2020*/
 @RestController
 public class EnqAlbChatController {
 //This work for App: Gfpl Enq App
-	@Autowired AlbumEnqChatRepo albumEnqChatRepo;
-	
+	@Autowired
+	AlbumEnqChatRepo albumEnqChatRepo;
+
 	// Save Album Enq Chat
 
 	//// Get Album Enq Chat
-	
+
 	@RequestMapping(value = { "/getAlbEnqChatList" }, method = RequestMethod.POST)
-	public @ResponseBody List<AlbumEnqChat> getAlbumList(@RequestParam int enqNo,@RequestParam int albEnqChatId) {
+	public @ResponseBody List<AlbumEnqChat> getAlbumList(@RequestParam int frId, @RequestParam int albEnqChatId) {
 
 		List<AlbumEnqChat> albumList = new ArrayList<>();
 
 		try {
 
-			albumList = albumEnqChatRepo.findByalbEnqChatIdAndEnqNo(albEnqChatId, enqNo);
+			if (frId > 0) {
+				albumList = albumEnqChatRepo.getChatListSpecFr(albEnqChatId, frId);
+			} else {
+				albumList = albumEnqChatRepo.getChatListAllFr(albEnqChatId);
+			}
 
 		} catch (Exception e) {
 
@@ -45,16 +50,15 @@ public class EnqAlbChatController {
 		return albumList;
 
 	}
-	
+
 	@RequestMapping(value = { "/saveAlbEnqChat" }, method = RequestMethod.POST)
 	public @ResponseBody AlbumEnqChat saveAlbEnqChat(@RequestBody AlbumEnqChat albumEnqChat) {
-
 
 		AlbumEnqChat res = new AlbumEnqChat();
 
 		try {
 
-			res =albumEnqChatRepo.save(albumEnqChat);
+			res = albumEnqChatRepo.save(albumEnqChat);
 
 		} catch (Exception e) {
 

@@ -18,16 +18,17 @@ public class AlbumEnqChat {
 
 	private int enqNo;// PK of t_album_enquiry
 
-	private int chatType;
+	private int chatType; // chat done by fr /factory emp
 
 	private String chatDesc;
 	private String chatDttime;
 
-	private int chatBy;
+	private String chatBy;//Name of chat person ie employee of factory OR Franchise Name
 	private int delStatus;
 
 	private int isRead;
 	private int isClosed;
+	private int frId;
 
 	private String exVar1;
 	private String exVar2;
@@ -75,11 +76,11 @@ public class AlbumEnqChat {
 		this.chatDttime = chatDttime;
 	}
 
-	public int getChatBy() {
+	public String getChatBy() {
 		return chatBy;
 	}
 
-	public void setChatBy(int chatBy) {
+	public void setChatBy(String chatBy) {
 		this.chatBy = chatBy;
 	}
 
