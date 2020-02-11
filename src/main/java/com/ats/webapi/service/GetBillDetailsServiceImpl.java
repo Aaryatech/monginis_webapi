@@ -5,9 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ats.webapi.model.Franchisee;
 import com.ats.webapi.model.GetBillDetails;
 import com.ats.webapi.model.GetBillDetailsList;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.repository.FranchiseRepository;
 import com.ats.webapi.repository.GetBillDetailsRepository;
 
 @Service
@@ -15,7 +17,9 @@ public class GetBillDetailsServiceImpl implements GetBillDetailsService {
 	
 	@Autowired
 	GetBillDetailsRepository getBillDetailsRepository;
-
+    @Autowired 
+    FranchiseRepository franchiseRepository;
+    
 	@Override
 	public GetBillDetailsList getBillDetailList(int billNo) {
 	
@@ -24,14 +28,14 @@ public class GetBillDetailsServiceImpl implements GetBillDetailsService {
 		List<GetBillDetails> getBillDetails=getBillDetailsRepository.showBillDetails(billNo);
 		
 		Info info=new Info();
-		
+		int isSameState=franchiseRepository.getIsSameState(billNo);
 		
 		if(getBillDetails!=null) {
 			
 			billDetailsList.setGetBillDetails(getBillDetails);
 			
 			info.setError(false);
-			info.setMessage("Bill details List received successfully");
+			info.setMessage(isSameState+"");
 			
 			billDetailsList.setInfo(info);
 			
@@ -39,7 +43,7 @@ public class GetBillDetailsServiceImpl implements GetBillDetailsService {
 		else {
 			
 			info.setError(true);
-			info.setMessage("Error : Bill Details List not received");
+			info.setMessage(isSameState+"");
 			billDetailsList.setInfo(info);
 			
 			
