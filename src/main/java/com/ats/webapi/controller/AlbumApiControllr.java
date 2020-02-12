@@ -53,7 +53,7 @@ public class AlbumApiControllr {
 	UpdateSeetingForPBRepo updateSeetingForPBRepo;
 
 	// Check Unique code in Item,Sp,Album Sp Master -Sachin 08-02-2020
-	@RequestMapping(value = { "/getAlbumCode1" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/checkUniqueCode" }, method = RequestMethod.POST)
 	public @ResponseBody String checkUniqueCode(@RequestParam String code, @RequestParam int tableId) {
 		System.err.println("hiii***");
 		int codeCount = 0;

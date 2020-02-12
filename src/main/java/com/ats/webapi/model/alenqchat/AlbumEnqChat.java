@@ -140,6 +140,28 @@ public class AlbumEnqChat {
 		this.exFloat1 = exFloat1;
 	}
 
+	
+	
+	
+	public int getFrId() {
+		return frId;
+	}
+
+	public void setFrId(int frId) {
+		this.frId = frId;
+	}
+
+	public Info getInfo() {
+		return info;
+	}
+
+	public void setInfo(Info info) {
+		this.info = info;
+	}
+
+
+
+
 	@javax.persistence.Transient
 	private Info info;
 
@@ -147,8 +169,8 @@ public class AlbumEnqChat {
 	public String toString() {
 		return "AlbumEnqChat [albEnqChatId=" + albEnqChatId + ", enqNo=" + enqNo + ", chatType=" + chatType
 				+ ", chatDesc=" + chatDesc + ", chatDttime=" + chatDttime + ", chatBy=" + chatBy + ", delStatus="
-				+ delStatus + ", isRead=" + isRead + ", isClosed=" + isClosed + ", exVar1=" + exVar1 + ", exVar2="
-				+ exVar2 + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + "]";
+				+ delStatus + ", isRead=" + isRead + ", isClosed=" + isClosed + ", frId=" + frId + ", exVar1=" + exVar1
+				+ ", exVar2=" + exVar2 + ", exInt1=" + exInt1 + ", exFloat1=" + exFloat1 + ", info=" + info + "]";
 	}
 
 }

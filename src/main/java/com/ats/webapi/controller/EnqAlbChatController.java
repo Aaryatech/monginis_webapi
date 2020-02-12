@@ -55,7 +55,7 @@ public class EnqAlbChatController {
 	public @ResponseBody AlbumEnqChat saveAlbEnqChat(@RequestBody AlbumEnqChat albumEnqChat) {
 
 		AlbumEnqChat res = new AlbumEnqChat();
-
+System.err.println("Req Body albumEnqChat " +albumEnqChat.toString());
 		try {
 
 			res = albumEnqChatRepo.save(albumEnqChat);

@@ -2097,7 +2097,10 @@ public class RestApiController {
 	@RequestMapping(value = "/updateFrConfMenuTime")
 	public @ResponseBody Info updateFrConf(@RequestParam("frIdList") List<Integer> frIdList,
 			@RequestParam("menuId") int menuId, @RequestParam("fromTime") String fromTime,
-			@RequestParam("toTime") String toTime) {
+			@RequestParam("toTime") String toTime, 
+			@RequestParam("settingType") int settingType,@RequestParam("date") String date,
+			@RequestParam("day") String day
+			) {
 		Info info = new Info();
 		int result = 0;
 		System.err.println("from time received " + fromTime + "to time  " + toTime);
@@ -2105,10 +2108,10 @@ public class RestApiController {
 		try {
 			if (frIdList.contains(0)) {
 				System.err.println("fr id is zero");
-				result = connfigureService.updateFrConfForAllFr(menuId, fromTime, toTime);
+				result = connfigureService.updateFrConfForAllFr(menuId, fromTime, toTime,settingType,date,day);
 			} else {
 				System.err.println("fr Id is not zero");
-				result = connfigureService.updateFrConfForSelectedFr(frIdList, menuId, fromTime, toTime);
+				result = connfigureService.updateFrConfForSelectedFr(frIdList, menuId, fromTime, toTime,settingType,date,day);
 			}
 
 			if (result > 0) {

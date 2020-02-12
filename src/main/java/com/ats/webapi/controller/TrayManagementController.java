@@ -612,8 +612,8 @@ public class TrayManagementController {
 			e.printStackTrace();
 		}
 		return info;
+	
 	}
-
 	@RequestMapping(value = { "/getAllTrayHeadersByDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetVehicleAvg> getAllTrayHeadersByDate(@RequestParam("date") String date) {
 
@@ -736,4 +736,36 @@ public class TrayManagementController {
 
 	}
 
+	//trayMgtHeaderRepository new change to update in/out km and diesel
+	//Sachin 11-02-2020
+	
+	@RequestMapping(value = { "/updateVehDetailByAdmin" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateVehDetailByAdmin(@RequestParam("tranId") int tranId,
+			@RequestParam("vehOutkm") float vehOutkm, @RequestParam("vehInkm") float vehInkm,@RequestParam("diesel") float diesel, @RequestParam("paramKey") int paramKey) {
+		
+		Info info =new Info();
+		
+		int res=0;
+		try {
+			if(paramKey==1) {
+				res = trayMgtHeaderRepository.updateVehDetailByAdminOutKm(tranId,vehOutkm);
+			}else if(paramKey==2) {
+				res = trayMgtHeaderRepository.updateVehDetailByAdminInKm(tranId, vehInkm);
+			}else if(paramKey==3) {
+				res = trayMgtHeaderRepository.updateVehDetailByAdminDiesel(tranId, diesel);
+			}
+		if(res>0) {
+			info.setError(false);
+			info.setMessage("success");
+		}else {
+			info.setError(true);
+			info.setMessage("failed");
+		}
+		}catch (Exception e) {
+			info.setError(true);
+			info.setMessage("failed");
+			e.printStackTrace();
+		}
+		return info;
+	}
 }

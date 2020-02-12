@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ats.webapi.model.ConfigureFranchisee;
 
@@ -23,16 +24,20 @@ public interface ConfigureFrRepository extends JpaRepository<ConfigureFranchisee
 	// 23 march
 	@Transactional
 	@Modifying
-	@Query(" UPDATE ConfigureFranchisee  SET fromTime=:fromTime, toTime=:toTime "
+	@Query(" UPDATE ConfigureFranchisee  SET fromTime=:fromTime, toTime=:toTime,settingType=:settingType,date=:date,day=:day "
 			+ " WHERE frId IN(:frIdList) AND menuId =:menuId")
 	int updateFrConfSelFr(@Param("frIdList") List<Integer> frIdList, @Param("menuId") int menuId,
-			@Param("fromTime") String fromTime, @Param("toTime") String toTime);
+			@Param("fromTime") String fromTime, @Param("toTime") String toTime,
+			@Param("settingType") int settingType,@Param("date") String date,
+			@Param("day") String day);//change this Sachin 11-02-2020 3 params added from settingType to day
 
 	@Transactional
 	@Modifying
-	@Query(" UPDATE ConfigureFranchisee  SET fromTime=:fromTime, toTime=:toTime WHERE  menuId =:menuId")
+	@Query(" UPDATE ConfigureFranchisee  SET fromTime=:fromTime, toTime=:toTime,settingType=:settingType,date=:date,day=:day WHERE  menuId =:menuId")
 	int updateFrConfAllFr(@Param("menuId") int menuId, @Param("fromTime") String fromTime,
-			@Param("toTime") String toTime);
+			@Param("toTime") String toTime,
+			@Param("settingType") int settingType,@Param("date") String date,
+			@Param("day") String day); //change this Sachin 11-02-2020 3 params added from settingType to day
 
 	 ConfigureFranchisee findByFrIdAndMenuIdAndDelStatus(int frId, int menuId, int i);
 	 

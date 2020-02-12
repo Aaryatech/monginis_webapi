@@ -16,8 +16,8 @@ public interface ConfigureFranchiseeService {
 	public List<Integer> findConfiguredMenuId(int frId);
 	
 	//23 March
-	public int updateFrConfForSelectedFr(List<Integer> frIdList, int menuId,String fromTime,String toTime);
-	public int updateFrConfForAllFr(int menuId,String fromTime,String toTime);
+	public int updateFrConfForSelectedFr(List<Integer> frIdList, int menuId,String fromTime,String toTime,int settingType,String date,String day);
+	public int updateFrConfForAllFr(int menuId,String fromTime,String toTime,int settingType,String date,String day);
 	
 	
 	//21-6-2019
