@@ -4513,6 +4513,24 @@ public class RestApiController {
 		return orderItemList;
 
 	}
+	
+	//Sachin 12-02-2020
+	@RequestMapping(value = { "/getSubCatOrderTotalSpecItemId" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<OrderItemSubCatTotal> getSubCatOrderTotalSpecItem(@RequestParam List<String> frId,
+			@RequestParam List<String> menuId, @RequestParam String date,@RequestParam List<String> itemId) {
+		List<OrderItemSubCatTotal> orderItemList = null;
+		try {
+			String strDate = Common.convertToYMD(date);
+			orderItemList = orderItemSubCatTotalRepository.findQtyTotalSubCatWiseSpecItem(frId, menuId, strDate,itemId);
+
+		} catch (Exception e) {
+
+			System.out.println("exception in getSubCatOrderTotal  rest controller" + e.getMessage());
+		}
+		return orderItemList;
+
+	}
 
 	@RequestMapping(value = { "/getSubCatOrderTotalAllFr" }, method = RequestMethod.POST)
 	@ResponseBody
@@ -4530,6 +4548,25 @@ public class RestApiController {
 		return orderItemList;
 
 	}
+	
+	//Sachin 12-02-2020
+	@RequestMapping(value = { "/getSubCatOrderTotalAllFrSpecItemId" }, method = RequestMethod.POST)
+	@ResponseBody
+	public List<OrderItemSubCatTotal> getSubCatOrderTotalAllFrSpecItem(@RequestParam List<String> menuId,
+			@RequestParam String date,@RequestParam List<String> itemId) {
+		List<OrderItemSubCatTotal> orderItemList = null;
+		try {
+			String strDate = Common.convertToYMD(date);
+			orderItemList = orderItemSubCatTotalRepository.findQtyTotalSubCatWiseAllFrSpecItem(menuId, strDate,itemId);
+
+		} catch (Exception e) {
+
+			System.out.println("exception in getSubCatOrderTotal  rest controller" + e.getMessage());
+		}
+		return orderItemList;
+
+	}
+
 
 	@RequestMapping(value = { "/getOrderListByOrder" }, method = RequestMethod.POST)
 	@ResponseBody
