@@ -147,7 +147,7 @@ AND           t_credit_note_header.crn_id= t_credit_note_details.crn_id
 			"        WHERE\n" + 
 			"            t_credit_note_header.crn_date BETWEEN :fromDate AND :toDate                              \n" + 
 			"            AND t_credit_note_header.is_grn=0                                \n" + 
-			"            group by t_credit_note_header.fr_id) d on a.fr_id=d.fr_id    order by  a.fr_id   " 
+			"            group by t_credit_note_header.fr_id) d on a.fr_id=d.fr_id order by a.fr_name   " 
 			,nativeQuery=true)
 		
 		List<SalesReportRoyaltyFr> getSaleReportRoyaltyFr(@Param("frIdList") List<String> frIdList,@Param("fromDate") String fromDate,@Param("toDate") String toDate);
@@ -192,7 +192,7 @@ AND           t_credit_note_header.crn_id= t_credit_note_details.crn_id
 				"        WHERE\n" + 
 				"            t_credit_note_header.crn_date BETWEEN :fromDate AND :toDate                              \n" + 
 				"            AND t_credit_note_header.is_grn=0                                \n" + 
-				"            group by t_credit_note_header.fr_id) d on a.fr_id=d.fr_id    order by  a.fr_id   " 
+				"            group by t_credit_note_header.fr_id) d on a.fr_id=d.fr_id order by  a.fr_name   " 
 				,nativeQuery=true)
 			
 			List<SalesReportRoyaltyFr> getSaleReportRoyaltyFrAllFrSel(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
