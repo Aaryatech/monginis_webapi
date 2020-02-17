@@ -46,6 +46,7 @@ import com.ats.webapi.model.remarks.GetAllRemarksList;
 import com.ats.webapi.model.salesreport.SalesReport;
 import com.ats.webapi.model.salesvaluereport.SalesReturnValueDao;
 import com.ats.webapi.model.salesvaluereport.SalesReturnValueDaoList;
+import com.ats.webapi.repository.ChangeOrderRecordRepo;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
 /*import com.ats.webapi.repository.BillLogRepo;
@@ -59,6 +60,7 @@ import com.ats.webapi.repository.MenuForAlbumRepo;
 import com.ats.webapi.repository.MiniSubCategoryRepository;
 import com.ats.webapi.repository.OrderItemSubCatTotalRepository;
 import com.ats.webapi.repository.OrderLogRespository;
+import com.ats.webapi.repository.OrderRepository;
 import com.ats.webapi.repository.PostFrOpStockDetailRepository;
 import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
 import com.ats.webapi.repository.ProdItemStockRepo;
@@ -5121,7 +5123,41 @@ public class RestApiController {
 
 		return isDelete;
 	}
+	
+	@Autowired ChangeOrderRecordRepo changeOrdeRecRepo;
+	@Autowired OrderRepository ordRepo;
+	@RequestMapping(value = "/saveChangeOrderRecord", method = RequestMethod.POST)
+	public @ResponseBody ChangeOrderRecord saveChangeOrderRecord(@RequestBody ChangeOrderRecord reqBody) {
+		System.out.println("inside REST  saveChangeOrderRecord");
+		ChangeOrderRecord res=new ChangeOrderRecord();
+		try{
+			Orders ord=ordRepo.getOneOrder(reqBody.getOrderId());
+			System.err.println("Orders "+ord);
+			reqBody.setItemId(Integer.parseInt(ord.getItemId()));
+			reqBody.setFrId(ord.getFrId());
+			res=changeOrdeRecRepo.save(reqBody);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+			res=new ChangeOrderRecord();
+		}
 
+		return res;
+	}
+
+	@RequestMapping(value = "/getChangeOrderRecordList", method = RequestMethod.POST)
+	public @ResponseBody List<ChangeOrderRecord> getChangeOrderRecordList() {
+		System.out.println("inside REST  saveChangeOrderRecord");
+		List<ChangeOrderRecord> res=new ArrayList<ChangeOrderRecord>();
+		try{
+			res=changeOrdeRecRepo.findAll();
+			
+		}catch (Exception e) {
+			res=new ArrayList<ChangeOrderRecord>();
+		}
+
+		return res;
+	}
 	// ganesh 25-10-2017
 
 	// Ganesh 26-10-2017

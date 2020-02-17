@@ -278,6 +278,19 @@ public class MasterController {
 		return info;
 
 	}
+//Sachin 14-02-2020
+	@RequestMapping(value = { "/dynamicPushNotif" }, method = RequestMethod.POST)
+	public @ResponseBody String dynamicPyshNotif(@RequestParam String token, String title, String body, String tag) {
+		String notfRes = new String();
+		try {
+			Firebase.sendPushNotifForCommunication(token, title,body,tag);
+			notfRes = "Notification Sent";
+		} catch (Exception e) {
+			notfRes=e.getMessage();
+			e.printStackTrace();
+		}
+		return notfRes;
+	}
 
 	@RequestMapping(value = { "/saveSpCakeSupCat" }, method = RequestMethod.POST)
 	public @ResponseBody Info saveSpCakeSupCat(@RequestBody SpCakeSupplementCat spCakeSupplementCat) {
@@ -505,7 +518,7 @@ public class MasterController {
 
 			if (franchiseSupRes != null) {
 				int a = franchiseeRepository.updateAdminPwd(franchiseSup.getFrId(), franchiseSup.getPass1());
-				if(a>0) {
+				if (a > 0) {
 					System.err.println("Password Update successfully");
 				}
 				info.setError(false);
@@ -1002,11 +1015,10 @@ public class MasterController {
 					System.err.println("intArray after " + intArray.toString());
 					System.err.println("commas seperated  itemShow ="
 							+ intArray.stream().map(String::valueOf).collect(Collectors.joining(",")));
-					itemShow=intArray.stream().map(String::valueOf).collect(Collectors.joining(","));
+					itemShow = intArray.stream().map(String::valueOf).collect(Collectors.joining(","));
 					configureFr.setItemShow(itemShow);
-					
-					ConfigureFranchisee configureFranchiseeReport =
-							  configureFrRepository.save(configureFr);
+
+					ConfigureFranchisee configureFranchiseeReport = configureFrRepository.save(configureFr);
 					info.setError(false);
 				}
 			} // fr Id for Loop;
