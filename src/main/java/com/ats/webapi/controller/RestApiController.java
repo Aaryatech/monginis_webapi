@@ -5144,6 +5144,29 @@ public class RestApiController {
 
 		return res;
 	}
+	
+	
+	
+	@RequestMapping(value = "/getChangedOrdersRecordList", method = RequestMethod.POST)
+	public @ResponseBody List<ChangeOrderRecord> getChangedOrdersRecordList(@RequestParam List<String> frIdList,
+			@RequestParam String fromDate, @RequestParam String toDate) {
+		System.out.println("inside REST  getChangedOrdersRecordList");
+		List<ChangeOrderRecord> resList=new ArrayList<ChangeOrderRecord>();
+		try{
+			
+			if(frIdList.contains("-1")) {
+			resList=changeOrdeRecRepo.getChangeOrderRecListAllFr(fromDate, toDate);
+			}else {
+				resList=changeOrdeRecRepo.getChangeOrderRecListSpecFr(frIdList, fromDate, toDate);
+			}
+			
+		}catch (Exception e) {
+			resList=new ArrayList<ChangeOrderRecord>();
+			e.printStackTrace();
+		}
+
+		return resList;
+	}
 
 	@RequestMapping(value = "/getChangeOrderRecordList", method = RequestMethod.POST)
 	public @ResponseBody List<ChangeOrderRecord> getChangeOrderRecordList() {

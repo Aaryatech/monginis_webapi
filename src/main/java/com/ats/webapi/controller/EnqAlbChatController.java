@@ -72,8 +72,15 @@ public class EnqAlbChatController {
 			res = albumEnqChatRepo.save(albumEnqChat);
 			// chat type: 1 fr, 0 Admin
 			if (res.getChatType() == 1) {
+				
+				List<String> strKey=new ArrayList<String>();
+				strKey.add("album-emp");
+				strKey.add("album-sup");
+				strKey.add("album-admin");
+				
 System.err.println("Notif to Factory EMPS");
-				List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo.getUserTokens("album-emp");
+for(int a=0;a<strKey.size();a++) {
+				List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo.getUserTokens(strKey.get(a));
 				if (enqEmpToken != null) {
 
 					List<String> tokenList = new ArrayList<>();
@@ -85,6 +92,8 @@ System.err.println("Notif to Factory EMPS");
 							res.getChatDesc(), "chat");
 
 				}
+				
+}//end of for Loop
 
 			} else {
 				System.err.println("Notif to Franchise ");
@@ -132,5 +141,13 @@ System.err.println("Notif to Factory EMPS");
 		}
 		return info;
 
+	}
+	
+	@RequestMapping(value = { "/sendNotif" }, method = RequestMethod.POST)
+	public @ResponseBody String updtAlbmTokenForFr(@RequestParam List<String> token) {
+		
+		new Firebase().send_FCM_NotificationList(token, "JAVA"+" enquiry has Rejected",
+				"Cake enquiry for   has Rejected.", "album_enq");
+		return "OK";
 	}
 }

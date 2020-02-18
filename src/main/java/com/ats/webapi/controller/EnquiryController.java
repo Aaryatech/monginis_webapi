@@ -49,14 +49,14 @@ public class EnquiryController {
 
 			List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo.getUserTokens("album-emp");
 			if (enqEmpToken != null) {
-
+				System.err.println("EMP token Ids  " +enqEmpToken.toString());
 				List<String> tokenList = new ArrayList<>();
 				for (int j = 0; j < enqEmpToken.size(); j++) {
 					tokenList.add(enqEmpToken.get(j).getToken1());
 				}
 
 				new Firebase().send_FCM_NotificationList(tokenList, "Cake enquiry from franchisee",
-						"PLease check the enquiry and revert back soon.", "album_enq");
+						"PLease check the enquiry and revert back soon. In Insert", "album_enq");
 
 			}
 		}

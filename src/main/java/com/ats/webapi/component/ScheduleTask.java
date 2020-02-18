@@ -113,17 +113,18 @@ public class ScheduleTask {
 	// Anmol-->29-11-2019----->Album_Enquiry_Notification
 	@Scheduled(cron = "1 * * * * *")
 	public void scheduleTaskAlbumEnquiryNotify() {
-
+System.err.println("Monika Enq");
 		try {
 
-			List<AlbumEnquiry> enqList = albumEnquiryRepo.findByDelStatusAndStatus(0, 0);
-
+			List<AlbumEnquiry> enqList = albumEnquiryRepo.getAlbumEnqNotNotedByEmp(0, 0);
+			//List<AlbumEnquiry> enqList = albumEnquiryRepo.findByDelStatusAndStatus(0, 0);	
 			if (enqList != null) {
+				System.err.println("Priya Notif Enq");
 
 				//System.err.println("ENQ_LIST ------------- > " + enqList);
 				
 				if(enqList.size()>0) {
-					
+					System.err.println("size >0");
 					AlbumEnquiry enq = enqList.get(0);
 					
 					SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
@@ -157,6 +158,7 @@ public class ScheduleTask {
 									"Please check the enquiry and revert back soon.", "album_enq");
 							
 							int res=albumEnquiryRepo.updateNotifyStatusByEnqId(enq.getEnquiryNo(),0);
+							System.err.println("Emp Not Sent Priya");
 							
 						}
 
