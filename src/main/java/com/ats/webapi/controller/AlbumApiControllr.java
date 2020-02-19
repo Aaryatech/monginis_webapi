@@ -25,6 +25,7 @@ import com.ats.webapi.model.album.AlbumRepo;
 import com.ats.webapi.model.album.SearchAlbumCakeResponse;
 import com.ats.webapi.repository.AlbumCodeAndNameRepo;
 import com.ats.webapi.repository.FrItemStockConfigureRepository;
+import com.ats.webapi.repository.MainMenuConfigurationRepository;
 import com.ats.webapi.repository.MenuForAlbumRepo;
 import com.ats.webapi.repository.OrderSpCakeRepository;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
@@ -202,12 +203,24 @@ public class AlbumApiControllr {
 
 	}
 
+	@Autowired MainMenuConfigurationRepository mainMenuConfRepo;
 	@RequestMapping(value = { "/getMenuForAlbum" }, method = RequestMethod.POST)
 	public @ResponseBody List<AllMenus> getMenuForAlbum(@RequestParam("catId") int catId,
 			@RequestParam("isSameDay") int isSameDay, @RequestParam("delStatus") int delStatus) {
 
 		List<AllMenus> allMenu = new ArrayList();
 		allMenu = menuService.findByCatIdAndIsSameDayAppAndDelStatus(catId, isSameDay, delStatus);
+
+		return allMenu;
+	}
+	//Sachin 19-02-2020
+	@RequestMapping(value = { "/getMenuForAlbumForApp" }, method = RequestMethod.POST)
+	public @ResponseBody List<AllMenus> getMenuForAlbumForApp(@RequestParam("catId") int catId,
+			@RequestParam("isSameDay") int isSameDay, @RequestParam("delStatus") int delStatus,
+			@RequestParam("frId") int frId) {
+
+		List<AllMenus> allMenu = new ArrayList();
+		allMenu =mainMenuConfRepo.findByCatIdAndIsSameDayAppAndDelStatusForApp(catId, isSameDay, delStatus,frId);
 
 		return allMenu;
 	}
