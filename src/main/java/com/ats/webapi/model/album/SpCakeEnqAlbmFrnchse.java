@@ -43,8 +43,20 @@ public class SpCakeEnqAlbmFrnchse {
 	private int frId;
 	private String frName;
 	
+	private int mrpRate1;
+	
+	
+	
 
 	
+	public int getMrpRate1() {
+		return mrpRate1;
+	}
+
+	public void setMrpRate1(int mrpRate1) {
+		this.mrpRate1 = mrpRate1;
+	}
+
 	private String albumDesc;
 
 	public int getAlbumId() {
@@ -299,7 +311,8 @@ public class SpCakeEnqAlbmFrnchse {
 				+ enquiryDateTime + ", approvedDateTime=" + approvedDateTime + ", approvedUserId=" + approvedUserId
 				+ ", approvedUserName=" + approvedUserName + ", status=" + status + ", noNotifictnFired="
 				+ noNotifictnFired + ", exVar1=" + exVar1 + ", exVar2=" + exVar2 + ", exInt1=" + exInt1 + ", exInt2="
-				+ exInt2 + ", frId=" + frId + ", frName=" + frName + ", albumDesc=" + albumDesc + "]";
+				+ exInt2 + ", frId=" + frId + ", frName=" + frName + ", mrpRate1=" + mrpRate1 + ", albumDesc="
+				+ albumDesc + "]";
 	}
 	
 	

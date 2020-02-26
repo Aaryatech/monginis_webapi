@@ -5558,7 +5558,7 @@ public class RestApiController {
 		return list;
 
 	}*/
-	
+	//Get MRP1 from m_sp_cake -25-02-Sachin
 	@RequestMapping(value = "/getSpCakeEnaAlbmFrDetail", method = RequestMethod.GET)
 	public @ResponseBody List<SpCakeEnqAlbmFrnchse> getSpCakeEnaAlbmFrDetailBYDate(@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
 

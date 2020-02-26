@@ -21,6 +21,7 @@ import com.ats.webapi.model.alenqchat.AlbumEnqChat;
 import com.ats.webapi.repository.AlbumEnquiryRepo;
 import com.ats.webapi.repository.EnquiryScheduleEmpTokenRepo;
 import com.ats.webapi.repository.alenqchatrepo.AlbumEnqChatRepo;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 /*@Author -Sachin
 Date 08-02-2020*/
@@ -65,40 +66,45 @@ public class EnqAlbChatController {
 	@RequestMapping(value = { "/saveAlbEnqChat" }, method = RequestMethod.POST)
 	public @ResponseBody AlbumEnqChat saveAlbEnqChat(@RequestBody AlbumEnqChat albumEnqChat) {
 
-		AlbumEnqChat res = new AlbumEnqChat();
+		AlbumEnqChat chatRes = new AlbumEnqChat();
 		System.err.println("Req Body albumEnqChat " + albumEnqChat.toString());
 		try {
 
-			res = albumEnqChatRepo.save(albumEnqChat);
+			chatRes = albumEnqChatRepo.save(albumEnqChat);
+			
+			ObjectMapper objMapper=new ObjectMapper();
+			String chatStrObj=objMapper.writeValueAsString(chatRes);
+			
+			
 			// chat type: 1 fr, 0 Admin
-			if (res.getChatType() == 1) {
-				
-				List<String> strKey=new ArrayList<String>();
+			if (chatRes.getChatType() == 1) {
+
+				List<String> strKey = new ArrayList<String>();
 				strKey.add("album-emp");
 				strKey.add("album-sup");
 				strKey.add("album-admin");
-				
-System.err.println("Notif to Factory EMPS");
-for(int a=0;a<strKey.size();a++) {
-				List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo.getUserTokens(strKey.get(a));
-				if (enqEmpToken != null) {
 
-					List<String> tokenList = new ArrayList<>();
-					for (int j = 0; j < enqEmpToken.size(); j++) {
-						tokenList.add(enqEmpToken.get(j).getToken1());
+				System.err.println("Notif to Factory EMPS");
+				for (int a = 0; a < strKey.size(); a++) {
+					List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo
+							.getUserTokens(strKey.get(a));
+					if (enqEmpToken != null) {
+
+						List<String> tokenList = new ArrayList<>();
+						for (int j = 0; j < enqEmpToken.size(); j++) {
+							tokenList.add(enqEmpToken.get(j).getToken1());
+						}
+						
+						new Firebase().send_FCM_NotificationList(tokenList, chatRes.getChatBy(), chatStrObj, "chat");
+
 					}
 
-					new Firebase().send_FCM_NotificationList(tokenList, res.getChatBy(),
-							res.getChatDesc(), "chat");
-
-				}
-				
-}//end of for Loop
+				} // end of for Loop
 
 			} else {
 				System.err.println("Notif to Franchise ");
 
-				AlbumEnquiry enq = albmEnq.findByEnquiryNoAndDelStatus(res.getEnqNo(), 0);
+				AlbumEnquiry enq = albmEnq.findByEnquiryNoAndDelStatus(chatRes.getEnqNo(), 0);
 
 				if (enq != null) {
 					if (!enq.getExVar1().isEmpty()) {
@@ -106,8 +112,7 @@ for(int a=0;a<strKey.size();a++) {
 						List<String> tokenList = new ArrayList<>();
 						tokenList.add(enq.getExVar1());
 
-						new Firebase().send_FCM_NotificationList(tokenList, res.getChatBy(),
-								res.getChatDesc() , "chat");
+						new Firebase().send_FCM_NotificationList(tokenList, chatRes.getChatBy(), chatStrObj, "chat");
 					}
 				}
 			}
@@ -117,7 +122,7 @@ for(int a=0;a<strKey.size();a++) {
 			e.printStackTrace();
 
 		}
-		return res;
+		return chatRes;
 	}
 
 	@RequestMapping(value = { "/updateAlbmTokenForFr" }, method = RequestMethod.POST)
@@ -142,11 +147,11 @@ for(int a=0;a<strKey.size();a++) {
 		return info;
 
 	}
-	
+
 	@RequestMapping(value = { "/sendNotif" }, method = RequestMethod.POST)
 	public @ResponseBody String updtAlbmTokenForFr(@RequestParam List<String> token) {
-		
-		new Firebase().send_FCM_NotificationList(token, "JAVA"+" enquiry has Rejected",
+
+		new Firebase().send_FCM_NotificationList(token, "JAVA" + " enquiry has Rejected",
 				"Cake enquiry for   has Rejected.", "album_enq");
 		return "OK";
 	}
