@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
+import com.ats.webapi.model.FrItemStockConfigure;
 import com.ats.webapi.model.GetSfData;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.prod.GetProdDetailBySubCat;
@@ -33,6 +34,7 @@ import com.ats.webapi.model.prod.mixing.GetTempMixItemDetail;
 import com.ats.webapi.model.prod.mixing.GetTempMixItemDetailList;
 import com.ats.webapi.model.prod.mixing.TempMixing;
 import com.ats.webapi.model.prod.mixing.TempMixingList;
+import com.ats.webapi.repository.FrItemStockConfigureRepository;
 import com.ats.webapi.repository.GetSfDataRepository;
 import com.ats.webapi.repository.getproddetailbysubcat.GetProdDetailBySubCatRepo;
 import com.ats.webapi.repository.prod.GetProdHeaderRepo;
@@ -52,6 +54,8 @@ public class TempProdApi {
 	@Autowired
 	GetProdPlanDetailRepo prodDetaiRepo;
 	
+	@Autowired
+	FrItemStockConfigureRepository frItemStockConfRepo;
 	
 	@Autowired
 	ProdMixingReqP1Repo prodMixReqP1;
@@ -192,13 +196,16 @@ public class TempProdApi {
 		public @ResponseBody GetSFPlanDetailForMixingList getSfPlanDetailForBom(@RequestParam("headerId")int headerId,@RequestParam("deptId") int deptId) {
 
 			GetSFPlanDetailForMixingList sfAndPlanDetailList = new GetSFPlanDetailForMixingList();
-			
+			List<GetSFPlanDetailForMixing> sfPlanDetailForBom=null;
 			Info info=new Info();
 
 			try {
-			
-				List<GetSFPlanDetailForMixing> sfPlanDetailForBom=getSFPlanDetailForMixingRepo.getSfPlanDetailForBom(headerId,deptId);
-			
+				int deptIdStore=frItemStockConfRepo.findBySettingKey("STORE");
+                 if(deptIdStore==deptId) {
+                	 sfPlanDetailForBom=getSFPlanDetailForMixingRepo.getSfPlanDetailForStoreBom(headerId,deptId);
+                 }else {
+				 sfPlanDetailForBom=getSFPlanDetailForMixingRepo.getSfPlanDetailForBom(headerId,deptId);
+                 }
 			if(!sfPlanDetailForBom.isEmpty()) {
 				
 				info.setError(false);

@@ -1277,6 +1277,121 @@ public interface GetSFPlanDetailForMixingRepo extends JpaRepository<GetSFPlanDet
 			"                    )\n" + 
 			"                )  ",nativeQuery=true)
 	List<GetSFPlanDetailForMixing> showDetailsForManualProduction2(@Param("deptId")  int deptId);
+	@Query(value="   select\n" + 
+			"        a.item_detail_id,\n" + 
+			"        a.item_id,\n" + 
+			"        a.rm_name,\n" + 
+			"        a.rm_type,\n" + 
+			"        a.plan_qty,\n" + 
+			"        a.order_qty,\n" + 
+			"        a.rm_id,\n" + 
+			"        a.no_pieces_per_item,\n" + 
+			"        a.rm_qty,\n" + 
+			"        a.uom,\n" + 
+			"        coalesce((b.single_cut),\n" + 
+			"        0) as single_cut,\n" + 
+			"        coalesce((c.double_cut),\n" + 
+			"        0) as double_cut,\n" + 
+			"        coalesce((a.total),\n" + 
+			"        0) as total        \n" + 
+			"    from\n" + 
+			"        (        SELECT\n" + 
+			"            m_item_detail.item_detail_id,\n" + 
+			"            m_item_detail.item_id,\n" + 
+			"            m_item_detail.rm_name,\n" + 
+			"            m_item_detail.rm_type,\n" + 
+			"            SUM(t_production_plan_detail.plan_qty) as plan_qty,\n" + 
+			"            SUM(t_production_plan_detail.order_qty) as order_qty,\n" + 
+			"            m_item_detail.rm_id,\n" + 
+			"            m_item_detail.no_pieces_per_item,\n" + 
+			"            m_item_detail.rm_qty,\n" + 
+			"            m_rm_uom.uom  ,\n" + 
+			"            CASE              \n" + 
+			"                WHEN t_production_plan_header.is_planned=0 THEN SUM(CEIL((t_production_plan_detail.order_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item))                 \n" + 
+			"                ELSE  SUM(CEIL((t_production_plan_detail.plan_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item))          \n" + 
+			"            END as total    \n" + 
+			"        FROM\n" + 
+			"            m_item_detail,\n" + 
+			"            t_production_plan_header,\n" + 
+			"            t_production_plan_detail,\n" + 
+			"            m_rm_uom,\n" + 
+			"            m_rm,\n" + 
+			"            m_item_sup         \n" + 
+			"        WHERE\n" + 
+			"            m_item_detail.del_status=0          \n" + 
+			"            and  t_production_plan_detail.item_id=m_item_detail.item_id          \n" + 
+			"            AND ( m_rm.rm_id=m_item_detail.rm_id)  \n" + 
+			"            and m_item_sup.item_id=m_item_detail.item_id          \n" + 
+			"            and    t_production_plan_header.production_header_id=t_production_plan_detail.production_header_id          \n" + 
+			"            AND  (m_rm.rm_op_rate=:deptId)       \n" + 
+			"            and m_item_detail.rm_type=1          \n" + 
+			"            and    t_production_plan_header.production_header_id=:headerId     \n" + 
+			"            AND m_rm_uom.uom_id=m_item_detail.rm_uom_id      \n" + 
+			"        GROUP by\n" + 
+			"            m_item_detail.rm_id) a \n" + 
+			"    LEFT JOIN\n" + 
+			"        (\n" + 
+			"            SELECT\n" + 
+			"                m_item_detail.rm_id,\n" + 
+			"                CASE                  \n" + 
+			"                    WHEN t_production_plan_header.is_planned=0 THEN SUM(CEIL((t_production_plan_detail.order_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item))                     \n" + 
+			"                    ELSE  SUM(CEIL((t_production_plan_detail.plan_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item))              \n" + 
+			"                END               as single_cut                   \n" + 
+			"            FROM\n" + 
+			"                m_item_detail,\n" + 
+			"                t_production_plan_header,\n" + 
+			"                t_production_plan_detail,\n" + 
+			"                m_rm_uom,\n" + 
+			"                 m_rm,\n" + 
+			"                m_item_sup         \n" + 
+			"            WHERE\n" + 
+			"                m_item_detail.del_status=0          \n" + 
+			"                and  t_production_plan_detail.item_id=m_item_detail.item_id          \n" + 
+			"                AND ( m_rm.rm_id=m_item_detail.rm_id)         \n" + 
+			"                and m_item_sup.item_id=m_item_detail.item_id          \n" + 
+			"                and    t_production_plan_header.production_header_id=t_production_plan_detail.production_header_id          \n" + 
+			"                AND  ( m_rm.rm_op_rate=:deptId)        \n" + 
+			"                and m_item_detail.rm_type=1  \n" + 
+			"                and m_item_sup.cut_section=1         \n" + 
+			"                and    t_production_plan_header.production_header_id=:headerId     \n" + 
+			"                AND m_rm_uom.uom_id=m_item_detail.rm_uom_id      \n" + 
+			"            GROUP by\n" + 
+			"                m_item_detail.rm_id\n" + 
+			"        ) b \n" + 
+			"            ON b.rm_id=a.rm_id          \n" + 
+			"    LEFT JOIN\n" + 
+			"        (\n" + 
+			"            SELECT\n" + 
+			"                m_item_detail.rm_id,\n" + 
+			"                CASE                  \n" + 
+			"                    WHEN t_production_plan_header.is_planned=0 THEN SUM(CEIL((t_production_plan_detail.order_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item))                     \n" + 
+			"                    ELSE  SUM(CEIL((t_production_plan_detail.plan_qty* m_item_detail.rm_qty)/m_item_detail.no_pieces_per_item))              \n" + 
+			"                END               as double_cut                   \n" + 
+			"            FROM\n" + 
+			"                m_item_detail,\n" + 
+			"                t_production_plan_header,\n" + 
+			"                t_production_plan_detail,\n" + 
+			"                m_rm_uom,\n" + 
+			"                m_rm,\n" + 
+			"                m_item_sup         \n" + 
+			"            WHERE\n" + 
+			"                m_item_detail.del_status=0          \n" + 
+			"                and  t_production_plan_detail.item_id=m_item_detail.item_id          \n" + 
+			"                AND (m_rm.rm_id=m_item_detail.rm_id)                \n" + 
+			"                and m_item_sup.item_id=m_item_detail.item_id          \n" + 
+			"                and    t_production_plan_header.production_header_id=t_production_plan_detail.production_header_id          \n" + 
+			"                AND (  m_rm.rm_op_rate=:deptId)             \n" + 
+			"                and m_item_detail.rm_type=1  \n" + 
+			"                and m_item_sup.cut_section=2         \n" + 
+			"                and    t_production_plan_header.production_header_id=:headerId     \n" + 
+			"                AND m_rm_uom.uom_id=m_item_detail.rm_uom_id      \n" + 
+			"            GROUP by\n" + 
+			"                m_item_detail.rm_id  \n" + 
+			"        ) c \n" + 
+			"            on c.rm_id=a.rm_id\n" + 
+			"",nativeQuery=true)
+	List<GetSFPlanDetailForMixing> getSfPlanDetailForStoreBom(@Param("headerId") int headerId,@Param("deptId") int deptId);
+
 	
 	/*"       CASE \n" + 
 	"            WHEN m_item_sup.cut_section=1 THEN  (CASE \n" + 
