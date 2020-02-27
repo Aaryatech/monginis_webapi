@@ -24,7 +24,7 @@ public interface AlbumEnquiryRepo extends JpaRepository<AlbumEnquiry, Integer> {
 	List<AlbumEnquiry> findByDelStatusAndStatus(int del,int status);
 	
 	//New Sachin 18-02-2020
-	@Query(value="SELECT t_album_enquiry.* from t_album_enquiry where t_album_enquiry.status=:status and t_album_enquiry.del_status=:del and t_album_enquiry.enquiry_no NOT IN (SELECT t_album_enq_chat.enq_no FROM t_album_enq_chat)\n" + 
+	@Query(value="SELECT t_album_enquiry.* from t_album_enquiry where t_album_enquiry.status=:status and t_album_enquiry.del_status=:del and t_album_enquiry.enquiry_no NOT IN (SELECT t_album_enq_chat.enq_no FROM t_album_enq_chat where t_album_enq_chat.chat_type=0)\n" + 
 			"",nativeQuery=true)
 	List<AlbumEnquiry> getAlbumEnqNotNotedByEmp(@Param("del")int del,@Param("status")int status);
 
