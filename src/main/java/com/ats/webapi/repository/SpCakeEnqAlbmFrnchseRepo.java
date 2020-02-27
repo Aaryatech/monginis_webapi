@@ -55,14 +55,15 @@ public interface SpCakeEnqAlbmFrnchseRepo extends JpaRepository<SpCakeEnqAlbmFrn
 			"	FROM t_sp_cake_album sp, t_album_enquiry enq, m_franchisee fr, m_sp_cake_category   " + 
 			" " + 
 			"	WHERE m_sp_cake_category.sp_id=sp.sp_id and fr.fr_id=enq.fr_id AND enq.album_id=sp.album_id AND sp.del_status=0 AND enq.enquiry_date BETWEEN :fromDate and :toDate and \n" + 
-			"	enq.enquiry_no  IN (select enq_no from t_album_enq_chat where del_status=1)	 " + 
+			"	enq.enquiry_no  IN (select  enq_no from t_album_enq_chat where del_status=1 GROUP BY enq_no  order by MAX(alb_enq_chat_id) DESC) " + 
 			"	UNION ALL " + 
 			"	SELECT 2 flag, sp.*, enq.cust_name, enq.enquiry_no, enq.mobile_no, enq.photo, enq.enquiry_date, enq.enquiry_date_time, enq.approved_date_time, enq.approved_user_id, enq.approved_user_name, enq.status, enq.no_notifictn_fired, enq.ex_var1, enq.ex_var2, enq.ex_int1, enq.ex_int2, fr.fr_name, fr.fr_id " + 
 			", m_sp_cake_category.mrp_rate1	FROM t_sp_cake_album sp, t_album_enquiry enq, m_franchisee fr,m_sp_cake_category  " + 
 			"	WHERE m_sp_cake_category.sp_id=sp.sp_id and fr.fr_id=enq.fr_id AND enq.album_id=sp.album_id AND sp.del_status=0 AND enq.enquiry_date BETWEEN :fromDate and :toDate and  " + 
-			"	enq.enquiry_no NOT IN (select enq_no from t_album_enq_chat where del_status=1) " + 
+			"	enq.enquiry_no NOT IN (select  enq_no from t_album_enq_chat where del_status=1 GROUP BY enq_no  order by MAX(alb_enq_chat_id) DESC) " + 
 			" " + 
-			"	) c ORDER BY c.flag ASC, c.enquiry_no DESC LIMIT 100",nativeQuery=true)
+			"	) c LEFT JOIN  (select  enq_no from t_album_enq_chat where del_status=1 GROUP BY enq_no  order by MAX(alb_enq_chat_id) DESC) ids   \n" + 
+			"ON FIND_IN_SET(c.enquiry_no, ids.enq_no) > 0    ORDER BY c.flag ASC LIMIT 100 ",nativeQuery=true)
 	public List<SpCakeEnqAlbmFrnchse> getSpcakeEnqAlbmFrDataByDate(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 	
 	

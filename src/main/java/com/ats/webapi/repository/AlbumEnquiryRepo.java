@@ -108,7 +108,7 @@ public interface AlbumEnquiryRepo extends JpaRepository<AlbumEnquiry, Integer> {
 			"  \n" + 
 			" \n" + 
 			"FROM t_album_enquiry a, m_franchisee m\n" + 
-			"WHERE a.fr_id=m.fr_id AND  a.enquiry_no  IN (select enq_no from t_album_enq_chat where del_status=1) and\n" + 
+			"WHERE a.fr_id=m.fr_id AND  a.enquiry_no  IN (select  enq_no from t_album_enq_chat where del_status=1 GROUP BY enq_no  order by MAX(alb_enq_chat_id) DESC) and\n" + 
 			"a.del_status=0  \n" + 
 			"\n" + 
 			"Union all\n" + 
@@ -136,8 +136,10 @@ public interface AlbumEnquiryRepo extends JpaRepository<AlbumEnquiry, Integer> {
 			"      \n" + 
 			" \n" + 
 			"FROM t_album_enquiry a, m_franchisee m\n" + 
-			"WHERE a.fr_id=m.fr_id AND  a.enquiry_no NOT IN (select enq_no from t_album_enq_chat where del_status=1) and\n" + 
-			"a.del_status=0   ) c ORDER BY c.flag ASC, c.enquiry_no DESC LIMIT 100",nativeQuery=true)
+			"WHERE a.fr_id=m.fr_id AND  a.enquiry_no NOT IN (select  enq_no from t_album_enq_chat where del_status=1 GROUP BY enq_no  order by MAX(alb_enq_chat_id) DESC) and\n" + 
+			"a.del_status=0   ) c LEFT JOIN  (select  enq_no from t_album_enq_chat where del_status=1 GROUP BY enq_no  order by MAX(alb_enq_chat_id) DESC) ids   \n" + 
+			"ON FIND_IN_SET(c.enquiry_no, ids.enq_no) > 0    ORDER BY c.flag ASC \n" + 
+			" LIMIT 100",nativeQuery=true)
 	List<AlbumEnquiry> getAlbmFrDetail();
 	
 	
@@ -168,12 +170,16 @@ public interface AlbumEnquiryRepo extends JpaRepository<AlbumEnquiry, Integer> {
 			"			   c.ex_int2,  " + 
 			"			 c.ex_int3 from " + 
 			"( SELECT 1 flag, a.enquiry_no, m.fr_id, m.fr_name AS ex_var3, a.cust_name, a.mobile_no, a.photo, a.enquiry_date, a.enquiry_date_time, a.approved_date_time, a.approved_user_id, a.approved_user_name, a.album_id, a.status, a.del_status, a.no_notifictn_fired, a.ex_var1, a.ex_var2, a.ex_int1, a.ex_int2, a.ex_int3 "
-			+ "FROM t_album_enquiry a, m_franchisee m WHERE a.enquiry_no  IN (select enq_no from t_album_enq_chat where del_status=1) and a.fr_id=m.fr_id AND a.del_status=0 AND a.enquiry_date BETWEEN :fromDate AND :toDate " + 
+			+ "FROM t_album_enquiry a, m_franchisee m WHERE a.enquiry_no  IN  (select  enq_no from t_album_enq_chat where del_status=1 GROUP BY enq_no  order by MAX(alb_enq_chat_id) DESC)\n" + 
+			" and a.fr_id=m.fr_id AND a.del_status=0 AND a.enquiry_date BETWEEN :fromDate AND :toDate " + 
 			"UNION ALL " + 
 			"SELECT 2 flag, a.enquiry_no, m.fr_id, m.fr_name AS ex_var3, a.cust_name, a.mobile_no, a.photo, a.enquiry_date, a.enquiry_date_time, a.approved_date_time, a.approved_user_id, a.approved_user_name, a.album_id, a.status, a.del_status, a.no_notifictn_fired, a.ex_var1, a.ex_var2, a.ex_int1, a.ex_int2, a.ex_int3 "
-			+ "FROM t_album_enquiry a, m_franchisee m WHERE a.enquiry_no NOT IN (select enq_no from t_album_enq_chat where del_status=1) and a.fr_id=m.fr_id AND a.del_status=0 AND a.enquiry_date BETWEEN :fromDate AND :toDate " + 
+			+ "FROM t_album_enquiry a, m_franchisee m WHERE a.enquiry_no NOT IN (select  enq_no from t_album_enq_chat where del_status=1 GROUP BY enq_no  order by MAX(alb_enq_chat_id) DESC) and a.fr_id=m.fr_id AND a.del_status=0 AND a.enquiry_date BETWEEN :fromDate AND :toDate " + 
 			" " + 
-			") c ORDER BY c.flag ASC, c.enquiry_no DESC LIMIT 100 " + 
+			") c LEFT JOIN  (select  enq_no from t_album_enq_chat where del_status=1 GROUP BY enq_no  order by MAX(alb_enq_chat_id) DESC) ids   \n" + 
+			"ON FIND_IN_SET(c.enquiry_no, ids.enq_no) > 0    ORDER BY c.flag ASC\n" + 
+			"\n" + 
+			" LIMIT 100 " + 
 			"",nativeQuery=true)
 	List<AlbumEnquiry> getAlbmFrDetailByDate(@Param("fromDate") String fromDate,@Param("toDate") String toDate);
 	

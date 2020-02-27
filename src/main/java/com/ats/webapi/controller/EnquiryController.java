@@ -175,7 +175,7 @@ public class EnquiryController {
 							tokenList.add(enq.getExVar1());
 							
 							new Firebase().send_FCM_NotificationList(tokenList, enq.getCustName()+" enquiry has Approved",
-									"Cake enquiry for "+enq.getCustName()+" has Approved.", "album_enq");
+									"Cake enquiry for "+enq.getCustName()+" has Approved.", "approved");
 						}
 					}
 					
@@ -188,7 +188,7 @@ public class EnquiryController {
 							tokenList.add(enq.getExVar1());
 							
 							new Firebase().send_FCM_NotificationList(tokenList, enq.getCustName()+" enquiry has Rejected",
-									"Cake enquiry for "+enq.getCustName()+" has Rejected.", "album_enq");
+									"Cake enquiry for "+enq.getCustName()+" has Rejected.", "rejected");
 						}
 					}
 					
