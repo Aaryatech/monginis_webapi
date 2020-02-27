@@ -49,8 +49,10 @@ import com.ats.webapi.model.salesvaluereport.SalesReturnValueDaoList;
 import com.ats.webapi.repository.ChangeOrderRecordRepo;
 import com.ats.webapi.repository.FranchiseSupRepository;
 import com.ats.webapi.repository.FranchiseeRepository;
+import com.ats.webapi.repository.GenerateBillRepository;
 /*import com.ats.webapi.repository.BillLogRepo;
 */import com.ats.webapi.repository.GetBillDetailsRepository;
+import com.ats.webapi.repository.GetBillHeaderRepository;
 import com.ats.webapi.repository.GetReorderByStockTypeRepository;
 import com.ats.webapi.repository.ItemCreamTypeRepo;
 import com.ats.webapi.repository.ItemRepository;
@@ -166,7 +168,8 @@ public class RestApiController {
 		return date;
 
 	}
-
+	@Autowired
+	GetBillHeaderRepository getBillHeaderRepository;
 	@Autowired
 	OrderItemSubCatTotalRepository orderItemSubCatTotalRepository;
 
@@ -400,6 +403,32 @@ public class RestApiController {
 
 	@Autowired
 	FranchiseSupRepository franchiseSupRepository;
+	@Autowired
+	GenerateBillRepository generateBillRepository;
+
+	@RequestMapping(value = { "/placeManualOrderNew" }, method = RequestMethod.POST)
+	public @ResponseBody List<GenerateBill> placeManualOrderNew(@RequestBody List<Orders> orderJson)
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
+		List<GenerateBill> billList = null;
+		List<Orders> jsonResult;
+		OrderLog log = new OrderLog();
+		log.setFrId(orderJson.get(0).getFrId());
+		log.setJson(orderJson.toString());
+		logRespository.save(log);
+
+		jsonResult = orderService.placeManualOrder(orderJson);
+		ArrayList<Integer> list = new ArrayList<Integer>();
+
+		if (!jsonResult.isEmpty()) {
+			for (int i = 0; i < jsonResult.size(); i++) {
+				list.add(jsonResult.get(i).getOrderId());
+			}
+
+			billList = generateBillRepository.getBillOfOrder(list);
+		}
+
+		return billList;
+	}
 	
 	@RequestMapping(value = "/getItemsResBySubCatId", method = RequestMethod.POST)
 	public @ResponseBody List<ItemRes> getItemsResBySubCatId(@RequestParam("subCatId") String subCatId) {
@@ -1238,7 +1267,21 @@ public class RestApiController {
 		return info;
 
 	}
+	@RequestMapping(value = "/getBillHeaderByBillNo", method = RequestMethod.POST)
+	public @ResponseBody GetBillHeader getBillHeaderByBillNo(@RequestParam("billNo") int billNo) {
+		GetBillHeader getBillHeader = null;
+		try {
 
+			 
+			getBillHeader = getBillHeaderRepository.getBillHeaderByBillNo(billNo);
+		} catch (Exception e) {
+			 
+			e.printStackTrace();
+		}
+
+		return getBillHeader;
+
+	}
 	@RequestMapping(value = { "/insertSellBillData" }, method = RequestMethod.POST)
 
 	public @ResponseBody SellBillHeader sellBillData(@RequestBody SellBillHeader sellBillHeader)
