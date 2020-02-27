@@ -106,7 +106,9 @@ public class AlbumApiControllr {
 			e.printStackTrace();
 
 		}
-		if (res != null && album.getAlbumId() == 0) {
+		System.err.println("res "+res);
+		if (res != null) {
+			System.err.println("UPDATE call");
 
 			int settingValue = frItemStockConfRepo.findBySettingKey("ALBUM_CODE_SR");
 
