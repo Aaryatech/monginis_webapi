@@ -10,16 +10,15 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 @Entity
-@Table(name = "m_fr_opening_stock_detail")
+//@Table(name = "m_fr_opening_stock_detail")
 
 public class GetCurrentStockDetails {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	
+	//@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "opening_stock_detail_id")
 	private int stockDetailId;
 	
-
 	@Column(name = "item_id")
 	private String itemId;
 
@@ -53,16 +52,17 @@ public class GetCurrentStockDetails {
 	private int stockHeaderId;
 	
 	
-	@Transient
+	//@Transient
 	private int currentRegStock;
 	
-	@Transient
+	//@Transient
 	private int currentSpStock;
 	
-	@Transient
+	//@Transient
 	private int reOrderQty;
 	
-	@Transient
+	//@Transient
+	@Id
 	private int id;
 	
 	
