@@ -43,6 +43,7 @@ import com.ats.webapi.model.prodapp.TRegSpCakeSup;
 import com.ats.webapi.model.prodapp.TSpCakeSup;
 import com.ats.webapi.model.rawmaterial.ItemDetail;
 import com.ats.webapi.model.remarks.GetAllRemarksList;
+import com.ats.webapi.model.report.GetBillWiseSpCakeRep;
 import com.ats.webapi.model.salesreport.SalesReport;
 import com.ats.webapi.model.salesvaluereport.SalesReturnValueDao;
 import com.ats.webapi.model.salesvaluereport.SalesReturnValueDaoList;
@@ -76,6 +77,7 @@ import com.ats.webapi.repository.UpdateSeetingForPBRepo;
 import com.ats.webapi.repository.UserRepository;
 import com.ats.webapi.repository.prodapp.TRegSpCakeSupRepo;
 import com.ats.webapi.repository.prodapp.TSpCakeSupRepo;
+import com.ats.webapi.repository.reportv2.BillWiseSpCakeRepo;
 import com.ats.webapi.repository.salesreturnrepo.SalesReturnValueDaoRepository;
 import com.ats.webapi.service.AllFrIdNameService;
 import com.ats.webapi.service.BillDetailUpdateService;
@@ -6093,5 +6095,42 @@ public class RestApiController {
 			routeList.setInfo(info);
 
 			return jsonRouteList;
+		}
+		
+		
+		
+	/******************************************************************************/
+		//Mahendra 29-02-2020
+		
+		@Autowired BillWiseSpCakeRepo spCakeBillRepo;
+		
+		@RequestMapping(value = { "/getSpCakeRepBillWise" }, method = RequestMethod.POST)
+		public @ResponseBody List<GetBillWiseSpCakeRep> getSpCakeRepBillWise(@RequestParam("frIdList") List<String> frIdList,
+				@RequestParam String fromDate, @RequestParam String toDate, @RequestParam int isBill) {
+			 List<GetBillWiseSpCakeRep> spList = new ArrayList<GetBillWiseSpCakeRep>();
+			try {
+				if(isBill==1) {
+
+					if(frIdList.contains("-1")) {
+						System.err.println("In Invoice 1 All");
+						spList = spCakeBillRepo.getAllSpCakeDetailGrpInvoice(fromDate, toDate);
+					}else {
+						System.err.println("In Invoice 2");
+						spList = spCakeBillRepo.getSpCakeDetailGrpInvoice(frIdList, fromDate, toDate);
+					}
+				}else {
+					if(frIdList.contains("-1")) {
+						System.err.println("In Fr 1 All");
+						spList = spCakeBillRepo.getSpCakeDetailBillWise(fromDate, toDate);
+					}else {
+						System.err.println("In Fr 2");
+						spList = spCakeBillRepo.getSpCakeDetailFranchiseeWise(frIdList, fromDate, toDate);
+					}
+				}
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return spList;
 		}
 }
