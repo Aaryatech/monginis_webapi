@@ -177,6 +177,33 @@ public class EnquiryController {
 							new Firebase().send_FCM_NotificationList(tokenList, enq.getCustName()+" enquiry has Approved",
 									"Cake enquiry for "+enq.getCustName()+" has Approved.", "approved");
 						}
+						
+						//start //Sachin 04-03-2020
+						
+						List<String> strKey = new ArrayList<String>();
+						strKey.add("album-emp");
+						strKey.add("album-sup");
+						strKey.add("album-admin");
+
+						System.err.println("Notif to Factory EMPS");
+						for (int a = 0; a < strKey.size(); a++) {
+							List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo
+									.getUserTokens(strKey.get(a));
+							if (enqEmpToken != null) {
+
+								List<String> tokenList = new ArrayList<>();
+								for (int j = 0; j < enqEmpToken.size(); j++) {
+									tokenList.add(enqEmpToken.get(j).getToken1());
+								}
+								
+								//new Firebase().send_FCM_NotificationList(tokenList, chatRes.getChatBy(), chatStrObj, "chat");
+								new Firebase().send_FCM_NotificationList(tokenList, enq.getCustName()+" enquiry has Approved",
+										"Cake enquiry for "+enq.getCustName()+" has Approved.", "approved");
+							}
+
+						} // end of for Loop
+						
+						//end //Sachin 04-03-2020
 					}
 					
 				}else if(status==2) {
@@ -192,6 +219,32 @@ public class EnquiryController {
 						}
 					}
 					
+					//start //Sachin 04-03-2020
+					
+					List<String> strKey = new ArrayList<String>();
+					strKey.add("album-emp");
+					strKey.add("album-sup");
+					strKey.add("album-admin");
+
+					System.err.println("Notif to Factory EMPS");
+					for (int a = 0; a < strKey.size(); a++) {
+						List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo
+								.getUserTokens(strKey.get(a));
+						if (enqEmpToken != null) {
+
+							List<String> tokenList = new ArrayList<>();
+							for (int j = 0; j < enqEmpToken.size(); j++) {
+								tokenList.add(enqEmpToken.get(j).getToken1());
+							}
+							
+							//new Firebase().send_FCM_NotificationList(tokenList, chatRes.getChatBy(), chatStrObj, "chat");
+							new Firebase().send_FCM_NotificationList(tokenList, enq.getCustName()+" enquiry has Rejected",
+									"Cake enquiry for "+enq.getCustName()+" has Rejected.", "rejected");
+						}
+
+					} // end of for Loop
+					
+					//end //Sachin 04-03-2020
 				}
 				
 			} else {

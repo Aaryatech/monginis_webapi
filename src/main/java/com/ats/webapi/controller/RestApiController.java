@@ -16,6 +16,8 @@ import java.util.TimeZone;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import javax.persistence.EntityManagerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -5535,6 +5537,10 @@ public class RestApiController {
 	@RequestMapping(value = "/updateFrConfItemShow")
 	public @ResponseBody Info updateFrConfItemShow(@RequestParam("items") String items,
 			@RequestParam("settingId") int settingId) {
+		
+		//System.err.println("Items Received "+items.toString());
+		//System.err.println("settingId Received "+settingId);
+
 		Info info = new Info();
 		int result = 0;
 		try {

@@ -74,9 +74,11 @@ public class EnqAlbChatController {
 			
 			ObjectMapper objMapper=new ObjectMapper();
 			String chatStrObj=objMapper.writeValueAsString(chatRes);
-			
-			
+		int chatCount=albumEnqChatRepo.getChatCountForEnqNo(chatRes.getEnqNo());
 			// chat type: 1 fr, 0 Admin
+		
+		if(chatCount>1) {  //Sachin 04-03-2020
+			
 			if (chatRes.getChatType() == 1) {
 
 				List<String> strKey = new ArrayList<String>();
@@ -115,7 +117,32 @@ public class EnqAlbChatController {
 						new Firebase().send_FCM_NotificationList(tokenList, chatRes.getChatBy(), chatStrObj, "chat");
 					}
 				}
+				
+				//Sachin 04-03-2020 Notif to all Factory member if chat is from one of them as well
+				List<String> strKey = new ArrayList<String>();
+				strKey.add("album-emp");
+				strKey.add("album-sup");
+				strKey.add("album-admin");
+
+				System.err.println("Notif to Factory EMPS");
+				for (int a = 0; a < strKey.size(); a++) {
+					List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo
+							.getUserTokens(strKey.get(a));
+					if (enqEmpToken != null) {
+
+						List<String> tokenList = new ArrayList<>();
+						for (int j = 0; j < enqEmpToken.size(); j++) {
+							tokenList.add(enqEmpToken.get(j).getToken1());
+						}
+						
+						new Firebase().send_FCM_NotificationList(tokenList, chatRes.getChatBy(), chatStrObj, "chat");
+
+					}
+
+				} // end of for Loop
 			}
+			
+		}//end of if chat count >1
 
 		} catch (Exception e) {
 

@@ -30,4 +30,9 @@ public interface AlbumEnqChatRepo extends JpaRepository<AlbumEnqChat, Integer>{
 	
 	List<AlbumEnqChat> getChatListAllFr(@Param("albEnqChatId") int albEnqChatId);
 	
+	//Sachin 04-03-2020
+	@Query(value="SELECT COUNT(t_album_enq_chat.alb_enq_chat_id) 	FROM t_album_enq_chat WHERE t_album_enq_chat.del_status=1 AND t_album_enq_chat.enq_no=:enqNo",nativeQuery=true)
+	
+	int getChatCountForEnqNo(@Param("enqNo") int enqNo);
+	
 }
