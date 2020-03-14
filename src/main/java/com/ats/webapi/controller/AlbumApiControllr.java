@@ -127,7 +127,7 @@ public class AlbumApiControllr {
 
 		try {
 
-			albumList = albumRepo.findByDelStatus(0);
+			albumList = albumRepo.getAlbumCakeForOPS();
 
 		} catch (Exception e) {
 

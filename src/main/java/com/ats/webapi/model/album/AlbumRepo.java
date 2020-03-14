@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 public interface AlbumRepo extends JpaRepository<Album, Integer> {
 
 	List<Album> findByDelStatus(int i);
+	
+	List<Album> findByDelStatusAndIsActive(int i,int j);
 
 	@Transactional
 	@Modifying
@@ -32,6 +34,9 @@ public interface AlbumRepo extends JpaRepository<Album, Integer> {
 	
 	@Query(value="select count(m_sp_cake.sp_code) from m_sp_cake WHERE sp_code=:code",nativeQuery=true)
 	int getCountOfMSpcakeCode(@Param("code") String code);
+	
+	@Query(value="SELECT * FROM t_sp_cake_album WHERE del_status=0 AND is_active=1",nativeQuery=true)
+	List<Album> getAlbumCakeForOPS();
 	
 	
 	

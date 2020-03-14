@@ -14,7 +14,7 @@ public interface AlbumCodeAndNameRepo extends JpaRepository<AlbumCodeAndName, In
 	List<AlbumCodeAndName> findAlbumCodeAndName(@Param ("items") List<Integer>items,@Param("frId")int frId,@Param("menuId")int menuId);
 */
 	
-	@Query(value="SELECT a.album_id, a.album_code, a.album_name, m.sp_code FROM t_sp_cake_album a, m_fr_configure f, m_sp_cake_category m WHERE a.sp_id=m.sp_id AND m.del_status=0 AND a.album_id IN(:items) AND a.del_status = 0 AND f.menu_id = :menuId AND f.fr_id = :frId  ",nativeQuery=true)
+	@Query(value="SELECT a.album_id, a.album_code, a.album_name, m.sp_code FROM t_sp_cake_album a, m_fr_configure f, m_sp_cake_category m WHERE a.sp_id=m.sp_id AND m.del_status=0 AND a.album_id IN(:items) AND a.del_status = 0 AND a.is_active=1 AND f.menu_id = :menuId AND f.fr_id = :frId  ",nativeQuery=true)
 	List<AlbumCodeAndName> findAlbumCodeAndName(@Param ("items") List<Integer>items,@Param("frId")int frId,@Param("menuId")int menuId);
 
 }
