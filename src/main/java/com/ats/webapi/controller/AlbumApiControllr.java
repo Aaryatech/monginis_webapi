@@ -1,7 +1,12 @@
 package com.ats.webapi.controller;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,7 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ats.webapi.commons.AndroidAlbumAppCommon;
+import com.ats.webapi.commons.Firebase;
+import com.ats.webapi.model.AlbumEnquiry;
 import com.ats.webapi.model.AllMenus;
+import com.ats.webapi.model.ConfigureFranchisee;
+import com.ats.webapi.model.EnquiryScheduleEmpToken;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Franchisee;
 import com.ats.webapi.model.FranchiseeAndMenuList;
@@ -24,11 +34,14 @@ import com.ats.webapi.model.album.AlbumCodeAndName;
 import com.ats.webapi.model.album.AlbumRepo;
 import com.ats.webapi.model.album.SearchAlbumCakeResponse;
 import com.ats.webapi.repository.AlbumCodeAndNameRepo;
+import com.ats.webapi.repository.AlbumEnquiryRepo;
+import com.ats.webapi.repository.EnquiryScheduleEmpTokenRepo;
 import com.ats.webapi.repository.FrItemStockConfigureRepository;
 import com.ats.webapi.repository.MainMenuConfigurationRepository;
 import com.ats.webapi.repository.MenuForAlbumRepo;
 import com.ats.webapi.repository.OrderSpCakeRepository;
 import com.ats.webapi.repository.UpdateSeetingForPBRepo;
+import com.ats.webapi.service.ConfigureFranchiseeService;
 import com.ats.webapi.service.MenuService;
 import com.ats.webapi.util.JsonUtil;
 
@@ -89,11 +102,14 @@ public class AlbumApiControllr {
 		return "" + settingValue;
 
 	}
+//A
+	@Autowired
+	private ConfigureFranchiseeService connfigureService;
 
 	@RequestMapping(value = { "/saveAlbum" }, method = RequestMethod.POST)
 	public @ResponseBody Album saveAlbum(@RequestBody Album album) {
 
-		System.out.println("albumalbumalbum" + album.toString());
+	//	System.out.println("albumalbumalbum" + album.toString());
 
 		Album res = new Album();
 
@@ -106,16 +122,62 @@ public class AlbumApiControllr {
 			e.printStackTrace();
 
 		}
-		System.err.println("res "+res);
+		//System.err.println("res "+res);
 		if (res != null) {
-			System.err.println("UPDATE call");
+			//System.err.println("UPDATE call");
 
 			int settingValue = frItemStockConfRepo.findBySettingKey("ALBUM_CODE_SR");
 
 			settingValue = settingValue + 1;
 
 			int result = updateSeetingForPBRepo.updateSeetingForPurBill(settingValue, "ALBUM_CODE_SR");
+			
+			if(result>0) {
+				List<String> tokenList=new ArrayList<String>();
+				tokenList.add(album.getToken());
+				
+				
+				new Firebase().send_FCM_NotificationList(tokenList,  "  ",
+						" ", "raw");
+			}
 		}
+		 DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"); 
+		 Calendar cal = Calendar.getInstance();
+		 String curDttime=dateFormat.format(cal.getTime());
+		//AndroidAlbumAppCommon commonCode=new AndroidAlbumAppCommon();
+		try {
+		updateAlbumEnquiry(album.getEnqNo(), album.getStatus(), curDttime);//Approve Service
+		
+		updateAlbumId(album.getEnqNo(), res.getAlbumId());// update  t_album_enquiry
+		}catch (Exception e) {
+			System.err.println("ex " +e.getMessage());
+			e.printStackTrace();
+		}
+		
+//System.err.println("album.getFrIds() " +album.getFrIds());
+		/*
+		 * List<Integer> intFrList = album.getFrIds().stream() .map(Integer::parseInt)
+		 * .collect(Collectors.toList());
+		 * 
+		 * List<Integer> intMenuList = album.getMenuList().stream()
+		 * .map(Integer::parseInt) .collect(Collectors.toList());
+		 */
+		
+		List<ConfigureFranchisee> confFrList=	getConfigListByFrAndMenu( album.getFrIds(), album.getMenuList());
+		
+		for(int i=0;i<confFrList.size();i++) {
+			
+			if(!confFrList.get(i).getItemShow().contains(String.valueOf(res.getAlbumId()))){
+				
+				String menuItem=confFrList.get(i).getItemShow()+","+res.getAlbumId();
+				
+				int result = connfigureService.updateFrConfItems(menuItem, confFrList.get(i).getSettingId());
+				
+			}
+			
+			
+		}
+		
 		return res;
 
 	}
@@ -285,4 +347,149 @@ public class AlbumApiControllr {
 		return albumCodeList;
 	}
 
+	//Sac new 18-03-2020
+	@Autowired
+	EnquiryScheduleEmpTokenRepo enquiryScheduleEmpTokenRepo;
+	
+	
+public  Info updateAlbumEnquiry(int enqId, int status,String approvedDateTime) {
+		
+		System.err.println("enqId "+enqId +"status " +status  +"approvedDateTime " +approvedDateTime) ;
+		Info info = new Info();
+		try {
+		int updatedEnq = albmEnq.updateEnquiryStatusByEnqId(enqId, status,approvedDateTime);
+
+		if (updatedEnq != 0) {
+			info.setError(false);
+			info.setMessage("Updated Successfully");
+			
+			AlbumEnquiry enq=albmEnq.findByEnquiryNoAndDelStatus(enqId, 0);
+			
+			if(status==1) {
+				
+				
+				if(enq!=null) {
+					if(!enq.getExVar1().isEmpty()) {
+						
+						List<String> tokenList = new ArrayList<>();
+						tokenList.add(enq.getExVar1());
+						
+						new Firebase().send_FCM_NotificationList(tokenList, enq.getCustName()+" enquiry has Approved",
+								"Cake enquiry for "+enq.getCustName()+" has Approved.", "approved");
+					}
+					
+					//start //Sachin 04-03-2020
+					
+					List<String> strKey = new ArrayList<String>();
+					strKey.add("album-emp");
+					strKey.add("album-sup");
+					strKey.add("album-admin");
+
+					System.err.println("Notif to Factory EMPS");
+					for (int a = 0; a < strKey.size(); a++) {
+						List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo
+								.getUserTokens(strKey.get(a));
+						if (enqEmpToken != null) {
+
+							List<String> tokenList = new ArrayList<>();
+							for (int j = 0; j < enqEmpToken.size(); j++) {
+								tokenList.add(enqEmpToken.get(j).getToken1());
+							}
+							
+							//new Firebase().send_FCM_NotificationList(tokenList, chatRes.getChatBy(), chatStrObj, "chat");
+							new Firebase().send_FCM_NotificationList(tokenList, enq.getCustName()+" enquiry has Approved",
+									"Cake enquiry for "+enq.getCustName()+" has Approved.", "approved");
+						}
+
+					} // end of for Loop
+					
+					//end //Sachin 04-03-2020
+				}
+				
+			}else if(status==2) {
+				
+				if(enq!=null) {
+					if(!enq.getExVar1().isEmpty()) {
+						
+						List<String> tokenList = new ArrayList<>();
+						tokenList.add(enq.getExVar1());
+						
+						new Firebase().send_FCM_NotificationList(tokenList, enq.getCustName()+" enquiry has Rejected",
+								"Cake enquiry for "+enq.getCustName()+" has Rejected.", "rejected");
+					}
+				}
+				
+				//start //Sachin 04-03-2020
+				
+				List<String> strKey = new ArrayList<String>();
+				strKey.add("album-emp");
+				strKey.add("album-sup");
+				strKey.add("album-admin");
+
+				System.err.println("Notif to Factory EMPS");
+				for (int a = 0; a < strKey.size(); a++) {
+					List<EnquiryScheduleEmpToken> enqEmpToken = enquiryScheduleEmpTokenRepo
+							.getUserTokens(strKey.get(a));
+					if (enqEmpToken != null) {
+
+						List<String> tokenList = new ArrayList<>();
+						for (int j = 0; j < enqEmpToken.size(); j++) {
+							tokenList.add(enqEmpToken.get(j).getToken1());
+						}
+						
+						//new Firebase().send_FCM_NotificationList(tokenList, chatRes.getChatBy(), chatStrObj, "chat");
+						new Firebase().send_FCM_NotificationList(tokenList, enq.getCustName()+" enquiry has Rejected",
+								"Cake enquiry for "+enq.getCustName()+" has Rejected.", "rejected");
+					}
+
+				} // end of for Loop
+				
+				//end //Sachin 04-03-2020
+			}
+			
+		} else {
+			info = new Info();
+			info.setError(true);
+			info.setMessage("Update Failed");
+		}
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		return info;
+	}
+	@Autowired
+	AlbumEnquiryRepo albmEnq;
+	//B
+	public Info updateAlbumId( int enqId,  int albmId) {
+		Info info = new Info();
+		int updatedAlbmId = albmEnq.updtAlbmIdByEnqId(enqId, albmId);
+
+		if (updatedAlbmId != 0) {
+			info.setError(false);
+			info.setMessage("AlbumEnquiry Updated Successfully");
+		} else {
+			info = new Info();
+			info.setError(true);
+			info.setMessage("AlbumEnquiry Update Failed");
+		}
+
+		return info;
+	}
+	
+
+	
+	//C
+	//@RequestMapping(value = "/getConfigListByFrAndMenu", method = RequestMethod.POST)
+	public  List<ConfigureFranchisee> getConfigListByFrAndMenu(  List<Integer> frIds,
+			  List<Integer> menuIds) {
+		System.err.println("in ws---------- FR " + frIds);
+		System.err.println("in ws---------- MENU " + menuIds);
+
+		List<ConfigureFranchisee> resultList = new ArrayList();
+		resultList = connfigureService.getDataByFrAndMenu(frIds, menuIds);
+		System.err.println("LIST -------------- " + resultList);
+		return resultList;
+
+	}
+	
 }

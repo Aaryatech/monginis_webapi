@@ -1,11 +1,15 @@
 package com.ats.webapi.model.album;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "t_sp_cake_album")
@@ -35,6 +39,65 @@ public class Album {
 
 	@Column(name = "album_desc")
 	private String albumDesc;
+
+	// Extra Not for save/Insert Just to call other methods to reduce Android
+	// Webservice calls
+
+	// 18-03-2020
+@Transient
+	private int enqNo;
+@Transient
+	private int status;
+@Transient
+	private List<Integer> menuList;
+@Transient
+	List<Integer> frIds;
+	
+@Transient 
+private String token;
+
+
+
+
+	public String getToken() {
+	return token;
+}
+
+public void setToken(String token) {
+	this.token = token;
+}
+
+	public int getEnqNo() {
+		return enqNo;
+	}
+
+	public void setEnqNo(int enqNo) {
+		this.enqNo = enqNo;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
+
+	public List<Integer> getMenuList() {
+		return menuList;
+	}
+
+	public void setMenuList(List<Integer> menuList) {
+		this.menuList = menuList;
+	}
+
+	public List<Integer> getFrIds() {
+		return frIds;
+	}
+
+	public void setFrIds(List<Integer> frIds) {
+		this.frIds = frIds;
+	}
 
 	public int getAlbumId() {
 		return albumId;
@@ -131,8 +194,6 @@ public class Album {
 	public void setAlbumDesc(String albumDesc) {
 		this.albumDesc = albumDesc;
 	}
-	
-	
 
 	public int getIsVisibleToAlbum() {
 		return isVisibleToAlbum;
@@ -141,15 +202,15 @@ public class Album {
 	public void setIsVisibleToAlbum(int isVisibleToAlbum) {
 		this.isVisibleToAlbum = isVisibleToAlbum;
 	}
-	
-	
 
 	@Override
 	public String toString() {
 		return "Album [albumId=" + albumId + ", albumCode=" + albumCode + ", albumName=" + albumName + ", photo1="
 				+ photo1 + ", photo2=" + photo2 + ", minWt=" + minWt + ", maxWt=" + maxWt + ", delStatus=" + delStatus
 				+ ", spId=" + spId + ", flavourId=" + flavourId + ", isActive=" + isActive + ", isVisibleToAlbum="
-				+ isVisibleToAlbum + ", albumDesc=" + albumDesc + "]";
+				+ isVisibleToAlbum + ", albumDesc=" + albumDesc + ", enqNo=" + enqNo + ", status=" + status
+				+ ", menuList=" + menuList + ", frIds=" + frIds + "]";
 	}
+
 
 }
