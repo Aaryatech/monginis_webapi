@@ -279,7 +279,7 @@ public class TempProdApi {
 				{
 				  sfPlanDetailForBom=getSFPlanDetailForMixingRepo.showDetailsForManualProduction2(11);
 				}
-				getSfDataRepository.deleteAll();
+			 getSfDataRepository.deleteAll(); 
 			if(!sfPlanDetailForBom.isEmpty()) {
 				
 				info.setError(false);
