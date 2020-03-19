@@ -13,10 +13,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
+import com.ats.webapi.model.GetGrnGvnDetails;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.ItemSup;
+import com.ats.webapi.model.grngvn.GHeader;
 import com.ats.webapi.model.grngvn.GrnGvnHeader;
 import com.ats.webapi.model.grngvn.GrnGvnHeaderList;
+import com.ats.webapi.model.grngvn.ResponseBean;
+import com.ats.webapi.repository.GetGrnGvnDetailsRepository;
+import com.ats.webapi.repository.grngvnheader.GHeaderRepo;
 import com.ats.webapi.repository.grngvnheader.GrnGvnHeaderRepo;
 
 @RestController //created on 15 FEB
@@ -177,6 +182,35 @@ public class GrnGvnApiController {
 		}
 
 		return responseHeader;
+		
+	}
+	
+	
+	
+	@Autowired GetGrnGvnDetailsRepository ggDetailRepo;
+	
+	@Autowired GHeaderRepo ggHeadRepo;
+	//Sachin 19-03-2020 Admin Pdf for Grn Gvn 
+	@RequestMapping(value = { "/getGGHeaderByHeaderIdList" }, method = RequestMethod.POST)
+	public @ResponseBody ResponseBean getGGHeaderByHeaderIdList(@RequestParam("grnGvnHeaderIdList")
+	List<String> grnGvnHeaderIdList) {
+		System.err.println("grnGvnHeaderIdList " +grnGvnHeaderIdList);
+		ResponseBean resBean=new ResponseBean();
+		List<GHeader> responseHeader=new ArrayList<GHeader>();
+		try {
+			
+			responseHeader=ggHeadRepo.getGGHeaderByHeaderIdList(grnGvnHeaderIdList);
+			System.err.println("res Head" +responseHeader.toString());
+			resBean.setGgHeaderList(responseHeader);
+			List<GetGrnGvnDetails> detailList=	ggDetailRepo.getFrGrnDetailsMultipleHeaderIds(grnGvnHeaderIdList);
+			resBean.setGgDetailList(detailList);
+		} catch (Exception e) {
+
+			System.out.println("Exce in Getting getHeaderByHeaderId /GrnGvnApiController " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return resBean;
 		
 	}
 	

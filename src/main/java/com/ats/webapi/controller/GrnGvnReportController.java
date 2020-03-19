@@ -12,11 +12,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.ItemWiseGrnGvnReport;
+import com.ats.webapi.model.grngvnreport.GGDetailApr;
+import com.ats.webapi.model.grngvnreport.GGHeaderApr;
 import com.ats.webapi.model.grngvnreport.GGReportByDate;
 import com.ats.webapi.model.grngvnreport.GGReportGrpByFrId;
 import com.ats.webapi.model.grngvnreport.GGReportGrpByMonthDate;
 import com.ats.webapi.model.grngvnreport.GrnGvnReportByGrnType;
 import com.ats.webapi.repository.ItemWiseGrnGvnReportRepo;
+import com.ats.webapi.repository.ggreport.GGDetailAprRepo;
+import com.ats.webapi.repository.ggreport.GGHeaderAprRepo;
 import com.ats.webapi.repository.ggreport.GGReportByDateRepo;
 import com.ats.webapi.repository.ggreport.GGReportGrpByFrIdRepo;
 import com.ats.webapi.repository.ggreport.GGreportGrpByDateMonthRepo;
@@ -36,7 +40,7 @@ public class GrnGvnReportController {
 
 	@Autowired
 	GrnGvnReportByGrnTypeRepo getGrnGvnReportByGrnTypeRepo; // 25-05-2018
-	
+
 	@Autowired
 	ItemWiseGrnGvnReportRepo itemWiseGrnGvnReportRepo;
 
@@ -121,7 +125,7 @@ public class GrnGvnReportController {
 		try {
 			if (!frIdList.contains("0")) {
 				System.out.println("fr Id List doesn't contain zero ");
-			
+
 				grpByFrIdList = gGReportGrpByFrIdRepo.getGGReportGrpByFrIdSelFr(fromDate, toDate, isGrn, frIdList);
 			} else {
 				System.out.println("fr id list is zero : get For All Fr");
@@ -193,17 +197,18 @@ public class GrnGvnReportController {
 
 		return grpByDateList;
 	}
-	
+
 	@RequestMapping(value = { "/itemwiseGrnGvnReportbetweenDate" }, method = RequestMethod.POST)
-	public @ResponseBody List<ItemWiseGrnGvnReport> itemwiseGrnGvnReportbetweenDate(@RequestParam("fromDate") String fromDate,
-			@RequestParam("toDate") String toDate, @RequestParam("isGrn") List<Integer> isGrn) {
-		  
+	public @ResponseBody List<ItemWiseGrnGvnReport> itemwiseGrnGvnReportbetweenDate(
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate,
+			@RequestParam("isGrn") List<Integer> isGrn) {
+
 		List<ItemWiseGrnGvnReport> grpByDateList = new ArrayList<>();
-		
+
 		try {
-			 
-				grpByDateList = itemWiseGrnGvnReportRepo.itemwiseGrnGvnReportbetweenDate(fromDate, toDate,  isGrn);
-			 
+
+			grpByDateList = itemWiseGrnGvnReportRepo.itemwiseGrnGvnReportbetweenDate(fromDate, toDate, isGrn);
+
 		} catch (Exception e) {
 
 			System.err.println("Exce in /GrnGvnReportController : /getGGReportGrpByMonth" + e.getMessage());
@@ -211,6 +216,41 @@ public class GrnGvnReportController {
 		}
 
 		return grpByDateList;
+	}
+
+	// Sachin 18-03-2020
+
+	@Autowired
+	GGHeaderAprRepo ggHeadRepo;
+	@Autowired
+	GGDetailAprRepo ggDetailRepo;
+
+	@RequestMapping(value = { "/getGGHeaderApprReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<GGHeaderApr> getGGHeaderApprReport(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("frIdList") List<String> frIdList,
+			@RequestParam("isGrn") List<String> isGrn) {
+
+		List<GGHeaderApr> ggHeaderAprRepList = new ArrayList<>();
+
+		try {
+
+			ggHeaderAprRepList = ggHeadRepo.getGGHeaderAprReportAllFr(fromDate, toDate, isGrn);
+			
+			for(int i=0;i<ggHeaderAprRepList.size();i++) {
+				
+			List<GGDetailApr> detailAprList=	ggDetailRepo.getGGDetailForAprReport(ggHeaderAprRepList.get(i).getGrnGvnHeaderId());
+				
+			ggHeaderAprRepList.get(i).setGgDetailList(detailAprList);
+			
+			}
+
+		} catch (Exception e) {
+
+			System.err.println("Exce in /getGGHeaderApprReport" + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return ggHeaderAprRepList;
 	}
 
 }
