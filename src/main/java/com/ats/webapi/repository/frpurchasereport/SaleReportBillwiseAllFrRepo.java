@@ -30,10 +30,10 @@ public interface SaleReportBillwiseAllFrRepo extends JpaRepository<SalesReportBi
 			"CASE  WHEN t_bill_detail.cat_id=5 THEN (SELECT m_sp_cake.sp_name  FROM  m_sp_cake WHERE m_sp_cake.sp_id= t_bill_detail.item_id) ELSE (SELECT  m_item.item_name FROM m_item WHERE t_bill_detail.item_id=m_item.id)END AS item_name," + 
 		
 			
-			"CASE  WHEN t_bill_detail.cat_id=5 THEN (SELECT m_sp_cake.sp_tax1  FROM  m_sp_cake WHERE m_sp_cake.sp_id= t_bill_detail.item_id) ELSE (SELECT  m_item.item_tax1 FROM m_item WHERE t_bill_detail.item_id=m_item.id)END AS item_tax1," + 
-			"CASE  WHEN t_bill_detail.cat_id=5 THEN (SELECT m_sp_cake.sp_tax2  FROM  m_sp_cake WHERE m_sp_cake.sp_id= t_bill_detail.item_id) ELSE (SELECT  m_item.item_tax2 FROM m_item WHERE t_bill_detail.item_id=m_item.id)END AS item_tax2," + 
+			"CASE  WHEN t_bill_detail.cat_id=5 THEN (SELECT COALESCE(m_sp_cake.sp_tax1,0)  FROM  m_sp_cake WHERE m_sp_cake.sp_id= t_bill_detail.item_id) ELSE (SELECT  COALESCE(m_item.item_tax1,0) FROM m_item WHERE t_bill_detail.item_id=m_item.id)END AS item_tax1," + 
+			"CASE  WHEN t_bill_detail.cat_id=5 THEN (SELECT COALESCE(m_sp_cake.sp_tax2,0)  FROM  m_sp_cake WHERE m_sp_cake.sp_id= t_bill_detail.item_id) ELSE (SELECT  COALESCE(m_item.item_tax2,0) FROM m_item WHERE t_bill_detail.item_id=m_item.id)END AS item_tax2," + 
 			
-			"CASE  WHEN t_bill_detail.cat_id=5 THEN (SELECT m_sp_cake.sp_tax3  FROM  m_sp_cake WHERE m_sp_cake.sp_id= t_bill_detail.item_id) ELSE (SELECT  m_item.item_tax3 FROM m_item WHERE t_bill_detail.item_id=m_item.id)END AS item_tax3," + 
+			"CASE  WHEN t_bill_detail.cat_id=5 THEN (SELECT COALESCE(m_sp_cake.sp_tax3,0)  FROM  m_sp_cake WHERE m_sp_cake.sp_id= t_bill_detail.item_id) ELSE (SELECT  COALESCE(m_item.item_tax3,0) FROM m_item WHERE t_bill_detail.item_id=m_item.id)END AS item_tax3," + 
 		
 			"        sum(t_bill_detail.sgst_rs) AS sgst_rs_sum," + 
 			"        sum(t_bill_detail.cgst_rs) AS cgst_rs_sum," + 

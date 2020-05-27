@@ -18,6 +18,7 @@ import com.ats.webapi.model.report.frpurchase.SalesReportBillwiseAllFr;
 import com.ats.webapi.model.report.frpurchase.SalesReportItemwise;
 import com.ats.webapi.model.report.frpurchase.SalesReportRoyalty;
 import com.ats.webapi.model.report.frpurchase.SalesReportRoyaltyFr;
+import com.ats.webapi.model.report.frpurchase.SalesRoyaltyConsByCat;
 import com.ats.webapi.model.reportv2.SubCatCreditGrnFrItemRep;
 import com.ats.webapi.model.reportv2.SubCatFrItemRepBill;
 import com.ats.webapi.model.reportv2.SubCatItemReport;
@@ -39,6 +40,7 @@ import com.ats.webapi.repository.frpurchasereport.SaleReportBillwiseRepo;
 import com.ats.webapi.repository.frpurchasereport.SaleReportItemwiseRepo;
 import com.ats.webapi.repository.frpurchasereport.SalesReportRoyaltyFrRepo;
 import com.ats.webapi.repository.frpurchasereport.SalesReportRoyaltyRepo;
+import com.ats.webapi.repository.frpurchasereport.SalesRoyaltyConsByCatRepo;
 import com.ats.webapi.repository.reportv2.SubCatCreditGrnFrItemRepRepo;
 import com.ats.webapi.repository.reportv2.SubCatFrItemRepBillRepo;
 import com.ats.webapi.repository.reportv2.SubCatItemReportRepository;
@@ -354,6 +356,44 @@ public class SalesReportController {
 		}
 		return salesReportItemwise;
 	}
+	
+	
+	@Autowired
+	SalesRoyaltyConsByCatRepo salesRoyaltyConsByCatRepo;
+	
+	// Anmol------14-5-2020
+		@RequestMapping(value = { "/getSaleRoyConsoByCatReportData" }, method = RequestMethod.POST)
+		public @ResponseBody List<SalesRoyaltyConsByCat> getSaleRoyConsoByCatReportData(
+				@RequestParam("frIdList") List<String> frIdList, @RequestParam("catIdList") List<String> catIdList,
+				@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+			List<SalesRoyaltyConsByCat> salesReportRoyaltyList = null;
+			try {
+				fromDate = Common.convertToYMD(fromDate);
+				toDate = Common.convertToYMD(toDate);
+
+				System.out.println("Input received for report 10 roy by category few fr Selected " + fromDate + "" + toDate
+						+ "" + frIdList + "cat=" + catIdList);
+
+				if (catIdList.contains("5")) {
+					salesReportRoyaltyList = salesRoyaltyConsByCatRepo.getSaleRoyConsoByCatUnion(catIdList, frIdList,
+							fromDate, toDate);
+					System.out.println("getSaleReportRoyConsoByCatForSp" + salesReportRoyaltyList.toString());
+				} else {
+					salesReportRoyaltyList = salesRoyaltyConsByCatRepo.getSaleRoyConsoByCat(catIdList, frIdList, fromDate,
+							toDate);
+					System.out.println("getSaleReportBillwise" + salesReportRoyaltyList.toString());
+
+				}
+			} catch (Exception e) {
+				System.out.println(" Exce in sales Report Royalty  By Category " + e.getMessage());
+				e.printStackTrace();
+			}
+			return salesReportRoyaltyList;
+		}
+
+		
+		
 
 	// report 10 AS OF REPORT 5
 	@RequestMapping(value = { "/getSaleReportRoyConsoByCat" }, method = RequestMethod.POST)
