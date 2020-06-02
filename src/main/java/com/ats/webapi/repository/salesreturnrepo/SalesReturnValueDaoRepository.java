@@ -63,10 +63,9 @@ public interface SalesReturnValueDaoRepository extends JpaRepository<SalesReturn
 			"    SUM(t_bill_detail.grand_total) AS grand_total\n" + 
 			"FROM\n" + 
 			"    t_bill_detail,\n" + 
-			"    t_bill_header,\n" + 
-			"    m_sp_cake\n" + 
+			"    t_bill_header\n" + 
 			"WHERE\n" + 
-			"    DATE_FORMAT(t_bill_header.bill_date, '%Y-%m') = :month AND t_bill_header.del_status = 0 AND t_bill_header.bill_no = t_bill_detail.bill_no AND t_bill_detail.cat_id = 5 AND m_sp_cake.sp_id = t_bill_detail.item_id\n" + 
+			"    DATE_FORMAT(t_bill_header.bill_date, '%Y-%m') = :month AND t_bill_header.del_status = 0 AND t_bill_header.bill_no = t_bill_detail.bill_no AND t_bill_detail.cat_id = 5 \n" + 
 			") t2\n" + 
 			"ON\n" + 
 			"    t1.sub_cat_id = t2.sub_cat_id\n" + 

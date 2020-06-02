@@ -52,10 +52,9 @@ public interface SubCatBillRepRepo extends JpaRepository<SubCatBillRep, Integer>
 				"    t_bill_header tb,\n" + 
 				"    t_bill_detail td,\n" + 
 				"    m_cat_sub sc,\n" + 
-				"    m_category c,\n" + 
-				"    m_sp_cake s\n" + 
+				"    m_category c\n" + 
 				"WHERE\n" + 
-				"    tb.del_status = 0 AND tb.bill_no = td.bill_no AND tb.bill_date BETWEEN :fromDate AND :toDate AND td.cat_id = c.cat_id AND s.sp_id = td.item_id AND 5 = sc.cat_id AND c.cat_id = 5  \n" + 
+				"    tb.del_status = 0 AND tb.bill_no = td.bill_no AND tb.bill_date BETWEEN :fromDate AND :toDate AND td.cat_id = c.cat_id AND 5 = sc.cat_id AND c.cat_id = 5 AND tb.del_status=0 AND td.del_status=0\n" + 
 				"GROUP BY\n" + 
 				"    sc.cat_id ) a ORDER BY sub_cat_name ", nativeQuery = true)
 		List<SubCatBillRep> getData(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
