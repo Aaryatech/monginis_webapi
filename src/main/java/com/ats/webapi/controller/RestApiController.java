@@ -5470,10 +5470,13 @@ public class RestApiController {
 	// ---------ANMOL 13-7-2019----------------
 	@RequestMapping(value = { "/getSpCKAlbumOrderBySpOrderNo" }, method = RequestMethod.POST)
 	@ResponseBody
-	public List<GetSpCkOrder> getSpCKAlbumOrderBySpOrderNo(@RequestParam("spOrderNo") List<String> spOrderNo) {
+	public List<GetSpCkOrderAlbum> getSpCKAlbumOrderBySpOrderNo(@RequestParam("spOrderNo") List<String> spOrderNo) {
 
-		List<GetSpCkOrder> spCakeOrder = spCkOrdersService.getSpCkAlbumOrder(spOrderNo);
-
+		//List<GetSpCkOrder> spCakeOrder = spCkOrdersService.getSpCkAlbumOrder(spOrderNo);
+		
+		// ---------Mahendra 30-06-2020----------------
+		List<GetSpCkOrderAlbum> spCakeOrder = spCkOrdersService.getAlbumSpCkOrder(spOrderNo);
+			
 		return spCakeOrder;
 	}
 
@@ -6138,5 +6141,16 @@ public class RestApiController {
 			}
 			
 			return spList;
+		}
+		
+		@RequestMapping(value = { "/getAllRoutesFrDetails" }, method = RequestMethod.GET)
+		public @ResponseBody  List<RoutesFrDetail>  getAllRoutesFrDetails() {
+			List<RoutesFrDetail> routeDetails = new ArrayList<RoutesFrDetail>();
+			try {
+				routeDetails = routeService.showRoutesFrDetail();
+			}catch (Exception e) {
+				e.printStackTrace();
+			}
+			return routeDetails;
 		}
 }

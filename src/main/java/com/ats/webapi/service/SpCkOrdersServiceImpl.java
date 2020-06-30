@@ -9,10 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.GetSpCakeOrders;
 import com.ats.webapi.model.GetSpCkOrder;
+import com.ats.webapi.model.GetSpCkOrderAlbum;
 import com.ats.webapi.model.SpCakeOrders;
 import com.ats.webapi.model.SpCakeOrdersBean;
 import com.ats.webapi.repository.GetSpCakeOrderRepository;
 import com.ats.webapi.repository.GetSpCakeOrdersRepository;
+import com.ats.webapi.repository.GetSpCkOrderAlbumRepo;
 import com.ats.webapi.repository.SpCakeOrdersRepoAdmin;
 import com.ats.webapi.repository.SpCakeOrdersRepository;
 
@@ -30,6 +32,8 @@ public class SpCkOrdersServiceImpl implements SpCkOrdersService {
 	
     @Autowired
     GetSpCakeOrderRepository getSpCakeOrderRepository;
+    
+    @Autowired GetSpCkOrderAlbumRepo getAlbumSpCkOrderRepo;
     
 	@Override
 	public List<SpCakeOrdersBean> findSpCakeOrder(List<Integer> frId, String prodDate) {
@@ -115,6 +119,13 @@ public class SpCkOrdersServiceImpl implements SpCkOrdersService {
 	public List<GetSpCkOrder> getSpCkAlbumOrder(List<String> spOrderNo) {
 		return getSpCakeOrderRepository.getSpCakeAlbumOrder(spOrderNo);
 	}
+
+
+	@Override
+	public List<GetSpCkOrderAlbum> getAlbumSpCkOrder(List<String> spOrderNo) {
+		// TODO Auto-generated method stub
+		return getAlbumSpCkOrderRepo.getAlbumSpCakeOrder(spOrderNo);
 	}
+}
 
 

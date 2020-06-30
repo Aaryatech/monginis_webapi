@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.ats.webapi.model.GetSpCakeOrders;
 import com.ats.webapi.model.GetSpCkOrder;
+import com.ats.webapi.model.GetSpCkOrderAlbum;
 import com.ats.webapi.model.SpCakeOrders;
 import com.ats.webapi.model.SpCakeOrdersBean;
 
@@ -25,4 +26,6 @@ public interface SpCkOrdersService {
 	public List<GetSpCakeOrders> getSpCakeAlbumOrder(List<String> spOrderNo);
 	
 	public List<GetSpCkOrder> getSpCkAlbumOrder(List<String> spOrderNo);
+
+	public List<GetSpCkOrderAlbum> getAlbumSpCkOrder(List<String> spOrderNo);
 }

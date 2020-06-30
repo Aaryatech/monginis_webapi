@@ -8,8 +8,10 @@ import org.springframework.stereotype.Service;
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
 import com.ats.webapi.model.Route;
+import com.ats.webapi.model.RoutesFrDetail;
 import com.ats.webapi.model.User;
 import com.ats.webapi.repository.RouteRepository;
+import com.ats.webapi.repository.RoutesFrDetailRepo;
 import com.ats.webapi.repository.UserRepository;
 import com.ats.webapi.util.JsonUtil;
 
@@ -21,7 +23,11 @@ public class RouteServiceImpl implements RouteService {
 	ErrorMessage errorMessage = new ErrorMessage();
 	@Autowired
 	RouteRepository routeRepository;
-	@Override
+	
+	@Autowired
+	RoutesFrDetailRepo routesFrDetailRepo;
+	
+	@Override	
 	public String save(Route route) {
 				if(route.getRouteName()!=null && !route.getRouteName().trim().equals("")) {
 					route= routeRepository.save(route);
@@ -55,6 +61,12 @@ public class RouteServiceImpl implements RouteService {
 	public Route findRoute(int routeId) {
 		Route route=routeRepository.findOne(routeId);
 	return route;
+	}
+
+	@Override
+	public List<RoutesFrDetail> showRoutesFrDetail() {
+		List<RoutesFrDetail> routeList = routesFrDetailRepo.getRouteFrDetails();
+		return routeList;
 	}
 
 }
