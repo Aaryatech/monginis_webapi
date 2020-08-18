@@ -64,5 +64,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Modifying
 	@Query("UPDATE User SET usr_pwd=:newPass WHERE usr_id=:userId")
 	int changePassword(@Param("userId") int userId, @Param("newPass") String newPass);
+	
 
 }

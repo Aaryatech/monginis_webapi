@@ -22,25 +22,40 @@ import com.ats.webapi.model.Route;
 import com.ats.webapi.model.RouteWithFrList;
 import com.ats.webapi.model.TrayMgtDetailList;
 import com.ats.webapi.model.logistics.VehicalMaster;
+import com.ats.webapi.model.tray.AllFrBalanceTrayReport;
 import com.ats.webapi.model.tray.CalCulateTray;
 import com.ats.webapi.model.tray.DriverDetailByFr;
+import com.ats.webapi.model.tray.FrHomeData;
 import com.ats.webapi.model.tray.FrOutTrays;
 import com.ats.webapi.model.tray.FrTrayConsumeQty;
+import com.ats.webapi.model.tray.FrTrayData;
+import com.ats.webapi.model.tray.FrTrayReportData;
 import com.ats.webapi.model.tray.FranchiseInRoute;
+import com.ats.webapi.model.tray.GetInTrays;
+import com.ats.webapi.model.tray.GetTotalTray;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
+import com.ats.webapi.model.tray.GetTrayMgtReport;
 import com.ats.webapi.model.tray.GetVehDriverMobNo;
 import com.ats.webapi.model.tray.GetVehicleAvg;
 import com.ats.webapi.model.tray.TrayMgtDetail;
 import com.ats.webapi.model.tray.TrayMgtDetailBean;
+import com.ats.webapi.model.tray.TrayMgtDetailInTray;
 import com.ats.webapi.model.tray.TrayMgtHeader;
 import com.ats.webapi.repository.RouteRepository;
 import com.ats.webapi.repository.logistics.VehicalMasterRepository;
+import com.ats.webapi.repository.tray.AllFrBalanceTrayReportRepo;
 import com.ats.webapi.repository.tray.CalculateTrayRepo;
 import com.ats.webapi.repository.tray.DriverDetailByFrRepo;
 import com.ats.webapi.repository.tray.FrTrayConsumeQtyRepo;
+import com.ats.webapi.repository.tray.FrTrayDataRepo;
 import com.ats.webapi.repository.tray.FranchiseInRouteRepository;
+import com.ats.webapi.repository.tray.GetTrayMgtHeaderRepository;
+import com.ats.webapi.repository.tray.GetTrayMgtReportRepo;
 import com.ats.webapi.repository.tray.GetVehDriverMobNoRepo;
 import com.ats.webapi.repository.tray.GetVehicleAvgRepository;
+import com.ats.webapi.repository.tray.TrayMgtDetailBeanRepository;
+import com.ats.webapi.repository.tray.TrayMgtDetailInTrayRepo;
+import com.ats.webapi.repository.tray.TrayMgtDetailRepository;
 import com.ats.webapi.repository.tray.TrayMgtHeaderRepository;
 import com.ats.webapi.service.tray.TrayMgtService;
 
@@ -70,12 +85,33 @@ public class TrayManagementController {
 
 	@Autowired
 	CalculateTrayRepo calculateTrayRepo;
-	
+
 	@Autowired
 	FranchiseInRouteRepository franchiseInRouteRepository;
-	
+
 	@Autowired
 	RouteRepository routeRepository;
+
+	@Autowired
+	GetTrayMgtHeaderRepository getTrayMgtHeaderRepository;
+
+	@Autowired
+	FrTrayDataRepo frTrayDataRepo;
+
+	@Autowired
+	TrayMgtDetailRepository trayMgtDetailRepository;
+
+	@Autowired
+	TrayMgtDetailBeanRepository trayMgtDetailBeanRepository;
+
+	@Autowired
+	TrayMgtDetailInTrayRepo trayMgtDetailInTrayRepo;
+
+	@Autowired
+	GetTrayMgtReportRepo getTrayMgtReportRepo;
+
+	@Autowired
+	AllFrBalanceTrayReportRepo allFrBalanceTrayReportRepo;
 
 	@RequestMapping(value = { "/getVehMobNo" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetVehDriverMobNo> getVehMobNo(@RequestParam("routeId") int routeId,
@@ -494,35 +530,38 @@ public class TrayManagementController {
 	@RequestMapping(value = { "/getFranchiseInRouteForTray" }, method = RequestMethod.POST)
 	public @ResponseBody List<FranchiseInRoute> getFranchiseInRouteForTray(@RequestParam("routeId") int routeId) {
 
-		List<FranchiseInRoute> franchiseInRoute =franchiseInRouteRepository.findFrInRouteForTray(routeId);
+		List<FranchiseInRoute> franchiseInRoute = franchiseInRouteRepository.findFrInRouteForTray(routeId);
 
 		return franchiseInRoute;
 	}
-	
+
 	@RequestMapping(value = { "/getFranchiseInRouteListForTray" }, method = RequestMethod.POST)
-	public @ResponseBody List<FranchiseInRoute> getFranchiseInRouteListForTray(@RequestParam("routeIds") List<String> routeIds) {
+	public @ResponseBody List<FranchiseInRoute> getFranchiseInRouteListForTray(
+			@RequestParam("routeIds") List<String> routeIds) {
 
-		List<FranchiseInRoute> franchiseInRoute =franchiseInRouteRepository.findFrInRouteListForTray(routeIds);
+		List<FranchiseInRoute> franchiseInRoute = franchiseInRouteRepository.findFrInRouteListForTray(routeIds);
 
 		return franchiseInRoute;
 	}
-	
-	@RequestMapping(value = { "/getRouteWithFrListForTray" }, method = RequestMethod.POST)
-	public @ResponseBody List<RouteWithFrList> getRouteWithFrListForTray(@RequestParam("routeIds") List<String> routeIds) {
 
-		List<RouteWithFrList> result=new ArrayList<>();
-		
-		for(int i=0;i<routeIds.size();i++) {
-			
-			Route route=routeRepository.findOne(Integer.parseInt(routeIds.get(i)));
-			RouteWithFrList routeFr=new RouteWithFrList();
+	@RequestMapping(value = { "/getRouteWithFrListForTray" }, method = RequestMethod.POST)
+	public @ResponseBody List<RouteWithFrList> getRouteWithFrListForTray(
+			@RequestParam("routeIds") List<String> routeIds) {
+
+		List<RouteWithFrList> result = new ArrayList<>();
+
+		for (int i = 0; i < routeIds.size(); i++) {
+
+			Route route = routeRepository.findOne(Integer.parseInt(routeIds.get(i)));
+			RouteWithFrList routeFr = new RouteWithFrList();
 			routeFr.setRouteId(route.getRouteId());
 			routeFr.setRouteName(route.getRouteName());
-			
-			List<FranchiseInRoute> franchiseInRoute =franchiseInRouteRepository.findFrInRouteForTray(Integer.parseInt(routeIds.get(i)));
-			
+
+			List<FranchiseInRoute> franchiseInRoute = franchiseInRouteRepository
+					.findFrInRouteForTray(Integer.parseInt(routeIds.get(i)));
+
 			routeFr.setFrList(franchiseInRoute);
-		
+
 			result.add(routeFr);
 		}
 		return result;
@@ -612,8 +651,9 @@ public class TrayManagementController {
 			e.printStackTrace();
 		}
 		return info;
-	
+
 	}
+
 	@RequestMapping(value = { "/getAllTrayHeadersByDate" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetVehicleAvg> getAllTrayHeadersByDate(@RequestParam("date") String date) {
 
@@ -649,68 +689,70 @@ public class TrayManagementController {
 	@RequestMapping(value = { "/getTotalFrTrayConsumed" }, method = RequestMethod.POST)
 	public @ResponseBody FrTrayConsumeQty getTotalFrTrayConsumed(@RequestParam("frId") int frId,
 			@RequestParam("deliveryDate") String deliveryDate) {
-		System.err.println("PARAM -------------------- frId - "+frId+"                  DeliveryDate - "+deliveryDate);
+		System.err.println(
+				"PARAM -------------------- frId - " + frId + "                  DeliveryDate - " + deliveryDate);
 		FrTrayConsumeQty result = new FrTrayConsumeQty();
 		try {
 
 			result = frTrayConsumeQtyRepo.getFrConsumeTrayList(frId, deliveryDate);
-			
-			if(result==null) {
+
+			if (result == null) {
 				result = new FrTrayConsumeQty();
 			}
-			
-			System.err.println("LIMIT -------------------- "+result);
+
+			System.err.println("LIMIT -------------------- " + result);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
-	//-------Anmol-------->19/12/2019------------------------------------------
-	
+
+	// -------Anmol-------->19/12/2019------------------------------------------
+
 	@RequestMapping(value = { "/getTotalFrTrayConsumedByMenu" }, method = RequestMethod.POST)
 	public @ResponseBody FrTrayConsumeQty getTotalFrTrayConsumedByMenu(@RequestParam("frId") int frId,
-			@RequestParam("deliveryDate") String deliveryDate,@RequestParam("menuId") int menuId) {
-		System.err.println("PARAM -------------------- frId - "+frId+"                  DeliveryDate - "+deliveryDate+"             MENUID - "+menuId);
+			@RequestParam("deliveryDate") String deliveryDate, @RequestParam("menuId") int menuId) {
+		System.err.println("PARAM -------------------- frId - " + frId + "                  DeliveryDate - "
+				+ deliveryDate + "             MENUID - " + menuId);
 		FrTrayConsumeQty result = new FrTrayConsumeQty();
 		try {
 
-			result = frTrayConsumeQtyRepo.getFrConsumeTrayListByMenu(frId, deliveryDate,menuId);
-			
-			if(result==null) {
+			result = frTrayConsumeQtyRepo.getFrConsumeTrayListByMenu(frId, deliveryDate, menuId);
+
+			if (result == null) {
 				result = new FrTrayConsumeQty();
 			}
-			
-			System.err.println("LIMIT -------------------- "+result);
+
+			System.err.println("LIMIT -------------------- " + result);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-	
+
 	@RequestMapping(value = { "/getTotalFrTrayConsumedByMenuNotIn" }, method = RequestMethod.POST)
 	public @ResponseBody FrTrayConsumeQty getTotalFrTrayConsumedByMenuNotIn(@RequestParam("frId") int frId,
-			@RequestParam("deliveryDate") String deliveryDate,@RequestParam("menuId") int menuId) {
-		System.err.println("PARAM -------------------- frId - "+frId+"                  DeliveryDate - "+deliveryDate+"             MENUID - "+menuId);
+			@RequestParam("deliveryDate") String deliveryDate, @RequestParam("menuId") int menuId) {
+		System.err.println("PARAM -------------------- frId - " + frId + "                  DeliveryDate - "
+				+ deliveryDate + "             MENUID - " + menuId);
 		FrTrayConsumeQty result = new FrTrayConsumeQty();
 		try {
 
-			result = frTrayConsumeQtyRepo.getFrConsumeTrayListByMenuNotIn(frId, deliveryDate,menuId);
-			
-			if(result==null) {
+			result = frTrayConsumeQtyRepo.getFrConsumeTrayListByMenuNotIn(frId, deliveryDate, menuId);
+
+			if (result == null) {
 				result = new FrTrayConsumeQty();
 			}
-			
-			System.err.println("LIMIT -------------------- "+result);
+
+			System.err.println("LIMIT -------------------- " + result);
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
-
 
 	// -------Anmol---->17/12/2019-----------------------------
 
@@ -736,36 +778,478 @@ public class TrayManagementController {
 
 	}
 
-	//trayMgtHeaderRepository new change to update in/out km and diesel
-	//Sachin 11-02-2020
-	
+	// trayMgtHeaderRepository new change to update in/out km and diesel
+	// Sachin 11-02-2020
+
 	@RequestMapping(value = { "/updateVehDetailByAdmin" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateVehDetailByAdmin(@RequestParam("tranId") int tranId,
-			@RequestParam("vehOutkm") float vehOutkm, @RequestParam("vehInkm") float vehInkm,@RequestParam("diesel") float diesel, @RequestParam("paramKey") int paramKey) {
-		
-		Info info =new Info();
-		
-		int res=0;
+			@RequestParam("vehOutkm") float vehOutkm, @RequestParam("vehInkm") float vehInkm,
+			@RequestParam("diesel") float diesel, @RequestParam("paramKey") int paramKey) {
+
+		Info info = new Info();
+
+		int res = 0;
 		try {
-			if(paramKey==1) {
-				res = trayMgtHeaderRepository.updateVehDetailByAdminOutKm(tranId,vehOutkm);
-			}else if(paramKey==2) {
+			if (paramKey == 1) {
+				res = trayMgtHeaderRepository.updateVehDetailByAdminOutKm(tranId, vehOutkm);
+			} else if (paramKey == 2) {
 				res = trayMgtHeaderRepository.updateVehDetailByAdminInKm(tranId, vehInkm);
-			}else if(paramKey==3) {
+			} else if (paramKey == 3) {
 				res = trayMgtHeaderRepository.updateVehDetailByAdminDiesel(tranId, diesel);
 			}
-		if(res>0) {
-			info.setError(false);
-			info.setMessage("success");
-		}else {
-			info.setError(true);
-			info.setMessage("failed");
-		}
-		}catch (Exception e) {
+			if (res > 0) {
+				info.setError(false);
+				info.setMessage("success");
+			} else {
+				info.setError(true);
+				info.setMessage("failed");
+			}
+		} catch (Exception e) {
 			info.setError(true);
 			info.setMessage("failed");
 			e.printStackTrace();
 		}
 		return info;
 	}
+
+	// ------------------------------------------------------------------
+
+	@RequestMapping(value = { "/getTotalTray" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetTotalTray> getTotalTray(@RequestParam("tranId") int tranId) {
+
+		List<GetTotalTray> getTrayMgtReport = null;
+		try {
+			getTrayMgtReport = new ArrayList<GetTotalTray>();
+
+			List<TrayMgtDetail> trayMgtDetailList = trayMgtDetailRepository.getByTranIdWithBal(tranId);
+
+			List<Integer> frIdList = new ArrayList<>();
+			for (TrayMgtDetail trayMgtDetail : trayMgtDetailList) {
+				frIdList.add(trayMgtDetail.getFrId());
+			}
+
+			List<GetInTrays> getTrayMgtInTrayList = trayMgtService.getTrayMgtInTrayList(tranId, frIdList);
+
+			System.err.println("getTrayMgtInTrayList" + getTrayMgtInTrayList.toString());
+			for (TrayMgtDetail trayMgtDetail : trayMgtDetailList) {
+				GetTotalTray getTray = new GetTotalTray();
+
+				getTray.setFrId(trayMgtDetail.getFrId());
+				getTray.setFrName(trayMgtDetail.getFrName());
+				getTray.setOuttrayBig(trayMgtDetail.getOuttrayBig());
+				getTray.setOuttrayLead(trayMgtDetail.getOuttrayLead());
+				getTray.setOuttraySmall(trayMgtDetail.getOuttraySmall());
+				getTray.setBalanceBig(trayMgtDetail.getBalanceBig());
+				getTray.setBalanceLead(trayMgtDetail.getBalanceLead());
+				getTray.setBalanceSmall(trayMgtDetail.getBalanceSmall());
+
+				for (int j = 0; j < getTrayMgtInTrayList.size(); j++) {
+					if (trayMgtDetail.getFrId() == getTrayMgtInTrayList.get(j).getFrId()) {
+						getTray.setIntrayBig(getTrayMgtInTrayList.get(j).getIntrayBig());
+						getTray.setIntrayLead(getTrayMgtInTrayList.get(j).getIntrayLead());
+						getTray.setIntraySmall(getTrayMgtInTrayList.get(j).getIntraySmall());
+					}
+				}
+				getTrayMgtReport.add(getTray);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return getTrayMgtReport;
+	}
+
+//	@RequestMapping(value = { "/getTotalTray" }, method = RequestMethod.POST)
+//	public @ResponseBody List<GetTotalTray> getTotalTray(@RequestParam("tranId") int tranId) {
+//
+//		List<GetTotalTray> getTrayMgtReport = null;
+//		try {
+//			getTrayMgtReport = new ArrayList<GetTotalTray>();
+//			List<TrayMgtDetail> trayMgtDetailList = trayMgtService.getTrayMgtDetailByTranId(tranId);
+//			List<Integer> frIdList = new ArrayList<>();
+//			for (TrayMgtDetail trayMgtDetail : trayMgtDetailList) {
+//				frIdList.add(trayMgtDetail.getFrId());
+//			}
+//			List<GetTrayMgtReport> getTrayMgtBalanceTrayList = trayMgtService.getTrayMgtBalanceTrayList(tranId,
+//					frIdList);
+//			System.err.println("getTrayMgtBalanceTrayList" + getTrayMgtBalanceTrayList.toString());
+//
+//			List<GetInTrays> getTrayMgtInTrayList = trayMgtService.getTrayMgtInTrayList(tranId, frIdList);
+//
+//			System.err.println("getTrayMgtInTrayList" + getTrayMgtInTrayList.toString());
+//			for (TrayMgtDetail trayMgtDetail : trayMgtDetailList) {
+//				GetTotalTray getTray = new GetTotalTray();
+//
+//				getTray.setFrId(trayMgtDetail.getFrId());
+//				getTray.setFrName(trayMgtDetail.getFrName());
+//				getTray.setOuttrayBig(trayMgtDetail.getOuttrayBig());
+//				getTray.setOuttrayLead(trayMgtDetail.getOuttrayLead());
+//				getTray.setOuttraySmall(trayMgtDetail.getOuttraySmall());
+//
+//				for (int i = 0; i < getTrayMgtBalanceTrayList.size(); i++) {
+//					if (trayMgtDetail.getFrId() == getTrayMgtBalanceTrayList.get(i).getFrId()) {
+//
+//						getTray.setBalanceBig(getTrayMgtBalanceTrayList.get(i).getBalanceBig());
+//						getTray.setBalanceLead(getTrayMgtBalanceTrayList.get(i).getBalanceLead());
+//						getTray.setBalanceSmall(getTrayMgtBalanceTrayList.get(i).getBalanceSmall());
+//					}
+//				}
+//				for (int j = 0; j < getTrayMgtInTrayList.size(); j++) {
+//					if (trayMgtDetail.getFrId() == getTrayMgtInTrayList.get(j).getFrId()) {
+//						getTray.setIntrayBig(getTrayMgtInTrayList.get(j).getIntrayBig());
+//						getTray.setIntrayLead(getTrayMgtInTrayList.get(j).getIntrayLead());
+//						getTray.setIntraySmall(getTrayMgtInTrayList.get(j).getIntraySmall());
+//					}
+//				}
+//				getTrayMgtReport.add(getTray);
+//			}
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		return getTrayMgtReport;
+//	}
+
+	// ------------------------------------------------------
+
+	@RequestMapping(value = { "/getTrayMgmtTrayByFrId" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetTrayMgtHeader> getTrayMgmtTrayByFrId(@RequestParam("routeId") int routeId) {
+
+		List<GetTrayMgtHeader> trayMgtDetailRes = new ArrayList<>();
+
+		try {
+
+			trayMgtDetailRes = getTrayMgtHeaderRepository.getTrayMgtHeaderByRouteId(routeId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return trayMgtDetailRes;
+
+	}
+
+	@RequestMapping(value = { "/getFrHomeData" }, method = RequestMethod.POST)
+	public @ResponseBody FrHomeData getFrHomeData(@RequestParam("frId") int frId,
+			@RequestParam("trayDate") String trayDate) {
+
+		FrHomeData res = new FrHomeData();
+
+		try {
+
+			FrTrayData openingCount = frTrayDataRepo.getOpeningCount(frId, trayDate);
+
+			List<FrTrayData> recTrayList = new ArrayList<>();
+			recTrayList = frTrayDataRepo.getReceivedTrays(frId, trayDate);
+
+			List<FrTrayData> retTrayList = new ArrayList<>();
+			retTrayList = frTrayDataRepo.getReturnTrays(frId, trayDate);
+
+			res.setOpeningCount(openingCount);
+			res.setReceivedTrayList(recTrayList);
+			res.setReturnTrayList(retTrayList);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getTrayDetailForBalanceByFr" }, method = RequestMethod.POST)
+	public @ResponseBody List<TrayMgtDetail> getTrayDetailForBalanceByFr(@RequestParam("frId") int frId) {
+
+		// List<TrayMgtDetail> trayMgtDetailRes =
+		// trayMgtDetailRepository.findByFrIdAndDelStatus(frId, 0);
+		List<TrayMgtDetail> trayMgtDetailRes = trayMgtService.getTrayDetailForBalanceByFr(frId);
+
+		return trayMgtDetailRes;
+
+	}
+
+	@RequestMapping(value = { "/getTrayDetailByTrayDetId" }, method = RequestMethod.POST)
+	public @ResponseBody TrayMgtDetailBean getTrayDetailByTrayDetId(@RequestParam("tranDetId") int tranDetId) {
+
+		TrayMgtDetailBean trayMgtDetailRes = null;
+		TrayMgtDetailBean res = null;
+
+		try {
+			trayMgtDetailRes = trayMgtService.getTrayDetailByDetailId(tranDetId);
+
+			if (trayMgtDetailRes.getTrayStatus() == 1) {
+
+				trayMgtDetailRes.setBalanceBig(trayMgtDetailRes.getOuttrayBig());
+				trayMgtDetailRes.setBalanceExtra(trayMgtDetailRes.getOuttrayExtra());
+				trayMgtDetailRes.setBalanceLead(trayMgtDetailRes.getOuttrayLead());
+				trayMgtDetailRes.setBalanceSmall(trayMgtDetailRes.getOuttraySmall());
+				trayMgtDetailRes.setTrayStatus(2);
+
+				res = trayMgtDetailBeanRepository.saveAndFlush(trayMgtDetailRes);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/saveTrayMgmtDeatilInTray" }, method = RequestMethod.POST)
+	public @ResponseBody TrayMgtDetailInTray saveTrayMgmtDeatilInTray(
+			@RequestBody TrayMgtDetailInTray trayMgtDetailInTray) {
+
+		TrayMgtDetailInTray res = new TrayMgtDetailInTray();
+
+		try {
+
+			res = trayMgtDetailInTrayRepo.saveAndFlush(trayMgtDetailInTray);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getTrayMgmtSetailTrayByFrId" }, method = RequestMethod.POST)
+	public @ResponseBody List<TrayMgtDetailInTray> getTrayMgmtSetailTrayByFrId(@RequestParam("frId") int frId,
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<TrayMgtDetailInTray> list = new ArrayList<TrayMgtDetailInTray>();
+
+		try {
+
+			list = trayMgtDetailInTrayRepo.getTrayMgtDetailBetDateAndFrId(fromDate, toDate, frId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return list;
+
+	}
+
+	@RequestMapping(value = { "/updateTrayDetailByTrayDetId" }, method = RequestMethod.POST)
+	public @ResponseBody TrayMgtDetailBean updateTrayDetailByTrayDetId(
+			@RequestBody TrayMgtDetailInTray trayMgtDetailInTray) {
+
+		TrayMgtDetailBean trayMgtDetailRes = null;
+		TrayMgtDetailBean res = new TrayMgtDetailBean();
+
+		try {
+			int d = trayMgtDetailInTrayRepo.updateInTrayDetail(trayMgtDetailInTray.getIntrayId(),
+					trayMgtDetailInTray.getExInt2(), Integer.parseInt(trayMgtDetailInTray.getExVar1()),
+					trayMgtDetailInTray.getExInt1());
+
+			trayMgtDetailRes = trayMgtService.getTrayDetailByDetailId(trayMgtDetailInTray.getTranDetailId());
+
+			int bigDiff = trayMgtDetailInTray.getIntrayBig() - trayMgtDetailInTray.getExInt2();
+
+			int smallDiff = trayMgtDetailInTray.getIntraySmall() - trayMgtDetailInTray.getExInt1();
+			int leadDiff = trayMgtDetailInTray.getIntrayLead() - Integer.parseInt(trayMgtDetailInTray.getExVar1());
+
+			trayMgtDetailRes.setBalanceBig(trayMgtDetailRes.getBalanceBig() + bigDiff);
+			trayMgtDetailRes.setBalanceLead(trayMgtDetailRes.getBalanceLead() + leadDiff);
+			trayMgtDetailRes.setBalanceSmall(trayMgtDetailRes.getBalanceSmall() + smallDiff);
+
+			res = trayMgtDetailBeanRepository.saveAndFlush(trayMgtDetailRes);
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return res;
+
+	}
+
+	@RequestMapping(value = { "/getTrayMgmtDeatilInTrayByFrIdAndDate" }, method = RequestMethod.POST)
+	public @ResponseBody List<TrayMgtDetailInTray> getTrayMgmtDeatilInTrayByFrIdAndDate(@RequestParam("frId") int frId,
+			@RequestParam("intrayDate") String intrayDate) {
+
+		List<TrayMgtDetailInTray> list = new ArrayList<TrayMgtDetailInTray>();
+
+		try {
+
+			list = trayMgtDetailInTrayRepo.findByFrIdAndIntrayDateAndDelStatus(frId, intrayDate, 0);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return list;
+
+	}
+
+	@RequestMapping(value = { "/getTrayMangtDetailreport" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetTrayMgtReport> getTrayMangtDetailreport(
+			@RequestParam("frIdList") List<String> frIdList, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		System.out.println(frIdList);
+		System.out.println(fromDate);
+		System.out.println(toDate);
+
+		List<GetTrayMgtReport> getTrayMgtDetail = null;
+		List<TrayMgtDetailInTray> trayMgtDetailInTrayList = null;
+		try {
+
+			if (!frIdList.contains("-1"))
+
+			{
+				trayMgtDetailInTrayList = trayMgtDetailInTrayRepo.getTrayMgtDetail(fromDate, toDate, frIdList);
+
+				getTrayMgtDetail = getTrayMgtReportRepo.getTrayMgtDetail(fromDate, toDate, frIdList);
+
+				for (int i = 0; i < getTrayMgtDetail.size(); i++) {
+
+					for (int j = 0; j < trayMgtDetailInTrayList.size(); j++) {
+						if (getTrayMgtDetail.get(i).getFrId() == trayMgtDetailInTrayList.get(j).getFrId()) {
+							getTrayMgtDetail.get(i).setIntrayBig(trayMgtDetailInTrayList.get(j).getIntrayBig());
+							getTrayMgtDetail.get(i).setIntrayLead(trayMgtDetailInTrayList.get(j).getIntrayLead());
+							getTrayMgtDetail.get(i).setIntraySmall(trayMgtDetailInTrayList.get(j).getIntraySmall());
+						}
+
+					}
+
+				}
+
+			} else {
+				trayMgtDetailInTrayList = trayMgtDetailInTrayRepo.getTrayMgtDetailBetDate(fromDate, toDate);
+				getTrayMgtDetail = getTrayMgtReportRepo.getTrayMgtDetailBetDate(fromDate, toDate);
+
+				for (int i = 0; i < getTrayMgtDetail.size(); i++) {
+
+					for (int j = 0; j < trayMgtDetailInTrayList.size(); j++) {
+						if (getTrayMgtDetail.get(i).getFrId() == trayMgtDetailInTrayList.get(j).getFrId()) {
+							getTrayMgtDetail.get(i).setIntrayBig(trayMgtDetailInTrayList.get(j).getIntrayBig());
+							getTrayMgtDetail.get(i).setIntrayLead(trayMgtDetailInTrayList.get(j).getIntrayLead());
+							getTrayMgtDetail.get(i).setIntraySmall(trayMgtDetailInTrayList.get(j).getIntraySmall());
+						}
+
+					}
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return getTrayMgtDetail;
+	}
+
+	@RequestMapping(value = { "/getFrTrayReportForLastEightDays" }, method = RequestMethod.POST)
+	public @ResponseBody List<FrTrayReportData> getFrTrayReportForLastEightDays(@RequestParam("frId") int frId,
+			@RequestParam("todaysDate") String todaysDate) {
+
+		List<FrTrayReportData> reportList = new ArrayList<>();
+
+		try {
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			SimpleDateFormat sdf1 = new SimpleDateFormat("dd-MM-yyyy");
+
+			Calendar calFrom = Calendar.getInstance();
+			Calendar calTo = Calendar.getInstance();
+
+			Date d1 = sdf.parse(todaysDate);
+
+			calTo.setTime(d1);
+			calTo.add(Calendar.DATE, 1);
+
+			calFrom.setTime(d1);
+			calFrom.add(Calendar.DATE, -8);
+
+			System.err.println("FROM - " + sdf.format(calFrom.getTime()) + "  ----------------------      TO - "
+					+ sdf.format(calTo.getTime()));
+
+			while (calFrom.before(calTo)) {
+
+				String dispDate = sdf1.format(calFrom.getTime());
+				String dateStr = sdf.format(calFrom.getTime());
+				System.err.println("DATE - " + dateStr);
+
+				FrTrayReportData data = new FrTrayReportData();
+				data.setDateStr("" + dispDate);
+
+				int opSmall = 0, opLead = 0, opBig = 0, recSmall = 0, recLead = 0, recBig = 0, retSmall = 0,
+						retLead = 0, retBig = 0;
+
+				FrTrayData openingCount = frTrayDataRepo.getOpeningCount(frId, dateStr);
+				if (openingCount != null) {
+
+					data.setOpeningSmall(openingCount.getSmall());
+					data.setOpeningLead(openingCount.getLead());
+					data.setOpeningBig(openingCount.getBig());
+
+					opSmall = openingCount.getSmall();
+					opLead = openingCount.getLead();
+					opBig = openingCount.getBig();
+
+				}
+
+				FrTrayData recCount = frTrayDataRepo.getSumReceivedTrays(frId, dateStr);
+				if (recCount != null) {
+
+					data.setReceivedSmall(recCount.getSmall());
+					data.setReceivedLead(recCount.getLead());
+					data.setReceivedBig(recCount.getBig());
+
+					recSmall = recCount.getSmall();
+					recLead = recCount.getLead();
+					recBig = recCount.getBig();
+
+				}
+
+				FrTrayData retCount = frTrayDataRepo.getSumReturnTrays(frId, dateStr);
+				if (retCount != null) {
+
+					data.setReturnSmall(retCount.getSmall());
+					data.setReturnLead(retCount.getLead());
+					data.setReturnBig(retCount.getBig());
+
+					retSmall = retCount.getSmall();
+					retLead = retCount.getLead();
+					retBig = retCount.getBig();
+
+				}
+
+				data.setBalSmall((opSmall + recSmall) - retSmall);
+				data.setBalLead((opLead + recLead) - retLead);
+				data.setBalBig((opBig + recBig) - retBig);
+
+				reportList.add(data);
+				calFrom.add(Calendar.DATE, 1);
+			}
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return reportList;
+
+	}
+
+	@RequestMapping(value = { "/getAllFrBalanceTray" }, method = RequestMethod.POST)
+	public @ResponseBody List<AllFrBalanceTrayReport> getAllFrBalanceTray() {
+
+		List<AllFrBalanceTrayReport> reportList = new ArrayList<>();
+		try {
+			reportList = allFrBalanceTrayReportRepo.getAllFrBalTray();
+		} catch (Exception e) {
+		}
+
+		return reportList;
+	}
+
 }

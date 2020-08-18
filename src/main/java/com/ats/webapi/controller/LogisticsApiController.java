@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.ErrorMessage;
 import com.ats.webapi.model.Info;
+import com.ats.webapi.model.LoginDriverResponse;
+import com.ats.webapi.model.User;
 import com.ats.webapi.model.logistics.AlertAmcRecord;
 import com.ats.webapi.model.logistics.AlertMachineServicingRecord;
 import com.ats.webapi.model.logistics.AlertVeihcleServicing;
@@ -34,9 +36,11 @@ import com.ats.webapi.model.logistics.VehicalMaster;
 import com.ats.webapi.model.logistics.VehicalType;
 import com.ats.webapi.model.logistics.VehicleDcoument;
 import com.ats.webapi.model.report.RouteTargetReport;
+import com.ats.webapi.repository.UserRepository;
 import com.ats.webapi.repository.logistics.AlertAmcRecordRepository;
 import com.ats.webapi.repository.logistics.AlertMachineServicingRepository;
 import com.ats.webapi.repository.logistics.AlertVeihcleServicingRepository;
+import com.ats.webapi.repository.logistics.DriverMasterRepository;
 import com.ats.webapi.repository.logistics.LogisAmcRepository;
 import com.ats.webapi.repository.logistics.MachineServicingRepository;
 import com.ats.webapi.repository.logistics.MechTypeRepository;
@@ -1680,4 +1684,6 @@ public class LogisticsApiController {
 		return list;
 
 	}
+	
+	
 }
