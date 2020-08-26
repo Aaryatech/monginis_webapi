@@ -53,7 +53,7 @@ public interface GrnGvnHeaderRepo extends JpaRepository<GrnGvnHeader, Integer> {
 			+ "IN (:statusList) and grngvn_date BETWEEN " + 
 			"			:fromDate AND :toDate AND fr_id IN (:frIdList)",nativeQuery=true)
 	List<GrnGvnHeader> findGrnGvnHeaderNewForGate(@Param("fromDate")Date fromDate,@Param("toDate") Date toDate,
-			@Param("isGrn")List<String> isGrn,@Param("statusList") List<String> statusList,@Param("frIdList")List<String> frIdList);
+			@Param("isGrn")List<String> isGrn,@Param("statusList") List<String> statusList,@Param("frIdList")List<Integer> frIdList);
 	
 	
 	

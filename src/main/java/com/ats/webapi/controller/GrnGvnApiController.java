@@ -82,6 +82,41 @@ public class GrnGvnApiController {
 	}
 	
 	
+	//Sachin 26-08-2020
+	@RequestMapping(value = { "/findGGHeaderForDispatch" }, method = RequestMethod.POST)
+	public @ResponseBody GrnGvnHeaderList findGGHeaderForDispatch(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate, @RequestParam("frIdList")
+	List<Integer> frIdList,
+			@RequestParam("isGrn")List<String> isGrn,@RequestParam("statusList")List<String> statusList) {
+		
+		GrnGvnHeaderList headerList=new GrnGvnHeaderList();
+
+		List<GrnGvnHeader> grnGvnHeaderList = new ArrayList<GrnGvnHeader>();
+
+		try {
+			
+			Date fDate=Common.convertToSqlDate(fromDate);
+			Date tDate=Common.convertToSqlDate(toDate);
+			
+			//System.out.println("Parameter Received Specific Fr Grn Header List  = "+fDate+""+toDate+" "+frIdList+ ""+isGrn);
+					
+			grnGvnHeaderList = grnGvnHeaderRepo.findGrnGvnHeaderNewForGate(fDate, tDate, isGrn, statusList, frIdList);
+					
+			headerList.setGrnGvnHeader(grnGvnHeaderList);
+			
+		//	System.out.println(" GRN GVN Header LIST /getGrnGvnHeader "+headerList.toString());
+
+			
+		} catch (Exception e) {
+
+			System.out.println("Exce in Getting getGrnGvnHeader /GrnGvnApiController " + e.getMessage());
+			e.printStackTrace();
+		}
+
+		return headerList;
+	}
+	
+	
+	
 	
 	@RequestMapping(value = { "/getGrnGvnHeaderAllFr" }, method = RequestMethod.POST)
 	public @ResponseBody GrnGvnHeaderList getGrnGvnHeaderAllFr(@RequestParam("fromDate")String fromDate,@RequestParam("toDate")String toDate,
