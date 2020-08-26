@@ -235,12 +235,17 @@ public class GrnGvnReportController {
 		try {
 
 			ggHeaderAprRepList = ggHeadRepo.getGGHeaderAprReportAllFr(fromDate, toDate, isGrn);
+			List<String> headerStrList=ggHeadRepo.getCommasepHeaderIds(fromDate, toDate, isGrn);
+
+			String headerIds=String.join(", ", headerStrList);
 			
 			for(int i=0;i<ggHeaderAprRepList.size();i++) {
 				
-			List<GGDetailApr> detailAprList=	ggDetailRepo.getGGDetailForAprReport(ggHeaderAprRepList.get(i).getGrnGvnHeaderId());
+			List<GGDetailApr> detailAprList = ggDetailRepo.getGGDetailForAprReport(ggHeaderAprRepList.get(i).getGrnGvnHeaderId());
 				
 			ggHeaderAprRepList.get(i).setGgDetailList(detailAprList);
+			
+			//
 			
 			}
 
@@ -251,6 +256,16 @@ public class GrnGvnReportController {
 		}
 
 		return ggHeaderAprRepList;
+	}
+	
+	@RequestMapping(value = { "/getGGHeaderCSList" }, method = RequestMethod.POST)
+	public @ResponseBody List<String> getGGHeaderCSList(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("frIdList") List<String> frIdList,
+			@RequestParam("isGrn") List<String> isGrn) {
+
+		List<String> s=ggHeadRepo.getCommasepHeaderIds(fromDate, toDate, isGrn);
+		
+		return s;
 	}
 
 }

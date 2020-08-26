@@ -66,4 +66,21 @@ public interface GGHeaderAprRepo extends JpaRepository<GGHeaderApr, Integer> {
 		String fromDate,@Param("toDate") 
 		String toDate, @Param("isGrn") List<String> isGrn);
 	
+	@Query(value="SELECT " + 
+			"        GROUP_CONCAT(t_grn_gvn_header.grn_gvn_header_id)          \n" + 
+			"    from " + 
+			"        t_grn_gvn_header               \n" + 
+			"    WHERE " + 
+			"         t_grn_gvn_header.grngvn_date BETWEEN :fromDate and :toDate   and  " + 
+			"          t_grn_gvn_header.is_grn IN (:isGrn)  " + 
+			"    ORDER By " + 
+			"        t_grn_gvn_header.fr_id ASC  " + 
+			" ",nativeQuery=true)
+	
+		List<String> getCommasepHeaderIds(@Param("fromDate") 
+		String fromDate,@Param("toDate") 
+		String toDate, @Param("isGrn") List<String> isGrn);
+	
+	
+	
 }
