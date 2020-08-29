@@ -34,6 +34,7 @@ import com.ats.webapi.model.tray.FranchiseInRoute;
 import com.ats.webapi.model.tray.GetInTrays;
 import com.ats.webapi.model.tray.GetTotalTray;
 import com.ats.webapi.model.tray.GetTrayMgtHeader;
+import com.ats.webapi.model.tray.GetTrayMgtHeaderForApp;
 import com.ats.webapi.model.tray.GetTrayMgtReport;
 import com.ats.webapi.model.tray.GetVehDriverMobNo;
 import com.ats.webapi.model.tray.GetVehicleAvg;
@@ -49,6 +50,7 @@ import com.ats.webapi.repository.tray.DriverDetailByFrRepo;
 import com.ats.webapi.repository.tray.FrTrayConsumeQtyRepo;
 import com.ats.webapi.repository.tray.FrTrayDataRepo;
 import com.ats.webapi.repository.tray.FranchiseInRouteRepository;
+import com.ats.webapi.repository.tray.GetTrayMgtHeaderForAppRepo;
 import com.ats.webapi.repository.tray.GetTrayMgtHeaderRepository;
 import com.ats.webapi.repository.tray.GetTrayMgtReportRepo;
 import com.ats.webapi.repository.tray.GetVehDriverMobNoRepo;
@@ -920,6 +922,27 @@ public class TrayManagementController {
 		try {
 
 			trayMgtDetailRes = getTrayMgtHeaderRepository.getTrayMgtHeaderByRouteId(routeId);
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return trayMgtDetailRes;
+
+	}
+	
+	@Autowired GetTrayMgtHeaderForAppRepo getTrayMgtHeaderForAppRepo;
+	
+	//For App
+	@RequestMapping(value = { "/getTrayMgmtTrayByFrIdNew" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetTrayMgtHeaderForApp> getTrayMgmtTrayByFrIdNew(@RequestParam("routeId") int routeId) {
+
+		List<GetTrayMgtHeaderForApp> trayMgtDetailRes = new ArrayList<>();
+
+		try {
+
+			trayMgtDetailRes = getTrayMgtHeaderForAppRepo.getTrayMgtHeaderNewByRouteId(routeId);
 
 		} catch (Exception e) {
 
