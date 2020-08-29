@@ -57,7 +57,7 @@ public interface GetTrayMgtHeaderRepository extends JpaRepository<GetTrayMgtHead
 			"    r.route_name,\n" + 
 			"    h.veh_no,\n" + 
 			"    h.veh_outtime,\n" + 
-			"    d.mobile1 as veh_intime,\n" + 
+			"    CONCAT(d.mobile1,',',d.mobile2,',',d.mobile3) as veh_intime,\n" + 
 			"    h.veh_outkm,\n" + 
 			"    h.veh_inkm,\n" + 
 			"    h.veh_running_km,\n" + 
