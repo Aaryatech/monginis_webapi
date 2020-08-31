@@ -26,7 +26,7 @@ public interface TrayMgtService {
 
 	List<FrOutTrays> getOutTraysForFr(int frId, String billDate);
 
-	Info updateExtraOutTrays(int tranId, int extraOutTrays);
+	Info updateExtraOutTrays(int tranId, String extraOutTrays);
 
 
 	Info updateVehicleOutData(int tranId, String vehOuttime, float vehOutKm);
@@ -42,7 +42,7 @@ public interface TrayMgtService {
 
 	Info updateDieselForTransaction(int tranId, float diesel);
 
-	Info updateExtraInTrays(int tranId, int extraInTrays);
+	Info updateExtraInTrays(int tranId, String extraInTrays);
 
 	TrayMgtDetail getTrayDetailByStatus(int frId, int trayStatus, int isSameDay);
 

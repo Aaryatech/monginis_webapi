@@ -21,7 +21,7 @@ public interface TrayMgtHeaderRepository extends JpaRepository<TrayMgtHeader, In
 	@Modifying
 	@Transactional
 	@Query("Update TrayMgtHeader  SET extra_tray_out=:extraOutTrays WHERE tran_id =:tranId")
-	int updateExtraOutTrays(@Param("tranId")int tranId,@Param("extraOutTrays") int extraOutTrays);
+	int updateExtraOutTrays(@Param("tranId")int tranId,@Param("extraOutTrays") String extraOutTrays);
 
 
 	@Modifying
@@ -42,7 +42,7 @@ public interface TrayMgtHeaderRepository extends JpaRepository<TrayMgtHeader, In
 	@Modifying
 	@Transactional
 	@Query("Update TrayMgtHeader  SET extra_tray_in=:extraInTrays WHERE tran_id =:tranId")
-	int updateExtraInTrays(@Param("tranId")int tranId,@Param("extraInTrays") int extraInTrays);
+	int updateExtraInTrays(@Param("tranId")int tranId,@Param("extraInTrays") String extraInTrays);
 
 
 	TrayMgtHeader findByTranId(int tranId);

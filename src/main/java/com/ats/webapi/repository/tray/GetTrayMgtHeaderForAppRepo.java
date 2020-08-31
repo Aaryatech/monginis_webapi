@@ -28,8 +28,8 @@ public interface GetTrayMgtHeaderForAppRepo extends JpaRepository<GetTrayMgtHead
 			"    h.diesel,\n" + 
 			"    h.veh_status,\n" + 
 			"    h.del_status,\n" + 
-			"    h.extra_tray_out,\n" + 
-			"    h.extra_tray_in,\n" + 
+			"    0 as extra_tray_out,\n" + 
+			"    0 as extra_tray_in,\n" + 
 			"    h.veh_is_regular,\n" + 
 			"    h.is_same_day, COALESCE(d.mobile1, '') AS mobile1,\r\n" + 
 			"    COALESCE(d.mobile2, '') AS mobile2,\r\n" + 

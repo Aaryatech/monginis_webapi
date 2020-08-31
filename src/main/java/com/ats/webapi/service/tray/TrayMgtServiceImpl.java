@@ -88,7 +88,7 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 	}
 
 	@Override
-	public Info updateExtraOutTrays(int tranId, int extraOutTrays) {
+	public Info updateExtraOutTrays(int tranId, String extraOutTrays) {
 
 		int isUpdated=trayMgtHeaderRepository.updateExtraOutTrays(tranId,extraOutTrays);
 		Info info=new Info();
@@ -214,7 +214,7 @@ public class TrayMgtServiceImpl implements TrayMgtService{
 	}
 
 	@Override
-	public Info updateExtraInTrays(int tranId, int extraInTrays) {
+	public Info updateExtraInTrays(int tranId, String extraInTrays) {
 		int isUpdated=trayMgtHeaderRepository.updateExtraInTrays(tranId,extraInTrays);
 		Info info=new Info();
 		if(isUpdated>=1)

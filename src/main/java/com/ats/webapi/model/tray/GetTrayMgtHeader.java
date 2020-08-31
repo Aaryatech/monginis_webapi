@@ -63,10 +63,10 @@ public class GetTrayMgtHeader implements Serializable{
 	private int delStatus;
 
 	@Column(name="extra_tray_out")
-	private int extraTrayOut;
+	private String extraTrayOut;
 	
 	@Column(name="extra_tray_in")
-	private int extraTrayIn;
+	private String extraTrayIn;
 
 	@Column(name="veh_is_regular")
 	private int vehIsRegular;
@@ -211,19 +211,19 @@ public class GetTrayMgtHeader implements Serializable{
 		this.delStatus = delStatus;
 	}
 
-	public int getExtraTrayOut() {
+	public String getExtraTrayOut() {
 		return extraTrayOut;
 	}
 
-	public void setExtraTrayOut(int extraTrayOut) {
+	public void setExtraTrayOut(String extraTrayOut) {
 		this.extraTrayOut = extraTrayOut;
 	}
 
-	public int getExtraTrayIn() {
+	public String getExtraTrayIn() {
 		return extraTrayIn;
 	}
 
-	public void setExtraTrayIn(int extraTrayIn) {
+	public void setExtraTrayIn(String extraTrayIn) {
 		this.extraTrayIn = extraTrayIn;
 	}
 

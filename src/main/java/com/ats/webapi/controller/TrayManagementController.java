@@ -367,7 +367,7 @@ public class TrayManagementController {
 	// Trays------------------------------------------------------
 	@RequestMapping(value = { "/updateExtraOutTrays" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateExtraOutTrays(@RequestParam("tranId") int tranId,
-			@RequestParam("extraOutTrays") int extraOutTrays) {
+			@RequestParam("extraOutTrays") String extraOutTrays) {
 
 		Info info = trayMgtService.updateExtraOutTrays(tranId, extraOutTrays);
 
@@ -379,7 +379,7 @@ public class TrayManagementController {
 	// Trays------------------------------------------------------
 	@RequestMapping(value = { "/updateExtraInTrays" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateExtraInTrays(@RequestParam("tranId") int tranId,
-			@RequestParam("extraInTrays") int extraInTrays) {
+			@RequestParam("extraInTrays") String extraInTrays) {
 
 		Info info = trayMgtService.updateExtraInTrays(tranId, extraInTrays);
 
@@ -484,7 +484,7 @@ public class TrayManagementController {
 	// time------------------------------------------------------
 	@RequestMapping(value = { "/updateInVehicleData" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateInVehicleData(@RequestParam("tranId") int tranId,
-			@RequestParam("vehInkm") float vehInkm, @RequestParam("extraTrayIn") int extraTrayIn) {
+			@RequestParam("vehInkm") float vehInkm, @RequestParam("extraTrayIn") String extraTrayIn) {
 
 		Info info = null;
 		try {
@@ -654,6 +654,32 @@ public class TrayManagementController {
 		}
 		return info;
 
+	}
+	
+	@RequestMapping(value = { "/updateTrayAndUpdateForApp" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateTrayAndUpdateForApp(@RequestParam("tranDetailId") int tranDetailId,
+			@RequestParam("balanceBig") int balanceBig, @RequestParam("balanceSmall") int balanceSmall,
+			@RequestParam("balanceLead") int balanceLead, @RequestParam("trayStatus") int trayStatus) {
+		Info info = new Info();
+		try {
+
+			int update = trayMgtDetailBeanRepository.updateTrayAndUpdateForApp(trayStatus, tranDetailId, balanceBig,
+					balanceSmall, balanceLead);
+
+			if (update == 0) {
+				info.setError(true);
+				info.setMessage("Not Update");
+			} else {
+				info.setError(false);
+				info.setMessage("Update Successfully");
+			}
+
+		} catch (Exception e) {
+			info.setError(true);
+			info.setMessage("Records Insertion Failed");
+			e.printStackTrace();
+		}
+		return info;
 	}
 
 	@RequestMapping(value = { "/getAllTrayHeadersByDate" }, method = RequestMethod.POST)
