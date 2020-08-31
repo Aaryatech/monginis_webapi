@@ -453,6 +453,25 @@ public class TrayManagementController {
 		return getTrayMgtHeaders;
 	}
 
+
+	@RequestMapping(value = { "/getAllVehiclesBetDateForApp" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetTrayMgtHeader> getAllVehiclesBetDateForApp(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<GetTrayMgtHeader> getTrayMgtHeaders = getTrayMgtHeaderRepository.getAllVehiclesBetDate(fromDate,toDate);
+
+		return getTrayMgtHeaders;
+	}
+
+	@RequestMapping(value = { "/getVehInLastRecForApp" }, method = RequestMethod.POST)
+	public @ResponseBody TrayMgtHeader getVehInLastRecForApp(@RequestParam("vehId") int vehId) {
+
+		TrayMgtHeader res = trayMgtHeaderRepository.getVehInLastRec(vehId);
+
+		return res;
+	}
+
+	
 	// --------------------------------------------------------------------------------------------------------------------------
 	// --------------------------------Getting Tray Management
 	// Header---------------------------
@@ -655,7 +674,7 @@ public class TrayManagementController {
 		return info;
 
 	}
-	
+
 	@RequestMapping(value = { "/updateTrayAndUpdateForApp" }, method = RequestMethod.POST)
 	public @ResponseBody Info updateTrayAndUpdateForApp(@RequestParam("tranDetailId") int tranDetailId,
 			@RequestParam("balanceBig") int balanceBig, @RequestParam("balanceSmall") int balanceSmall,
@@ -957,10 +976,11 @@ public class TrayManagementController {
 		return trayMgtDetailRes;
 
 	}
-	
-	@Autowired GetTrayMgtHeaderForAppRepo getTrayMgtHeaderForAppRepo;
-	
-	//For App
+
+	@Autowired
+	GetTrayMgtHeaderForAppRepo getTrayMgtHeaderForAppRepo;
+
+	// For App
 	@RequestMapping(value = { "/getTrayMgmtTrayByFrIdNew" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetTrayMgtHeaderForApp> getTrayMgmtTrayByFrIdNew(@RequestParam("routeId") int routeId) {
 

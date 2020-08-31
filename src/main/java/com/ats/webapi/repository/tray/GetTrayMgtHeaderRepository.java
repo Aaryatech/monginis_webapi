@@ -42,6 +42,10 @@ public interface GetTrayMgtHeaderRepository extends JpaRepository<GetTrayMgtHead
 
 	@Query(value="select h.tran_id, h.tran_date,h.veh_id,h.is_same_day,h.drv_id,d.driver_name,h.route_id,r.route_name,h.veh_no,h.veh_outtime,h.veh_intime,h.veh_outkm,h.veh_inkm,h.veh_running_km,h.diesel,h.veh_status,h.del_status,COALESCE(h.extra_tray_out,'') as extra_tray_out, COALESCE(h.extra_tray_in,'') as extra_tray_in, h.veh_is_regular from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id And h.tran_date=:date order by h.tran_id DESC",nativeQuery=true)
 	List<GetTrayMgtHeader> getAllVehicles(@Param("date")String date);
+	
+	//31-08-2020
+	@Query(value="select h.tran_id, h.tran_date,h.veh_id,h.is_same_day,h.drv_id,d.driver_name,h.route_id,r.route_name,h.veh_no,h.veh_outtime,h.veh_intime,h.veh_outkm,h.veh_inkm,h.veh_running_km,h.diesel,h.veh_status,h.del_status,COALESCE(h.extra_tray_out,'') as extra_tray_out, COALESCE(h.extra_tray_in,'') as extra_tray_in, h.veh_is_regular from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id And h.tran_date BETWEEN :fromDate AND :toDate order by h.tran_id DESC",nativeQuery=true)
+	List<GetTrayMgtHeader> getAllVehiclesBetDate(@Param("fromDate")String fromDate,@Param("toDate")String toDate);
 
 	@Query(value="select h.tran_id, h.tran_date,h.veh_id,h.drv_id,h.is_same_day,d.driver_name,h.route_id,r.route_name,h.veh_no,h.veh_outtime,h.veh_intime,h.veh_outkm,h.veh_inkm,h.veh_running_km,h.diesel,h.veh_status,h.del_status,COALESCE(h.extra_tray_out,'') as extra_tray_out, COALESCE(h.extra_tray_in,'') as extra_tray_in, h.veh_is_regular from t_tray_mgt_header h,m_fr_route r,m_logis_driver d where h.del_status=0 And h.drv_id=d.driver_id And h.route_id=r.route_id  And h.veh_status=:vehStatus order by h.tran_id DESC",nativeQuery=true)
 	List<GetTrayMgtHeader> getLoadedVehiclesByStatus(@Param("vehStatus")int vehStatus);

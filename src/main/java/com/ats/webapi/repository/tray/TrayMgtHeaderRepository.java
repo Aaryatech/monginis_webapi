@@ -71,6 +71,10 @@ public interface TrayMgtHeaderRepository extends JpaRepository<TrayMgtHeader, In
 	@Transactional
 	@Query("Update TrayMgtHeader  SET diesel=:diesel WHERE tran_id=:tranId")
 	int updateVehDetailByAdminDiesel(@Param("tranId")int tranId,@Param("diesel") float diesel);
+	
+	@Query(value="SELECT h.* FROM t_tray_mgt_header h WHERE h.veh_id=:vehId AND h.del_status=0 AND h.veh_status=2 ORDER BY h.tran_id DESC LIMIT 1   ",nativeQuery=true)
+	TrayMgtHeader getVehInLastRec(@Param("vehId") int vehId);
+
 
 	
 }
