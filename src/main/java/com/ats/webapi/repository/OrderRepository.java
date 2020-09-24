@@ -43,5 +43,12 @@ public interface OrderRepository extends JpaRepository<Orders, Long> {
 	@Query(value = "SELECT * FROM t_order WHERE  t_order.order_id=:orderId", nativeQuery = true)
 	Orders getOneOrder(
 			@Param("orderId") long orderId);
+	
+	@Transactional
+	@Modifying
+	@Query("UPDATE Orders t SET t.deliveryDate=:delDate,t.productionDate=:prodDate WHERE t.productionDate=:pDate AND t.menuId IN(:menuIds) AND t.frId IN(:frIds)")
+	int updateShiftOrder(@Param("frIds") List<Integer> frIds,@Param("menuIds") List<Integer> menuIds, @Param("delDate") Date delDate,
+			@Param("prodDate") Date prodDate,@Param("pDate") Date pDate);
+	
 
 }

@@ -1099,6 +1099,38 @@ public class MasterController {
 
 		return info;
 	}
+	
+	
+	@RequestMapping(value = "/updateShiftOrder", method = RequestMethod.POST)
+	public @ResponseBody Info updateShiftOrder(@RequestParam List<Integer> frIds,@RequestParam List<Integer> menuIds, @RequestParam String delDate,
+			@RequestParam String prodDate,@RequestParam String pDate) {
+		
+		Info info = new Info();
+
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date dateDel = new Date();
+		Date dateProd = new Date();
+		Date dateP = new Date();
+		try {
+			dateDel = df.parse(delDate);
+			dateProd = df.parse(prodDate);
+			dateP = df.parse(pDate);
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		int isUpdated = orderRepository.updateShiftOrder(frIds, menuIds, dateDel, dateProd,dateP);
+		if (isUpdated > 0) {
+			info.setError(false);
+			info.setMessage("Order Updated Successfully");
+		} else {
+			info.setError(true);
+			info.setMessage("Orders Not Updated");
+		}
+
+		return info;
+	}
 
 	// Anmol-->27-11-2019--->Update_Setting_new_value
 	@RequestMapping(value = { "/updateSettingValueById" }, method = RequestMethod.POST)
@@ -1193,5 +1225,8 @@ public class MasterController {
 		System.err.println("RES---------------------------------- " + res);
 		return res;
 	}
+	
+	
+	
 
 }
