@@ -39,7 +39,7 @@ public interface AlbumEnquiryRepo extends JpaRepository<AlbumEnquiry, Integer> {
 	@Query(value="UPDATE t_album_enquiry SET ex_int1=:status WHERE enquiry_no=:enqId",nativeQuery=true)
 	int updateNotifyStatusByEnqId(@Param("enqId") int enqId, @Param("status") int status);
 
-	/*@Query(value="SELECT a.enquiry_no,\n" + 
+	@Query(value="SELECT a.enquiry_no,\n" + 
 			"	m.fr_id,\n" + 
 			"    m.fr_name AS ex_var3,\n" + 
 			"    a.cust_name,\n" + 
@@ -63,10 +63,10 @@ public interface AlbumEnquiryRepo extends JpaRepository<AlbumEnquiry, Integer> {
 			"FROM t_album_enquiry a, m_franchisee m, t_album_enq_chat chat \n" + 
 			"WHERE a.fr_id=m.fr_id AND\n" + 
 			"	a.del_status=0 and chat.enq_no=a.enquiry_no  order by ",nativeQuery=true)
-	List<AlbumEnquiry> getAlbmFrDetail();*/
+	List<AlbumEnquiry> getAlbmFrDetail();
 	
 	
-	@Query(value="select c.enquiry_no,c.fr_id,c.ex_var3,c.cust_name,  \n" + 
+	/*@Query(value="select c.enquiry_no,c.fr_id,c.ex_var3,c.cust_name,  \n" + 
 			"   c.mobile_no,  \n" + 
 			"   c.photo,  \n" + 
 			"   c.enquiry_date,  \n" + 
@@ -140,7 +140,7 @@ public interface AlbumEnquiryRepo extends JpaRepository<AlbumEnquiry, Integer> {
 			"a.del_status=0   ) c LEFT JOIN  (select  enq_no from t_album_enq_chat where del_status=1 GROUP BY enq_no  order by MAX(alb_enq_chat_id) DESC) ids   \n" + 
 			"ON FIND_IN_SET(c.enquiry_no, ids.enq_no) > 0    ORDER BY c.flag ASC \n" + 
 			" LIMIT 100",nativeQuery=true)
-	List<AlbumEnquiry> getAlbmFrDetail();
+	List<AlbumEnquiry> getAlbmFrDetail();*/
 	
 	
 	
