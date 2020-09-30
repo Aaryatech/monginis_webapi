@@ -26,6 +26,26 @@ public interface AllFrIdNameRepository extends JpaRepository<AllFrIdName, Intege
 		
 		@Query(value="SELECT fr_id,fr_name from m_franchisee where del_status=:del", nativeQuery=true)
 		List<AllFrIdName> getAllFrIdNameByDelStatus(@Param("del")int del);
+		
+		@Query(value="select\n" + 
+				"        m_franchisee.fr_id,\n" + 
+				"        m_franchisee.fr_name \n" + 
+				"    from\n" + 
+				"        m_franchisee \n" + 
+				"    where\n" + 
+				"        m_franchisee.del_status=0 \n" + 
+				"        And  m_franchisee.fr_id NOT IN(\n" + 
+				"            select\n" + 
+				"                t_order.fr_id \n" + 
+				"            from\n" + 
+				"                t_order \n" + 
+				"            where\n" + 
+				"                production_date=:productionDate \n" + 
+				"                AND menu_id=:menuId\n" + 
+				"        ) \n" + 
+				"    order by\n" + 
+				"        m_franchisee.fr_name Asc",nativeQuery=true)
+		public List<AllFrIdName> findNonProduction(@Param("productionDate") String productionDate, @Param("menuId") int menuId);
 
 }
 

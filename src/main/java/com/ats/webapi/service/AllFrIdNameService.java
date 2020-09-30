@@ -11,4 +11,5 @@ public interface AllFrIdNameService {
 
 	AllFrIdNameList getFrIdAndNameByDelstatus(int i);
 
+	AllFrIdNameList findNonProductionFranchisee(String productionDate, int menuId);
 }

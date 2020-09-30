@@ -12,90 +12,99 @@ import com.ats.webapi.repository.AllFrIdNameRepository;
 
 @Service
 public class AllFrIdNameServiceImpl implements AllFrIdNameService {
-	
+
 	@Autowired
 	AllFrIdNameRepository allFrIdNameRepository;
 
 	@Override
 	public AllFrIdNameList getFrIdAndName() {
-		
-		AllFrIdNameList allFrIdNameList=new AllFrIdNameList();
-		
-		List<AllFrIdName> allFrIdNames=allFrIdNameRepository.getAllFrIdName();
-		Info info=new Info();
-		
-		if(allFrIdNames!=null) {
+
+		AllFrIdNameList allFrIdNameList = new AllFrIdNameList();
+
+		List<AllFrIdName> allFrIdNames = allFrIdNameRepository.getAllFrIdName();
+		Info info = new Info();
+
+		if (allFrIdNames != null) {
 			allFrIdNameList.setFrIdNamesList(allFrIdNames);
 			info.setError(false);
 			info.setMessage("Successfully displayed all fr Name and Id");
 			allFrIdNameList.setInfo(info);
-			
-			
-		}
-		else {
+
+		} else {
 			info.setError(true);
 			info.setMessage("error in getting fr Id and Names");
 			allFrIdNameList.setInfo(info);
 		}
-		
-		
-		
-		
+
 		return allFrIdNameList;
 	}
+
 	@Override
 	public AllFrIdNameList findNonOrderFranchisee(String orderDate, int menuId) {
-		
-		
-AllFrIdNameList allFrIdNameList=new AllFrIdNameList();
-		
-List<AllFrIdName> allFrIdNames=allFrIdNameRepository.findNonOrders(orderDate, menuId);
-	Info info=new Info();
-		
-		if(allFrIdNames!=null) {
+
+		AllFrIdNameList allFrIdNameList = new AllFrIdNameList();
+
+		List<AllFrIdName> allFrIdNames = allFrIdNameRepository.findNonOrders(orderDate, menuId);
+		Info info = new Info();
+
+		if (allFrIdNames != null) {
 			allFrIdNameList.setFrIdNamesList(allFrIdNames);
 			info.setError(false);
 			info.setMessage("Successfully displayed of Non Order fr Name and Id");
 			allFrIdNameList.setInfo(info);
-			
-			
-		}
-		else {
+
+		} else {
 			info.setError(true);
 			info.setMessage("error in getting fr Id and Names");
 			allFrIdNameList.setInfo(info);
 		}
-		
-		
-		
+
 		return allFrIdNameList;
 	}
-	
+
 	@Override
 	public AllFrIdNameList getFrIdAndNameByDelstatus(int del) {
-		
-		AllFrIdNameList allFrIdNameList=new AllFrIdNameList();
-		
-		List<AllFrIdName> allFrIdNames=allFrIdNameRepository.getAllFrIdNameByDelStatus(del);
-		Info info=new Info();
-		
-		if(allFrIdNames!=null) {
+
+		AllFrIdNameList allFrIdNameList = new AllFrIdNameList();
+
+		List<AllFrIdName> allFrIdNames = allFrIdNameRepository.getAllFrIdNameByDelStatus(del);
+		Info info = new Info();
+
+		if (allFrIdNames != null) {
 			allFrIdNameList.setFrIdNamesList(allFrIdNames);
 			info.setError(false);
 			info.setMessage("Successfully displayed all fr Name and Id");
 			allFrIdNameList.setInfo(info);
-			
-			
-		}
-		else {
+
+		} else {
 			info.setError(true);
 			info.setMessage("error in getting fr Id and Names");
 			allFrIdNameList.setInfo(info);
 		}
-		
-		
-		
-		
+
+		return allFrIdNameList;
+	}
+
+	@Override
+	public AllFrIdNameList findNonProductionFranchisee(String productionDate, int menuId) {
+		System.err.println(productionDate);
+		AllFrIdNameList allFrIdNameList = new AllFrIdNameList();
+
+		List<AllFrIdName> allFrIdNames = allFrIdNameRepository.findNonProduction(productionDate, menuId);
+		Info info = new Info();
+
+		if (allFrIdNames != null) {
+			allFrIdNameList.setFrIdNamesList(allFrIdNames);
+			info.setError(false);
+			info.setMessage("Successfully displayed of Non Production fr Name and Id");
+			allFrIdNameList.setInfo(info);
+
+		} else {
+			info.setError(true);
+			info.setMessage("error in getting fr Id and Names");
+			allFrIdNameList.setInfo(info);
+		}
+
 		return allFrIdNameList;
 	}
 
