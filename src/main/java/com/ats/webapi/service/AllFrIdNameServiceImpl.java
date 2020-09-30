@@ -87,7 +87,7 @@ public class AllFrIdNameServiceImpl implements AllFrIdNameService {
 
 	@Override
 	public AllFrIdNameList findNonProductionFranchisee(String productionDate, int menuId) {
-		System.err.println(productionDate);
+		
 		AllFrIdNameList allFrIdNameList = new AllFrIdNameList();
 
 		List<AllFrIdName> allFrIdNames = allFrIdNameRepository.findNonProduction(productionDate, menuId);
