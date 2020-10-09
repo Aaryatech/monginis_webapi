@@ -1074,7 +1074,22 @@ public class TrayManagementController {
 
 		try {
 
-			res = trayMgtDetailInTrayRepo.saveAndFlush(trayMgtDetailInTray);
+			int flag = 0;
+
+			try {
+				List<TrayMgtDetailInTray> prev = trayMgtDetailInTrayRepo.findByTranDetailIdAndTranIntrayId(
+						trayMgtDetailInTray.getTranDetailId(), trayMgtDetailInTray.getTranIntrayId());
+				if (prev != null) {
+					if (!prev.isEmpty() || prev.size() > 0) {
+						flag = 1;
+					}
+				}
+			}catch(Exception e) {}
+			
+
+			if (flag == 0) {
+				res = trayMgtDetailInTrayRepo.saveAndFlush(trayMgtDetailInTray);
+			}
 
 		} catch (Exception e) {
 

@@ -14,6 +14,9 @@ import com.ats.webapi.model.tray.TrayMgtDetailInTray;
 public interface TrayMgtDetailInTrayRepo extends JpaRepository<TrayMgtDetailInTray, Integer> {
 
 	List<TrayMgtDetailInTray> findByFrIdAndIntrayDateAndDelStatus(int frId, String intrayDate, int i);
+	
+	List<TrayMgtDetailInTray> findByTranDetailIdAndTranIntrayId(int detailId,int intrayId);
+
 
 	// SELECT
 	// dt.intray_id,dt.tran_id,dt.tran_detail_id,dt.fr_id,dt.intray_date,SUM(dt.intray_big)
