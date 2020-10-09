@@ -72,6 +72,7 @@ import com.ats.webapi.repository.ProdItemStockRepo;
 import com.ats.webapi.repository.ProdItemStockTotalRepo;
 import com.ats.webapi.repository.SalesReportRepo;
 import com.ats.webapi.repository.SpCakeEnqAlbmFrnchseRepo;
+import com.ats.webapi.repository.SpCakeOrderHisRepository;
 import com.ats.webapi.repository.SpecialCakeCatRepository;
 import com.ats.webapi.repository.SpecialCakeRepository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
@@ -410,6 +411,8 @@ public class RestApiController {
 	FranchiseSupRepository franchiseSupRepository;
 	@Autowired
 	GenerateBillRepository generateBillRepository;
+	@Autowired
+	SpCakeOrderHisRepository spCakeOrderHisRepository;
 
 	@RequestMapping(value = { "/placeManualOrderNew" }, method = RequestMethod.POST)
 	public @ResponseBody List<GenerateBill> placeManualOrderNew(@RequestBody List<Orders> orderJson)
@@ -6171,4 +6174,19 @@ public class RestApiController {
 		}
 		return routeDetails;
 	}
+	
+	
+	//9-10-20
+	// Search Special Cake Order History
+		@RequestMapping("/getSpOrderHistory")
+		public @ResponseBody SpCkOrderHis getSpOrderHistory(@RequestParam int spOrderNo) {
+
+			SpCkOrderHis spCakeOrderList = spCakeOrderHisRepository.findBySpOrderNo(spOrderNo);
+			if(spCakeOrderList==null) {
+				spCakeOrderList=new SpCkOrderHis();
+			}
+
+			return spCakeOrderList;
+
+		}
 }
