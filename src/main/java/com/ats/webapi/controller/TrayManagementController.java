@@ -453,12 +453,11 @@ public class TrayManagementController {
 		return getTrayMgtHeaders;
 	}
 
-
 	@RequestMapping(value = { "/getAllVehiclesBetDateForApp" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetTrayMgtHeader> getAllVehiclesBetDateForApp(@RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 
-		List<GetTrayMgtHeader> getTrayMgtHeaders = getTrayMgtHeaderRepository.getAllVehiclesBetDate(fromDate,toDate);
+		List<GetTrayMgtHeader> getTrayMgtHeaders = getTrayMgtHeaderRepository.getAllVehiclesBetDate(fromDate, toDate);
 
 		return getTrayMgtHeaders;
 	}
@@ -471,7 +470,6 @@ public class TrayManagementController {
 		return res;
 	}
 
-	
 	// --------------------------------------------------------------------------------------------------------------------------
 	// --------------------------------Getting Tray Management
 	// Header---------------------------
@@ -1031,9 +1029,9 @@ public class TrayManagementController {
 	@RequestMapping(value = { "/getTrayDetailForBalanceByFr" }, method = RequestMethod.POST)
 	public @ResponseBody List<TrayMgtDetail> getTrayDetailForBalanceByFr(@RequestParam("frId") int frId) {
 
+		List<TrayMgtDetail> trayMgtDetailRes = trayMgtDetailRepository.findByFrIdAndDelStatus(frId, 0);
 		// List<TrayMgtDetail> trayMgtDetailRes =
-		// trayMgtDetailRepository.findByFrIdAndDelStatus(frId, 0);
-		List<TrayMgtDetail> trayMgtDetailRes = trayMgtService.getTrayDetailForBalanceByFr(frId);
+		// trayMgtService.getTrayDetailForBalanceByFr(frId);
 
 		return trayMgtDetailRes;
 
