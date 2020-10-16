@@ -12,12 +12,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.OrderDispatchRepDao;
 import com.ats.webapi.model.SpCakeWtCount;
+import com.ats.webapi.model.report.RouteFrBillDateAnalysis;
 import com.ats.webapi.model.reportv2.CrNoteRegItem;
 import com.ats.webapi.model.reportv2.CrNoteRegSp;
 import com.ats.webapi.model.reportv2.CrNoteRegisterList;
 import com.ats.webapi.repository.SpCakeWtCountRepo;
 import com.ats.webapi.repository.reportv2.CrNoteRegItemRepo;
 import com.ats.webapi.repository.reportv2.CrNoteRegSpRepo;
+import com.ats.webapi.repository.reportv2.RouteFrBillDateAnalysisRepo;
 import com.ats.webapi.repository.taxreport.OrderDispatchRepDaoRepository;
 
 @RestController
@@ -86,4 +88,26 @@ public class ReportApiCon {
 
 		return orderDispReportList;
 	}
+	
+	//Sachin 16-10-2020
+	@Autowired RouteFrBillDateAnalysisRepo routeFrBillDateAnalysRepo;
+	
+	
+	@RequestMapping(value = { "/getRouteFrBillDateAnalysReport" }, method = RequestMethod.POST)
+	public @ResponseBody Object getRouteFrBillDateAnalysReport(
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<RouteFrBillDateAnalysis> routeBillAnalyList = new ArrayList<>();
+		
+		try {
+			routeBillAnalyList=routeFrBillDateAnalysRepo.getRouteFrBillDateAnalysisReport(fromDate, toDate);
+		}catch (Exception e) {
+			routeBillAnalyList = new ArrayList<>();
+		}
+		
+		return routeBillAnalyList;
+		
+	}
+	
+	
 }
