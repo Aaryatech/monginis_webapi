@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ats.webapi.model.OrderDispatchRepDao;
 import com.ats.webapi.model.SpCakeWtCount;
 import com.ats.webapi.model.report.RouteFrBillDateAnalysis;
+import com.ats.webapi.model.report.SpCakeImageReport;
 import com.ats.webapi.model.reportv2.CrNoteRegItem;
 import com.ats.webapi.model.reportv2.CrNoteRegSp;
 import com.ats.webapi.model.reportv2.CrNoteRegisterList;
@@ -20,6 +21,7 @@ import com.ats.webapi.repository.SpCakeWtCountRepo;
 import com.ats.webapi.repository.reportv2.CrNoteRegItemRepo;
 import com.ats.webapi.repository.reportv2.CrNoteRegSpRepo;
 import com.ats.webapi.repository.reportv2.RouteFrBillDateAnalysisRepo;
+import com.ats.webapi.repository.reportv2.SpCakeImageReportRepo;
 import com.ats.webapi.repository.taxreport.OrderDispatchRepDaoRepository;
 
 @RestController
@@ -109,5 +111,24 @@ public class ReportApiCon {
 		
 	}
 	
+	
+	//Sachin 19-10-2020
+	@Autowired SpCakeImageReportRepo getSpCakeImageReportRepo;
+	
+	@RequestMapping(value = { "/getSpCakeImageReportBetFdTd" }, method = RequestMethod.POST)
+	public @ResponseBody Object getSpCakeImageReportBetFdTd(
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<SpCakeImageReport> spCakeImageReportList = new ArrayList<>();
+		
+		try {
+			spCakeImageReportList=getSpCakeImageReportRepo.getSpCakeImageReport(fromDate, toDate);
+		}catch (Exception e) {
+			spCakeImageReportList = new ArrayList<>();
+		}
+		
+		return spCakeImageReportList;
+		
+	}
 	
 }
