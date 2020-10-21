@@ -2916,7 +2916,7 @@ public class RestApiController {
 
 	}
 
-	// Anmol 24-6-2019
+	// 24-6-2019
 	@RequestMapping(value = { "/getAllSpCakesByFrForAlbum" }, method = RequestMethod.POST)
 	@ResponseBody
 	public SpecialCakeBeanList getAllSpCakesByFrForAlbum(@RequestParam("frId") int frId) {

@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name="m_comm_feedback_detail")
 public class FeedbackDetail implements Serializable{
@@ -40,7 +42,7 @@ public class FeedbackDetail implements Serializable{
 	@Column(name="time")
     private String time;
 
-	
+	@JsonFormat(locale = "hi",timezone = "Asia/Kolkata", pattern = "dd-MM-yyyy")
 	public Date getDate() {
 		return date;
 	}

@@ -229,4 +229,14 @@ public interface TrayMgtDetailRepository extends JpaRepository<TrayMgtDetail, In
     		"ON\n" + 
     		"    t1.fr_id = t2.fr_id",nativeQuery=true)
    	List<TrayMgtDetail> getByTranIdWithBal(@Param("tranId")int tranId);
+    
+    
+    
+    //UPDATE
+    @Modifying
+	@Transactional
+	@Query("Update TrayMgtDetail  SET balance_small=:small,balance_big=:big,balance_lead=:lid,tray_status=:status "
+			+ " WHERE tran_detail_id=:tranDetailId")
+	int updateBalTrayDetail(@Param("tranDetailId") int tranDetailId, @Param("small") int small,
+			@Param("big") int big, @Param("lid") int lid, @Param("status") int status);
 }

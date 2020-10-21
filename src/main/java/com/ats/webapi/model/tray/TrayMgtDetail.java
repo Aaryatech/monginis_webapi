@@ -3,6 +3,7 @@ package com.ats.webapi.model.tray;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Cacheable;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 @Entity
+@Cacheable(false)
 @Table(name="t_tray_mgt_detail")
 public class TrayMgtDetail implements Serializable{
 

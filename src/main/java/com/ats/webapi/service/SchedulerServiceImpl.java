@@ -47,16 +47,29 @@ public class SchedulerServiceImpl implements SchedulerService {
 					frTokens.addAll(usrTokens);
 					System.out.println("usrTokens" + usrTokens.toString());
 
-					try {
-						for (String token : frTokens) {
-							if (token != null) {
-								Firebase.sendPushNotifForCommunication(token, scheduler.getSchOccasionname(), jsonStr,
-										"news");
+					if (scheduler.getSchId() == 0) {
+
+						try {
+							for (String token : frTokens) {
+								if (token != null ) {
+									Firebase.sendPushNotifForCommunication(token, scheduler.getSchOccasionname(),
+											jsonStr, "news");
+								}
 							}
+							
+							
+							for (String token : usrTokens) {
+								if (token != null ) {
+									Firebase.sendPushNotifForCommunication(token, scheduler.getSchOccasionname(), jsonStr,
+											"news");
+								}
+							}
+							
+						} catch (Exception e) {
+							e.printStackTrace();
 						}
-					} catch (Exception e) {
-						e.printStackTrace();
 					}
+
 				}
 				info.setError(false);
 				info.setMessage("Scheduler inserted Successfully");

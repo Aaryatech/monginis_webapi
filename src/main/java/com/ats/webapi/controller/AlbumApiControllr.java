@@ -492,4 +492,25 @@ public  Info updateAlbumEnquiry(int enqId, int status,String approvedDateTime) {
 
 	}
 	
+	//21-10-2020
+	@RequestMapping(value = { "/getAllAlbumName" }, method = RequestMethod.GET)
+	public @ResponseBody List<Album> getAllAlbumName() {
+
+
+		List<Album> albumList = new ArrayList<>();
+
+		try {
+
+			albumList = albumRepo.getAllAlbumName();
+
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return albumList;
+
+	}
+	
 }

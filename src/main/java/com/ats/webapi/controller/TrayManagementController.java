@@ -4,8 +4,12 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,6 +42,8 @@ import com.ats.webapi.model.tray.GetTrayMgtHeaderForApp;
 import com.ats.webapi.model.tray.GetTrayMgtReport;
 import com.ats.webapi.model.tray.GetVehDriverMobNo;
 import com.ats.webapi.model.tray.GetVehicleAvg;
+import com.ats.webapi.model.tray.NewTrayReport;
+import com.ats.webapi.model.tray.NewTrayReportInTray;
 import com.ats.webapi.model.tray.TrayMgtDetail;
 import com.ats.webapi.model.tray.TrayMgtDetailBean;
 import com.ats.webapi.model.tray.TrayMgtDetailInTray;
@@ -55,6 +61,7 @@ import com.ats.webapi.repository.tray.GetTrayMgtHeaderRepository;
 import com.ats.webapi.repository.tray.GetTrayMgtReportRepo;
 import com.ats.webapi.repository.tray.GetVehDriverMobNoRepo;
 import com.ats.webapi.repository.tray.GetVehicleAvgRepository;
+import com.ats.webapi.repository.tray.NewTrayReportRepo;
 import com.ats.webapi.repository.tray.TrayMgtDetailBeanRepository;
 import com.ats.webapi.repository.tray.TrayMgtDetailInTrayRepo;
 import com.ats.webapi.repository.tray.TrayMgtDetailRepository;
@@ -115,6 +122,9 @@ public class TrayManagementController {
 	@Autowired
 	AllFrBalanceTrayReportRepo allFrBalanceTrayReportRepo;
 
+	@Autowired
+	NewTrayReportRepo newTrayReportRepo;
+
 	@RequestMapping(value = { "/getVehMobNo" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetVehDriverMobNo> getVehMobNo(@RequestParam("routeId") int routeId,
 			@RequestParam("curDate") String curDate) {
@@ -134,8 +144,8 @@ public class TrayManagementController {
 		try {
 			TrayMgtHeader isHeaderAvail = null;
 			try {
-				System.out.println("----------------------" + trayMgtHeader.getTranDate() + "--"
-						+ new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+				//System.out.println("----------------------" + trayMgtHeader.getTranDate() + "--"
+				//		+ new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 				isHeaderAvail = trayMgtHeaderRepository.findByTranDateAndVehIdAndDelStatus(
 						new SimpleDateFormat("yyyy-MM-dd").format(new Date()), trayMgtHeader.getVehId(), 0);
 
@@ -162,7 +172,7 @@ public class TrayManagementController {
 			trayMgtHeaderRes.setMessage("TrayMgtHeader Not Saved .Exc");
 
 			e.printStackTrace();
-			System.out.println("Exception In TrayManagementController /saveTrayMgtHeader" + e.getMessage());
+			//System.out.println("Exception In TrayManagementController /saveTrayMgtHeader" + e.getMessage());
 
 		}
 		return trayMgtHeaderRes;
@@ -195,7 +205,7 @@ public class TrayManagementController {
 			info.setMessage("TrayMgtDetail Not Saved .");
 
 			e.printStackTrace();
-			System.out.println("Exception In TrayManagementController /saveTrayMgtDetail" + e.getMessage());
+			//System.out.println("Exception In TrayManagementController /saveTrayMgtDetail" + e.getMessage());
 
 		}
 		return info;
@@ -228,7 +238,7 @@ public class TrayManagementController {
 			info.setMessage("TrayMgtDetails Not Saved .");
 
 			e.printStackTrace();
-			System.out.println("Exception In TrayManagementController /saveTrayMgtDetail" + e.getMessage());
+			//System.out.println("Exception In TrayManagementController /saveTrayMgtDetail" + e.getMessage());
 
 		}
 		return info;
@@ -720,7 +730,7 @@ public class TrayManagementController {
 			Calendar cal = Calendar.getInstance();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-			System.err.println("DATE -------- " + sdf.format(cal.getTimeInMillis()));
+			//System.err.println("DATE -------- " + sdf.format(cal.getTimeInMillis()));
 
 			driverList = driverDetailByFrRepo.getDriverInfo(frId, sdf.format(cal.getTimeInMillis()));
 		} catch (Exception e) {
@@ -729,13 +739,13 @@ public class TrayManagementController {
 		return driverList;
 	}
 
-	// ----ANMOL--------->17-12-2019----------------
+	// ------------->17-12-2019----------------
 
 	@RequestMapping(value = { "/getTotalFrTrayConsumed" }, method = RequestMethod.POST)
 	public @ResponseBody FrTrayConsumeQty getTotalFrTrayConsumed(@RequestParam("frId") int frId,
 			@RequestParam("deliveryDate") String deliveryDate) {
-		System.err.println(
-				"PARAM -------------------- frId - " + frId + "                  DeliveryDate - " + deliveryDate);
+		//System.err.println(
+		//		"PARAM -------------------- frId - " + frId + "                  DeliveryDate - " + deliveryDate);
 		FrTrayConsumeQty result = new FrTrayConsumeQty();
 		try {
 
@@ -745,7 +755,7 @@ public class TrayManagementController {
 				result = new FrTrayConsumeQty();
 			}
 
-			System.err.println("LIMIT -------------------- " + result);
+			//System.err.println("LIMIT -------------------- " + result);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -758,8 +768,8 @@ public class TrayManagementController {
 	@RequestMapping(value = { "/getTotalFrTrayConsumedByMenu" }, method = RequestMethod.POST)
 	public @ResponseBody FrTrayConsumeQty getTotalFrTrayConsumedByMenu(@RequestParam("frId") int frId,
 			@RequestParam("deliveryDate") String deliveryDate, @RequestParam("menuId") int menuId) {
-		System.err.println("PARAM -------------------- frId - " + frId + "                  DeliveryDate - "
-				+ deliveryDate + "             MENUID - " + menuId);
+		//System.err.println("PARAM -------------------- frId - " + frId + "                  DeliveryDate - "
+		//		+ deliveryDate + "             MENUID - " + menuId);
 		FrTrayConsumeQty result = new FrTrayConsumeQty();
 		try {
 
@@ -769,7 +779,7 @@ public class TrayManagementController {
 				result = new FrTrayConsumeQty();
 			}
 
-			System.err.println("LIMIT -------------------- " + result);
+			//System.err.println("LIMIT -------------------- " + result);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -867,6 +877,7 @@ public class TrayManagementController {
 			getTrayMgtReport = new ArrayList<GetTotalTray>();
 
 			List<TrayMgtDetail> trayMgtDetailList = trayMgtDetailRepository.getByTranIdWithBal(tranId);
+			//System.err.println("DETAIL LIST - " + trayMgtDetailList.toString());
 
 			List<Integer> frIdList = new ArrayList<>();
 			for (TrayMgtDetail trayMgtDetail : trayMgtDetailList) {
@@ -875,8 +886,10 @@ public class TrayManagementController {
 
 			List<GetInTrays> getTrayMgtInTrayList = trayMgtService.getTrayMgtInTrayList(tranId, frIdList);
 
-			System.err.println("getTrayMgtInTrayList" + getTrayMgtInTrayList.toString());
+			//System.err.println("getTrayMgtInTrayList" + getTrayMgtInTrayList.toString());
+			
 			for (TrayMgtDetail trayMgtDetail : trayMgtDetailList) {
+				
 				GetTotalTray getTray = new GetTotalTray();
 
 				getTray.setFrId(trayMgtDetail.getFrId());
@@ -888,13 +901,23 @@ public class TrayManagementController {
 				getTray.setBalanceLead(trayMgtDetail.getBalanceLead());
 				getTray.setBalanceSmall(trayMgtDetail.getBalanceSmall());
 
+				int inSmall = 0, inBig = 0, inLid = 0;
+
 				for (int j = 0; j < getTrayMgtInTrayList.size(); j++) {
-					if (trayMgtDetail.getFrId() == getTrayMgtInTrayList.get(j).getFrId()) {
-						getTray.setIntrayBig(getTrayMgtInTrayList.get(j).getIntrayBig());
-						getTray.setIntrayLead(getTrayMgtInTrayList.get(j).getIntrayLead());
-						getTray.setIntraySmall(getTrayMgtInTrayList.get(j).getIntraySmall());
+					if (trayMgtDetail.getFrId() == getTrayMgtInTrayList.get(j).getFrId()
+							) {
+
+						inSmall = inSmall + getTrayMgtInTrayList.get(j).getIntraySmall();
+						inBig = inBig + getTrayMgtInTrayList.get(j).getIntrayBig();
+						inLid = inLid + getTrayMgtInTrayList.get(j).getIntrayLead();
+
 					}
 				}
+
+				getTray.setIntrayBig(inBig);
+				getTray.setIntrayLead(inLid);
+				getTray.setIntraySmall(inSmall);
+
 				getTrayMgtReport.add(getTray);
 			}
 
@@ -1029,9 +1052,9 @@ public class TrayManagementController {
 	@RequestMapping(value = { "/getTrayDetailForBalanceByFr" }, method = RequestMethod.POST)
 	public @ResponseBody List<TrayMgtDetail> getTrayDetailForBalanceByFr(@RequestParam("frId") int frId) {
 
-		List<TrayMgtDetail> trayMgtDetailRes = trayMgtDetailRepository.findByFrIdAndDelStatus(frId, 0);
 		// List<TrayMgtDetail> trayMgtDetailRes =
-		// trayMgtService.getTrayDetailForBalanceByFr(frId);
+		// trayMgtDetailRepository.findByFrIdAndDelStatus(frId, 0);
+		List<TrayMgtDetail> trayMgtDetailRes = trayMgtService.getTrayDetailForBalanceByFr(frId);
 
 		return trayMgtDetailRes;
 
@@ -1084,8 +1107,8 @@ public class TrayManagementController {
 						flag = 1;
 					}
 				}
-			}catch(Exception e) {}
-			
+			} catch (Exception e) {
+			}
 
 			if (flag == 0) {
 				res = trayMgtDetailInTrayRepo.saveAndFlush(trayMgtDetailInTray);
@@ -1176,9 +1199,9 @@ public class TrayManagementController {
 			@RequestParam("frIdList") List<String> frIdList, @RequestParam("fromDate") String fromDate,
 			@RequestParam("toDate") String toDate) {
 
-		System.out.println(frIdList);
-		System.out.println(fromDate);
-		System.out.println(toDate);
+		//System.out.println(frIdList);
+		//System.out.println(fromDate);
+		//System.out.println(toDate);
 
 		List<GetTrayMgtReport> getTrayMgtDetail = null;
 		List<TrayMgtDetailInTray> trayMgtDetailInTrayList = null;
@@ -1332,6 +1355,293 @@ public class TrayManagementController {
 		}
 
 		return reportList;
+	}
+
+	// NEW REPORT - 16-10-2020
+	@RequestMapping(value = { "/getFrWiseTrayReportNew" }, method = RequestMethod.POST)
+	public @ResponseBody List<NewTrayReport> getFrWiseTrayReportNew(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate, @RequestParam("frId") int frId) {
+
+		fromDate = Common.convertToYMD(fromDate);
+		toDate = Common.convertToYMD(toDate);
+
+		List<NewTrayReport> trayMgtDetailRes = newTrayReportRepo.getFrWiseTrayReport(fromDate, toDate, frId);
+
+		List<NewTrayReport> res = new ArrayList<>();
+
+		if (trayMgtDetailRes != null) {
+
+			List<Integer> uniqueIds = new ArrayList<>();
+			Set<Integer> setIds = new HashSet<Integer>();
+			for (int i = 0; i < trayMgtDetailRes.size(); i++) {
+				setIds.add(trayMgtDetailRes.get(i).getTranId());
+			}
+			uniqueIds.addAll(setIds);
+			Collections.sort(uniqueIds);
+
+			for (int i = 0; i < uniqueIds.size(); i++) {
+
+				NewTrayReport model = new NewTrayReport();
+				List<NewTrayReportInTray> intrayList = new ArrayList<>();
+
+				for (int j = 0; j < trayMgtDetailRes.size(); j++) {
+
+					if (uniqueIds.get(i) == trayMgtDetailRes.get(j).getTranId()) {
+
+						model = trayMgtDetailRes.get(j);
+
+						//System.err.println("TRAY -----------> " + model);
+
+						for (int k = 0; k < trayMgtDetailRes.size(); k++) {
+
+							if (uniqueIds.get(i) == trayMgtDetailRes.get(k).getTranId()) {
+
+								intrayList.add(new NewTrayReportInTray(trayMgtDetailRes.get(k).getId(),
+										trayMgtDetailRes.get(k).getTranId(), trayMgtDetailRes.get(k).getTranDetailId(),
+										trayMgtDetailRes.get(k).getOuttrayDate(),
+										trayMgtDetailRes.get(k).getOuttrayBig(),
+										trayMgtDetailRes.get(k).getOuttraySmall(),
+										trayMgtDetailRes.get(k).getOuttrayLead(), trayMgtDetailRes.get(k).getIntrayId(),
+										trayMgtDetailRes.get(k).getTranIntrayId(),
+										trayMgtDetailRes.get(k).getIntrayDate(), trayMgtDetailRes.get(k).getIntrayBig(),
+										trayMgtDetailRes.get(k).getIntrayLead(),
+										trayMgtDetailRes.get(k).getIntraySmall(), trayMgtDetailRes.get(k).getBalSmall(),
+										trayMgtDetailRes.get(k).getBalBig(), trayMgtDetailRes.get(k).getBalLead()));
+
+							}
+
+						}
+
+						break;
+
+					}
+
+				}
+
+				model.setIntrayList(intrayList);
+				res.add(model);
+			}
+
+		}
+
+		return res;
+
+	}
+
+	// 20-10-2020 - UPDATE FR IN TRAY NEW
+	@RequestMapping(value = { "/updateReturnTrayByAdmin" }, method = RequestMethod.POST)
+	public @ResponseBody Info updateInTrayNew(@RequestParam("frId") int frId, @RequestParam("date") String date,
+			@RequestParam("small") int small, @RequestParam("big") int big, @RequestParam("lid") int lid) {
+		Info info = new Info();
+
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String currDate = sdf.format(new Date().getTime());
+
+			int vehIntrayId = 0;
+			int flag = 0;
+
+			List<TrayMgtDetailInTray> inTrayList = trayMgtDetailInTrayRepo.findByFrIdAndIntrayDateAndDelStatus(frId,
+					date, 0);
+
+			//System.err.println(
+			//		"PARAM => " + date + "  FR = " + frId + "   S = " + small + "    B = " + big + "    L = " + lid);
+
+			//System.err.println("IN TRAY LIST ==> " + inTrayList);
+
+			if (inTrayList != null) {
+				if (inTrayList.size() > 0) {
+
+					for (TrayMgtDetailInTray in : inTrayList) {
+
+						vehIntrayId = in.getTranIntrayId();
+
+						TrayMgtDetail detail = trayMgtDetailRepository.findByTranDetailId(in.getTranDetailId());
+						if (detail != null) {
+
+							//System.err.println("TRAY DETAIL ==> " + detail);
+
+							int balSmall = detail.getBalanceSmall() + in.getIntraySmall();
+							int balBig = detail.getBalanceBig() + in.getIntrayBig();
+							int balLid = detail.getBalanceLead() + in.getIntrayLead();
+							int status = detail.getTrayStatus();
+
+							if (status > 3) {
+								status = 4;
+							}
+
+							int res = trayMgtDetailRepository.updateBalTrayDetail(detail.getTranDetailId(), balSmall,
+									balBig, balLid, status);
+
+							List<TrayMgtDetail> detailList = trayMgtDetailRepository
+									.findByFrIdAndIsSameDayAndDelStatusAndTrayStatusIn(frId, 0, 0);
+
+							//System.err.println("NEW DETAIL TRAY LIST--> " + detailList);
+
+							if (res > 0) {
+
+								//System.err.println("UPDATE TRAY DETAIL ==> " + res + "     BAL S = " + balSmall
+								//		+ "    BAL B = " + balBig + "    BAL L = " + balLid);
+
+								trayMgtDetailInTrayRepo.deleteInTray(in.getIntrayId());
+
+								flag = 1;
+							}
+
+						}
+					}
+
+					if (flag == 1) {
+						// info = saveInTrayAndUpdateTrayDetail(frId, currDate, small, big, lid,
+						// vehIntrayId);
+					}
+
+				} else {
+					// flag = 1;
+					// info = saveInTrayAndUpdateTrayDetail(frId, currDate, small, big, lid,
+					// vehIntrayId);
+				}
+			} else {
+				// flag = 1;
+				// info = saveInTrayAndUpdateTrayDetail(frId, currDate, small, big, lid,
+				// vehIntrayId);
+			}
+
+			// INSERT NEW INTRAY AND UPDATE BAL TRAY
+
+			info.setError(false);
+			info.setMessage("" + vehIntrayId);
+
+		} catch (Exception e) {
+			info.setError(true);
+			info.setMessage("Failed");
+		}
+
+		return info;
+	}
+
+	@RequestMapping(value = { "/updateReturnTrayValuesByAdmin" }, method = RequestMethod.POST)
+	public @ResponseBody Info saveInTrayAndUpdateTrayDetail(@RequestParam("frId") int frId,
+			@RequestParam("small") int small, @RequestParam("big") int big, @RequestParam("lid") int lid,
+			@RequestParam("vehIntrayId") int vehIntrayId) {
+
+		Info info = new Info();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String currDate = sdf.format(new Date().getTime());
+
+		try {
+
+			List<TrayMgtDetail> detailList = trayMgtDetailRepository
+					.findByFrIdAndIsSameDayAndDelStatusAndTrayStatusIn(frId, 0, 0);
+
+			if (detailList != null) {
+				if (detailList.size() > 0) {
+
+					//System.err.println("DETAIL TRAY LIST--> " + detailList);
+
+					//for (int i = 0; i < detailList.size(); i++) {
+
+						//System.err.println("DETAIL TRAY STATUS LOOP --> " + detailList.get(i).getTrayStatus());
+
+						//System.err.println("DETAIL TRAY SMALL LOOP --> " + detailList.get(i).getBalanceSmall());
+						//System.err.println("DETAIL TRAY BIG LOOP --> " + detailList.get(i).getBalanceBig());
+						//System.err.println("DETAIL TRAY LID LOOP --> " + detailList.get(i).getBalanceLead());
+
+					//}
+
+					for (TrayMgtDetail detail : detailList) {
+
+						if (detail.getTrayStatus() == 2 || detail.getTrayStatus() == 3 || detail.getTrayStatus() == 4) {
+
+							//System.err.println("DETAIL TRAY STATUS --> " + detail.getTrayStatus());
+
+							//System.err.println("DETAIL TRAY SMALL --> " + detail.getBalanceSmall());
+							//System.err.println("DETAIL TRAY BIG --> " + detail.getBalanceBig());
+							//System.err.println("DETAIL TRAY LID --> " + detail.getBalanceLead());
+
+							int balSmall = 0, inSmall = 0;
+							int balBig = 0, inBig = 0;
+							int balLid = 0, inLid = 0;
+
+							if (detail.getBalanceSmall() <= small) {
+								small = small - detail.getBalanceSmall();
+								inSmall = detail.getBalanceSmall();
+								balSmall = 0;
+							} else {
+								inSmall = small;
+								balSmall = detail.getBalanceSmall() - small;
+								small = 0;
+							}
+							//System.err.println("BAL SMALL --> " + balSmall + "        IN SMALL --> " + inSmall);
+
+							if (detail.getBalanceBig() <= big) {
+								big = big - detail.getBalanceBig();
+								inBig = detail.getBalanceBig();
+								balBig = 0;
+							} else {
+								inBig = big;
+								balBig = detail.getBalanceBig() - big;
+								big = 0;
+							}
+							//System.err.println("BAL BIG --> " + balBig + "        IN BIG --> " + inBig);
+
+							if (detail.getBalanceLead() <= lid) {
+								lid = lid - detail.getBalanceLead();
+								inLid = detail.getBalanceLead();
+								balLid = 0;
+							} else {
+								inLid = lid;
+								balLid = detail.getBalanceLead() - lid;
+								lid = 0;
+							}
+							//System.err.println("BAL LID --> " + balLid + "        IN LID --> " + inLid);
+
+							int status = 3;
+
+							if (balSmall == 0 && balBig == 0 && balLid == 0) {
+								status = 5;
+							} else if (detail.getTrayStatus() == 2) {
+								status = 3;
+							} else if (detail.getTrayStatus() == 3) {
+								status = 4;
+							} else if (detail.getTrayStatus() == 4) {
+								status = 4;
+							}
+
+							TrayMgtDetailInTray inTray = new TrayMgtDetailInTray(0, detail.getTranDetailId(),
+									detail.getTranId(), detail.getFrId(), currDate, 0, 0, "0", "", 0, inBig, inLid,
+									vehIntrayId, inSmall);
+							//System.err.println("SAVE IN TRAY --> " + inTray);
+
+							if (trayMgtDetailInTrayRepo.saveAndFlush(inTray) != null) {
+
+								//System.err.println("SAVE IN TRAY --> " + inTray);
+
+								// int res=0;
+								int res = trayMgtDetailRepository.updateBalTrayDetail(detail.getTranDetailId(),
+										balSmall, balBig, balLid, status);
+								//System.err.println(
+								//		"UPDATE TRAY --> RES = " + res + "  --->   SMALL = " + balSmall + "     BIG = "
+								//				+ balBig + "      LID = " + balLid + "     STATUS => " + status);
+
+							}
+						}
+
+					}
+
+				}
+			}
+
+			info.setError(false);
+			info.setMessage("Success");
+
+		} catch (Exception e) {
+			info.setError(true);
+			info.setMessage("Failed");
+		}
+
+		return info;
+
 	}
 
 }

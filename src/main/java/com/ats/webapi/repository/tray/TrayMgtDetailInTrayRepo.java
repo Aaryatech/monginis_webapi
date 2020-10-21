@@ -49,5 +49,11 @@ public interface TrayMgtDetailInTrayRepo extends JpaRepository<TrayMgtDetailInTr
 			+ " WHERE intray_id=:inTrayId")
 	int updateInTrayDetail(@Param("inTrayId") int inTrayId, @Param("intrayBig") int intrayBig,
 			@Param("intrayLead") int intrayLead, @Param("intraySmall") int intraySmall);
+	
+	@Modifying
+	@Transactional
+	@Query("delete TrayMgtDetailInTray WHERE intray_id=:inTrayId")
+	int deleteInTray(@Param("inTrayId") int inTrayId);
+
 
 }

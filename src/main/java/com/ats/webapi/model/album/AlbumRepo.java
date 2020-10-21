@@ -38,6 +38,10 @@ public interface AlbumRepo extends JpaRepository<Album, Integer> {
 	@Query(value="SELECT * FROM t_sp_cake_album WHERE del_status=0 AND is_active=1",nativeQuery=true)
 	List<Album> getAlbumCakeForOPS();
 	
+	@Query(value="SELECT * FROM t_sp_cake_album WHERE del_status=0 AND album_name!='' GROUP BY album_name",nativeQuery=true)
+	List<Album> getAllAlbumName();
+	
+	
 	
 	
 }

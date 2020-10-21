@@ -16,7 +16,7 @@ public interface GetInTraysRepository  extends JpaRepository<GetInTrays, Integer
 			"sum(intray_big) as intray_big, \n" + 
 			"sum(intray_lead) as intray_lead, \n" + 
 			"sum(intray_small) as intray_small,0 as balance_big,0 as balance_lead,0 as balance_small,'' as fr_code,'' as fr_name " + 
-			"         from t_tray_mgmt_detail_intray where tran_intray_id=:tranId and fr_id IN(:frIdList) group by fr_id,tran_intray_id",nativeQuery=true)
+			"         from t_tray_mgmt_detail_intray where tran_id=:tranId and fr_id IN(:frIdList) group by fr_id,tran_intray_id",nativeQuery=true)
 	List<GetInTrays> getTrayMgtInTrayList(@Param("tranId")int tranId,@Param("frIdList") List<Integer> frIdList);
 
 }

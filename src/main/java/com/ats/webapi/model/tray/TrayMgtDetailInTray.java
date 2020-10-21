@@ -55,6 +55,39 @@ public class TrayMgtDetailInTray {
 
 	@Column(name = "intray_small")
 	private int intraySmall;
+	
+	
+	
+	
+
+	public TrayMgtDetailInTray() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+
+	public TrayMgtDetailInTray(int intrayId, int tranDetailId, int tranId, int frId, String intrayDate, int exInt1,
+			int exInt2, String exVar1, String exVar2, int delStatus, int intrayBig, int intrayLead, int tranIntrayId,
+			int intraySmall) {
+		super();
+		this.intrayId = intrayId;
+		this.tranDetailId = tranDetailId;
+		this.tranId = tranId;
+		this.frId = frId;
+		this.intrayDate = intrayDate;
+		this.exInt1 = exInt1;
+		this.exInt2 = exInt2;
+		this.exVar1 = exVar1;
+		this.exVar2 = exVar2;
+		this.delStatus = delStatus;
+		this.intrayBig = intrayBig;
+		this.intrayLead = intrayLead;
+		this.tranIntrayId = tranIntrayId;
+		this.intraySmall = intraySmall;
+	}
+
+
 
 	public int getIntrayId() {
 		return intrayId;
