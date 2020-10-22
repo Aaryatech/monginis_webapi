@@ -43,6 +43,30 @@ public class Notification implements Serializable{
     private int isClosed;
 	
 	
+	
+	
+	public Notification() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+
+	public Notification(int notificationId, String subject, int userId, String description, String photo, Date date,
+			String time, int isClosed) {
+		super();
+		this.notificationId = notificationId;
+		this.subject = subject;
+		this.userId = userId;
+		this.description = description;
+		this.photo = photo;
+		this.date = date;
+		this.time = time;
+		this.isClosed = isClosed;
+	}
+
+
+
 	public int getIsClosed() {
 		return isClosed;
 	}

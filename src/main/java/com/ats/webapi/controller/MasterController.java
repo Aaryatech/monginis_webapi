@@ -1227,6 +1227,19 @@ public class MasterController {
 	}
 	
 	
+	@RequestMapping(value = { "/getAllItemSupData" }, method = RequestMethod.POST)
+	public @ResponseBody List<GetItemSup> getAllItemSupData(@RequestParam("del") int del) {
+
+		List<GetItemSup> res=null;
+
+		res = getItemSupRepository.findAllByDelStatus(del);
+		if (res == null) {
+			res = new ArrayList<>();
+		}
+		return res;
+	}
+	
+	
 	
 
 }
