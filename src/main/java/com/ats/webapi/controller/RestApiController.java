@@ -2279,6 +2279,73 @@ public class RestApiController {
 
 		return jsonResult;
 	}
+	
+	
+	
+	@RequestMapping(value = { "/saveFranchiseeNew" }, method = RequestMethod.POST)
+	@ResponseBody
+	public ErrorMessage saveFranchiseeNew(@RequestParam("frName") String frName, @RequestParam("frCode") String frCode,
+			@RequestParam("frOpeningDate") String frOpeningDate, @RequestParam("frRate") int frRate,
+			@RequestParam("frImage") String frImage, @RequestParam("frRouteId") int frRouteId,
+			@RequestParam("frCity") String frCity, @RequestParam("frKg1") int frKg1, @RequestParam("frKg2") int frKg2,
+			@RequestParam("frKg3") int frKg3, @RequestParam("frKg4") int frKg4, @RequestParam("frEmail") String frEmail,
+			@RequestParam("frPassword") String frPassword, @RequestParam("frMob") String frMob,
+			@RequestParam("frOwner") String frOwner, @RequestParam("frRateCat") int frRateCat,
+			@RequestParam("grnTwo") int grnTwo, @RequestParam("ownerBirthDate") String ownerBirthDate,
+			@RequestParam("fbaLicenseDate") String fbaLicenseDate, @RequestParam("delStatus") int delStatus,
+			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
+			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
+			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget,
+			@RequestParam("isSameState") int isSameState,@RequestParam("frNameMr") String frNameMr) throws ParseException {
+		// DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+		// java.util.Date date = sdf.parse(frOpeningDate);
+		// java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
+		java.sql.Date sqlOpeningDate = Common.convertToSqlDate(frOpeningDate);
+		java.sql.Date sqlFrAgreementDate = Common.convertToSqlDate(frAgreementDate);
+		java.sql.Date sqlOwnerBirthDate = Common.convertToSqlDate(ownerBirthDate);
+		java.sql.Date SQLfbaLicenseDate = Common.convertToSqlDate(fbaLicenseDate);
+
+		Franchisee franchisee = new Franchisee();
+		// franchisee.setFrId(frId);
+		franchisee.setFrName(frName);
+		franchisee.setFrCode(frCode);
+		franchisee.setFrOpeningDate(sqlOpeningDate);
+		franchisee.setFrRate(frRate);
+		franchisee.setFrImage(frImage);
+		franchisee.setFrRouteId(frRouteId);
+		franchisee.setFrCity(frCity);
+		franchisee.setFrKg1(frKg1);
+		franchisee.setFrKg2(frKg2);
+		franchisee.setFrKg3(frKg3);
+		franchisee.setFrKg4(frKg4);
+		franchisee.setFrEmail(frEmail);
+		franchisee.setFrPassword(frPassword);
+		franchisee.setFrMob(frMob);
+		franchisee.setFrOwner(frOwner);
+		franchisee.setFrRateCat(frRateCat);
+		franchisee.setGrnTwo(grnTwo);
+		franchisee.setFrRmn1("");
+		franchisee.setFrOpening(0);
+		franchisee.setShowItems("");
+		franchisee.setNotShowItems(frNameMr);
+		franchisee.setFrPasswordKey("");
+
+		franchisee.setFrAddress(frAddress);
+		franchisee.setFrAgreementDate(sqlFrAgreementDate);
+		franchisee.setFrGstNo(frGstNo);
+		franchisee.setFrGstType(frGstType);
+		franchisee.setOwnerBirthDate(sqlOwnerBirthDate);
+		franchisee.setFbaLicenseDate(SQLfbaLicenseDate);
+		franchisee.setStockType(stockType);
+		franchisee.setFrTarget(frTarget);
+		franchisee.setIsSameState(isSameState);
+		franchisee.setDelStatus(delStatus);
+
+		System.out.println("" + franchisee.toString());
+		ErrorMessage jsonResult = franchiseeService.saveFranchisee(franchisee);
+
+		return jsonResult;
+	}
 
 	// Special Cake Insert
 	@RequestMapping(value = { "/insertSpecialCake" }, method = RequestMethod.POST)
@@ -4451,6 +4518,98 @@ public class RestApiController {
 		// return "abc";
 	}
 
+	
+	//New
+	@RequestMapping(value = { "/updateFranchiseeNew" }, method = RequestMethod.POST)
+	@ResponseBody
+	public ErrorMessage updateFranchiseeNew(@RequestParam("frId") int frId, @RequestParam("frName") String frName,
+			@RequestParam("frCode") String frCode, @RequestParam("frOpeningDate") String frOpeningDate,
+			@RequestParam("frRate") int frRate, @RequestParam("frImage") String frImage,
+			@RequestParam("frRouteId") int frRouteId, @RequestParam("frCity") String frCity,
+			@RequestParam("frKg1") int frKg1, @RequestParam("frKg2") int frKg2, @RequestParam("frKg3") int frKg3,
+			@RequestParam("frKg4") int frKg4, @RequestParam("frEmail") String frEmail,
+			@RequestParam("frPassword") String frPassword, @RequestParam("frMob") String frMob,
+			@RequestParam("frOwner") String frOwner, @RequestParam("frRateCat") int frRateCat,
+			@RequestParam("grnTwo") int grnTwo, @RequestParam("delStatus") int delStatus,
+			@RequestParam("ownerBirthDate") String ownerBirthDate,
+			@RequestParam("fbaLicenseDate") String fbaLicenseDate,
+			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
+			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
+			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget,
+			@RequestParam("isSameState") int isSameState,@RequestParam("frNameMr") String frNameMr) {
+		ErrorMessage jsonResult = new ErrorMessage();
+		try {
+
+			System.out.println("inside update fr rest controller:1721 line");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+			Date date = sdf.parse(frOpeningDate);
+			System.out.println("parsed Date line no 1728 : " + date);
+			java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
+			Date utilFrAgreementDate = sdf.parse(frAgreementDate);
+			Date utilOwnerBirthDate = sdf.parse(ownerBirthDate);
+			Date utilFbaLicenseDate = sdf.parse(fbaLicenseDate);
+			/*
+			 * java.sql.Date sqlFrAgreementDate=Common.convertToSqlDate(frAgreementDate);
+			 * java.sql.Date sqlOwnerBirthDate=Common.convertToSqlDate(ownerBirthDate);
+			 * java.sql.Date SQLfrLicenseDate=Common.convertToSqlDate(frLicenseDate);
+			 */
+			/*
+			 * System.out.println("fr opening as of form "+frOpeningDate); java.sql.Date
+			 * sqlDate=Common.convertToSqlDate(frOpeningDate);
+			 * 
+			 * 
+			 * System.out.println("sql date for update fr ****** "+sqlDate);
+			 */
+
+			Franchisee franchisee = franchiseeService.findFranchisee(frId);
+
+			// franchisee.setFrId(frId);
+			franchisee.setFrName(frName);
+			franchisee.setFrCode(frCode);
+			franchisee.setFrOpeningDate(date);
+			franchisee.setFrRate(frRate);
+			franchisee.setFrImage(frImage);
+			franchisee.setFrRouteId(frRouteId);
+			franchisee.setFrCity(frCity);
+			franchisee.setFrKg1(frKg1);
+			franchisee.setFrKg2(frKg2);
+			franchisee.setFrKg3(frKg3);
+			franchisee.setFrKg4(frKg4);
+			franchisee.setFrEmail(frEmail);
+			franchisee.setFrPassword(frPassword);
+			franchisee.setFrMob(frMob);
+			franchisee.setFrOwner(frOwner);
+			franchisee.setFrRateCat(frRateCat);
+			franchisee.setGrnTwo(grnTwo);
+			franchisee.setFrRmn1("");
+			franchisee.setFrOpening(0);
+			franchisee.setShowItems("");
+			franchisee.setNotShowItems(frNameMr);
+			franchisee.setFrPasswordKey("");
+			franchisee.setDelStatus(delStatus);
+
+			franchisee.setFrAddress(frAddress);
+			franchisee.setFrAgreementDate(utilFrAgreementDate);
+			franchisee.setFrGstNo(frGstNo);
+			franchisee.setFrGstType(frGstType);
+			franchisee.setOwnerBirthDate(utilOwnerBirthDate);
+			franchisee.setFbaLicenseDate(utilFbaLicenseDate);
+			franchisee.setStockType(stockType);
+			franchisee.setFrTarget(frTarget);
+			franchisee.setIsSameState(isSameState);
+
+			System.out.println("" + franchisee.toString());
+			jsonResult = franchiseeService.saveFranchisee(franchisee);
+		} catch (Exception e) {
+			System.out.println("update scheduler rest exce " + e.getMessage());
+		}
+
+		return jsonResult;
+		// return "abc";
+	}
+
+	
+	
 	// 27 aug
 	// update rate
 	@RequestMapping("/updateRate")

@@ -691,7 +691,11 @@ public class CommunicationServiceImpl implements CommunicationService {
 		List<GetSuggestion> allSuggestions = new ArrayList<GetSuggestion>();
 
 		try {
-			allSuggestions = getSuggestionRepository.findAllGetSuggestionsBySuggestionId(suggestionId);
+			if (suggestionId == 0) {
+				allSuggestions = getSuggestionRepository.findAllGetSuggestionsBySuggestionIdLast8Days();
+			} else {
+				allSuggestions = getSuggestionRepository.findAllGetSuggestionsBySuggestionId(suggestionId);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -704,8 +708,11 @@ public class CommunicationServiceImpl implements CommunicationService {
 
 		List<GetSuggestionDetail> suggestionDetails = new ArrayList<GetSuggestionDetail>();
 		try {
-			suggestionDetails = getSuggestionDetailRepository.findBySuggestionDetailId(suggestionDetailId);
-
+			if (suggestionDetailId == 0) {
+				suggestionDetails = getSuggestionDetailRepository.findBySuggestionDetailIdLast8Days();
+			} else {
+				suggestionDetails = getSuggestionDetailRepository.findBySuggestionDetailId(suggestionDetailId);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -717,7 +724,11 @@ public class CommunicationServiceImpl implements CommunicationService {
 		List<GetSuggestion> allSuggestions = new ArrayList<GetSuggestion>();
 
 		try {
-			allSuggestions = getSuggestionRepository.findAllGetSuggHeadersByFrIdAndSuggestionId(frId, suggestionId);
+			if (suggestionId == 0) {
+				allSuggestions = getSuggestionRepository.findAllGetSuggHeadersByFrIdAndSuggestionIdLast8Days(frId);
+			} else {
+				allSuggestions = getSuggestionRepository.findAllGetSuggHeadersByFrIdAndSuggestionId(frId, suggestionId);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -730,7 +741,13 @@ public class CommunicationServiceImpl implements CommunicationService {
 
 		List<GetSuggestionDetail> suggestionDetails = new ArrayList<GetSuggestionDetail>();
 		try {
-			suggestionDetails = getSuggestionDetailRepository.findBySuggestionDetailIdAndFrId(suggestionDetailId, frId);
+
+			if (suggestionDetailId == 0) {
+				suggestionDetails = getSuggestionDetailRepository.findBySuggestionDetailIdAndFrIdLast8Days(frId);
+			} else {
+				suggestionDetails = getSuggestionDetailRepository.findBySuggestionDetailIdAndFrId(suggestionDetailId,
+						frId);
+			}
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -742,8 +759,11 @@ public class CommunicationServiceImpl implements CommunicationService {
 	public List<GetComplaint> getAllComplHeaders(int complaintId) {
 		List<GetComplaint> allComplaints = new ArrayList<GetComplaint>();
 		try {
-			allComplaints = getComplaintRepository.getAllComplHeaders(complaintId);
-
+			if (complaintId == 0) {
+				allComplaints = getComplaintRepository.getAllComplHeadersLast8Days();
+			} else {
+				allComplaints = getComplaintRepository.getAllComplHeaders(complaintId);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -756,7 +776,11 @@ public class CommunicationServiceImpl implements CommunicationService {
 
 		List<GetComplaintDetail> complaintDetails = new ArrayList<GetComplaintDetail>();
 		try {
-			complaintDetails = getComplaintDetailRepository.findByComplaintDetailId(compDetailId);
+			if (compDetailId == 0) {
+				complaintDetails = getComplaintDetailRepository.findByComplaintDetailIdLast8Days();
+			} else {
+				complaintDetails = getComplaintDetailRepository.findByComplaintDetailId(compDetailId);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -781,8 +805,11 @@ public class CommunicationServiceImpl implements CommunicationService {
 
 		List<GetComplaint> allComplaints = new ArrayList<GetComplaint>();
 		try {
-			allComplaints = getComplaintRepository.getAllComplHeadersByFrId(complaintId, frId);
-
+			if (complaintId == 0) {
+				allComplaints = getComplaintRepository.getAllComplHeadersByFrIdLast8Days(frId);
+			} else {
+				allComplaints = getComplaintRepository.getAllComplHeadersByFrId(complaintId, frId);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -795,7 +822,11 @@ public class CommunicationServiceImpl implements CommunicationService {
 
 		List<GetComplaintDetail> complaintDetails = new ArrayList<GetComplaintDetail>();
 		try {
-			complaintDetails = getComplaintDetailRepository.findByComplaintDetailIdAndFrId(compDetailId, frId);
+			if (compDetailId == 0) {
+				complaintDetails = getComplaintDetailRepository.findByComplaintDetailIdAndFrIdLast8Days(frId);
+			} else {
+				complaintDetails = getComplaintDetailRepository.findByComplaintDetailIdAndFrId(compDetailId, frId);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

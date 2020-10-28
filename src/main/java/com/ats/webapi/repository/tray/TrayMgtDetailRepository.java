@@ -125,7 +125,7 @@ public interface TrayMgtDetailRepository extends JpaRepository<TrayMgtDetail, In
     		"        t_tray_mgt_header h,\n" + 
     		"        t_tray_mgt_detail d\n" + 
     		"    WHERE\n" + 
-    		"        h.del_status = 0 AND d.del_status = 0 AND h.tran_id = d.tran_id AND d.fr_id = :frId\n" + 
+    		"        h.del_status = 0 AND d.del_status = 0 AND h.tran_id = d.tran_id AND d.fr_id = :frId AND d.tray_status>1 \n" + 
     		") t1\n" + 
     		"ON\n" + 
     		"    t.flg = t1.flg\n" + 

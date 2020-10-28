@@ -33,7 +33,7 @@ public interface GetSpCkOrderAlbumRepo extends JpaRepository<GetSpCkOrderAlbum, 
 			"        s.sp_cust_mob_no,\n" + 
 			"        sf.spf_name,\n" + 
 			"        album.photo1 as album_photo1,\n" + 
-			"        album.photo2 as album_photo2\n" + 
+			"        album.photo2 as album_photo2, f.not_show_items as fr_name_mr \n" + 
 			"    FROM\n" + 
 			"        m_franchisee f ,\n" + 
 			"        m_sp_cake_category sp,\n" + 

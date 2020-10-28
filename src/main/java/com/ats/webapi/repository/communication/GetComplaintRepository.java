@@ -20,9 +20,15 @@ public interface GetComplaintRepository extends JpaRepository<GetComplaint, Inte
 
 	@Query(value="select h.complaint_id,h.title,h.description,h.photo1,h.photo2,h.fr_id,f.fr_name,h.mobile_number,h.is_closed,date,h.time,h.customer_name from m_comm_complaint h,m_franchisee f WHERE  h.fr_id=f.fr_id And h.is_closed=0 And h.complaint_id>:complaintId",nativeQuery=true)
 	List<GetComplaint> getAllComplHeaders(@Param("complaintId")int complaintId);
+	
+	@Query(value="select h.complaint_id,h.title,h.description,h.photo1,h.photo2,h.fr_id,f.fr_name,h.mobile_number,h.is_closed,date,h.time,h.customer_name from m_comm_complaint h,m_franchisee f WHERE  h.fr_id=f.fr_id And h.is_closed=0 And h.date >= (CURDATE() - INTERVAL 8 DAY)",nativeQuery=true)
+	List<GetComplaint> getAllComplHeadersLast8Days();
 
 	@Query(value="select h.complaint_id,h.title,h.description,h.photo1,h.photo2,h.fr_id,f.fr_name,h.mobile_number,h.is_closed,date,h.time,h.customer_name from m_comm_complaint h,m_franchisee f WHERE  h.fr_id=f.fr_id And h.is_closed=0 And h.complaint_id>:complaintId And h.fr_id=:frId",nativeQuery=true)
 	List<GetComplaint> getAllComplHeadersByFrId(@Param("complaintId")int complaintId,@Param("frId") int frId);
+
+	@Query(value="select h.complaint_id,h.title,h.description,h.photo1,h.photo2,h.fr_id,f.fr_name,h.mobile_number,h.is_closed,date,h.time,h.customer_name from m_comm_complaint h,m_franchisee f WHERE  h.fr_id=f.fr_id And h.is_closed=0 And h.date >= (CURDATE() - INTERVAL 8 DAY) And h.fr_id=:frId",nativeQuery=true)
+	List<GetComplaint> getAllComplHeadersByFrIdLast8Days(@Param("frId") int frId);
 
 
 }

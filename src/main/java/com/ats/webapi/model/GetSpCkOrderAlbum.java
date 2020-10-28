@@ -82,6 +82,8 @@ public class GetSpCkOrderAlbum {
 	private String albumPhoto1;
 	private String albumPhoto2;
 
+	@Column(name="fr_name_mr") 
+	private String frNameMr;
 	
 	
 	public String getItemId() {
@@ -312,6 +314,20 @@ public class GetSpCkOrderAlbum {
 	public void setAlbumPhoto2(String albumPhoto2) {
 		this.albumPhoto2 = albumPhoto2;
 	}
+	
+	
+
+
+	public String getFrNameMr() {
+		return frNameMr;
+	}
+
+
+	public void setFrNameMr(String frNameMr) {
+		this.frNameMr = frNameMr;
+	}
+	
+	
 
 
 	@Override
@@ -323,7 +339,7 @@ public class GetSpCkOrderAlbum {
 				+ ", itemId=" + itemId + ", spDeliveryPlace=" + spDeliveryPlace + ", spCustName=" + spCustName
 				+ ", spEvents=" + spEvents + ", spEventsName=" + spEventsName + ", spCustMobNo=" + spCustMobNo
 				+ ", spfName=" + spfName + ", cusChoicePhoto=" + cusChoicePhoto + ", orderPhoto=" + orderPhoto
-				+ ", albumPhoto1=" + albumPhoto1 + ", albumPhoto2=" + albumPhoto2 + "]";
+				+ ", albumPhoto1=" + albumPhoto1 + ", albumPhoto2=" + albumPhoto2 + ", frNameMr=" + frNameMr + "]";
 	}
 
 

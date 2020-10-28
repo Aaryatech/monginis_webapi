@@ -18,7 +18,14 @@ public interface GetSuggestionDetailRepository extends JpaRepository<GetSuggesti
 	@Query(value="select d.suggestion_detail_id,d.suggestion_id,d.message,d.is_admin,d.fr_id,CASE WHEN d.is_admin=1 THEN (select u.usr_name from m_user u where d.fr_id=u.usr_id) Else (select f.fr_name from m_franchisee f where f.fr_id=d.fr_id)END AS fr_name,d.photo,d.date,d.time from m_comm_suggestion_detail d where d.suggestion_detail_id>:suggestionDetailId",nativeQuery=true)
 	List<GetSuggestionDetail> findBySuggestionDetailId(@Param("suggestionDetailId")int suggestionDetailId);
 
+	@Query(value="select d.suggestion_detail_id,d.suggestion_id,d.message,d.is_admin,d.fr_id,CASE WHEN d.is_admin=1 THEN (select u.usr_name from m_user u where d.fr_id=u.usr_id) Else (select f.fr_name from m_franchisee f where f.fr_id=d.fr_id)END AS fr_name,d.photo,d.date,d.time from m_comm_suggestion_detail d,m_comm_suggestion h where d.suggestion_id=h.suggestion_id AND d.date >= (CURDATE() - INTERVAL 8 DAY) AND h.date >= (CURDATE() - INTERVAL 8 DAY)",nativeQuery=true)
+	List<GetSuggestionDetail> findBySuggestionDetailIdLast8Days();
+
+	
 	@Query(value="select d.suggestion_detail_id,d.suggestion_id,d.message,d.is_admin,d.fr_id,CASE WHEN d.is_admin=1 THEN (select u.usr_name from m_user u where d.fr_id=u.usr_id) Else (select f.fr_name from m_franchisee f where f.fr_id=d.fr_id)END AS fr_name,d.photo,d.date,d.time from m_comm_suggestion_detail d,m_comm_suggestion h where d.suggestion_detail_id>:suggestionDetailId And d.suggestion_id=h.suggestion_id And h.fr_id=:frId",nativeQuery=true)
 	List<GetSuggestionDetail> findBySuggestionDetailIdAndFrId(@Param("suggestionDetailId")int suggestionDetailId,@Param("frId") int frId);
+
+	@Query(value="select d.suggestion_detail_id,d.suggestion_id,d.message,d.is_admin,d.fr_id,CASE WHEN d.is_admin=1 THEN (select u.usr_name from m_user u where d.fr_id=u.usr_id) Else (select f.fr_name from m_franchisee f where f.fr_id=d.fr_id)END AS fr_name,d.photo,d.date,d.time from m_comm_suggestion_detail d,m_comm_suggestion h where d.date >= (CURDATE() - INTERVAL 8 DAY) AND h.date >= (CURDATE() - INTERVAL 8 DAY) And d.suggestion_id=h.suggestion_id And h.fr_id=:frId",nativeQuery=true)
+	List<GetSuggestionDetail> findBySuggestionDetailIdAndFrIdLast8Days(@Param("frId") int frId);
 
 }

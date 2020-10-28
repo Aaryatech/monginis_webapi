@@ -39,7 +39,14 @@ public interface GetSuggestionRepository extends JpaRepository<GetSuggestion, In
 	@Query(value="select m_comm_suggestion.suggestion_id,m_comm_suggestion.title,m_comm_suggestion.photo,m_comm_suggestion.description,m_comm_suggestion.date,m_comm_suggestion.time,m_comm_suggestion.fr_id,m_franchisee.fr_name,m_comm_suggestion.is_closed  from m_comm_suggestion,m_franchisee where m_comm_suggestion.fr_id=m_franchisee.fr_id AND m_comm_suggestion.is_closed=0 And m_comm_suggestion.suggestion_id>:suggestionId",nativeQuery=true)
 	List<GetSuggestion> findAllGetSuggestionsBySuggestionId(@Param("suggestionId")int suggestionId);
 
+	@Query(value="select m_comm_suggestion.suggestion_id,m_comm_suggestion.title,m_comm_suggestion.photo,m_comm_suggestion.description,m_comm_suggestion.date,m_comm_suggestion.time,m_comm_suggestion.fr_id,m_franchisee.fr_name,m_comm_suggestion.is_closed  from m_comm_suggestion,m_franchisee where m_comm_suggestion.fr_id=m_franchisee.fr_id AND m_comm_suggestion.is_closed=0 And m_comm_suggestion.date>=(CURDATE() - INTERVAL 8 DAY)",nativeQuery=true)
+	List<GetSuggestion> findAllGetSuggestionsBySuggestionIdLast8Days();
+
+	
 	@Query(value="select m_comm_suggestion.suggestion_id,m_comm_suggestion.title,m_comm_suggestion.photo,m_comm_suggestion.description,m_comm_suggestion.date,m_comm_suggestion.time,m_comm_suggestion.fr_id,m_franchisee.fr_name,m_comm_suggestion.is_closed  from m_comm_suggestion,m_franchisee where m_comm_suggestion.fr_id=m_franchisee.fr_id AND m_comm_suggestion.is_closed=0 And m_comm_suggestion.fr_id=:frId And m_comm_suggestion.suggestion_id>:suggestionId",nativeQuery=true)
 	List<GetSuggestion> findAllGetSuggHeadersByFrIdAndSuggestionId(@Param("frId")int frId,@Param("suggestionId") int suggestionId);
+
+	@Query(value="select m_comm_suggestion.suggestion_id,m_comm_suggestion.title,m_comm_suggestion.photo,m_comm_suggestion.description,m_comm_suggestion.date,m_comm_suggestion.time,m_comm_suggestion.fr_id,m_franchisee.fr_name,m_comm_suggestion.is_closed  from m_comm_suggestion,m_franchisee where m_comm_suggestion.fr_id=m_franchisee.fr_id AND m_comm_suggestion.is_closed=0 And m_comm_suggestion.fr_id=:frId And m_comm_suggestion.date>=(CURDATE() - INTERVAL 8 DAY)",nativeQuery=true)
+	List<GetSuggestion> findAllGetSuggHeadersByFrIdAndSuggestionIdLast8Days(@Param("frId")int frId);
 
 }
