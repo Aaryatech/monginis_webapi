@@ -111,7 +111,7 @@ public class ScheduleTask {
 	// second, minute, hour, day of month, month, day(s) of week
 
 	// Anmol-->29-11-2019----->Album_Enquiry_Notification
-	@Scheduled(cron = "1 * * * * *")
+	//@Scheduled(cron = "1 * * * * *")
 	public void scheduleTaskAlbumEnquiryNotify() {
 System.err.println("Monika Enq");
 		try {

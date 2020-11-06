@@ -5651,6 +5651,8 @@ public class RestApiController {
 
 		// List<GetSpCkOrder> spCakeOrder =
 		// spCkOrdersService.getSpCkAlbumOrder(spOrderNo);
+		
+		System.err.println("PARAM ---------> "+spOrderNo);
 
 		// ---------Mahendra 30-06-2020----------------
 		List<GetSpCkOrderAlbum> spCakeOrder = spCkOrdersService.getAlbumSpCkOrder(spOrderNo);

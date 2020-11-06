@@ -77,6 +77,7 @@ ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_i
 	private String spEventsName;
 	
 	private int isAllocated;
+	private int spOrderNo;
 	
 	
 	public String getIsCharUsed() {
@@ -265,6 +266,17 @@ ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_i
 	}
 	
 	
+	
+	
+	public int getSpOrderNo() {
+		return spOrderNo;
+	}
+	public void setSpOrderNo(int spOrderNo) {
+		this.spOrderNo = spOrderNo;
+	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "GetSpCakeOrderForProdApp [tSpCakeSupNo=" + tSpCakeSupNo + ", srNo=" + srNo + ", date=" + date
@@ -275,7 +287,7 @@ ORDER BY m_fr_route.route_id DESC,m_franchise_sup.no_in_route,t_sp_cake_sup.fr_i
 				+ ", spInstructions=" + spInstructions + ", spDeliveryDate=" + spDeliveryDate + ", startTimeStamp="
 				+ startTimeStamp + ", endTimeStamp=" + endTimeStamp + ", orderPhoto=" + orderPhoto + ", orderPhoto2="
 				+ orderPhoto2 + ", isCharUsed=" + isCharUsed + ", spEvents=" + spEvents + ", spEventsName="
-				+ spEventsName + ", isAllocated=" + isAllocated + "]";
+				+ spEventsName + ", isAllocated=" + isAllocated + ", spOrderNo=" + spOrderNo + "]";
 	}
 	
 	

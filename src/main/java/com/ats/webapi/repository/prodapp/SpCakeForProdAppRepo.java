@@ -15,7 +15,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "m_franchisee.fr_name,m_franchisee.fr_code,m_franchisee.fr_id,m_fr_route.route_id,\n"
 			+ "m_sp_cake.sp_name,m_sp_cake.sp_code,m_sp_cake.sp_image,t_sp_cake.sp_flavour_id,m_sp_flavour.spf_name,\n"
 			+ "t_sp_cake.sp_delivery_place,t_sp_cake.sp_instructions,t_sp_cake.sp_delivery_date, t_sp_cake.sp_events,t_sp_cake.sp_events_name,\n"
-			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated\n"
+			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no \n"
 			+ "FROM t_sp_cake_sup,m_fr_route,m_franchise_sup,t_sp_cake,m_franchisee,m_sp_cake,m_sp_flavour\n"
 			+ "WHERE t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake_sup.menu_id IN (:menuIdList) AND t_sp_cake.is_slot_used IN (:isSlotUsed) "
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id\n"
@@ -32,7 +32,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "m_franchisee.fr_name,m_franchisee.fr_code,m_franchisee.fr_id,m_fr_route.route_id,\n"
 			+ "m_sp_cake.sp_name,m_sp_cake.sp_code,m_sp_cake.sp_image,t_sp_cake.sp_flavour_id,m_sp_flavour.spf_name,\n"
 			+ "t_sp_cake.sp_delivery_place,t_sp_cake.sp_instructions,t_sp_cake.sp_delivery_date, t_sp_cake.sp_events,t_sp_cake.sp_events_name, \n"
-			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated "
+			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no  "
 			+ "FROM t_sp_cake_sup,m_fr_route,m_franchise_sup,t_sp_cake,m_franchisee,m_sp_cake,m_sp_flavour\n"
 			+ "WHERE t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake.is_slot_used IN (:isSlotUsed) "
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id "
@@ -48,7 +48,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "m_franchisee.fr_name,m_franchisee.fr_code,m_franchisee.fr_id,m_fr_route.route_id,\n"
 			+ "m_sp_cake.sp_name,m_sp_cake.sp_code,m_sp_cake.sp_image,t_sp_cake.sp_flavour_id,m_sp_flavour.spf_name,\n"
 			+ "t_sp_cake.sp_delivery_place,t_sp_cake.sp_instructions,t_sp_cake.sp_delivery_date,  t_sp_cake.sp_events,t_sp_cake.sp_events_name, \n"
-			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated\n"
+			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no \n"
 			+ "FROM t_sp_cake_sup,m_fr_route,m_franchise_sup,t_sp_cake,m_franchisee,m_sp_cake,m_sp_flavour\n"
 			+ "WHERE t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake_sup.menu_id IN (:menuIdList) AND t_sp_cake.is_slot_used IN (:isSlotUsed) "
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id\n"
@@ -65,7 +65,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "m_franchisee.fr_name,m_franchisee.fr_code,m_franchisee.fr_id,m_fr_route.route_id,\n"
 			+ "m_sp_cake.sp_name,m_sp_cake.sp_code,m_sp_cake.sp_image,t_sp_cake.sp_flavour_id,m_sp_flavour.spf_name,\n"
 			+ "t_sp_cake.sp_delivery_place,t_sp_cake.sp_instructions,t_sp_cake.sp_delivery_date,  t_sp_cake.sp_events,t_sp_cake.sp_events_name,\n"
-			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated\n"
+			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no \n"
 			+ "FROM t_sp_cake_sup,m_fr_route,m_franchise_sup,t_sp_cake,m_franchisee,m_sp_cake,m_sp_flavour\n"
 			+ "WHERE t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake.is_slot_used IN (:isSlotUsed) "
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id\n"
@@ -83,7 +83,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "m_franchisee.fr_name,m_franchisee.fr_code,m_franchisee.fr_id,m_fr_route.route_id,\n"
 			+ "m_sp_cake.sp_name,m_sp_cake.sp_code,m_sp_cake.sp_image,t_sp_cake.sp_flavour_id,m_sp_flavour.spf_name,\n"
 			+ "t_sp_cake.sp_delivery_place,t_sp_cake.sp_instructions,t_sp_cake.sp_delivery_date, t_sp_cake.sp_events,t_sp_cake.sp_events_name,\n"
-			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated\n"
+			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no \n"
 			+ "FROM t_sp_cake_sup,m_fr_route,m_franchise_sup,t_sp_cake,m_franchisee,m_sp_cake,m_sp_flavour\n"
 			+ "WHERE t_sp_cake_sup.date BETWEEN :fromDate AND :toDate AND t_sp_cake_sup.menu_id IN (:menuIdList) "
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id\n"
@@ -100,7 +100,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			+ "m_franchisee.fr_name,m_franchisee.fr_code,m_franchisee.fr_id,m_fr_route.route_id,\n"
 			+ "m_sp_cake.sp_name,m_sp_cake.sp_code,m_sp_cake.sp_image,t_sp_cake.sp_flavour_id,m_sp_flavour.spf_name,\n"
 			+ "t_sp_cake.sp_delivery_place,t_sp_cake.sp_instructions,t_sp_cake.sp_delivery_date, t_sp_cake.sp_events,t_sp_cake.sp_events_name,\n"
-			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated\n"
+			+ "t_sp_cake_sup.start_time_stamp,t_sp_cake_sup.end_time_stamp,t_sp_cake.order_photo,t_sp_cake.order_photo2,t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no \n"
 			+ "FROM t_sp_cake_sup,m_fr_route,m_franchise_sup,t_sp_cake,m_franchisee,m_sp_cake,m_sp_flavour\n"
 			+ "WHERE t_sp_cake_sup.date BETWEEN :fromDate AND :toDate   "
 			+ "AND t_sp_cake.sp_order_no=t_sp_cake_sup.t_sp_cake_order_no AND t_sp_cake_sup.fr_id=m_franchisee.fr_id\n"
@@ -148,7 +148,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    t_sp_cake_sup.end_time_stamp,\n" + 
 			"    t_sp_cake.order_photo,\n" + 
 			"    t_sp_cake.order_photo2,\n" +
-			"    t_sp_cake.is_allocated\n" + 
+			"    t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no \n" + 
 			"FROM\n" + 
 			"    t_sp_cake_sup,\n" + 
 			"    m_fr_route,\n" + 
@@ -196,7 +196,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    t_sp_cake_sup.end_time_stamp,\n" + 
 			"    t_sp_cake.order_photo,\n" + 
 			"    t_sp_cake.order_photo2,\n" + 
-			"    t_sp_cake.is_allocated\n" + 
+			"    t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no \n" + 
 			"FROM\n" + 
 			"    t_sp_cake_sup,\n" + 
 			"    m_fr_route,\n" + 
@@ -248,7 +248,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    t_sp_cake_sup.end_time_stamp,\n" + 
 			"    t_sp_cake.order_photo,\n" + 
 			"    t_sp_cake.order_photo2,\n" + 
-			"    t_sp_cake.is_allocated\n" + 
+			"    t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no \n" + 
 			"FROM\n" + 
 			"    t_sp_cake_sup,\n" + 
 			"    m_fr_route,\n" + 
@@ -298,7 +298,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    t_sp_cake_sup.end_time_stamp,\n" + 
 			"    t_sp_cake.order_photo,\n" + 
 			"    t_sp_cake.order_photo2,\n" + 
-			"    t_sp_cake.is_allocated\n" + 
+			"    t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no \n" + 
 			"FROM\n" + 
 			"    t_sp_cake_sup,\n" + 
 			"    m_fr_route,\n" + 
@@ -353,7 +353,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    t_sp_cake_sup.end_time_stamp,\n" + 
 			"    t_sp_cake.order_photo,\n" + 
 			"    t_sp_cake.order_photo2,\n" + 
-			"    t_sp_cake.is_allocated\n" + 
+			"    t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no \n" + 
 			"FROM\n" + 
 			"    t_sp_cake_sup,\n" + 
 			"    m_fr_route,\n" + 
@@ -403,7 +403,7 @@ public interface SpCakeForProdAppRepo extends JpaRepository<GetSpCakeOrderForPro
 			"    t_sp_cake_sup.end_time_stamp,\n" + 
 			"    t_sp_cake.order_photo,\n" + 
 			"    t_sp_cake.order_photo2,\n" + 
-			"    t_sp_cake.is_allocated\n" + 
+			"    t_sp_cake.is_allocated, t_sp_cake_sup.t_sp_cake_order_no as sp_order_no \n" + 
 			"FROM\n" + 
 			"    t_sp_cake_sup,\n" + 
 			"    m_fr_route,\n" + 
