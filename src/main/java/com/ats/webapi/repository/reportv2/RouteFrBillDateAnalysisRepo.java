@@ -10,7 +10,7 @@ import com.ats.webapi.model.report.RouteFrBillDateAnalysis;
 
 public interface RouteFrBillDateAnalysisRepo extends JpaRepository<RouteFrBillDateAnalysis, Integer> {
 	
-	@Query(value = " SELECT UUID() as unique_id, m_franchisee.fr_id,m_franchisee.fr_name,m_franchisee.fr_code,m_franchisee.fr_route_id, " + 
+	@Query(value = " SELECT UUID() as unique_id,m_franchisee.fr_city, m_franchisee.fr_id,m_franchisee.fr_name,m_franchisee.fr_code,m_franchisee.fr_route_id, " + 
 			" t_bill_header.bill_date,sum(t_bill_header.grand_total) as grand_total " + 
 			" FROM m_franchisee,t_bill_header,m_franchise_sup " + 
 			" WHERE t_bill_header.fr_id=m_franchisee.fr_id AND t_bill_header.del_status=0 AND t_bill_header.bill_date BETWEEN :fromDate AND "
