@@ -1698,13 +1698,36 @@ public class RestApiController {
 
 		logRespository.save(log);
 
-		System.out.println("Inside Place Order " + orderJson.toString());
+		//System.out.println("Inside Place Order " + orderJson.toString());
 
 		jsonResult = orderService.placeOrder(orderJson);
 
 		return jsonResult;
 
 	}
+	
+	// Place Item Order
+		@RequestMapping(value = { "/placeOrderNew" }, method = RequestMethod.POST)
+
+		public @ResponseBody List<Orders> placeItemOrderNew(@RequestBody List<Orders> orderJson)
+				throws ParseException, JsonParseException, JsonMappingException, IOException {
+
+
+			List<Orders> jsonResult;
+
+			OrderLog log = new OrderLog();
+			log.setFrId(orderJson.get(0).getFrId());
+			log.setJson(orderJson.toString());
+			logRespository.save(log);
+
+			//System.out.println("Inside Place Order " + orderJson.toString());
+
+			jsonResult = orderService.placeOrderNew(orderJson);
+
+			return jsonResult;
+
+		}
+	
 
 	@Autowired
 	TSpCakeSupRepo tSpCakeSupRepo;

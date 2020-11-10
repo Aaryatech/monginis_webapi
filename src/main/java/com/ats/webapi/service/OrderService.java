@@ -13,6 +13,9 @@ import com.ats.webapi.model.Orders;
 public interface OrderService {
 
 	List<Orders> placeOrder(List<Orders> list);
+	List<Orders> placeOrderNew(List<Orders> list);
+	
+	
 	ItemOrderList searchOrderHistory(int menuId, Date deliveryDate,int frId);
 	
 	int updateBillStatus(@Param("orderId") int orderId,@Param("status") int status);// from OrderRepository

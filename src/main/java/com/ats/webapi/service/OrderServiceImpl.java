@@ -25,27 +25,26 @@ import com.ats.webapi.repository.OrdersRepository;
 public class OrderServiceImpl implements OrderService {
 
 	String jsonResult;
-	
+
 	@Autowired
 	OrderRepository orderRepository;
-	
+
 	@Autowired
 	ItemOrderHisRepository itemOrderHisRepository;
 
 	@Autowired
 	AllFrIdNameRepository allFrIdNameRepository;
-	 
+
 	@Autowired
 	FranchiseSupRepository franchiseSupRepository;
-	
+
 	@Autowired
 	OrderDeleteRepository deleteRepository;
-	
-	
+
 	@Override
 	public List<Orders> placeOrder(List<Orders> list) {
 		List<Orders> returnList = new ArrayList();
-		
+
 		for (Orders o : list) {
 
 			Orders prevOrder = orderRepository.findPreviousOrder(o.getItemId(), o.getFrId(), o.getProductionDate(),
@@ -64,37 +63,36 @@ public class OrderServiceImpl implements OrderService {
 					if (o.getOrderQty() == 0) {
 
 						System.out.println("Deleteing order");
-						
-						OrderDelete delete=new OrderDelete();
-						
+
+						OrderDelete delete = new OrderDelete();
+
 						delete.setFrId(o.getFrId());
 						delete.setOrderId(prevOrder.getOrderId());
-						
-						deleteRepository.save(delete); 
-						
 
-						Long result = orderRepository.deleteByOrderDateAndFrIdAndMenuIdAndItemId(o.getOrderDate(),o.getFrId(),
-								o.getMenuId(), o.getItemId());
+						deleteRepository.save(delete);
+
+						Long result = orderRepository.deleteByOrderDateAndFrIdAndMenuIdAndItemId(o.getOrderDate(),
+								o.getFrId(), o.getMenuId(), o.getItemId());
 
 						System.out.println("Order Deleted ? = " + result);
 					} else {
 						prevOrder.setOrderQty(o.getOrderQty());
 						updatedOrder = orderRepository.save(prevOrder);
-						
+
 					}
-					
+
 					returnList.add(updatedOrder);
 				}
 
 			} catch (Exception e) {
 
 				System.out.println("Prev Order Exception " + e.getMessage());
-				
+
 				if (e.getMessage() == null) {
 					System.out.println("Saving new order");
 
 					Orders newOrder = orderRepository.save(o);
-			
+
 					returnList.add(newOrder);
 				}
 			}
@@ -102,7 +100,27 @@ public class OrderServiceImpl implements OrderService {
 			// Orders order=orderRepository.save(o);
 			// returnList.add(prevOrder);
 		}
-		
+
+		return returnList;
+	}
+
+	// NEW-10-11-2020
+	@Override
+	public List<Orders> placeOrderNew(List<Orders> list) {
+		List<Orders> returnList = new ArrayList();
+
+		for (Orders o : list) {
+
+			try {
+
+				Orders newOrder = orderRepository.save(o);
+				returnList.add(newOrder);
+
+			} catch (Exception e) {
+				//System.out.println("Prev Order Exception " + e.getMessage());
+			}
+		}
+
 		return returnList;
 	}
 
@@ -148,57 +166,55 @@ public class OrderServiceImpl implements OrderService {
 
 	// new Update order method for billing
 	@Override
-	public int  updateBillStatus(int orderId,int status) {
-	
-	int x=	orderRepository.updateBillStatus(orderId,status);
-		
-		
+	public int updateBillStatus(int orderId, int status) {
+
+		int x = orderRepository.updateBillStatus(orderId, status);
+
 		return x;
-		
-		
+
 	}
 
 	@Override
 	public List<Orders> placePustDumpOrder(List<Orders> list) {
-	
-		
+
 		List<Orders> returnList = new ArrayList();
 		for (Orders o : list) {
 
-					System.out.println("Saving new order");
+			System.out.println("Saving new order");
 
-					Orders newOrder = orderRepository.save(o);
-					
-					returnList.add(newOrder);
-				
-						 try {
-							 
-							  String frToken=franchiseSupRepository.findTokenByFrId(o.getFrId());
-					          Firebase.sendPushNotifForCommunication(frToken,"Order Pushed","Your savories/ cakes and pastries order not recived. A standing order has been put, against which no GVN-GRN will be given.","inbox");
-							
-					         }
-					         catch(Exception e2)
-					         {
-						       e2.printStackTrace();
-					         }
-					
+			Orders newOrder = orderRepository.save(o);
+
+			returnList.add(newOrder);
+
+			try {
+
+				String frToken = franchiseSupRepository.findTokenByFrId(o.getFrId());
+				Firebase.sendPushNotifForCommunication(frToken, "Order Pushed",
+						"Your savories/ cakes and pastries order not recived. A standing order has been put, against which no GVN-GRN will be given.",
+						"inbox");
+
+			} catch (Exception e2) {
+				e2.printStackTrace();
 			}
+
+		}
 
 		return returnList;
 	}
+
 	@Override
 	public List<Orders> placeManualOrder(List<Orders> list) {
-    List<Orders> returnList = new ArrayList();
-		
+		List<Orders> returnList = new ArrayList();
+
 		for (Orders o : list) {
 			try {
-			Orders newOrder = orderRepository.save(o);
-			returnList.add(newOrder);
+				Orders newOrder = orderRepository.save(o);
+				returnList.add(newOrder);
 
 			} catch (Exception e) {
-					e.printStackTrace();
-				}
+				e.printStackTrace();
 			}
+		}
 		return returnList;
 	}
 }
