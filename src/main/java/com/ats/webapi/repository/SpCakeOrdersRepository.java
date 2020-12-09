@@ -33,8 +33,8 @@ public interface SpCakeOrdersRepository extends JpaRepository<SpCakeOrders,Integ
 	@Query(value="select COALESCE(count(*),0) from t_sp_cake_sup where date=:sqlSpProduDate",nativeQuery=true)
 	int findSpCakeOrdCountByProduDate(@Param("sqlSpProduDate")String sqlSpProduDate);
 	
-	@Query(value="select COALESCE(count(*),0) from t_sp_cake where sp_prod_date=:sqlSpProduDate",nativeQuery=true)
-	int findCakeCountByProduDate(@Param("sqlSpProduDate")String sqlSpProduDate);
+	@Query(value="select COALESCE(count(*),0) from t_sp_cake where sp_prod_date=:sqlSpProduDate AND menu_id=:menuId",nativeQuery=true)
+	int findCakeCountByProduDate(@Param("sqlSpProduDate")String sqlSpProduDate,@Param("menuId") int menuId);
 	
 
 	@Transactional

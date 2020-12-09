@@ -1787,11 +1787,11 @@ public class RestApiController {
 
 	// SP CAKE COUNT
 	@RequestMapping(value = { "/getSpCakeCountByProdDate" }, method = RequestMethod.POST)
-	public @ResponseBody Info getSpCakeCountByProdDate(@RequestParam String prodDate) {
+	public @ResponseBody Info getSpCakeCountByProdDate(@RequestParam String prodDate,@RequestParam int menuId) {
 
 		Info info = new Info();
 
-		int res = spCakeOrdersRepository.findCakeCountByProduDate(prodDate);
+		int res = spCakeOrdersRepository.findCakeCountByProduDate(prodDate,menuId);
 		
 		info.setMessage("" + res);
 
