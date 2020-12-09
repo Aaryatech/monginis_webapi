@@ -73,6 +73,7 @@ import com.ats.webapi.repository.ProdItemStockTotalRepo;
 import com.ats.webapi.repository.SalesReportRepo;
 import com.ats.webapi.repository.SpCakeEnqAlbmFrnchseRepo;
 import com.ats.webapi.repository.SpCakeOrderHisRepository;
+import com.ats.webapi.repository.SpCakeOrdersRepository;
 import com.ats.webapi.repository.SpecialCakeCatRepository;
 import com.ats.webapi.repository.SpecialCakeRepository;
 import com.ats.webapi.repository.UpdatePBTimeRepo;
@@ -413,6 +414,9 @@ public class RestApiController {
 	GenerateBillRepository generateBillRepository;
 	@Autowired
 	SpCakeOrderHisRepository spCakeOrderHisRepository;
+	
+	@Autowired
+	SpCakeOrdersRepository spCakeOrdersRepository;
 
 	@RequestMapping(value = { "/placeManualOrderNew" }, method = RequestMethod.POST)
 	public @ResponseBody List<GenerateBill> placeManualOrderNew(@RequestBody List<Orders> orderJson)
@@ -1698,36 +1702,34 @@ public class RestApiController {
 
 		logRespository.save(log);
 
-		//System.out.println("Inside Place Order " + orderJson.toString());
+		// System.out.println("Inside Place Order " + orderJson.toString());
 
 		jsonResult = orderService.placeOrder(orderJson);
 
 		return jsonResult;
 
 	}
-	
+
 	// Place Item Order
-		@RequestMapping(value = { "/placeOrderNew" }, method = RequestMethod.POST)
+	@RequestMapping(value = { "/placeOrderNew" }, method = RequestMethod.POST)
 
-		public @ResponseBody List<Orders> placeItemOrderNew(@RequestBody List<Orders> orderJson)
-				throws ParseException, JsonParseException, JsonMappingException, IOException {
+	public @ResponseBody List<Orders> placeItemOrderNew(@RequestBody List<Orders> orderJson)
+			throws ParseException, JsonParseException, JsonMappingException, IOException {
 
+		List<Orders> jsonResult;
 
-			List<Orders> jsonResult;
+		OrderLog log = new OrderLog();
+		log.setFrId(orderJson.get(0).getFrId());
+		log.setJson(orderJson.toString());
+		logRespository.save(log);
 
-			OrderLog log = new OrderLog();
-			log.setFrId(orderJson.get(0).getFrId());
-			log.setJson(orderJson.toString());
-			logRespository.save(log);
+		// System.out.println("Inside Place Order " + orderJson.toString());
 
-			//System.out.println("Inside Place Order " + orderJson.toString());
+		jsonResult = orderService.placeOrderNew(orderJson);
 
-			jsonResult = orderService.placeOrderNew(orderJson);
+		return jsonResult;
 
-			return jsonResult;
-
-		}
-	
+	}
 
 	@Autowired
 	TSpCakeSupRepo tSpCakeSupRepo;
@@ -1780,6 +1782,20 @@ public class RestApiController {
 		}
 
 		return spCakeOrderRes;
+
+	}
+
+	// SP CAKE COUNT
+	@RequestMapping(value = { "/getSpCakeCountByProdDate" }, method = RequestMethod.POST)
+	public @ResponseBody Info getSpCakeCountByProdDate(@RequestParam String prodDate) {
+
+		Info info = new Info();
+
+		int res = spCakeOrdersRepository.findCakeCountByProduDate(prodDate);
+		
+		info.setMessage("" + res);
+
+		return info;
 
 	}
 
@@ -2302,9 +2318,7 @@ public class RestApiController {
 
 		return jsonResult;
 	}
-	
-	
-	
+
 	@RequestMapping(value = { "/saveFranchiseeNew" }, method = RequestMethod.POST)
 	@ResponseBody
 	public ErrorMessage saveFranchiseeNew(@RequestParam("frName") String frName, @RequestParam("frCode") String frCode,
@@ -2319,7 +2333,8 @@ public class RestApiController {
 			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
 			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
 			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget,
-			@RequestParam("isSameState") int isSameState,@RequestParam("frNameMr") String frNameMr) throws ParseException {
+			@RequestParam("isSameState") int isSameState, @RequestParam("frNameMr") String frNameMr)
+			throws ParseException {
 		// DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		// java.util.Date date = sdf.parse(frOpeningDate);
 		// java.sql.Date sqlOpeningDate = new java.sql.Date(date.getTime());
@@ -4541,8 +4556,7 @@ public class RestApiController {
 		// return "abc";
 	}
 
-	
-	//New
+	// New
 	@RequestMapping(value = { "/updateFranchiseeNew" }, method = RequestMethod.POST)
 	@ResponseBody
 	public ErrorMessage updateFranchiseeNew(@RequestParam("frId") int frId, @RequestParam("frName") String frName,
@@ -4559,7 +4573,7 @@ public class RestApiController {
 			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
 			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
 			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget,
-			@RequestParam("isSameState") int isSameState,@RequestParam("frNameMr") String frNameMr) {
+			@RequestParam("isSameState") int isSameState, @RequestParam("frNameMr") String frNameMr) {
 		ErrorMessage jsonResult = new ErrorMessage();
 		try {
 
@@ -4631,8 +4645,6 @@ public class RestApiController {
 		// return "abc";
 	}
 
-	
-	
 	// 27 aug
 	// update rate
 	@RequestMapping("/updateRate")
@@ -5674,8 +5686,8 @@ public class RestApiController {
 
 		// List<GetSpCkOrder> spCakeOrder =
 		// spCkOrdersService.getSpCkAlbumOrder(spOrderNo);
-		
-		System.err.println("PARAM ---------> "+spOrderNo);
+
+		System.err.println("PARAM ---------> " + spOrderNo);
 
 		// ---------Mahendra 30-06-2020----------------
 		List<GetSpCkOrderAlbum> spCakeOrder = spCkOrdersService.getAlbumSpCkOrder(spOrderNo);
@@ -6358,19 +6370,18 @@ public class RestApiController {
 		}
 		return routeDetails;
 	}
-	
-	
-	//9-10-20
+
+	// 9-10-20
 	// Search Special Cake Order History
-		@RequestMapping("/getSpOrderHistory")
-		public @ResponseBody SpCkOrderHis getSpOrderHistory(@RequestParam int spOrderNo) {
+	@RequestMapping("/getSpOrderHistory")
+	public @ResponseBody SpCkOrderHis getSpOrderHistory(@RequestParam int spOrderNo) {
 
-			SpCkOrderHis spCakeOrderList = spCakeOrderHisRepository.findBySpOrderNo(spOrderNo);
-			if(spCakeOrderList==null) {
-				spCakeOrderList=new SpCkOrderHis();
-			}
-
-			return spCakeOrderList;
-
+		SpCkOrderHis spCakeOrderList = spCakeOrderHisRepository.findBySpOrderNo(spOrderNo);
+		if (spCakeOrderList == null) {
+			spCakeOrderList = new SpCkOrderHis();
 		}
+
+		return spCakeOrderList;
+
+	}
 }

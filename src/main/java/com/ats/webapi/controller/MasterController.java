@@ -1,12 +1,16 @@
 package com.ats.webapi.controller;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -38,6 +42,8 @@ import com.ats.webapi.model.Item;
 import com.ats.webapi.model.ItemIdOnly;
 import com.ats.webapi.model.ItemSup;
 import com.ats.webapi.model.ItemSupList;
+import com.ats.webapi.model.MenuOrderLimit;
+import com.ats.webapi.model.MenuWiseLimitDisplay;
 import com.ats.webapi.model.PostFrItemStockDetail;
 import com.ats.webapi.model.PostFrItemStockHeader;
 import com.ats.webapi.model.RegularSpCkOrders;
@@ -46,6 +52,7 @@ import com.ats.webapi.model.SettingNew;
 import com.ats.webapi.model.SpCake;
 import com.ats.webapi.model.SpCakeSupplement;
 import com.ats.webapi.model.SpCakeSupplementCat;
+import com.ats.webapi.model.SubCatWiseLimit;
 import com.ats.webapi.model.SubCategory;
 import com.ats.webapi.model.SubCategory2;
 import com.ats.webapi.model.tally.FranchiseeList;
@@ -58,6 +65,7 @@ import com.ats.webapi.repository.GetItemSupRepository;
 import com.ats.webapi.repository.GetSubCategoryRepository;
 import com.ats.webapi.repository.ItemIdOnlyRepository;
 import com.ats.webapi.repository.ItemRepository;
+import com.ats.webapi.repository.MenuOrderLimitRepo;
 import com.ats.webapi.repository.OrderRepository;
 import com.ats.webapi.repository.PostFrOpStockDetailRepository;
 import com.ats.webapi.repository.PostFrOpStockHeaderRepository;
@@ -75,6 +83,9 @@ import com.ats.webapi.service.OrderService;
 import com.ats.webapi.service.RegularSpCkOrderService;
 import com.ats.webapi.service.SpecialCakeCatService;
 import com.ats.webapi.service.SpecialCakeService;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 @RestController
 public class MasterController {
@@ -142,6 +153,9 @@ public class MasterController {
 
 	@Autowired
 	SettingRepository settingRepository;
+
+	@Autowired
+	MenuOrderLimitRepo menuOrderLimitRepo;
 
 	// ----------------------------GET FrToken--------------------------------
 	@RequestMapping(value = { "/getFrToken" }, method = RequestMethod.POST)
@@ -278,15 +292,16 @@ public class MasterController {
 		return info;
 
 	}
+
 //Sachin 14-02-2020
 	@RequestMapping(value = { "/dynamicPushNotif" }, method = RequestMethod.POST)
 	public @ResponseBody String dynamicPyshNotif(@RequestParam String token, String title, String body, String tag) {
 		String notfRes = new String();
 		try {
-			Firebase.sendPushNotifForCommunication(token, title,body,tag);
+			Firebase.sendPushNotifForCommunication(token, title, body, tag);
 			notfRes = "Notification Sent";
 		} catch (Exception e) {
-			notfRes=e.getMessage();
+			notfRes = e.getMessage();
 			e.printStackTrace();
 		}
 		return notfRes;
@@ -1099,12 +1114,11 @@ public class MasterController {
 
 		return info;
 	}
-	
-	
+
 	@RequestMapping(value = "/updateShiftOrder", method = RequestMethod.POST)
-	public @ResponseBody Info updateShiftOrder(@RequestParam List<Integer> frIds,@RequestParam List<Integer> menuIds, @RequestParam String delDate,
-			@RequestParam String prodDate,@RequestParam String pDate) {
-		
+	public @ResponseBody Info updateShiftOrder(@RequestParam List<Integer> frIds, @RequestParam List<Integer> menuIds,
+			@RequestParam String delDate, @RequestParam String prodDate, @RequestParam String pDate) {
+
 		Info info = new Info();
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -1119,8 +1133,8 @@ public class MasterController {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		int isUpdated = orderRepository.updateShiftOrder(frIds, menuIds, dateDel, dateProd,dateP);
+
+		int isUpdated = orderRepository.updateShiftOrder(frIds, menuIds, dateDel, dateProd, dateP);
 		if (isUpdated > 0) {
 			info.setError(false);
 			info.setMessage("Order Updated Successfully");
@@ -1225,12 +1239,11 @@ public class MasterController {
 		System.err.println("RES---------------------------------- " + res);
 		return res;
 	}
-	
-	
+
 	@RequestMapping(value = { "/getAllItemSupData" }, method = RequestMethod.POST)
 	public @ResponseBody List<GetItemSup> getAllItemSupData(@RequestParam("del") int del) {
 
-		List<GetItemSup> res=null;
+		List<GetItemSup> res = null;
 
 		res = getItemSupRepository.findAllByDelStatus(del);
 		if (res == null) {
@@ -1238,7 +1251,105 @@ public class MasterController {
 		}
 		return res;
 	}
+
+	// MENU WISE SUB CAT LIST FOR ORDER LIMIT
+	@RequestMapping(value = { "/getMenuWiseSubCatForLimit" }, method = RequestMethod.GET)
+	public @ResponseBody List<MenuOrderLimit> getMenuWiseSubCatForLimit() {
+
+		List<MenuOrderLimit> menuList = new ArrayList<>();
+
+		try {
+
+			menuList = menuOrderLimitRepo.getMenuWiseSubCatForLimit();
+
+			ObjectMapper Obj = new ObjectMapper();
+			String jsonStr = "";
+			try {
+				jsonStr = Obj.writeValueAsString(menuList);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			//System.err.println("json - " + jsonStr);
+
+			SettingNew setting = settingNewRepository.findBySettingKey("MENULIMIT");
+			if (setting != null) {
+
+				if (!setting.getSettingValue1().isEmpty()) {
+
+					// ObjectMapper mapper = new ObjectMapper();
+					// List<MenuOrderLimit> jsonList = mapper.readValue(setting.getSettingValue1(),
+					// List.class);
+
+					Gson gson = new Gson();
+
+					Type userListType = new TypeToken<ArrayList<MenuOrderLimit>>() {
+					}.getType();
+
+					ArrayList<MenuOrderLimit> jsonList = gson.fromJson(setting.getSettingValue1(), userListType);
+
+					System.err.println("SETTINGS JSON ----> " + jsonList);
+
+					if (jsonList != null) {
+
+						for (MenuOrderLimit a : menuList) {
+
+							for (MenuOrderLimit b : jsonList) {
+
+								if (a.getMenuId() == b.getMenuId() && a.getSubCatId() == b.getSubCatId()) {
+
+									a.setQtyLimit(b.getQtyLimit());
+									break;
+								}
+
+							}
+
+						}
+
+					}
+
+				}
+
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return menuList;
+	}
 	
+	
+	
+	@RequestMapping(value = { "/updateMenuOrderLimitValue"}, method = RequestMethod.POST)
+	public @ResponseBody Info updateSettingValueByKey(@RequestBody List<MenuOrderLimit> menuList) {
+
+		Info info = new Info();
+		
+		
+		System.err.println("PARAM ----> "+menuList);
+		
+
+		ObjectMapper Obj = new ObjectMapper();
+		String jsonStr = "";
+		try {
+			jsonStr = Obj.writeValueAsString(menuList);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		System.err.println("JSON STR -----> "+jsonStr);
+
+		int res = settingNewRepository.udateValueByKey("MENULIMIT",jsonStr);
+		if (res > 0) {
+			info.setError(false);
+			info.setMessage("Success");
+		} else {
+			info.setError(true);
+			info.setMessage("Failed");
+		}
+
+		return info;
+	}
 	
 	
 
