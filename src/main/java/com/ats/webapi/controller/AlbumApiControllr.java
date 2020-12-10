@@ -34,6 +34,8 @@ import com.ats.webapi.model.Setting;
 import com.ats.webapi.model.User;
 import com.ats.webapi.model.album.Album;
 import com.ats.webapi.model.album.AlbumCodeAndName;
+import com.ats.webapi.model.album.AlbumNew;
+import com.ats.webapi.model.album.AlbumNewRepo;
 import com.ats.webapi.model.album.AlbumRepo;
 import com.ats.webapi.model.album.SearchAlbumCakeResponse;
 import com.ats.webapi.model.communication.Notification;
@@ -59,6 +61,9 @@ public class AlbumApiControllr {
 
 	@Autowired
 	AlbumRepo albumRepo;
+
+	@Autowired
+	AlbumNewRepo albumNewRepo;
 
 	@Autowired
 	private MenuService menuService;
@@ -209,7 +214,7 @@ public class AlbumApiControllr {
 			}
 
 		}
-		
+
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Calendar cal = Calendar.getInstance();
 		String curDttime = dateFormat.format(cal.getTime());
@@ -249,6 +254,25 @@ public class AlbumApiControllr {
 		try {
 
 			albumList = albumRepo.getAlbumCakeForOPS();
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+
+		}
+		return albumList;
+
+	}
+
+	// New 10-12-2020
+	@RequestMapping(value = { "/getAlbumListWithCatAndMrp" }, method = RequestMethod.GET)
+	public @ResponseBody List<AlbumNew> getAlbumListWithCatAndMrp() {
+
+		List<AlbumNew> albumList = new ArrayList<>();
+
+		try {
+
+			albumList = albumNewRepo.getAlbumCakeForOPS();
 
 		} catch (Exception e) {
 
