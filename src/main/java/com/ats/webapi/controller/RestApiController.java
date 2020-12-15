@@ -6384,4 +6384,13 @@ public class RestApiController {
 		return spCakeOrderList;
 
 	}
+	
+	// Get Franchise is tsc value
+			@RequestMapping(value = { "/getFrTcsVal" }, method = RequestMethod.POST)
+			public @ResponseBody int getFrTcsVal(@RequestParam("frId") int frId) {
+				
+				int frTcs = franchiseeService.getFrIsTcs(frId);
+				
+				return frTcs;
+			}
 }

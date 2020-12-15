@@ -554,5 +554,11 @@ public class FranchiseeServiceImpl implements FranchiseeService {
 		Franchisee fr = new Franchisee(); 
 		return fr = franchiseeRepository.findOne(frId);
 	}
+
+	@Override
+	public int getFrIsTcs(int frId) {
+		int isTcs = franchiseeRepository.isFrTcs(frId);
+		return isTcs;
+	}
 	
 }

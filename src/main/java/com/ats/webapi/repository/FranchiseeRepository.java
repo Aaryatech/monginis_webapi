@@ -46,10 +46,7 @@ public interface FranchiseeRepository extends JpaRepository<Franchisee, Integer>
 
 		public Franchisee findByfrCodeAndDelStatus(String frCode, int del);
 		
-		
-
-
-		
-
+		@Query(value="SELECT fr_opening FROM `m_franchisee` WHERE fr_id=:frId",nativeQuery=true)
+		public int isFrTcs(@Param("frId")int frId);
 		
 	}

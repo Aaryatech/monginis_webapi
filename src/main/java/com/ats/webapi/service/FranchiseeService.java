@@ -52,6 +52,8 @@ public interface FranchiseeService {
 
 	public List<Franchisee> getAllFranchiseeByStatus(int i);
 	
+	public int getFrIsTcs(int frId);
+	
 	/*********************************************************/
 	public Franchisee getFranchiseeByFrCode(String frCode);
 
