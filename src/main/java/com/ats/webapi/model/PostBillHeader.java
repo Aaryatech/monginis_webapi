@@ -77,6 +77,9 @@ public class PostBillHeader implements Serializable {
 	@Column(name="igst_sum")
 	private float igstSum;
 	
+	@Column(name="round_off")
+	private float roundOff;
+	
 
 	@Transient
 	List<PostBillDetail> postBillDetailsList;
@@ -231,15 +234,23 @@ public class PostBillHeader implements Serializable {
 		this.igstSum = igstSum;
 	}
 
+	public float getRoundOff() {
+		return roundOff;
+	}
+
+	public void setRoundOff(float roundOff) {
+		this.roundOff = roundOff;
+	}
+
 	@Override
 	public String toString() {
 		return "PostBillHeader [billNo=" + billNo + ", taxApplicable=" + taxApplicable + ", invoiceNo=" + invoiceNo
 				+ ", billDate=" + billDate + ", frId=" + frId + ", frCode=" + frCode + ", grandTotal=" + grandTotal
 				+ ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", status=" + status + ", DelStatus="
 				+ DelStatus + ", remark=" + remark + ", time=" + time + ", billDateTime=" + billDateTime + ", sgstSum="
-				+ sgstSum + ", cgstSum=" + cgstSum + ", igstSum=" + igstSum + ", postBillDetailsList="
-				+ postBillDetailsList + "]";
+				+ sgstSum + ", cgstSum=" + cgstSum + ", igstSum=" + igstSum + ", roundOff=" + roundOff
+				+ ", postBillDetailsList=" + postBillDetailsList + "]";
 	}
 
-
+	
 }
