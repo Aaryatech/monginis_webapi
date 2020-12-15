@@ -4619,7 +4619,7 @@ public class RestApiController {
 			franchisee.setFrRateCat(frRateCat);
 			franchisee.setGrnTwo(grnTwo);
 			franchisee.setFrRmn1("");
-			franchisee.setFrOpening(0);
+			franchisee.setFrOpening(0); // TCS 1=Yes, 0=No
 			franchisee.setShowItems("");
 			franchisee.setNotShowItems(frNameMr);
 			franchisee.setFrPasswordKey("");
