@@ -1431,6 +1431,15 @@ public class RestApiController {
 		return allFrIdNamesList;
 
 	}
+	
+	@RequestMapping(value = "/getAllFranchises", method = RequestMethod.GET)
+	public @ResponseBody AllFrIdNameList getAllFranchises() {
+		
+		// mahendra 15-12-2020
+		AllFrIdNameList allFrIdNamesList = allFrIdNameService.getFranchisesIdAndName();
+
+		return allFrIdNamesList;
+	}
 
 	@RequestMapping(value = "/getRegularSpCkItems", method = RequestMethod.POST)
 	public @ResponseBody AllRegularSpCkItems getRegularSpCkItems(@RequestParam List<Integer> items,

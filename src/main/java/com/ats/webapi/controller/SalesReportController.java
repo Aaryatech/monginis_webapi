@@ -850,4 +850,42 @@ public class SalesReportController {
 	 * } catch (Exception e) { System.out.println(" Exce in Tax1 Report " +
 	 * e.getMessage()); e.printStackTrace(); } return catReportList; }
 	 */
+	
+	@RequestMapping(value = { "/getTcsReportSelectedFr" }, method = RequestMethod.POST)
+	public @ResponseBody List<SalesReportBillwise> getTcsReportSelectedFr(
+			@RequestParam("frIdList") List<String> frIdList,@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<SalesReportBillwise> salesReportBillwiseList = null;
+		try {
+			fromDate = Common.convertToYMD(fromDate);
+			toDate = Common.convertToYMD(toDate);
+			System.out.println("Input received " + fromDate + "" + toDate + "");
+			salesReportBillwiseList = saleReportBillwiseRepo.getTcsReport(frIdList, fromDate, toDate);
+			System.out.println("getSaleReportBillwise" + salesReportBillwiseList.toString());
+
+		} catch (Exception e) {
+			System.out.println(" Exce in sale Report Billwise  " + e.getMessage());
+			e.printStackTrace();
+		}
+		return salesReportBillwiseList;
+	}
+	
+	@RequestMapping(value = { "/getTcsReportByAllFr" }, method = RequestMethod.POST)
+	public @ResponseBody List<SalesReportBillwise> getTcsReportByAllFr(
+			@RequestParam("fromDate") String fromDate, @RequestParam("toDate") String toDate) {
+
+		List<SalesReportBillwise> salesReportBillwiseList = null;
+		try {
+			fromDate = Common.convertToYMD(fromDate);
+			toDate = Common.convertToYMD(toDate);
+			System.out.println("Input received " + fromDate + "" + toDate + "");
+			salesReportBillwiseList = saleReportBillwiseRepo.getTcsReportByAllFr(fromDate, toDate);
+			System.out.println("getSaleReportBillwise" + salesReportBillwiseList.toString());
+
+		} catch (Exception e) {
+			System.out.println(" Exce in sale Report Billwise  " + e.getMessage());
+			e.printStackTrace();
+		}
+		return salesReportBillwiseList;
+	}
 }

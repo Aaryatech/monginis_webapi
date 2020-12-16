@@ -108,4 +108,26 @@ public class AllFrIdNameServiceImpl implements AllFrIdNameService {
 		return allFrIdNameList;
 	}
 
+	@Override
+	public AllFrIdNameList getFranchisesIdAndName() {
+		AllFrIdNameList allFrIdNameList = new AllFrIdNameList();
+
+		List<AllFrIdName> allFrIdNames = allFrIdNameRepository.getAllFranchiseIdAndName();
+		Info info = new Info();
+
+		if (allFrIdNames != null) {
+			allFrIdNameList.setFrIdNamesList(allFrIdNames);
+			info.setError(false);
+			info.setMessage("Successfully displayed all fr Name and Id");
+			allFrIdNameList.setInfo(info);
+
+		} else {
+			info.setError(true);
+			info.setMessage("error in getting getFranchisesIdAndName");
+			allFrIdNameList.setInfo(info);
+		}
+
+		return allFrIdNameList;
+	}
+
 }
