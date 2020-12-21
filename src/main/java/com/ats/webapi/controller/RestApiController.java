@@ -2342,7 +2342,7 @@ public class RestApiController {
 			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
 			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
 			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget,
-			@RequestParam("isSameState") int isSameState, @RequestParam("frNameMr") String frNameMr)
+			@RequestParam("isSameState") int isSameState, @RequestParam("frNameMr") String frNameMr, @RequestParam("isTcs") int isTcs)
 			throws ParseException {
 		// DateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 		// java.util.Date date = sdf.parse(frOpeningDate);
@@ -2372,7 +2372,7 @@ public class RestApiController {
 		franchisee.setFrRateCat(frRateCat);
 		franchisee.setGrnTwo(grnTwo);
 		franchisee.setFrRmn1("");
-		franchisee.setFrOpening(0);
+		franchisee.setFrOpening(isTcs); // TCS 1=Yes, 0=No
 		franchisee.setShowItems("");
 		franchisee.setNotShowItems(frNameMr);
 		franchisee.setFrPasswordKey("");
@@ -4582,7 +4582,7 @@ public class RestApiController {
 			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
 			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
 			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget,
-			@RequestParam("isSameState") int isSameState, @RequestParam("frNameMr") String frNameMr) {
+			@RequestParam("isSameState") int isSameState, @RequestParam("frNameMr") String frNameMr, @RequestParam("isTcs") int isTcs) {
 		ErrorMessage jsonResult = new ErrorMessage();
 		try {
 
@@ -4628,7 +4628,7 @@ public class RestApiController {
 			franchisee.setFrRateCat(frRateCat);
 			franchisee.setGrnTwo(grnTwo);
 			franchisee.setFrRmn1("");
-			franchisee.setFrOpening(0); // TCS 1=Yes, 0=No
+			franchisee.setFrOpening(isTcs); // TCS 1=Yes, 0=No
 			franchisee.setShowItems("");
 			franchisee.setNotShowItems(frNameMr);
 			franchisee.setFrPasswordKey("");
