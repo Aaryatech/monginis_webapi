@@ -4493,7 +4493,7 @@ public class RestApiController {
 			@RequestParam("frAgreementDate") String frAgreementDate, @RequestParam("frGstType") int frGstType,
 			@RequestParam("frGstNo") String frGstNo, @RequestParam("stockType") int stockType,
 			@RequestParam("frAddress") String frAddress, @RequestParam("frTarget") int frTarget,
-			@RequestParam("isSameState") int isSameState) {
+			@RequestParam("isSameState") int isSameState, @RequestParam("isTcs") int isTcs) {
 		ErrorMessage jsonResult = new ErrorMessage();
 		try {
 
@@ -4539,7 +4539,7 @@ public class RestApiController {
 			franchisee.setFrRateCat(frRateCat);
 			franchisee.setGrnTwo(grnTwo);
 			franchisee.setFrRmn1("");
-			franchisee.setFrOpening(0);
+			franchisee.setFrOpening(isTcs); // 1=Yes, 0=No
 			franchisee.setShowItems("");
 			franchisee.setNotShowItems("");
 			franchisee.setFrPasswordKey("");

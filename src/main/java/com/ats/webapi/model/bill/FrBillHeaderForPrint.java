@@ -62,6 +62,9 @@ public class FrBillHeaderForPrint implements Serializable {
 	@Column(name="is_same_state")
 	private String isSameState;
 	
+	@Column(name="round_off")
+	private float roundOff;
+	
 	@Transient
 	Company company;
 
@@ -193,14 +196,21 @@ public class FrBillHeaderForPrint implements Serializable {
 		this.isSameState = isSameState;
 	}
 
+	public float getRoundOff() {
+		return roundOff;
+	}
+
+	public void setRoundOff(float roundOff) {
+		this.roundOff = roundOff;
+	}
+
 	@Override
 	public String toString() {
 		return "FrBillHeaderForPrint [billNo=" + billNo + ", frName=" + frName + ", taxApplicable=" + taxApplicable
 				+ ", invoiceNo=" + invoiceNo + ", billDate=" + billDate + ", frId=" + frId + ", frCode=" + frCode
 				+ ", grandTotal=" + grandTotal + ", taxableAmt=" + taxableAmt + ", totalTax=" + totalTax + ", status="
 				+ status + ", DelStatus=" + DelStatus + ", remark=" + remark + ", frAddress=" + frAddress
-				+ ", isSameState=" + isSameState + "]";
+				+ ", isSameState=" + isSameState + ", roundOff=" + roundOff + ", company=" + company + "]";
 	}
 
-	
 }
