@@ -10,7 +10,7 @@ import com.ats.webapi.model.tray.CalCulateTray;
 
 public interface CalculateTrayRepo extends JpaRepository<CalCulateTray, Integer> {
 
-	@Query(value = "SELECT\r\n" + "    t_order.order_id,\r\n" + "    m_franchisee.fr_id,\r\n"
+	@Query(value = "SELECT\r\n" + "    t_order.order_id,\r\n" + "  m_franchisee.fr_target,\r\n"+ "    m_franchisee.fr_id,\r\n"
 			+ "    m_franchisee.fr_route_id,\r\n" + "    m_fr_route.route_name,\r\n" + "    m_franchisee.fr_name,\r\n"
 			+ "    m_cat_sub.sub_cat_id,\r\n" + "    m_cat_sub.sub_cat_name,\r\n"
 			+ "    SUM(t_order.order_qty) AS order_qty,\r\n" + "     COALESCE((CEILING(SUM(ROUND((t_order.order_qty / m_item_sup.no_of_item_per_tray),2)))),0) AS tray_qty   \r\n" + "FROM\r\n"
