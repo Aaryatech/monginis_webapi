@@ -19,7 +19,7 @@ public interface GetSpCkOrderAlbumRepo extends JpaRepository<GetSpCkOrderAlbum, 
 			"        s.sp_events_name,\n" + 
 			"        s.order_photo2,\n" + 
 			"        s.sp_order_no,\n" + 
-			"        f.fr_mob,\n" + 
+			"        sup.sr_no as fr_mob,\n" + 
 			"        sp.sp_name,\n" + 
 			"        s.order_date,\n" + 
 			"        s.sp_price,\n" + 
@@ -39,12 +39,12 @@ public interface GetSpCkOrderAlbumRepo extends JpaRepository<GetSpCkOrderAlbum, 
 			"        m_sp_cake_category sp,\n" + 
 			"        m_sp_flavour sf,\n" + 
 			"        t_sp_cake s,\n" + 
-			"        t_sp_cake_album album\n" + 
+			"        t_sp_cake_album album,  t_sp_cake_sup sup  \n" + 
 			"    WHERE\n" + 
 			"        s.sp_order_no IN(:spOrderNo) \n" + 
 			"        AND s.sp_id = sp.sp_id \n" + 
 			"        AND s.fr_id = f.fr_id \n" + 
 			"        AND sf.spf_id=s.sp_flavour_id \n" + 
-			"        AND SUBSTRING_INDEX(s.item_id, \"#\", 1)=album.album_id",nativeQuery=true)
+			"        AND SUBSTRING_INDEX(s.item_id, \"#\", 1)=album.album_id AND s.sp_order_no=sup.t_sp_cake_order_no",nativeQuery=true)
 	List<GetSpCkOrderAlbum> getAlbumSpCakeOrder(@Param("spOrderNo")List<String> spOrderNo);
 }
