@@ -22,6 +22,8 @@ public class CrnSalesReportDateWise {
 	private float crnGrandTotal;
 	private String frName;
 	private String frCode;
+	private int crnNo;
+	
 	public String getUid() {
 		return uid;
 	}
@@ -77,11 +79,17 @@ public class CrnSalesReportDateWise {
 	public void setMonthName(String monthName) {
 		this.monthName = monthName;
 	}
+	public int getCrnNo() {
+		return crnNo;
+	}
+	public void setCrnNo(int crnNo) {
+		this.crnNo = crnNo;
+	}
 	@Override
 	public String toString() {
 		return "CrnSalesReportDateWise [uid=" + uid + ", crnDate=" + crnDate + ", monthName=" + monthName + ", frId="
 				+ frId + ", crnTaxableAmt=" + crnTaxableAmt + ", crnTotalTax=" + crnTotalTax + ", crnGrandTotal="
-				+ crnGrandTotal + ", frName=" + frName + ", frCode=" + frCode + "]";
+				+ crnGrandTotal + ", frName=" + frName + ", frCode=" + frCode + ", crnNo=" + crnNo + "]";
 	}
 	
 }

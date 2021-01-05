@@ -943,4 +943,30 @@ public class SalesReportController {
 		}
 		return crnList;
 	}
+	
+	
+	@RequestMapping(value = { "/getConsolidatedCrnReport" }, method = RequestMethod.POST)
+	public @ResponseBody List<CrnSalesReportDateWise> getConsolidatedCrnReport(
+			@RequestParam("frIdList") List<String> frIdList, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<CrnSalesReportDateWise> crnList = null;
+		try {
+			fromDate = Common.convertToYMD(fromDate);
+			toDate = Common.convertToYMD(toDate);
+			
+			if(frIdList.contains("-1")) {	
+				crnList = new ArrayList<CrnSalesReportDateWise>();
+				crnList = crnSalesRepo.getCnsoldatdCrnSalesReportAllFr(fromDate, toDate);
+			}else {
+				crnList = new ArrayList<CrnSalesReportDateWise>();
+				crnList = crnSalesRepo.getCnsoldatdCrnSalesReport(frIdList, fromDate, toDate);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(" Exce in /getConsolidatedCrnReport " + e.getMessage());
+			e.printStackTrace();
+		}
+		return crnList;
+	}
 }
