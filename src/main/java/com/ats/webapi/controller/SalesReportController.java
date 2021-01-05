@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.commons.Common;
+import com.ats.webapi.model.report.frpurchase.CrnSalesReportDateWise;
 import com.ats.webapi.model.report.frpurchase.SalesReportBillwise;
 import com.ats.webapi.model.report.frpurchase.SalesReportBillwiseAllFr;
 import com.ats.webapi.model.report.frpurchase.SalesReportItemwise;
@@ -35,6 +36,7 @@ import com.ats.webapi.repository.SubCatBillRepRepo;
 import com.ats.webapi.repository.SubCatCreditGrnFrRepRepo;
 import com.ats.webapi.repository.SubCatCreditGrnRepRepo;
 import com.ats.webapi.repository.SubCatFrRepBillRepo;
+import com.ats.webapi.repository.frpurchasereport.CrnSalesReportDateWiseRepo;
 import com.ats.webapi.repository.frpurchasereport.SaleReportBillwiseAllFrRepo;
 import com.ats.webapi.repository.frpurchasereport.SaleReportBillwiseRepo;
 import com.ats.webapi.repository.frpurchasereport.SaleReportItemwiseRepo;
@@ -887,5 +889,58 @@ public class SalesReportController {
 			e.printStackTrace();
 		}
 		return salesReportBillwiseList;
+	}
+	
+	
+	@Autowired CrnSalesReportDateWiseRepo crnSalesRepo;
+	@RequestMapping(value = { "/getCrnSaleReportDateWise" }, method = RequestMethod.POST)
+	public @ResponseBody List<CrnSalesReportDateWise> getCrnSaleReportDateWise(
+			@RequestParam("frIdList") List<String> frIdList, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<CrnSalesReportDateWise> crnList = null;
+		try {
+			fromDate = Common.convertToYMD(fromDate);
+			toDate = Common.convertToYMD(toDate);
+			
+			if(frIdList.contains("-1")) {	
+				crnList = new ArrayList<CrnSalesReportDateWise>();
+				crnList = crnSalesRepo.getCrnSalesDateReportAllFr(fromDate, toDate);
+			}else {
+				crnList = new ArrayList<CrnSalesReportDateWise>();
+				crnList = crnSalesRepo.getCrnSalesDateReport(frIdList, fromDate, toDate);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(" Exce in /getCrnSaleReportDateWise " + e.getMessage());
+			e.printStackTrace();
+		}
+		return crnList;
+	}
+	
+	
+	@RequestMapping(value = { "/getCrnSaleReportMonthWise" }, method = RequestMethod.POST)
+	public @ResponseBody List<CrnSalesReportDateWise> getCrnSaleReportMonthWise(
+			@RequestParam("frIdList") List<String> frIdList, @RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<CrnSalesReportDateWise> crnList = null;
+		try {
+			fromDate = Common.convertToYMD(fromDate);
+			toDate = Common.convertToYMD(toDate);
+			
+			if(frIdList.contains("-1")) {	
+				crnList = new ArrayList<CrnSalesReportDateWise>();
+				crnList = crnSalesRepo.getCrnSalesMonthReportAllFr(fromDate, toDate);
+			}else {
+				crnList = new ArrayList<CrnSalesReportDateWise>();
+				crnList = crnSalesRepo.getCrnSalesMonthReport(frIdList, fromDate, toDate);
+			}
+			
+		} catch (Exception e) {
+			System.out.println(" Exce in /getCrnSaleReportDateWise " + e.getMessage());
+			e.printStackTrace();
+		}
+		return crnList;
 	}
 }
