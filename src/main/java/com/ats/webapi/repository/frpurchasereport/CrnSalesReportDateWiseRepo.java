@@ -18,8 +18,8 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"        crn.crn_taxable_amt,\n" + 
 			"        crn.crn_total_tax,\n" + 
 			"        crn.crn_grand_total,\n" + 
-			"        'NA' AS fr_name,\n" + 
-			"        'NA' AS fr_code, 0 AS crn_no \n" + 
+			"        f.fr_name AS fr_name,\n" + 
+			"        f.fr_code AS fr_code, crn.crn_no \n" + 
 			"    FROM\n" + 
 			"        t_credit_note_header crn,\n" + 
 			"        m_franchisee f \n" + 
@@ -27,7 +27,7 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"        crn.crn_date BETWEEN :fromDate AND :toDate \n" + 
 			"        AND crn.fr_id = f.fr_id \n" + 
 			"        AND f.fr_id IN (:frIdList)\n" + 
-			"        ORDER BY crn_date", nativeQuery=true)
+			"        ORDER BY crn_date DESC", nativeQuery=true)
 	List<CrnSalesReportDateWise> getCnsoldatdCrnSalesReport(@Param("frIdList") List<String> frIdList, @Param("fromDate") String fromDate, 
 			@Param("toDate") String toDate);
 	
@@ -40,15 +40,15 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"        crn.crn_taxable_amt,\n" + 
 			"        crn.crn_total_tax,\n" + 
 			"        crn.crn_grand_total,\n" + 
-			"        'NA' AS fr_name,\n" + 
-			"        'NA' AS fr_code, 0 AS crn_no \n" + 
+			"        f.fr_name AS fr_name,\n" + 
+			"        f.fr_code AS fr_code, crn.crn_no \n" + 
 			"    FROM\n" + 
 			"        t_credit_note_header crn,\n" + 
 			"        m_franchisee f \n" + 
 			"    WHERE\n" + 
 			"        crn.crn_date BETWEEN :fromDate AND :toDate \n" + 
 			"        AND crn.fr_id = f.fr_id \n" + 
-			"        ORDER BY crn_date", nativeQuery=true)
+			"        ORDER BY crn_date DESC", nativeQuery=true)
 	List<CrnSalesReportDateWise> getCnsoldatdCrnSalesReportAllFr(@Param("fromDate") String fromDate, 
 			@Param("toDate") String toDate);
 
@@ -64,7 +64,7 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"WHERE\n" + 
 			"    crn.crn_date BETWEEN :fromDate AND :toDate AND crn.fr_id = f.fr_id AND f.fr_id IN (:frIdList)\n" + 
 			"GROUP BY\n" + 
-			"    crn.crn_date, f.fr_id\n" + 
+			"    crn.crn_date\n" + 
 			"ORDER BY\n" + 
 			"    crn.crn_date\n" + 
 			"DESC", nativeQuery=true)
@@ -83,7 +83,7 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"WHERE\n" + 
 			"    crn.crn_date BETWEEN :fromDate AND :toDate AND crn.fr_id = f.fr_id\n" + 
 			"GROUP BY\n" + 
-			"    crn.crn_date, f.fr_id\n" + 
+			"    crn.crn_date\n" + 
 			"ORDER BY\n" + 
 			"    crn.crn_date\n" + 
 			"DESC", nativeQuery=true)
@@ -100,13 +100,14 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"    FROM\n" + 
 			"        t_credit_note_header crn\n" + 
 			"    WHERE\n" + 
-			"        MONTH(crn.crn_date) BETWEEN MONTH(:fromDate) AND MONTH(:toDate) AND\n" + 
-			"        YEAR(crn.crn_date) BETWEEN YEAR(:fromDate) AND YEAR(:toDate) \n" + 
+			"        crn.crn_date BETWEEN :fromDate AND :toDate \n" +
 			"        AND crn.fr_id IN (:frIdList) \n" + 
 			"    GROUP BY\n" + 
-			"        MONTH(crn.crn_date), YEAR(crn.crn_date)\n" + 
+			"   	 YEAR(crn.crn_date),\n" + 
+			"        MONTH(crn.crn_date)             \n" + 
 			"    ORDER BY\n" + 
-			"         MONTH(crn.crn_date)",nativeQuery=true)
+			"    	 YEAR(crn.crn_date) Desc,\n" + 
+			"        MONTH(crn.crn_date) Desc",nativeQuery=true)
 	List<CrnSalesReportDateWise> getCrnSalesMonthReport(@Param("frIdList") List<String> frIdList, @Param("fromDate") String fromDate, 
 			@Param("toDate") String toDate);
 	
@@ -117,16 +118,21 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"        SUM(crn.crn_taxable_amt) AS crn_taxable_amt,\n" + 
 			"        SUM(crn.crn_total_tax) AS crn_total_tax,\n" + 
 			"        SUM(crn.crn_grand_total) AS crn_grand_total,\n" + 
-			"        YEAR(crn.crn_date) AS fr_name, 'NA' AS fr_code, 0 AS fr_id, crn.crn_date, 0 AS crn_no\n" + 
+			"        YEAR(crn.crn_date) AS fr_name,\n" + 
+			"        'NA' AS fr_code,\n" + 
+			"        0 AS fr_id,\n" + 
+			"        crn.crn_date,\n" + 
+			"        0 AS crn_no     \n" + 
 			"    FROM\n" + 
-			"        t_credit_note_header crn\n" + 
+			"        t_credit_note_header crn     \n" + 
 			"    WHERE\n" + 
-			"        MONTH(crn.crn_date) BETWEEN MONTH(:fromDate) AND MONTH(:toDate) AND \n" + 
-			"		YEAR(crn.crn_date) BETWEEN YEAR(:fromDate) AND YEAR(:toDate) \n" + 
+			"        crn.crn_date BETWEEN :fromDate AND :toDate\n" + 
 			"    GROUP BY\n" + 
-			"        MONTH(crn.crn_date), YEAR(crn.crn_date)\n" + 
+			"   	 YEAR(crn.crn_date),\n" + 
+			"        MONTH(crn.crn_date)             \n" + 
 			"    ORDER BY\n" + 
-			"         MONTH(crn.crn_date)", nativeQuery=true)
+			"    	 YEAR(crn.crn_date) Desc,\n" + 
+			"        MONTH(crn.crn_date) Desc", nativeQuery=true)
 	List<CrnSalesReportDateWise> getCrnSalesMonthReportAllFr(@Param("fromDate") String fromDate, @Param("toDate") String toDate);
 	
 	
