@@ -20,6 +20,9 @@ import com.ats.webapi.model.report.frpurchase.SalesReportItemwise;
 import com.ats.webapi.model.report.frpurchase.SalesReportRoyalty;
 import com.ats.webapi.model.report.frpurchase.SalesReportRoyaltyFr;
 import com.ats.webapi.model.report.frpurchase.SalesRoyaltyConsByCat;
+import com.ats.webapi.model.reportv2.CrNoteRegItem;
+import com.ats.webapi.model.reportv2.CrNoteRegSp;
+import com.ats.webapi.model.reportv2.CrNoteRegisterList;
 import com.ats.webapi.model.reportv2.SubCatCreditGrnFrItemRep;
 import com.ats.webapi.model.reportv2.SubCatFrItemRepBill;
 import com.ats.webapi.model.reportv2.SubCatItemReport;
@@ -43,6 +46,7 @@ import com.ats.webapi.repository.frpurchasereport.SaleReportItemwiseRepo;
 import com.ats.webapi.repository.frpurchasereport.SalesReportRoyaltyFrRepo;
 import com.ats.webapi.repository.frpurchasereport.SalesReportRoyaltyRepo;
 import com.ats.webapi.repository.frpurchasereport.SalesRoyaltyConsByCatRepo;
+import com.ats.webapi.repository.reportv2.CrNoteRegItemRepo;
 import com.ats.webapi.repository.reportv2.SubCatCreditGrnFrItemRepRepo;
 import com.ats.webapi.repository.reportv2.SubCatFrItemRepBillRepo;
 import com.ats.webapi.repository.reportv2.SubCatItemReportRepository;
@@ -70,6 +74,9 @@ public class SalesReportController {
 
 	@Autowired
 	SalesReturnValueItemDaoRepo salesReturnValueItemDaoRepo;
+	
+	@Autowired
+	CrNoteRegItemRepo getCrNoteRegItemRepo;
 
 	// Report 1 sales report bill wise order by date
 	@RequestMapping(value = { "/getSaleReportBillwise" }, method = RequestMethod.POST)
@@ -968,5 +975,45 @@ public class SalesReportController {
 			e.printStackTrace();
 		}
 		return crnList;
+	}
+	
+	@RequestMapping(value = { "/getTax1Report" }, method = RequestMethod.POST)
+	public @ResponseBody List<Tax1Report> getTax1Report(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate) {
+
+		List<Tax1Report> tax1ReportList = null;
+		try {
+			fromDate = Common.convertToYMD(fromDate);
+			toDate = Common.convertToYMD(toDate);
+
+			tax1ReportList = tax1ReportRepository.getTax1Report(fromDate, toDate);
+		} catch (Exception e) {
+			System.out.println(" Exce in Tax1 Report " + e.getMessage());
+			e.printStackTrace();
+		}
+		return tax1ReportList;
+	}
+	
+	
+	@RequestMapping(value = { "/getCrNoteRegisterDone" }, method = RequestMethod.POST)
+	public @ResponseBody CrNoteRegisterList getCrNoteRegisterDone(@RequestParam("fromDate") String fromDate,
+			@RequestParam("toDate") String toDate,@RequestParam("CreditNoteType") String CreditNoteType) {
+
+		CrNoteRegisterList crNoteList = new CrNoteRegisterList();
+
+		List<CrNoteRegItem> crNoteRegItemList;
+		List<CrNoteRegSp> crNoteRegSpList=new ArrayList<>();
+
+		crNoteRegItemList = getCrNoteRegItemRepo.getCrNoteRegItemDone(fromDate, toDate,CreditNoteType);
+		System.err.println("List found----------->"+crNoteRegItemList);
+		crNoteList.setCrNoteRegItemList(crNoteRegItemList);
+
+		//crNoteRegSpList = getCrNoteRegSpRepo.getCrNoteRegSpDone(fromDate, toDate);
+		crNoteList.setCrNoteRegSpList(crNoteRegSpList);
+
+		System.err.println("size Item  crNoteList " + crNoteList.getCrNoteRegItemList().size());
+		System.err.println("size Sp  crNoteList " + crNoteList.getCrNoteRegSpList());
+
+		return crNoteList;
 	}
 }

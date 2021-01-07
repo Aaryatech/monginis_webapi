@@ -7,7 +7,6 @@ public class CrNoteRegisterList {
 	List<CrNoteRegItem> crNoteRegItemList;
 	List<CrNoteRegSp> crNoteRegSpList;
 	
-	
 	public List<CrNoteRegItem> getCrNoteRegItemList() {
 		return crNoteRegItemList;
 	}
@@ -21,11 +20,10 @@ public class CrNoteRegisterList {
 	public void setCrNoteRegSpList(List<CrNoteRegSp> crNoteRegSpList) {
 		this.crNoteRegSpList = crNoteRegSpList;
 	}
-	
 	@Override
 	public String toString() {
 		return "CrNoteRegisterList [crNoteRegItemList=" + crNoteRegItemList + ", crNoteRegSpList=" + crNoteRegSpList
 				+ "]";
-	}
+	}	
 
 }
