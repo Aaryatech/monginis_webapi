@@ -1004,8 +1004,14 @@ public class SalesReportController {
 		List<CrNoteRegItem> crNoteRegItemList;
 		List<CrNoteRegSp> crNoteRegSpList=new ArrayList<>();
 
-		crNoteRegItemList = getCrNoteRegItemRepo.getCrNoteRegItemDone(fromDate, toDate,CreditNoteType);
+		if(Integer.parseInt(CreditNoteType)==-1) {
+			crNoteRegItemList = getCrNoteRegItemRepo.getAllCrNoteRegItemDone(fromDate, toDate);
+		}else {
+			crNoteRegItemList = getCrNoteRegItemRepo.getCrNoteRegItemDone(fromDate, toDate,CreditNoteType);
+		}
+		
 		System.err.println("List found----------->"+crNoteRegItemList);
+		
 		crNoteList.setCrNoteRegItemList(crNoteRegItemList);
 
 		//crNoteRegSpList = getCrNoteRegSpRepo.getCrNoteRegSpDone(fromDate, toDate);
