@@ -19,7 +19,7 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"        crn.crn_total_tax,\n" + 
 			"        crn.crn_grand_total,\n" + 
 			"        f.fr_name AS fr_name,\n" + 
-			"        f.fr_code AS fr_code, crn.crn_no \n" + 
+			"        f.fr_code AS fr_code, crn.crn_no, crn.is_grn \n" + 
 			"    FROM\n" + 
 			"        t_credit_note_header crn,\n" + 
 			"        m_franchisee f \n" + 
@@ -41,7 +41,7 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"        crn.crn_total_tax,\n" + 
 			"        crn.crn_grand_total,\n" + 
 			"        f.fr_name AS fr_name,\n" + 
-			"        f.fr_code AS fr_code, crn.crn_no \n" + 
+			"        f.fr_code AS fr_code, crn.crn_no, crn.is_grn \n" + 
 			"    FROM\n" + 
 			"        t_credit_note_header crn,\n" + 
 			"        m_franchisee f \n" + 
@@ -57,7 +57,7 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"    SUM(crn.crn_total_tax) AS crn_total_tax,\n" + 
 			"    SUM(crn.crn_grand_total) AS crn_grand_total,\n" + 
 			"    f.fr_name,\n" + 
-			"    f.fr_code, 0 AS crn_no\n" + 
+			"    f.fr_code, 0 AS crn_no, 0 AS is_grn \n" + 
 			"FROM\n" + 
 			"    t_credit_note_header crn,\n" + 
 			"    m_franchisee f\n" + 
@@ -76,7 +76,7 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"    SUM(crn.crn_total_tax) AS crn_total_tax,\n" + 
 			"    SUM(crn.crn_grand_total) AS crn_grand_total,\n" + 
 			"    f.fr_name,\n" + 
-			"    f.fr_code, 0 AS crn_no\n" + 
+			"    f.fr_code, 0 AS crn_no, 0 AS is_grn\n" + 
 			"FROM\n" + 
 			"    t_credit_note_header crn,\n" + 
 			"    m_franchisee f\n" + 
@@ -96,7 +96,7 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"        SUM(crn.crn_taxable_amt) AS crn_taxable_amt,\n" + 
 			"        SUM(crn.crn_total_tax) AS crn_total_tax,\n" + 
 			"        SUM(crn.crn_grand_total) AS crn_grand_total,\n" + 
-			"        YEAR(crn.crn_date) AS fr_name, 'NA' AS fr_code, 0 AS fr_id, crn.crn_date, 0 AS crn_no\n" + 
+			"        YEAR(crn.crn_date) AS fr_name, 'NA' AS fr_code, 0 AS fr_id, crn.crn_date, 0 AS crn_no, 0 AS is_grn\n" + 
 			"    FROM\n" + 
 			"        t_credit_note_header crn\n" + 
 			"    WHERE\n" + 
@@ -122,7 +122,7 @@ public interface CrnSalesReportDateWiseRepo extends JpaRepository<CrnSalesReport
 			"        'NA' AS fr_code,\n" + 
 			"        0 AS fr_id,\n" + 
 			"        crn.crn_date,\n" + 
-			"        0 AS crn_no     \n" + 
+			"        0 AS crn_no, 0 AS is_grn     \n" + 
 			"    FROM\n" + 
 			"        t_credit_note_header crn     \n" + 
 			"    WHERE\n" + 

@@ -23,6 +23,7 @@ public class CrnSalesReportDateWise {
 	private String frName;
 	private String frCode;
 	private int crnNo;
+	private int isGrn;
 	
 	public String getUid() {
 		return uid;
@@ -85,11 +86,18 @@ public class CrnSalesReportDateWise {
 	public void setCrnNo(int crnNo) {
 		this.crnNo = crnNo;
 	}
+	public int getIsGrn() {
+		return isGrn;
+	}
+	public void setIsGrn(int isGrn) {
+		this.isGrn = isGrn;
+	}
 	@Override
 	public String toString() {
 		return "CrnSalesReportDateWise [uid=" + uid + ", crnDate=" + crnDate + ", monthName=" + monthName + ", frId="
 				+ frId + ", crnTaxableAmt=" + crnTaxableAmt + ", crnTotalTax=" + crnTotalTax + ", crnGrandTotal="
-				+ crnGrandTotal + ", frName=" + frName + ", frCode=" + frCode + ", crnNo=" + crnNo + "]";
+				+ crnGrandTotal + ", frName=" + frName + ", frCode=" + frCode + ", crnNo=" + crnNo + ", isGrn=" + isGrn
+				+ "]";
 	}
 	
 }

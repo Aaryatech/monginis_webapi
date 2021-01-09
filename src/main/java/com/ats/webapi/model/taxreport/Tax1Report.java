@@ -41,6 +41,8 @@ public class Tax1Report implements Serializable{
 
 	private float sgstAmt;
 	
+	private float igstAmt;
+	
 	private float totalTax;
 	
 	private float grandTotal;
@@ -157,15 +159,21 @@ public class Tax1Report implements Serializable{
 		this.grandTotal = grandTotal;
 	}
 
+	public float getIgstAmt() {
+		return igstAmt;
+	}
+
+	public void setIgstAmt(float igstAmt) {
+		this.igstAmt = igstAmt;
+	}
+
 	@Override
 	public String toString() {
 		return "Tax1Report [billDetailNo=" + billDetailNo + ", invoiceNo=" + invoiceNo + ", billDate=" + billDate
 				+ ", frName=" + frName + ", frGstNo=" + frGstNo + ", billNo=" + billNo + ", cgstPer=" + cgstPer
 				+ ", sgstPer=" + sgstPer + ", taxPer=" + taxPer + ", taxableAmt=" + taxableAmt + ", cgstAmt=" + cgstAmt
-				+ ", sgstAmt=" + sgstAmt + ", totalTax=" + totalTax + ", grandTotal=" + grandTotal + "]";
+				+ ", sgstAmt=" + sgstAmt + ", igstAmt=" + igstAmt + ", totalTax=" + totalTax + ", grandTotal="
+				+ grandTotal + "]";
 	}
-	
-	
-	
-	
+
 }
