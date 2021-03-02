@@ -12,10 +12,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ats.webapi.model.BillHeader;
+import com.ats.webapi.model.GetNonRegFr;
 import com.ats.webapi.model.MenuOrderLimit;
 import com.ats.webapi.model.ProdQtyLimitCnt;
 import com.ats.webapi.model.SettingNew;
+import com.ats.webapi.model.SpCakeDispatchReport;
+import com.ats.webapi.repo.spcakedispatchreport.SpCakeDispatchRepo;
 import com.ats.webapi.repository.BillHeaderRepository;
+import com.ats.webapi.repository.GetNonRegFrRepo;
 import com.ats.webapi.repository.ProdQtyLimitCntRepository;
 import com.ats.webapi.repository.SettingNewRepository;
 import com.google.gson.Gson;
@@ -35,6 +39,10 @@ public class BillHeaderController {
 	
 	@Autowired
 	ProdQtyLimitCntRepository prodQtyRepo;
+	
+	@Autowired
+	SpCakeDispatchRepo CakeDispatchRepo;
+
 	
 	
 	@RequestMapping(value="/getListGreaterThanBillNo",method=RequestMethod.POST)
@@ -101,7 +109,29 @@ public class BillHeaderController {
 		
 	}
 	
+	@Autowired
+	GetNonRegFrRepo nonGenFrRepo;
+
+	@RequestMapping(value = "/getNonRegFrApi", method = RequestMethod.POST)
+	public @ResponseBody List<GetNonRegFr> getNonRegFrReports(@RequestParam String fromDate,
+			@RequestParam String toDate) {
+
+		List<GetNonRegFr> nonGenFr = new ArrayList<GetNonRegFr>();
+
+		try {
+			nonGenFr = nonGenFrRepo.getNonRegFrReports(fromDate, toDate);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+
+		}
+
+		return nonGenFr;
+
+	}
 	
+	  
+
 	
 	
 	

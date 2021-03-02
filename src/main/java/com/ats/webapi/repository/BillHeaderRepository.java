@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.ats.webapi.model.BillHeader;
+import com.ats.webapi.model.SpCakeDispatchReport;
 
 
 //Akhilesh Friday 11/12/2020 15:34
