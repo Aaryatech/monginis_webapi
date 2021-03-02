@@ -19,7 +19,7 @@ public class SpecialCakeDispatchReportController {
 	SpCakeDispatchRepo CakeDispatchRepo;
 	
 
-	  @RequestMapping(value="/getSpecialCakeDispatchReports",method=RequestMethod.GET)
+	  @RequestMapping(value="/getSpecialCakeDispatchReports",method=RequestMethod.POST)
 	public @ResponseBody List<SpCakeDispatchReport> getSpecialCakeDispatchReports(@RequestParam String spCakeDelDate,@RequestParam int routId){
 		  List<SpCakeDispatchReport> Spcake=new ArrayList<SpCakeDispatchReport>();
 		
