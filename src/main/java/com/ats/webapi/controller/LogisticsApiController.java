@@ -1119,7 +1119,8 @@ public class LogisticsApiController {
 		List<VehicleDcoument> getAllVehicleDcoument = new ArrayList<VehicleDcoument>();
 		try {
 			  
-			getAllVehicleDcoument = vehicleDcoumentService.getAllVehicleDcoument(); 
+			//getAllVehicleDcoument = vehicleDcoumentService.getAllVehicleDcoument(); 
+			getAllVehicleDcoument = vehicleDcoumentService.getAllAvaiVehicleDcoument(); 
 		} catch (Exception e) {
 
 			e.printStackTrace();

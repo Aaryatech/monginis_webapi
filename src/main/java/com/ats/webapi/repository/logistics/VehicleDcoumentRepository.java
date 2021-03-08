@@ -17,8 +17,17 @@ public interface VehicleDcoumentRepository extends JpaRepository<VehicleDcoument
 	@Transactional
 	@Modifying
 	@Query(" UPDATE VehicleDcoument SET del_status=1 WHERE veh_doc_id=:vehDocId")
-	int deleteVehicleDcoument(@Param("vehDocId")int vehDocId);
+	int deleteVehicleDcoument(@Param("vehDocId") int vehDocId);
 
+	@Query(value="SELECT\r\n" + 
+			"    m_logis_veh_doc.*\r\n" + 
+			"FROM\r\n" + 
+			"    m_logis_veh_doc,\r\n" + 
+			"    m_logis_vehical\r\n" + 
+			"WHERE\r\n" + 
+			"    m_logis_veh_doc.veh_id = m_logis_vehical.veh_id AND m_logis_veh_doc.del_status=:delStatus AND m_logis_vehical.del_status = :delStatus", nativeQuery=true)
+	List<VehicleDcoument> findByVehDocDelStatus(@Param("delStatus") int delStatus);
+	
 	List<VehicleDcoument> findByDelStatus(int delStatus);
 
 	VehicleDcoument findByVehDocId(int vehDocId);

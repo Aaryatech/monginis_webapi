@@ -19,5 +19,7 @@ public interface VehicleDcoumentService {
 	VehicleDcoument getVehicleDcoumentById(int vehDocId);
 
 	List<VehicleDcoument> getAlertDocumentRecord(String today);
+	
+	List<VehicleDcoument> getAllAvaiVehicleDcoument();
 
 }

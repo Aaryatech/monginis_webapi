@@ -69,6 +69,21 @@ public class VehicleDcoumentServiceImpl implements VehicleDcoumentService {
 		}
 		return getAllVehicleDcoument;
 	}
+	
+	@Override
+	public List<VehicleDcoument> getAllAvaiVehicleDcoument() {
+		List<VehicleDcoument> getAllVehicleDcoument = new ArrayList<VehicleDcoument>();
+		try {
+			  
+			getAllVehicleDcoument = vehicleDcoumentRepository.findByVehDocDelStatus(0);
+			 
+			System.out.println(getAllVehicleDcoument.toString());
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		}
+		return getAllVehicleDcoument;
+	}
 
 	@Override
 	public VehicleDcoument getVehicleDcoumentById(int vehDocId) {
