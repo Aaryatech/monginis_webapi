@@ -1520,7 +1520,8 @@ public class LogisticsApiController {
 			 SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd");
 			 String today = formate.format(date);
 			 System.out.println("todays " + today);  
-			getAlertDocumentRecord = vehicleDcoumentService.getAlertDocumentRecord(today); 
+			//getAlertDocumentRecord = vehicleDcoumentService.getAlertDocumentRecord(today); 
+			 getAlertDocumentRecord = vehicleDcoumentService.getAlertAvailDocumentRecord(today);
 			 System.out.println("getAlertDocumentRecord "+ getAlertDocumentRecord);
 		} catch (Exception e) {
 

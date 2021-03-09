@@ -38,5 +38,28 @@ public interface VehicleDcoumentRepository extends JpaRepository<VehicleDcoument
 			+ " where ( doc_expire_date >= :today and doc_exp_notification_date <= :today ) "
 			+ "or doc_exp_notification_date < :today",nativeQuery=true) 
 	List<VehicleDcoument> getAlertDocumentRecord(@Param("today")String today);
+	
+	
+	
+	@Query(value="SELECT\r\n" + 
+			"    d.veh_doc_id,\r\n" + 
+			"    d.veh_id,\r\n" + 
+			"    d.doc_id,\r\n" + 
+			"    d.entry_date,\r\n" + 
+			"    d.doc_date,\r\n" + 
+			"    d.doc_expire_date,\r\n" + 
+			"    d.doc_exp_notification_date,\r\n" + 
+			"    d.doc_path,\r\n" + 
+			"    d.current_km,\r\n" + 
+			"    d.del_status,\r\n" + 
+			"    DATEDIFF(d.doc_expire_date, :today) AS remaining_day\r\n" + 
+			"FROM\r\n" + 
+			"    m_logis_veh_doc d,\r\n" + 
+			"    m_logis_vehical v\r\n" + 
+			"WHERE\r\n" + 
+			"    d.veh_id = v.veh_id AND v.del_status = 0 AND(\r\n" + 
+			"        d.doc_expire_date >= :today AND d.doc_exp_notification_date <= :today\r\n" + 
+			"    ) OR d.doc_exp_notification_date < :today AND v.del_status = 0 AND FIND_IN_SET(v.veh_id, d.veh_id)", nativeQuery=true)
+	List<VehicleDcoument> getAvailAlertDocumentRecord(@Param("today")String today);
 
 }
