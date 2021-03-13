@@ -20,17 +20,18 @@ public class SpecialCakeDispatchReportController {
 	
 
 	  @RequestMapping(value="/getSpecialCakeDispatchReports",method=RequestMethod.POST)
-	public @ResponseBody List<SpCakeDispatchReport> getSpecialCakeDispatchReports(@RequestParam String spCakeDelDate,@RequestParam int routId){
+	public @ResponseBody List<SpCakeDispatchReport> getSpecialCakeDispatchReports(@RequestParam String spCakeDelDate,@RequestParam int routId,@RequestParam List<String> menuIdList){
 		  List<SpCakeDispatchReport> Spcake=new ArrayList<SpCakeDispatchReport>();
 		
 		try {
-			Spcake=CakeDispatchRepo.getSpecialCakeDispatchReport(spCakeDelDate,routId);
+			Spcake=CakeDispatchRepo.getSpecialCakeDispatchReport(spCakeDelDate,routId,menuIdList);
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 			
 		}
 		
+		System.out.println("Spcake"+Spcake);
 		return Spcake;
 		
 	}
