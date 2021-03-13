@@ -25,7 +25,15 @@ public class OrderCounts implements Serializable{
 	String menuTitle;
 	
 	int total;
+	private float kgs;
 	
+	
+	public float getKgs() {
+		return kgs;
+	}
+	public void setKgs(float kgs) {
+		this.kgs = kgs;
+	}
 	public int getMenuId() {
 		return menuId;
 	}
@@ -50,7 +58,7 @@ public class OrderCounts implements Serializable{
 	}
 	@Override
 	public String toString() {
-		return "OrderCounts [menuId=" + menuId + ", menuTitle=" + menuTitle + ", Total=" + total + "]";
+		return "OrderCounts [menuId=" + menuId + ", menuTitle=" + menuTitle + ", total=" + total + ", kgs=" + kgs + "]";
 	}
 	
 	
