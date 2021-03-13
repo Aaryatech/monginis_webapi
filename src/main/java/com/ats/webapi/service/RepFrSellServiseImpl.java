@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ats.webapi.model.report.GetCustBillTax;
 import com.ats.webapi.model.report.GetCustomerBill;
+import com.ats.webapi.model.report.GetCustomerBillNew;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
 import com.ats.webapi.model.report.GetRepItemwiseSell;
 import com.ats.webapi.model.report.GetRepMenuwiseSell;
@@ -14,6 +15,7 @@ import com.ats.webapi.model.report.GetRepMonthwiseSell;
 import com.ats.webapi.model.report.GetRepTaxSell;
 import com.ats.webapi.repository.GetCustBillTaxRepository;
 import com.ats.webapi.repository.GetCustomerBillRepository;
+import com.ats.webapi.repository.GetCustomerBillRepositoryNew;
 import com.ats.webapi.repository.RepFrDatewiseSellRepository;
 import com.ats.webapi.repository.RepFrItemwiseSellRepository;
 import com.ats.webapi.repository.RepFrMenuwiseSellRepository;
@@ -41,6 +43,8 @@ public class RepFrSellServiseImpl implements RepFrSellServise{
 	
 	@Autowired
 	GetCustBillTaxRepository getCustBillTaxRepository;
+	
+	@Autowired GetCustomerBillRepositoryNew getCustBillNew;
 	@Override
 	public List<GetRepFrDatewiseSell> getDatewiseSellReport(String fromDate, String toDate,  List<String> frId) {
 		
@@ -117,6 +121,13 @@ List<GetRepItemwiseSell> getRepCatwiseSellList=repFrItemwiseSellRepository.getRe
 		
 		List<GetCustBillTax> getCustBillTaxList=getCustBillTaxRepository.getCustBill(billNo);
 		return getCustBillTaxList;
+	}
+	@Override
+	public List<GetCustomerBillNew> getCustBillItmHsn(int billNo) {
+		
+		List<GetCustomerBillNew> getCustBill=getCustBillNew.getCustBillItmHsn(billNo);
+		
+		return getCustBill;
 	}
  
 

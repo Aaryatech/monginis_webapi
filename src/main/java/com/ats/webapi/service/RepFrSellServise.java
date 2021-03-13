@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ats.webapi.model.report.GetCustBillTax;
 import com.ats.webapi.model.report.GetCustomerBill;
+import com.ats.webapi.model.report.GetCustomerBillNew;
 import com.ats.webapi.model.report.GetRepFrDatewiseSell;
 import com.ats.webapi.model.report.GetRepItemwiseSell;
 import com.ats.webapi.model.report.GetRepMenuwiseSell;
@@ -25,5 +26,5 @@ public interface RepFrSellServise {
 			List<String> catId);
 	List<GetCustomerBill> getCustBill(int billNo);
 	List<GetCustBillTax> getCustBillTax(int billNo);
-
+	List<GetCustomerBillNew> getCustBillItmHsn(int billNo);
 }
